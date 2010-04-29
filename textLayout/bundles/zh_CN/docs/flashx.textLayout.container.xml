@@ -1,0 +1,1050 @@
+<?xml version="1.0"?>
+<apiPackage id="flashx.textLayout.container"><apiName>flashx.textLayout.container</apiName><apiDetail/><apiClassifier id="flashx.textLayout.container:ISandboxSupport"><apiName>ISandboxSupport</apiName><shortdesc> 用于在安全沙箱中支持 TLF 管理的容器的接口。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc> 用于在安全沙箱中支持 TLF 管理的容器的接口。
+	 
+	 </apiDesc></apiClassifierDetail><apiOperation id="flashx.textLayout.container:ISandboxSupport:flashx.textLayout.container:ISandboxSupport:beginMouseCapture"><apiName>beginMouseCapture</apiName><shortdesc> 
+		 请求客户端开始从安全沙箱外部转发 mouseup 和 mousemove 事件时调用。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 请求客户端开始从安全沙箱外部转发 mouseup 和 mousemove 事件时调用。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:ISandboxSupport:flashx.textLayout.container:ISandboxSupport:endMouseCapture"><apiName>endMouseCapture</apiName><shortdesc> 
+		 通知客户端不再需要从安全沙箱外部转发 mouseup 和 mousemove 事件时调用。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 通知客户端不再需要从安全沙箱外部转发 mouseup 和 mousemove 事件时调用。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:ISandboxSupport:flashx.textLayout.container:ISandboxSupport:mouseMoveSomewhere"><apiName>mouseMoveSomewhere</apiName><shortdesc> 用于从安全沙箱外部转发 mouseMove 事件的客户端调用。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:Event"/></apiParam></apiOperationDef><apiDesc> 用于从安全沙箱外部转发 mouseMove 事件的客户端调用。不需要鼠标移动的坐标。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:ISandboxSupport:flashx.textLayout.container:ISandboxSupport:mouseUpSomewhere"><apiName>mouseUpSomewhere</apiName><shortdesc> 客户端调用以从安全沙箱外转发一个 mouseUp 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:Event"/></apiParam></apiOperationDef><apiDesc> 客户端调用以从安全沙箱外转发一个 mouseUp 事件。不需要鼠标向上的坐标。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation></apiClassifier><apiClassifier id="flashx.textLayout.container:TextContainerManager"><apiName>TextContainerManager</apiName><shortdesc> 管理容器中的文本。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion><Exclude kind="method" name="callInContext"/><Exclude kind="method" name="getBaseSWFContext"/></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseInterface>flashx.textLayout.compose:ISWFContext</apiBaseInterface><apiBaseInterface>flashx.textLayout.edit:IInteractionEventHandler</apiBaseInterface><apiBaseInterface>flashx.textLayout.container:ISandboxSupport</apiBaseInterface><apiBaseClassifier>flash.events:EventDispatcher</apiBaseClassifier></apiClassifierDef><apiDesc> 管理容器中的文本。假定它管理容器的所有子代。 
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.container.xml#ContainerController"><linktext>ContainerController</linktext></link></related-links><adobeApiEvent id="flashx.textLayout.container:TextContainerManager_flashx.textLayout.events.UpdateCompleteEvent_updateComplete"><apiName>updateComplete</apiName><shortdesc> 每次一个容器添加了新 DisplayObject 或由于合成操作而更新时，由 TextFlow 对象分派。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><adobeApiEventDetail><adobeApiEventDef><adobeApiEventClassifier>flashx.textLayout.events.UpdateCompleteEvent</adobeApiEventClassifier><apiGeneratedEvent/></adobeApiEventDef><apiDesc> 每次由于合成而使容器添加或更新了 DisplayObject 时由 TextFlow 对象分派。
+	 
+	 </apiDesc></adobeApiEventDetail></adobeApiEvent><adobeApiEvent id="flashx.textLayout.container:TextContainerManager_flashx.textLayout.events.DamageEvent_damage"><apiName>damage</apiName><shortdesc> 每次 TextFlow 对象受损时由该对象分派。 
+	 
+	 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><adobeApiEventDetail><adobeApiEventDef><adobeApiEventClassifier>flashx.textLayout.events.DamageEvent</adobeApiEventClassifier><apiGeneratedEvent/></adobeApiEventDef><apiDesc> 每次 TextFlow 对象受损时由该对象分派。 
+	 
+	 </apiDesc></adobeApiEventDetail></adobeApiEvent><adobeApiEvent id="flashx.textLayout.container:TextContainerManager_flashx.textLayout.events.TextLayoutEvent_scroll"><apiName>scroll</apiName><shortdesc> 在控制器容器中滚动了文本时由 TextFlow 对象分派。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><adobeApiEventDetail><adobeApiEventDef><adobeApiEventClassifier>flashx.textLayout.events.TextLayoutEvent</adobeApiEventClassifier><apiGeneratedEvent/></adobeApiEventDef><apiDesc> 在控制器容器中滚动了文本时由 TextFlow 对象分派。  
+	 
+	 </apiDesc></adobeApiEventDetail></adobeApiEvent><adobeApiEvent id="flashx.textLayout.container:TextContainerManager_flashx.textLayout.events.StatusChangeEvent_inlineGraphicStatusChanged"><apiName>inlineGraphicStatusChanged</apiName><shortdesc> 当由于宽度或高度设置为 auto 或百分比而使 InlineGraphicElement 调整了大小，且图形完成加载后进行分派。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><adobeApiEventDetail><adobeApiEventDef><adobeApiEventClassifier>flashx.textLayout.events.StatusChangeEvent</adobeApiEventClassifier><apiGeneratedEvent/></adobeApiEventDef><apiDesc> 当由于宽度或高度设置为 auto 或百分比而使 InlineGraphicElement 调整了大小，且图形完成加载后进行分派。 
+	 
+	 </apiDesc></adobeApiEventDetail></adobeApiEvent><adobeApiEvent id="flashx.textLayout.container:TextContainerManager_flashx.textLayout.events.FlowElementMouseEvent_click"><apiName>click</apiName><shortdesc> 单击任何链接时分派。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><adobeApiEventDetail><adobeApiEventDef><adobeApiEventClassifier>flashx.textLayout.events.FlowElementMouseEvent</adobeApiEventClassifier><apiGeneratedEvent/></adobeApiEventDef><apiDesc> 单击任何链接时分派。 
+	 
+	 </apiDesc></adobeApiEventDetail></adobeApiEvent><adobeApiEvent id="flashx.textLayout.container:TextContainerManager_flashx.textLayout.events.FlowElementMouseEvent_rollOut"><apiName>rollOut</apiName><shortdesc> 当鼠标离开任何链接时分派。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><adobeApiEventDetail><adobeApiEventDef><adobeApiEventClassifier>flashx.textLayout.events.FlowElementMouseEvent</adobeApiEventClassifier><apiGeneratedEvent/></adobeApiEventDef><apiDesc> 当鼠标离开任何链接时分派。 
+	 
+	 </apiDesc></adobeApiEventDetail></adobeApiEvent><adobeApiEvent id="flashx.textLayout.container:TextContainerManager_flashx.textLayout.events.FlowElementMouseEvent_rollOver"><apiName>rollOver</apiName><shortdesc> 当鼠标首次进入任何链接时分派。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><adobeApiEventDetail><adobeApiEventDef><adobeApiEventClassifier>flashx.textLayout.events.FlowElementMouseEvent</adobeApiEventClassifier><apiGeneratedEvent/></adobeApiEventDef><apiDesc> 当鼠标首次进入任何链接时分派。 
+	 
+	 </apiDesc></adobeApiEventDetail></adobeApiEvent><adobeApiEvent id="flashx.textLayout.container:TextContainerManager_flashx.textLayout.events.FlowElementMouseEvent_mouseMove"><apiName>mouseMove</apiName><shortdesc> 当鼠标经过任何链接时分派。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><adobeApiEventDetail><adobeApiEventDef><adobeApiEventClassifier>flashx.textLayout.events.FlowElementMouseEvent</adobeApiEventClassifier><apiGeneratedEvent/></adobeApiEventDef><apiDesc> 当鼠标经过任何链接时分派。 
+	 
+	 </apiDesc></adobeApiEventDetail></adobeApiEvent><adobeApiEvent id="flashx.textLayout.container:TextContainerManager_flashx.textLayout.events.FlowElementMouseEvent_mouseUp"><apiName>mouseUp</apiName><shortdesc> 在任何链接上松开鼠标时分派。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><adobeApiEventDetail><adobeApiEventDef><adobeApiEventClassifier>flashx.textLayout.events.FlowElementMouseEvent</adobeApiEventClassifier><apiGeneratedEvent/></adobeApiEventDef><apiDesc> 在任何链接上松开鼠标时分派。 
+	 
+	 </apiDesc></adobeApiEventDetail></adobeApiEvent><adobeApiEvent id="flashx.textLayout.container:TextContainerManager_flashx.textLayout.events.FlowElementMouseEvent_mouseDown"><apiName>mouseDown</apiName><shortdesc> 在任何链接上按下鼠标时分派。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><adobeApiEventDetail><adobeApiEventDef><adobeApiEventClassifier>flashx.textLayout.events.FlowElementMouseEvent</adobeApiEventClassifier><apiGeneratedEvent/></adobeApiEventDef><apiDesc> 在任何链接上按下鼠标时分派。 
+	 
+	 </apiDesc></adobeApiEventDetail></adobeApiEvent><adobeApiEvent id="flashx.textLayout.container:TextContainerManager_flashx.textLayout.events.CompositionCompleteEvent_compositionComplete"><apiName>compositionComplete</apiName><shortdesc> 每次重新合成后分派。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><adobeApiEventDetail><adobeApiEventDef><adobeApiEventClassifier>flashx.textLayout.events.CompositionCompleteEvent</adobeApiEventClassifier><apiGeneratedEvent/></adobeApiEventDef><apiDesc> 每次重新合成后分派。 
+	
+	</apiDesc></adobeApiEventDetail></adobeApiEvent><adobeApiEvent id="flashx.textLayout.container:TextContainerManager_flashx.textLayout.events.SelectionEvent_selectionChange"><apiName>selectionChange</apiName><shortdesc> 每次更改选择部分后分派。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><adobeApiEventDetail><adobeApiEventDef><adobeApiEventClassifier>flashx.textLayout.events.SelectionEvent</adobeApiEventClassifier><apiGeneratedEvent/></adobeApiEventDef><apiDesc> 每次更改所选内容后分派。主要用于更新与当前选择相关的用户界面。 
+	 
+	 </apiDesc></adobeApiEventDetail></adobeApiEvent><adobeApiEvent id="flashx.textLayout.container:TextContainerManager_flashx.textLayout.events.FlowOperationEvent.FLOW_OPERATION_COMPLETE_flowOperationComplete"><apiName>flowOperationComplete</apiName><shortdesc>
+	 
+	 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><adobeApiEventDetail><adobeApiEventDef><apiEventType>flashx.textLayout.events.FlowOperationEvent.FLOW_OPERATION_COMPLETE</apiEventType><adobeApiEventClassifier>flashx.textLayout.events.FlowOperationEvent</adobeApiEventClassifier><apiGeneratedEvent/></adobeApiEventDef><apiDesc>
+	 
+	 </apiDesc></adobeApiEventDetail></adobeApiEvent><adobeApiEvent id="flashx.textLayout.container:TextContainerManager_flashx.textLayout.events.FlowOperationEvent.FLOW_OPERATION_END_flowOperationEnd"><apiName>flowOperationEnd</apiName><shortdesc>
+	 
+	 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><adobeApiEventDetail><adobeApiEventDef><apiEventType>flashx.textLayout.events.FlowOperationEvent.FLOW_OPERATION_END</apiEventType><adobeApiEventClassifier>flashx.textLayout.events.FlowOperationEvent</adobeApiEventClassifier><apiGeneratedEvent/></adobeApiEventDef><apiDesc>
+	 
+	 </apiDesc></adobeApiEventDetail></adobeApiEvent><adobeApiEvent id="flashx.textLayout.container:TextContainerManager_flashx.textLayout.events.FlowOperationEvent.FLOW_OPERATION_BEGIN_flowOperationBegin"><apiName>flowOperationBegin</apiName><shortdesc>
+	 
+	  </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><adobeApiEventDetail><adobeApiEventDef><apiEventType>flashx.textLayout.events.FlowOperationEvent.FLOW_OPERATION_BEGIN</apiEventType><adobeApiEventClassifier>flashx.textLayout.events.FlowOperationEvent</adobeApiEventClassifier><apiGeneratedEvent/></adobeApiEventDef><apiDesc>
+	 
+	  </apiDesc></adobeApiEventDetail></adobeApiEvent><apiConstructor id="flashx.textLayout.container:TextContainerManager:TextContainerManager"><apiName>TextContainerManager</apiName><shortdesc> 构造函数 - 创建 TextContainerManager 实例。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>container</apiItemName><apiType value="flash.display:Sprite"/><apiDesc>用于管理文本行的 DisplayObjectContainer。
+		 </apiDesc></apiParam><apiParam><apiItemName>configuration</apiItemName><apiOperationClassifier>flashx.textLayout.elements:IConfiguration</apiOperationClassifier><apiData>null</apiData><apiDesc>- 用于与此 TextContainerManager 实例一起使用的 IConfiguration 实例。 
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 构造函数 - 创建 TextContainerManager 实例。为得到最佳结果：
+		 <ol>
+		 <li>从 TextContainerManager.defaultConfiguration 开始并修改它</li>   
+		 <li>在多个 InputManagers 之间共享相同 Configuration</li>
+		 </ol>
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.container:TextContainerManager:activateHandler"><apiName>activateHandler</apiName><shortdesc conref="flashx.textLayout.container.ContainerController#activateHandler()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:Event"/><apiDesc>Event 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="flashx.textLayout.container.ContainerController#activateHandler()"> </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#Event/ACTIVATE"><linktext>Event.ACTIVATE</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:beginInteraction"><apiName>beginInteraction</apiName><shortdesc> 返回当前 ISelectionManager 实例。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>该 TextContainerManager 实例的交互管理器。
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.edit:ISelectionManager</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc> 返回当前 ISelectionManager 实例。转换为 TextFlow 实例，如有必要创建一个实例。 
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.edit.xml#ISelectionManager"><linktext>ISelectionManager</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:beginMouseCapture"><apiName>beginMouseCapture</apiName><shortdesc> 
+		 请求客户端开始从安全沙箱外部转发 mouseup 和 mousemove 事件时调用。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 请求客户端开始从安全沙箱外部转发 mouseup 和 mousemove 事件时调用。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:compose"><apiName>compose</apiName><shortdesc> 合成容器文本；调用工厂或 updateAllControllers()。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 合成容器文本；调用工厂或 <codeph>updateAllControllers()</codeph>。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:protected:createContextMenu"><apiName>createContextMenu</apiName><shortdesc> 为 TextContainerManager 创建一个 ContextMenu。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="protected"/><apiReturn><apiDesc>创建的上下文菜单。
+		 
+		 </apiDesc><apiType value="flash.ui:ContextMenu"/></apiReturn></apiOperationDef><apiDesc> 为 TextContainerManager 创建一个 ContextMenu。使用 ContextMenu 类的方法可向菜单中添加项。 
+		 <p>您可以覆盖此方法，以定义一个自定义上下文菜单。</p>
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.ui.ContextMenu.xml"><linktext>ContextMenu</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:protected:createEditManager"><apiName>createEditManager</apiName><shortdesc>创建一个编辑管理器，用于编辑。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="protected"/><apiReturn><apiDesc>该 TextContainerManager 实例的编辑管理器。
+		 
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.edit:IEditManager</apiOperationClassifier></apiReturn><apiParam><apiItemName>undoManager</apiItemName><apiOperationClassifier>flashx.undo:IUndoManager</apiOperationClassifier><apiDesc>要创建的 EditManager 的 IUndoManager 实例。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc>创建一个编辑管理器，用于编辑。如果您有自定义的 EditManager，并希望使用它取代默认设置，请覆盖此方法。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:protected:createSelectionManager"><apiName>createSelectionManager</apiName><shortdesc>创建选择管理器，用于进行选择。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="protected"/><apiReturn><apiDesc>一个新 SelectionManager 实例。
+		 
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.edit:ISelectionManager</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>创建选择管理器，用于进行选择。如果您有自定义的 SelectionManager，并希望使用它取代默认设置，请覆盖此方法。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:deactivateHandler"><apiName>deactivateHandler</apiName><shortdesc conref="flashx.textLayout.container.ContainerController#deactivateHandler()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:Event"/><apiDesc>Event 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="flashx.textLayout.container.ContainerController#deactivateHandler()"> </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#Event/DEACTIVATE"><linktext>Event.DEACTIVATE</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:drawBackgroundAndSetScrollRect"><apiName>drawBackgroundAndSetScrollRect</apiName><shortdesc>   
+		 如果它填充了容器的 scrollRect 属性则返回 true。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>如果它创建了 <codeph>scrollRect</codeph> 对象则返回 <codeph>true</codeph>。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>scrollX</apiItemName><apiType value="Number"/><apiDesc>滚动矩形的水平起始位置。
+		 </apiDesc></apiParam><apiParam><apiItemName>scrollY</apiItemName><apiType value="Number"/><apiDesc>滚动矩形的垂直起始位置。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc>   
+		 如果它填充了容器的 scrollRect 属性则返回<codeph> true</codeph>。此方法使您能够测试 <codeph>scrollRect</codeph> 是否是在没有实际访问 <codeph>scrollRect</codeph> 属性的情况下设置的，这种情况可能会造成性能问题。 
+		 <p>覆盖此方法可绘制背景或边框。由于必须根据指定值设置 scrollRect<b/>，因此覆盖该方法可能需要慎重。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:editHandler"><apiName>editHandler</apiName><shortdesc conref="flashx.textLayout.container.ContainerController#editHandler()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:Event"/><apiDesc>事件对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="flashx.textLayout.container.ContainerController#editHandler()"> </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.Event.xml"><linktext>事件</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:endInteraction"><apiName>endInteraction</apiName><shortdesc> 终止交互。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 终止交互。 
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.edit.xml#ISelectionManager"><linktext>ISelectionManager</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:endMouseCapture"><apiName>endMouseCapture</apiName><shortdesc> 
+		 通知客户端不再需要从安全沙箱外部转发 mouseup 和 mousemove 事件时调用。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 通知客户端不再需要从安全沙箱外部转发 mouseup 和 mousemove 事件时调用。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:focusChangeHandler"><apiName>focusChangeHandler</apiName><shortdesc conref="flashx.textLayout.container.ContainerController#focusChangeHandler()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:FocusEvent"/><apiDesc>FocusEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="flashx.textLayout.container.ContainerController#focusChangeHandler()"> </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#FocusEvent/KEY_FOCUS_CHANGE"><linktext>FocusEvent.KEY_FOCUS_CHANGE</linktext></link><link href="" invalidHref="flash.events.xml#FocusEvent/MOUSE_FOCUS_CHANGE"><linktext>FocusEvent.MOUSE_FOCUS_CHANGE</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:focusInHandler"><apiName>focusInHandler</apiName><shortdesc> 处理 focusIn 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:FocusEvent"/></apiParam></apiOperationDef><apiDesc> 处理 focusIn 事件。
+		</apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:focusOutHandler"><apiName>focusOutHandler</apiName><shortdesc conref="flashx.textLayout.container.ContainerController#focusOutHandler()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:FocusEvent"/><apiDesc>FocusEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="flashx.textLayout.container.ContainerController#focusOutHandler()"> </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#FocusEvent/FOCUS_OUT"><linktext>FocusEvent.FOCUS_OUT</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:getContentBounds"><apiName>getContentBounds</apiName><shortdesc> 创建一个矩形，它显示对 compose() 方法或 updateContainer() 方法的最后调用放置该文本的位置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>内容的范围
+		 </apiDesc><apiType value="flash.geom:Rectangle"/></apiReturn></apiOperationDef><apiDesc> 创建一个矩形，它显示对 <codeph>compose()</codeph> 方法或 <codeph>updateContainer()</codeph> 方法的最后调用放置该文本的位置。
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.container.xml#TextContainerManager/compose()"><linktext>compose()</linktext></link><link href="flashx.textLayout.container.xml#TextContainerManager/updateContainer()"><linktext>updateContainer()</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:protected:getFocusedSelectionFormat"><apiName>getFocusedSelectionFormat</apiName><shortdesc> 返回 focusedSelectionFormat - 默认情况下从配置获得。</shortdesc><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="protected"/><apiReturn><apiOperationClassifier>flashx.textLayout.edit:SelectionFormat</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc> 返回 focusedSelectionFormat - 默认情况下从配置获得。可以在子类中覆盖该方法以提供不同的 SelectionFormat。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:protected:getInactiveSelectionFormat"><apiName>getInactiveSelectionFormat</apiName><shortdesc> 返回 inactiveSelectionFormat - 默认情况下从配置获得。可以在子类中覆盖该方法以提供不同的 SelectionFormat。
+		 </shortdesc><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="protected"/><apiReturn><apiOperationClassifier>flashx.textLayout.edit:SelectionFormat</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc> 返回 inactiveSelectionFormat - 默认情况下从配置获得。可以在子类中覆盖该方法以提供不同的 SelectionFormat。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:getLineAt"><apiName>getLineAt</apiName><shortdesc> 从合成的行数组中返回位于指定索引的 TextLine。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>位于指定索引的 TextLine。
+		 
+		 </apiDesc><apiType value="flash.text.engine:TextLine"/></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>找到文本中位于该索引位置的行。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 从合成的行数组中返回位于指定索引的 TextLine。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:getScrollDelta"><apiName>getScrollDelta</apiName><shortdesc conref="flashx.textLayout.container.ContainerController#getScrollDelta()"> 
+		</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="Number"/><apiDesc>要滚动的空间增量
+		
+		</apiDesc></apiReturn><apiParam><apiItemName>numLines</apiItemName><apiType value="int"/><apiDesc>要滚动的行数。
+		
+		</apiDesc></apiParam></apiOperationDef><apiDesc conref="flashx.textLayout.container.ContainerController#getScrollDelta()"> 
+		</apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:getTextFlow"><apiName>getTextFlow</apiName><shortdesc> 当前 TextFlow。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>当前 TextFlow 对象
+		 
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc> 当前 TextFlow。将其转化为完整的 TextFlow 表示形式（如果尚不是）。 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:getText"><apiName>getText</apiName><shortdesc>
+		 返回在段落之间使用某一分隔符的当前文本。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="String"/></apiReturn><apiParam><apiItemName>separator</apiItemName><apiType value="String"/><apiData> </apiData><apiDesc>要在段落之间设置的字符串。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc>
+		 返回在段落之间使用某一分隔符的当前文本。该分隔符可以使用 <codeph>separator</codeph> 参数进行指定。<codeph>separator</codeph> 参数的默认值为 Unicode 字符 <codeph>'PARAGRAPH SEPARATOR' (U+2029)</codeph>。
+		 
+		 <p>调用 setter 将放弃任何附加的 TextFlow。会丢失任意当前选择。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:protected:getUndoManager"><apiName>getUndoManager</apiName><shortdesc> 
+		 返回要使用的撤消管理器。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="protected"/><apiReturn><apiDesc>新的 IUndoManager 实例。
+		 
+		 </apiDesc><apiOperationClassifier>flashx.undo:IUndoManager</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc> 
+		 返回要使用的撤消管理器。默认情况下会创建一个唯一的撤消管理器。如果您希望自定义该撤消管理器（例如，对多个 TextContainerManager 实例使用一个共享的撤消管理器），可以在子类中覆盖此方法。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:protected:getUnfocusedSelectionFormat"><apiName>getUnfocusedSelectionFormat</apiName><shortdesc> 返回 unfocusedSelectionFormat - 默认情况下从配置获得。您可以在子类中覆盖该方法以提供不同的 SelectionFormat。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="protected"/><apiReturn><apiOperationClassifier>flashx.textLayout.edit:SelectionFormat</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc> 返回 unfocusedSelectionFormat - 默认情况下从配置获得。您可以在子类中覆盖该方法以提供不同的 SelectionFormat。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:imeStartCompositionHandler"><apiName>imeStartCompositionHandler</apiName><shortdesc> 当客户端管理事件时处理 IME.START_COMPOSITION 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10.1"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:IMEEvent"/><apiDesc> IMEEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 当客户端管理事件时处理 <codeph>IME.START_COMPOSITION</codeph> 事件。
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#IMEEvent/START_COMPOSITION"><linktext>IMEEvent.START_COMPOSITION</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:invalidateSelectionFormats"><apiName>invalidateSelectionFormats</apiName><shortdesc> 如果要更改选择格式 (SelectionFormat) 并希望更新 interactionManager，可调用此方法。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 如果要更改选择格式 (SelectionFormat) 并希望更新 interactionManager，可调用此方法。 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:invalidateUndoManager"><apiName>invalidateUndoManager</apiName><shortdesc> 如果您正在执行编辑且希望重置用于编辑的撤消管理器，可调用此方法。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 如果您正在执行编辑且希望重置用于编辑的撤消管理器，可调用此方法。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:isDamaged"><apiName>isDamaged</apiName><shortdesc> 如果需要合成内容则返回 true。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>如果需要合成内容则返回 <codeph>true</codeph>，否则返回 <codeph>false</codeph>。
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc> 如果需要合成内容则返回 <codeph>true</codeph>。 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:keyDownHandler"><apiName>keyDownHandler</apiName><shortdesc conref="flashx.textLayout.container.ContainerController#keyDownHandler()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:KeyboardEvent"/><apiDesc>KeyboardEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="flashx.textLayout.container.ContainerController#keyDownHandler()"> </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#KeyboardEvent/KEY_DOWN"><linktext>KeyboardEvent.KEY_DOWN</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:keyFocusChangeHandler"><apiName>keyFocusChangeHandler</apiName><shortdesc conref="flashx.textLayout.container.ContainerController#keyFocusChangeHandler()."> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:FocusEvent"/><apiDesc>FocusEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="flashx.textLayout.container.ContainerController#keyFocusChangeHandler()."> </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:keyUpHandler"><apiName>keyUpHandler</apiName><shortdesc conref="flashx.textLayout.container.ContainerController#keyUpHandler()."> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:KeyboardEvent"/><apiDesc>KeyboardEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="flashx.textLayout.container.ContainerController#keyUpHandler()."> </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#KeyboardEvent/KEY_UP"><linktext>KeyboardEvent.KEY_UP</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:menuSelectHandler"><apiName>menuSelectHandler</apiName><shortdesc conref="flashx.textLayout.container.ContainerController#menuSelectHandler()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:ContextMenuEvent"/><apiDesc>ContextMenuEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="flashx.textLayout.container.ContainerController#menuSelectHandler()"> </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#ContextMenuEvent/MENU_SELECT"><linktext>ContextMenuEvent.MENU_SELECT</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:mouseDoubleClickHandler"><apiName>mouseDoubleClickHandler</apiName><shortdesc conref="flashx.textLayout.container.ContainerController#mouseDoubleClickHandler()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:MouseEvent"/><apiDesc>MouseEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="flashx.textLayout.container.ContainerController#mouseDoubleClickHandler()"> </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#MouseEvent/DOUBLE_CLICK"><linktext>MouseEvent.DOUBLE_CLICK</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:mouseDownHandler"><apiName>mouseDownHandler</apiName><shortdesc conref="flashx.textLayout.container.ContainerController#mouseDownHandler()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:MouseEvent"/><apiDesc>MouseEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="flashx.textLayout.container.ContainerController#mouseDownHandler()"> </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#MouseEvent/MOUSE_DOWN"><linktext>MouseEvent.MOUSE_DOWN</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:mouseMoveHandler"><apiName>mouseMoveHandler</apiName><shortdesc conref="flashx.textLayout.container.ContainerController#mouseMoveHandler()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:MouseEvent"/><apiDesc>MouseEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="flashx.textLayout.container.ContainerController#mouseMoveHandler()"> </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#MouseEvent/MOUSE_MOVE"><linktext>MouseEvent.MOUSE_MOVE</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:mouseMoveSomewhere"><apiName>mouseMoveSomewhere</apiName><shortdesc> 用于从安全沙箱外部转发 mouseMove 事件的客户端调用。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>e</apiItemName><apiType value="flash.events:Event"/></apiParam></apiOperationDef><apiDesc> 用于从安全沙箱外部转发 mouseMove 事件的客户端调用。不需要鼠标移动的坐标。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:mouseOutHandler"><apiName>mouseOutHandler</apiName><shortdesc conref="flashx.textLayout.container.ContainerController#mouseOutHandler()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:MouseEvent"/><apiDesc>MouseEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="flashx.textLayout.container.ContainerController#mouseOutHandler()"> </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#MouseEvent/MOUSE_OUT"><linktext>MouseEvent.MOUSE_OUT</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:mouseOverHandler"><apiName>mouseOverHandler</apiName><shortdesc> 处理 mouseOver 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:MouseEvent"/></apiParam></apiOperationDef><apiDesc> 处理 mouseOver 事件。
+		</apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#MouseEvent/MOUSE_OVER"><linktext>MouseEvent.MOUSE_OVER</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:mouseUpHandler"><apiName>mouseUpHandler</apiName><shortdesc conref="flashx.textLayout.container.ContainerController#mouseUpHandler()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:MouseEvent"/><apiDesc>MouseEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="flashx.textLayout.container.ContainerController#mouseUpHandler()"> </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#MouseEvent/MOUSE_UP"><linktext>MouseEvent.MOUSE_UP</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:mouseUpSomewhere"><apiName>mouseUpSomewhere</apiName><shortdesc> 客户端调用以从安全沙箱外转发一个 mouseUp 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>e</apiItemName><apiType value="flash.events:Event"/></apiParam></apiOperationDef><apiDesc> 客户端调用以从安全沙箱外转发一个 mouseUp 事件。不需要鼠标向上的坐标。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:mouseWheelHandler"><apiName>mouseWheelHandler</apiName><shortdesc conref="flashx.textLayout.container.ContainerController#mouseWheelHandler()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:MouseEvent"/><apiDesc>MouseEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="flashx.textLayout.container.ContainerController#mouseWheelHandler()"> </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#MouseEvent/MOUSE_WHEEL"><linktext>MouseEvent.MOUSE_WHEEL</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:scrollToRange"><apiName>scrollToRange</apiName><shortdesc conref="flashx.textLayout.container.ContainerController#scrollToRange()"> 
+		</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>activePosition</apiItemName><apiType value="int"/><apiDesc>当您扩展选择时随之改变的所选内容的末尾。可以是所选内容的开始或末尾，表示为距文本流起始位置的偏移。
+		 </apiDesc></apiParam><apiParam><apiItemName>anchorPosition</apiItemName><apiType value="int"/><apiDesc>  	当扩展选择时所选内容的固定末尾。可以是所选内容的起始或末尾。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="flashx.textLayout.container.ContainerController#scrollToRange()"> 
+		</apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:setTextFlow"><apiName>setTextFlow</apiName><shortdesc> 将一个 TextFlow 设置到该 TextContainerManager 中，取代任何现有 TextFlow 并放弃当前文本。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>textFlow</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier></apiParam></apiOperationDef><apiDesc> 将一个 TextFlow 设置到该 TextContainerManager 中，取代任何现有 TextFlow 并放弃当前文本。 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:setText"><apiName>setText</apiName><shortdesc>
+		 将 text 属性设置为指定的 String。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>text</apiItemName><apiType value="String"/><apiDesc>要设置的字符串
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc>
+		 将 <codeph>text</codeph> 属性设置为指定的 String。放弃任何附加的 TextFlow。会丢失任意当前选择。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:textInputHandler"><apiName>textInputHandler</apiName><shortdesc conref="flashx.textLayout.container.ContainerController#textInputHandler()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:TextEvent"/><apiDesc> TextEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="flashx.textLayout.container.ContainerController#textInputHandler()"> </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#TextEvent/TEXT_INPUT"><linktext>TextEvent.TEXT_INPUT</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:updateContainer"><apiName>updateContainer</apiName><shortdesc> 更新显示；调用工厂或 updateAllControllers()。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 更新显示；调用工厂或 updateAllControllers()。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.container:TextContainerManager:compositionHeight:get"><apiName>compositionHeight</apiName><shortdesc> 返回容器内允许的文本垂直范围。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Number"/></apiValueDef><apiDesc> 返回容器内允许的文本垂直范围。该值以像素为单位指定。 
+		 <p>在设置此属性后，容器中的文本会受损，需要进行合成。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:TextContainerManager:compositionWidth:get"><apiName>compositionWidth</apiName><shortdesc> 返回容器内允许的文本水平范围。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Number"/></apiValueDef><apiDesc> 返回容器内允许的文本水平范围。该值以像素为单位指定。
+		 
+		 <p>在设置此属性后，容器中的文本会受损，需要进行合成。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:TextContainerManager:configuration:get"><apiName>configuration</apiName><shortdesc> 该 TextContainerManager 的 Configuration 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:IConfiguration</apiValueClassifier></apiValueDef><apiDesc> 该 TextContainerManager 的 Configuration 对象。 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flashx.textLayout.IConfiguration.xml"><linktext>IConfiguration</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:TextContainerManager:container:get"><apiName>container</apiName><shortdesc> 返回包含该 TextContainerManager 管理的文本的容器 (DisplayObjectContainer)。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="flash.display:Sprite"/></apiValueDef><apiDesc> 返回包含该 TextContainerManager 管理的文本的容器 (DisplayObjectContainer)。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.container.xml#ContainerController/container"><linktext>ContainerController.container</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:TextContainerManager:defaultConfiguration:get"><apiName>defaultConfiguration</apiName><shortdesc> 该 TextContainerManager 的默认配置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiStatic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:IConfiguration</apiValueClassifier></apiValueDef><apiDesc> 该 TextContainerManager 的默认配置。列和填充属性设置为 <codeph>FormatValue.INHERIT</codeph>。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.elements.xml#IConfiguration"><linktext>IConfiguration</linktext></link><link href="flashx.textLayout.formats.xml#FormatValue/INHERIT"><linktext>FormatValue.INHERIT</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:TextContainerManager:editingMode:get"><apiName>editingMode</apiName><shortdesc> 该 TextContainerManager 的编辑模式。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 该 TextContainerManager 的编辑模式。模式包括只读、允许读取和选择，以及允许编辑（读取、选择和写入）。可使用 EditingMode 类的常量值来设置此属性。 
+		 <p>默认值为 READ_WRITE。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.edit.xml#EditingMode"><linktext>EditingMode</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:TextContainerManager:horizontalScrollPolicy:get"><apiName>horizontalScrollPolicy</apiName><shortdesc conref="flashx.textLayout.container.ContainerController#horizontalScrollPolicy"> 
+		 控制工厂是生成所有文本行还是在填满容器范围时停止。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc conref="flashx.textLayout.container.ContainerController#horizontalScrollPolicy"> 
+		 控制工厂是生成所有文本行还是在填满容器范围时停止。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:TextContainerManager:horizontalScrollPosition:get"><apiName>horizontalScrollPosition</apiName><shortdesc conref="flashx.textLayout.container.ContainerController#horizontalScrollPosition"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Number"/></apiValueDef><apiDesc conref="flashx.textLayout.container.ContainerController#horizontalScrollPosition"> 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:TextContainerManager:hostFormat:get"><apiName>hostFormat</apiName><shortdesc> 设置仅显示一个字符串时的格式。</shortdesc><prolog/><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 设置仅显示一个字符串时的格式。如果显示的是 TextFlow，则没有即时效果。不会复制提供的 ITextLayoutFormat。如果没有调用此 setter 而修改它，则有即时效果。 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:TextContainerManager:numLines:get"><apiName>numLines</apiName><shortdesc conref="flashx.textLayout.compose.IFlowComposer#numLines"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc conref="flashx.textLayout.compose.IFlowComposer#numLines"> </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:TextContainerManager:swfContext:get"><apiName>swfContext</apiName><shortdesc> 
+		用于根据需要在正确的 swf 上下文中进行 FTE 调用的可选 ISWFContext 实例。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.compose:ISWFContext</apiValueClassifier></apiValueDef><apiDesc> 
+		用于根据需要在正确的 swf 上下文中进行 FTE 调用的可选 ISWFContext 实例。 
+		
+		
+		</apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#ISWFContext"><linktext>flashx.textLayout.compose.ISWFContext</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:TextContainerManager:verticalScrollPolicy:get"><apiName>verticalScrollPolicy</apiName><shortdesc conref="flashx.textLayout.container.ContainerController#verticalScrollPolicy"> 
+		 控制工厂是生成所有文本行还是在填满容器范围时停止。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc conref="flashx.textLayout.container.ContainerController#verticalScrollPolicy"> 
+		 控制工厂是生成所有文本行还是在填满容器范围时停止。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:TextContainerManager:verticalScrollPosition:get"><apiName>verticalScrollPosition</apiName><shortdesc conref="flashx.textLayout.container.ContainerController#verticalScrollPosition"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Number"/></apiValueDef><apiDesc conref="flashx.textLayout.container.ContainerController#verticalScrollPosition"> 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.container:ScrollPolicy"><apiName>ScrollPolicy</apiName><shortdesc>
+	  ScrollPolicy 类是一个枚举类，定义了用于设置 ContainerController 类的 horizontalScrollPolicy 和 verticalScrollPolicy 属性的值；ContainerController 类可定义文本流容器。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc>
+	  ScrollPolicy 类是一个枚举类，定义了用于设置 ContainerController 类的 <codeph>horizontalScrollPolicy</codeph> 和 <codeph>verticalScrollPolicy</codeph> 属性的值；ContainerController 类可定义文本流容器。 
+	 
+	  </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.container.xml#ContainerController/horizontalScrollPolicy"><linktext>ContainerController.horizontalScrollPolicy</linktext></link><link href="flashx.textLayout.container.xml#ContainerController/verticalScrollPolicy"><linktext>ContainerController.verticalScrollPolicy</linktext></link></related-links><apiValue id="flashx.textLayout.container:ScrollPolicy:AUTO"><apiName>AUTO</apiName><shortdesc> 
+		 指示如果内容超出了容器的大小则发生滚动。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>auto</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 指示如果内容超出了容器的大小则发生滚动。运行时会计算溢出容器的行数，用户可使用光标、通过选择并拖动或旋转鼠标滚轮导航到这些行。还可以通过设置相应位置值（<codeph>ContainerController.horizontalScrollPosition</codeph> 或 <codeph>ContainerController.verticalScrollPosition</codeph>）实现滚动。此外，运行时可以在编辑期间自动滚动容器内容。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ScrollPolicy:OFF"><apiName>OFF</apiName><shortdesc> 
+		 使运行时不显示溢出行，也就是说用户无法导航到这些行。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>off</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 使运行时不显示溢出行，也就是说用户无法导航到这些行。在这种情况下，设置相应的 <codeph>ContainerController.horizontalScrollPosition</codeph> 和 <codeph>ContainerController.verticalScrollPosition</codeph> 属性不起作用。 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ScrollPolicy:ON"><apiName>ON</apiName><shortdesc> 
+		 指定允许通过滚动访问超出容器大小的内容。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>on</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 指定允许通过滚动访问超出容器大小的内容。运行时会计算溢出容器的行数，用户可使用光标、通过选择并拖动或旋转鼠标滚轮滚动到这些行。还可以通过设置相应位置值（<codeph>ContainerController.horizontalScrollPosition</codeph> 或 <codeph>ContainerController.verticalScrollPosition</codeph>）实现滚动。此外，运行时可以在编辑期间自动滚动容器内容。
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.container:ColumnState"><apiName>ColumnState</apiName><shortdesc> 
+	 ColumnState 类可使用容器宽度和容器属性计算列的大小和位置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 ColumnState 类可使用容器宽度和容器属性计算列的大小和位置。可以独立创建此类的实例来计算列值，也可以在合成或更新（重绘）容器后获得用于文本的列值。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.container.xml#ContainerController"><linktext>ContainerController</linktext></link></related-links><apiConstructor id="flashx.textLayout.container:ColumnState:ColumnState"><apiName>ColumnState</apiName><shortdesc>
+		 构造函数 - 创建 ColumnState 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>blockProgression</apiItemName><apiType value="String"/><apiDesc>文本流中行的方向可以是 BlockProgression.TB（由上自下）或 BlockProgression.RL（从右到左）。
+		 </apiDesc></apiParam><apiParam><apiItemName>columnDirection</apiItemName><apiType value="String"/><apiDesc>文本流中列布局的方向，可能是 Direction.RTL（从右到左）或 Direction.LTR（从左到右）。
+		 </apiDesc></apiParam><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>ContainerController 实例，其属性用于计算列值。
+		 </apiDesc></apiParam><apiParam><apiItemName>compositionWidth</apiItemName><apiType value="Number"/><apiDesc>容器中允许的文本的水平范围（像素数）。
+		 </apiDesc></apiParam><apiParam><apiItemName>compositionHeight</apiItemName><apiType value="Number"/><apiDesc>容器中允许的文本的垂直范围（像素数）。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc>
+		 构造函数 - 创建 ColumnState 对象。如果 <codeph>controller.compositionWidth</codeph> 和 <codeph>controller.compositionHeight</codeph> 的值为 <codeph>NaN</codeph>（非数字），则该构造函数将测量容器的内容，确定 ColumnState 中的实际合成宽度和高度。使用 <codeph>flashx.textLayout.formats.BlockProgression</codeph> 类定义的常量可以指定 <codeph>blockProgression</codeph> 参数的值。使用 <codeph>flashx.textLayout.formats.Direction</codeph> 定义的常量可以指定 <codeph>columnDirection</codeph> 参数的值。
+		 
+		 </apiDesc></apiConstructorDetail><related-links><link href="flashx.textLayout.formats.xml#BlockProgression"><linktext>BlockProgression</linktext></link><link href="flashx.textLayout.formats.xml#Direction"><linktext>方向</linktext></link></related-links></apiConstructor><apiOperation id="flashx.textLayout.container:ColumnState:getColumnAt"><apiName>getColumnAt</apiName><shortdesc> 
+		 返回一个列在容器内占据的区域。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>指定的列的区域。
+		 
+		 </apiDesc><apiType value="flash.geom:Rectangle"/></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>该列在容器内所有列中所处的相对位置，第一列位于位置 0。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 返回一个列在容器内占据的区域。允许您访问特定列的区域。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.container:ColumnState:columnCount:get"><apiName>columnCount</apiName><shortdesc> 
+		 容器中的列数。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 容器中的列数。 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ColumnState:columnGap:get"><apiName>columnGap</apiName><shortdesc> 
+		 容器中列之间的间距（像素数）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 容器中列之间的间距（像素数）。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ColumnState:columnWidth:get"><apiName>columnWidth</apiName><shortdesc> 
+		 容器中列的宽度（像素数）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 容器中列的宽度（像素数）。 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.container:ContainerController"><apiName>ContainerController</apiName><shortdesc> 
+	 ContainerController 类定义了 TextFlow 对象与容器之间的关系。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseInterface>flashx.textLayout.edit:IInteractionEventHandler</apiBaseInterface><apiBaseInterface>flashx.textLayout.formats:ITextLayoutFormat</apiBaseInterface><apiBaseInterface>flashx.textLayout.container:ISandboxSupport</apiBaseInterface><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 ContainerController 类定义了 TextFlow 对象与容器之间的关系。TextFlow 具有 IFlowComposer，用于为该 TextFlow 管理一个或一组容器。对于管理的每个容器，IFlowComposer 都有一个 ContainerController。ContainerController 用于管理容器、此容器独有的属性及容器中的文本。
+	 
+	 <p><adobeimage alt="IContainerController" href="../../../images/textLayout_multiController.gif"/></p>
+	 
+	 </apiDesc><example conref="examples\ContainerControllerExample1.as"/><example conref="examples\ContainerControllerExample2.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.compose.xml#IFlowComposer"><linktext>flashx.textLayout.compose.IFlowComposer</linktext></link><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>flashx.textLayout.elements.TextFlow</linktext></link></related-links><apiConstructor id="flashx.textLayout.container:ContainerController:ContainerController"><apiName>ContainerController</apiName><shortdesc> 
+		 构造函数 - 创建一个 ContainerController 实例。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>container</apiItemName><apiType value="flash.display:Sprite"/><apiDesc>用于管理文本行的 DisplayObjectContainer。
+		 </apiDesc></apiParam><apiParam><apiItemName>compositionWidth</apiItemName><apiType value="Number"/><apiData>100</apiData><apiDesc>在容器中合成文本的初始宽度。
+		 </apiDesc></apiParam><apiParam><apiItemName>compositionHeight</apiItemName><apiType value="Number"/><apiData>100</apiData><apiDesc>在容器中合成文本的初始高度。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 构造函数 - 创建一个 ContainerController 实例。ContainerController 具有默认的 <codeph>compositionWidth</codeph> 和 <codeph>compositionHeight</codeph>，这样，未指定容器宽度和高度时，容器中会出现一些文本。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.container:ContainerController:activateHandler"><apiName>activateHandler</apiName><shortdesc> 当客户端管理事件时处理 Event.ACTIVATE 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:Event"/><apiDesc>Event 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 当客户端管理事件时处理 <codeph>Event.ACTIVATE </codeph>事件。
+		 
+		 </apiDesc><example conref="examples\ContainerController_activateHandlerExample.as"/></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#Event/ACTIVATE"><linktext>Event.ACTIVATE</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:protected:addBackgroundShape"><apiName>addBackgroundShape</apiName><shortdesc>
+		 添加要在其上绘制背景形状（如背景颜色）的 flash.display.Shape 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="protected"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>shape</apiItemName><apiType value="flash.display:Shape"/><apiDesc>要添加的 <codeph>flash.display.Shape</codeph> 对象
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc>
+		 添加要在其上绘制背景形状（如背景颜色）的 <codeph>flash.display.Shape</codeph> 对象。此方法的默认实现（可能会被覆盖）会将该对象添加到 <codeph>container</codeph> 中，正好位于第一个 <codeph>flash.text.engine.TextLine</codeph> 子级（如果存在）前面，否则，会将该对象添加到最后一个现有子级后面。 
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.display.Shape.xml"><linktext>flash.display.Shape</linktext></link><link href="" invalidHref="flash.text.engine.TextLine.xml"><linktext>flash.text.engine.TextLine</linktext></link><link href="flashx.textLayout.container.xml#ContainerController/container"><linktext>container</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:protected:addSelectionContainer"><apiName>addSelectionContainer</apiName><shortdesc>
+		 添加要向其添加选区形状（如块选区加亮、光标等）的 flash.display.DisplayObjectContainer 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="protected"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>selectionContainer</apiItemName><apiType value="flash.display:DisplayObjectContainer"/><apiDesc>要添加的 <codeph>flash.display.DisplayObjectContainer</codeph> 对象
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc>
+		 添加要向其添加选区形状（如块选区加亮、光标等）的 <codeph>flash.display.DisplayObjectContainer</codeph> 对象。此方法的默认实现（可能会被覆盖）具有以下行为：会将该对象正好添加在 <codeph>container</codeph> 的第一个 <codeph>flash.text.engine.TextLine</codeph> 子级（如果存在）之前，该对象不透明且具有正常混合模式。所有其它情况下，会将它作为 <codeph>container</codeph> 的最后一个子级添加。
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.display.DisplayObjectContainer.xml"><linktext>flash.display.DisplayObjectContainer</linktext></link><link href="" invalidHref="flash.text.engine.TextLine.xml"><linktext>flash.text.engine.TextLine</linktext></link><link href="flashx.textLayout.container.xml#ContainerController/container"><linktext>container</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:protected:addTextLine"><apiName>addTextLine</apiName><shortdesc>
+		 将 flash.text.engine.TextLine 对象作为 container 的后代添加。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="protected"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>textLine</apiItemName><apiType value="flash.text.engine:TextLine"/><apiDesc>要添加的 <codeph>flash.text.engine.TextLine</codeph> 对象
+		 </apiDesc></apiParam><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>其父级中的文本行的插入索引 
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc>
+		 添加 <codeph>flash.text.engine.TextLine</codeph> 对象作为 <codeph>container</codeph> 的后代。此方法的默认实现（可能会被覆盖）在指定的索引处将对象作为 <codeph>container</codeph> 的直接子级添加。
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.text.engine.TextLine.xml"><linktext>flash.text.engine.TextLine</linktext></link><link href="flashx.textLayout.container.xml#ContainerController/container"><linktext>container</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:autoScrollIfNecessary"><apiName>autoScrollIfNecessary</apiName><shortdesc> 
+		 在“拖动”选择期间处理滚动事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>mouseX</apiItemName><apiType value="int"/><apiDesc>鼠标光标在舞台上的水平位置。
+		 </apiDesc></apiParam><apiParam><apiItemName>mouseY</apiItemName><apiType value="int"/><apiDesc>鼠标光标在舞台上的垂直位置。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 在“拖动”选择期间处理滚动事件。 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:beginMouseCapture"><apiName>beginMouseCapture</apiName><shortdesc> 
+		 请求客户端开始从安全沙箱外部转发 mouseup 和 mousemove 事件时调用。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 请求客户端开始从安全沙箱外部转发 mouseup 和 mousemove 事件时调用。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:clearStyle"><apiName>clearStyle</apiName><shortdesc> 从该 FlowElement 中清除由 styleProp 指定的样式。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>styleProp</apiItemName><apiType value="String"/></apiParam></apiOperationDef><apiDesc> 从该 FlowElement 中清除由 <codeph>styleProp </codeph>指定的样式。将值设置为 <codeph>undefined</codeph>。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:protected:createContextMenu"><apiName>createContextMenu</apiName><shortdesc> 
+		 为 ContainerController 创建上下文菜单。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="protected"/><apiReturn><apiType value="flash.ui:ContextMenu"/></apiReturn></apiOperationDef><apiDesc> 
+		 为 ContainerController 创建上下文菜单。使用 ContextMenu 类的方法可向菜单中添加项。
+		 <p>您可以覆盖此方法，以定义一个自定义上下文菜单。</p>
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.ui.ContextMenu.xml"><linktext>ContextMenu</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:deactivateHandler"><apiName>deactivateHandler</apiName><shortdesc> 当客户端管理事件时处理 Event.DEACTIVATE 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:Event"/><apiDesc>Event 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 当客户端管理事件时处理 <codeph>Event.DEACTIVATE </codeph>事件。 
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#Event/DEACTIVATE"><linktext>Event.DEACTIVATE</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:editHandler"><apiName>editHandler</apiName><shortdesc>
+		 当客户端管理事件时处理编辑事件（CUT、COPY、PASTE、SELECT_ALL）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:Event"/><apiDesc>事件对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc>
+		 当客户端管理事件时处理编辑事件（CUT、COPY、PASTE、SELECT_ALL）。
+		 
+		 </apiDesc><example conref="examples\ContainerController_editHandlerExample.as"/></apiOperationDetail><related-links><link href="" invalidHref="flash.events.Event.xml"><linktext>Event</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:endMouseCapture"><apiName>endMouseCapture</apiName><shortdesc> 
+		 通知客户端不再需要从安全沙箱外部转发 mouseup 和 mousemove 事件时调用。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 通知客户端不再需要从安全沙箱外部转发 mouseup 和 mousemove 事件时调用。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:focusChangeHandler"><apiName>focusChangeHandler</apiName><shortdesc> 
+		 当客户端管理事件时处理 FocusEvent.KEY_FOCUS_CHANGE 和 FocusEvent.MOUSE_FOCUS_CHANGE 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:FocusEvent"/><apiDesc>FocusEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 当客户端管理事件时处理 <codeph>FocusEvent.KEY_FOCUS_CHANGE</codeph> 和 <codeph>FocusEvent.MOUSE_FOCUS_CHANGE</codeph> 事件。
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#FocusEvent/KEY_FOCUS_CHANGE"><linktext>FocusEvent.KEY_FOCUS_CHANGE</linktext></link><link href="" invalidHref="flash.events.xml#FocusEvent/MOUSE_FOCUS_CHANGE"><linktext>FocusEvent.MOUSE_FOCUS_CHANGE</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:focusInHandler"><apiName>focusInHandler</apiName><shortdesc> 当客户端管理事件时处理 FocusEvent.FOCUS_IN 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:FocusEvent"/><apiDesc>FocusEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 当客户端管理事件时处理 <codeph>FocusEvent.FOCUS_IN</codeph> 事件。
+		 
+		 </apiDesc><example conref="examples\ContainerController_focusInHandlerExample.as"/></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#FocusEvent/FOCUS_IN"><linktext>FocusEvent.FOCUS_IN</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:focusOutHandler"><apiName>focusOutHandler</apiName><shortdesc> 当客户端管理事件时处理 FocusEvent.FOCUS_OUT 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:FocusEvent"/><apiDesc>FocusEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 当客户端管理事件时处理 <codeph>FocusEvent.FOCUS_OUT</codeph> 事件。
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#FocusEvent/FOCUS_OUT"><linktext>FocusEvent.FOCUS_OUT</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:getContentBounds"><apiName>getContentBounds</apiName><shortdesc> 
+		 返回文本所占用的区域，该区域由上一个合成或更新操作反映。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>描述文本所占用的区域。
+		 
+		 </apiDesc><apiType value="flash.geom:Rectangle"/></apiReturn></apiOperationDef><apiDesc> 
+		 返回文本所占用的区域，该区域由上一个合成或更新操作反映。如果容器可以滚动且文本超出了可视区域，则可以估计宽度和高度。
+		 
+		 </apiDesc><example conref="examples\ContainerController_getContentBoundsExample.as"/></apiOperationDetail><related-links><link href="" invalidHref="flash.geom.Rectangle.xml"><linktext>Rectangle</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:protected:getFirstTextLineChildIndex"><apiName>getFirstTextLineChildIndex</apiName><shortdesc>
+		 获取第一个文本行必须出现在其父级内的索引。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="protected"/><apiReturn><apiDesc>第一个文本行必须出现在其父代中的索引。
+		 
+		 </apiDesc><apiType value="int"/></apiReturn></apiOperationDef><apiDesc>
+		 获取第一个文本行必须出现在其父级内的索引。此方法的默认实现（可能会被覆盖）返回 <codeph>container</codeph> 的第一个 <codeph>flash.text.engine.TextLine</codeph> 子级（如果存在）的子索引，否则，返回 <codeph>container</codeph> 的最后一个子级的子索引。 
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.text.engine.TextLine.xml"><linktext>flash.text.engine.TextLine</linktext></link><link href="flashx.textLayout.container.xml#ContainerController/container"><linktext>container</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:getScrollDelta"><apiName>getScrollDelta</apiName><shortdesc> 
+		计算要向上或向下滚动指定行数所需的滚动距离。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>要滚动的空间增量
+		
+		</apiDesc><apiType value="Number"/></apiReturn><apiParam><apiItemName>numLines</apiItemName><apiType value="int"/><apiDesc>要滚动的行数。
+		
+		</apiDesc></apiParam></apiOperationDef><apiDesc> 
+		计算要向上或向下滚动指定行数所需的滚动距离。如果行数为负值则会向上滚动，从而显示 TextFlow 顶部的更多行。如果行数为正值则会向下滚动，从而显示底部的下一行。
+		
+		<p>例如，向上滚动时，该方法使下一行完全可见。如果下一行被部分遮挡，而行数指定为 1，则该行将会完全可见。</p>
+		
+		</apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:getStyle"><apiName>getStyle</apiName><shortdesc> 返回 styleProp 参数指定的样式值。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>指定的样式的当前值。
+		 
+		 </apiDesc><apiType value="any"/></apiReturn><apiParam><apiItemName>styleProp</apiItemName><apiType value="String"/><apiDesc>所需样式属性的名称。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 返回 <codeph>styleProp </codeph>参数指定的样式值。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:imeStartCompositionHandler"><apiName>imeStartCompositionHandler</apiName><shortdesc> 当客户端管理事件时处理 IMEEvent.IME_START_COMPOSITION 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:IMEEvent"/><apiDesc> IMEEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 当客户端管理事件时处理 <codeph>IMEEvent.IME_START_COMPOSITION</codeph> 事件。
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.IMEEvent.IME_START_COMPOSITION.xml"><linktext>flash.events.IMEEvent.IME_START_COMPOSITION</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:invalidateContents"><apiName>invalidateContents</apiName><shortdesc> 
+		 将此容器中所有文本标记为需要进行合成。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 将此容器中所有文本标记为需要进行合成。 
+		 
+		 </apiDesc><example conref="examples\ContainerController_invalidateContentsExample.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:isDamaged"><apiName>isDamaged</apiName><shortdesc> 
+		 确定容器是否具有需要合成的文本。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>如果容器需要合成，则为 true。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc> 
+		 确定容器是否具有需要合成的文本。 
+		 
+		 </apiDesc><example conref="examples\ContainerController_isDamagedExample.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:keyDownHandler"><apiName>keyDownHandler</apiName><shortdesc> 当客户端管理事件时处理 KeyboardEvent.KEY_DOWN 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:KeyboardEvent"/><apiDesc>KeyboardEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 当客户端管理事件时处理 <codeph>KeyboardEvent.KEY_DOWN</codeph> 事件。
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#KeyboardEvent/KEY_DOWN"><linktext>KeyboardEvent.KEY_DOWN</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:keyFocusChangeHandler"><apiName>keyFocusChangeHandler</apiName><shortdesc> 当客户端管理事件时处理 FocusEvent.KEY_FOCUS_CHANGE 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:FocusEvent"/><apiDesc>FocusEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 当客户端管理事件时处理 <codeph>FocusEvent.KEY_FOCUS_CHANGE</codeph> 事件。
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#FocusEvent/KEY_FOCUS_CHANGE"><linktext>FocusEvent.KEY_FOCUS_CHANGE</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:keyUpHandler"><apiName>keyUpHandler</apiName><shortdesc> 当客户端管理事件时处理 Keyboard.KEY_UP 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:KeyboardEvent"/><apiDesc>KeyboardEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 当客户端管理事件时处理 <codeph>Keyboard.KEY_UP</codeph> 事件。
+		 
+		 </apiDesc><example conref="examples\ContainerController_keyUpHandlerExample.as"/></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#KeyboardEvent/KEY_UP"><linktext>KeyboardEvent.KEY_UP</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:menuSelectHandler"><apiName>menuSelectHandler</apiName><shortdesc> 
+		 当客户端管理事件时处理 ContextMenuEvent.MENU_SELECT 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:ContextMenuEvent"/><apiDesc>ContextMenuEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 当客户端管理事件时处理 <codeph>ContextMenuEvent.MENU_SELECT </codeph>事件。
+		 
+		 </apiDesc><example conref="examples\ContainerController_menuSelectHandlerExample.as"/></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#ContextMenuEvent/MENU_SELECT"><linktext>ContextMenuEvent.MENU_SELECT</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:mouseDoubleClickHandler"><apiName>mouseDoubleClickHandler</apiName><shortdesc> 当客户端管理事件时处理 MouseEvent.DOUBLE_CLICK 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:MouseEvent"/><apiDesc>MouseEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 当客户端管理事件时处理 <codeph>MouseEvent.DOUBLE_CLICK</codeph> 事件。
+		 
+		 </apiDesc><example conref="examples\ContainerController_mouseDoubleClickHandlerExample.as"/></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#MouseEvent/DOUBLE_CLICK"><linktext>MouseEvent.DOUBLE_CLICK</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:mouseDownHandler"><apiName>mouseDownHandler</apiName><shortdesc> 当客户端管理事件时处理 MouseEvent.MOUSE_DOWN 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:MouseEvent"/><apiDesc>MouseEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 当客户端管理事件时处理 <codeph>MouseEvent.MOUSE_DOWN </codeph>事件。 
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#MouseEvent/MOUSE_DOWN"><linktext>MouseEvent.MOUSE_DOWN</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:mouseMoveHandler"><apiName>mouseMoveHandler</apiName><shortdesc> 
+		 当客户端管理事件时处理 MouseEvent.MOUSE_MOVE 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:MouseEvent"/><apiDesc>MouseEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 当客户端管理事件时处理 <codeph>MouseEvent.MOUSE_MOVE</codeph> 事件。
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#MouseEvent/MOUSE_MOVE"><linktext>MouseEvent.MOUSE_MOVE</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:mouseMoveSomewhere"><apiName>mouseMoveSomewhere</apiName><shortdesc> 用于从安全沙箱外部转发 mouseMove 事件的客户端调用。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:Event"/></apiParam></apiOperationDef><apiDesc> 用于从安全沙箱外部转发 mouseMove 事件的客户端调用。不需要鼠标移动的坐标。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:mouseOutHandler"><apiName>mouseOutHandler</apiName><shortdesc> 当客户端管理事件时处理 MouseEvent.MOUSE_OUT 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:MouseEvent"/><apiDesc>MouseEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 当客户端管理事件时处理 <codeph>MouseEvent.MOUSE_OUT</codeph> 事件。
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#MouseEvent/MOUSE_OUT"><linktext>MouseEvent.MOUSE_OUT</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:mouseOverHandler"><apiName>mouseOverHandler</apiName><shortdesc> 
+		 当客户端管理事件时处理 MouseEvent.MOUSE_OVER 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:MouseEvent"/><apiDesc>MouseEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 当客户端管理事件时处理 <codeph>MouseEvent.MOUSE_OVER</codeph> 事件。 
+		 
+		 </apiDesc><example conref="examples\ContainerController_mouseOverHandlerExample.as"/></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#MouseEvent/MOUSE_OVER"><linktext>MouseEvent.MOUSE_OVER</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:mouseUpHandler"><apiName>mouseUpHandler</apiName><shortdesc> 
+		 当客户端管理事件时处理 MouseEvent.MOUSE_UP 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:MouseEvent"/><apiDesc>MouseEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 当客户端管理事件时处理 <codeph>MouseEvent.MOUSE_UP</codeph> 事件。
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#MouseEvent/MOUSE_UP"><linktext>MouseEvent.MOUSE_UP</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:mouseUpSomewhere"><apiName>mouseUpSomewhere</apiName><shortdesc> 客户端调用以从安全沙箱外转发一个 mouseUp 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:Event"/></apiParam></apiOperationDef><apiDesc> 客户端调用以从安全沙箱外转发一个 mouseUp 事件。不需要鼠标向上的坐标。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:mouseWheelHandler"><apiName>mouseWheelHandler</apiName><shortdesc> 当客户端管理事件时处理 MouseEvent.MOUSE_WHEEL 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:MouseEvent"/><apiDesc>MouseEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 当客户端管理事件时处理 <codeph>MouseEvent.MOUSE_WHEEL</codeph> 事件。
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#MouseEvent/MOUSE_WHEEL"><linktext>MouseEvent.MOUSE_WHEEL</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:protected:removeSelectionContainer"><apiName>removeSelectionContainer</apiName><shortdesc>
+		 删除包含选区形状（如块选区加亮、光标等）的 flash.display.DisplayObjectContainer 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="protected"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>selectionContainer</apiItemName><apiType value="flash.display:DisplayObjectContainer"/><apiDesc>要删除的 <codeph>flash.display.DisplayObjectContainer</codeph> 对象
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc>
+		 删除包含选区形状（如块选区加亮、光标等）的 <codeph>flash.display.DisplayObjectContainer</codeph> 对象。此方法的默认实现（可能会被覆盖）会将对象从其父级删除（如果存在）。
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.display.DisplayObjectContainer.xml"><linktext>flash.display.DisplayObjectContainer</linktext></link><link href="flashx.textLayout.container.xml#ContainerController/container"><linktext>container</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:protected:removeTextLine"><apiName>removeTextLine</apiName><shortdesc>
+		 从 flash.text.engine.TextLine 对象的父级删除该对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="protected"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>textLine</apiItemName><apiType value="flash.text.engine:TextLine"/><apiDesc>要删除的 <codeph>flash.text.engine.TextLine</codeph> 对象 
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc>
+		 从 <codeph>flash.text.engine.TextLine</codeph> 对象的父代中删除该对象。此方法的默认实现（可能会被覆盖）会从 <codeph>container</codeph> 删除该对象（如果该对象是 container 的直接子级）。即使该对象不是 <codeph>container</codeph> 的后代时，也可能会调用此方法。此方法的实现必须确保这种情况下未采取任何操作。
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.text.engine.TextLine.xml"><linktext>flash.text.engine.TextLine</linktext></link><link href="flashx.textLayout.container.xml#ContainerController/container"><linktext>container</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:scrollToRange"><apiName>scrollToRange</apiName><shortdesc> 
+		 允许滚动，使文本范围在容器中可见。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>activePosition</apiItemName><apiType value="int"/><apiDesc>当您扩展选择时随之改变的所选内容的末尾。可以是所选内容的开始或末尾，表示为距文本流起始位置的偏移。
+		 </apiDesc></apiParam><apiParam><apiItemName>anchorPosition</apiItemName><apiType value="int"/><apiDesc>  	当扩展选择时所选内容的固定末尾。可以是所选内容的起始或末尾。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 允许滚动，使文本范围在容器中可见。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:selectRange"><apiName>selectRange</apiName><shortdesc> 
+		 在实现 ITextSupport 的组件中设置选定文本的范围。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10.0"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>anchorIndex</apiItemName><apiType value="int"/><apiDesc>从零开始的字符索引值位于选区的锚点结尾
+		 
+		 </apiDesc></apiParam><apiParam><apiItemName>activeIndex</apiItemName><apiType value="int"/><apiDesc>从零开始的字符索引值位于选区的活动端。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 在实现 ITextSupport 的组件中设置选定文本的范围。如果任一参数超出范围，则不应该更改选择。要支持内联 IME 的组件必须调用此方法。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:setCompositionSize"><apiName>setCompositionSize</apiName><shortdesc> 
+		 设置容器中允许的文本宽度和高度。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>w</apiItemName><apiType value="Number"/><apiDesc>适用于容器中文本的宽度（像素数）。
+		 </apiDesc></apiParam><apiParam><apiItemName>h</apiItemName><apiType value="Number"/><apiDesc>适用于容器中文本的高度（像素数）。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 设置容器中允许的文本宽度和高度。 
+		 
+		 </apiDesc><example conref="examples\ContainerController_setCompositionSizeExample.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:setStyle"><apiName>setStyle</apiName><shortdesc> 
+		将 styleProp 参数指定的样式值设置为 newValue 参数指定的值。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>styleProp</apiItemName><apiType value="String"/><apiDesc>要设置值的样式属性的名称。
+		</apiDesc></apiParam><apiParam><apiItemName>newValue</apiItemName><apiType value="any"/><apiDesc>要赋给该样式的值。
+		
+		</apiDesc></apiParam></apiOperationDef><apiDesc> 
+		将 <codeph>styleProp </codeph>参数指定的样式值设置为 <codeph>newValue </codeph>参数指定的值。
+		
+		</apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:textInputHandler"><apiName>textInputHandler</apiName><shortdesc> 当客户端管理事件时处理 TextEvent.TEXT_INPUT 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:TextEvent"/><apiDesc> TextEvent 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 当客户端管理事件时处理 <codeph>TextEvent.TEXT_INPUT</codeph> 事件。
+		 
+		 </apiDesc><example conref="examples\ContainerController_textInputHandlerExample.as"/></apiOperationDetail><related-links><link href="" invalidHref="flash.events.xml#TextEvent/TEXT_INPUT"><linktext>TextEvent.TEXT_INPUT</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:protected:updateVisibleRectangle"><apiName>updateVisibleRectangle</apiName><shortdesc> 
+		 如果滚动，将滚动矩形设置为容器矩形，这样会将显示一半的任何行剪裁到可滚动区域。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="protected"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 如果滚动，将滚动矩形设置为容器矩形，这样会将显示一半的任何行剪裁到可滚动区域。如果不滚动，则清除滚动矩形，不进行裁剪。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.container:ContainerController:absoluteStart:get"><apiName>absoluteStart</apiName><shortdesc> 
+		 返回容器中第一个字符。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 返回容器中第一个字符。如果该容器不是文本流中的第一个容器，则合成文本时（即调用 IFlowComposer 的 <codeph>compose()</codeph> 或 <codeph>updateAllControllers()</codeph> 方法时）该值会进行更新。
+		 
+	 	 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#IFlowComposer"><linktext>flashx.textLayout.compose.IFlowComposer</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:alignmentBaseline:get"><apiName>alignmentBaseline</apiName><shortdesc>
+		 TextLayoutFormat：指定主导基线对齐到的基线。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：指定主导基线对齐到的基线。例如，如果将 <codeph>dominantBaseline</codeph> 设置为 ASCENT，则将 <codeph>alignmentBaseline</codeph> 设置为 DESCENT 会将文本的顶部与 DESCENT 基线对齐，或在该线下面。基线通常由行中最大的元素决定。<p><adobeimage alt="baselines" href="../../../images/textLayout_baselines.jpg"/></p>
+		 <p>合法值为 flash.text.engine.TextBaseline.ROMAN、flash.text.engine.TextBaseline.ASCENT、flash.text.engine.TextBaseline.DESCENT、flash.text.engine.TextBaseline.IDEOGRAPHIC_TOP、flash.text.engine.TextBaseline.IDEOGRAPHIC_CENTER、flash.text.engine.TextBaseline.IDEOGRAPHIC_BOTTOM、flash.text.engine.TextBaseline.USE_DOMINANT_BASELINE 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有任何祖代设置此属性，则它将具有值 USE_DOMINANT_BASELINE。</p>
+		 </apiDesc><example conref="examples\TextLayoutFormat_alignmentBaselineExample.as"/></apiValueDetail><related-links><link href="" invalidHref="flash.text.engine.TextBaseline.xml"><linktext>flash.text.engine.TextBaseline</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:backgroundAlpha:get"><apiName>backgroundAlpha</apiName><shortdesc>
+		 TextLayoutFormat：背景的 Alpha（透明度）值（如果在层叠期间未定义，则使用默认值）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：背景的 Alpha（透明度）值（如果在层叠期间未定义，则使用默认值）。值为 0 表示完全透明，值为 1 表示完全不透明。Alpha 设置为 0 的显示对象是活动对象，即使它们不可见。
+		 <p>合法值为 0 到 1 范围内的数字和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性值为 1。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:backgroundColor:get"><apiName>backgroundColor</apiName><shortdesc>
+		 TextLayoutFormat：文本的背景颜色（如果在层叠期间未定义，则使用默认值）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：文本的背景颜色（如果在层叠期间未定义，则使用默认值）。可以是常量值 <codeph>BackgroundColor.TRANSPARENT</codeph>，或一个指定三个 8 位 RGB（红、绿、蓝）值的十六进制值，例如 0xFF0000 表示红色，0x00FF00 表示绿色。
+		 <p>合法值为字符串 flashx.textLayout.formats.BackgroundColor.TRANSPARENT、flashx.textLayout.formats.FormatValue.INHERIT 和 0x0 到 0xffffffff 范围内的 uint。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性值为 TRANSPARENT。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.formats.xml#BackgroundColor"><linktext>flashx.textLayout.formats.BackgroundColor</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:baselineShift:get"><apiName>baselineShift</apiName><shortdesc>
+		 TextLayoutFormat：从 dominantBaseline 值偏移基线的数量。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：基线距 <codeph>dominantBaseline</codeph> 值的偏移量。单位是像素或者 <codeph>fontSize</codeph> 的百分比（此时应输入字符串值，例如 140%）。如果是正值，则将水平文本行向上（对于垂直文本行是向右）移动；如果是负值，则将水平文本行向下（对于垂直文本行是向左）移动。 
+		 <p>合法值为 flashx.textLayout.formats.BaselineShift.SUPERSCRIPT、flashx.textLayout.formats.BaselineShift.SUBSCRIPT 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>合法值为 -1000 到 1000 范围内的数字。</p>
+		 <p>百分比合法值为 -1000 到 1000 范围内的数字。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 0.0。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.formats.xml#BaselineShift"><linktext>flashx.textLayout.formats.BaselineShift</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:blockProgression:get"><apiName>blockProgression</apiName><shortdesc>
+		 TextLayoutFormat：指定线位置的垂直或水平行进。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：指定线位置的垂直或水平行进。将行按照从上至下（<codeph>BlockProgression.TB</codeph>，用于水平文本行）或从右至左（<codeph>BlockProgression.RL</codeph>，用于垂直文本行）的顺序放置。
+		 <p>合法值为 flashx.textLayout.formats.BlockProgression.RL、flashx.textLayout.formats.BlockProgression.TB 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 TB。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.formats.xml#BlockProgression"><linktext>flashx.textLayout.formats.BlockProgression</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:breakOpportunity:get"><apiName>breakOpportunity</apiName><shortdesc>
+		 TextLayoutFormat：控制在将连续文本断开为多行时允许行断开的位置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：控制在将连续文本断开为多行时允许行断开的位置。设置为 <codeph>BreakOpportunity.AUTO</codeph> 以正常断开文本。设置为 <codeph>BreakOpportunity.NONE</codeph> 以不<i/>断开文本，除非文本会超出测量限度且不存在任何其它位置来断开行。设置为 <codeph>BreakOpportunity.ANY</codeph> 以允许该行在任意位置断开，而不是仅仅在单词之间断开。设置为 <codeph>BreakOpportunity.ALL</codeph> 以将每个排版群集放置在一个单独的行上（对于路径上的文本很有用）。
+		 <p>合法值为 flash.text.engine.BreakOpportunity.ALL、flash.text.engine.BreakOpportunity.ANY、flash.text.engine.BreakOpportunity.AUTO、flash.text.engine.BreakOpportunity.NONE 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 AUTO。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.text.engine.BreakOpportunity.xml"><linktext>flash.text.engine.BreakOpportunity</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:cffHinting:get"><apiName>cffHinting</apiName><shortdesc>
+		 TextLayoutFormat：用于此文本的 CFF 提示的类型。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：用于此文本的 CFF 提示的类型。CFF 提示决定了 Flash 运行时是否强制让粗水平线适合子像素网格。只有当 <codeph>renderingMode</codeph> 属性被设置为 <codeph>RenderingMode.CFF</codeph> 且嵌入了字体（<codeph>fontLookup</codeph> 属性被设置为 <codeph>FontLookup.EMBEDDED_CFF</codeph>）时，才会应用此属性。对于小的屏幕尺寸，提示将生成让人易于阅读的清晰文本。
+		 <p>合法值为 flash.text.engine.CFFHinting.NONE、flash.text.engine.CFFHinting.HORIZONTAL_STEM 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 HORIZONTAL_STEM。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.text.engine.CFFHinting.xml"><linktext>flash.text.engine.CFFHinting</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:color:get"><apiName>color</apiName><shortdesc>
+		 TextLayoutFormat：文本的颜色。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：文本的颜色。一个十六进制数字，指定三个 8 位 RGB（红、绿、蓝）值，例如 0xFF0000 表示红色，0x00FF00 表示绿色。 
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 0。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:columnCount:get"><apiName>columnCount</apiName><shortdesc>
+		 TextLayoutFormat：文本列数（如果在层叠期间未定义，则使用默认值）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：文本列数（如果在层叠期间未定义，则使用默认值）。该列数会覆盖其它列设置。该值是一个整数，如果未指定，则为 <codeph>FormatValue.AUTO</codeph>。如果未指定 <codeph>columnCount</codeph>，则系统使用 <codeph>columnWidth</codeph> 创建容器可容纳的尽可能多的列。
+		 <p>合法字符串值为 flashx.textLayout.formats.FormatValue.AUTO、flashx.textLayout.formats.FormatValue.INHERIT 及从 1 到 50 范围内的整数。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性值为 AUTO。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.formats.xml#FormatValue"><linktext>flashx.textLayout.formats.FormatValue</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:columnGap:get"><apiName>columnGap</apiName><shortdesc>
+		 TextLayoutFormat：指定要在列之间留出的装订线空间量（以像素为单位），如果在层叠期间未定义，则使用默认值。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：指定要在列之间留出的装订线空间量（以像素为单位），如果在层叠期间未定义，则使用默认值。该值是一个数字。
+		 <p>合法值为 0 到 1000 范围内的数字和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性值为 20。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:columnState:get"><apiName>columnState</apiName><shortdesc> 
+		 返回 ColumnState 对象，描述了容器中列的数目和特性。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.container:ColumnState</apiValueClassifier></apiValueDef><apiDesc> 
+		 返回 ColumnState 对象，描述了容器中列的数目和特性。当重新合成文本（通过执行 <codeph>IFlowComposer.compose()</codeph> 或 <codeph>IFlowComposer.updateAllControllers()</codeph>）时会更新这些值。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.container.xml#ColumnState"><linktext>ColumnState</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:columnWidth:get"><apiName>columnWidth</apiName><shortdesc>
+		 TextLayoutFormat：列宽（以像素为单位）（如果在层叠期间未定义，则使用默认值）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：列宽（以像素为单位）（如果在层叠期间未定义，则使用默认值）。如果指定了列宽而没有指定列数，则 TextLayout 将根据容器宽度和 <codeph>columnGap</codeph> 设置，尽可能多地创建具有该宽度的列。在最后一个列之后将留出任意空格。该值是一个数字。
+		 <p>合法值为字符串 flashx.textLayout.formats.FormatValue.AUTO、flashx.textLayout.formats.FormatValue.INHERIT，和 0 到 8000 范围内的数字。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性值为 AUTO。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.formats.xml#FormatValue"><linktext>flashx.textLayout.formats.FormatValue</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:compositionHeight:get"><apiName>compositionHeight</apiName><shortdesc> 
+		 返回容器内允许的文本垂直范围。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 返回容器内允许的文本垂直范围。该值以像素为单位指定。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.container.xml#ContainerController/setCompositionSize()"><linktext>setCompositionSize()</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:compositionWidth:get"><apiName>compositionWidth</apiName><shortdesc> 
+		 返回容器内允许的文本水平范围。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 返回容器内允许的文本水平范围。该值以像素为单位指定。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.container.xml#ContainerController/setCompositionSize()"><linktext>setCompositionSize()</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:computedFormat:get"><apiName>computedFormat</apiName><shortdesc> 
+		 返回具有应用于此容器的属性的一个 ITextLayoutFormat 实例，包括从其根元素继承的属性。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 返回具有应用于此容器的属性的一个 ITextLayoutFormat 实例，包括从其根元素继承的属性。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.container.xml#ContainerController/rootElement"><linktext>rootElement</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:container:get"><apiName>container</apiName><shortdesc> 
+		 返回包含此 ContainerController 实例文本行的容器显示对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="flash.display:Sprite"/></apiValueDef><apiDesc> 
+		 返回包含此 ContainerController 实例文本行的容器显示对象。 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.container.xml#ContainerController/ContainerController()"><linktext>ContainerController()</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:coreStyles:get"><apiName>coreStyles</apiName><shortdesc> 返回此 ContainerController 的 coreStyles。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Object"/></apiValueDef><apiDesc> 返回此 ContainerController 的 <codeph>coreStyles</codeph>。请注意 getter 创建核心样式库的一个副本。coreStyles 对象封装了 TextLayoutFormat 定义的这些格式。<codeph>coreStyles</codeph> 对象包含由<i>样式名-值</i>对组成的数组。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:digitCase:get"><apiName>digitCase</apiName><shortdesc>
+		 TextLayoutFormat：用于此文本的数字大小写类型。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：用于此文本的数字大小写类型。将该值设置为 <codeph>DigitCase.OLD_STYLE</codeph> 时接近支持不同上行字母和下行字母的小写字母形式。各位数字之间等比间隔。此样式只适用于所选的字体，最常用于 supplemental 或 expert 字体。<codeph>DigitCase.LINING</codeph> 设置具有 all-cap（全大写）高度，通常为等宽以便在图表中对齐。<p><adobeimage alt="digitCase" href="../../../images/textLayout_digitcase.gif"/></p>
+		 <p>合法值为 flash.text.engine.DigitCase.DEFAULT、flash.text.engine.DigitCase.LINING、flash.text.engine.DigitCase.OLD_STYLE 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 DEFAULT。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.text.engine.DigitCase.xml"><linktext>flash.text.engine.DigitCase</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:digitWidth:get"><apiName>digitWidth</apiName><shortdesc>
+		 TextLayoutFormat：用于此文本的数字宽度类型。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：用于此文本的数字宽度类型。可以是 <codeph>DigitWidth.PROPORTIONAL</codeph>，最适用于显示单独出现的数字，或者是 <codeph>DigitWidth.TABULAR</codeph>，最适用于显示表、图表和垂直行中的数字。<p><adobeimage alt="digitWidth" href="../../../images/textLayout_digitwidth.gif"/></p>
+		 <p>合法值为 flash.text.engine.DigitWidth.DEFAULT、flash.text.engine.DigitWidth.PROPORTIONAL、flash.text.engine.DigitWidth.TABULAR 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 DEFAULT。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.text.engine.DigitWidth.xml"><linktext>flash.text.engine.DigitWidth</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:direction:get"><apiName>direction</apiName><shortdesc>
+		 TextLayoutFormat：指定文本在文本块中的默认双向嵌入级别。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：指定文本在文本块中的默认双向嵌入级别。从左到右的阅读顺序，如在拉丁风格的文本中，或者从右到左的阅读顺序，如阿拉伯语或希伯来语。此属性还影响在容器级别应用时列的方向。与文本一样，列可以为从左到右或从右到左排列。下面给出了一些示例：<p><adobeimage alt="direction" href="../../../images/textLayout_direction.gif"/></p>
+		 <p>合法值为 flashx.textLayout.formats.Direction.LTR、flashx.textLayout.formats.Direction.RTL 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 LTR。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.formats.xml#Direction"><linktext>flashx.textLayout.formats.Direction</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:dominantBaseline:get"><apiName>dominantBaseline</apiName><shortdesc>
+		 TextLayoutFormat：指定该元素的哪条基线紧贴到 alignmentBaseline 以确定元素在该行上的垂直位置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：指定该元素的哪条基线紧贴到 <codeph>alignmentBaseline</codeph> 以确定元素在该行上的垂直位置。值为 <codeph>TextBaseline.AUTO</codeph> 会基于父段落的 <codeph>locale</codeph> 属性选择主导基线。对于日语和中文，选定的基线值是 <codeph>TextBaseline.IDEOGRAPHIC_CENTER</codeph>；对于所有其它语言，选定的基线值是 <codeph>TextBaseline.ROMAN</codeph>。这些基线选项由选择的字体和字体大小决定。<p><adobeimage alt="baselines" href="../../../images/textLayout_baselines.jpg"/></p>
+		 <p>合法值为 flashx.textLayout.formats.FormatValue.AUTO、flash.text.engine.TextBaseline.ROMAN、flash.text.engine.TextBaseline.ASCENT、flash.text.engine.TextBaseline.DESCENT、flash.text.engine.TextBaseline.IDEOGRAPHIC_TOP、flash.text.engine.TextBaseline.IDEOGRAPHIC_CENTER、flash.text.engine.TextBaseline.IDEOGRAPHIC_BOTTOM 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 flashx.textLayout.formats.FormatValue.AUTO。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.text.engine.TextBaseline.xml"><linktext>flash.text.engine.TextBaseline</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:firstBaselineOffset:get"><apiName>firstBaselineOffset</apiName><shortdesc>
+		 TextLayoutFormat：指定容器中第一行的基线位置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：指定容器中第一行的基线位置。该属性引用的基线取决于容器级别的区域设置。对于日语和中文，为 <codeph>TextBaseline.IDEOGRAPHIC_BOTTOM</codeph>；对于所有其它语言，为 <codeph>TextBaseline.ROMAN</codeph>。从容器顶部边界（如果 <codeph>blockProgression</codeph> 是 RL 则为右侧边界）到第一行的基线之间的偏移可以是 <codeph>BaselineOffset.ASCENT</codeph>，表示等于行的 ascent（文本顶端或右端到基线的距离），也可以是 <codeph>BaselineOffset.LINE_HEIGHT</codeph>，表示等于第一行的高度，或者是任何固定值数字，用于指定绝对距离。<codeph>BaselineOffset.AUTO</codeph> 可将行的 ascent 与容器顶部边界对齐。<p><adobeimage alt="firstBaselineOffset1" href="../../../images/textLayout_FBO1.png"/><adobeimage alt="firstBaselineOffset2" href="../../../images/textLayout_FBO2.png"/><adobeimage alt="firstBaselineOffset3" href="../../../images/textLayout_FBO3.png"/><adobeimage alt="firstBaselineOffset4" href="../../../images/textLayout_FBO4.png"/></p>
+		 <p>合法值为字符串 flashx.textLayout.formats.BaselineOffset.AUTO、flashx.textLayout.formats.BaselineOffset.ASCENT、flashx.textLayout.formats.BaselineOffset.LINE_HEIGHT、flashx.textLayout.formats.FormatValue.INHERIT 和 0 到 1000 范围内的数字。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 AUTO。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.formats.xml#BaselineOffset"><linktext>flashx.textLayout.formats.BaselineOffset</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:flowComposer:get"><apiName>flowComposer</apiName><shortdesc> 
+		 返回流合成器对象，该对象可将文本合成到由此控制器管理的容器，并加亮该文本。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.compose:IFlowComposer</apiValueClassifier></apiValueDef><apiDesc> 
+		 返回流合成器对象，该对象可将文本合成到由此控制器管理的容器，并加亮该文本。 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#IFlowComposer"><linktext>flashx.textLayout.compose.IFlowComposer</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:fontFamily:get"><apiName>fontFamily</apiName><shortdesc>
+		 TextLayoutFormat：要使用的字体的名称或用逗号分隔的字体名称列表。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：要使用的字体的名称或用逗号分隔的字体名称列表。Flash 运行时使用列表中的第一个可用字体呈现该元素。例如，“Arial, Helvetica, _sans”使播放器搜索 Arial；如果没有找到 Arial，则搜索 Helvetica；如果两者都没找到，则搜索 _sans。
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 Arial。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:fontLookup:get"><apiName>fontLookup</apiName><shortdesc>
+		 TextLayoutFormat：要使用的字体查找。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：要使用的字体查找。指定为 <codeph>FontLookup.DEVICE</codeph> 时会使用运行 SWF 文件的系统上安装的字体。设备字体会减小影片大小，但是在不同系统和平台中文本的呈现方式可能不同。指定为 <codeph>FontLookup.EMBEDDED_CFF</codeph> 时会使用嵌入到已发布的 SWF 文件中的字体轮廓。嵌入的字体会增大 SWF 文件大小（有时程度很大），但是文本以所选的字体一致显示。
+		 <p>合法值为 flash.text.engine.FontLookup.DEVICE、flash.text.engine.FontLookup.EMBEDDED_CFF 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 DEVICE。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.text.engine.FontLookup.xml"><linktext>flash.text.engine.FontLookup</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:fontSize:get"><apiName>fontSize</apiName><shortdesc>
+		 TextLayoutFormat：文本的大小（以像素为单位）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：文本的大小（以像素为单位）。
+		 <p>合法值为 1 到 720 范围内的数字和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 12。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:fontStyle:get"><apiName>fontStyle</apiName><shortdesc>
+		 TextLayoutFormat：文本的样式。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：文本的样式。可以为 <codeph>FontPosture.NORMAL</codeph>，用于纯文本，或者为 <codeph>FontPosture.ITALIC</codeph>，用于斜体。此属性只应用于设备字体（<codeph>fontLookup</codeph> 属性设置为 flash.text.engine.FontLookup.DEVICE 时）。
+		 <p>合法值为 flash.text.engine.FontPosture.NORMAL、flash.text.engine.FontPosture.ITALIC 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 NORMAL。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.text.engine.FontPosture.xml"><linktext>flash.text.engine.FontPosture</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:fontWeight:get"><apiName>fontWeight</apiName><shortdesc>
+		 TextLayoutFormat：文本的粗细。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：文本的粗细。可以为 <codeph>FontWeight.NORMAL</codeph>，用于纯文本，或者为 <codeph>FontWeight.BOLD</codeph>。只应用于设备字体（<codeph>fontLookup</codeph> 属性设置为 flash.text.engine.FontLookup.DEVICE 时）。
+		 <p>合法值为 flash.text.engine.FontWeight.NORMAL、flash.text.engine.FontWeight.BOLD 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 NORMAL。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.text.engine.FontWeight.xml"><linktext>flash.text.engine.FontWeight</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:format:get"><apiName>format</apiName><shortdesc> 
+		 存储包含此容器属性的 ITextLayoutFormat 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 存储包含此容器属性的 ITextLayoutFormat 对象。控制器从所属的 TextFlow 继承容器属性。此属性允许同一个文本流中的不同控制器具有（例如）不同的列设置或填充。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.formats.xml#ITextLayoutFormat"><linktext>flashx.textLayout.formats.ITextLayoutFormat</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:horizontalScrollPolicy:get"><apiName>horizontalScrollPolicy</apiName><shortdesc> 
+		 指定水平滚动方式，这可以通过指定 ScrollPolicy  类的一个常量来设置：ON、OFF 或 AUTO。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 指定水平滚动方式，这可以通过指定 ScrollPolicy  类的一个常量来设置：ON、OFF 或 AUTO。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.container.xml#ScrollPolicy"><linktext>ScrollPolicy</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:horizontalScrollPosition:get"><apiName>horizontalScrollPosition</apiName><shortdesc> 指定舞台上当前的水平滚动位置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Number"/></apiValueDef><apiDesc> 指定舞台上当前的水平滚动位置。该值指定了自左端的像素数。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:interactionManager:get"><apiName>interactionManager</apiName><shortdesc conref="flashx.textLayout.elements.TextFlow#interactionManager"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.edit:ISelectionManager</apiValueClassifier></apiValueDef><apiDesc conref="flashx.textLayout.elements.TextFlow#interactionManager"> 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow/interactionManager"><linktext>flashx.textLayout.elements.TextFlow.interactionManager</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:justificationRule:get"><apiName>justificationRule</apiName><shortdesc>
+		 TextLayoutFormat：用于将段落中的文本两端对齐的规则。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：用于将段落中的文本两端对齐的规则。默认值为 <codeph>FormatValue.AUTO</codeph>，它基于段落的 <codeph>locale</codeph> 属性将文本两端对齐。对于除了日语和中文之外的所有语言，<codeph>FormatValue.AUTO</codeph> 会变成 <codeph>JustificationRule.SPACE</codeph>，后者会向空格字符添加额外的空格。对于日语和中文，<codeph>FormatValue.AUTO</codeph> 会变成 <codeph>JustficationRule.EAST_ASIAN</codeph>。在某种程度上，两端对齐会改变标点的间距。在罗马文本中，逗号和日语句号占一个全字符的宽度，但在东亚文本中，仅占一个字符宽度的一半。另外，在东亚文本中，连续的标点符号之间的间距会变得更紧密，遵守传统东亚排版惯例。同样要注意的是，在下面的示例中，应用到段落的第二行的行距。在东亚版本中，最后两行向左推进。在罗马版本中，第二行和之后的行向左推进。<p><adobeimage alt="justificationRule" href="../../../images/textLayout_justificationrule.png"/></p>
+		 <p>合法值为 flashx.textLayout.formats.JustificationRule.EAST_ASIAN、flashx.textLayout.formats.JustificationRule.SPACE、flashx.textLayout.formats.FormatValue.AUTO 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 flashx.textLayout.formats.FormatValue.AUTO。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.formats.xml#JustificationRule"><linktext>flashx.textLayout.formats.JustificationRule</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:justificationStyle:get"><apiName>justificationStyle</apiName><shortdesc>
+		 TextLayoutFormat：用于将段落两端对齐的样式。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：用于将段落两端对齐的样式。仅与 <codeph>JustificationRule.EAST_ASIAN</codeph> 的 <codeph>justificationRule</codeph> 设置一起使用。对于所有区域设置，<codeph>FormatValue.AUTO</codeph> 的默认值被解析为 <codeph>JustificationStyle.PUSH_IN_KINSOKU</codeph>。JustificationStyle 类定义的常量指定用于处理避头尾 (kinsoku) 字符的选项；避头尾字符是指不能出现在一行首尾的日语字符。如果希望文本布局更宽松，请指定 <codeph>JustificationStyle.PUSH-OUT-ONLY</codeph>。如果希望文本布局类似于使用<codeph> JustificationRule.SPACE</codeph> 的 <codeph>justificationRule</codeph> 得到的结果，可使用 <codeph>JustificationStyle.PRIORITIZE-LEAST-ADJUSTMENT</codeph>。
+		 <p>合法值为 flash.text.engine.JustificationStyle.PRIORITIZE_LEAST_ADJUSTMENT、flash.text.engine.JustificationStyle.PUSH_IN_KINSOKU、flash.text.engine.JustificationStyle.PUSH_OUT_ONLY、flashx.textLayout.formats.FormatValue.AUTO 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 flashx.textLayout.formats.FormatValue.AUTO。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.text.engine.JustificationStyle.xml"><linktext>flash.text.engine.JustificationStyle</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:kerning:get"><apiName>kerning</apiName><shortdesc>
+		 TextLayoutFormat：字距调整用于调整某些字符对之间的像素以提高可读性。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：字距调整用于调整某些字符对之间的像素以提高可读性。字距调整表的所有字体都支持字距调整。
+		 <p>合法值为 flash.text.engine.Kerning.ON、flash.text.engine.Kerning.OFF、flash.text.engine.Kerning.AUTO 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 AUTO。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.text.engine.Kerning.xml"><linktext>flash.text.engine.Kerning</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:leadingModel:get"><apiName>leadingModel</apiName><shortdesc>
+		 TextLayoutFormat：指定行距模型，它是行距基础和行距方向的组合。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：指定行距模型，它是行距基础和行距方向的组合。行距基础是 <codeph>lineHeight</codeph> 属性引用的基线。行距方向决定了 <codeph>lineHeight</codeph> 属性是引用一行基线与前一行基线之间的距离，还是与后一行基线之间的距离。默认值 <codeph>FormatValue.AUTO</codeph> 根据段落的 <codeph>locale</codeph> 属性进行解析。对于日语和中文，为 <codeph>LeadingModel.IDEOGRAPHIC_TOP_DOWN</codeph>，对于所有其它语言，为 <codeph>LeadingModel.ROMAN_UP</codeph>。<p><b/></p><p><adobeimage alt="" href="../../../images/textLayout_LB1.png"/><adobeimage alt="" href="../../../images/textLayout_LB2.png"/><adobeimage alt="" href="../../../images/textLayout_LB3.png"/></p><p><b/></p><p><adobeimage alt="" href="../../../images/textLayout_LD1.png"/><adobeimage alt="" href="../../../images/textLayout_LD2.png"/><adobeimage alt="" href="../../../images/textLayout_LD3.png"/></p>
+		 <p>合法值为 flashx.textLayout.formats.LeadingModel.ROMAN_UP、flashx.textLayout.formats.LeadingModel.IDEOGRAPHIC_TOP_UP、flashx.textLayout.formats.LeadingModel.IDEOGRAPHIC_CENTER_UP、flashx.textLayout.formats.LeadingModel.IDEOGRAPHIC_TOP_DOWN、flashx.textLayout.formats.LeadingModel.IDEOGRAPHIC_CENTER_DOWN、flashx.textLayout.formats.LeadingModel.APPROXIMATE_TEXT_FIELD、flashx.textLayout.formats.LeadingModel.ASCENT_DESCENT_UP、flashx.textLayout.formats.LeadingModel.AUTO、flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 AUTO。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.formats.xml#LeadingModel"><linktext>flashx.textLayout.formats.LeadingModel</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:ligatureLevel:get"><apiName>ligatureLevel</apiName><shortdesc>
+		 TextLayoutFormat：控制可以在该文本中使用字体中定义的哪些连字。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：控制可以在该文本中使用字体中定义的哪些连字。对于每个设置显示的连字取决于字体。由两个或两个以上的字母结合在一起形成单个字型时就是连字。连字通常用于替换一些共享公共部分的连续字符，例如字母对“fi”、“fl”或“ae”。在拉丁语字符集和非拉丁语字符集中均可使用连字。LigatureLevel 类的值（<codeph>MINIMUM</codeph>、<codeph>COMMON</codeph>、<codeph>UNCOMMON</codeph> 和 <codeph>EXOTIC</codeph>）支持的连字是添加的。每个值支持一个新连字集，而且包含先前类型的那些连字。<p><b>注意：</b>使用阿拉伯语或叙利亚语字体时，必须将 <codeph>ligatureLevel</codeph> 设置为 MINIMUM 或更高。</p><p><adobeimage alt="ligatureLevel" href="../../../images/textLayout_ligatures.png"/></p>
+		 <p>合法值为 flash.text.engine.LigatureLevel.MINIMUM、flash.text.engine.LigatureLevel.COMMON、flash.text.engine.LigatureLevel.UNCOMMON、flash.text.engine.LigatureLevel.EXOTIC 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 COMMON。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.text.engine.LigatureLevel.xml"><linktext>flash.text.engine.LigatureLevel</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:lineBreak:get"><apiName>lineBreak</apiName><shortdesc>
+		 TextLayoutFormat：控制容器内的换行（如果在层叠期间未定义，则使用默认值）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：控制容器内的换行（如果在层叠期间未定义，则使用默认值）。可以将容器中的文本设置为适合容器的宽度 (<codeph>LineBreak.TO_FIT</codeph>)，也可以设置为只在显式回车或换行符处断开 (<codeph>LineBreak.EXPLICIT</codeph>)。
+		 <p>合法值为 flashx.textLayout.formats.LineBreak.EXPLICIT、flashx.textLayout.formats.LineBreak.TO_FIT 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性值为 TO_FIT。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.formats.xml#LineBreak"><linktext>flashx.textLayout.formats.LineBreak</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:lineHeight:get"><apiName>lineHeight</apiName><shortdesc>
+		 TextLayoutFormat：文本的行距控制。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：文本的行距控制。上一行或下一行（取决于 <codeph>LeadingModel</codeph>）的基线与当前行的基线之间的距离，等于应用于该行中任意字符的最大行距。该值可以是数字或百分比。如果指定百分比，请输入字符串值，例如 140%。<p><adobeimage alt="lineHeight1" href="../../../images/textLayout_lineHeight1.jpg"/><adobeimage alt="lineHeight2" href="../../../images/textLayout_lineHeight2.jpg"/></p>
+		 <p>合法值为 -720 到 720 范围内的数字。</p>
+		 <p>合法值为 -1000% 到 1000% 范围内的百分比数字。</p>
+		 <p>合法值包括 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 120%。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:lineThrough:get"><apiName>lineThrough</apiName><shortdesc>
+		 TextLayoutFormat：若为 true，则应用删除线（一条穿过文本中间的直线）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：如果为 <codeph>true</codeph>，则应用删除线（贯穿文本中间绘制的线）。
+		 <p>合法值为 true、false 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 false。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:locale:get"><apiName>locale</apiName><shortdesc>
+		 TextLayoutFormat：文本的区域设置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：文本的区域设置。控制大小写转换和形状。使用标准区域设置标识符，如 Unicode Technical Standard #35 中所述。例如，en、en_US 和 en-US 均表示英语，ja 表示日语。 
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 en。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:paddingBottom:get"><apiName>paddingBottom</apiName><shortdesc>
+		 TextLayoutFormat：底部边界（以像素为单位）（如果在层叠期间未定义，则使用默认值）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：底部边界（以像素为单位）（如果在层叠期间未定义，则使用默认值）。容器底部边缘与文本之间的空间。该值是一个数字。 <p> 对于水平文本，在含有多个列的可滚动容器中，第一列和后续列将填充部分显示为容器底部的空白，但是对于最后一列，如果文本没有完全填充，可能必须进行滚动才能看到填充。</p>
+		 <p>合法值为 0 到 1000 范围内的数字和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性值为 0。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:paddingLeft:get"><apiName>paddingLeft</apiName><shortdesc>
+		 TextLayoutFormat：左边边界（以像素为单位）（如果在层叠期间未定义，则使用默认值）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：左边边界（以像素为单位）（如果在层叠期间未定义，则使用默认值）。容器左边缘与文本之间的空间。该值是一个数字。<p> 对于垂直文本，在含有多个列的可滚动容器中，第一列和后续列将填充部分显示为容器末尾的空白，但是对于最后一列，如果文本没有完全填充，可能必须进行滚动才能看到填充。</p>
+		 <p>合法值为 0 到 1000 范围内的数字和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性值为 0。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:paddingRight:get"><apiName>paddingRight</apiName><shortdesc>
+		 TextLayoutFormat：右边边界（以像素为单位）（如果在层叠期间未定义，则使用默认值）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：右边边界（以像素为单位）（如果在层叠期间未定义，则使用默认值）。容器右边缘与文本之间的空间。该值是一个数字。
+		 <p>合法值为 0 到 1000 范围内的数字和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性值为 0。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:paddingTop:get"><apiName>paddingTop</apiName><shortdesc>
+		 TextLayoutFormat：顶部边界（以像素为单位）（如果在层叠期间未定义，则使用默认值）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：顶部边界（以像素为单位）（如果在层叠期间未定义，则使用默认值）。容器顶部边缘与文本之间的空间。该值是一个数字。
+		 <p>合法值为 0 到 1000 范围内的数字和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性值为 0。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:paragraphEndIndent:get"><apiName>paragraphEndIndent</apiName><shortdesc>
+		 TextLayoutFormat：一个数字，指定段落结束边缘的缩进量（像素数）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：一个数字，指定段落结束边缘的缩进量（像素数）。是指从左到右文本中的右边缘和从右到左文本中的左边缘。 
+		 <p>合法值为 0 到 1000 范围内的数字和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 0。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:paragraphSpaceAfter:get"><apiName>paragraphSpaceAfter</apiName><shortdesc>
+		 TextLayoutFormat：一个数字，指定在段落后留出的空白（像素数）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：一个数字，指定在段落后留出的空白（像素数）。与 <codeph>paragraphSpaceBefore</codeph> 一起使用时会合并。
+		 <p>合法值为 0 到 1000 范围内的数字和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 0。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:paragraphSpaceBefore:get"><apiName>paragraphSpaceBefore</apiName><shortdesc>
+		 TextLayoutFormat：一个数字，指定在段落前留出的空白（像素数）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：一个数字，指定在段落前留出的空白（像素数）。与 <codeph>paragraphSpaceAfter</codeph> 一起使用时会合并。
+		 <p>合法值为 0 到 1000 范围内的数字和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 0。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:paragraphStartIndent:get"><apiName>paragraphStartIndent</apiName><shortdesc>
+		 TextLayoutFormat：一个数字，指定段落开始边缘的缩进量（像素数）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：一个数字，指定段落开始边缘的缩进量（像素数）。是指从左至右文本的左边和从右至左文本的右边。 
+		 <p>合法值为 0 到 1000 范围内的数字和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 0。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:renderingMode:get"><apiName>renderingMode</apiName><shortdesc>
+		 TextLayoutFormat：用于此文本的呈现模式。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：用于此文本的呈现模式。只应用于嵌入字体（<codeph>fontLookup</codeph> 属性设置为 <codeph>FontLookup.EMBEDDED_CFF</codeph> 时）。
+		 <p>合法值为 flash.text.engine.RenderingMode.NORMAL、flash.text.engine.RenderingMode.CFF 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 CFF。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.text.engine.RenderingMode.xml"><linktext>flash.text.engine.RenderingMode</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:rootElement:get"><apiName>rootElement</apiName><shortdesc> 
+		 返回容器中显示的根元素。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:ContainerFormattedElement</apiValueClassifier></apiValueDef><apiDesc> 
+		 返回容器中显示的根元素。例如，根元素可能是 DivElement 或 TextFlow 实例。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.elements.xml#ContainerFormattedElement"><linktext>flashx.textLayout.elements.ContainerFormattedElement</linktext></link><link href="flashx.textLayout.elements.xml#DivElement"><linktext>flashx.textLayout.elements.DivElement</linktext></link><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>flashx.textLayout.elements.TextFlow</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:tabStops:get"><apiName>tabStops</apiName><shortdesc>
+		 TextLayoutFormat：指定与段落关联的制表位。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：指定与段落关联的制表位。Setter 可采用 flashx.textLayout.formats.TabStopFormat 数组、精简的字符串表示形式、undefined 或 <codeph>FormatValue.INHERIT</codeph>。精简的字符串形式始终转换为 flashx.textLayout.formats.TabStopFormat 的一个数组。 <p>基于字符串的格式是一个制表位列表，其中各个制表位由一个或多个空格分隔。</p><p>制表位的形式为：&lt;对齐类型>&lt;对齐位置>|&lt;对齐标记>。</p><p>对齐类型由一个字符表示，可以是 S、E、C 或 D（或相应小写字母）。S 或 s 表示起始，E 或 e 表示末尾，C 或 c 表示中心，D 或 d 表示小数。对齐类型是可选的，如果未指定，将默认为 S。</p><p>对齐位置是一个数字，根据数字的 FXG 规范（小数或科学表示法）指定。对齐位置是必需的。</p><p>垂直竖线用于分隔对齐位置和对齐标记，只有当存在对齐标记时才应存在。</p><p> 如果对齐类型为 D，则对齐标记是可选的，如果是其它对齐类型，则对齐标记不应存在。对齐标记可以是由制表位末尾空白所终止的任何字符序列（对于最后一个制表位，末尾空白可选，默认为对齐标记的末尾）。如果空格由反斜杠进行转义 (\ )，则可以是对齐标记本身的一部分。如果反斜杠由另一个反斜杠进行转义 (\\)，则可以是对齐标记本身的一部分。如果对齐类型为 D，且未指定对齐标记，则会使用默认值 null。</p><p>如果未指定制表位，则制表符操作默认为到达行的末尾。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 null。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:textAlignLast:get"><apiName>textAlignLast</apiName><shortdesc>
+		 TextLayoutFormat：两端对齐文本中段落最后一行（或唯一的一行）与容器的对齐方式。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：两端对齐文本中段落最后一行（或唯一的一行）与容器的对齐方式。如果 <codeph>textAlign</codeph> 设置为 <codeph>TextAlign.JUSTIFY</codeph>，则 <codeph>textAlignLast</codeph> 指定最后一行（如果是只含一行的块则为唯一一行）的对齐方式。其值类似于 <codeph>textAlign</codeph>。
+		 <p>合法值为 flashx.textLayout.formats.TextAlign.LEFT、flashx.textLayout.formats.TextAlign.RIGHT、flashx.textLayout.formats.TextAlign.CENTER、flashx.textLayout.formats.TextAlign.JUSTIFY、flashx.textLayout.formats.TextAlign.START、flashx.textLayout.formats.TextAlign.END 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 START。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.formats.xml#TextAlign"><linktext>flashx.textLayout.formats.TextAlign</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:textAlign:get"><apiName>textAlign</apiName><shortdesc>
+		 TextLayoutFormat：段落中的行与容器的对齐方式。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：段落中的行与容器的对齐方式。<codeph>TextAlign.LEFT</codeph> 将文本行与容器左边缘对齐。<codeph>TextAlign.RIGHT</codeph> 与右边缘对齐。<codeph>TextAlign.CENTER</codeph> 等效于将从左至右的文本设置为左对齐，或将从右至左的文本设置为右对齐。<codeph>TextAlign.JUSTIFY</codeph> 会展开行，使其充满整个空间。<codeph>TextAlign.START</codeph> 等效于将从左至右的文本设置为左对齐，或将从右至左的文本设置为右对齐。<codeph>TextAlign.END</codeph> 等效于将从左至右的文本设置为右对齐，或将从右至左的文本设置为左对齐。
+		 <p>合法值为 flashx.textLayout.formats.TextAlign.LEFT、flashx.textLayout.formats.TextAlign.RIGHT、flashx.textLayout.formats.TextAlign.CENTER、flashx.textLayout.formats.TextAlign.JUSTIFY、flashx.textLayout.formats.TextAlign.START、flashx.textLayout.formats.TextAlign.END 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 START。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.formats.xml#TextAlign"><linktext>flashx.textLayout.formats.TextAlign</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:textAlpha:get"><apiName>textAlpha</apiName><shortdesc>
+		 TextLayoutFormat：文本的 Alpha（透明度）值。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：文本的 Alpha（透明度）值。值为 0 表示完全透明，值为 1 表示完全不透明。<codeph>textAlpha</codeph> 设置为 0 的显示对象是活动对象，即使它们不可见。
+		 <p>合法值为 0 到 1 范围内的数字和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 1。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:textDecoration:get"><apiName>textDecoration</apiName><shortdesc>
+		 TextLayoutFormat：文本上的装饰。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：文本上的装饰。用于应用下划线，默认值为 none。
+		 <p>合法值为 flashx.textLayout.formats.TextDecoration.NONE、flashx.textLayout.formats.TextDecoration.UNDERLINE 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 NONE。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.formats.xml#TextDecoration"><linktext>flashx.textLayout.formats.TextDecoration</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:textFlow:get"><apiName>textFlow</apiName><shortdesc> 
+		 返回其内容出现在容器中的 TextFlow 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:TextFlow</apiValueClassifier></apiValueDef><apiDesc> 
+		 返回其内容出现在容器中的 TextFlow 对象。<codeph>textFlow</codeph> 和 <codeph>rootElement</codeph> 的值可能相同，也可能是根元素的 TextFlow 对象。例如，如果容器的根元素是 DivElement，则该值为 DivElement 所属的 TextFlow 对象。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.elements.xml#/TextFlow"><linktext>TextFlow</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:textIndent:get"><apiName>textIndent</apiName><shortdesc>
+		 TextLayoutFormat：一个数字，指定段落第一行的缩进量（像素数）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：一个数字，指定段落第一行的缩进量（像素数）。如果为负值，则会将行向边缘中推进，可能会推到容器之外。
+		 <p>合法值为 -1000 到 1000 范围内的数字和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 0。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:textJustify:get"><apiName>textJustify</apiName><shortdesc>
+		 TextLayoutFormat：指定文本两端对齐的选项。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：指定文本两端对齐的选项。默认值为 <codeph>TextJustify.INTER_WORD</codeph>，表示向空格符添加额外空格。<codeph>TextJustify.DISTRIBUTE</codeph> 会向空格符和各字母之间添加额外空格。仅与 <codeph>JustificationRule.SPACE</codeph> 的 <codeph>justificationRule</codeph> 值一起使用。
+		 <p>合法值为 flashx.textLayout.formats.TextJustify.INTER_WORD、flashx.textLayout.formats.TextJustify.DISTRIBUTE 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 INTER_WORD。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.formats.xml#TextJustify"><linktext>flashx.textLayout.formats.TextJustify</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:textLength:get"><apiName>textLength</apiName><shortdesc> 返回容器中的字符总数。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 返回容器中的字符总数。如果容器是可滚动的，则可以包含当前未显示出来的文本。该值将在合成文本（调用 IFlowComposer 的 <codeph>compose()</codeph> 或 <codeph>updateAllControllers()</codeph> 方法）时进行更新。
+		 
+	 	 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#IFlowComposer"><linktext>flashx.textLayout.compose.IFlowComposer</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:textRotation:get"><apiName>textRotation</apiName><shortdesc>
+		 TextLayoutFormat：确定要旋转此文本的度数。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：确定要旋转此文本的度数。
+		 <p>合法值为 flash.text.engine.TextRotation.ROTATE_0、flash.text.engine.TextRotation.ROTATE_180、flash.text.engine.TextRotation.ROTATE_270、flash.text.engine.TextRotation.ROTATE_90、flash.text.engine.TextRotation.AUTO 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 AUTO。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.text.engine.TextRotation.xml"><linktext>flash.text.engine.TextRotation</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:trackingLeft:get"><apiName>trackingLeft</apiName><shortdesc>
+		 TextLayoutFormat：像素数（或 fontSize 的百分比，如 120%），指示应用于每个字符左侧的间隙数（手动字距调整）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：数字（以像素为单位）（或 <codeph>fontSize</codeph> 的百分比，如 120%）表示要应用到每个字符左边的间距的量（手动字距调整）。如果启用字距调整，则会将 <codeph>trackingLeft</codeph> 值与字体字距调整表中的值相加。如果禁用字距调整，则使用 <codeph>trackingLeft</codeph> 值作为手动字距调整值。同时支持正值和负值。 
+		 <p>合法值为 -1000 到 1000 范围内的数字。</p>
+		 <p>合法值为 -1000% 到 1000% 范围内的百分比数字。</p>
+		 <p>合法值包括 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 0。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:trackingRight:get"><apiName>trackingRight</apiName><shortdesc>
+		 TextLayoutFormat：数字（以像素为单位）（或 fontSize 的百分比，如 120%）表示要应用到每个字符右边的间距的量（手动字距调整）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：数字（以像素为单位）（或 <codeph>fontSize</codeph> 的百分比，如 120%）表示要应用到每个字符右边的间距的量（手动字距调整）。如果启用字距调整，则会将 <codeph>trackingRight</codeph> 值与字体字距调整表中的值相加。如果禁用字距调整，则使用 <codeph>trackingRight</codeph> 值作为手动字距调整值。同时支持正值和负值。 
+		 <p>合法值为 -1000 到 1000 范围内的数字。</p>
+		 <p>合法值为 -1000% 到 1000% 范围内的百分比数字。</p>
+		 <p>合法值包括 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 0。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:typographicCase:get"><apiName>typographicCase</apiName><shortdesc>
+		 TextLayoutFormat：用于此文本的印刷大小写的类型。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：用于此文本的印刷大小写的类型。下面给出了一些示例：<p><adobeimage alt="typographicCase" href="../../../images/textLayout_typographiccase.png"/></p>
+		 <p>合法值为 flashx.textLayout.formats.TLFTypographicCase.DEFAULT、flashx.textLayout.formats.TLFTypographicCase.CAPS_TO_SMALL_CAPS、flashx.textLayout.formats.TLFTypographicCase.UPPERCASE、flashx.textLayout.formats.TLFTypographicCase.LOWERCASE、flashx.textLayout.formats.TLFTypographicCase.LOWERCASE_TO_SMALL_CAPS 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 DEFAULT。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.formats.xml#TLFTypographicCase"><linktext>flashx.textLayout.formats.TLFTypographicCase</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:userStyles:get"><apiName>userStyles</apiName><shortdesc> 
+		 ContainerController 实例的 userStyles 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc> 
+		 ContainerController 实例的 <codeph>userStyles</codeph> 对象。getter 会创建 <codeph>userStyles</codeph> 对象的一个副本，即<i>样式名-值</i>对的数组。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:verticalAlign:get"><apiName>verticalAlign</apiName><shortdesc>
+		 TextLayoutFormat：垂直对齐或两端对齐（如果在层叠期间未定义，则使用默认值）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：垂直对齐或两端对齐（如果在层叠期间未定义，则使用默认值）。确定 TextFlow 元素在容器内如何对齐。
+		 <p>合法值为 flashx.textLayout.formats.VerticalAlign.TOP、flashx.textLayout.formats.VerticalAlign.MIDDLE、flashx.textLayout.formats.VerticalAlign.BOTTOM、flashx.textLayout.formats.VerticalAlign.JUSTIFY 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性值为 TOP。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.formats.xml#VerticalAlign"><linktext>flashx.textLayout.formats.VerticalAlign</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:verticalScrollPolicy:get"><apiName>verticalScrollPolicy</apiName><shortdesc> 指定垂直滚动方式，这可以通过指定 ScrollPolicy 类的一个常量来设置：ON、OFF 或 AUTO。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 指定垂直滚动方式，这可以通过指定 ScrollPolicy 类的一个常量来设置：ON、OFF 或 AUTO。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.container.xml#ScrollPolicy"><linktext>ScrollPolicy</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:verticalScrollPosition:get"><apiName>verticalScrollPosition</apiName><shortdesc> 指定舞台上当前的垂直滚动位置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Number"/></apiValueDef><apiDesc> 指定舞台上当前的垂直滚动位置。该值指定了距离顶部的像素数。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.container:ContainerController:whiteSpaceCollapse:get"><apiName>whiteSpaceCollapse</apiName><shortdesc>
+		 TextLayoutFormat：将文本导入到 TextFlow 中时压缩或保留空白。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>当设置的值不在此属性的范围内时
+		 
+		 </apiDesc><apiItemName>RangeError</apiItemName><apiOperationClassifier>RangeError</apiOperationClassifier></apiException></apiValueDef><apiDesc>
+		 TextLayoutFormat：将文本导入到 TextFlow 中时压缩或保留空白。<codeph>WhiteSpaceCollapse.PRESERVE</codeph> 会保留所有空白字符。如果为 <codeph>WhiteSpaceCollapse.COLLAPSE</codeph>，则会删除导入的文本块中的新行、制表符以及前导或结尾空格。换行标记 () 和 Unicode 行分隔符将会保留。
+		 <p>合法值为 flashx.textLayout.formats.WhiteSpaceCollapse.PRESERVE、flashx.textLayout.formats.WhiteSpaceCollapse.COLLAPSE 和 flashx.textLayout.formats.FormatValue.INHERIT。</p>
+		 <p>默认值未定义，指示未设置。</p>
+		 <p>如果在层叠期间未定义，则此属性将从一个祖代继承值。如果没有祖代设置了此属性，则其值为 COLLAPSE。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.formats.xml#WhiteSpaceCollapse"><linktext>flashx.textLayout.formats.WhiteSpaceCollapse</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:containerControllerInitialFormat:set"><apiName>containerControllerInitialFormat</apiName><shortdesc/><prolog/><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiStatic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef></apiValueDetail></apiValue></apiClassifier></apiPackage>

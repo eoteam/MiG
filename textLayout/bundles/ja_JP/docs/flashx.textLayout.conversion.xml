@@ -1,0 +1,377 @@
+<?xml version="1.0"?>
+<apiPackage id="flashx.textLayout.conversion"><apiName>flashx.textLayout.conversion</apiName><apiDetail/><apiClassifier id="flashx.textLayout.conversion:TextConverter"><apiName>TextConverter</apiName><shortdesc> 
+	 これは、インポートとエクスポートを処理するゲートウェイクラスです。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 これは、インポートとエクスポートを処理するゲートウェイクラスです。Text Layout Framework の変換機能の一元的なアクセスポイントとなります。
+	 </apiDesc><example conref="examples\TextConverter_example.as"/></apiClassifierDetail><apiOperation id="flashx.textLayout.conversion:TextConverter:export"><apiName>export</apiName><shortdesc> 
+		 TextFlow を指定された形式にエクスポートします。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>TextFlow のオブジェクトエクスポート形式
+		 </apiDesc><apiType value="Object"/></apiReturn><apiParam><apiItemName>source</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiDesc>ソースコンテンツ
+		 </apiDesc></apiParam><apiParam><apiItemName>format</apiItemName><apiType value="String"/><apiDesc>出力形式
+		 </apiDesc></apiParam><apiParam><apiItemName>conversionType</apiItemName><apiType value="String"/><apiDesc>エクスポートされたデータのタイプ
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 TextFlow を指定された形式にエクスポートします。サポートされている形式は、FXG、HTML、プレーンテキストおよび TextLayout Markup です。
+		 <p>このクラスに提供されている 4 つの静的定数の 1 つを使用して、<codeph>format</codeph> パラメーターを指定します。
+		 <ul>
+		 <li>TextConverter.TEXT_FIELD_HTML_FORMAT</li>
+		 <li>TextConverter.PLAIN_TEXT_FORMAT</li>
+		 <li>TextConverter.TEXT_LAYOUT_FORMAT</li>
+		 </ul>
+		 </p>
+		 <p>ConversionType クラスで指定されている 2 つの静的定数の 1 つを使用して、<codeph>conversionType</codeph> パラメーターでエクスポートデータのタイプを指定します。
+		 <ul>
+		 <li>ConversionType.STRING_TYPE</li>
+		 <li>ConversionType.XML_TYPE</li>
+		 </ul>
+		 </p>
+		 
+		 TextFlow の表現を指定された形式で返します。
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.conversion.xml#TextConverter/TEXT_FIELD_HTML_FORMAT"><linktext>TEXT_FIELD_HTML_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/PLAIN_TEXT_FORMAT"><linktext>PLAIN_TEXT_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/TEXT_LAYOUT_FORMAT"><linktext>TEXT_LAYOUT_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#ConversionType"><linktext>flashx.textLayout.conversion.ConversionType</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.conversion:TextConverter:getExporter"><apiName>getExporter</apiName><shortdesc> 
+		 エクスポートフィルターを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>指定された形式でエクスポート可能な ITextExporter テキストフィルターです。
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.conversion:ITextExporter</apiOperationClassifier></apiReturn><apiParam><apiItemName>format</apiItemName><apiType value="String"/><apiDesc>エクスポートデータのターゲット形式です。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 エクスポートフィルターを作成します。エクスポートフィルターを返します。その後、TextFlow からソースストリングまたは XML オブジェクトへのエクスポートにこのフィルターを使用できます。多数の個別エクスポートを実行する必要がある場合は、この関数を使用します。これは、<codeph>flashx.textLayout.conversion.TextConverter.export()</codeph> を呼び出すことと同じです。
+		 <p>このクラスに提供されている 4 つの静的定数の 1 つを使用して、<codeph>format</codeph> パラメーターを指定します。
+		 <ul>
+		 <li>TextConverter.TEXT_FIELD_HTML_FORMAT</li>
+		 <li>TextConverter.PLAIN_TEXT_FORMAT</li>
+		 <li>TextConverter.TEXT_LAYOUT_FORMAT</li>
+		 </ul>
+		 </p>
+		 </apiDesc><example conref="examples\getExporter_example.as"/></apiOperationDetail><related-links><link href="flashx.textLayout.conversion.xml#TextConverter/TEXT_FIELD_HTML_FORMAT"><linktext>TEXT_FIELD_HTML_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/PLAIN_TEXT_FORMAT"><linktext>PLAIN_TEXT_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/TEXT_LAYOUT_FORMAT"><linktext>TEXT_LAYOUT_FORMAT</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.conversion:TextConverter:getImporter"><apiName>getImporter</apiName><shortdesc> 
+		 インポートフィルターを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>ソースデータをインポートできる、ITextImporter テキストフィルターです。
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.conversion:ITextImporter</apiOperationClassifier></apiReturn><apiParam><apiItemName>format</apiItemName><apiType value="String"/><apiDesc>ソースコンテンツの形式です。flashx.textLayout.conversion.TextConverter.TEXT_LAYOUT_FORMAT、PLAIN_TEXT_FORMAT、TEXT_FIELD_HTML_FORMAT などからの定数を使用します。
+		 </apiDesc></apiParam><apiParam><apiItemName>config</apiItemName><apiOperationClassifier>flashx.textLayout.elements:IConfiguration</apiOperationClassifier><apiData>null</apiData><apiDesc>   このインポート中に使用する構成です。null は現在のデフォルトを使用することを示します。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 インポートフィルターを作成します。インポートフィルターを返します。その後、ソースストリングまたは XML オブジェクトから TextFlow へのインポートにこのフィルターを使用できます。多数の個別インポートを実行する必要がある場合、またはインポート中にエラーを処理する場合、この関数を使用します。これは、<codeph>flashx.textLayout.conversion.TextConverter.importToFlow()</codeph> を呼び出すことと同じです。
+		 <p>このクラスに提供されている 4 つの静的定数の 1 つを使用して、<codeph>format</codeph> パラメーターを指定します。
+		 <ul>
+		 <li>TextConverter.TEXT_FIELD_HTML_FORMAT</li>
+		 <li>TextConverter.PLAIN_TEXT_FORMAT</li>
+		 <li>TextConverter.TEXT_LAYOUT_FORMAT</li>
+		 </ul>
+		 </p>
+		 </apiDesc><example conref="examples\getImporter_example.as"/></apiOperationDetail><related-links><link href="flashx.textLayout.conversion.xml#TextConverter/TEXT_FIELD_HTML_FORMAT"><linktext>TEXT_FIELD_HTML_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/PLAIN_TEXT_FORMAT"><linktext>PLAIN_TEXT_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/TEXT_LAYOUT_FORMAT"><linktext>TEXT_LAYOUT_FORMAT</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.conversion:TextConverter:importToFlow"><apiName>importToFlow</apiName><shortdesc> 
+		 指定された形式で、ソースコンテンツから TextFlow を作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>ソースから作成された TextFlow です。
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier></apiReturn><apiParam><apiItemName>source</apiItemName><apiType value="Object"/><apiDesc>ソースコンテンツ
+		 </apiDesc></apiParam><apiParam><apiItemName>format</apiItemName><apiType value="String"/><apiDesc>ソースコンテンツの形式
+		 </apiDesc></apiParam><apiParam><apiItemName>config</apiItemName><apiOperationClassifier>flashx.textLayout.elements:IConfiguration</apiOperationClassifier><apiData>null</apiData><apiDesc>   新規 TextFlow の作成時に使用する IConfiguration
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 指定された形式で、ソースコンテンツから TextFlow を作成します。サポートされている形式は、HTML、プレーンテキストおよび TextLayout Markup です。
+		 <p>このクラスに提供されている 4 つの静的定数の 1 つを使用して、<codeph>format</codeph> パラメーターを指定します。
+		 <ul>
+		 <li>TextConverter.TEXT_FIELD_HTML_FORMAT</li>
+		 <li>TextConverter.PLAIN_TEXT_FORMAT</li>
+		 <li>TextConverter.TEXT_LAYOUT_FORMAT</li>
+		 </ul>
+		 </p>
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.conversion.xml#TextConverter/TEXT_FIELD_HTML_FORMAT"><linktext>TEXT_FIELD_HTML_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/PLAIN_TEXT_FORMAT"><linktext>PLAIN_TEXT_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/TEXT_LAYOUT_FORMAT"><linktext>TEXT_LAYOUT_FORMAT</linktext></link></related-links></apiOperation><apiValue id="flashx.textLayout.conversion:TextConverter:PLAIN_TEXT_FORMAT"><apiName>PLAIN_TEXT_FORMAT</apiName><shortdesc> 
+		 プレーンテキスト形式です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>plainTextFormat</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 プレーンテキスト形式です。これは、簡易なフォーマットされていないストリングからの TextFlow の作成、または TextFlow からの簡易なフォーマットされていないストリングの作成に使用します。
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.conversion:TextConverter:TEXT_FIELD_HTML_FORMAT"><apiName>TEXT_FIELD_HTML_FORMAT</apiName><shortdesc> 
+		 HTML 形式です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>textFieldHTMLFormat</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 HTML 形式です。これは、HTML 形式を使用する TextFlow との間でのインポートおよびエクスポートに使用します。Text Layout Framework HTML では、<codeph>flash.text</codeph> パッケージの TextField クラスでサポートされるタグと属性のサブセットがサポートされます。
+		 <p>次の表に、インポートおよびエクスポート処理でサポートされている HTML タグと属性を示します（TextField でサポートされ Text Layout Framework でサポートされないタグと属性については、その旨記載しています）。</p>
+		 
+		 
+		 <adobetable class="innertable">
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 <tgroup cols="2"><thead><row><entry>
+		 タグ
+		 </entry><entry>
+		 説明
+		 </entry></row></thead><tbody><row>
+		 
+		 <entry>
+		 アンカータグ
+		 </entry>
+		 
+		 <entry>
+		 <codeph>&lt;a></codeph> タグはハイパーリンクを作成するもので、次の属性を指定できます。
+		 <ul>
+		 
+		 <li>
+		 <codeph>target</codeph>：ページをロードする先のターゲットウィンドウの名前を指定します。オプションには、<codeph>_self</codeph>、<codeph>_blank</codeph>、<codeph>_parent</codeph>、および <codeph>_top</codeph> があります。<codeph>_self</codeph> オプションは現在のウィンドウ内の現在のフレームを指定します。<codeph>_blank</codeph> は新しいウィンドウを指定します。<codeph>_parent</codeph> は現在のフレームの親を指定します。<codeph>_top</codeph> は現在のウィンドウ内のトップレベルのフレームを指定します。 
+		 </li>
+		 
+		 <li>
+		 <codeph>href</codeph>：URL を指定します。URL は、ページをロードしている SWF ファイルの場所に対して絶対的でも相対的でもかまいません。 URL への絶対的な参照の例としては <codeph>http://www.adobe.com</codeph>、相対的な参照の例としては <codeph>/index.html</codeph> が挙げられます。絶対 URL には先頭に http:// を付けます。それがない場合は、相対 URL と見なされます。<b>メモ：TextField クラスと異なり、</b>ActionScript の <codeph>link</codeph> イベントはサポートされません。<codeph>a:link</codeph>、<codeph>a:hover</codeph>、<codeph>a:active</codeph> スタイルもサポートされません。
+		 </li>
+		 
+		 </ul>
+		 
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 ボールドタグ
+		 </entry>
+		 
+		 <entry>
+		 <codeph>&lt;b></codeph> タグは、テキストをボールドで表示します。ボールド体を利用できるフォントで使用する必要があります。
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 ブレークタグ
+		 </entry>
+		 <entry>
+		 <codeph>&lt;br></codeph> タグは、テキストに改行を作成します。
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 フォントタグ
+		 </entry>
+		 
+		 <entry>
+		 <codeph>&lt;font></codeph> タグは、テキストを表示するフォントまたはフォントリストを指定します。フォントタグには、次の属性を指定できます。
+		 <ul>
+		 
+		 <li>
+		 <codeph>color</codeph>：16 進数のカラー（<codeph>#FFFFFF</codeph>）値のみがサポートされます。 
+		 </li>
+		 
+		 <li>
+		 <codeph>face</codeph>：使用するフォントの名前を指定します。次の例が示すように、カンマで区切られたフォント名の一覧を指定することもできます。その場合、Flash Player は最初に利用可能なフォントを選択します。指定したフォントがローカルのコンピューターシステムにインストールされていないか、または SWF ファイルに組み込まれていない場合、Flash Player は代替フォントを選択します。 
+		 </li>
+		 
+		 <li>
+		 <codeph>size</codeph>：フォントのサイズを指定します。絶対ピクセルサイズ（16 や 18 など）、または相対ポイントサイズ（+2 や -4 など）を使用できます。 
+		 </li>
+		 
+		 <li>
+		 <codeph>letterspacing</codeph>：各文字の右側に適用するトラッキング（手動カーニング）をピクセル単位で指定します。 
+		 </li>
+		 
+		 <li>
+		 <codeph>kerning</codeph>：カーニングが有効か無効かを指定します。0 以外の値を指定すると、カーニングが有効になります。0 を指定すると、カーニングが無効になります。  
+		 </li>
+		 
+		 </ul>
+		 
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 イメージタグ
+		 </entry>
+		 
+		 <entry>
+		 <codeph>&lt;img></codeph> タグは、外部イメージファイル（JPEG、GIF、PNG）、SWF ファイル、およびムービークリップをテキスト内に埋め込みます。  
+		 
+		  <p><codeph>&amp;lt;img&amp;gt;</codeph> タグには、次の属性を指定できます。 </p>
+		 
+		 <ul>
+		 
+		 <li>
+		 <codeph>src</codeph>：イメージファイルまたは SWF ファイルへの URL、またはライブラリ内のムービークリップシンボルへのリンケージ識別子を指定します。この属性は必須です。他の属性はすべて省略可能です。外部ファイル（JPEG、GIF、PNG および SWF ファイル）は、完全にダウンロードされるまで表示されません。 
+		 </li>
+		 
+		 <li>
+		 <codeph>width</codeph>：挿入されるイメージ、SWF ファイル、またはムービークリップのピクセル単位の幅です。 
+		 </li>
+		 
+		 <li>
+		 <codeph>height</codeph>：挿入されるイメージ、SWF ファイル、またはムービークリップのピクセル単位の高さです。 
+		 </li>
+		 </ul>
+		 <p><b>注意：</b>TextField クラスと異なり、<codeph>align</codeph>、<codeph>hspace</codeph>、<codeph>vspace</codeph>、<codeph>id</codeph>、<codeph>checkPolicyFile の各属性はサポートされません。</codeph></p>
+		 
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 イタリックタグ
+		 </entry>
+		 
+		 <entry>
+		 <codeph>&lt;i></codeph> タグは、指定されたテキストをイタリックで表示します。イタリック体を利用できるフォントで使用する必要があります。
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 <i>リスト項目タグ</i>
+		 </entry>
+		 
+		 <entry>
+		 <b>メモ：</b>TextField クラスと異なり、リスト項目タグはサポートされません。
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 段落タグ
+		 </entry>
+		 
+		 <entry>
+		 <codeph>&amp;lt;p&amp;gt;</codeph> タグは新しい段落を作成します。<codeph>&amp;lt;p&amp;gt;</codeph> タグには、次の属性を指定できます。
+		 <ul>
+		 
+		 <li>
+		 align：段落内のテキストの行揃えを指定します。有効な値は、<codeph>left</codeph>、<codeph>right</codeph>、<codeph>justify</codeph>、および <codeph>center</codeph> です。 
+		 </li>
+		 
+		 <li>
+		 class：スタイル設定に使用できるクラス名を指定します。 
+		 </li>
+		 
+		 </ul>
+		 
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 範囲タグ
+		 </entry>
+		 
+		 <entry>
+		 
+		 <codeph>&amp;lt;span&amp;gt;</codeph> タグには、次の属性を指定できます。
+		 
+		 <ul>
+		 
+		 <li>
+		 class：スタイル設定に使用できるクラス名を指定します。 
+		 </li>
+		 
+		 </ul>
+		 
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 テキストフォーマットタグ
+		 </entry>
+		 
+		 <entry>
+		  <p><codeph>&lt;textformat></codeph> タグを使用すれば、テキストフィールド内において TextFormat クラスのいくつかの段落フォーマットプロパティ（行間、一行目インデント、インデント、タブストップなど）を指定できます。<codeph>&lt;textformat></codeph> タグは、ビルトイン HTML タグと組み合わせて使用できます。 </p>
+		 
+		  <p><codeph>&lt;textformat></codeph> タグでは、次のような属性を指定できます。 </p>
+		 <ul>
+		 
+		 
+		 <li>
+		 <codeph>indent</codeph>：左インデントから段落の先頭文字までのインデントを指定します。<codeph>TextFormat.indent</codeph> に相当します。正の数と負の数の両方を使用できます。 
+		 </li>
+		 
+		 <li>
+		 <codeph>blockindent</codeph>：段落内のすべての行に適用されるインデントを指定します。
+		 </li>
+		 
+		 <li>
+		 <codeph>leftmargin</codeph>：段落の左インデントをポイント単位で指定します。<codeph>TextFormat.leftMargin</codeph> に相当します。 
+		 </li>
+		 
+		 <li>
+		 <codeph>rightmargin</codeph>：段落の右インデントをポイント単位で指定します。<codeph>TextFormat.rightMargin</codeph> に相当します。 
+		 </li>
+		 
+		 	<li>
+		 <codeph>leading</codeph>：行のアセントと前の行のディセント間の行送り（行の高さ）をピクセル単位で指定します。
+		 </li>
+		 
+		 	<li>
+		 <codeph>tabstops</codeph>：段落のタブストップ位置を示すカンマ区切りのリストを指定します。 
+		 </li>
+		 </ul>
+		 
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 下線タグ
+		 </entry>
+		 
+		 <entry>
+		 <codeph>&lt;u></codeph> タグを付けたテキストには下線が引かれます。
+		 </entry>
+		 </row></tbody></tgroup></adobetable>
+
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.conversion:TextConverter:TEXT_LAYOUT_FORMAT"><apiName>TEXT_LAYOUT_FORMAT</apiName><shortdesc> 
+		 TextLayout 形式です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>textLayoutFormat</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 TextLayout 形式です。これは、TextLayout マークアップ形式を使用する TextFlow との間でのインポートおよびエクスポートに使用します。Text Layout 形式は次のエラーを検出します。
+		 <ul>
+		 <li>予期しない名前空間</li>
+		 <li>不明なエレメント</li>
+		 <li>不明な属性</li>
+		 </ul>
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.conversion:ITextExporter"><apiName>ITextExporter</apiName><shortdesc> 
+	 テキストコンテンツを TextFlow インスタンスから String または XML 形式にエクスポートするインターフェイスです。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc> 
+	 テキストコンテンツを TextFlow インスタンスから String または XML 形式にエクスポートするインターフェイスです。 
+	 </apiDesc></apiClassifierDetail><apiOperation id="flashx.textLayout.conversion:ITextExporter:flashx.textLayout.conversion:ITextExporter:export"><apiName>export</apiName><shortdesc> 
+		 テキストコンテンツを TextFlow インスタンスから String または XML 形式にエクスポートします。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>Object。エクスポートされたコンテンツ
+		 </apiDesc><apiType value="Object"/></apiReturn><apiParam><apiItemName>source</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiDesc>エクスポートする TextFlow 
+		 </apiDesc></apiParam><apiParam><apiItemName>conversionType</apiItemName><apiType value="String"/><apiDesc>	String（STRING_TYPE）または XML（XML_TYPE）を返します。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 テキストコンテンツを TextFlow インスタンスから String または XML 形式にエクスポートします。
+		 <p><codeph>conversionType</codeph> パラメーターを次のいずれかの値に設定します。
+		 <ul>
+		   <li><codeph>flashx.textLayout.conversion.ConversionType.STRING_TYPE</codeph></li>
+		   <li><codeph>flashx.textLayout.conversion.ConversionType.XML_TYPE</codeph></li>
+		 </ul>
+		 </p>
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.conversion.xml#ConversionType"><linktext>flashx.textLayout.conversion.ConversionType</linktext></link></related-links></apiOperation></apiClassifier><apiClassifier id="flashx.textLayout.conversion:PlainTextExporter"><apiName>PlainTextExporter</apiName><shortdesc> 
+	 プレーンテキスト形式用のエクスポートフィルターです。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseInterface>flashx.textLayout.conversion:ITextExporter</apiBaseInterface><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 プレーンテキスト形式用のエクスポートフィルターです。このクラスは、プレーンテキストをエクスポートするための <codeph>TextConverter.export()</codeph> 静的メソッドの代わりになります。PlainTextExporter クラスの <codeph>export()</codeph> メソッドの結果が <codeph>TextConverter.export()</codeph> 静的メソッドと同じ出力ストリングになるのは、PlainTextExporter クラスの <codeph>paragraphSeparator</codeph> および <codeph>stripDiscretionaryHyphens</codeph> という 2 つのプロパティに、それぞれのデフォルト値である <codeph>"¥n"</codeph> と <codeph>true</codeph> が含まれている場合です。
+	 </apiDesc><example conref="examples\PlainTextExporter_example.as"/></apiClassifierDetail><apiConstructor id="flashx.textLayout.conversion:PlainTextExporter:PlainTextExporter"><apiName>PlainTextExporter</apiName><shortdesc>
+		 コンストラクター 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/></apiConstructorDef><apiDesc>
+		 コンストラクター 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.conversion:PlainTextExporter:export"><apiName>export</apiName><shortdesc> 
+		 TextFlow オブジェクトのコンテンツをプレーンテキストにエクスポートします。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>Object。エクスポートされたコンテンツ
+		 
+		 </apiDesc><apiType value="Object"/></apiReturn><apiParam><apiItemName>source</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiDesc>エクスポートするテキストフローオブジェクト
+		 </apiDesc></apiParam><apiParam><apiItemName>conversionType</apiItemName><apiType value="String"/><apiDesc>	返される型（STRING_TYPE）。このパラメーターは、<codeph>ConversionType.STRING_TYPE</codeph> という 1 つの値しか受け入れませんが、このクラスが ITextExporter インターフェイスを実装しているので必要になります。インターフェイスのメソッド <codeph>ITextExporter.export()</codeph> では、このパラメーターが必要です。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 TextFlow オブジェクトのコンテンツをプレーンテキストにエクスポートします。<codeph>paragraphSeparator</codeph> プロパティと <codeph>stripDiscretionaryHyphens</codeph> プロパティの値は、このメソッドで生成される出力に影響を与えます。
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.conversion.xml#PlainTextExporter/paragraphSeparator"><linktext>paragraphSeparator</linktext></link><link href="flashx.textLayout.conversion.xml#PlainTextExporter/stripDiscretionaryHyphens"><linktext>stripDiscretionaryHyphens</linktext></link><link href="flashx.textLayout.conversion.xml#ConversionType/STRING_TYPE"><linktext>ConversionType.STRING_TYPE</linktext></link></related-links></apiOperation><apiValue id="flashx.textLayout.conversion:PlainTextExporter:paragraphSeparator:get"><apiName>paragraphSeparator</apiName><shortdesc> 段落を区切る文字を指定します（テキストフローのプレーンテキスト内）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 段落を区切る文字を指定します（テキストフローのプレーンテキスト内）。段落の区切り記号は、最後の段落の後には追加されません。デフォルト値は "¥n" です。 
+  		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.conversion:PlainTextExporter:stripDiscretionaryHyphens:get"><apiName>stripDiscretionaryHyphens</apiName><shortdesc> このフラグは、エクスポート処理でテキストの任意ハイフンを取り除くかどうかを示します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Boolean"/></apiValueDef><apiDesc> このフラグは、エクスポート処理でテキストの任意ハイフンを取り除くかどうかを示します。任意ハイフンは、「ソフトハイフン」とも呼ばれており、語を 2 つの行に分割する必要がある場合に、どこで語を分断するかを示します。任意ハイフンを表す Unicode 文字は、<codeph>¥u00AD</codeph> です。
+		 <p><codeph>stripDiscretionaryHyphens</codeph> プロパティに <codeph>true</codeph> を設定した場合、元のテキスト内にある任意ハイフンは、元のテキストの一部であっても、エクスポートされたテキストに現れません。<codeph>false</codeph> を設定した場合、任意ハイフンは、エクスポートされたテキストに現れます。デフォルト値は <codeph>true</codeph> です。</p>
+  		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.conversion:ConversionType"><apiName>ConversionType</apiName><shortdesc>
+	 エクスポートテキストの形式の値です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 エクスポートテキストの形式の値です。値 <codeph>STRING_TYPE</codeph> と <codeph>XML_TYPE</codeph> を、ITextExporter インターフェイスおよび TextConverter クラスで export() メソッドの <codeph>conversionType</codeph> パラメーターに使用できます。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.conversion.xml#ITextExporter/export()"><linktext>flashx.textLayout.conversion.ITextExporter.export()</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/export()"><linktext>flashx.textLayout.conversion.TextConverter.export()</linktext></link></related-links><apiValue id="flashx.textLayout.conversion:ConversionType:STRING_TYPE"><apiName>STRING_TYPE</apiName><shortdesc> 
+		  String 型としてエクスポートします。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>stringType</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		  String 型としてエクスポートします。 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.conversion:ConversionType:XML_TYPE"><apiName>XML_TYPE</apiName><shortdesc> 
+		 XML 型としてエクスポートします。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>xmlType</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 XML 型としてエクスポートします。
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.conversion:ITextImporter"><apiName>ITextImporter</apiName><shortdesc> 
+	 テキストコンテンツを外部ソースから TextFlow にインポートするためのインターフェイスです。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc> 
+	 テキストコンテンツを外部ソースから TextFlow にインポートするためのインターフェイスです。 
+	 </apiDesc></apiClassifierDetail><apiOperation id="flashx.textLayout.conversion:ITextImporter:flashx.textLayout.conversion:ITextImporter:importToFlow"><apiName>importToFlow</apiName><shortdesc> 
+		 テキストコンテンツを外部ソースからインポートし、TextFlow に変換します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>ソースから作成された TextFlow です。
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier></apiReturn><apiParam><apiItemName>source</apiItemName><apiType value="Object"/><apiDesc>	変換するデータ
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 テキストコンテンツを外部ソースからインポートし、TextFlow に変換します。
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.conversion:ITextImporter:flashx.textLayout.conversion:ITextImporter:errors:get"><apiName>errors</apiName><shortdesc> 
+		 解析中にエラーが発生しました。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Vector$String"/></apiValueDef><apiDesc> 
+		 解析中にエラーが発生しました。エラーがない場合は空白になります。値は、ストリングのベクターです。
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.conversion:ITextImporter:flashx.textLayout.conversion:ITextImporter:throwOnError:get"><apiName>throwOnError</apiName><shortdesc> 
+		 throwOnError が true の場合、インポート中に解析エラーが発生すると例外がスローされます。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 throwOnError が <codeph>true</codeph> の場合、インポート中に解析エラーが発生すると例外がスローされます。 
+	 	 </apiDesc></apiValueDetail></apiValue></apiClassifier></apiPackage>

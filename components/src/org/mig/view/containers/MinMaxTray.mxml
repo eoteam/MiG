@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" 
+	height="{MIN_HEIGHT}"  horizontalGap="0" creationComplete="addComponents()"	 >
+
+	<mx:Metadata> 
+        [DefaultProperty("contentChild")] 
+        [Event(name="open", type="flash.events.Event")]
+        [Event(name="opening", type="flash.events.Event")]
+       [Event(name="close", type="flash.events.Event")]
+    </mx:Metadata> 
+    
+     <mx:Script> 
+        <![CDATA[
+        	
+			[Embed(source='../../../../../../webapp/src/migAssets/library.swf#Tree_folderClosedIcon')]
+			[Bindable] private var closeIcon:Class;
+
+			[Embed(source='../../../../../../webapp/src/migAssets/library.swf#Tree_folderOpenIcon')]
+			[Bindable] private var openIcon:Class;
+        
+        	[Bindable] private var _headerLabel:String = "label";
+        	[Bindable] private var _summaryText:String;
+        	
+        	public function set headerLabel(value:String):void{
+                _headerLabel = value;
+            }
+            public function get headerLabel():String{
+                return _headerLabel;
+            }
+            
+            public function set summaryText(value:String):void{
+                _summaryText = value;
+            }
+            public function get summaryText():String{
+                return _summaryText;
+            }
+        	
+        	private const MIN_HEIGHT:Number = 30;
+
+            private var _components:Array = new Array();
+            public function set contentChild(value:Array):void{
+                _components = value;
+            }
+            public function get contentChild():Array{
+              	return _components;
+            }            
+            public function addComponents():void{
+                container.removeAllChildren();
+                if(_components)
+                for(var i:int=0; i < _components.length; i++){
+                    container.addChild( _components[i] );
+                }
+            }
+            
+            private function toggleState():void
+			{
+				dispatch = true;
+				if(this.currentState == "open"){
+					this.setCurrentState("closed",true);
+					stateIcon.source = closeIcon;
+				}else{
+					this.dispatchEvent(new Event("opening"));
+					this.setCurrentState("open",true);
+					stateIcon.source = openIcon;
+				}
+			}
+            public function close(val:Boolean):void
+            {
+            	dispatch = val;
+  				this.setCurrentState("closed",true);
+				stateIcon.source = closeIcon;          	
+            }
+            private var dispatch:Boolean = true;
+			public function get isClosed():Boolean
+			{
+				return this.height == this.MIN_HEIGHT;
+			}
+        ]]> 
+    </mx:Script>
+    
+    <mx:SWFLoader source="{closeIcon}" id="stateIcon" mouseChildren="false" useHandCursor="true" buttonMode="true"  click="toggleState()" />
+	<mx:Label text="{_headerLabel}" styleName="inputFieldTitle" width="85" mouseChildren="false" useHandCursor="true" buttonMode="true" click="toggleState()" />
+	<mx:Canvas id="contentBody" width="100%" height="100%"  horizontalScrollPolicy="off" verticalScrollPolicy="off">
+		<mx:Text maxWidth="250" id="summaryTextBox"  htmlText="{_summaryText}" visible="true" styleName="bodyCopy"  alpha="0.6" 
+			selectable="false"  />
+		<mx:Canvas id="container" width="100%" height="100%" visible="false" horizontalScrollPolicy="off" verticalScrollPolicy="off"/>
+	</mx:Canvas>
+	
+	
+	
+	<mx:states>
+		<mx:State id="closed" name="closed" >
+			<mx:SetProperty name="height" value="{MIN_HEIGHT}"/>
+			<mx:SetProperty name="visible" value="true" target="{summaryTextBox}" />
+		</mx:State>
+		
+		<mx:State id="open" name="open" >
+			<mx:SetProperty name="height" value="{maxHeight}"/>
+			<mx:SetProperty name="visible" value="false" target="{summaryTextBox}" />
+		</mx:State>
+		
+	</mx:states>
+	
+	<mx:transitions>
+		
+		<mx:Transition toState="open">
+			
+				<mx:Resize target="{this}" duration="200" effectStart="container.visible=true" 
+					effectEnd="this.dispatchEvent(new Event('open'))"   />
+
+		</mx:Transition>
+		<mx:Transition toState="closed">
+
+				<mx:Resize target="{this}" duration="200" 
+					effectEnd="container.visible=false;if(dispatch){this.dispatchEvent(new Event('close'))}"  />
+
+		</mx:Transition>
+	</mx:transitions>
+		
+
+</mx:HBox>

@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<apiPackage id="flashx.textLayout.factory"><apiName>flashx.textLayout.factory</apiName><apiDetail/><apiClassifier id="flashx.textLayout.factory:StringTextLineFactory"><apiName>StringTextLineFactory</apiName><shortdesc>
+ Класс StringTextLineFactory обеспечивает возможность применения простого способа создания экземпляров TextLine из строки.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>flashx.textLayout.factory:TextLineFactoryBase</apiBaseClassifier></apiClassifierDef><apiDesc>
+ Класс StringTextLineFactory обеспечивает возможность применения простого способа создания экземпляров TextLine из строки. 
+ 
+ <p>Текстовые строки являются статическими и создаются с применением единого формата и единого абзаца. Создаваемые строки умещаются в указанном ограничивающем прямоугольнике.</p>
+ 
+ <p>Класс StringTextLineFactory обеспечивает эффективный способ создания элементов TextLine, поскольку во многих повторяющихся вызовах в нем многократно используются объекты TextFlow, ParagraphElement, SpanElement и ContainerController. Существует возможность создания отдельной фабрики и ее многократного применения. Также можно многократно использовать все элементы, которые являются одинаковыми при каждом их вызове; например, таким образом могут применяться различные форматы и границы.</p> 
+ 
+ <p><b>Примечание.</b> Для создания статических строк, использующих множество форматов или абзацев, или включающих вложенные графические элементы, применяются объект TextFlow и TextFlowTextLineFactory. </p>
+ 
+ </apiDesc><example conref="examples\StringTextLineFactory_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.factory.xml#TextFlowTextLineFactory"><linktext>TextFlowTextLineFactory</linktext></link></related-links><apiConstructor id="flashx.textLayout.factory:StringTextLineFactory:StringTextLineFactory"><apiName>StringTextLineFactory</apiName><shortdesc> 
+		 Создает объект StringTextLineFactory.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>configuration</apiItemName><apiOperationClassifier>flashx.textLayout.elements:IConfiguration</apiOperationClassifier><apiData>null</apiData><apiDesc>Объект конфигурации, используемый для установки свойств внутреннего объекта TextFlow, применяемого для компоновки строк, создаваемых данной фабрикой. 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Создает объект StringTextLineFactory.  
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.factory:StringTextLineFactory:createTextLines"><apiName>createTextLines</apiName><shortdesc> 
+		 Создает объекты TextLine с использованием текста, назначенного этому объекту фабрики в текущий момент.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>callback</apiItemName><apiType value="Function"/><apiDesc>Функция обратного вызова, вызываемая для каждого созданного объекта TextLine.
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Создает объекты TextLine с использованием текста, назначенного этому объекту фабрики в текущий момент.
+		 
+		 <p>Текстовые строки создаются с использованием текста и форматов, назначенных в текущий момент, и компонуются для размещения в границах, назначенных в свойстве <codeph>compositionBounds</codeph>. По мере создания каждой строки фабрика обеспечивает вызов функции, заданной в параметре <codeph>callback</codeph>. Эта функция получает объект TextLine и применяется для отображения строки.</p>
+		 
+		 <p>Для создания отличающегося набора строк измените любое свойство в соответствии с имеющимися требованиями и вновь вызовите метод <codeph>createTextLines()</codeph>.</p>
+		  
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.factory:StringTextLineFactory:configuration:get"><apiName>configuration</apiName><shortdesc> 
+		 Конфигурация, используемая внутренним объектом TextFlow.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:IConfiguration</apiValueClassifier></apiValueDef><apiDesc> 
+		 Конфигурация, используемая внутренним объектом TextFlow.
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:StringTextLineFactory:defaultConfiguration:get"><apiName>defaultConfiguration</apiName><shortdesc> 
+		 Конфигурация по умолчанию, используемая данной фабрикой, если не задана иная конфигурация.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiStatic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:IConfiguration</apiValueClassifier></apiValueDef><apiDesc> 
+		 Конфигурация по умолчанию, используемая данной фабрикой, если не задана иная конфигурация. 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:StringTextLineFactory:paragraphFormat:get"><apiName>paragraphFormat</apiName><shortdesc> 
+		 Формат абзаца.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Формат абзаца. 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:StringTextLineFactory:spanFormat:get"><apiName>spanFormat</apiName><shortdesc> 
+		 Формат символа.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Формат символа. 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:StringTextLineFactory:textFlowFormat:get"><apiName>textFlowFormat</apiName><shortdesc> 
+		 Формат текстового потока.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Формат текстового потока.
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:StringTextLineFactory:text:get"><apiName>text</apiName><shortdesc> 
+		 Текст, преобразуемый в объекты TextLine.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 Текст, преобразуемый в объекты TextLine.
+		 
+		 <p>Для создания объектов TextLine вызовите <codeph>createTextLines()</codeph> после установки данного свойства <codeph>text</codeph> и требуемых форматов.</p> 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.factory:TextFlowTextLineFactory"><apiName>TextFlowTextLineFactory</apiName><shortdesc>
+ Класс TextFlowTextLineFactory обеспечивает простой способ создания объектов TextLine для отображения текста из текстового потока.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>flashx.textLayout.factory:TextLineFactoryBase</apiBaseClassifier></apiClassifierDef><apiDesc>
+ Класс TextFlowTextLineFactory обеспечивает простой способ создания объектов TextLine для отображения текста из текстового потока.
+ 
+ <p>Текстовые строки являются статичными и при создании умещаются в отдельном ограничивающем прямоугольнике, однако могут иметь несколько абзацев и форматов, а также включать вложенные графические элементы. Для создания объектов TextLine непосредственно из строки применяйте класс StringTextLineFactory.</p> 
+ 
+ <p><b>Примечание.</b> При использовании вложенных графических элементов в качестве значения свойства <codeph>source</codeph> объекта InlineGraphicElement должен быть указан элемент DisplayObject или объект Class, представляющий встроенный ресурс. Применение объектов URLRequest недопустимо. Ширина и высота вложенного графического элемента в момент создания строки применяются для компоновки потока. </p>
+ 
+ </apiDesc><example conref="examples\TextFlowTextLineFactory_example.as"><swfblock conref="examples\TextFlowTextLineFactory_example.swf"/></example></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>TextFlow</linktext></link><link href="flashx.textLayout.factory.xml#StringTextLineFactory"><linktext>StringTextLineFactory</linktext></link></related-links><apiConstructor id="flashx.textLayout.factory:TextFlowTextLineFactory:TextFlowTextLineFactory"><apiName>TextFlowTextLineFactory</apiName><shortdesc> 
+		 Создает объект TextFlowTextLineFactory.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/></apiConstructorDef><apiDesc> 
+		 Создает объект TextFlowTextLineFactory. 
+		 
+ 		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.factory:TextFlowTextLineFactory:createTextLines"><apiName>createTextLines</apiName><shortdesc>
+		 Объект TextFlow, на основе которого создаются строки.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>callback</apiItemName><apiType value="Function"/><apiDesc>функция, вызываемая с каждым создаваемым объектом TextLine. Обратный вызов будет осуществляться посредством объекта Shape, содержащего любые данные о фоновом цвете (если таковые существуют), и элемента TextLine для текста.
+		 </apiDesc></apiParam><apiParam><apiItemName>textFlow</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiDesc>Объект TextFlow, на основе которого создаются строки.
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc>
+		 Объект TextFlow, на основе которого создаются строки.
+		 
+		 <p>При компоновке текстовые строки располагаются в границах, назначенных свойству <codeph>compositionBounds</codeph>. По мере создания каждой строки фабрика обеспечивает вызов функции, заданной в параметре <codeph>callback</codeph>. Эта функция получает объект TextLine и применяется для отображения строки. Если строка имеет фоновый цвет, фабрика также выполняет вызов функции обратного вызова посредством объекта Shape, содержащего прямоугольник фонового цвета.</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation></apiClassifier><apiClassifier id="flashx.textLayout.factory:TruncationOptions"><apiName>TruncationOptions</apiName><shortdesc> 
+	 Класс TruncationOptions определяет параметры для ограничения количества строк текста, создаваемых TextLineFactory, а также для указания не включенных строк.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 Класс TruncationOptions определяет параметры для ограничения количества строк текста, создаваемых TextLineFactory, а также для указания не включенных строк.
+	 
+	 </apiDesc></apiClassifierDetail><apiConstructor id="flashx.textLayout.factory:TruncationOptions:TruncationOptions"><apiName>TruncationOptions</apiName><shortdesc> 
+		 Создает объект TruncationOptions.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>truncationIndicator</apiItemName><apiType value="String"/><apiData>unknown</apiData><apiDesc>строка, используемая для указания на то, что текст был усечен. Она появляется в конце составленного текста. Значением по умолчанию является горизонтальное многоточие (U+2026).
+		 </apiDesc></apiParam><apiParam><apiItemName>lineCountLimit</apiItemName><apiType value="int"/><apiData>unknown</apiData><apiDesc>указывает критерий усечения в виде максимального количества разрешенных строк. Значение по умолчанию <codeph>NO_LINE_COUNT_LIMIT</codeph> указывает на отсутствие ограничения на количество строк.
+		 </apiDesc></apiParam><apiParam><apiItemName>truncationIndicatorFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiData>null</apiData><apiDesc>указывает формат индикатора усечения. Формат null (значение по умолчанию) указывает на то, что индикатор усечения анализирует формат содержимого непосредственно перед точкой усечения. В методах <codeph>TextLineFactory</codeph>, принимающих простую строку в качестве входных значений, этот параметр также игнорируется и реализуется поведение, заданное по умолчанию.
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Создает объект TruncationOptions.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.factory:TruncationOptions:HORIZONTAL_ELLIPSIS"><apiName>HORIZONTAL_ELLIPSIS</apiName><shortdesc>
+		 Определяет значение свойства truncationIndicator, \u2026, которое соответствует горизонтальному многоточию.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>…</apiData><apiType value="String"/></apiValueDef><apiDesc>
+		 Определяет значение свойства <codeph>truncationIndicator</codeph>, <codeph>\u2026</codeph>, которое соответствует горизонтальному многоточию.
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.factory.xml#TruncationOptions/truncationIndicator"><linktext>truncationIndicator</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.factory:TruncationOptions:NO_LINE_COUNT_LIMIT"><apiName>NO_LINE_COUNT_LIMIT</apiName><shortdesc>
+		 Определяет значение свойства lineCountLimit, -1, которое означает отсутствие ограничений.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>-1</apiData><apiType value="int"/></apiValueDef><apiDesc>
+		 Определяет значение свойства <codeph>lineCountLimit</codeph>, <codeph>-1</codeph>, которое означает отсутствие ограничений.
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.factory.xml#TruncationOptions/lineCountLimit()"><linktext>lineCountLimit()</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.factory:TruncationOptions:lineCountLimit:get"><apiName>lineCountLimit</apiName><shortdesc> 
+		 Максимальное количество создаваемых строк.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 Максимальное количество создаваемых строк.
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:TruncationOptions:truncationIndicatorFormat:get"><apiName>truncationIndicatorFormat</apiName><shortdesc> 
+		 Стиль, применяемый в отношении строки индикатора усечения.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Стиль, применяемый в отношении строки индикатора усечения.
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:TruncationOptions:truncationIndicator:get"><apiName>truncationIndicator</apiName><shortdesc> 
+		 Строка, используемая для указания того, что содержимое не может быть полностью отображено из-за ограничения на количество строк.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 Строка, используемая для указания того, что содержимое не может быть полностью отображено из-за ограничения на количество строк.
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.factory:TextLineFactoryBase"><apiName>TextLineFactoryBase</apiName><shortdesc>
+ Класс TextLineFactoryBase является базовым классом для фабрик текстовых строк инфраструктуры Text Layout Framework.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion><Exclude kind="method" name="getNextTruncationPosition"/><Exclude kind="method" name="doesComposedTextFit"/><Exclude kind="method" name="callbackWithTextLines"/><Exclude kind="method" name="setContentBounds"/><Exclude kind="property" name="containerController"/></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc>
+ Класс TextLineFactoryBase является базовым классом для фабрик текстовых строк инфраструктуры Text Layout Framework.
+ 
+ <p><b>Примечание.</b> Непосредственное создание или использование объекта TextLineFactoryBase с помощью кода приложения, как правило, не требуется. Вместо этого используйте один из полученных классов фабрики текста.</p>
+  
+ </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>flashx.textLayout.elements.TextFlow</linktext></link></related-links><apiConstructor id="flashx.textLayout.factory:TextLineFactoryBase:TextLineFactoryBase"><apiName>TextLineFactoryBase</apiName><shortdesc> 
+		 Конструктор базового класса для фабрик текстовых строк.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/></apiConstructorDef><apiDesc> 
+		 Конструктор базового класса для фабрик текстовых строк.
+		  
+ 		 <p><b>Примечание.</b> Непосредственное создание или использование объекта TextLineFactoryBase с помощью кода приложения, как правило, не требуется. Вместо этого используйте один из полученных классов фабрики текста.</p>
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.factory:TextLineFactoryBase:getContentBounds"><apiName>getContentBounds</apiName><shortdesc>
+		 Наименьший прямоугольник, в котором может уместиться размещаемое содержимое.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="flash.geom:Rectangle"/></apiReturn></apiOperationDef><apiDesc>
+		 Наименьший прямоугольник, в котором может уместиться размещаемое содержимое.
+		 
+		 <p><b>Примечание.</b> Усеченные строки не учитываются при вычислении размера.</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.factory:TextLineFactoryBase:compositionBounds:get"><apiName>compositionBounds</apiName><shortdesc>
+		 Прямоугольник, внутри которого создаются текстовые строки.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="flash.geom:Rectangle"/></apiValueDef><apiDesc>
+		 Прямоугольник, внутри которого создаются текстовые строки.
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:TextLineFactoryBase:horizontalScrollPolicy:get"><apiName>horizontalScrollPolicy</apiName><shortdesc> 
+		 Указывает способ создания строк в случае, если границы компоновки недостаточно велики.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 Указывает способ создания строк в случае, если границы компоновки недостаточно велики.
+		  
+		 <p>Если задано значение <codeph>ScrollPolicy.ON</codeph> или <codeph>ScrollPolicy.AUTO</codeph>, то создаются все строки. Прокрутка строк в видимой области (и, при необходимости, маскировка строк за пределами этой области) выполняется вручную. Если задано значение <codeph>ScrollPolicy.OFF</codeph>, то создаются только строки, которые помещаются в границах компоновки.</p>
+		 
+		 <p>Если установлено свойство <codeph>truncationOptions</codeph>, стратегия прокрутки игнорируется (прокрутка выполняется как при выбранном значении <codeph>ScrollPolicy.OFF</codeph>).</p> 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#StandardFlowComposer"><linktext>flashx.textLayout.compose.StandardFlowComposer</linktext></link><link href="flashx.textLayout.container.xml#ScrollPolicy"><linktext>flashx.textLayout.container.ScrollPolicy</linktext></link><link href="flashx.textLayout.factory.xml#TextLineFactoryBase/truncationOptions"><linktext>truncationOptions</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.factory:TextLineFactoryBase:isTruncated:get"><apiName>isTruncated</apiName><shortdesc> 
+		 Указывает, был ли текст усечен при последней операции создания строк.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 Указывает, был ли текст усечен при последней операции создания строк.
+		  
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:TextLineFactoryBase:swfContext:get"><apiName>swfContext</apiName><shortdesc> 
+		Экземпляр ISWFContext, используемый для создания, при необходимости, вызовов FTE.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.compose:ISWFContext</apiValueClassifier></apiValueDef><apiDesc> 
+		Экземпляр ISWFContext, используемый для создания, при необходимости, вызовов FTE. 
+		
+		<p>По умолчанию реализация ISWFContext является объектом FlowComposerBase. Приложения могут предоставлять пользовательскую реализацию для использования шрифтов, встроенных в другой файл SWF, или для кэширования и повторного использования текстовых строк.</p>
+		
+		</apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#ISWFContext"><linktext>flashx.textLayout.compose.ISWFContext</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.factory:TextLineFactoryBase:truncationOptions:get"><apiName>truncationOptions</apiName><shortdesc> 
+		 Указывает параметры усечения текста, если он не умещается в границах компоновки.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.factory:TruncationOptions</apiValueClassifier></apiValueDef><apiDesc> 
+		 Указывает параметры усечения текста, если он не умещается в границах компоновки.
+		  
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:TextLineFactoryBase:verticalScrollPolicy:get"><apiName>verticalScrollPolicy</apiName><shortdesc> 
+		 Указывает способ создания строк в случае, если границы компоновки недостаточно велики.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 Указывает способ создания строк в случае, если границы компоновки недостаточно велики.
+		  
+		 <p>Если задано значение <codeph>ScrollPolicy.ON</codeph> или <codeph>ScrollPolicy.AUTO</codeph>, то создаются все строки. Прокрутка строк в видимой области (и, при необходимости, маскировка строк за пределами этой области) выполняется вручную. Если задано значение <codeph>ScrollPolicy.OFF</codeph>, то создаются только строки, которые помещаются в границах компоновки.</p>
+		 
+		 <p>Если установлено свойство <codeph>truncationOptions</codeph>, стратегия прокрутки игнорируется (прокрутка выполняется как при выбранном значении <codeph>ScrollPolicy.OFF</codeph>).</p> 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#StandardFlowComposer"><linktext>flashx.textLayout.compose.StandardFlowComposer</linktext></link><link href="flashx.textLayout.container.xml#ScrollPolicy"><linktext>flashx.textLayout.container.ScrollPolicy</linktext></link><link href="flashx.textLayout.factory.xml#TextLineFactoryBase/truncationOptions"><linktext>truncationOptions</linktext></link></related-links></apiValue></apiClassifier></apiPackage>

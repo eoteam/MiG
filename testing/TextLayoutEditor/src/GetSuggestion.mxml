@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ADOBE SYSTEMS INCORPORATED
+ Copyright 2009 Adobe Systems Incorporated
+ All Rights Reserved.
+
+NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the 
+terms of the Adobe license agreement accompanying it.  If you have received this file from a 
+source other than Adobe, then your use, modification, or distribution of it requires the prior 
+written permission of Adobe.
+-->
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" applicationComplete="init()" horizontalAlign="left">
+<mx:Script>
+	<![CDATA[
+/**
+ * @exampleText The following GetSuggestion MXML demonstrates how to get the suggestion list for a mispelled word by using Squiggly API.
+ * Note that the results from this example may differ based on dictionary file.
+ * 
+ * The following steps are taken:
+ * <ol>
+ *  <li>A <code>SpellingDictionary</code> object is created </li>
+ *  <li>A <code>SpellChecker</code> object is created </li>
+ *  <li>In the mx:application tag, add a functon call to <code>init</code> for <code>applicationComplete</code> </li>
+ *  <li>Create <code>init</code> function body: in the body, add a event listener for <code>SpellingDictionary</code> object. 
+ * Then create a <code>URLRequest</code> object to specify the url of dictionary file. Then call the <code>SpellingDictionary</code> 
+ *  object <code>load</load> method to load the dictionary from disk or remote URL.</li>
+ *  <li> Finish the <code>handleLoadComplete</code> function to attach the <code>SpellingDictionary</code> object to a <code>SpellChecker</code> object</li>
+ *  <li> Add a function to call the <code>CheckWord</code> method of <code>SpellChecker</code> object to verify the correctness of a word. </li>
+ *  </li>
+ *  <li> For the mispelled word from last step, call the <code>getSuggestions</code> method of <code>SpellChecker</code> object to query the suggestion list
+ *  </li>
+ *  <li>Add related MXML component tag and related property.
+ * </li>
+ * </ol>
+ * 
+ * Note: to make this example work properly, please make sure you have the proper dictionary file in the specified folder 
+ * and put the Squiggly library(AdobeSpellingEngine.swc) in you libs folder. Please see the reference "How to generate Squiggly dictionary".
+ */
+
+		import com.adobe.linguistics.spelling.*;
+		
+		private var _newdict:SpellingDictionary = new SpellingDictionary();
+		private var sp:SpellChecker= new SpellChecker();
+		private function init():void {
+				_newdict.addEventListener(Event.COMPLETE, handleLoadComplete);
+				var myUrl:URLRequest = new URLRequest("usa.zwl");
+				_newdict.load(myUrl);
+		}
+		private function handleLoadComplete(evt:Event):void
+		{
+			sp.addDictionary(_newdict);
+		}
+
+		private function checkWord():void {
+			suggestions.text= "";
+			if( sp.checkWord( inputWord.text ) ) {
+				result.text = "Result:correct";
+			}
+			else {
+				result.text = "Result:wrong";
+				var sugeestionArr:Array= sp.getSuggestions(inputWord.text);
+				if (sugeestionArr != null) {
+					for ( var i:int=0;i< sugeestionArr.length; i++ ) {
+						suggestions.text= suggestions.text + sugeestionArr[i] + "\n";
+					}
+				}
+			}
+		}
+		
+	]]>
+</mx:Script>
+	<mx:HBox>
+		<mx:TextInput id="inputWord" text ="test" keyUp="checkWord()"/>
+		<mx:Button id="check" label="Check Word" click="checkWord()"  />
+		<mx:Label id ="result" text="Result:"/>	
+	</mx:HBox>
+	<mx:TextArea id="suggestions" height="300" width="100"/>
+</mx:Application>

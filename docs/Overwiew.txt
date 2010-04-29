@@ -1,0 +1,31 @@
+MiG Docs
+
+The MiG is centered around a few ideas that enable certain workflows.
+
+The main areas of interest are Content, Media, Users, Tags.
+
+Information about content is configurable
+Content is organized in templates, templates represents groups of containers that share common properties. These properties reflect CustomFields which in their turns have types, default value and some order that dictates how these fields fill the content table.
+
+Information about Media,Tags and Users is not configurable, but from project to project new properties are needed to describe users, files etc...
+
+Users: groups, permission group and permissions. These are not similar to relationship
+
+
+
+What is configurable content and what does it enable
+It enables the tree catalog
+The model generates itself (a controller would do so)
+and it needs the config to know how to instantiate children nodes.
+Since containers can be very different, a singleton type controller that manages this model would have to track the instantiation process. Might be hard to achieve. 
+
+Managers have a global configuration, and no matter how deep is the catalog for this model, the configuration tends to be the same.
+
+
+Relationships are flexible. They need configuration for table, operation and parameters.
+Tray or Tab is a view thing.
+
+Media is related to Tags.
+
+
+

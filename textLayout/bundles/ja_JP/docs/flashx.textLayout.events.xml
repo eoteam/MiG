@@ -1,0 +1,227 @@
+<?xml version="1.0"?>
+<apiPackage id="flashx.textLayout.events"><apiName>flashx.textLayout.events</apiName><apiDetail/><apiClassifier id="flashx.textLayout.events:FlowElementMouseEvent"><apiName>FlowElementMouseEvent</apiName><shortdesc> このイベントは、マウス操作が検出されたときに LinkElement によって送出されます。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flash.events:Event</apiBaseClassifier></apiClassifierDef><apiDesc> このイベントは、マウス操作が検出されたときに LinkElement によって送出されます。Text Layout Framework にこのマウスイベントの特別バージョンが組み込まれているのは、編集可能なテキストフローにリンクエレメントが埋め込まれている場合、一般にマウスイベントは不要なためです。 
+	 <p>このタイプのイベントを監視するために、LinkElement にイベントリスナーを追加できます。<codeph>Event.preventDefault</codeph> を呼び出してイベントをキャンセルする場合、イベントに関連付けられているデフォルト動作は行われません。
+	 </p>
+	 <p>LinkElement にイベントリスナーを追加しない場合、またはイベントリスナー関数によって動作がキャンセルされない場合、イベントは再び送出されます。ただし、今度は LinkElement 自体によってではなく、LinkElement に関連付けられている TextFlow インスタンスによって送出されます。これにより、TextFlow に追加されたイベントリスナーによってこのイベントを監視する 2 つめの機会が提供されます。 
+	 </p>
+	 <p>FlowElementMouseEvents は、テキストを編集できない場合、またはマウス操作と同時に Control キーが押された場合にのみ送出されます。</p>
+	 <p>
+	 次の 6 つのイベントタイプは、テキストを編集できない場合、または Control キーが押された場合にのみ送出されます。
+	 <ul>
+	   <li><codeph>MouseEvent.CLICK </codeph></li>
+	   <li><codeph>MouseEvent.MOUSE_DOWN</codeph></li>
+	   <li><codeph>MouseEvent.MOUSE_OUT</codeph></li>
+	   <li><codeph>MouseEvent.MOUSE_UP</codeph></li>
+	   <li><codeph>MouseEvent.ROLL_OVER</codeph></li>
+	   <li><codeph>MouseEvent.ROLL_OUT</codeph></li>
+	 </ul>
+	 </p>
+	 
+	 </apiDesc><example conref="examples\FlowElementMouseEvent_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#LinkElement"><linktext>flashx.textLayout.elements.LinkElement</linktext></link></related-links><apiConstructor id="flashx.textLayout.events:FlowElementMouseEvent:FlowElementMouseEvent"><apiName>FlowElementMouseEvent</apiName><shortdesc> 
+		 マウス操作情報を含むイベントオブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>type</apiItemName><apiType value="String"/><apiDesc> イベントのタイプです。イベントリスナーは、継承された <codeph>type</codeph> プロパティを通じてこの情報にアクセスできます。<codeph>MouseEvent.CLICK</codeph>、<codeph>MouseEvent.MOUSE_DOWN</codeph>、<codeph>MouseEvent.MOUSE_OUT</codeph>、<codeph>MouseEvent.MOUSE_UP</codeph>、<codeph>MouseEvent.ROLL_OVER</codeph>、および <codeph>MouseEvent.ROLL_OUT</codeph> の 6 つのタイプがあります。
+		 </apiDesc></apiParam><apiParam><apiItemName>bubbles</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>Event オブジェクトがイベントフローのバブリング段階で処理されるかどうかを判断します。FlowElementMouseEvent オブジェクトではバブリングを実行できません。
+		 </apiDesc></apiParam><apiParam><apiItemName>cancelable</apiItemName><apiType value="Boolean"/><apiData>true</apiData><apiDesc>Event オブジェクトがキャンセル可能かどうかを判断します。イベントリスナーは、継承された <codeph>cancelable</codeph> プロパティを通じてこの情報にアクセスできます。FlowElementMouseEvent オブジェクトはキャンセルできません。イベントリスナーで <codeph>preventDefault()</codeph> メソッドを呼び出して、このイベントに関連付けられているデフォルト動作をキャンセルできます。
+		 </apiDesc></apiParam><apiParam><apiItemName>flowElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiData>null</apiData><apiDesc>このイベントに関連付けられている FlowElement のインスタンス（通常は LinkElement）です。イベントリスナーは、<codeph>flowElement</codeph> プロパティを通じてこの情報にアクセスできます。
+		 </apiDesc></apiParam><apiParam><apiItemName>originalEvent</apiItemName><apiType value="flash.events:MouseEvent"/><apiData>null</apiData><apiDesc>flowElement で発生した元のマウスイベントです。イベントリスナーは、<codeph>originalEvent</codeph> プロパティを通じてこの情報にアクセスできます。
+
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 マウス操作情報を含むイベントオブジェクトを作成します。イベントリスナーには Event オブジェクトがパラメーターとして渡されます。イベントを手動で送出する場合は、コンストラクターを使用します。LinkElement によって生成された FlowElementMouseEvent オブジェクトの監視に、コンストラクターを使用する必要はありません。
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.events:FlowElementMouseEvent:CLICK"><apiName>CLICK</apiName><shortdesc/><prolog/><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>click</apiData><apiType value="String"/></apiValueDef></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowElementMouseEvent:MOUSE_DOWN"><apiName>MOUSE_DOWN</apiName><shortdesc/><prolog/><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>mouseDown</apiData><apiType value="String"/></apiValueDef></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowElementMouseEvent:MOUSE_MOVE"><apiName>MOUSE_MOVE</apiName><shortdesc/><prolog/><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>mouseMove</apiData><apiType value="String"/></apiValueDef></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowElementMouseEvent:MOUSE_UP"><apiName>MOUSE_UP</apiName><shortdesc/><prolog/><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>mouseUp</apiData><apiType value="String"/></apiValueDef></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowElementMouseEvent:ROLL_OUT"><apiName>ROLL_OUT</apiName><shortdesc/><prolog/><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>rollOut</apiData><apiType value="String"/></apiValueDef></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowElementMouseEvent:ROLL_OVER"><apiName>ROLL_OVER</apiName><shortdesc/><prolog/><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>rollOver</apiData><apiType value="String"/></apiValueDef></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowElementMouseEvent:flowElement:get"><apiName>flowElement</apiName><shortdesc> 
+		 イベントを送出した LinkElement です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.elements:FlowElement</apiValueClassifier></apiValueDef><apiDesc> 
+		 イベントを送出した LinkElement です。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.elements.xml#LinkElement"><linktext>flashx.textLayout.elements.LinkElement</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.events:FlowElementMouseEvent:originalEvent:get"><apiName>originalEvent</apiName><shortdesc> 
+		 マウス操作で生成された元のマウスイベントです。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="flash.events:MouseEvent"/></apiValueDef><apiDesc> 
+		 マウス操作で生成された元のマウスイベントです。このプロパティには、次の値を含めることができます。
+		 <ul>
+		   <li><codeph>MouseEvent.CLICK </codeph></li>
+		   <li><codeph>MouseEvent.MOUSE_DOWN</codeph></li>
+		   <li><codeph>MouseEvent.MOUSE_OUT</codeph></li>
+		   <li><codeph>MouseEvent.MOUSE_UP</codeph></li>
+		   <li><codeph>MouseEvent.MOUSE_OVER</codeph></li>
+		   <li><codeph>MouseEvent.MOUSE_OUT</codeph></li>
+		 </ul>
+		 <p>
+		 ほとんどの場合、元のイベントは LinkElement によって送出されるイベントと一致します。<codeph>click</codeph>、<codeph>mouseDown</codeph>、<codeph>mouseOut</codeph>、および <codeph>mouseOver</codeph> イベントと一致するイベントです。ただし、次の 2 つのケースでは、LinkElement によって元のイベントが関連イベントに変換されます。 LinkElement によって <codeph>mouseOver</codeph> イベントが検出されると、<codeph>rollOver</codeph> イベントが送出されます。同様に、LinkElement によって <codeph>mouseOut</codeph> イベントが検出されると、<codeph>rollOut</codeph> イベントが送出されます。
+		 </p>
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.events.MouseEvent.xml"><linktext>flash.events.MouseEvent</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.events:CompositionCompleteEvent"><apiName>CompositionCompleteEvent</apiName><shortdesc> 
+	 このイベントは、作成操作の完了後に TextFlow インスタンスによって送出されます。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flash.events:Event</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 このイベントは、作成操作の完了後に TextFlow インスタンスによって送出されます。各テキストコンテナには、入力と表示の 2 つのステータスがあります。このイベントは、作成段階が終了したことを通知します。これにより、テキストを表示する前に、コンテナに必要および適切な変更を加えることができます。例えば、このイベントを使用してテキストフロー内の特定の単語または文字にハイライトを追加してから、そのテキストを表示できます。
+	 
+	 <p>このイベントを送出する主なメソッドは、<codeph>compose()</codeph>、<codeph>updateToController()</codeph> および <codeph>updateAllControllers()</codeph> です。これら 3 つのメソッドはすべて StandardFlowComposer クラスにあります。</p>
+	 
+	 <p><b>メモ：</b><codeph>updateAllControllers()</codeph> メソッドから送出されるイベントについては、イベントハンドラー関数で <codeph>updateAllControllers()</codeph> を再び呼び出さないようにしてください。<codeph>updateAllControllers()</codeph> メソッドでは作成と表示の両ステップを実行するので、このような呼び出しは再帰的な呼び出しになります。<codeph>updateAllControllers()</codeph> は、作成の終了後、表示ステップの実行前にこのイベントを送出します。この論理は <codeph>updateToController()</codeph> メソッドにも当てはまります。
+	 </p>
+	 
+	 </apiDesc><example conref="examples\CompositionCompleteEvent_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>flashx.textLayout.elements.TextFlow</linktext></link></related-links><apiConstructor id="flashx.textLayout.events:CompositionCompleteEvent:CompositionCompleteEvent"><apiName>CompositionCompleteEvent</apiName><shortdesc> コンストラクター
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>type</apiItemName><apiType value="String"/><apiDesc>イベントタイプ - 静的プロパティ COMPOSITION_COMPLETE を使用します。
+		 </apiDesc></apiParam><apiParam><apiItemName>bubbles</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>イベントがバブリングイベントかどうかを示します。このイベントではバブリングを実行できません。
+		 </apiDesc></apiParam><apiParam><apiItemName>cancelable</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>イベントに関連付けられた動作を回避できるかどうかを示します。このイベントはキャンセルできません。
+		 </apiDesc></apiParam><apiParam><apiItemName>textFlow</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiData>null</apiData><apiDesc>作成された TextFlow 
+		 </apiDesc></apiParam><apiParam><apiItemName>compositionStart</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>作成の開始。テキストフローへのインデックスとして示されます。
+		 </apiDesc></apiParam><apiParam><apiItemName>compositionLength</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>作成される文字の長さです
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> コンストラクター
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.events:CompositionCompleteEvent:COMPOSITION_COMPLETE"><apiName>COMPOSITION_COMPLETE</apiName><shortdesc> 
+	     compositionComplete イベントオブジェクトの type プロパティ値を定義します 
+	     </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>compositionComplete</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+	     <codeph>compositionComplete</codeph> イベントオブジェクトの <codeph>type</codeph> プロパティ値を定義します 
+	     </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:CompositionCompleteEvent:compositionLength:get"><apiName>compositionLength</apiName><shortdesc> 
+		 作成される文字数です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 作成される文字数です。
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:CompositionCompleteEvent:compositionStart:get"><apiName>compositionStart</apiName><shortdesc> 
+		 作成の影響を受けるテキスト範囲の開始位置です。テキストフローへのインデックスとして示されます。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 作成の影響を受けるテキスト範囲の開始位置です。テキストフローへのインデックスとして示されます。
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:CompositionCompleteEvent:textFlow:get"><apiName>textFlow</apiName><shortdesc>
+		 作成が終了した TextFlow です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.elements:TextFlow</apiValueClassifier></apiValueDef><apiDesc>
+		 作成が終了した TextFlow です。 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.events:DamageEvent"><apiName>DamageEvent</apiName><shortdesc> 
+	 損傷とマークされるたびに、TextFlow インスタンスによって送出されます。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flash.events:Event</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 損傷とマークされるたびに、TextFlow インスタンスによって送出されます。モデルまたはレイアウトに変更を加えると、損傷することがあります。
+	 
+	 </apiDesc><example conref="examples\DamageEvent_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>flashx.textLayout.elements.TextFlow</linktext></link></related-links><apiConstructor id="flashx.textLayout.events:DamageEvent:DamageEvent"><apiName>DamageEvent</apiName><shortdesc> コンストラクター
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>type</apiItemName><apiType value="String"/><apiDesc>損傷開始のテキストインデックスです
+		 </apiDesc></apiParam><apiParam><apiItemName>bubbles</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>損傷したテキストの長さです
+		 </apiDesc></apiParam><apiParam><apiItemName>cancelable</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam><apiParam><apiItemName>textFlow</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiData>null</apiData></apiParam><apiParam><apiItemName>damageAbsoluteStart</apiItemName><apiType value="int"/><apiData>0</apiData></apiParam><apiParam><apiItemName>damageLength</apiItemName><apiType value="int"/><apiData>0</apiData></apiParam></apiConstructorDef><apiDesc> コンストラクター
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.events:DamageEvent:DAMAGE"><apiName>DAMAGE</apiName><shortdesc> DamageEvent のイベントタイプです </shortdesc><prolog/><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>damage</apiData><apiType value="String"/></apiValueDef><apiDesc> DamageEvent のイベントタイプです </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:DamageEvent:damageAbsoluteStart:get"><apiName>damageAbsoluteStart</apiName><shortdesc>
+		 損傷の絶対開始です 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc>
+		 損傷の絶対開始です 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:DamageEvent:damageLength:get"><apiName>damageLength</apiName><shortdesc>
+		 損傷の長さです。 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc>
+		 損傷の長さです。 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:DamageEvent:textFlow:get"><apiName>textFlow</apiName><shortdesc>
+		 損傷した TextFlow です 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:TextFlow</apiValueClassifier></apiValueDef><apiDesc>
+		 損傷した TextFlow です 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.events:StatusChangeEvent"><apiName>StatusChangeEvent</apiName><shortdesc> 
+	 このイベントは、FlowElement のステータスが変更されたときに TextFlow インスタンスによって送出されます。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flash.events:Event</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 このイベントは、FlowElement のステータスが変更されたときに TextFlow インスタンスによって送出されます。このイベントを使用して、インライングラフィックエレメントの読み込みが完了したことを検出できます。イベントハンドラーを使用し、新しく読み込まれたインライングラフィックエレメントの存在に基づいて、テキストフローを再構成できます。
+	 
+	 </apiDesc><example conref="examples\StatusChangeEvent_example.as"/></apiClassifierDetail><apiConstructor id="flashx.textLayout.events:StatusChangeEvent:StatusChangeEvent"><apiName>StatusChangeEvent</apiName><shortdesc> ステータス変更情報を含むイベントオブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>type</apiItemName><apiType value="String"/><apiDesc>	イベントのタイプです。イベントリスナーは、継承された <codeph>type</codeph> プロパティを通じてこの情報にアクセスできます。StatusChangeEvent のタイプは、<codeph>StatusChangeEvent.INLINE_GRAPHIC_STATUS_CHANGE</codeph> の 1 つのみです。 
+		 </apiDesc></apiParam><apiParam><apiItemName>bubbles</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>	イベントがバブリングイベントかどうかを示します。このイベントではバブリングを実行できません。
+		 </apiDesc></apiParam><apiParam><apiItemName>cancelable</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>	イベントに関連付けられた動作を回避できるかどうかを示します。このイベントはキャンセルできません。
+		 </apiDesc></apiParam><apiParam><apiItemName>element</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiData>null</apiData><apiDesc>ステータスが変更された FlowElement インスタンスです。
+		 </apiDesc></apiParam><apiParam><apiItemName>status</apiItemName><apiType value="String"/><apiData>null</apiData><apiDesc>FlowElement インスタンスの新規ステータスです。
+		 </apiDesc></apiParam><apiParam><apiItemName>errorEvent</apiItemName><apiType value="flash.events:ErrorEvent"/><apiData>null</apiData><apiDesc>このステータスに関連付けられている ErrorEvent オブジェクト（ある場合）です。
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> ステータス変更情報を含むイベントオブジェクトを作成します。
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.events:StatusChangeEvent:INLINE_GRAPHIC_STATUS_CHANGE"><apiName>INLINE_GRAPHIC_STATUS_CHANGE</apiName><shortdesc> 
+	     inlineGraphicStatusChanged イベントオブジェクトの type プロパティ値を定義します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>inlineGraphicStatusChange</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+	     <codeph>inlineGraphicStatusChanged</codeph> イベントオブジェクトの <codeph>type</codeph> プロパティ値を定義します。
+	     </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:StatusChangeEvent:element:get"><apiName>element</apiName><shortdesc> 
+		 ステータスが変更された FlowElement インスタンスです。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.elements:FlowElement</apiValueClassifier></apiValueDef><apiDesc> 
+		 ステータスが変更された FlowElement インスタンスです。 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.elements.xml#FlowElement"><linktext>flashx.textLayout.elements.FlowElement</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.events:StatusChangeEvent:errorEvent:get"><apiName>errorEvent</apiName><shortdesc> 
+		 ステータス変更の結果として送出された ErrorEvent オブジェクトです。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="flash.events:ErrorEvent"/></apiValueDef><apiDesc> 
+		 ステータス変更の結果として送出された ErrorEvent オブジェクトです。 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.events.ErrorEvent.xml"><linktext>flash.events.ErrorEvent</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.events:StatusChangeEvent:status:get"><apiName>status</apiName><shortdesc>
+		 FlowElement の新規ステータスです。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc>
+		 FlowElement の新規ステータスです。このプロパティに指定可能な値は、InlineGraphicElementStatus クラスで定義されます。InlineGraphicElementStatus クラスには、使用可能な静的定数が 5 つあります。
+		 <ul>
+		   <li>ERROR : String = "error"。参照先グラフィックの読み込み中にエラーが発生しました。</li>
+		   <li>LOADING : String = "loading"。URL を表すグラフィックエレメントの読み込みが開始されました（完了はしていません）。</li>
+		   <li>LOAD_PENDING : String = "loadPending"。グラフィックエレメントは、読み込み済みでない URL です。</li>
+		   <li>READY : String = "ready"。グラフィックは完全に読み込まれ、適切にサイズ変更されています。</li>
+		   <li>SIZE_PENDING : String = "sizePending"。自動またはパーセント値により幅と高さが指定されたグラフィックエレメントは完全に読み込まれましたが、再構成されていません。</li>
+		 </ul>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.elements.xml#InlineGraphicElementStatus"><linktext>flashx.textLayout.elements.InlineGraphicElementStatus</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.events:SelectionEvent"><apiName>SelectionEvent</apiName><shortdesc> 
+	 EditManager または SelectionManager によってテキスト範囲が変更または選択されると、TextFlow インスタンスによって SelectionEvent オブジェクトが送出されます。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flash.events:Event</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 EditManager または SelectionManager によってテキスト範囲が変更または選択されると、TextFlow インスタンスによって SelectionEvent オブジェクトが送出されます。例えば、このイベントは、テキスト範囲が選択された場合だけでなく、ユーザーがテキストフローのどこかをクリックしたために選択範囲が変更された場合にも送出されます。また、このイベントは、EditManager によってテキスト範囲内のテキストまたはテキスト書式が変更された場合にも送出されます。
+	 
+	 </apiDesc><example conref="examples\SelectionEvent_example.as"/></apiClassifierDetail><apiConstructor id="flashx.textLayout.events:SelectionEvent:SelectionEvent"><apiName>SelectionEvent</apiName><shortdesc> 
+		 フロー操作情報を含むイベントオブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>type</apiItemName><apiType value="String"/><apiDesc>	イベントのタイプです。イベントリスナーは、継承された <codeph>type</codeph> プロパティを通じてこの情報にアクセスできます。SelectionEvent のタイプは<codeph>SelectionEvent.SELECTION_CHANGE</codeph> のみです。 
+		 </apiDesc></apiParam><apiParam><apiItemName>bubbles</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>	イベントがバブリングイベントかどうかを示します。このイベントではバブリングを実行できません。
+		 </apiDesc></apiParam><apiParam><apiItemName>cancelable</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>	イベントに関連付けられた動作を回避できるかどうかを示します。
+		 </apiDesc></apiParam><apiParam><apiItemName>selectionState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiData>null</apiData><apiDesc>	選択されたテキスト範囲を示す ElementRange タイプのオブジェクトです。
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 フロー操作情報を含むイベントオブジェクトを作成します。
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.events:SelectionEvent:SELECTION_CHANGE"><apiName>SELECTION_CHANGE</apiName><shortdesc> 
+		 SelectionEvent.SELECTION_CHANGE 定数により、選択イベントのイベントオブジェクトの type プロパティ値が定義されます。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>selectionChange</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 SelectionEvent.SELECTION_CHANGE 定数により、選択イベントのイベントオブジェクトの type プロパティ値が定義されます。 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:SelectionEvent:selectionState:get"><apiName>selectionState</apiName><shortdesc> 
+		 この SelectionEvent に関連付けられている選択範囲を示す SelectionState タイプのオブジェクトです。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.edit:SelectionState</apiValueClassifier></apiValueDef><apiDesc> 
+		 この SelectionEvent に関連付けられている選択範囲を示す SelectionState タイプのオブジェクトです。
+		 
+		 <p>このプロパティと ElementRange クラスを使用して、選択されたテキスト範囲を示す ElementRange インスタンスを作成できます。次のコード行を使用して、選択したテキスト範囲を示す ElementRange クラスのインスタンスを作成できます（<codeph>ev</codeph> 変数はイベントオブジェクトを示し、条件演算子を使用して <codeph>selectionState</codeph> プロパティに対して <codeph>null</codeph> 値がガードされます）。</p>
+		 <codeblock>
+		 // Find selected element range
+		 var range:ElementRange = ev.selectionState ?  
+		 	ElementRange.createElementRange(ev.selectionState.textFlow,
+		 	ev.selectionState.absoluteStart, ev.selectionState.absoluteEnd) : null;</codeblock>
+		 
+		 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.edit.xml#ElementRange"><linktext>flashx.textLayout.edit.ElementRange</linktext></link><link href="flashx.textLayout.edit.xml#SelectionState"><linktext>flashx.textLayout.edit.SelectionState</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.events:FlowOperationEvent"><apiName>FlowOperationEvent</apiName><shortdesc> このイベントは、操作が開始される直前および操作が終了した直後に、TextFlow インスタンスによって送出されます。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flash.events:Event</apiBaseClassifier></apiClassifierDef><apiDesc> このイベントは、操作が開始される直前および操作が終了した直後に、TextFlow インスタンスによって送出されます。送出されるイベントオブジェクトは両方とも FlowOperationEvent のインスタンスですが、操作の前後に送出されるイベントは大きく異なります。
+	 
+	 <p>すべての操作の実行前に、TextFlow オブジェクトから、<codeph>type</codeph> プロパティが <codeph>FlowOperationEvent.FLOW_OPERATION_BEGIN</codeph> に設定された FlowOperationEvent が送出されます。これから開始される操作のタイプは <codeph>operation</codeph> プロパティで確認できます。FLOW_OPERATION_BEGIN タイプのイベントはキャンセル可能です。操作を続行すべきでないと判断した場合は、<codeph>Event.PreventDefault()</codeph> を呼び出して操作をキャンセルできます。操作をキャンセルすると、操作は実行されず、FLOW_OPERATION_END イベントは送出されません。EditManager にコールバックして、イベントをトリガーした操作が実行される前に別の操作を行うこともできます。この場合、イベントハンドラーで開始する操作は、イベントをトリガーした操作と共に単一操作として取り消されます。</p>
+	 
+	 <p>操作を続行する場合、TextFlow は <codeph>type</codeph> プロパティを <codeph>FlowOperationEvent.FLOW_OPERATION_END</codeph> に設定して、操作の完了時に FlowOperationEvent を送出します。このイベントは、Flash Player で操作の結果として発生する可能性のあるエラーがスローされる前に送出されます。これにより、Flash Player でエラーがスローされる前に、エラーを処理できます。エラーには、イベントの <codeph>error</codeph> プロパティを通じてアクセスできます。エラーをイベントハンドラーで処理する場合、<codeph>Event.preventDefault()</codeph> を呼び出して FLOW_OPERATION_END イベントをキャンセルすることで、Flash Player でエラーがスローされるのを防ぐことができます。EditManager にコールバックして、追加操作を行うこともできます。この場合、操作はイベントをトリガーした操作と共に 1 つの単位として取り消されます。
+	 </p> 
+	 
+	 </apiDesc><example conref="examples\FlowOperationEvent_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.operations.xml#FlowOperation"><linktext>flashx.textLayout.operations.FlowOperation</linktext></link></related-links><apiConstructor id="flashx.textLayout.events:FlowOperationEvent:FlowOperationEvent"><apiName>FlowOperationEvent</apiName><shortdesc> フロー操作情報を含むイベントオブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>type</apiItemName><apiType value="String"/><apiDesc>		イベントのタイプです。イベントリスナーは、継承された <codeph>type</codeph> プロパティを通じてこの情報にアクセスできます。<codeph>FlowOperationEvent.FLOW_OPERATION_BEGIN</codeph> と <codeph>FlowOperationEvent.FLOW_OPERATION_END</codeph> の 2 つのタイプがあります。	
+		 </apiDesc></apiParam><apiParam><apiItemName>bubbles</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>		イベントがバブリングイベントかどうかを示します。このイベントではバブリングを実行できません。
+		 </apiDesc></apiParam><apiParam><apiItemName>cancelable</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>	イベントに関連付けられた動作を回避できるかどうかを示します。このイベントは、イベントハンドラー関数で <codeph>Event.preventDefault()</codeph> メソッドを呼び出してキャンセルできます。
+		 </apiDesc></apiParam><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.textLayout.operations:FlowOperation</apiOperationClassifier><apiData>null</apiData><apiDesc>	開始される、または終了した FlowOperation です。
+		 </apiDesc></apiParam><apiParam><apiItemName>level</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>		操作中に生成されるエラーです。
+		 </apiDesc></apiParam><apiParam><apiItemName>error</apiItemName><apiType value="Error"/><apiData>null</apiData></apiParam></apiConstructorDef><apiDesc> フロー操作情報を含むイベントオブジェクトを作成します。
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.events:FlowOperationEvent:FLOW_OPERATION_BEGIN"><apiName>FLOW_OPERATION_BEGIN</apiName><shortdesc> 
+		 flowOperationBegin イベントオブジェクトの type プロパティ値を定義します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>flowOperationBegin</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 操作が実行される前に送出される、<codeph>flowOperationBegin</codeph> イベントオブジェクトの <codeph>type</codeph> プロパティ値を定義します。このイベントをキャンセルすると、操作がブロックされます。 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowOperationEvent:FLOW_OPERATION_COMPLETE"><apiName>FLOW_OPERATION_COMPLETE</apiName><shortdesc>  
+		 flowOperationComplete イベントオブジェクトの type プロパティ値を定義します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>flowOperationComplete</apiData><apiType value="String"/></apiValueDef><apiDesc>  
+		 <codeph>flowOperationComplete</codeph> イベントオブジェクトの <codeph>type</codeph> プロパティ値を定義します。保留操作および作成操作を含むすべての操作が終了し、作成が完了して、表示がスクロールされた後に送出されます。
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowOperationEvent:FLOW_OPERATION_END"><apiName>FLOW_OPERATION_END</apiName><shortdesc>  
+		 flowOperationEnd イベントオブジェクトの type プロパティ値を定義します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>flowOperationEnd</apiData><apiType value="String"/></apiValueDef><apiDesc>  
+		 操作の完了後に送出される、<codeph>flowOperationEnd</codeph> イベントオブジェクトの <codeph>type</codeph> プロパティ値を定義します。すべてのエラーは <codeph>OperationEvent.error</codeph> に格納されます。エラーがある場合、このイベントをキャンセルすると、エラーの再スローをブロックできます。一般に、すべてのエラーは重大なエラーである可能性があります。
+	 	 <p>この時点で（実行後に）操作を変更すると、失敗することがあります。</p> 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowOperationEvent:error:get"><apiName>error</apiName><shortdesc> 
+		 操作中にエラーがスローされました（ある場合）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Error"/></apiValueDef><apiDesc> 
+		 操作中にエラーがスローされました（ある場合）。操作中にエラーが発生した場合、エラーオブジェクトへの参照が FLOW_OPERATION_END イベントに添付されます。これにより、Flash Player でエラーがスローされる前に、エラーを処理できます。イベントをキャンセルすると、Flash Player でエラーはスローされません。
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowOperationEvent:level:get"><apiName>level</apiName><shortdesc> 
+		 操作は、ネストを使用して作成操作に結合されることもあります。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 操作は、ネストを使用して作成操作に結合されることもあります。このフラグは、操作のネストレベルを記述します。
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowOperationEvent:operation:get"><apiName>operation</apiName><shortdesc> 
+		 開始される、または終了した操作です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.operations:FlowOperation</apiValueClassifier></apiValueDef><apiDesc> 
+		 開始される、または終了した操作です。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.operations.xml#FlowOperation"><linktext>flashx.textLayout.operations.FlowOperation</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.events:UpdateCompleteEvent"><apiName>UpdateCompleteEvent</apiName><shortdesc> 
+	 コンテナが更新を完了すると、TextFlow インスタンスによってこのイベントが送出されます。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata><asCustoms><internal>Note: the DamageEvent_example class contains a good example of 
+	 using the UpdateCompleteEvent, so I have included it as the class example
+	 instead of creating a new example. I've updated the description of the
+	 DamageEvent_example file to include prominent mention of the UpdateCompleteEvent.
+	 
+	 </internal></asCustoms></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flash.events:Event</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 コンテナが更新を完了すると、TextFlow インスタンスによってこのイベントが送出されます。各テキストコンテナには、入力と表示の 2 つのステータスがあります。このイベントは、表示段階が終了したことを通知します。これにより、表示可能になったが、まだ画面にペイントされていないときに、コンテナに必要な変更を加えることができます。
+	 
+	 </apiDesc><example conref="examples\DamageEvent_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>flashx.textLayout.elements.TextFlow</linktext></link></related-links><apiConstructor id="flashx.textLayout.events:UpdateCompleteEvent:UpdateCompleteEvent"><apiName>UpdateCompleteEvent</apiName><shortdesc> コンストラクター
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>type</apiItemName><apiType value="String"/><apiDesc>イベントタイプ - 静的プロパティ UPDATE_COMPLETE を使用します。
+		 </apiDesc></apiParam><apiParam><apiItemName>bubbles</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>イベントがバブリングイベントかどうかを示します。このイベントではバブリングを実行できません。
+		 </apiDesc></apiParam><apiParam><apiItemName>cancelable</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>イベントに関連付けられた動作を回避できるかどうかを示します。このイベントはキャンセルできません。
+		 </apiDesc></apiParam><apiParam><apiItemName>textFlow</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiData>null</apiData><apiDesc>コンテナが更新された ContainerController です
+		 </apiDesc></apiParam><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiData>null</apiData><apiDesc>更新された TextFlow です
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> コンストラクター
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.events:UpdateCompleteEvent:UPDATE_COMPLETE"><apiName>UPDATE_COMPLETE</apiName><shortdesc> 
+	     UpdateCompleteEvent オブジェクトの type プロパティ値を定義します。 
+	     </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>updateComplete</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+	     <codeph>UpdateCompleteEvent</codeph> オブジェクトの <codeph>type</codeph> プロパティ値を定義します。 
+	     </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:UpdateCompleteEvent:controller:get"><apiName>controller</apiName><shortdesc> 
+		 更新されるコンテナのコントローラーです
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.container:ContainerController</apiValueClassifier></apiValueDef><apiDesc> 
+		 更新されるコンテナのコントローラーです
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:UpdateCompleteEvent:textFlow:get"><apiName>textFlow</apiName><shortdesc>
+		 更新された TextFlow です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.elements:TextFlow</apiValueClassifier></apiValueDef><apiDesc>
+		 更新された TextFlow です。 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.events:TextLayoutEvent"><apiName>TextLayoutEvent</apiName><shortdesc>
+	 TextLayoutEvent インスタンスは、カスタムプロパティを必要としない TextLayoutEvent.SCROLL イベントなどのイベントを表します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flash.events:Event</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 TextLayoutEvent インスタンスは、カスタムプロパティを必要としない <codeph>TextLayoutEvent.SCROLL</codeph> イベントなどのイベントを表します。 
+	 <p>スクロールイベントは、<codeph>type</codeph> プロパティが <codeph>TextLayoutEvent.SCROLL</codeph> に設定された TextLayoutEvent インスタンスによって表されます。スクロールイベントには、固有のイベントクラスを持つ他のイベントのようなカスタムプロパティがないため、スクロールイベント固有のクラスは不要です。新規 Text Layout イベントにカスタムプロパティが不要な場合、このイベントは TextLayoutEvent オブジェクトによって表されますが、<codeph>type</codeph> プロパティは新規の静的定数に設定されます。
+	 </p>
+	 
+	 </apiDesc><example conref="examples\TextLayoutEvent_example.as"/></apiClassifierDetail><apiConstructor id="flashx.textLayout.events:TextLayoutEvent:TextLayoutEvent"><apiName>TextLayoutEvent</apiName><shortdesc>
+		  TextLayoutEvent クラスは、多数の Text Layout イベントのためにイベントリスナーに渡されるイベントオブジェクトを表します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>type</apiItemName><apiType value="String"/></apiParam><apiParam><apiItemName>bubbles</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam><apiParam><apiItemName>cancelable</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiConstructorDef><apiDesc>
+		  TextLayoutEvent クラスは、多数の Text Layout イベントのためにイベントリスナーに渡されるイベントオブジェクトを表します。
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.events:TextLayoutEvent:SCROLL"><apiName>SCROLL</apiName><shortdesc>
+	      TextLayoutEvent.SCROLL 定数により、スクロールイベントのイベントオブジェクトの type プロパティ値が定義されます。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>scroll</apiData><apiType value="String"/></apiValueDef><apiDesc>
+	      <codeph>TextLayoutEvent.SCROLL</codeph> 定数により、<codeph>scroll</codeph> イベントのイベントオブジェクトの <codeph>type</codeph> プロパティ値が定義されます。
+	     </apiDesc></apiValueDetail></apiValue></apiClassifier></apiPackage>

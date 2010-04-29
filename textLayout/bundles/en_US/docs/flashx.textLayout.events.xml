@@ -1,0 +1,359 @@
+<apiPackage id="flashx.textLayout.events"><apiName>flashx.textLayout.events</apiName><apiDetail/><apiClassifier id="flashx.textLayout.events:StatusChangeEvent"><apiName>StatusChangeEvent</apiName><shortdesc> 
+	 A TextFlow instance dispatches this event when the status of a FlowElement changes.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flash.events:Event</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 A TextFlow instance dispatches this event when the status of a FlowElement changes. 
+	 This event can be used to detect when an inline graphic element has
+	 completed loading. You can use your event handler to recompose the text flow
+	 based on the presence of the newly loaded inline graphic element.
+	 
+	 </apiDesc><example conref="examples\StatusChangeEvent_example.as"/></apiClassifierDetail><apiConstructor id="flashx.textLayout.events:StatusChangeEvent:StatusChangeEvent"><apiName>StatusChangeEvent</apiName><shortdesc> Creates an event object that contains information about a status change.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>type</apiItemName><apiType value="String"/><apiDesc>	The type of the event. Event listeners can access this information through the
+		 inherited <codeph>type</codeph> property. There is only one type of StatusChangeEvent: 
+		 <codeph>StatusChangeEvent.INLINE_GRAPHIC_STATUS_CHANGE</codeph>; 
+		 </apiDesc></apiParam><apiParam><apiItemName>bubbles</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>	Indicates whether an event is a bubbling event.This event does not bubble.
+		 </apiDesc></apiParam><apiParam><apiItemName>cancelable</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>	Indicates whether the behavior associated with the event can be prevented.
+		 This event cannot be cancelled.
+		 </apiDesc></apiParam><apiParam><apiItemName>element</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiData>null</apiData><apiDesc>The FlowElement instance that has experienced a change in status.
+		 </apiDesc></apiParam><apiParam><apiItemName>status</apiItemName><apiType value="String"/><apiData>null</apiData><apiDesc>The FlowElement instance's new status.
+		 </apiDesc></apiParam><apiParam><apiItemName>errorEvent</apiItemName><apiType value="flash.events:ErrorEvent"/><apiData>null</apiData><apiDesc>The ErrorEvent object, if any, associated with the status.
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> Creates an event object that contains information about a status change.
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.events:StatusChangeEvent:INLINE_GRAPHIC_STATUS_CHANGE"><apiName>INLINE_GRAPHIC_STATUS_CHANGE</apiName><shortdesc> 
+	     Defines the value of the type property of a inlineGraphicStatusChanged event object.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>inlineGraphicStatusChange</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+	     Defines the value of the <codeph>type</codeph> property of a <codeph>inlineGraphicStatusChanged</codeph> event object.
+	     </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:StatusChangeEvent:element:get"><apiName>element</apiName><shortdesc> 
+		 The FlowElement instance that has experienced a change in status.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.elements:FlowElement</apiValueClassifier></apiValueDef><apiDesc> 
+		 The FlowElement instance that has experienced a change in status. 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.elements.xml#FlowElement"><linktext>flashx.textLayout.elements.FlowElement</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.events:StatusChangeEvent:errorEvent:get"><apiName>errorEvent</apiName><shortdesc> 
+		 The ErrorEvent object that was dispatched as a result of the status change.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="flash.events:ErrorEvent"/></apiValueDef><apiDesc> 
+		 The ErrorEvent object that was dispatched as a result of the status change. 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.events.ErrorEvent.xml"><linktext>flash.events.ErrorEvent</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.events:StatusChangeEvent:status:get"><apiName>status</apiName><shortdesc>
+		 The FlowElement's new status.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc>
+		 The FlowElement's new status. The possible values of this property are
+		 defined by the InlineGraphicElementStatus class. There are five static constants
+		 available in the InlineGraphicElementStatus class:
+		 <ul>
+		   <li>ERROR : String = "error". An error occurred during loading of a referenced graphic.</li>
+		   <li>LOADING : String = "loading". Load has been initiated (but not completed) on a graphic element that is a URL.</li>
+		   <li>LOAD_PENDING : String = "loadPending". Graphic element is an URL that has not been loaded.</li>
+		   <li>READY : String = "ready". Graphic is completely loaded and properly sized.</li>
+		   <li>SIZE_PENDING : String = "sizePending". Graphic element with auto or percentage width/height has completed loading but has not been recomposed.</li>
+		 </ul>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.elements.xml#InlineGraphicElementStatus"><linktext>flashx.textLayout.elements.InlineGraphicElementStatus</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.events:FlowElementMouseEvent"><apiName>FlowElementMouseEvent</apiName><shortdesc> A LinkElement dispatches this event when it detects mouse activity.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flash.events:Event</apiBaseClassifier></apiClassifierDef><apiDesc> A LinkElement dispatches this event when it detects mouse activity.
+	 The Text Layout Framework includes this special version of mouse events
+	 because mouse events are generally unwanted when a link element is
+	 embedded in an editable text flow. 
+	 <p>You can add an event listener to a LinkElement to listen for this
+	 type of event. If you choose to cancel the event by calling
+	 <codeph>Event.preventDefault()</codeph>, the default behavior associated
+	 with the event will not occur.
+	 </p>
+	 <p>If you choose not to add an event listener to the LinkElement, or
+	 your event listener function does not cancel the behavior, the 
+	 event is again dispatched, but this time by the LinkElement's
+	 associated TextFlow instance rather than by the LinkElement itself. 
+	 This provides a second opportunity to listen for this event with
+	 an event listener attached to the TextFlow. 
+	 </p>
+	 <p>FlowElementMouseEvents are
+	 dispatched only when the text cannot be edited or when the control key 
+	 is pressed concurrently with the mouse activity.</p>
+	 <p>
+	 The following six event types are dispatched only when the text
+	 cannot be edited or when the control key is pressed:
+	 <ul>
+	   <li><codeph>MouseEvent.CLICK</codeph></li>
+	   <li><codeph>MouseEvent.MOUSE_DOWN</codeph></li>
+	   <li><codeph>MouseEvent.MOUSE_OUT</codeph></li>
+	   <li><codeph>MouseEvent.MOUSE_UP</codeph></li>
+	   <li><codeph>MouseEvent.ROLL_OVER</codeph></li>
+	   <li><codeph>MouseEvent.ROLL_OUT</codeph></li>
+	 </ul>
+	 </p>
+	 
+	 </apiDesc><example conref="examples\FlowElementMouseEvent_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#LinkElement"><linktext>flashx.textLayout.elements.LinkElement</linktext></link></related-links><apiConstructor id="flashx.textLayout.events:FlowElementMouseEvent:FlowElementMouseEvent"><apiName>FlowElementMouseEvent</apiName><shortdesc> 
+		 Creates an event object that contains information about mouse activity.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>type</apiItemName><apiType value="String"/><apiDesc> The type of the event. Event listeners can access this information through the
+		 inherited <codeph>type</codeph> property. There are six types:
+		 <codeph>MouseEvent.CLICK</codeph>; <codeph>MouseEvent.MOUSE_DOWN</codeph>; <codeph>MouseEvent.MOUSE_OUT</codeph>;
+		 <codeph>MouseEvent.MOUSE_UP</codeph>; <codeph>MouseEvent.ROLL_OVER</codeph>; and <codeph>MouseEvent.ROLL_OUT</codeph>.
+		 </apiDesc></apiParam><apiParam><apiItemName>bubbles</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>Determines whether the Event object participates in the bubbling phase of the
+		 event flow. FlowElementMouseEvent objects do not bubble.
+		 </apiDesc></apiParam><apiParam><apiItemName>cancelable</apiItemName><apiType value="Boolean"/><apiData>true</apiData><apiDesc>Determines whether the Event object can be canceled. Event listeners can
+		 access this information through the inherited <codeph>cancelable</codeph> property. FlowElementMouseEvent
+		 objects can be cancelled. You can cancel the default behavior associated with this event
+		 by calling the <codeph>preventDefault()</codeph> method in your event listener.
+		 </apiDesc></apiParam><apiParam><apiItemName>flowElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiData>null</apiData><apiDesc>The instance of FlowElement, usually a LinkElement, associated with this
+		 event. Event listeners can access this information through the <codeph>flowElement</codeph> property.
+		 </apiDesc></apiParam><apiParam><apiItemName>originalEvent</apiItemName><apiType value="flash.events:MouseEvent"/><apiData>null</apiData><apiDesc>The original mouse event that occurred on the flowElement. Event listeners can 
+		 access this information through the <codeph>originalEvent</codeph> property.
+
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Creates an event object that contains information about mouse activity.
+		 Event objects are passed as parameters to event listeners. Use the
+		 constructor if you plan to manually dispatch an event. You do not need
+		 to use the constructor to listen for FlowElementMouseEvent objects
+		 generated by a LinkElement.
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.events:FlowElementMouseEvent:CLICK"><apiName>CLICK</apiName><shortdesc/><prolog/><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>click</apiData><apiType value="String"/></apiValueDef></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowElementMouseEvent:MOUSE_DOWN"><apiName>MOUSE_DOWN</apiName><shortdesc/><prolog/><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>mouseDown</apiData><apiType value="String"/></apiValueDef></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowElementMouseEvent:MOUSE_MOVE"><apiName>MOUSE_MOVE</apiName><shortdesc/><prolog/><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>mouseMove</apiData><apiType value="String"/></apiValueDef></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowElementMouseEvent:MOUSE_UP"><apiName>MOUSE_UP</apiName><shortdesc/><prolog/><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>mouseUp</apiData><apiType value="String"/></apiValueDef></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowElementMouseEvent:ROLL_OUT"><apiName>ROLL_OUT</apiName><shortdesc/><prolog/><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>rollOut</apiData><apiType value="String"/></apiValueDef></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowElementMouseEvent:ROLL_OVER"><apiName>ROLL_OVER</apiName><shortdesc/><prolog/><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>rollOver</apiData><apiType value="String"/></apiValueDef></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowElementMouseEvent:flowElement:get"><apiName>flowElement</apiName><shortdesc> 
+		 The LinkElement that dispatched the event.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.elements:FlowElement</apiValueClassifier></apiValueDef><apiDesc> 
+		 The LinkElement that dispatched the event.
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.elements.xml#LinkElement"><linktext>flashx.textLayout.elements.LinkElement</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.events:FlowElementMouseEvent:originalEvent:get"><apiName>originalEvent</apiName><shortdesc> 
+		 The original mouse event generated by the mouse activity.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="flash.events:MouseEvent"/></apiValueDef><apiDesc> 
+		 The original mouse event generated by the mouse activity. 
+		 This property can contain any of the following values:
+		 <ul>
+		   <li><codeph>MouseEvent.CLICK</codeph></li>
+		   <li><codeph>MouseEvent.MOUSE_DOWN</codeph></li>
+		   <li><codeph>MouseEvent.MOUSE_OUT</codeph></li>
+		   <li><codeph>MouseEvent.MOUSE_UP</codeph></li>
+		   <li><codeph>MouseEvent.MOUSE_OVER</codeph></li>
+		   <li><codeph>MouseEvent.MOUSE_OUT</codeph></li>
+		 </ul>
+		 <p>
+		 In most cases the original event matches the event that the
+		 LinkElement dispatches. The events match for the <codeph>click</codeph>,
+		 <codeph>mouseDown</codeph>, <codeph>mouseOut</codeph>, and <codeph>mouseOver</codeph>
+		 events. There are two cases, however, in which the original event
+		 is converted by the LinkElement to a related event. 
+		 If a LinkElement detects a <codeph>mouseOver</codeph> event, it dispatches
+		 a <codeph>rollOver</codeph> event. Likewise, if a LinkElement detects
+		 a <codeph>mouseOut</codeph> event, it dispatches a <codeph>rollOut</codeph> event.
+		 </p>
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.events.MouseEvent.xml"><linktext>flash.events.MouseEvent</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.events:CompositionCompleteEvent"><apiName>CompositionCompleteEvent</apiName><shortdesc> 
+	 A TextFlow instance dispatches this event after a compose operation completes.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flash.events:Event</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 A TextFlow instance dispatches this event after a compose operation completes. 
+	 Each text container has two states: composition and display. This event notifies
+	 you when the composition phase has ended. This provides an opportunity to make any
+	 necessary and appropriate changes to the container before you display the text. 
+	 For example, you can use this event to add highlighting of certain words or
+	 characters in the text flow before the text is displayed.
+	 
+	 <p>The three main methods that dispatch this event are <codeph>compose()</codeph>, 
+	 <codeph>updateToController()</codeph>, and <codeph>updateAllControllers()</codeph>.
+	 All three of these methods are in the StandardFlowComposer class.</p>
+	 
+	 <p><b>Note: </b>If the event is dispatched by the
+	 <codeph>updateAllControllers()</codeph> method, do not call 
+	 <codeph>updateAllControllers()</codeph> again in your event handler function.
+	 Such a call would be a recursive call because the <codeph>updateAllControllers()</codeph> 
+	 method executes both the composition and display steps. The <codeph>updateAllControllers()</codeph>
+	 dispatches this event after composition completes, but before the display step executes.
+	 The same reasoning applies to the <codeph>updateToController()</codeph> method.
+	 </p>
+	 
+	 </apiDesc><example conref="examples\CompositionCompleteEvent_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>flashx.textLayout.elements.TextFlow</linktext></link></related-links><apiConstructor id="flashx.textLayout.events:CompositionCompleteEvent:CompositionCompleteEvent"><apiName>CompositionCompleteEvent</apiName><shortdesc> Constructor
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>type</apiItemName><apiType value="String"/><apiDesc>event type - use the static property COMPOSITION_COMPLETE.
+		 </apiDesc></apiParam><apiParam><apiItemName>bubbles</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>Indicates whether an event is a bubbling event. This event does not bubble.
+		 </apiDesc></apiParam><apiParam><apiItemName>cancelable</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>Indicates whether the behavior associated with the event can be prevented.
+		 This event cannot be cancelled.
+		 </apiDesc></apiParam><apiParam><apiItemName>textFlow</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiData>null</apiData><apiDesc>The TextFlow which was composed
+		 </apiDesc></apiParam><apiParam><apiItemName>compositionStart</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>start of composition, in terms of an index into the text flow.
+		 </apiDesc></apiParam><apiParam><apiItemName>compositionLength</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>length number of characters composed
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> Constructor
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.events:CompositionCompleteEvent:COMPOSITION_COMPLETE"><apiName>COMPOSITION_COMPLETE</apiName><shortdesc> 
+	     Defines the value of the type property of a compositionComplete event object 
+	     </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>compositionComplete</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+	     Defines the value of the <codeph>type</codeph> property of a <codeph>compositionComplete</codeph> event object 
+	     </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:CompositionCompleteEvent:compositionLength:get"><apiName>compositionLength</apiName><shortdesc> 
+		 The number of characters composed.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 The number of characters composed.
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:CompositionCompleteEvent:compositionStart:get"><apiName>compositionStart</apiName><shortdesc> 
+		 The start location of the text range affected by the composition, expressed as an index into the text flow.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 The start location of the text range affected by the composition, expressed as an index into the text flow.
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:CompositionCompleteEvent:textFlow:get"><apiName>textFlow</apiName><shortdesc>
+		 TextFlow on which composition has been completed.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.elements:TextFlow</apiValueClassifier></apiValueDef><apiDesc>
+		 TextFlow on which composition has been completed. 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.events:DamageEvent"><apiName>DamageEvent</apiName><shortdesc> 
+	 A TextFlow instance dispatches this each time it is marked as damaged.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flash.events:Event</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 A TextFlow instance dispatches this each time it is marked as damaged.  Damage can be caused by changes to the model or changes to the layout.
+	 
+	 </apiDesc><example conref="examples\DamageEvent_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>flashx.textLayout.elements.TextFlow</linktext></link></related-links><apiConstructor id="flashx.textLayout.events:DamageEvent:DamageEvent"><apiName>DamageEvent</apiName><shortdesc> Constructor
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>type</apiItemName><apiType value="String"/><apiDesc>text index of the start of the damage
+		 </apiDesc></apiParam><apiParam><apiItemName>bubbles</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>length of text that was damaged
+		 </apiDesc></apiParam><apiParam><apiItemName>cancelable</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam><apiParam><apiItemName>textFlow</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiData>null</apiData></apiParam><apiParam><apiItemName>damageAbsoluteStart</apiItemName><apiType value="int"/><apiData>0</apiData></apiParam><apiParam><apiItemName>damageLength</apiItemName><apiType value="int"/><apiData>0</apiData></apiParam></apiConstructorDef><apiDesc> Constructor
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.events:DamageEvent:DAMAGE"><apiName>DAMAGE</apiName><shortdesc> Event type for DamageEvent </shortdesc><prolog/><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>damage</apiData><apiType value="String"/></apiValueDef><apiDesc> Event type for DamageEvent </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:DamageEvent:damageAbsoluteStart:get"><apiName>damageAbsoluteStart</apiName><shortdesc>
+		 Absolute start of the damage 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc>
+		 Absolute start of the damage 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:DamageEvent:damageLength:get"><apiName>damageLength</apiName><shortdesc>
+		 Length of the damage 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc>
+		 Length of the damage 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:DamageEvent:textFlow:get"><apiName>textFlow</apiName><shortdesc>
+		 TextFlow owning the damage 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:TextFlow</apiValueClassifier></apiValueDef><apiDesc>
+		 TextFlow owning the damage 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.events:SelectionEvent"><apiName>SelectionEvent</apiName><shortdesc> 
+	 A TextFlow instance dispatches a SelectionEvent object when
+	 an EditManager or SelectionManager changes or selects a range of text.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flash.events:Event</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 A TextFlow instance dispatches a SelectionEvent object when
+	 an EditManager or SelectionManager changes or selects a range of text. 
+	 For example, this event is dispatched not only when a range of text is
+	 selected, but also when the selection changes because the
+	 user clicks elsewhere in the text flow. Moreover, this
+	 event is also dispatched when an EditManager changes
+	 the text or text formatting within a range of text.
+	 
+	 </apiDesc><example conref="examples\SelectionEvent_example.as"/></apiClassifierDetail><apiConstructor id="flashx.textLayout.events:SelectionEvent:SelectionEvent"><apiName>SelectionEvent</apiName><shortdesc> 
+		 Creates an event object that contains information about a flow operation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>type</apiItemName><apiType value="String"/><apiDesc>	The type of the event. Event listeners can access this information through the
+		 inherited <codeph>type</codeph> property. There is only one type of SelectionEvent: 
+		 <codeph>SelectionEvent.SELECTION_CHANGE</codeph>; 
+		 </apiDesc></apiParam><apiParam><apiItemName>bubbles</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>	Indicates whether an event is a bubbling event.This event does not bubble.
+		 </apiDesc></apiParam><apiParam><apiItemName>cancelable</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>	Indicates whether the behavior associated with the event can be prevented.
+		 </apiDesc></apiParam><apiParam><apiItemName>selectionState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiData>null</apiData><apiDesc>	An object of type ElementRange that describes the range of text selected.
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Creates an event object that contains information about a flow operation.
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.events:SelectionEvent:SELECTION_CHANGE"><apiName>SELECTION_CHANGE</apiName><shortdesc> 
+		 The SelectionEvent.SELECTION_CHANGE constant defines the value of the 
+		 type property of the event object for a selection event.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>selectionChange</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 The SelectionEvent.SELECTION_CHANGE constant defines the value of the 
+		 type property of the event object for a selection event. 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:SelectionEvent:selectionState:get"><apiName>selectionState</apiName><shortdesc> 
+		 An object of type SelectionState that represents the selected range associated with this SelectionEvent.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.edit:SelectionState</apiValueClassifier></apiValueDef><apiDesc> 
+		 An object of type SelectionState that represents the selected range associated with this SelectionEvent.
+		 
+		 <p>You can use this property, along with the ElementRange class, to create an ElementRange
+		 instance that represents the range of selected text.
+		 You can use the following line of code to create an instance of the
+		 ElementRange class that represents the range of selected text
+		 (the <codeph>ev</codeph> variable represents the event object, and the conditional operator 
+		 is used to guard against a <codeph>null</codeph> value for the <codeph>selectionState</codeph>
+		 property):</p>
+		 <codeblock>
+		 // Find selected element range
+		 var range:ElementRange = ev.selectionState ?  
+		 	ElementRange.createElementRange(ev.selectionState.textFlow,
+		 	ev.selectionState.absoluteStart, ev.selectionState.absoluteEnd) : null;</codeblock>
+		 
+		 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.edit.xml#ElementRange"><linktext>flashx.textLayout.edit.ElementRange</linktext></link><link href="flashx.textLayout.edit.xml#SelectionState"><linktext>flashx.textLayout.edit.SelectionState</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.events:FlowOperationEvent"><apiName>FlowOperationEvent</apiName><shortdesc> A TextFlow instance dispatches this event just before an operation commences
+	 and again just after an operation completes.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flash.events:Event</apiBaseClassifier></apiClassifierDef><apiDesc> A TextFlow instance dispatches this event just before an operation commences
+	 and again just after an operation completes. Although the event object
+	 dispatched in both cases is an instance of FlowOperationEvent, the events
+	 dispatched before and after an operation differ in significant ways.
+	 
+	 <p>Before any operation is carried out, a TextFlow object dispatches a FlowOperationEvent
+	 with its <codeph>type</codeph> property set to <codeph>FlowOperationEvent.FLOW_OPERATION_BEGIN.</codeph>
+	 You can determine what type of operation is about to commence by checking
+	 the <codeph>operation</codeph> property. Events of type FLOW_OPERATION_BEGIN are
+	 cancellable, which means that if you decide that the operation should not proceed,
+	 you can call <codeph>Event.PreventDefault()</codeph> to cancel the operation.
+	 If you cancel the operation, the operation is not performed and the 
+	 FLOW_OPERATION_END event is not dispatched. You may also choose to call back into the
+	 EditManager to do another operation before the operation that triggered the event is done. If you do
+	 this, the operations you initiate in your event handler will be undone as a single
+	 operation with the operation that triggered the event.</p>
+	 
+	 <p>If you allow the operation to proceed, TextFlow will dispatch a FlowOperationEvent
+	 upon completion of the operation with its <codeph>type</codeph> property set to
+	 <codeph>FlowOperationEvent.FLOW_OPERATION_END</codeph>. This event is dispatched
+	 before Flash Player throws any errors that may have occurred as a result of the
+	 operation. This gives you an opportunity to process the error before Flash Player
+	 throws the error. You can access the error through the event's <codeph>error</codeph>
+	 property. If you choose to handle the error in your event handler, you can prevent
+	 Flash Player from throwing the error by cancelling the FLOW_OPERATION_END event
+	 by calling <codeph>Event.preventDefault()</codeph>. You may also choose to call back into the
+	 EditManager to do some additional operations. If you do this, the operations that result
+	 will be undone as a unit with the operation that triggered the event.
+	 </p> 
+	 
+	 </apiDesc><example conref="examples\FlowOperationEvent_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.operations.xml#FlowOperation"><linktext>flashx.textLayout.operations.FlowOperation</linktext></link></related-links><apiConstructor id="flashx.textLayout.events:FlowOperationEvent:FlowOperationEvent"><apiName>FlowOperationEvent</apiName><shortdesc> Creates an event object that contains information about a flow operation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>type</apiItemName><apiType value="String"/><apiDesc>		The type of the event. Event listeners can access this information through the
+		 inherited <codeph>type</codeph> property. There are two types: 
+		 <codeph>FlowOperationEvent.FLOW_OPERATION_BEGIN</codeph>; 
+		 <codeph>FlowOperationEvent.FLOW_OPERATION_END</codeph>.
+		 </apiDesc></apiParam><apiParam><apiItemName>bubbles</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>		Indicates whether an event is a bubbling event.This event does not bubble.
+		 </apiDesc></apiParam><apiParam><apiItemName>cancelable</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>	Indicates whether the behavior associated with the event can be prevented.
+		 This event can be cancelled by calling the <codeph>Event.preventDefault()</codeph> method in
+		 your event handler function.
+		 </apiDesc></apiParam><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.textLayout.operations:FlowOperation</apiOperationClassifier><apiData>null</apiData><apiDesc>	The FlowOperation that is about to commence or that has just ended.
+		 </apiDesc></apiParam><apiParam><apiItemName>level</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>		Any Error generating during the operation.
+		 </apiDesc></apiParam><apiParam><apiItemName>error</apiItemName><apiType value="Error"/><apiData>null</apiData></apiParam></apiConstructorDef><apiDesc> Creates an event object that contains information about a flow operation.
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.events:FlowOperationEvent:FLOW_OPERATION_BEGIN"><apiName>FLOW_OPERATION_BEGIN</apiName><shortdesc> 
+		 Defines the value of the type property of a flowOperationBegin event object.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>flowOperationBegin</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 Defines the value of the <codeph>type</codeph> property of a <codeph>flowOperationBegin</codeph> event object.
+		 Dispatched before an operation is executed.   Cancelling this event blocks the operation. 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowOperationEvent:FLOW_OPERATION_COMPLETE"><apiName>FLOW_OPERATION_COMPLETE</apiName><shortdesc>  
+		 Defines the value of the type property of a flowOperationComplete event object.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>flowOperationComplete</apiData><apiType value="String"/></apiValueDef><apiDesc>  
+		 Defines the value of the <codeph>type</codeph> property of a <codeph>flowOperationComplete</codeph> event object.
+		 Dispatched after all operations including pending and composite operations are completed, composition is finished and the display is scrolled.
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowOperationEvent:FLOW_OPERATION_END"><apiName>FLOW_OPERATION_END</apiName><shortdesc>  
+		 Defines the value of the type property of a flowOperationEnd event object.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>flowOperationEnd</apiData><apiType value="String"/></apiValueDef><apiDesc>  
+		 Defines the value of the <codeph>type</codeph> property of a <codeph>flowOperationEnd</codeph> event object.
+		 Dispatched after an operation completes. Any errors are stored in <codeph>OperationEvent.error</codeph>.
+	 	 If there is an error, cancelling this event blocks the rethrow of the error.
+	 	 Generally speaking all errors are likely to be fatal.
+	 	 <p>Changing an operation at this time (after it has been executed) may fail.</p> 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowOperationEvent:error:get"><apiName>error</apiName><shortdesc> 
+		 The error thrown, if any, during an operation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Error"/></apiValueDef><apiDesc> 
+		 The error thrown, if any, during an operation.  
+		 If an error occurs during an operation, a reference to the error object is attached to the 
+		 FLOW_OPERATION_END event. This give you the opportunity to deal with the error
+		 before Flash Player throws the error. If you cancel the event, Flash Player will not throw the error.
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowOperationEvent:level:get"><apiName>level</apiName><shortdesc> 
+		 Operations may be merged into composite operations through nesting.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 Operations may be merged into composite operations through nesting.  This flag describes the nesting level of the operation.
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowOperationEvent:operation:get"><apiName>operation</apiName><shortdesc> 
+		 The operation that is about to begin or has just ended.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.operations:FlowOperation</apiValueClassifier></apiValueDef><apiDesc> 
+		 The operation that is about to begin or has just ended.
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.operations.xml#FlowOperation"><linktext>flashx.textLayout.operations.FlowOperation</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.events:TextLayoutEvent"><apiName>TextLayoutEvent</apiName><shortdesc>
+	 A TextLayoutEvent instance represents an event, such as the 
+	 TextLayoutEvent.SCROLL event, that does not require
+	 custom properties.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flash.events:Event</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 A TextLayoutEvent instance represents an event, such as the 
+	 <codeph>TextLayoutEvent.SCROLL</codeph> event, that does not require
+	 custom properties. 
+	 <p>A scroll event is represented by a TextLayoutEvent instance with its 
+	 <codeph>type</codeph> property set to <codeph>TextLayoutEvent.SCROLL</codeph>.
+	 A class specifically for scroll events is not necessary because there are
+	 no custom properties for a scroll event, as there are for the other
+	 events that have specific event classes.
+	 If a new text layout event is needed, and the event does not require
+	 custom properties, the new event will also be represented by a
+	 TextLayoutEvent object, but with its <codeph>type</codeph> property
+	 set to a new static constant.
+	 </p>
+	 
+	 </apiDesc><example conref="examples\TextLayoutEvent_example.as"/></apiClassifierDetail><apiConstructor id="flashx.textLayout.events:TextLayoutEvent:TextLayoutEvent"><apiName>TextLayoutEvent</apiName><shortdesc>
+		  The TextLayoutEvent class represents the event object passed to
+		  the event listener for many Text Layout events.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>type</apiItemName><apiType value="String"/></apiParam><apiParam><apiItemName>bubbles</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam><apiParam><apiItemName>cancelable</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiConstructorDef><apiDesc>
+		  The TextLayoutEvent class represents the event object passed to
+		  the event listener for many Text Layout events.
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.events:TextLayoutEvent:SCROLL"><apiName>SCROLL</apiName><shortdesc>
+	      The TextLayoutEvent.SCROLL constant defines the value of the
+	      type property of the event object for a scroll event.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>scroll</apiData><apiType value="String"/></apiValueDef><apiDesc>
+	      The <codeph>TextLayoutEvent.SCROLL</codeph> constant defines the value of the
+	      <codeph>type</codeph> property of the event object for a <codeph>scroll</codeph> event.
+	     </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.events:UpdateCompleteEvent"><apiName>UpdateCompleteEvent</apiName><shortdesc> 
+	 A TextFlow instance dispatches this event after any of its containers completes 
+	 an update.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata><asCustoms><internal>Note: the DamageEvent_example class contains a good example of 
+	 using the UpdateCompleteEvent, so I have included it as the class example
+	 instead of creating a new example. I've updated the description of the
+	 DamageEvent_example file to include prominent mention of the UpdateCompleteEvent.
+	 
+	 </internal></asCustoms></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flash.events:Event</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 A TextFlow instance dispatches this event after any of its containers completes 
+	 an update. Each text container has two states: composition and display. This 
+	 event notifies you when the display phase has ended. This provides an 
+	 opportunity to make any necessary changes to the container when it is ready to
+	 be displayed, but hasn't yet been painted to the screen.
+	 
+	 </apiDesc><example conref="examples\DamageEvent_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>flashx.textLayout.elements.TextFlow</linktext></link></related-links><apiConstructor id="flashx.textLayout.events:UpdateCompleteEvent:UpdateCompleteEvent"><apiName>UpdateCompleteEvent</apiName><shortdesc> Constructor
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>type</apiItemName><apiType value="String"/><apiDesc>event type - use the static property UPDATE_COMPLETE.
+		 </apiDesc></apiParam><apiParam><apiItemName>bubbles</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>Indicates whether an event is a bubbling event. This event does not bubble.
+		 </apiDesc></apiParam><apiParam><apiItemName>cancelable</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>Indicates whether the behavior associated with the event can be prevented.
+		 This event cannot be cancelled.
+		 </apiDesc></apiParam><apiParam><apiItemName>textFlow</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiData>null</apiData><apiDesc>The ContainerController whose container was updated
+		 </apiDesc></apiParam><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiData>null</apiData><apiDesc>The TextFlow which was updated
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> Constructor
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.events:UpdateCompleteEvent:UPDATE_COMPLETE"><apiName>UPDATE_COMPLETE</apiName><shortdesc> 
+	     Defines the value of the type property of an UpdateCompleteEvent object 
+	     </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>updateComplete</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+	     Defines the value of the <codeph>type</codeph> property of an <codeph>UpdateCompleteEvent</codeph> object 
+	     </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:UpdateCompleteEvent:controller:get"><apiName>controller</apiName><shortdesc> 
+		 The controller of the container being updated
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.container:ContainerController</apiValueClassifier></apiValueDef><apiDesc> 
+		 The controller of the container being updated
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:UpdateCompleteEvent:textFlow:get"><apiName>textFlow</apiName><shortdesc>
+		 TextFlow which has been updated.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.elements:TextFlow</apiValueClassifier></apiValueDef><apiDesc>
+		 TextFlow which has been updated. 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier></apiPackage>

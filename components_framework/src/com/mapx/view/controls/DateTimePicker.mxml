@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" 
+		 paddingBottom="2" paddingTop="2" horizontalGap="0" verticalAlign="middle" 
+		 xmlns:controls="com.mapx.view.controls.*">
+    
+    <mx:Metadata>
+        [Event(name="change", type="flash.events.Event")]
+    </mx:Metadata>
+
+	<mx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			import com.map.controller.ControllerLocator;
+			
+			[Bindable] private var _selectedDate:Date;
+			[Bindable] public var textInputStyleName:String = "inputFieldBlack"; 
+			[Inspectable(defaultValue='5', category="Other", enumeration="1,5,10,15,30")] 
+			[Bindable] public var minuteIncrement:int = 1;
+		
+			public function get selectedDate():Date
+			{
+				//this.validateNow();
+				return this._selectedDate;
+			}
+			
+			[Bindable]
+			public function set selectedDate(value:Date):void
+			{
+				var temp:Date = value;
+				var offset:Number =   ControllerLocator.controller.timeZoneOffset - (-temp.getTimezoneOffset()*60 * 1000);
+				//temp.timezoneOffset = 
+				//offset -= (59*60+59)*1000;
+				temp.setTime(temp.getTime()+offset);
+				_selectedDate = temp;
+				//this.date.selectedDate = this._selectedDate
+/* 				if(value.getHours() >= 12)
+				{
+					this.ampm.selectedValue = 2;
+				}
+				else
+				{
+					this.ampm.selectedValue = 1;
+				} */
+				
+/* 				if(value.getHours() < 13 )
+					this.hours.value = value.getHours()
+				else
+					this.hours.value = value.getHours() - 12 */
+/* 				this.hours.value = value.getHours();
+				if(value.getHours() == 0)
+					this.hours.value = 12;
+				
+				this.minutes.value = value.getMinutes() */
+				//this.validateNow();
+			}
+			public function handleChange(event:Event):void
+			{
+				
+/* 				if(ampm.selectedValue == 2 && hours.value != 12)
+					militaryHours = hours.value+12; 
+				else if(ampm.selectedValue == 1 && hours.value == 12)
+					militaryHours = militaryHours = hours.value; */
+				if(event.target == date && date.text == '')
+				{
+					_selectedDate = null;
+					hours.value = 12;
+					minutes.value = 0;
+				}	
+				else if((event.target == date && date.text != '') || (event.target != date && _selectedDate!=null) )
+				{
+					var d:Date = new Date(
+										date.selectedDate.getFullYear(),
+										date.selectedDate.getMonth(),
+										date.selectedDate.getDate(),
+										hours.value,
+										minutes.value);			
+					if(_selectedDate != d)
+					{
+						_selectedDate = d;
+						var offset:Number = (-_selectedDate.getTimezoneOffset()*60*1000) - (ControllerLocator.controller.timeZoneOffset);
+						//offset -= (59*60+59)*1000;
+						_selectedDate.setTime(_selectedDate.getTime()+offset);						
+						this.dispatchEvent(new Event("change"));
+					}
+				}
+				else
+				{
+					hours.value = 12;
+					minutes.value = 00;					
+				}
+			}
+
+		]]>
+	</mx:Script>
+	<controls:MiGDateField id="date" selectedDate="{_selectedDate}"  change="handleChange(event)"  yearNavigationEnabled="true"   
+	editable="true" dateChooserStyleName="dateChooser" inputStyleName="{textInputStyleName}	" width="120"/>
+	<mx:Spacer width="20"/>
+	<controls:MiGNumericStepper id="hours" minimum="1" maximum="23" stepSize="1" change="handleChange(event)" textInputStyleName="{textInputStyleName}"
+	value="{_selectedDate?(_selectedDate.getHours()==0?12:_selectedDate.getHours()):0}"	enabled="{_selectedDate?true:false}"
+	textAlign="center" backgroundColor="0x000000" backgroundAlpha="1" backgroundDisabledColor="0x333333" />
+	<mx:Label text=":" textAlign="center"/>
+	<controls:MiGNumericStepper id="minutes" minimum="0" maximum="59" stepSize="{minuteIncrement}" change="handleChange(event)" 
+	enabled="{_selectedDate?true:false}" textInputStyleName="{textInputStyleName}"
+	textAlign="center" backgroundColor="0x000000" backgroundAlpha="1" value="{_selectedDate?_selectedDate.getMinutes():00}" backgroundDisabledColor="0x333333"/>
+</mx:HBox>

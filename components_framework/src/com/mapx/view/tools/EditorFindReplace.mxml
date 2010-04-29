@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"  
+		 xmlns:controls="com.mapx.view.controls.*">
+	
+	<mx:Script>
+		<![CDATA[
+			import com.mapx.view.controls.MiGTLFTextArea;
+			
+			import flashx.textLayout.elements.SpanElement;
+			import flashx.textLayout.elements.TextFlow;
+			
+			public var searchBounds:Array = [];
+			private var searchIndex:int;
+			private var searchResults:Array = [];
+			
+			public var activeFlow:TextFlow;
+			public var textArea:MiGTLFTextArea;
+			
+			public function resizeSearch():void {
+				var span:SpanElement;
+				var bbox:Rectangle;
+				var relativePosition:int;
+				for each(var item:Object in searchBounds)
+				{
+					span = activeFlow.findLeaf(item.start) as SpanElement;
+					relativePosition = item.start - span.getParagraph().getAbsoluteStart();	
+					bbox = TLFUtils.spanBBox(span,item.start,relativePosition,item.length,activeFlow,textArea.textPanel);					
+					textArea.searchDrawing.graphics.moveTo(bbox.x,bbox.y);
+					textArea.searchDrawing.graphics.beginFill(0xFCEE21,0.2);
+					textArea.searchDrawing.graphics.drawRect(bbox.x, bbox.y, bbox.width, bbox.height);
+					textArea.searchDrawing.graphics.endFill();						
+				} 	
+				textArea.searchDrawing2.graphics.copyFrom(textArea.searchDrawing.graphics);
+				if(searchBounds.length > 0 )
+					TLFUtils.highlightBlock(searchBounds[searchIndex],0xFCEE21,textArea.searchDrawing,activeFlow,textArea.textPanel);			
+			}
+			private function search(search:String):void
+			{
+				activeFlow.flowComposer.updateAllControllers();	
+				var options:String = searchCase.selected ? "g" : "gi";
+				var myPattern:RegExp = new RegExp(search,options);
+				searchIndex = 0;
+				if(searchResults.length > 0 )
+					clearSearch();	
+				var pos:int = 0; 
+				
+				if(search != '')
+				{	
+					var tokens:Array = textArea.text.split(myPattern);
+					//resultsNum.text = (tokens.length-1) + ' found';
+					for (var i:int=0;i<tokens.length-1;i++)
+					{
+						var t:String = tokens[i];
+						pos += t.length;
+						searchResults.push(pos);
+						
+						var span:SpanElement = activeFlow.findLeaf(pos) as SpanElement;	
+						var relativePosition:int = pos - span.getParagraph().getAbsoluteStart();
+						var bbox:Rectangle = TLFUtils.spanBBox(span,pos,relativePosition,search.length,activeFlow,textArea.textPanel);
+						textArea.searchDrawing.graphics.moveTo(bbox.x,bbox.y);
+						textArea.searchDrawing.graphics.beginFill(0xFCEE21,0.2);
+						textArea.searchDrawing.graphics.drawRect(bbox.x, bbox.y, bbox.width, bbox.height);
+						textArea.searchDrawing.graphics.endFill();
+						searchBounds.push({start:pos,length:search.length});
+						pos += search.length;
+					}		
+					textArea.searchDrawing2.graphics.clear();
+					textArea.searchDrawing2.graphics.copyFrom(textArea.searchDrawing.graphics);
+					TLFUtils.highlightBlock(searchBounds[0],0xFCEE21,textArea.searchDrawing,activeFlow,textArea.textPanel);
+				}
+			}	
+			
+			private function searchInput_changeHandler(event:Event):void
+			{
+				clearSearchBtn.visible = searchInput.text == searchInput.prompt ? false:true;
+				if(searchInput.text == '')
+					clearSearchBtn.visible = false;
+			}
+			private function clearSearch():void
+			{
+				textArea.searchDrawing.graphics.clear();
+				textArea.searchDrawing2.graphics.clear();
+				searchResults = [];
+				searchBounds = [];
+				//resultsNum.text = '';
+				searchInput.text = '';
+			}
+			private function handleSearchPrev(event:MouseEvent):void
+			{
+				textArea.searchDrawing.graphics.clear();
+				textArea.searchDrawing.graphics.copyFrom(textArea.searchDrawing2.graphics);
+				searchIndex--;
+				if(searchIndex < 0)
+					searchIndex = searchBounds.length-1;		
+				TLFUtils.highlightBlock(searchBounds[searchIndex],0xFCEE21,textArea.searchDrawing,activeFlow,textArea.textPanel);
+				
+			}
+			private function handleSearchNext(event:MouseEvent):void
+			{
+				textArea.searchDrawing.graphics.clear();
+				textArea.searchDrawing.graphics.copyFrom(textArea.searchDrawing2.graphics);
+				searchIndex++;
+				if(searchIndex == searchBounds.length)
+					searchIndex = 0;		
+				TLFUtils.highlightBlock(searchBounds[searchIndex],0xFCEE21,textArea.searchDrawing,activeFlow,textArea.textPanel);
+			}
+			private function replaceAll():void
+			{
+				var options:String = searchCase.selected ? "g" : "gi";
+				var myPattern:RegExp = new RegExp(searchInput.text,options);
+				var pos:int  = 0;
+				if(searchInput.text != '')
+				{	
+					//editor.text = editor.text.split(myPattern).join(replaceInput.text);
+					//this.search(replaceInput.text);
+					var tokens:Array = textArea.text.split(myPattern);
+					for (var i:int=0;i<tokens.length-1;i++)
+					{
+						var t:String = tokens[i];
+						pos += t.length;
+						searchResults.push(pos);
+						var span:SpanElement = activeFlow.findLeaf(pos) as SpanElement;
+						var spanPosition:int = pos - span.getAbsoluteStart();
+						var endPos:int = spanPosition+searchInput.text.length;
+						if (replaceInput.text != '')
+							span.text = span.text.slice(0, spanPosition) + replaceInput.text + span.text.slice(endPos, span.text.length);
+						else
+							span.text = span.text.slice(0, spanPosition) + span.text.slice(endPos, span.text.length);			
+						
+						/*var txtLayFmt:TextLayoutFormat = editor.getFormatOfRange(null,
+						pos,
+						pos+replaceInput.text.length);	
+						txtLayFmt.backgroundColor = 0xFCEE21;
+						txtLayFmt.backgroundAlpha = 0.6;
+						editor.setFormatOfRange(txtLayFmt,
+						pos,
+						pos+replaceInput.text.length);*/
+						pos += searchInput.text.length + (replaceInput.text.length - searchInput.text.length);				
+					}
+				}
+			}
+			
+		]]>
+	</mx:Script>
+	<mx:Canvas width="100%">
+		<controls:PromptTextInput promptColor="0x666666"  styleName = "inputFieldBlack"  
+		change="searchInput_changeHandler(event)" prompt="Find"  width="100%" id="searchInput" enter="search(searchInput.text)" />	
+		<mx:SWFLoader id="clearSearchBtn" visible="false" source="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#plus')" rotation="45" right="0" top="4"
+					  click="clearSearch()"   />
+	</mx:Canvas>			
+	<controls:PromptTextInput promptColor="0x666666" styleName = "inputFieldBlack"  prompt="Replace" width="100%" id="replaceInput" enter="replaceAll()"/>
+	<mx:HBox>
+		<mx:Button icon="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#tree_RightIcon')" width="30"  toolTip="prev" click="this.handleSearchPrev(event)" />
+		<mx:Button icon="@Embed(source='../../../../../../webapp/src/migAssets/flex_skins.swf#Tree_folderClosedIcon')" width="30" toolTip="next" click="this.handleSearchNext(event)"/>						
+		<mx:Label id="resultsNum" />
+		<mx:Spacer width="100%"/>
+		<mx:Button label="Replace" />
+		<mx:Button label="All" />
+	</mx:HBox>
+	<mx:HBox>
+		<mx:CheckBox label="Case Sensitive" id="searchCase" />	
+		<mx:CheckBox label="Wrap Around" />					
+	</mx:HBox>
+</mx:VBox>

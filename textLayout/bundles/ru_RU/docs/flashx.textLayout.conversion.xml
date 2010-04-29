@@ -1,0 +1,377 @@
+<?xml version="1.0"?>
+<apiPackage id="flashx.textLayout.conversion"><apiName>flashx.textLayout.conversion</apiName><apiDetail/><apiClassifier id="flashx.textLayout.conversion:TextConverter"><apiName>TextConverter</apiName><shortdesc> 
+	 Это класс шлюза, используемый для обработки импорта и экспорта.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 Это класс шлюза, используемый для обработки импорта и экспорта. Является унифицированной точкой доступа к функциональным возможностям преобразования инфраструктуры Text Layout Framework.
+	 </apiDesc><example conref="examples\TextConverter_example.as"/></apiClassifierDetail><apiOperation id="flashx.textLayout.conversion:TextConverter:export"><apiName>export</apiName><shortdesc> 
+		 Обеспечивает экспорт TextFlow в указанный формат.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>Форма экспортированного объекта TextFlow
+		 </apiDesc><apiType value="Object"/></apiReturn><apiParam><apiItemName>source</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiDesc>Исходное содержимое
+		 </apiDesc></apiParam><apiParam><apiItemName>format</apiItemName><apiType value="String"/><apiDesc>Формат выходных данных
+		 </apiDesc></apiParam><apiParam><apiItemName>conversionType</apiItemName><apiType value="String"/><apiDesc>Тип экспортируемых данных
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Обеспечивает экспорт TextFlow в указанный формат. К числу поддерживаемых форматов относятся FXG, HTML, обычный текст и разметка TextLayout.
+		 <p>Для определения параметра <codeph>format</codeph> используется одна из четырех статических констант, предоставляемых с этим классом:
+		 <ul>
+		 <li>TextConverter.TEXT_FIELD_HTML_FORMAT</li>
+		 <li>TextConverter.PLAIN_TEXT_FORMAT</li>
+		 <li>TextConverter.TEXT_LAYOUT_FORMAT</li>
+		 </ul>
+		 </p>
+		 <p>Тип экспортированных данных указывается в параметре <codeph>conversionType</codeph> с одной из двух статических констант, предоставляемых классом ConversionType:
+		 <ul>
+		 <li>ConversionType.STRING_TYPE</li>
+		 <li>ConversionType.XML_TYPE</li>
+		 </ul>
+		 </p>
+		 
+		 Возвращает представление TextFlow в указанном формате.
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.conversion.xml#TextConverter/TEXT_FIELD_HTML_FORMAT"><linktext>TEXT_FIELD_HTML_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/PLAIN_TEXT_FORMAT"><linktext>PLAIN_TEXT_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/TEXT_LAYOUT_FORMAT"><linktext>TEXT_LAYOUT_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#ConversionType"><linktext>flashx.textLayout.conversion.ConversionType</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.conversion:TextConverter:getExporter"><apiName>getExporter</apiName><shortdesc> 
+		 Создает фильтр экспорта.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>Текстовый фильтр ITextExporter, обеспечивающий экспорт в указанном формате
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.conversion:ITextExporter</apiOperationClassifier></apiReturn><apiParam><apiItemName>format</apiItemName><apiType value="String"/><apiDesc>Целевой формат экспортированных данных
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Создает фильтр экспорта. Возвращает фильтр экспорта, который впоследствии может использоваться для осуществления экспорта из TextFlow в исходную строку или XML-объект. Эта функция применяется при наличии множества отдельных операций экспорта, подлежащих выполнению. Она эквивалентна вызову метода <codeph>flashx.textLayout.conversion.TextConverter.export()</codeph>.
+		 <p>Для определения параметра <codeph>format</codeph> используется одна из четырех статических констант, предоставляемых с этим классом:
+		 <ul>
+		 <li>TextConverter.TEXT_FIELD_HTML_FORMAT</li>
+		 <li>TextConverter.PLAIN_TEXT_FORMAT</li>
+		 <li>TextConverter.TEXT_LAYOUT_FORMAT</li>
+		 </ul>
+		 </p>
+		 </apiDesc><example conref="examples\getExporter_example.as"/></apiOperationDetail><related-links><link href="flashx.textLayout.conversion.xml#TextConverter/TEXT_FIELD_HTML_FORMAT"><linktext>TEXT_FIELD_HTML_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/PLAIN_TEXT_FORMAT"><linktext>PLAIN_TEXT_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/TEXT_LAYOUT_FORMAT"><linktext>TEXT_LAYOUT_FORMAT</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.conversion:TextConverter:getImporter"><apiName>getImporter</apiName><shortdesc> 
+		 Создает фильтр импорта.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>Текстовый фильтр ITextImporter, обеспечивающий импорт исходных данных
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.conversion:ITextImporter</apiOperationClassifier></apiReturn><apiParam><apiItemName>format</apiItemName><apiType value="String"/><apiDesc>Формат исходного содержимого. Используйте константы из flashx.textLayout.conversion.TextConverter.TEXT_LAYOUT_FORMAT, PLAIN_TEXT_FORMAT, HTML_FORMAT и т.д.
+		 </apiDesc></apiParam><apiParam><apiItemName>config</apiItemName><apiOperationClassifier>flashx.textLayout.elements:IConfiguration</apiOperationClassifier><apiData>null</apiData><apiDesc>   конфигурация, которая должна применяться в ходе выполнения этой операции импорта. null указывает на использование текущего значения по умолчанию.
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Создает фильтр импорта. Возвращает фильтр импорта, который впоследствии может использоваться для импорта из исходной строки или XML-объекта в TextFlow. Эта функция применяется при наличии множества отдельных операций импорта, подлежащих выполнению, или в случае необходимости обработки ошибок в ходе импорта. Она эквивалентна вызову метода <codeph>flashx.textLayout.conversion.TextConverter.importToFlow()</codeph>.
+		 <p>Для определения параметра <codeph>format</codeph> используется одна из четырех статических констант, предоставляемых с этим классом:
+		 <ul>
+		 <li>TextConverter.TEXT_FIELD_HTML_FORMAT</li>
+		 <li>TextConverter.PLAIN_TEXT_FORMAT</li>
+		 <li>TextConverter.TEXT_LAYOUT_FORMAT</li>
+		 </ul>
+		 </p>
+		 </apiDesc><example conref="examples\getImporter_example.as"/></apiOperationDetail><related-links><link href="flashx.textLayout.conversion.xml#TextConverter/TEXT_FIELD_HTML_FORMAT"><linktext>TEXT_FIELD_HTML_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/PLAIN_TEXT_FORMAT"><linktext>PLAIN_TEXT_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/TEXT_LAYOUT_FORMAT"><linktext>TEXT_LAYOUT_FORMAT</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.conversion:TextConverter:importToFlow"><apiName>importToFlow</apiName><shortdesc> 
+		 Создает TextFlow из исходного содержимого в заданном формате.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>Объект TextFlow, созданный из исходного содержимого.
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier></apiReturn><apiParam><apiItemName>source</apiItemName><apiType value="Object"/><apiDesc>Исходное содержимое
+		 </apiDesc></apiParam><apiParam><apiItemName>format</apiItemName><apiType value="String"/><apiDesc>Формат исходного содержимого
+		 </apiDesc></apiParam><apiParam><apiItemName>config</apiItemName><apiOperationClassifier>flashx.textLayout.elements:IConfiguration</apiOperationClassifier><apiData>null</apiData><apiDesc>   IConfiguration для использования при создании новых элементов TextFlow
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Создает TextFlow из исходного содержимого в заданном формате. К числу поддерживаемых форматов относятся HTML, обычный текст и разметка TextLayout.
+		 <p>Для определения параметра <codeph>format</codeph> используется одна из четырех статических констант, предоставляемых с этим классом:
+		 <ul>
+		 <li>TextConverter.TEXT_FIELD_HTML_FORMAT</li>
+		 <li>TextConverter.PLAIN_TEXT_FORMAT</li>
+		 <li>TextConverter.TEXT_LAYOUT_FORMAT</li>
+		 </ul>
+		 </p>
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.conversion.xml#TextConverter/TEXT_FIELD_HTML_FORMAT"><linktext>TEXT_FIELD_HTML_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/PLAIN_TEXT_FORMAT"><linktext>PLAIN_TEXT_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/TEXT_LAYOUT_FORMAT"><linktext>TEXT_LAYOUT_FORMAT</linktext></link></related-links></apiOperation><apiValue id="flashx.textLayout.conversion:TextConverter:PLAIN_TEXT_FORMAT"><apiName>PLAIN_TEXT_FORMAT</apiName><shortdesc> 
+		 Формат обычного текста.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>plainTextFormat</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 Формат обычного текста. Эта константа применяется для создания TextFlow из простой неотформатированной строки или для создания простой неотформатированной строки из TextFlow.
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.conversion:TextConverter:TEXT_FIELD_HTML_FORMAT"><apiName>TEXT_FIELD_HTML_FORMAT</apiName><shortdesc> 
+		 Формат HTML.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>textFieldHTMLFormat</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 Формат HTML. Эта константа применяется для импорта из TextFlow или экспорта в TextFlow с использованием формата HTML. Text Layout Framework HTML поддерживает подмножество тегов и атрибутов, поддерживаемых классом TextField в пакете <codeph>flash.text</codeph>.
+		 <p>В следующей таблице представлены HTML-теги и атрибуты, поддерживаемые для импорта и экспорта (теги и атрибуты, поддерживаемые TextField, но не поддерживаемые Text Layout Framework, специально отмечаются как не поддерживаемые):</p>
+		 
+		 
+		 <adobetable class="innertable">
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 <tgroup cols="2"><thead><row><entry>
+		 Тег
+		 </entry><entry>
+		 Описание
+		 </entry></row></thead><tbody><row>
+		 
+		 <entry>
+		 Тег привязки
+		 </entry>
+		 
+		 <entry>
+		 Тег <codeph>&lt;a></codeph> создает гипертекстовую ссылку и поддерживает следующие атрибуты.
+		 <ul>
+		 
+		 <li>
+		 <codeph>target</codeph>: указывает имя целевого окна, где загружается страница. Возможные значения: <codeph>_self</codeph>, <codeph>_blank</codeph>, <codeph>_parent</codeph> и <codeph>_top</codeph>. Вариант <codeph>_self</codeph> задает текущий фрейм текущего окна, <codeph>_blank</codeph> задает новое окно, <codeph>_parent</codeph> задает вышестоящий элемент текущего фрейма, а <codeph>_top</codeph> задает фрейм верхнего уровня текущего окна. 
+		 </li>
+		 
+		 <li>
+		 <codeph>href</codeph>: определяет URL. URL-адрес может быть абсолютным или указываться относительно местоположения SWF-файла, загружающего страницу. Абсолютная ссылка на URL-адрес выглядит так: <codeph>http://www.adobe.com</codeph>. А вот пример относительной ссылки: <codeph>/index.html</codeph>. Абсолютные URL должны иметь префикс http://, иначе проигрыватель Flash воспримет их как относительные. <b>Примечание. В отличие от класса TextField, </b>события ActionScript <codeph>link</codeph> не поддерживаются. Не является ни <codeph>a:link</codeph>, ни <codeph>a:hover</codeph>, ни <codeph>a:active</codeph> стилем.
+		 </li>
+		 
+		 </ul>
+		 
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 Тег полужирного начертания
+		 </entry>
+		 
+		 <entry>
+		 Тег <codeph>&lt;b></codeph> изменяет начертание текста на полужирное. Для используемого шрифта должно быть доступно полужирное написание.
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 Тег разрыва
+		 </entry>
+		 <entry>
+		 Тег <codeph>&lt;br></codeph> создает разрыв строки в тексте.
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 Тег шрифта
+		 </entry>
+		 
+		 <entry>
+		 Тег <codeph>&lt;font></codeph> задает шрифт или список шрифтов для отображения текста. Тег шрифта поддерживает следующие атрибуты.
+		 <ul>
+		 
+		 <li>
+		 <codeph>color</codeph>: поддерживаются только шестнадцатеричные значения цветов (<codeph>#FFFFFF</codeph>). 
+		 </li>
+		 
+		 <li>
+		 <codeph>face</codeph>: задает имя используемого шрифта. Как показано в следующем примере, можно задать список разделенных запятыми имен шрифтов, тогда проигрыватель Flash Player выбирает первый доступный шрифт. Если заданный шрифт не установлен в локальной компьютерной системе или не встроен в SWF-файл, проигрыватель выбирает подстановочный шрифт. 
+		 </li>
+		 
+		 <li>
+		 <codeph>size</codeph>: задает размер шрифта. Можно использовать абсолютные размеры в пикселах, такие как 16 или 18, либо относительные кегли, такие как +2 или -4. 
+		 </li>
+		 
+		 <li>
+		 <codeph>letterspacing</codeph>: определяет трекинг (ручной кернинг) в пикселах, который будет применен справа от каждого символа. 
+		 </li>
+		 
+		 <li>
+		 <codeph>kerning</codeph>: указывает, включен или отключен кернинг. Ненулевое значение включает кернинг, а нуль отключает его.  
+		 </li>
+		 
+		 </ul>
+		 
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 Тег изображения
+		 </entry>
+		 
+		 <entry>
+		 Тег <codeph>&lt;img></codeph> позволяет встраивать в текст внешние файлы изображений (JPEG, GIF, PNG), SWF-файлы и фрагменты роликов.  
+		 
+		  <p>Тег <codeph>&lt;img></codeph> поддерживает следующие атрибуты. </p>
+		 
+		 <ul>
+		 
+		 <li>
+		 <codeph>src</codeph>: задает URL-адрес на изображение или SWF-файл, либо идентификатор связи для символа фрагмента ролика в библиотеке. Это обязательный атрибут, все остальные атрибуты – необязательные. Внешние файлы (JPEG, GIF, PNG и SWF) отображаются только после завершения загрузки. 
+		 </li>
+		 
+		 <li>
+		 <codeph>width</codeph>: ширина в пикселях вставляемого изображения, SWF-файла или фрагмента ролика. 
+		 </li>
+		 
+		 <li>
+		 <codeph>height</codeph>: высота в пикселях вставляемого изображения, SWF-файла или фрагмента ролика. 
+		 </li>
+		 </ul>
+		 <p><b>Примечание. </b>В отличие от класса TextField, следующие атрибуты не поддерживаются: <codeph>align</codeph>, <codeph>hspace</codeph>, <codeph>vspace</codeph>, <codeph>id</codeph> и <codeph>checkPolicyFile</codeph>.</p>
+		 
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 Тег курсива
+		 </entry>
+		 
+		 <entry>
+		 Тег <codeph>&lt;i></codeph> отображает заключенный в него текст курсивом. Для используемого шрифта должно быть доступно курсивное начертание.
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 <i>Тег элемента списка</i>
+		 </entry>
+		 
+		 <entry>
+		 <b>Примечание. </b>В отличие от класса TextField, тег List item не поддерживается.
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 Тег абзаца
+		 </entry>
+		 
+		 <entry>
+		 Тег <codeph>&lt;p></codeph> создает новый абзац. Тег <codeph>&lt;p></codeph> поддерживает следующие атрибуты.
+		 <ul>
+		 
+		 <li>
+		 align: задает выравнивание текста в абзаце. Допускаются следующие значения: <codeph>left</codeph>, <codeph>right</codeph>, <codeph>justify</codeph> и <codeph>center</codeph>. 
+		 </li>
+		 
+		 <li>
+		 class: задает имя класса, который может быть использован для определения стиля 
+		 </li>
+		 
+		 </ul>
+		 
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 Тег диапазона
+		 </entry>
+		 
+		 <entry>
+		 
+		 Тег <codeph>&lt;span></codeph> поддерживает следующие атрибуты:
+		 
+		 <ul>
+		 
+		 <li>
+		 class: задает имя класса, который может быть использован для определения стиля 
+		 </li>
+		 
+		 </ul>
+		 
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 Тег формата текста
+		 </entry>
+		 
+		 <entry>
+		  <p>Тег <codeph>&lt;textformat></codeph> позволяет использовать в текстовых полях подгруппу свойств форматирования абзаца класса TextFormat, включая межстрочный интервал, отступы, поля и точки табуляции. Теги <codeph>&lt;textformat></codeph> комбинировать с встроенными тегами HTML. </p>
+		 
+		  <p>Тег <codeph>&lt;textformat></codeph> имеет следующие атрибуты. </p>
+		 <ul>
+		 
+		 
+		 <li>
+		 <codeph>indent</codeph>: задает отступ от левого поля для первого символа абзаца; соответствует свойству <codeph>TextFormat.indent</codeph>. Допускаются как положительные, так и отрицательные числа. 
+		 </li>
+		 
+		 <li>
+		 <codeph>blockindent</codeph>: указывает, что отступ применяется ко всем строкам абзаца.
+		 </li>
+		 
+		 <li>
+		 <codeph>leftmargin</codeph>: задает левое поле абзаца в точках; соответствует свойству <codeph>TextFormat.leftMargin</codeph>. 
+		 </li>
+		 
+		 <li>
+		 <codeph>rightmargin</codeph>: задает правое поле абзаца в точках; соответствует свойству <codeph>TextFormat.rightMargin</codeph>. 
+		 </li>
+		 
+		 	<li>
+		 <codeph>leading</codeph>: задает интерлиньяж (высоту строки) в пикселах между верхней линией данной строки и нижней линией предыдущей.
+		 </li>
+		 
+		 	<li>
+		 <codeph>tabstops</codeph>: задает разделенный запятыми список позиций табуляции для абзаца. 
+		 </li>
+		 </ul>
+		 
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 Тег подчеркивания
+		 </entry>
+		 
+		 <entry>
+		 Тег <codeph>&lt;u></codeph> подчеркивает заключенный в него текст.
+		 </entry>
+		 </row></tbody></tgroup></adobetable>
+
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.conversion:TextConverter:TEXT_LAYOUT_FORMAT"><apiName>TEXT_LAYOUT_FORMAT</apiName><shortdesc> 
+		 Формат TextLayout.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>textLayoutFormat</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 Формат TextLayout. Эта константа применяется для импорта из TextFlow или экспорта в TextFlow с использованием формата разметки TextLayout. В формате Text Layout обеспечивается обнаружение следующих ошибок:
+		 <ul>
+		 <li>непредвиденного пространства имен;</li>
+		 <li>неизвестных элементов;</li>
+		 <li>неизвестных атрибутов.</li>
+		 </ul>
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.conversion:ITextExporter"><apiName>ITextExporter</apiName><shortdesc> 
+	 Интерфейс для экспорта текстового содержимого из экземпляра TextFlow в элемент String или XML.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc> 
+	 Интерфейс для экспорта текстового содержимого из экземпляра TextFlow в элемент String или XML. 
+	 </apiDesc></apiClassifierDetail><apiOperation id="flashx.textLayout.conversion:ITextExporter:flashx.textLayout.conversion:ITextExporter:export"><apiName>export</apiName><shortdesc> 
+		 Экспорт текстового содержимого из экземпляра TextFlow в элемент String или формат XML.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>Экспортированное содержимое объекта
+		 </apiDesc><apiType value="Object"/></apiReturn><apiParam><apiItemName>source</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiDesc>Экспортируемый элемент TextFlow
+		 </apiDesc></apiParam><apiParam><apiItemName>conversionType</apiItemName><apiType value="String"/><apiDesc>	Возвращает элемент String (STRING_TYPE) или XML (XML_TYPE).
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Экспорт текстового содержимого из экземпляра TextFlow в элемент String или формат XML.
+		 <p>В качестве значения параметра <codeph>conversionType</codeph> установите одно из следующих значений:
+		 <ul>
+		   <li><codeph>flashx.textLayout.conversion.ConversionType.STRING_TYPE</codeph>;</li>
+		   <li><codeph>flashx.textLayout.conversion.ConversionType.XML_TYPE</codeph>.</li>
+		 </ul>
+		 </p>
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.conversion.xml#ConversionType"><linktext>flashx.textLayout.conversion.ConversionType</linktext></link></related-links></apiOperation></apiClassifier><apiClassifier id="flashx.textLayout.conversion:PlainTextExporter"><apiName>PlainTextExporter</apiName><shortdesc> 
+	 Фильтр экспорта для обычного текста.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseInterface>flashx.textLayout.conversion:ITextExporter</apiBaseInterface><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 Фильтр экспорта для обычного текста. Этот класс представляет собой альтернативу статическому методу <codeph>TextConverter.export()</codeph> для экспорта обычного текста. Метод <codeph>export()</codeph> класса PlainTextExporter создает такую же выходную строку, что и статический метод <codeph>TextConverter.export()</codeph>, если свойства <codeph>paragraphSeparator</codeph> и <codeph>stripDiscretionaryHyphens</codeph> класса PlainTextExporter содержат значения по умолчанию <codeph>\n</codeph> и <codeph>true</codeph> соответственно.
+	 </apiDesc><example conref="examples\PlainTextExporter_example.as"/></apiClassifierDetail><apiConstructor id="flashx.textLayout.conversion:PlainTextExporter:PlainTextExporter"><apiName>PlainTextExporter</apiName><shortdesc>
+		 Конструктор 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/></apiConstructorDef><apiDesc>
+		 Конструктор 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.conversion:PlainTextExporter:export"><apiName>export</apiName><shortdesc> 
+		 Экспортирует содержимое объекта TextFlow в обычный текст.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>Объект экспортированного содержимого
+		 
+		 </apiDesc><apiType value="Object"/></apiReturn><apiParam><apiItemName>source</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiDesc>Экспортируемый объект текстового потока
+		 </apiDesc></apiParam><apiParam><apiItemName>conversionType</apiItemName><apiType value="String"/><apiDesc>	Возвращаемый тип (STRING_TYPE). Этот параметр принимает единственное значение <codeph>ConversionType. STRING_TYPE</codeph>, однако является необходимым, поскольку этот класс реализует интерфейс ITextExporter. Этот параметр должен использоваться методом интерфейса <codeph>ITextExporter.export()</codeph>.
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Экспортирует содержимое объекта TextFlow в обычный текст. Значения свойства <codeph>paragraphSeparator</codeph> и <codeph>stripDiscretionaryHyphens</codeph> воздействуют на результат этого метода.
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.conversion.xml#PlainTextExporter/paragraphSeparator"><linktext>paragraphSeparator</linktext></link><link href="flashx.textLayout.conversion.xml#PlainTextExporter/stripDiscretionaryHyphens"><linktext>stripDiscretionaryHyphens</linktext></link><link href="flashx.textLayout.conversion.xml#ConversionType/STRING_TYPE"><linktext>ConversionType.STRING_TYPE</linktext></link></related-links></apiOperation><apiValue id="flashx.textLayout.conversion:PlainTextExporter:paragraphSeparator:get"><apiName>paragraphSeparator</apiName><shortdesc> Указывает последовательность символов, применяемую (в эквиваленте обычного текста текстового потока) для разделения абзацев.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> Указывает последовательность символов, применяемую (в эквиваленте обычного текста текстового потока) для разделения абзацев. После последнего абзаца разделитель абзацев не добавляется. Значением по умолчанию является \n. 
+  		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.conversion:PlainTextExporter:stripDiscretionaryHyphens:get"><apiName>stripDiscretionaryHyphens</apiName><shortdesc> Этот флаг указывает на необходимость удаления из экспортируемого содержимого знаков дефиса, находящихся в тексте.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Boolean"/></apiValueDef><apiDesc> Этот флаг указывает на необходимость удаления из экспортируемого содержимого знаков дефиса, находящихся в тексте. Дискреционные переносы, также называемые «мягкими переносами», определяют необходимость разбиения слова в случае переноса части этого слова на другую строку. Символом Unicode для дискреционного переноса является <codeph>\u00AD</codeph>.
+		 <p>Если свойство <codeph>stripDiscretionaryHyphens</codeph> имеет значение <codeph>true</codeph>, то дискреционные переносы, находящиеся в первоначальном тексте, отсутствуют в экспортированном тексте даже в том случае, если они являются частью исходного текста. В случае значения <codeph>false</codeph> дискреционные переносы присутствуют в экспортированном тексте. Значением по умолчанию является <codeph>true</codeph>.</p>
+  		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.conversion:ConversionType"><apiName>ConversionType</apiName><shortdesc>
+	 Значения для формата экспортированного текста.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 Значения для формата экспортированного текста. Значения <codeph>STRING_TYPE</codeph> и <codeph>XML_TYPE</codeph> могут использоваться в параметре <codeph>conversionType</codeph> для метода export() в интерфейсе ITextExporter и классе TextConverter.
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.conversion.xml#ITextExporter/export()"><linktext>flashx.textLayout.conversion.ITextExporter.export()</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/export()"><linktext>flashx.textLayout.conversion.TextConverter.export()</linktext></link></related-links><apiValue id="flashx.textLayout.conversion:ConversionType:STRING_TYPE"><apiName>STRING_TYPE</apiName><shortdesc> 
+		 Экспорт в виде типа String.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>stringType</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 Экспорт в виде типа String. 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.conversion:ConversionType:XML_TYPE"><apiName>XML_TYPE</apiName><shortdesc> 
+		 Экспорт в виде типа XML.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>xmlType</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 Экспорт в виде типа XML.
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.conversion:ITextImporter"><apiName>ITextImporter</apiName><shortdesc> 
+	 Интерфейс, предназначенный для импорта текстового содержимого в TextFlow из внешнего источника.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc> 
+	 Интерфейс, предназначенный для импорта текстового содержимого в TextFlow из внешнего источника. 
+	 </apiDesc></apiClassifierDetail><apiOperation id="flashx.textLayout.conversion:ITextImporter:flashx.textLayout.conversion:ITextImporter:importToFlow"><apiName>importToFlow</apiName><shortdesc> 
+		 Обеспечивает импорт текстового содержимого из внешнего источника и его преобразование в TextFlow.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>Объект TextFlow, созданный из исходного содержимого.
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier></apiReturn><apiParam><apiItemName>source</apiItemName><apiType value="Object"/><apiDesc>	Данные для преобразования
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Обеспечивает импорт текстового содержимого из внешнего источника и его преобразование в TextFlow.
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.conversion:ITextImporter:flashx.textLayout.conversion:ITextImporter:errors:get"><apiName>errors</apiName><shortdesc> 
+		 Ошибки, обнаруженные в ходе синтаксического анализа.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Vector$String"/></apiValueDef><apiDesc> 
+		 Ошибки, обнаруженные в ходе синтаксического анализа. Будет пустым при отсутствии ошибок. Значением является вектор элементов String.
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.conversion:ITextImporter:flashx.textLayout.conversion:ITextImporter:throwOnError:get"><apiName>throwOnError</apiName><shortdesc> 
+		 Если throwOnError имеет значение true, ошибки синтаксического анализа, возникшие в ходе импорта, станут причиной возникновения исключений.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 Если throwOnError имеет значение <codeph>true</codeph>, ошибки синтаксического анализа, возникшие в ходе импорта, станут причиной возникновения исключений. 
+	 	 </apiDesc></apiValueDetail></apiValue></apiClassifier></apiPackage>

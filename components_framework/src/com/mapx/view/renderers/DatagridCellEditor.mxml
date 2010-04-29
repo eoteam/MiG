@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox  xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" 
+	 verticalAlign="middle" horizontalAlign="left"
+	 paddingTop="2" paddingBottom="2" paddingRight="2" paddingLeft="2" 
+	 implements="mx.controls.listClasses.IDropInListItemRenderer"
+	 backgroundAlpha="0" xmlns:controls="com.mapx.view.controls.*">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+		import mx.controls.dataGridClasses.DataGridListData;
+		import mx.controls.listClasses.BaseListData;
+         
+		[Bindable] public var isPassword:Boolean = false;	         
+        [Bindable] public var editable:Boolean = true;
+         [Bindable] public var textColor:Number = 0xffffff;
+      	public var colorEnabled:Boolean = false;
+        private var _listData:BaseListData;
+    
+		public function get listData():BaseListData
+		{
+			return _listData;
+		}
+		
+		// Define the setter method,
+		public function set listData(value:BaseListData):void
+		{
+			_listData = value;
+		}				
+        override public function get data():Object
+        {
+            return super.data;
+        }    
+		override public function set data(value:Object):void 
+		{  
+			super.data = value;    
+            if(value != null)  
+            {
+                cellValue = value[DataGridListData(this.listData).dataField];
+                if(colorEnabled && data.id == 0)
+                	textColor = 0x666666;
+                else
+                	textColor = 0xffffff;
+                
+                if(data.hasOwnProperty("active"))
+                {
+                	this.enabled = (data.active == 1) ? true:false;
+                }
+                    
+            }   
+         } 
+         private function handleValueChange():void
+         {
+         	data[DataGridListData(this.listData).dataField] = input.text;
+         }
+		override protected function measure():void
+		{
+			super.measure();
+			this.measuredMinHeight = 28;
+			this.measuredHeight = 28;
+		}         
+         [Bindable] private var cellValue:String; 
+         [Bindable] public var enabledField:String;
+		]]>
+	</mx:Script>
+	<controls:MiGTextInput borderThickness="0" styleName="inputFieldBlack"   width="100%" displayAsPassword="{isPassword}" id="input" text="{cellValue}" 
+		backgroundAlpha="0" borderStyle="solid" color="{textColor}"  change="handleValueChange()" editable="{editable}"  />
+</mx:HBox>

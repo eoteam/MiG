@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+	 xmlns:mx="http://www.adobe.com/2006/mxml"
+	 xmlns:view="org.mig.view.*"
+	 xmlns:mig="org.mig.*" 
+	 xmlns:components="org.mig.view.components.*" 
+	 creationPolicy="none"
+	 backgroundColor="0x000000"
+	 backgroundGradientColors="[0x1A1A1A,0x111111]" 
+	 backgroundGradientAlphas="[1,1]"
+	 preinitialize="loadCSS(event)" xmlns:local="*" >
+	<mx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			import mx.events.StyleEvent;
+
+			private function loadCSS(event:FlexEvent):void {
+				var myevent:IEventDispatcher = StyleManager.loadStyleDeclarations("mig.swf");
+				myevent.addEventListener(StyleEvent.COMPLETE, createComponents);
+			}
+			private function createComponents(event:StyleEvent): void {
+				createComponentsFromDescriptors();
+				migContext.contextView = this;				
+			}
+
+		]]>
+	</mx:Script>
+	<local:MiGContext id="migContext"  />
+	<view:Main width="100%" height="100%" />
+</mx:Application>

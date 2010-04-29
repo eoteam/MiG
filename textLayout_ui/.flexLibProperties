@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flexLibProperties includeAllClasses="false" version="3">
+  <includeClasses>
+    <classEntry path="bxf.BxfClasses"/>
+    <classEntry path="flashx.textLayout.UiClasses"/>
+    <classEntry path="textEditBar.EditBarClasses"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

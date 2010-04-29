@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="init()"  xmlns:controls="com.fxcomponents.controls.*" xmlns:local="*" xmlns:css="css.*">
+   <mx:Script>
+      <![CDATA[
+      	import mx.core.IUITextField;
+         import mx.controls.Button;
+         import mx.core.UITextField;
+         
+         use namespace mx_internal;
+         
+        // private var _button:Button
+         
+         [Bindable]
+         private var textField:IUITextField;
+         
+         private function init():void
+         {
+            var parentButton:Button = this.parent as Button;
+            if(parentButton)
+            {
+            	textField = parentButton.getTextField();
+            }
+         }
+         
+      ]]>
+   </mx:Script>
+   
+   <!-- States .............................................. -->
+   <mx:states>
+   
+	    <mx:State name="up">
+	        
+		</mx:State>
+		
+		<mx:State name="down">
+		     
+		</mx:State>
+		
+		<mx:State name="over">
+		   
+		</mx:State>
+		
+		<mx:State name="disabled">
+	        
+		</mx:State>
+		
+		<mx:State name="selectedUp" >
+			<mx:SetStyle target="{Button(this.parent)}" name="color" value="{this.getStyle('textRollOverColor')}" />
+			
+			<mx:SetProperty target="{bgBox}" name="alpha" value="1" />
+		</mx:State>
+		<mx:State name="selectedDown" >
+			<mx:SetStyle target="{Button(this.parent)}" name="color" value="{this.getStyle('textRollOverColor')}" />
+			<mx:SetProperty target="{bgBox}" name="alpha" value="1" />
+		</mx:State>
+		<mx:State name="selectedOver" >
+			<mx:SetStyle target="{Button(this.parent)}" name="color" value="{this.getStyle('textRollOverColor')}" />
+			<mx:SetProperty target="{bgBox}" name="alpha" value="1" />
+		</mx:State>
+		   
+	</mx:states>
+
+
+   
+   <!-- Transitions .............................................. -->
+   <mx:transitions>
+		 <!-- Not Selected .............................................. -->
+      <mx:Transition id="toOver" fromState="*" toState="over">
+      	<mx:Fade target="{bgOver}"  alphaTo="1" duration="300" />
+      </mx:Transition>
+      
+      <mx:Transition id="toUp" fromState="*" toState="up">
+        <mx:Fade target="{bgOver}"  alphaTo="0" duration="300" />
+      </mx:Transition>
+      
+      <mx:Transition id="toDown" fromState="*" toState="down">
+      	<mx:Fade target="{bgOver}"  alphaTo="0" duration="100" />
+      </mx:Transition>
+      
+      
+      <!-- Selected .............................................. -->
+      
+   </mx:transitions>
+
+   
+ 	<mx:Canvas id="bgBox" width="{this.width}" height="{this.height+4}" backgroundColor="black" />
+ 	<mx:Canvas id="bgOver" width="{this.width}" alpha="0" height="{this.height+4}" styleName="defaultButtonOverBackground" />
+ 	<mx:Canvas width="{this.width}" height="{this.height+4}" styleName="defaultButtonHighlight" />
+	<!--<mx:Box id="bgBox" height="{this.height - 4}"  width="{this.width}" y="2" alpha="1"  backgroundColor="{this.getStyle('backgroundColor')}" />-->
+   
+</mx:Canvas>

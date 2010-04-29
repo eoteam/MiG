@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<apiPackage id="flashx.undo"><apiName>flashx.undo</apiName><apiDetail/><apiClassifier id="flashx.undo:UndoManager"><apiName>UndoManager</apiName><shortdesc> 
+	 Die UndoManager-Klasse verwaltet den Verlauf von Änderungsvorgängen an einem Textfluss, sodass diese Vorgänge wiederhergestellt und rückgängig gemacht werden können.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseInterface>flashx.undo:IUndoManager</apiBaseInterface><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 Die UndoManager-Klasse verwaltet den Verlauf von Änderungsvorgängen an einem Textfluss, sodass diese Vorgänge wiederholt und rückgängig gemacht werden können.
+	 
+	 <p>Der Rückgängig-Manager verwaltet zwei Stapel von IOperation-Objekten. Wenn ein reversibler Vorgang ausgeführt wird, wird er auf dem Rückgängig-Stapel abgelegt. Wenn dieser Vorgang rückgängig gemacht wurde, wird er vom Rückgängig-Stapel entfernt, umgekehrt und auf dem Wiederherstellungsstapel abgelegt. Gleichermaßen gilt: Wenn dieser Vorgang wiederhergestellt wird, wird er vom Wiederherstellungsstapel entfernt, erneut ausgeführt und wieder auf dem Rückgängig-Stapel abgelegt. Wenn ein anderer Vorgang zuerst ausgeführt wird, wird der Wiederherstellungsstapel geleert.</p>
+	 
+	 <p>Wenn der TextFlow direkt verändert wird (nicht über Aufrufe des EditManagers, sondern direkt über Aufrufe an die verwalteten FlowElement-Objekte), leert der EditManager den Rückgängig-Stapel, um ihn daran zu hindern, die Synchronität mit dem aktuellen Status zu verlieren.</p>
+	 
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link></related-links><apiConstructor id="flashx.undo:UndoManager:UndoManager"><apiName>UndoManager</apiName><shortdesc>
+		 Erstellt ein UndoManager-Objekt.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/></apiConstructorDef><apiDesc>
+		 Erstellt ein UndoManager-Objekt.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.undo:UndoManager:canRedo"><apiName>canRedo</apiName><shortdesc conref="IUndoManager#canRedo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="Boolean"/><apiDesc>Boolescher Wert :<codeph>true</codeph>, wenn sich ein Vorgang, der wiederhergestellt werden kann, im Wiederherstellungsstapel befindet. Andernfalls wird <codeph>false</codeph> zurückgegeben.
+		 
+		 </apiDesc></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#canRedo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:canUndo"><apiName>canUndo</apiName><shortdesc conref="IUndoManager#canUndo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="Boolean"/><apiDesc>Boolescher Wert :<codeph>true</codeph>, wenn sich ein Vorgang, der rückgängig gemacht werden kann, im Rückgängig-Stapel befindet. Andernfalls wird <codeph>false</codeph> zurückgegeben.
+		 
+		 </apiDesc></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#canUndo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:clearAll"><apiName>clearAll</apiName><shortdesc conref="IUndoManager#clearAll()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#clearAll()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:clearRedo"><apiName>clearRedo</apiName><shortdesc conref="IUndoManager#clearRedo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#clearRedo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:peekRedo"><apiName>peekRedo</apiName><shortdesc conref="IUndoManager#peekRedo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier><apiDesc>IOperation - Das wiederherstellbare IOperation-Objekt oder <codeph>null</codeph>, wenn sich kein wiederherstellbarer Vorgang im Wiederherstellungsstapel befindet.
+		 
+		 </apiDesc></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#peekRedo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:peekUndo"><apiName>peekUndo</apiName><shortdesc conref="IUndoManager#peekUndo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier><apiDesc>IOperation - Das IOperation-Objekt, das rückgängig gemacht werden kann, oder <codeph>null</codeph>, wenn sich kein Vorgang, der rückgängig gemacht werden kann, im Rückgängig-Stapel befindet.
+		 
+		 </apiDesc></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#peekUndo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:popRedo"><apiName>popRedo</apiName><shortdesc conref="IUndoManager#popRedo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier><apiDesc>IOperation - Das wiederherstellbare IOperation-Objekt oder <codeph>null</codeph>, wenn sich kein wiederherstellbarer Vorgang im Wiederherstellungsstapel befindet.
+		 </apiDesc></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#popRedo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:popUndo"><apiName>popUndo</apiName><shortdesc conref="IUndoManager#popUndo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier><apiDesc>IOperation - Das IOperation-Objekt, das rückgängig gemacht werden kann, oder <codeph>null</codeph>, wenn sich kein Vorgang, der rückgängig gemacht werden kann, im Rückgängig-Stapel befindet.
+		 
+		 </apiDesc></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#popUndo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:pushRedo"><apiName>pushRedo</apiName><shortdesc conref="IUndoManager#pushRedo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiParam></apiOperationDef><apiDesc conref="IUndoManager#pushRedo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:pushUndo"><apiName>pushUndo</apiName><shortdesc conref="IUndoManager#pushUndo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiParam></apiOperationDef><apiDesc conref="IUndoManager#pushUndo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:redo"><apiName>redo</apiName><shortdesc conref="IUndoManager#redo()"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#redo()"> 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.edit.xml#IEditManager/redo"><linktext>flashx.textLayout.edit.IEditManager.redo</linktext></link></related-links></apiOperation><apiOperation id="flashx.undo:UndoManager:undo"><apiName>undo</apiName><shortdesc conref="IUndoManager#undo()"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#undo()"> 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.edit.xml#IEditManager/undo"><linktext>flashx.textLayout.edit.IEditManager.undo</linktext></link></related-links></apiOperation><apiValue id="flashx.undo:UndoManager:undoAndRedoItemLimit:get"><apiName>undoAndRedoItemLimit</apiName><shortdesc conref="IUndoManager#undoAndRedoItemLimit()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc conref="IUndoManager#undoAndRedoItemLimit()">
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.undo:IOperation"><apiName>IOperation</apiName><shortdesc> 
+	 IOperation definiert die Schnittstelle für Vorgänge, die rückgängig gemacht und wiederhergestellt werden können.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc> 
+	 IOperation definiert die Schnittstelle für Vorgänge, die rückgängig gemacht und wiederhergestellt werden können.
+	  
+	 </apiDesc></apiClassifierDetail><apiOperation id="flashx.undo:IOperation:flashx.undo:IOperation:performRedo"><apiName>performRedo</apiName><shortdesc> 
+		 Führt den Vorgang erneut aus.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 Führt den Vorgang erneut aus.
+		 
+		 <p>Der Vorgang ist auch verantwortlich dafür, dass er sich selbst auf den Rückgängig-Stapel befördert.</p>
+		  
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IOperation:flashx.undo:IOperation:performUndo"><apiName>performUndo</apiName><shortdesc> 
+		 Kehrt den Vorgang um.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 Kehrt den Vorgang um.
+		 
+		 <p>Der Vorgang ist auch verantwortlich dafür, dass er sich selbst auf den Wiederherstellungsstapel befördert.</p> 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation></apiClassifier><apiClassifier id="flashx.undo:IUndoManager"><apiName>IUndoManager</apiName><shortdesc>
+	 IUndoManager definiert die Schnittstelle für die Verwaltung von Rückgängig- und Wiederherstellungsstapeln.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc>
+	 IUndoManager definiert die Schnittstelle für die Verwaltung von Rückgängig- und Wiederherstellungsstapeln.
+	 
+	 <p>Der Rückgängig-Manager verwaltet einen Stapel von Vorgängen, die rückgängig gemacht oder wiederhergestellt werden können.</p>
+	 
+	 </apiDesc></apiClassifierDetail><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:canRedo"><apiName>canRedo</apiName><shortdesc>
+		 Gibt an, ob aktuell ein wiederherstellbarer Vorgang vorhanden ist.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>Boolescher Wert <codeph>true</codeph>, wenn sich ein Vorgang, der wiederhergestellt werden kann, im Wiederherstellungsstapel befindet. Andernfalls wird <codeph>false</codeph> zurückgegeben.
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc>
+		 Gibt an, ob aktuell ein wiederherstellbarer Vorgang vorhanden ist.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:canUndo"><apiName>canUndo</apiName><shortdesc>
+		 Gibt an, ob aktuell ein Vorgang vorhanden ist, der rückgängig gemacht werden kann.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>Boolescher Wert: <codeph>true</codeph>, wenn sich ein Vorgang, der rückgängig gemacht werden kann, im Rückgängig-Stapel befindet. Andernfalls wird <codeph>false</codeph> zurückgegeben.
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc>
+		 Gibt an, ob es aktuell einen Vorgang gibt, der rückgängig gemacht werden kann.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:clearAll"><apiName>clearAll</apiName><shortdesc>
+		 Leert sowohl den Rückgängig- als auch den Wiederherstellungsverlauf.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc>
+		 Leert sowohl den Rückgängig- als auch den Wiederherstellungsverlauf.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:clearRedo"><apiName>clearRedo</apiName><shortdesc>
+		 Leert den Wiederherstellungsstapel.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc>
+		 Leert den Wiederherstellungsstapel.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:peekRedo"><apiName>peekRedo</apiName><shortdesc>
+		 Gibt den nächsten wiederherzustellenden Vorgang zurück.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>IOperation - Das wiederherstellbare IOperation-Objekt oder <codeph>null</codeph>, wenn sich kein wiederherstellbarer Vorgang im Wiederherstellungsstapel befindet.
+		 
+		 </apiDesc><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>
+		 Gibt den nächsten wiederherzustellenden Vorgang zurück.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:peekUndo"><apiName>peekUndo</apiName><shortdesc>
+		 Gibt den nächsten rückgängig zu machenden Vorgang zurück.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>IOperation - Das IOperation-Objekt, das rückgängig gemacht werden kann, oder <codeph>null</codeph>, wenn sich kein Vorgang, der rückgängig gemacht werden kann, im Rückgängig-Stapel befindet.
+		 
+		 </apiDesc><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>
+		 Gibt den nächsten rückgängig zu machenden Vorgang zurück.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:popRedo"><apiName>popRedo</apiName><shortdesc>
+		 Entfernt den nächsten wiederherzustellenden Vorgang aus dem Wiederherstellungsstapel und gibt ihn zurück.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>IOperation - Das wiederherstellbare IOperation-Objekt oder <codeph>null</codeph>, wenn sich kein wiederherstellbarer Vorgang im Wiederherstellungsstapel befindet.
+		 </apiDesc><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>
+		 Entfernt den nächsten wiederherzustellenden Vorgang aus dem Wiederherstellungsstapel und gibt ihn zurück.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:popUndo"><apiName>popUndo</apiName><shortdesc>
+		 Entfernt den nächsten rückgängig zu machenden Vorgang aus dem Rückgängig-Stapel und gibt ihn zurück.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>IOperation - Das IOperation-Objekt, das rückgängig gemacht werden kann, oder <codeph>null</codeph>, wenn sich kein Vorgang, der rückgängig gemacht werden kann, im Rückgängig-Stapel befindet.
+		 
+		 </apiDesc><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>
+		 Entfernt den nächsten rückgängig zu machenden Vorgang aus dem Rückgängig-Stapel und gibt ihn zurück.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:pushRedo"><apiName>pushRedo</apiName><shortdesc>
+		 Fügt dem Wiederherstellungsstapel einen wiederherstellbaren Vorgang hinzu.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiParam></apiOperationDef><apiDesc>
+		 Fügt dem Wiederherstellungsstapel einen wiederherstellbaren Vorgang hinzu.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:pushUndo"><apiName>pushUndo</apiName><shortdesc>
+		 Fügt dem Rückgängig-Stapel einen Vorgang hinzu, der rückgängig gemacht werden kann.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiParam></apiOperationDef><apiDesc>
+		 Fügt dem Rückgängig-Stapel einen Vorgang hinzu, der rückgängig gemacht werden kann.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:redo"><apiName>redo</apiName><shortdesc> 
+		 Entfernt das nächste IOperation-Objekt vom Wiederherstellungsstapel und ruft die performRedo()-Funktion des Objekts auf.</shortdesc><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 Entfernt das nächste IOperation-Objekt vom Wiederherstellungsstapel und ruft die performRedo()-Funktion des Objekts auf.
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.edit.xml#IEditManager/redo"><linktext>flashx.textLayout.edit.IEditManager.redo</linktext></link><link href="flashx.undo.xml#IUndoManager/canRedo"><linktext>flashx.undo.IUndoManager.canRedo</linktext></link><link href="flashx.undo.xml#IUndoManager/clearRedo"><linktext>flashx.undo.IUndoManager.clearRedo</linktext></link><link href="flashx.undo.xml#IUndoManager/peekRedo"><linktext>flashx.undo.IUndoManager.peekRedo</linktext></link><link href="flashx.undo.xml#IUndoManager/pushRedo"><linktext>flashx.undo.IUndoManager.pushRedo</linktext></link><link href="flashx.undo.xml#IUndoManager/popRedo"><linktext>flashx.undo.IUndoManager.popRedo</linktext></link></related-links></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:undo"><apiName>undo</apiName><shortdesc> 
+		 Entfernt das nächste IOperation-Objekt vom Rückgängig-Stapel und ruft die performUndo()-Funktion des Objekts auf.</shortdesc><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 Entfernt das nächste IOperation-Objekt vom Rückgängig-Stapel und ruft die performUndo()-Funktion des Objekts auf.
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.edit.xml#IEditManager/undo"><linktext>flashx.textLayout.edit.IEditManager.undo</linktext></link><link href="flashx.undo.xml#IUndoManager/canUndo"><linktext>flashx.undo.IUndoManager.canUndo</linktext></link><link href="flashx.undo.xml#IUndoManager/clearUndo"><linktext>flashx.undo.IUndoManager.clearUndo</linktext></link><link href="flashx.undo.xml#IUndoManager/peekUndo"><linktext>flashx.undo.IUndoManager.peekUndo</linktext></link><link href="flashx.undo.xml#IUndoManager/pushUndo"><linktext>flashx.undo.IUndoManager.pushUndo</linktext></link><link href="flashx.undo.xml#IUndoManager/popUndo"><linktext>flashx.undo.IUndoManager.popUndo</linktext></link></related-links></apiOperation><apiValue id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:undoAndRedoItemLimit:get"><apiName>undoAndRedoItemLimit</apiName><shortdesc>
+		 Die maximal zurückzuverfolgende Anzahl von Vorgängen, die rückgängig gemacht oder wiederhergestellt werden können.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc>
+		 Die maximal zurückzuverfolgende Anzahl von Vorgängen, die rückgängig gemacht oder wiederhergestellt werden können.
+		 
+		 <p>Um die Rückgängig-Funktion zu deaktivieren, setzen Sie diesen Wert auf 0.</p> 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier></apiPackage>

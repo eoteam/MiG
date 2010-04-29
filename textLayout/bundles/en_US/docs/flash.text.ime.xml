@@ -1,0 +1,151 @@
+<apiPackage id="flash.text.ime"><apiName>flash.text.ime</apiName><apiDetail/><apiClassifier id="flash.text.ime:IIMEClient"><apiName>IIMEClient</apiName><shortdesc>
+Interface for IME (input method editor) clients.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10.1"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc>
+Interface for IME (input method editor) clients.  Components based on the flash.text.engine package must implement 
+this interface to support editing text inline using an IME. This interface is not used with TextField objects. 
+TextLayoutFramework (TLF) uses this interface to support inline IME, so clients using TLF do not need to implement this 
+interface. 
+<p>To support inline IME, set the <codeph>imeClient</codeph> property of an <codeph>ImeEvent.IME_START_COMPOSITION</codeph> event to
+an object which implements this interface.</p>
+
+</apiDesc></apiClassifierDetail><related-links><link href="flash.text.ime.xml#CompositionAttributeRange"><linktext>flash.text.ime.CompositionAttributeRange</linktext></link><link href="" invalidHref="flash.events.ImeEvent.imeClient.xml"><linktext>flash.events.ImeEvent:imeClient</linktext></link></related-links><adobeApiEvent id="flash.text.ime:IIMEClient_flash.events.TextEvent.TEXT_INPUT_textInput"><apiName>textInput</apiName><shortdesc>
+ Dispatched when the user enters text.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><adobeApiEventDetail><adobeApiEventDef><apiEventType>flash.events.TextEvent.TEXT_INPUT</apiEventType><adobeApiEventClassifier>flash.TextEvent.TEXT_INPUT</adobeApiEventClassifier><apiGeneratedEvent/></adobeApiEventDef><apiDesc>
+ Dispatched when the user enters text. For IME (input method editor) clients, the receiver should 
+ insert the string contained in the event object's <codeph>text</codeph> property at the current insertion point.
+ </apiDesc></adobeApiEventDetail></adobeApiEvent><adobeApiEvent id="flash.text.ime:IIMEClient_flash.events.IMEEvent.IME_START_COMPOSITION_imeStartComposition"><apiName>imeStartComposition</apiName><shortdesc>
+ Dispatched when the user begins to use an IME (input method editor).</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><adobeApiEventDetail><adobeApiEventDef><apiEventType>flash.events.IMEEvent.IME_START_COMPOSITION</apiEventType><adobeApiEventClassifier>flash.IMEEvent.IME_START_COMPOSITION</adobeApiEventClassifier><apiGeneratedEvent/></adobeApiEventDef><apiDesc>
+ Dispatched when the user begins to use an IME (input method editor).
+ </apiDesc></adobeApiEventDetail></adobeApiEvent><apiOperation id="flash.text.ime:IIMEClient:flash.text.ime:IIMEClient:confirmComposition"><apiName>confirmComposition</apiName><shortdesc>
+	Use this callback to end the inline editing session and confirm the text.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10.1"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>text</apiItemName><apiType value="String"/><apiData>null</apiData><apiDesc> the final state of the text in the inline session (the text that got confirmed).
+	</apiDesc></apiParam><apiParam><apiItemName>preserveSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc> when true, you should not reset the current selection to the end of the confirmed text.
+	</apiDesc></apiParam></apiOperationDef><apiDesc>
+	Use this callback to end the inline editing session and confirm the text.
+	
+	</apiDesc></apiOperationDetail></apiOperation><apiOperation id="flash.text.ime:IIMEClient:flash.text.ime:IIMEClient:getTextBounds"><apiName>getTextBounds</apiName><shortdesc>
+	This callback is used by the IME to query the bounding box of the text being edited with the IME client.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10.1"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>the bounding box of the specified range of text, or <codeph>null</codeph> if either or both of the indexes are invalid.
+	The same value should be returned independant of whether <codeph>startIndex</codeph> is greater or less than <codeph>endIndex</codeph>.
+	</apiDesc><apiType value="flash.geom:Rectangle"/></apiReturn><apiParam><apiItemName>startIndex</apiItemName><apiType value="int"/><apiDesc>an integer that specifies the starting location of the range of text for which you need to measure the bounding box.
+	</apiDesc></apiParam><apiParam><apiItemName>endIndex</apiItemName><apiType value="int"/><apiDesc>Optional; an integer that specifies the ending location of the range of text for which you need to measure the bounding box.
+	
+	</apiDesc></apiParam></apiOperationDef><apiDesc>
+	This callback is used by the IME to query the bounding box of the text being edited with the IME client.
+	Use this method to place the candidate window and set the mouse cursor in the IME client when the mouse is over the 
+	text field or other component that supports IME.
+	
+	</apiDesc></apiOperationDetail></apiOperation><apiOperation id="flash.text.ime:IIMEClient:flash.text.ime:IIMEClient:getTextInRange"><apiName>getTextInRange</apiName><shortdesc> 
+	 Gets the specified range of text from the component.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10.1"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>The requested text, or <codeph>null</codeph> if no text is available in the requested range
+	 or if either or both of the indexes are invalid.  The same value should be returned 
+	 independant of whether <codeph>startIndex</codeph> is greater or less than <codeph>endIndex</codeph>.
+	 
+	 </apiDesc><apiType value="String"/></apiReturn><apiParam><apiItemName>startIndex</apiItemName><apiType value="int"/><apiDesc>an integer that specifies the starting location of the range of text to be retrieved.
+	 </apiDesc></apiParam><apiParam><apiItemName>endIndex</apiItemName><apiType value="int"/><apiDesc>an integer that specifies the ending location of the range of text to be retrieved.
+	 
+	 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+	 Gets the specified range of text from the component.  This method is called during IME reconversion.
+	 
+	 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flash.text.ime:IIMEClient:flash.text.ime:IIMEClient:selectRange"><apiName>selectRange</apiName><shortdesc> 
+	 Sets the range of selected text in the component.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10.1"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>anchorIndex</apiItemName><apiType value="int"/><apiDesc>The zero-based index value of the character at the anchor end of the selection
+	 </apiDesc></apiParam><apiParam><apiItemName>activeIndex</apiItemName><apiType value="int"/><apiDesc>The zero-based index value of the character at the active end of the selection.
+	 
+	 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+	 Sets the range of selected text in the component.
+	 If either of the arguments is out of bounds the selection should not be changed.
+	 
+	 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flash.text.ime:IIMEClient:flash.text.ime:IIMEClient:updateComposition"><apiName>updateComposition</apiName><shortdesc>
+	Callback for updating the contents of the inline editing session.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10.1"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>text</apiItemName><apiType value="String"/><apiDesc> contains the text of the inline edit session from the IME
+	</apiDesc></apiParam><apiParam><apiItemName>attributes</apiItemName><apiType value="Vector$flash.text.ime:CompositionAttributeRange"/><apiDesc> contains an array of composition clauses with adornment info 
+	</apiDesc></apiParam><apiParam><apiItemName>compositionStartIndex</apiItemName><apiType value="int"/><apiDesc> start of the inline session relative to the start of the text object
+	</apiDesc></apiParam><apiParam><apiItemName>compositionEndIndex</apiItemName><apiType value="int"/><apiDesc> end of the inline session relative to the start of the text object
+	</apiDesc></apiParam></apiOperationDef><apiDesc>
+	Callback for updating the contents of the inline editing session.
+	This gets called whenever the text being edited with the IME has changed
+	and its contents are used by the client to redraw the entire inline edit session.
+	
+	</apiDesc></apiOperationDetail></apiOperation><apiValue id="flash.text.ime:IIMEClient:flash.text.ime:IIMEClient:compositionEndIndex:get"><apiName>compositionEndIndex</apiName><shortdesc> 
+	 The zero-based character index value of the end of the current edit session text (i.e.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10.1"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
+	 The zero-based character index value of the end of the current edit session text (i.e.
+	 all text in the inline session that is still not yet confirmed to the document).
+	 
+	 </apiDesc></apiValueDetail></apiValue><apiValue id="flash.text.ime:IIMEClient:flash.text.ime:IIMEClient:compositionStartIndex:get"><apiName>compositionStartIndex</apiName><shortdesc> 
+	 The zero-based character index value of the start of the current edit session text (i.e.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10.1"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
+	 The zero-based character index value of the start of the current edit session text (i.e.
+	 all text in the inline session that is still not yet confirmed to the document).
+	 
+	 </apiDesc></apiValueDetail></apiValue><apiValue id="flash.text.ime:IIMEClient:flash.text.ime:IIMEClient:selectionActiveIndex:get"><apiName>selectionActiveIndex</apiName><shortdesc> 
+	 The zero-based character index value of the last character in the current selection.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10.1"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
+	 The zero-based character index value of the last character in the current selection.
+	 
+	 </apiDesc></apiValueDetail></apiValue><apiValue id="flash.text.ime:IIMEClient:flash.text.ime:IIMEClient:selectionAnchorIndex:get"><apiName>selectionAnchorIndex</apiName><shortdesc> 
+	 The zero-based character index value of the first character in the current selection.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10.1"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
+	 The zero-based character index value of the first character in the current selection.
+	 
+	 </apiDesc></apiValueDetail></apiValue><apiValue id="flash.text.ime:IIMEClient:flash.text.ime:IIMEClient:verticalTextLayout:get"><apiName>verticalTextLayout</apiName><shortdesc> 
+	 Indicates whether the text in the component is vertical or not.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10.1"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+	 Indicates whether the text in the component is vertical or not.  This will affect the positioning
+	 of the candidate window (beside vertical text, below horizontal text).
+	 
+	 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flash.text.ime:CompositionAttributeRange"><apiName>CompositionAttributeRange</apiName><shortdesc>
+The CompositionAttributeRange class represents a range of composition attributes for use with IME events.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10.1"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc>
+The CompositionAttributeRange class represents a range of composition attributes for use with IME events. 
+For example, when editing text in the IME, the text is divided by the IME into composition ranges.
+These composition ranges are flagged as selected (i.e. currently being lengthened, shortened, or edited),
+and/or converted (i.e. they have made one pass through the IME dictionary lookup already).
+
+<p>By convention, the client should adorn these composition ranges with underlining or hiliting according to
+the flags.</p>
+
+<p>For example:</p>
+<codeblock>
+     !converted              = thick gray underline (raw text)
+     !selected &amp;&amp; converted  = thin black underline
+      selected &amp;&amp; converted  = thick black underline
+</codeblock>
+</apiDesc></apiClassifierDetail><apiConstructor id="flash.text.ime:CompositionAttributeRange:CompositionAttributeRange"><apiName>CompositionAttributeRange</apiName><shortdesc>
+	 Creates a CompositionAttributeRange object.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10.1"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiDesc> The zero based index of the first character included in the character range.
+	 </apiDesc></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiDesc> The zero based index of the last character included in the character range.
+	 </apiDesc></apiParam><apiParam><apiItemName>selected</apiItemName><apiType value="Boolean"/><apiDesc> The selected flag
+	 </apiDesc></apiParam><apiParam><apiItemName>converted</apiItemName><apiType value="Boolean"/><apiDesc> The converted flag
+	 
+	 </apiDesc></apiParam><apiTipTexts><apiTipText>Constructor for CompositionAttributeRange objects.
+	 </apiTipText></apiTipTexts></apiConstructorDef><apiDesc>
+	 Creates a CompositionAttributeRange object.
+	 
+	 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flash.text.ime:CompositionAttributeRange:converted"><apiName>converted</apiName><shortdesc>
+	 The converted flag, meaning this clause has been processed by the IME
+	 and is awaiting acceptance/confirmation by the user
+	 
+	 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10.1"/></apiVersion></asMetadata><asCustoms><helpid>
+	 
+	 </helpid></asCustoms></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiType value="Boolean"/></apiValueDef><apiDesc>
+	 The converted flag, meaning this clause has been processed by the IME
+	 and is awaiting acceptance/confirmation by the user
+	 
+	 </apiDesc></apiValueDetail></apiValue><apiValue id="flash.text.ime:CompositionAttributeRange:relativeEnd"><apiName>relativeEnd</apiName><shortdesc>
+	 The relative end of the composition clause, relative to the beginning
+	 of the inline edit session.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10.1"/></apiVersion></asMetadata><asCustoms><helpid>
+	 
+	 </helpid></asCustoms></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiType value="int"/></apiValueDef><apiDesc>
+	 The relative end of the composition clause, relative to the beginning
+	 of the inline edit session.
+	 i.e. 0 = the start of the text the IME can see (there may be text 
+	 before that in the edit field)
+	 
+	 </apiDesc></apiValueDetail></apiValue><apiValue id="flash.text.ime:CompositionAttributeRange:relativeStart"><apiName>relativeStart</apiName><shortdesc>
+	 The relative start from the beginning of the inline edit session
+	 i.e.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10.1"/></apiVersion></asMetadata><asCustoms><helpid>
+	 
+	 </helpid></asCustoms></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiType value="int"/></apiValueDef><apiDesc>
+	 The relative start from the beginning of the inline edit session
+	 i.e. 0 = the start of the text the IME can see (there may be text 
+	 before that in the edit field)
+	 
+	 </apiDesc></apiValueDetail></apiValue><apiValue id="flash.text.ime:CompositionAttributeRange:selected"><apiName>selected</apiName><shortdesc>
+	 The selected flag, meaning this composition clause is active and 
+	 being lengthened or shortened or edited with the IME, and the neighboring
+	 clauses are not.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10.1"/></apiVersion></asMetadata><asCustoms><helpid>
+	 
+	 </helpid></asCustoms></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiType value="Boolean"/></apiValueDef><apiDesc>
+	 The selected flag, meaning this composition clause is active and 
+	 being lengthened or shortened or edited with the IME, and the neighboring
+	 clauses are not.
+	 
+	 </apiDesc></apiValueDetail></apiValue></apiClassifier></apiPackage>

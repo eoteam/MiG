@@ -1,0 +1,227 @@
+<?xml version="1.0"?>
+<apiPackage id="flashx.textLayout.events"><apiName>flashx.textLayout.events</apiName><apiDetail/><apiClassifier id="flashx.textLayout.events:FlowElementMouseEvent"><apiName>FlowElementMouseEvent</apiName><shortdesc> LinkElement 在检测到鼠标动作时分派此事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flash.events:Event</apiBaseClassifier></apiClassifierDef><apiDesc> LinkElement 在检测到鼠标动作时分派此事件。文本布局框架包括这一特殊版本的鼠标事件，因为当链接元素嵌入在可编辑文本流中时，通常不需要鼠标事件。 
+	 <p>可以将事件侦听器添加到 LinkElement 以侦听该类型的事件。如果选择通过调用 <codeph>Event.preventDefault()</codeph> 取消事件，则不会发生与该事件关联的默认行为。
+	 </p>
+	 <p>如果您选择不向 LinkElement 添加事件侦听器，或者您的事件侦听器功能不取消此行为，则会再次分派该事件，但是这一次是由 LinkElement 的关联 TextFlow 实例而不是由 LinkElement 本身分派的。这样即提供了第二次机会，允许使用附加到 TextFlow 的事件侦听器侦听该事件。 
+	 </p>
+	 <p>只有当无法编辑文本或者在鼠标动作的同时按下控制键时，才会分派 FlowElementMouseEvent。</p>
+	 <p>
+	 只有当无法编辑文本或按下控制键时，才会分派下列六种事件类型：
+	 <ul>
+	   <li><codeph>MouseEvent.CLICK</codeph></li>
+	   <li><codeph>MouseEvent.MOUSE_DOWN</codeph></li>
+	   <li><codeph>MouseEvent.MOUSE_OUT</codeph></li>
+	   <li><codeph>MouseEvent.MOUSE_UP</codeph></li>
+	   <li><codeph>MouseEvent.ROLL_OVER</codeph></li>
+	   <li><codeph>MouseEvent.ROLL_OUT</codeph></li>
+	 </ul>
+	 </p>
+	 
+	 </apiDesc><example conref="examples\FlowElementMouseEvent_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#LinkElement"><linktext>flashx.textLayout.elements.LinkElement</linktext></link></related-links><apiConstructor id="flashx.textLayout.events:FlowElementMouseEvent:FlowElementMouseEvent"><apiName>FlowElementMouseEvent</apiName><shortdesc> 
+		 创建事件对象，其中包含有关鼠标动作的信息。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>type</apiItemName><apiType value="String"/><apiDesc> 事件的类型。事件侦听器可以通过继承的 <codeph>type</codeph> 属性访问此信息。有六种类型：<codeph>MouseEvent.CLICK</codeph>、<codeph>MouseEvent.MOUSE_DOWN</codeph>、<codeph>MouseEvent.MOUSE_OUT</codeph>、<codeph>MouseEvent.MOUSE_UP</codeph>、<codeph>MouseEvent.ROLL_OVER</codeph> 和 <codeph>MouseEvent.ROLL_OUT</codeph>。
+		 </apiDesc></apiParam><apiParam><apiItemName>bubbles</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>确定 Event 对象是否参与事件流的冒泡阶段。FlowElementMouseEvent 对象不会冒泡。
+		 </apiDesc></apiParam><apiParam><apiItemName>cancelable</apiItemName><apiType value="Boolean"/><apiData>true</apiData><apiDesc>确定是否可以取消 Event 对象。事件侦听器可以通过继承的 <codeph>cancelable</codeph> 属性访问此信息。可以取消 FlowElementMouseEvent 对象。可通过调用事件侦听器中的 <codeph>preventDefault()</codeph> 方法取消与该事件关联的默认行为。
+		 </apiDesc></apiParam><apiParam><apiItemName>flowElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiData>null</apiData><apiDesc>FlowElement 实例，通常是与该事件关联的 LinkElement。事件侦听器可以通过 <codeph>flowElement</codeph> 属性访问此信息。
+		 </apiDesc></apiParam><apiParam><apiItemName>originalEvent</apiItemName><apiType value="flash.events:MouseEvent"/><apiData>null</apiData><apiDesc>flowElement 上发生的原始鼠标事件。事件侦听器可以通过 <codeph>originalEvent</codeph> 属性访问此信息。
+
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建事件对象，其中包含有关鼠标动作的信息。将 Event 对象作为参数传递给事件侦听器。如果您想要手动分派一个事件，可使用构造函数。无需使用构造函数侦听由 LinkElement 生成的 FlowElementMouseEvent 对象。
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.events:FlowElementMouseEvent:CLICK"><apiName>CLICK</apiName><shortdesc/><prolog/><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>click</apiData><apiType value="String"/></apiValueDef></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowElementMouseEvent:MOUSE_DOWN"><apiName>MOUSE_DOWN</apiName><shortdesc/><prolog/><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>mouseDown</apiData><apiType value="String"/></apiValueDef></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowElementMouseEvent:MOUSE_MOVE"><apiName>MOUSE_MOVE</apiName><shortdesc/><prolog/><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>mouseMove</apiData><apiType value="String"/></apiValueDef></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowElementMouseEvent:MOUSE_UP"><apiName>MOUSE_UP</apiName><shortdesc/><prolog/><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>mouseUp</apiData><apiType value="String"/></apiValueDef></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowElementMouseEvent:ROLL_OUT"><apiName>ROLL_OUT</apiName><shortdesc/><prolog/><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>rollOut</apiData><apiType value="String"/></apiValueDef></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowElementMouseEvent:ROLL_OVER"><apiName>ROLL_OVER</apiName><shortdesc/><prolog/><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>rollOver</apiData><apiType value="String"/></apiValueDef></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowElementMouseEvent:flowElement:get"><apiName>flowElement</apiName><shortdesc> 
+		 分派事件的 LinkElement。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.elements:FlowElement</apiValueClassifier></apiValueDef><apiDesc> 
+		 分派事件的 LinkElement。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.elements.xml#LinkElement"><linktext>flashx.textLayout.elements.LinkElement</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.events:FlowElementMouseEvent:originalEvent:get"><apiName>originalEvent</apiName><shortdesc> 
+		 由鼠标动作生成的原始鼠标事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="flash.events:MouseEvent"/></apiValueDef><apiDesc> 
+		 由鼠标动作生成的原始鼠标事件。此属性可以是下列值之一：
+		 <ul>
+		   <li><codeph>MouseEvent.CLICK</codeph></li>
+		   <li><codeph>MouseEvent.MOUSE_DOWN</codeph></li>
+		   <li><codeph>MouseEvent.MOUSE_OUT</codeph></li>
+		   <li><codeph>MouseEvent.MOUSE_UP</codeph></li>
+		   <li><codeph>MouseEvent.MOUSE_OVER</codeph></li>
+		   <li><codeph>MouseEvent.MOUSE_OUT</codeph></li>
+		 </ul>
+		 <p>
+		 在大多数情况下，原始事件与 LinkElement 分派的事件相匹配。这些事件与 <codeph>click</codeph>、<codeph>mouseDown</codeph>、<codeph>mouseOut</codeph> 和 <codeph>mouseOver</codeph> 事件匹配。但是，在两种情况下原始事件由 LinkElement 转换为相关事件。如果 LinkElement 检测到 <codeph>mouseOver</codeph> 事件，则会分派 <codeph>rollOver</codeph> 事件。同样，如果 LinkElement 检测到 <codeph>mouseOut</codeph> 事件，则会分派 <codeph>rollOut</codeph> 事件。
+		 </p>
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.events.MouseEvent.xml"><linktext>flash.events.MouseEvent</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.events:CompositionCompleteEvent"><apiName>CompositionCompleteEvent</apiName><shortdesc> 
+	 TextFlow 实例在合成操作完成后分派该事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flash.events:Event</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 TextFlow 实例在合成操作完成后分派该事件。每个文本容器有两种状态：合成和显示。该事件通知您合成阶段何时结束。这样您可以在显示文本之前对容器进行任何必要且适当的更改。例如，您可以使用此事件在显示文本之前在文本流中添加对某些词或字符的加亮效果。
+	 
+	 <p>分派此事件的三个主要方法是 <codeph>compose()</codeph>、<codeph>updateToController()</codeph> 和 <codeph>updateAllControllers()</codeph>。这三个方法都属于 StandardFlowComposer 类。</p>
+	 
+	 <p><b>注意：</b>如果事件是由 <codeph>updateAllControllers()</codeph> 方法分派的，则不要在事件处理函数中再次调用 <codeph>updateAllControllers()</codeph>。这样的调用会是递归调用，因为 <codeph>updateAllControllers()</codeph> 方法执行合成和显示步骤。<codeph>updateAllControllers()</codeph> 在合成完成之后，显示步骤执行之前分派此事件。相同的推理适用于 <codeph>updateToController()</codeph> 方法。
+	 </p>
+	 
+	 </apiDesc><example conref="examples\CompositionCompleteEvent_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>flashx.textLayout.elements.TextFlow</linktext></link></related-links><apiConstructor id="flashx.textLayout.events:CompositionCompleteEvent:CompositionCompleteEvent"><apiName>CompositionCompleteEvent</apiName><shortdesc> 构造函数
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>type</apiItemName><apiType value="String"/><apiDesc>事件类型 - 使用静态属性 COMPOSITION_COMPLETE。
+		 </apiDesc></apiParam><apiParam><apiItemName>bubbles</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>指示事件是否为冒泡事件。该事件不会冒泡。
+		 </apiDesc></apiParam><apiParam><apiItemName>cancelable</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>指示是否可以阻止与事件相关联的行为。无法取消此事件。
+		 </apiDesc></apiParam><apiParam><apiItemName>textFlow</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiData>null</apiData><apiDesc>被合成的 TextFlow
+		 </apiDesc></apiParam><apiParam><apiItemName>compositionStart</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>合成开始位置，以文本流内的索引表示。
+		 </apiDesc></apiParam><apiParam><apiItemName>compositionLength</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>合成的字符长度值
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 构造函数
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.events:CompositionCompleteEvent:COMPOSITION_COMPLETE"><apiName>COMPOSITION_COMPLETE</apiName><shortdesc> 
+	     定义 compositionComplete 事件对象的 type 属性值。 
+	     </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>compositionComplete</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+	     定义 <codeph>compositionComplete</codeph> 事件对象的 <codeph>type</codeph> 属性值。 
+	     </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:CompositionCompleteEvent:compositionLength:get"><apiName>compositionLength</apiName><shortdesc> 
+		 合成的字符数。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 合成的字符数。
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:CompositionCompleteEvent:compositionStart:get"><apiName>compositionStart</apiName><shortdesc> 
+		 受合成影响的文本范围的起始位置，以文本流中的索引表示。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 受合成影响的文本范围的起始位置，以文本流中的索引表示。
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:CompositionCompleteEvent:textFlow:get"><apiName>textFlow</apiName><shortdesc>
+		 在其上已完成合成的 TextFlow。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.elements:TextFlow</apiValueClassifier></apiValueDef><apiDesc>
+		 在其上已完成合成的 TextFlow。 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.events:DamageEvent"><apiName>DamageEvent</apiName><shortdesc> 
+	 TextFlow 实例在每次标记为受损时分派该事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flash.events:Event</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 TextFlow 实例在每次标记为受损时分派该事件。如果对模型或布局进行更改，可能会导致损坏。
+	 
+	 </apiDesc><example conref="examples\DamageEvent_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>flashx.textLayout.elements.TextFlow</linktext></link></related-links><apiConstructor id="flashx.textLayout.events:DamageEvent:DamageEvent"><apiName>DamageEvent</apiName><shortdesc> 构造函数
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>type</apiItemName><apiType value="String"/><apiDesc>受损部分的起始文本索引
+		 </apiDesc></apiParam><apiParam><apiItemName>bubbles</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>受损文本的长度
+		 </apiDesc></apiParam><apiParam><apiItemName>cancelable</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam><apiParam><apiItemName>textFlow</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiData>null</apiData></apiParam><apiParam><apiItemName>damageAbsoluteStart</apiItemName><apiType value="int"/><apiData>0</apiData></apiParam><apiParam><apiItemName>damageLength</apiItemName><apiType value="int"/><apiData>0</apiData></apiParam></apiConstructorDef><apiDesc> 构造函数
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.events:DamageEvent:DAMAGE"><apiName>DAMAGE</apiName><shortdesc> DamageEvent 的事件类型 </shortdesc><prolog/><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>damage</apiData><apiType value="String"/></apiValueDef><apiDesc> DamageEvent 的事件类型 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:DamageEvent:damageAbsoluteStart:get"><apiName>damageAbsoluteStart</apiName><shortdesc>
+		 受损部分的绝对起始位置 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc>
+		 受损部分的绝对起始位置 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:DamageEvent:damageLength:get"><apiName>damageLength</apiName><shortdesc>
+		 受损部分的长度 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc>
+		 受损部分的长度 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:DamageEvent:textFlow:get"><apiName>textFlow</apiName><shortdesc>
+		 拥有受损部分的 TextFlow 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:TextFlow</apiValueClassifier></apiValueDef><apiDesc>
+		 拥有受损部分的 TextFlow 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.events:StatusChangeEvent"><apiName>StatusChangeEvent</apiName><shortdesc> 
+	 当 FlowElement 的状态改变时，TextFlow 实例会分派此事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flash.events:Event</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 当 FlowElement 的状态改变时，TextFlow 实例会分派此事件。该事件可用于检测一个内嵌图形元素何时完成加载。您可以使用事件处理函数，根据新加载的内嵌图形元素重新合成文本流。
+	 
+	 </apiDesc><example conref="examples\StatusChangeEvent_example.as"/></apiClassifierDetail><apiConstructor id="flashx.textLayout.events:StatusChangeEvent:StatusChangeEvent"><apiName>StatusChangeEvent</apiName><shortdesc> 创建事件对象，其中包含有关状态改变的信息。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>type</apiItemName><apiType value="String"/><apiDesc>	事件的类型。事件侦听器可以通过继承的 <codeph>type</codeph> 属性访问此信息。只有一种类型的 StatusChangeEvent：<codeph>StatusChangeEvent.INLINE_GRAPHIC_STATUS_CHANGE</codeph>； 
+		 </apiDesc></apiParam><apiParam><apiItemName>bubbles</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>	指示事件是否是冒泡事件。该事件不会冒泡。
+		 </apiDesc></apiParam><apiParam><apiItemName>cancelable</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>	指示是否可以阻止与事件相关联的行为。无法取消此事件。
+		 </apiDesc></apiParam><apiParam><apiItemName>element</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiData>null</apiData><apiDesc>发生了状态变化的 FlowElement 实例。
+		 </apiDesc></apiParam><apiParam><apiItemName>status</apiItemName><apiType value="String"/><apiData>null</apiData><apiDesc>FlowElement 实例的新状态。
+		 </apiDesc></apiParam><apiParam><apiItemName>errorEvent</apiItemName><apiType value="flash.events:ErrorEvent"/><apiData>null</apiData><apiDesc>与状态关联的 ErrorEvent 对象（如果有）。
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 创建事件对象，其中包含有关状态改变的信息。
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.events:StatusChangeEvent:INLINE_GRAPHIC_STATUS_CHANGE"><apiName>INLINE_GRAPHIC_STATUS_CHANGE</apiName><shortdesc> 
+	     定义 inlineGraphicStatusChanged 事件对象的 type 属性值。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>inlineGraphicStatusChange</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+	     定义 <codeph>inlineGraphicStatusChanged</codeph> 事件对象的 <codeph>type</codeph>。
+	     </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:StatusChangeEvent:element:get"><apiName>element</apiName><shortdesc> 
+		 发生了状态变化的 FlowElement 实例。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.elements:FlowElement</apiValueClassifier></apiValueDef><apiDesc> 
+		 发生了状态变化的 FlowElement 实例。 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.elements.xml#FlowElement"><linktext>flashx.textLayout.elements.FlowElement</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.events:StatusChangeEvent:errorEvent:get"><apiName>errorEvent</apiName><shortdesc> 
+		 由于状态改变而分派的 ErrorEvent 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="flash.events:ErrorEvent"/></apiValueDef><apiDesc> 
+		 由于状态改变而分派的 ErrorEvent 对象。 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.events.ErrorEvent.xml"><linktext>flash.events.ErrorEvent</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.events:StatusChangeEvent:status:get"><apiName>status</apiName><shortdesc>
+		 FlowElement 的新状态。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc>
+		 FlowElement 的新状态。此属性的可能值是由 InlineGraphicElementStatus 类定义的。在 InlineGraphicElementStatus 类中存在五个可用的静态常量：
+		 <ul>
+		   <li>ERROR：String = "error"。在加载引用的图形期间发生了错误。</li>
+		   <li>LOADING：字符串 = "loading"。已经对一个 URL 图形元素启动了（但尚未完成）加载。</li>
+		   <li>LOAD_PENDING :字符串 = "loadPending"。图形元素是尚未加载的 URL。</li>
+		   <li>READY：字符串 = "ready"。图形已完成加载并正确调整了大小。</li>
+		   <li>SIZE_PENDING :字符串 = "sizePending"。具有 auto 或百分比宽度/高度值的图形元素已完成加载但尚未重新合成。</li>
+		 </ul>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.elements.xml#InlineGraphicElementStatus"><linktext>flashx.textLayout.elements.InlineGraphicElementStatus</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.events:SelectionEvent"><apiName>SelectionEvent</apiName><shortdesc> 
+	 TextFlow 实例在 EditManager 或 SelectionManager 更改或选择文本范围时，分派 SelectionEvent 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flash.events:Event</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 TextFlow 实例在 EditManager 或 SelectionManager 更改或选择文本范围时，分派 SelectionEvent 对象。例如，不仅在选择了文本范围时分派该事件，而且当用户在文本流中单击其它位置而导致更改选择部分时也会分派该事件。此外，在 EditManager 更改了某一范围内的文本或文本格式时也分派该事件。
+	 
+	 </apiDesc><example conref="examples\SelectionEvent_example.as"/></apiClassifierDetail><apiConstructor id="flashx.textLayout.events:SelectionEvent:SelectionEvent"><apiName>SelectionEvent</apiName><shortdesc> 
+		 创建事件对象，其中包含有关流操作的信息。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>type</apiItemName><apiType value="String"/><apiDesc>	事件的类型。事件侦听器可以通过继承的 <codeph>type</codeph> 属性访问此信息。只有一种类型的 SelectionEvent：<codeph>SelectionEvent.SELECTION_CHANGE</codeph>； 
+		 </apiDesc></apiParam><apiParam><apiItemName>bubbles</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>	指示事件是否是冒泡事件。该事件不会冒泡。
+		 </apiDesc></apiParam><apiParam><apiItemName>cancelable</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>	指示是否可以阻止与事件相关联的行为。
+		 </apiDesc></apiParam><apiParam><apiItemName>selectionState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiData>null</apiData><apiDesc>	描述所选文本范围的 ElementRange 类型对象。
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建事件对象，其中包含有关流操作的信息。
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.events:SelectionEvent:SELECTION_CHANGE"><apiName>SELECTION_CHANGE</apiName><shortdesc> 
+		 SelectionEvent.SELECTION_CHANGE 常量可为一个选择事件定义该事件对象的 type 属性值。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>selectionChange</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 SelectionEvent.SELECTION_CHANGE 常量可为一个选择事件定义该事件对象的 type 属性值。 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:SelectionEvent:selectionState:get"><apiName>selectionState</apiName><shortdesc> 
+		 表示与该 SelectionEvent 关联的所选范围的 SelectionState 类型对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.edit:SelectionState</apiValueClassifier></apiValueDef><apiDesc> 
+		 表示与该 SelectionEvent 关联的所选范围的 SelectionState 类型对象。
+		 
+		 <p>可以使用该属性以及 ElementRange 类，创建表示所选文本范围的一个 ElementRange 实例。可以使用以下代码行创建一个表示所选文本范围的 ElementRange 类实例（<codeph>ev</codeph> 变量表示事件对象，条件运算符用于防止 <codeph>selectionState</codeph> 属性为 <codeph>null</codeph> 值）：</p>
+		 <codeblock>
+		 // Find selected element range
+		 var range:ElementRange = ev.selectionState ?  
+		 	ElementRange.createElementRange(ev.selectionState.textFlow,
+		 	ev.selectionState.absoluteStart, ev.selectionState.absoluteEnd) : null;</codeblock>
+		 
+		 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.edit.xml#ElementRange"><linktext>flashx.textLayout.edit.ElementRange</linktext></link><link href="flashx.textLayout.edit.xml#SelectionState"><linktext>flashx.textLayout.edit.SelectionState</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.events:FlowOperationEvent"><apiName>FlowOperationEvent</apiName><shortdesc> TextFlow 实例在一个操作开始之前分派该事件，并在操作结束后立即再次分派该事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flash.events:Event</apiBaseClassifier></apiClassifierDef><apiDesc> TextFlow 实例在一个操作开始之前分派该事件，并在操作结束后立即再次分派该事件。尽管这两种情况下分派的事件对象都是 FlowOperationEvent 实例，但是在操作之前和之后分派的事件仍有很大不同。
+	 
+	 <p>在执行任何操作之前，TextFlow 对象分派 FlowOperationEvent（其 <codeph>type</codeph> 属性设置为 <codeph>FlowOperationEvent.FLOW_OPERATION_BEGIN）。</codeph>通过检查 <codeph>operation</codeph> 属性，您可以确定将开始执行的操作类型。FLOW_OPERATION_BEGIN 类型的事件是可以取消的，也就是说如果您决定不应该继续执行操作，可以调用 <codeph>Event.PreventDefault()</codeph> 取消该操作。如果取消了操作，则不会执行该操作，而且不会分派 FLOW_OPERATION_END 事件。您也可以选择再次调用 EditManager，在完成触发事件的操作之前执行另一操作。如果这样做，则在事件处理函数中启动的操作将作为单个操作被撤消，而替代为触发该事件的操作。</p>
+	 
+	 <p>如果要允许继续操作，TextFlow 将在完成该操作（其 <codeph>type</codeph> 属性设置为 <codeph>FlowOperationEvent.FLOW_OPERATION_END</codeph>）时分派 FlowOperationEvent。在 Flash Player 可能由于该操作而引发任何错误之前分派该事件。这样您有机会在 Flash Player 引发错误之前处理该错误。可以通过事件的 <codeph>error</codeph> 属性访问该错误。如果选择在事件处理函数中处理错误，可以通过调用 <codeph>Event.preventDefault()</codeph> 取消 FLOW_OPERATION_END 事件来防止 Flash Player 引发错误。您也可以选择再次调用 EditManager 执行某个其它操作。如果这样做，则生成的操作将会作为一个单元被撤消，而替代为触发该事件的操作。
+	 </p> 
+	 
+	 </apiDesc><example conref="examples\FlowOperationEvent_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.operations.xml#FlowOperation"><linktext>flashx.textLayout.operations.FlowOperation</linktext></link></related-links><apiConstructor id="flashx.textLayout.events:FlowOperationEvent:FlowOperationEvent"><apiName>FlowOperationEvent</apiName><shortdesc> 创建事件对象，其中包含有关流操作的信息。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>type</apiItemName><apiType value="String"/><apiDesc>		事件的类型。事件侦听器可以通过继承的 <codeph>type</codeph> 属性访问此信息。有两种类型：<codeph>FlowOperationEvent.FLOW_OPERATION_BEGIN</codeph>、<codeph>FlowOperationEvent.FLOW_OPERATION_END</codeph>。
+		 </apiDesc></apiParam><apiParam><apiItemName>bubbles</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>		指示事件是否是冒泡事件。该事件不会冒泡。
+		 </apiDesc></apiParam><apiParam><apiItemName>cancelable</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>	指示是否可以阻止与事件相关联的行为。可以通过在事件处理函数中调用 <codeph>Event.preventDefault()</codeph> 方法来取消该事件。
+		 </apiDesc></apiParam><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.textLayout.operations:FlowOperation</apiOperationClassifier><apiData>null</apiData><apiDesc>	要开始执行或刚刚结束执行的 FlowOperation。
+		 </apiDesc></apiParam><apiParam><apiItemName>level</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>		在操作期间生成的任何错误。
+		 </apiDesc></apiParam><apiParam><apiItemName>error</apiItemName><apiType value="Error"/><apiData>null</apiData></apiParam></apiConstructorDef><apiDesc> 创建事件对象，其中包含有关流操作的信息。
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.events:FlowOperationEvent:FLOW_OPERATION_BEGIN"><apiName>FLOW_OPERATION_BEGIN</apiName><shortdesc> 
+		 定义 flowOperationBegin 事件对象的 type 属性值。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>flowOperationBegin</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 定义 <codeph>flowOperationBegin</codeph> 事件对象的 <codeph>type</codeph> 属性值。执行操作之前被分派。取消该事件会阻止操作的执行。 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowOperationEvent:FLOW_OPERATION_COMPLETE"><apiName>FLOW_OPERATION_COMPLETE</apiName><shortdesc>  
+		 定义 flowOperationComplete 事件对象的 type 属性的值。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>flowOperationComplete</apiData><apiType value="String"/></apiValueDef><apiDesc>  
+		 定义 <codeph>flowOperationComplete</codeph> 事件对象的 <codeph>type</codeph> 属性的值。在完成所有操作（包括挂起操作和合成操作）、完成合成并滚动显示后调度。
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowOperationEvent:FLOW_OPERATION_END"><apiName>FLOW_OPERATION_END</apiName><shortdesc>  
+		 定义 flowOperationEnd 事件对象的 type 属性值。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>flowOperationEnd</apiData><apiType value="String"/></apiValueDef><apiDesc>  
+		 定义 <codeph>flowOperationEnd</codeph> 事件对象的 <codeph>type</codeph> 属性值。在完成操作之后分派。所有错误都存储在 <codeph>OperationEvent.error</codeph> 中。如果发生错误，则取消该事件会阻止重新引发错误。一般情况下，所有错误都可能是致命的。
+	 	 <p>在此时（操作执行后）更改操作可能会失败。</p> 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowOperationEvent:error:get"><apiName>error</apiName><shortdesc> 
+		 在操作期间引发的错误（如果有）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Error"/></apiValueDef><apiDesc> 
+		 在操作期间引发的错误（如果有）。如果在操作期间发生了错误，对该错误对象的引用会附加到 FLOW_OPERATION_END 事件。这样您有机会在 Flash Player 引发错误之前处理该错误。如果取消了该事件，Flash Player 不会引发错误。
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowOperationEvent:level:get"><apiName>level</apiName><shortdesc> 
+		 可能会通过嵌套将操作合并到合成操作中。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 可能会通过嵌套将操作合并到合成操作中。此标志描述操作的嵌套级别。
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:FlowOperationEvent:operation:get"><apiName>operation</apiName><shortdesc> 
+		 即将开始或刚刚结束执行的操作。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.operations:FlowOperation</apiValueClassifier></apiValueDef><apiDesc> 
+		 即将开始或刚刚结束执行的操作。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.operations.xml#FlowOperation"><linktext>flashx.textLayout.operations.FlowOperation</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.events:UpdateCompleteEvent"><apiName>UpdateCompleteEvent</apiName><shortdesc> 
+	 TextFlow 实例在其任何容器完成更新后分派该事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata><asCustoms><internal>Note: the DamageEvent_example class contains a good example of 
+	 using the UpdateCompleteEvent, so I have included it as the class example
+	 instead of creating a new example. I've updated the description of the
+	 DamageEvent_example file to include prominent mention of the UpdateCompleteEvent.
+	 
+	 </internal></asCustoms></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flash.events:Event</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 TextFlow 实例在其任何容器完成更新后分派该事件。每个文本容器有两种状态：合成和显示。该事件通知您显示阶段何时结束。这样您可以对可以显示但尚未显示到屏幕的容器进行任何必要的更改。
+	 
+	 </apiDesc><example conref="examples\DamageEvent_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>flashx.textLayout.elements.TextFlow</linktext></link></related-links><apiConstructor id="flashx.textLayout.events:UpdateCompleteEvent:UpdateCompleteEvent"><apiName>UpdateCompleteEvent</apiName><shortdesc> 构造函数
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>type</apiItemName><apiType value="String"/><apiDesc>事件类型 - 使用静态属性 UPDATE_COMPLETE。
+		 </apiDesc></apiParam><apiParam><apiItemName>bubbles</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>指示事件是否为冒泡事件。该事件不会冒泡。
+		 </apiDesc></apiParam><apiParam><apiItemName>cancelable</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>指示是否可以阻止与事件相关联的行为。无法取消此事件。
+		 </apiDesc></apiParam><apiParam><apiItemName>textFlow</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiData>null</apiData><apiDesc>更新了其容器的 ContainerController
+		 </apiDesc></apiParam><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiData>null</apiData><apiDesc>更新的 TextFlow
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 构造函数
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.events:UpdateCompleteEvent:UPDATE_COMPLETE"><apiName>UPDATE_COMPLETE</apiName><shortdesc> 
+	     定义 UpdateCompleteEvent 对象的 type 属性值。 
+	     </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>updateComplete</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+	     定义 <codeph>UpdateCompleteEvent</codeph> 对象的 <codeph>type</codeph> 属性值。 
+	     </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:UpdateCompleteEvent:controller:get"><apiName>controller</apiName><shortdesc> 
+		 正在更新的容器的控制器。
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.container:ContainerController</apiValueClassifier></apiValueDef><apiDesc> 
+		 正在更新的容器的控制器。
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.events:UpdateCompleteEvent:textFlow:get"><apiName>textFlow</apiName><shortdesc>
+		 更新的 TextFlow。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.elements:TextFlow</apiValueClassifier></apiValueDef><apiDesc>
+		 更新的 TextFlow。 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.events:TextLayoutEvent"><apiName>TextLayoutEvent</apiName><shortdesc>
+	 TextLayoutEvent 实例表示一个不需要自定义属性的事件，例如 TextLayoutEvent.SCROLL 事件。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flash.events:Event</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 TextLayoutEvent 实例表示一个不需要自定义属性的事件，例如 <codeph>TextLayoutEvent.SCROLL </codeph>事件。 
+	 <p>scroll 事件由 <codeph>type</codeph> 属性设置为 <codeph>TextLayoutEvent.SCROLL</codeph> 的 TextLayoutEvent 实例表示。专用于 scroll 事件的类不是必需的，因为 scroll 事件没有自定义属性，而具有特定事件类的其它事件有自定义属性。如果需要一个新的文本布局事件，而该事件不需要自定义属性，则该新事件也会由一个 TextLayoutEvent 对象表示，但是其 <codeph>type</codeph> 属性设置为新的静态常量。
+	 </p>
+	 
+	 </apiDesc><example conref="examples\TextLayoutEvent_example.as"/></apiClassifierDetail><apiConstructor id="flashx.textLayout.events:TextLayoutEvent:TextLayoutEvent"><apiName>TextLayoutEvent</apiName><shortdesc>
+		  TextLayoutEvent 类表示传递到很多 Text Layout 事件的事件侦听器的事件对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>type</apiItemName><apiType value="String"/></apiParam><apiParam><apiItemName>bubbles</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam><apiParam><apiItemName>cancelable</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiConstructorDef><apiDesc>
+		  TextLayoutEvent 类表示传递到很多 Text Layout 事件的事件侦听器的事件对象。
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.events:TextLayoutEvent:SCROLL"><apiName>SCROLL</apiName><shortdesc>
+	      TextLayoutEvent.SCROLL 常量可为 scroll 事件定义事件对象的 type 属性值。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>scroll</apiData><apiType value="String"/></apiValueDef><apiDesc>
+	      <codeph>TextLayoutEvent.SCROLL</codeph> 常量可为 <codeph>scroll</codeph> 事件定义事件对象的 <codeph>type</codeph> 属性值。
+	     </apiDesc></apiValueDetail></apiValue></apiClassifier></apiPackage>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Button xmlns:mx="http://www.adobe.com/2006/mxml"  styleName ="linkButtonUp" toolTip = "Drag to a container to link" mouseDown="handleSocketClick(event)">
+	
+	<mx:Script>
+		<![CDATA[
+			import com.map.controller.ControllerLocator;
+			import com.map.model.ContentNode;
+			import com.map.model.MediaContainerNode;
+			
+			import mx.controls.TextInput;
+			import mx.core.Application;
+			import mx.core.UIComponent;
+			private var mouseXInit:Number;
+			private var mouseYInit:Number;
+			public var linkInput:TextInput;
+			
+			private function handleSocketClick(event:MouseEvent):void	
+			{
+				mouseXInit = Application.application.mouseX-this.mouseX+this.width/2;
+				mouseYInit = Application.application.mouseY-this.mouseY+this.height/2;					
+				Application.application.linkingMode = true;
+				Application.application.showDrawingLayer();
+				Application.application.stage.addEventListener(MouseEvent.MOUSE_MOVE,handleMouseMove);
+				Application.application.stage.addEventListener(MouseEvent.MOUSE_UP,removeLine);
+			}
+			private function handleMouseMove(event:MouseEvent):void
+			{
+				var drawingLayer:UIComponent = Application.application.drawingLayer;
+				drawingLayer.graphics.clear(); 
+				drawingLayer.graphics.lineStyle(3, 0xFCEE21, 1); 
+				drawingLayer.graphics.moveTo(mouseXInit, mouseYInit); 
+				drawingLayer.graphics.lineTo(drawingLayer.mouseX, drawingLayer.mouseY);
+				drawingLayer.graphics.endFill();  
+			}		
+			private function removeLine(event:Event):void
+			{
+				Application.application.linkingMode = false;
+				var currPoint:Point = new Point(Application.application.mouseX,Application.application.mouseY);
+				var mediaObjects:Array = Application.application.mainView.rightMain.getObjectsUnderPoint(currPoint);
+				var treeObjects:Array = Application.application.mainView.contentTree.getObjectsUnderPoint(currPoint);
+				
+				if(treeObjects.length > 0)
+				{
+					var node:ContentNode = Application.application.mainView.contentTree.selectedItem;
+					this.linkInput.text = "event:content="+node.data.id.toString();
+					
+				}
+				else if(mediaObjects.length > 0)
+				{
+					
+					if(Application.application.mainView.editorsView.linkedResource != null)
+					{
+						var file:MediaContainerNode = Application.application.mainView.editorsView.linkedResource;
+						var mediaPath:String =ControllerLocator.mediaManagerController.mediaURL+file.data.path.toString()+file.data.name.toString();					
+						var baseLink:String = ControllerLocator.controller.contentModel.config.@publishedLink;	
+						this.linkInput.text = /* baseLink+"download.php?file="+ */mediaPath;	
+					}
+				}
+				//Applying the link
+			/* 	EditManager(editor.textFlow.interactionManager).selectRange(editor.selectionAnchorPosition,editor.selectionActivePosition);
+				EditManager(editor.textFlow.interactionManager).applyLink(linkInput.text,"_blank",true);
+				var p:SpanElement = SpanElement(editor.textFlow.findLeaf(editor.selectionActivePosition));
+				p.linkActiveFormat = cfg.defaultLinkActiveFormat;
+				p.linkHoverFormat = cfg.defaultLinkHoverFormat;
+				p.linkNormalFormat = cfg.defaultLinkNormalFormat;
+				editor.textFlow.flowComposer.updateAllControllers(); */
+				
+				Application.application.stage.removeEventListener(MouseEvent.MOUSE_MOVE,handleMouseMove);
+				Application.application.stage.removeEventListener(MouseEvent.MOUSE_UP,removeLine);
+				Application.application.hideDrawingLayer();
+				/*			if(!isPopUp) {
+				}
+				else {
+				}	*/
+			}
+			private var clearLineTimer:Timer;	
+		]]>
+	</mx:Script>
+</mx:Button>

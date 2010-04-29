@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<apiPackage id="flashx.textLayout.factory"><apiName>flashx.textLayout.factory</apiName><apiDetail/><apiClassifier id="flashx.textLayout.factory:StringTextLineFactory"><apiName>StringTextLineFactory</apiName><shortdesc>
+ StringTextLineFactory クラスは、文字列から TextLine を作成するための簡単な方法を提供します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>flashx.textLayout.factory:TextLineFactoryBase</apiBaseClassifier></apiClassifierDef><apiDesc>
+ StringTextLineFactory クラスは、文字列から TextLine を作成するための簡単な方法を提供します。 
+ 
+ <p>テキスト行は静的で、単一のフォーマットと単一の段落により作成されます。行は、指定した矩形の枠に収まるよう作成されます。</p>
+ 
+ <p>StringTextLineFactory は、何度も繰り返される呼び出しに、単一の TextFlow、ParagraphElement、SpanElement および ContainerController オブジェクトを再使用するため、TextLine を作成するための効果的な方法となっています。単一のファクトリを作成して、それを繰り返し利用できます。また、呼び出すたびに同じである部分はすべて、再使用できます。例えば、様々なフォーマットや境界を再使用できます。</p> 
+ 
+ <p><b>注意：</b>複数のフォーマットや段落を使用するかまたはインライングラフィックを含む静的な行を作成するには、TextFlowTextLineFactory および TextFlow オブジェクトを使用します。 </p>
+ 
+ </apiDesc><example conref="examples\StringTextLineFactory_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.factory.xml#TextFlowTextLineFactory"><linktext>TextFlowTextLineFactory</linktext></link></related-links><apiConstructor id="flashx.textLayout.factory:StringTextLineFactory:StringTextLineFactory"><apiName>StringTextLineFactory</apiName><shortdesc> 
+		 StringTextLineFactory オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>configuration</apiItemName><apiOperationClassifier>flashx.textLayout.elements:IConfiguration</apiOperationClassifier><apiData>null</apiData><apiDesc>このファクトリにより作成される行の構成に使用される内部 TextFlow オブジェクトのプロパティを設定するために使用される構成オブジェクトです。 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 StringTextLineFactory オブジェクトを作成します。  
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.factory:StringTextLineFactory:createTextLines"><apiName>createTextLines</apiName><shortdesc> 
+		 現在このファクトリオブジェクトに割り当てられているテキストを使用して TextLine オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>callback</apiItemName><apiType value="Function"/><apiDesc>作成済みの各 TextLine オブジェクトに対して呼び出されるコールバック関数です。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 現在このファクトリオブジェクトに割り当てられているテキストを使用して TextLine オブジェクトを作成します。
+		 
+		 <p>テキスト行は、現在割り当てられているテキストおよびフォーマットを使用して作成され、<codeph>compositionBounds</codeph> プロパティに割り当てられた領域に収まるよう構成されます。行が作成されるたびに、<codeph>callback</codeph> パラメーターで指定されている関数がファクトリにより呼び出されます。この関数は TextLine オブジェクトに渡されて、行を表示する役割を担います。</p>
+		 
+		 <p>他の一連の行を作成するには、任意にプロパティを変更して、<codeph>createTextLines()</codeph> を再度呼び出します。</p>
+		  
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.factory:StringTextLineFactory:configuration:get"><apiName>configuration</apiName><shortdesc> 
+		 内部 TextFlow オブジェクトで使用される構成です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:IConfiguration</apiValueClassifier></apiValueDef><apiDesc> 
+		 内部 TextFlow オブジェクトで使用される構成です。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:StringTextLineFactory:defaultConfiguration:get"><apiName>defaultConfiguration</apiName><shortdesc> 
+		 何も指定しない場合にこのファクトリにより使用されるデフォルトの構成です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiStatic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:IConfiguration</apiValueClassifier></apiValueDef><apiDesc> 
+		 何も指定しない場合にこのファクトリにより使用されるデフォルトの構成です。 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:StringTextLineFactory:paragraphFormat:get"><apiName>paragraphFormat</apiName><shortdesc> 
+		 段落のフォーマットです。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 段落のフォーマットです。 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:StringTextLineFactory:spanFormat:get"><apiName>spanFormat</apiName><shortdesc> 
+		 文字のフォーマットです。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 文字のフォーマットです。 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:StringTextLineFactory:textFlowFormat:get"><apiName>textFlowFormat</apiName><shortdesc> 
+		 テキストフローのフォーマットです。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 テキストフローのフォーマットです。
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:StringTextLineFactory:text:get"><apiName>text</apiName><shortdesc> 
+		 TextLine オブジェクトに変換するテキストです。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 TextLine オブジェクトに変換するテキストです。
+		 
+		 <p>TextLine を作成するには、この <codeph>text</codeph> プロパティと必要なフォーマットを設定した後に、<codeph>createTextLines()</codeph> を呼び出します。</p> 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.factory:TextFlowTextLineFactory"><apiName>TextFlowTextLineFactory</apiName><shortdesc>
+ TextFlowTextLineFactory クラスは、テキストフローからテキストを表示するために TextLines を作成するための簡単な方法を提供します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>flashx.textLayout.factory:TextLineFactoryBase</apiBaseClassifier></apiClassifierDef><apiDesc>
+ TextFlowTextLineFactory クラスは、テキストフローからテキストを表示するために TextLines を作成するための簡単な方法を提供します。
+ 
+ <p>テキスト行は静的なもので、矩形の枠に収まるよう作成されますが、複数の段落、フォーマットおよびインライングラフィックを含むことができます。文字列から直接 TextLine オブジェクトを作成するには、StringTextLineFactory を使用します。</p> 
+ 
+ <p><b>注意：</b>インライングラフィックを使用する場合、InlineGraphicElement オブジェクトの <codeph>source</codeph> プロパティは、DisplayObject または埋め込みアセットを表す Class オブジェクトのインスタンスである必要があります。URLRequest オブジェクトは使用できません。行が作成される際のインライングラフィックの幅と高さは、フローの構成に使用されます。 </p>
+ 
+ </apiDesc><example conref="examples\TextFlowTextLineFactory_example.as"><swfblock conref="examples\TextFlowTextLineFactory_example.swf"/></example></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>TextFlow</linktext></link><link href="flashx.textLayout.factory.xml#StringTextLineFactory"><linktext>StringTextLineFactory</linktext></link></related-links><apiConstructor id="flashx.textLayout.factory:TextFlowTextLineFactory:TextFlowTextLineFactory"><apiName>TextFlowTextLineFactory</apiName><shortdesc> 
+		 TextFlowTextLineFactory オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/></apiConstructorDef><apiDesc> 
+		 TextFlowTextLineFactory オブジェクトを作成します。 
+		 
+ 		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.factory:TextFlowTextLineFactory:createTextLines"><apiName>createTextLines</apiName><shortdesc>
+		 指定したテキストフローから TextLine オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>callback</apiItemName><apiType value="Function"/><apiDesc>生成された各 TextLine オブジェクトを使用して呼び出す関数です。任意の背景色を表す Shape オブジェクト（存在する場合）とテキストの TextLine オブジェクトを指定してコールバックが呼び出されます。
+		 </apiDesc></apiParam><apiParam><apiItemName>textFlow</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiDesc>行の作成元の TextFlow です。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc>
+		 指定したテキストフローから TextLine オブジェクトを作成します。
+		 
+		 <p>テキスト行は、<codeph>compositionBounds</codeph> プロパティに割り当てられた境界に収まるよう構成されます。行が作成されるたびに、<codeph>callback</codeph> パラメーターで指定されている関数がファクトリにより呼び出されます。この関数は TextLine オブジェクトに渡されて、行を表示する役割を担います。行に背景色がある場合、ファクトリは、その背景色の矩形を含む Shape オブジェクトを指定してコールバック関数の呼び出しも行います。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation></apiClassifier><apiClassifier id="flashx.textLayout.factory:TruncationOptions"><apiName>TruncationOptions</apiName><shortdesc> 
+	 TruncationOptions クラスでは、テキスト行のファクトリで作成されるテキストの行数を制限するためのオプションと、行が削除された日時を示すためのオプションを指定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 TruncationOptions クラスでは、テキスト行のファクトリで作成されるテキストの行数を制限するためのオプションと、行が削除された日時を示すためのオプションを指定します。
+	 
+	 </apiDesc></apiClassifierDetail><apiConstructor id="flashx.textLayout.factory:TruncationOptions:TruncationOptions"><apiName>TruncationOptions</apiName><shortdesc> 
+		 TruncationOptions オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>truncationIndicator</apiItemName><apiType value="String"/><apiData>unknown</apiData><apiDesc>テキストが切り詰められていることを示すために使用される文字列です。これは、構成されたテキストの末尾に表示されます。デフォルト値は、水平の省略記号（U+2026）です。
+		 </apiDesc></apiParam><apiParam><apiItemName>lineCountLimit</apiItemName><apiType value="int"/><apiData>unknown</apiData><apiDesc>使用できる最大行数の形で、切り詰めの基準を指定します。デフォルト値 <codeph>NO_LINE_COUNT_LIMIT</codeph> は、行数に制限がないことを示しています。
+		 </apiDesc></apiParam><apiParam><apiItemName>truncationIndicatorFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiData>null</apiData><apiDesc>切り詰めインジケーターのフォーマットを指定します。null フォーマット（デフォルト値）は、切り詰めインジケーターが切り詰め点の直前をコンテンツのフォーマットと仮定するよう指定します。入力に単純な文字列を使用する <codeph>TextLineFactory</codeph> メソッドの場合にも、このパラメーターは無視され、デフォルトの動作が実行されます。
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 TruncationOptions オブジェクトを作成します。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.factory:TruncationOptions:HORIZONTAL_ELLIPSIS"><apiName>HORIZONTAL_ELLIPSIS</apiName><shortdesc>
+		 truncationIndicator プロパティの値として ¥u2026 を定義します。これは、水平の省略記号を表します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>…</apiData><apiType value="String"/></apiValueDef><apiDesc>
+		 <codeph>truncationIndicator</codeph> プロパティの値として <codeph>¥u2026</codeph> を定義します。これは、水平の省略記号を表します。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.factory.xml#TruncationOptions/truncationIndicator"><linktext>truncationIndicator</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.factory:TruncationOptions:NO_LINE_COUNT_LIMIT"><apiName>NO_LINE_COUNT_LIMIT</apiName><shortdesc>
+		 lineCountLimit プロパティの値として -1 を定義します。これは、制限がないことを表します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>-1</apiData><apiType value="int"/></apiValueDef><apiDesc>
+		 <codeph>lineCountLimit</codeph> プロパティの値として <codeph>-1</codeph> を定義します。これは、制限がないことを表します。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.factory.xml#TruncationOptions/lineCountLimit()"><linktext>lineCountLimit()</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.factory:TruncationOptions:lineCountLimit:get"><apiName>lineCountLimit</apiName><shortdesc> 
+		 作成する行の最大数。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 作成する行の最大数。
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:TruncationOptions:truncationIndicatorFormat:get"><apiName>truncationIndicatorFormat</apiName><shortdesc> 
+		 切り詰めインジケーターストリングに適用されるスタイル。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 切り詰めインジケーターストリングに適用されるスタイル。
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:TruncationOptions:truncationIndicator:get"><apiName>truncationIndicator</apiName><shortdesc> 
+		 行数の制限でコンテンツを完全に表示できなかったことを示すために使用されるストリング。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 行数の制限でコンテンツを完全に表示できなかったことを示すために使用されるストリング。
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.factory:TextLineFactoryBase"><apiName>TextLineFactoryBase</apiName><shortdesc>
+ TextLineFactoryBase クラスは、Text Layout Framework のテキスト行ファクトリの基本クラスとして機能します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion><Exclude kind="method" name="getNextTruncationPosition"/><Exclude kind="method" name="doesComposedTextFit"/><Exclude kind="method" name="callbackWithTextLines"/><Exclude kind="method" name="setContentBounds"/><Exclude kind="property" name="containerController"/></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc>
+ TextLineFactoryBase クラスは、Text Layout Framework のテキスト行ファクトリの基本クラスとして機能します。
+ 
+ <p><b>注意：</b>通常は、アプリケーションコードにより TextLineFactoryBase オブジェクトを直接作成または使用する必要はありません。代わりに、テキストファクトリの派生クラスの 1 つを使用します。</p>
+  
+ </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>flashx.textLayout.elements.TextFlow</linktext></link></related-links><apiConstructor id="flashx.textLayout.factory:TextLineFactoryBase:TextLineFactoryBase"><apiName>TextLineFactoryBase</apiName><shortdesc> 
+		 テキスト行ファクトリの基本クラスのコンストラクターです。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/></apiConstructorDef><apiDesc> 
+		 テキスト行ファクトリの基本クラスのコンストラクターです。
+		  
+ 		 <p><b>注意：</b>通常は、アプリケーションコードにより TextLineFactoryBase オブジェクトを直接作成または使用する必要はありません。代わりに、テキストファクトリの派生クラスの 1 つを使用します。</p>
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.factory:TextLineFactoryBase:getContentBounds"><apiName>getContentBounds</apiName><shortdesc>
+		 レイアウトされたコンテンツが収められる最小の矩形です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="flash.geom:Rectangle"/></apiReturn></apiOperationDef><apiDesc>
+		 レイアウトされたコンテンツが収められる最小の矩形です。
+		 
+		 <p><b>注意：</b>切り詰められた行は、サイズ計算に含まれません。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.factory:TextLineFactoryBase:compositionBounds:get"><apiName>compositionBounds</apiName><shortdesc>
+		 その中にテキスト行が作成される矩形です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="flash.geom:Rectangle"/></apiValueDef><apiDesc>
+		 その中にテキスト行が作成される矩形です。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:TextLineFactoryBase:horizontalScrollPolicy:get"><apiName>horizontalScrollPolicy</apiName><shortdesc> 
+		 入力境界が十分に大きくないときの行の作成方法を指定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 入力境界が十分に大きくないときの行の作成方法を指定します。
+		  
+		 <p><codeph>ScrollPolicy.ON</codeph> または <codeph>ScrollPolicy.AUTO</codeph> を設定すると、すべての行が作成されます。表示可能領域で行をスクロールすること（および、この領域の外部の行を必要に応じてマスクすること）は、ユーザーが行います。<codeph>ScrollPolicy.OFF</codeph> を設定すると、入力境界に収まる行のみが作成されます。</p>
+		 
+		 <p><codeph>truncationOptions</codeph> プロパティを設定した場合は、スクロールポリシーが無視されます（<codeph>ScrollPolicy.OFF</codeph> として処理されます）。</p> 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#StandardFlowComposer"><linktext>flashx.textLayout.compose.StandardFlowComposer</linktext></link><link href="flashx.textLayout.container.xml#ScrollPolicy"><linktext>flashx.textLayout.container.ScrollPolicy</linktext></link><link href="flashx.textLayout.factory.xml#TextLineFactoryBase/truncationOptions"><linktext>truncationOptions</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.factory:TextLineFactoryBase:isTruncated:get"><apiName>isTruncated</apiName><shortdesc> 
+		 行を最後に作成したときにテキストが切り詰められたかどうかを示します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 行を最後に作成したときにテキストが切り詰められたかどうかを示します。
+		  
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:TextLineFactoryBase:swfContext:get"><apiName>swfContext</apiName><shortdesc> 
+		必要に応じて FTE 呼び出しを行うために使用される ISWFContext インスタンスです。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.compose:ISWFContext</apiValueClassifier></apiValueDef><apiDesc> 
+		必要に応じて FTE 呼び出しを行うために使用される ISWFContext インスタンスです。 
+		
+		<p>デフォルトでは、ISWFContext 実装はこの FlowComposerBase オブジェクトです。アプリケーションでは、別の SWF ファイルに埋め込まれているフォントを使用したりテキスト行をキャッシュして再利用したりするための、カスタム実装を用意できます。</p>
+		
+		</apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#ISWFContext"><linktext>flashx.textLayout.compose.ISWFContext</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.factory:TextLineFactoryBase:truncationOptions:get"><apiName>truncationOptions</apiName><shortdesc> 
+		 テキストが入力境界に収まらない場合に、テキストを切り詰めるオプションを指定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.factory:TruncationOptions</apiValueClassifier></apiValueDef><apiDesc> 
+		 テキストが入力境界に収まらない場合に、テキストを切り詰めるオプションを指定します。
+		  
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:TextLineFactoryBase:verticalScrollPolicy:get"><apiName>verticalScrollPolicy</apiName><shortdesc> 
+		 入力境界が十分に大きくないときの行の作成方法を指定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 入力境界が十分に大きくないときの行の作成方法を指定します。
+		  
+		 <p><codeph>ScrollPolicy.ON</codeph> または <codeph>ScrollPolicy.AUTO</codeph> を設定すると、すべての行が作成されます。表示可能領域で行をスクロールすること（および、この領域の外部の行を必要に応じてマスクすること）は、ユーザーが行います。<codeph>ScrollPolicy.OFF</codeph> を設定すると、入力境界に収まる行のみが作成されます。</p>
+		 
+		 <p><codeph>truncationOptions</codeph> プロパティを設定した場合は、スクロールポリシーが無視されます（<codeph>ScrollPolicy.OFF</codeph> として処理されます）。</p> 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#StandardFlowComposer"><linktext>flashx.textLayout.compose.StandardFlowComposer</linktext></link><link href="flashx.textLayout.container.xml#ScrollPolicy"><linktext>flashx.textLayout.container.ScrollPolicy</linktext></link><link href="flashx.textLayout.factory.xml#TextLineFactoryBase/truncationOptions"><linktext>truncationOptions</linktext></link></related-links></apiValue></apiClassifier></apiPackage>

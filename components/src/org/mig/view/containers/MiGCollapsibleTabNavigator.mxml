@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" styleName="toolsContainer"
+	creationComplete="addComponents()" >
+	<mx:Metadata>
+		[DefaultProperty("contentChild")] 
+		</mx:Metadata>
+	<mx:Script>
+		<![CDATA[
+		
+					
+			private const MIN_HEIGHT:Number = 22;
+		
+			private var _components:Array = new Array();
+			[Bindable] private var _selectedIndex:int = 0;
+			[Bindable] private var _opened:Boolean = true;
+			
+            public function set contentChild(value:Array):void{
+                _components = value;
+            }
+            public function get contentChild():Array{
+              	return _components;
+            }
+            public function get selectedIndex():int{
+              	return _selectedIndex;
+            }
+            public function set selectedIndex(value:int):void{
+                _selectedIndex = value;
+            }
+            public function get opened():Boolean{
+              	return _opened;
+            }
+            public function set opened(value:Boolean):void{
+                _opened = value;
+                toggleState();
+            }
+           
+            public function addComponents():void{
+                container.removeAllChildren();
+                if(_components){
+                	for(var i:int=0; i < _components.length; i++){
+	                    container.addChild( _components[i] );
+	                }
+                }
+                
+            }
+            private function toggleState():void
+			{
+				if(!_opened){
+					this.setCurrentState("closed",true);
+					
+				}else{
+					this.setCurrentState("open",true);
+					
+				}
+			}
+		]]>
+	</mx:Script>
+	<mx:Canvas width="100%" height="22" styleName="toolsHeaderBG" />
+	
+	<mx:TabNavigator width="100%" id="container" height="100%"  historyManagementEnabled="false" styleName="toolsTabNavigator" selectedIndex="{_selectedIndex}" 
+		tabIndexChange="_selectedIndex = container.selectedIndex"  paddingLeft="4" paddingRight="4" paddingTop="10" />
+	
+	<mx:Button top="5" right="6" width="10" toggle="true" selected="{_opened}" click="opened =! opened" styleName="toolPanelToggleButton"
+		 mouseChildren="false" buttonMode="true" />	
+	
+	<mx:states>
+		<mx:State id="closed" name="closed" >
+			<mx:SetProperty name="height" value="{MIN_HEIGHT}"/>
+			<mx:SetProperty name="maxHeight" value="{MIN_HEIGHT}"/>
+			
+		</mx:State>
+		
+		<mx:State id="open" name="open" >
+			<mx:SetProperty name="height" value="100%"/>
+			
+		</mx:State>
+		
+	</mx:states>
+	
+	
+</mx:Canvas>

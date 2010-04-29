@@ -1,0 +1,137 @@
+<mx:HBox 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	implements="mx.controls.listClasses.IDropInListItemRenderer"
+	resize="this.invalidateSize()" verticalScrollPolicy="off"
+	horizontalScrollPolicy="off"  verticalAlign="top"
+	width="100%" paddingLeft="{pad}" paddingRight="4" paddingTop="0" paddingBottom="0" xmlns:controls="com.mapx.view.controls.*">
+
+    <mx:Script>
+        <![CDATA[
+        import mx.core.UITextField;
+		import mx.controls.advancedDataGridClasses.AdvancedDataGridListData;
+		import mx.controls.listClasses.BaseListData;
+         
+        private var _listData:BaseListData;
+    
+		public function get listData():BaseListData
+		{
+			return _listData;
+		}
+		
+		// Define the setter method,
+		public function set listData(value:BaseListData):void
+		{
+			_listData = value;
+			if(value && value.owner)
+			value.owner.addEventListener("itemFocus",handleItemFocus);
+		}		
+		private function handleItemFocus(event:DataEvent):void
+		{
+			if(AdvancedDataGridListData(this._listData).rowIndex == Number(event.data))
+			{
+				title.setFocus();
+			}
+		}
+        override public function get data():Object
+        {
+            return super.data;
+        }            
+        override public function set data(value:Object):void
+        {
+        	 super.data = value;
+        	 if(value != null)
+        	 {
+         	 	if(value.parent == null)
+         	 	{
+					if(!textEditable)
+						checkEnabled = false; 	
+					pad = 2;
+         	 	}
+        	 		
+        	 	else
+        	 	{
+        	 		pad = 15;
+        	 		checkEnabled = true; 	
+        	 	}
+   				//title data     	 		
+        	 	titleText = value[AdvancedDataGridListData(this.listData).dataField];
+				if(value.state == 3)
+				{
+					checked = true;
+					imageVisible = false;					
+				}
+				else if(value.state == 2)
+				{
+					checked = false;
+					imageVisible = true;
+				}
+				else if(value.state == 1)
+				{
+					checked = false;
+					imageVisible = false;
+				}       	 	
+        	 }	           	 
+        }
+		public function handleTitleChange():void
+		{
+			this.data[AdvancedDataGridListData(this.listData).dataField] = title.text;
+		}
+		override protected function measure():void
+		{
+			super.measure();
+			var tf:UITextField = title.mx_internal::getTextField();
+			var metrics:TextLineMetrics = tf.getLineMetrics(0);
+			var h:Number = title.mx_internal::getTextField().numLines*metrics.height + 5;
+			this.measuredHeight = h;
+			title.height = h;
+		}
+		public function handleCheckChange():void
+		{
+			var sel:int = check.selected? 3:1;
+			var parent:Object;
+			var checkedChildren:int = 0;
+			data.state = sel;
+			if(data.parent == null)
+			{			
+				for each(var child:Object in data.children)
+				{
+					child.state = sel;
+				}	
+				if(!textEditable)
+					checkEnabled = false; 		
+			}
+			else if(data.parent != null)
+			{
+				checkEnabled = true;
+				parent = data.parent;
+				for each(child in parent.children)
+				{
+					if(child.state == 3)
+						checkedChildren++;
+				}					
+				if(checkedChildren == parent.children.length)
+					parent.state = 3;
+				else if (checkedChildren > 0)
+					parent.state = 2;
+				else if(checkedChildren == 0)
+					parent.state = 1;
+			}		
+		}	
+		[Bindable] private var titleText:String;
+		[Bindable] private var checked:Boolean;
+		[Bindable] private var imageVisible:Boolean;	
+		[Bindable] private var pad:Number = 2;
+		[Bindable] public var textEditable:Boolean = true;  
+		[Bindable] private var checkEnabled:Boolean = true;	
+        ]]>
+    </mx:Script>
+    <mx:Metadata>
+    	[Event(name="enter", type="flash.events.Event")]
+    </mx:Metadata>
+    <mx:Canvas> 
+		<mx:CheckBox visible="{checkEnabled}"  top="4"  id="check" change="handleCheckChange()" selected="{checked}" /> 
+		<mx:Image alpha="{checkEnabled?1:0}" top="4" id="inner" visible="{imageVisible}" source="@Embed('../../../../../../webapp/src/migAssets/flex_skins.swf#CheckBox_partialUpIcon')"/>
+	</mx:Canvas>  
+	<controls:MultilineTextInput  editable="{textEditable}" selectable="{textEditable}" verticalCenter="0" change="handleTitleChange()" width="100%" styleName="regularCopy"  verticalScrollPolicy="off" text="{titleText}"
+		backgroundAlpha="0" id="title" borderThickness="0" enter="dispatchEvent(new Event('enter'));event.target.focusEnabled=false"  creationComplete="measure()	"  paddingBottom="0"  paddingLeft="0" paddingRight="0" paddingTop="0" wordWrap="true" />
+</mx:HBox>			

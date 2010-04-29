@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<apiPackage id="flashx.textLayout.utils"><apiName>flashx.textLayout.utils</apiName><apiDetail/><apiClassifier id="flashx.textLayout.utils:CharacterUtil"><apiName>CharacterUtil</apiName><shortdesc> 
+	 Dienstprogramme für die Verwaltung und den Bezug von Informationen über Zeichen.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 Dienstprogramme für die Verwaltung und den Bezug von Informationen über Zeichen. Die Methoden dieser Klasse sind statisch und müssen mit folgender Syntax aufgerufen werden: <codeph>GeometryUtil.method<i>(</i>Parameter</codeph>).
+	 
+	 </apiDesc></apiClassifierDetail><apiOperation id="flashx.textLayout.utils:CharacterUtil:isHighSurrogate"><apiName>isHighSurrogate</apiName><shortdesc> 
+		 Gibt „true“ zurück, wenn das charCode-Argument ein High-Word eines Surrogate-Paars ist.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc><codeph>true</codeph>, wenn <codeph>charCode</codeph> das High-Surrogate in einem Surrogate-Paar ist.
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>charCode</apiItemName><apiType value="int"/><apiDesc>Eine Ganzzahl, die einen Zeichencode darstellt. Zeichencodes werden normalerweise im Hexadezimalformat dargestellt. Beispiel: Der Zeichencode des Leerzeichens kann durch die Zahl <codeph>0x0020</codeph> dargestellt werden.
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Gibt <codeph>true</codeph> zurück, wenn das <codeph>charCode</codeph>-Argument ein High-Word eines Surrogate-Paars ist. Ein Surrogate-Paar stellt ein Zeichen mit einem Code-Punkt dar, für dessen Ausdruck mehr als 16 Bits benötigt werden und der deshalb durch eine Kombination von zwei 16-Bit-Wörtern (High- und Low-Surrogate) ausgedrückt werden muss.
+		 <p>Diese Methode kann zum Verarbeiten einer Zeichenserie verwendet werden, um sicherzustellen, dass Sie nicht unbeabsichtigt ein Surrogate-Paar in zwei unvollständige Hälften teilen.</p>
+		 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:CharacterUtil:isLowSurrogate"><apiName>isLowSurrogate</apiName><shortdesc> 
+		 Gibt „true“ zurück, wenn das charCode-Argument ein Low-Word eines Surrogate-Paars ist.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc><codeph>true</codeph>, wenn <codeph>charCode</codeph> das Low-Surrogate in einem Surrogate-Paar ist.
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>charCode</apiItemName><apiType value="int"/><apiDesc>Eine Ganzzahl, die einen Zeichencode darstellt. Zeichencodes werden normalerweise im Hexadezimalformat dargestellt. Beispiel: Der Zeichencode des Leerzeichens kann durch die Zahl <codeph>0x0020</codeph> dargestellt werden.
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Gibt <codeph>true</codeph> zurück, wenn das <codeph>charCode</codeph>-Argument ein Low-Word in einem Surrogate-Paar ist. Ein Surrogate-Paar stellt ein Zeichen mit einem Code-Punkt dar, für dessen Ausdruck mehr als 16 Bits benötigt werden und der deshalb durch eine Kombination von zwei 16-Bit-Wörtern (High- und Low-Surrogate) ausgedrückt werden muss.
+		 <p>Diese Methode kann zum Verarbeiten einer Zeichenserie verwendet werden, um sicherzustellen, dass Sie nicht unbeabsichtigt ein Surrogate-Paar in zwei unvollständige Hälften teilen.</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:CharacterUtil:isWhitespace"><apiName>isWhitespace</apiName><shortdesc> 
+		 Gibt „true“ zurück, wenn charCode ein Leerzeichen ist.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>Gibt <codeph>true</codeph> zurück, wenn <codeph>charCode</codeph> ein Leerzeichen ist. 
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>charCode</apiItemName><apiType value="int"/><apiDesc>Eine Ganzzahl, die einen Zeichencode darstellt. Zeichencodes werden normalerweise im Hexadezimalformat dargestellt. Beispiel: Der Zeichencode des Leerzeichens kann durch die Zahl <codeph>0x0020</codeph> dargestellt werden.
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Gibt <codeph>true</codeph> zurück, wenn <codeph>charCode</codeph> ein Leerzeichen ist. 
+		 <p>Die folgende Tabelle beschreibt alle Zeichen, die von dieser Methode als Leerzeichen behandelt werden.
+		 </p>
+		 <adobetable class="innertable">
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		  <tgroup cols="3"><thead><row><entry>Zeichencode</entry><entry>Unicode-Zeichenname</entry><entry>Kategorie</entry></row></thead><tbody><row><entry><codeph>0x0020</codeph></entry><entry>Leerzeichen</entry><entry>Trennzeichen</entry></row><row><entry><codeph>0x1680</codeph></entry><entry>OGHAM-Leerzeichen</entry><entry>Trennzeichen</entry></row><row><entry><codeph>0x180E</codeph></entry><entry>Mongolisches Vokaltrennzeichen</entry><entry>Trennzeichen</entry></row><row><entry><codeph>0x2000</codeph></entry><entry>En-Quad</entry><entry>Trennzeichen</entry></row><row><entry><codeph>0x2001</codeph></entry><entry>Em-Quad</entry><entry>Trennzeichen</entry></row><row><entry><codeph>0x2002</codeph></entry><entry>En-Leerzeichen</entry><entry>Trennzeichen</entry></row><row><entry><codeph>0x2003</codeph></entry><entry>Em-Leerzeichen</entry><entry>Trennzeichen</entry></row><row><entry><codeph>0x2004</codeph></entry><entry>1/3-Em-Leerzeichen</entry><entry>Trennzeichen</entry></row><row><entry><codeph>0x2005</codeph></entry><entry>1/4-Em-Leerzeichen</entry><entry>Trennzeichen</entry></row><row><entry><codeph>0x2006</codeph></entry><entry>1/6-Em-Leerzeichen</entry><entry>Trennzeichen</entry></row><row><entry><codeph>0x2007</codeph></entry><entry>Ziffernbreite-Leerzeichen</entry><entry>Trennzeichen</entry></row><row><entry><codeph>0x2008</codeph></entry><entry>Interpunktionsleerzeichen</entry><entry>Trennzeichen</entry></row><row><entry><codeph>0x2009</codeph></entry><entry>Schmales Leerzeichen</entry><entry>Trennzeichen</entry></row><row><entry><codeph>0x200A</codeph></entry><entry>Hair Space</entry><entry>Trennzeichen</entry></row><row><entry><codeph>0x202F</codeph></entry><entry>Schmales geschütztes Leerzeichen</entry><entry>Trennzeichen</entry></row><row><entry><codeph>0x205F</codeph></entry><entry>Mittelbreites mathematisches Leerzeichen</entry><entry>Trennzeichen</entry></row><row><entry><codeph>0x3000</codeph></entry><entry>Ideographisches Leerzeichen</entry><entry>Trennzeichen</entry></row><row><entry><codeph>0x2028</codeph></entry><entry>Zeilentrennzeichen</entry><entry>Zeilentrennzeichen</entry></row><row><entry><codeph>0x2029</codeph></entry><entry>Abschnittstrennzeichen</entry><entry>Abschnittstrennzeichen</entry></row><row><entry><codeph>0x0009</codeph></entry><entry>Zeichentabulierung</entry><entry>Sonstiges</entry></row><row><entry><codeph>0x000A</codeph></entry><entry>Zeilenvorschub</entry><entry>Sonstiges</entry></row><row><entry><codeph>0x000B</codeph></entry><entry>Zeilentabulierung</entry><entry>Sonstiges</entry></row><row><entry><codeph>0x000C</codeph></entry><entry>Seitenvorschub</entry><entry>Sonstiges</entry></row><row><entry><codeph>0x000D</codeph></entry><entry>Zeilenumschaltung</entry><entry>Sonstiges</entry></row><row><entry><codeph>0x0085</codeph></entry><entry>Nächste Zeile</entry><entry>Sonstiges</entry></row><row><entry><codeph>0x00A0</codeph></entry><entry>Geschütztes Leerzeichen</entry><entry>Sonstiges</entry></row></tbody></tgroup></adobetable>
+
+		 
+		 </apiDesc></apiOperationDetail></apiOperation></apiClassifier><apiClassifier id="flashx.textLayout.utils:NavigationUtil"><apiName>NavigationUtil</apiName><shortdesc> 
+	 Dienstprogramme zur Manipulation von TextRange. Die Methoden dieser Klasse sind statisch und müssen mit folgender Syntax aufgerufen werden: NavigationUtil.method(parameter).</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 Dienstprogramme zur Manipulation von TextRange. Die Methoden dieser Klasse sind statisch und müssen mit folgender Syntax aufgerufen werden: <codeph>NavigationUtil.method(<i>parameter</i>)</codeph>.
+	 
+	 </apiDesc></apiClassifierDetail><apiOperation id="flashx.textLayout.utils:NavigationUtil:endOfDocument"><apiName>endOfDocument</apiName><shortdesc>
+		 Stellt TextRange am Ende des Dokuments ein.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>„true“, wenn die Auswahl geändert wurde.
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>Gibt an, dass nur activeIndex verschoben werden soll
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 Stellt TextRange am Ende des Dokuments ein.
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:endOfLine"><apiName>endOfLine</apiName><shortdesc>
+		 Stellt TextRange am Ende der Zeile ein.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>„true“, wenn die Auswahl geändert wurde.
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>Gibt an, dass nur activeIndex verschoben werden soll
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 Stellt TextRange am Ende der Zeile ein.
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:endOfParagraph"><apiName>endOfParagraph</apiName><shortdesc>
+		 Stellt TextRange am Ende des Abschnitts ein.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>„true“, wenn die Auswahl geändert wurde.
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>Gibt an, dass nur activeIndex verschoben werden soll
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 Stellt TextRange am Ende des Abschnitts ein.
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:nextAtomPosition"><apiName>nextAtomPosition</apiName><shortdesc> 
+		 Gibt die absolute Position des nächsten Atoms zurück.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiType value="int"/></apiReturn><apiParam><apiItemName>flowRoot</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier></apiParam><apiParam><apiItemName>absolutePos</apiItemName><apiType value="int"/></apiParam></apiOperationDef><apiDesc> 
+		 Gibt die absolute Position des nächsten Atoms zurück.
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:nextCharacter"><apiName>nextCharacter</apiName><shortdesc>
+		 Verschiebt TextRange um ein Zeichen vorwärts.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>„true“, wenn die Auswahl geändert wurde.
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>Gibt an, dass nur activeIndex verschoben werden soll
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 Verschiebt TextRange um ein Zeichen vorwärts.
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:nextLine"><apiName>nextLine</apiName><shortdesc>
+		 Verschiebt TextRange eine Zeile nach unten.
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>„true“, wenn die Auswahl geändert wurde.
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>Gibt an, dass nur activeIndex verschoben werden soll
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 Verschiebt TextRange eine Zeile nach unten.
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:nextPage"><apiName>nextPage</apiName><shortdesc>
+		 Verschiebt TextRange eine Seite nach unten.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>„true“, wenn die Auswahl geändert wurde.
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>Gibt an, dass nur activeIndex verschoben werden soll
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 Verschiebt TextRange eine Seite nach unten.
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:nextWordPosition"><apiName>nextWordPosition</apiName><shortdesc> 
+		 Gibt die absolute Position des Anfangs des nächsten Worts zurück.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiType value="int"/></apiReturn><apiParam><apiItemName>flowRoot</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier></apiParam><apiParam><apiItemName>absolutePos</apiItemName><apiType value="int"/></apiParam></apiOperationDef><apiDesc> 
+		 Gibt die absolute Position des Anfangs des nächsten Worts zurück.
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:nextWord"><apiName>nextWord</apiName><shortdesc>
+		 Verschiebt TextRange um ein Wort nach vorn.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>„true“, wenn die Auswahl geändert wurde.
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>Gibt an, dass nur activeIndex verschoben werden soll
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 Verschiebt TextRange um ein Wort nach vorn.
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:previousAtomPosition"><apiName>previousAtomPosition</apiName><shortdesc> 
+		 Gibt die absolute Position des vorangegangenen Atoms zurück.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiType value="int"/></apiReturn><apiParam><apiItemName>flowRoot</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier></apiParam><apiParam><apiItemName>absolutePos</apiItemName><apiType value="int"/></apiParam></apiOperationDef><apiDesc> 
+		 Gibt die absolute Position des vorangegangenen Atoms zurück. 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:previousCharacter"><apiName>previousCharacter</apiName><shortdesc>
+		 Verschiebt TextRange um ein Zeichen nach hinten.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>„true“, wenn die Auswahl geändert wurde.
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>Gibt an, dass nur activeIndex verschoben werden soll
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 Verschiebt TextRange um ein Zeichen nach hinten.
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:previousLine"><apiName>previousLine</apiName><shortdesc>
+		 Verschiebt TextRange eine Zeile nach oben.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>„true“, wenn die Auswahl geändert wurde.
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>Gibt an, dass nur activeIndex verschoben werden soll
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 Verschiebt TextRange eine Zeile nach oben.
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:previousPage"><apiName>previousPage</apiName><shortdesc>
+		 Verschiebt TextRange eine Seite nach oben.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>„true“, wenn die Auswahl geändert wurde.
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>Gibt an, dass nur activeIndex verschoben werden soll
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 Verschiebt TextRange eine Seite nach oben.
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:previousWordPosition"><apiName>previousWordPosition</apiName><shortdesc> 
+		 Gibt die absolute Position des Anfangs des vorangegangenen Worts zurück.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiType value="int"/></apiReturn><apiParam><apiItemName>flowRoot</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier></apiParam><apiParam><apiItemName>absolutePos</apiItemName><apiType value="int"/></apiParam></apiOperationDef><apiDesc> 
+		 Gibt die absolute Position des Beginns des vorangegangenen Worts zurück.
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:previousWord"><apiName>previousWord</apiName><shortdesc>
+		 Verschiebt TextRange um ein Wort nach hinten.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>„true“, wenn die Auswahl geändert wurde.
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>Gibt an, dass nur activeIndex verschoben werden soll
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 Verschiebt TextRange um ein Wort nach hinten.
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:startOfDocument"><apiName>startOfDocument</apiName><shortdesc>
+		 Stellt TextRange am Anfang des Dokuments ein.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>„true“, wenn die Auswahl geändert wurde.
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>Gibt an, dass nur activeIndex verschoben werden soll
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 Stellt TextRange am Anfang des Dokuments ein.
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:startOfLine"><apiName>startOfLine</apiName><shortdesc>
+		 Stellt TextRange am Anfang der Zeile ein.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>„true“, wenn die Auswahl geändert wurde.
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>Gibt an, dass nur activeIndex verschoben werden soll
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 Stellt TextRange am Anfang der Zeile ein.
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:startOfParagraph"><apiName>startOfParagraph</apiName><shortdesc>
+		 Stellt TextRange am Anfang des Abschnitts ein.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>„true“, wenn die Auswahl geändert wurde.
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>Gibt an, dass nur activeIndex verschoben werden soll
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 Stellt TextRange am Anfang des Abschnitts ein.
+		 </apiDesc></apiOperationDetail></apiOperation></apiClassifier></apiPackage>

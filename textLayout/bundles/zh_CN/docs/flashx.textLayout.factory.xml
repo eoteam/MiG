@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<apiPackage id="flashx.textLayout.factory"><apiName>flashx.textLayout.factory</apiName><apiDetail/><apiClassifier id="flashx.textLayout.factory:StringTextLineFactory"><apiName>StringTextLineFactory</apiName><shortdesc>
+ StringTextLineFactory 类提供一种基于字符串创建 TextLine 的简单方法。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>flashx.textLayout.factory:TextLineFactoryBase</apiBaseClassifier></apiClassifierDef><apiDesc>
+ StringTextLineFactory 类提供一种基于字符串创建 TextLine 的简单方法。 
+ 
+ <p>文本行是静态的，使用单个格式和一个段落创建。这些创建的行位于指定的边界矩形范围内。</p>
+ 
+ <p>StringTextLineFactory 提供一种创建 TextLine 的高效方法，这是因为它在多个重复的调用中重用单个 TextFlow、ParagraphElement、SpanElement 和 ContainerController 对象。您可以创建单个工厂，然后多次重用它。也可以重用每次调用该工厂时相同的所有部分，例如，您可以重用各种格式和范围界限。</p> 
+ 
+ <p><b>注意：</b>要创建使用多个格式或包含多个段落的静态行，或包含内嵌图形的静态行，可使用 TextFlowTextLineFactory 和 TextFlow 对象。 </p>
+ 
+ </apiDesc><example conref="examples\StringTextLineFactory_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.factory.xml#TextFlowTextLineFactory"><linktext>TextFlowTextLineFactory</linktext></link></related-links><apiConstructor id="flashx.textLayout.factory:StringTextLineFactory:StringTextLineFactory"><apiName>StringTextLineFactory</apiName><shortdesc> 
+		 创建 StringTextLineFactory 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>configuration</apiItemName><apiOperationClassifier>flashx.textLayout.elements:IConfiguration</apiOperationClassifier><apiData>null</apiData><apiDesc>配置对象，用于设置用来合成由该工厂生成的文本行的内部 TextFlow 对象的属性。 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建 StringTextLineFactory 对象。  
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.factory:StringTextLineFactory:createTextLines"><apiName>createTextLines</apiName><shortdesc> 
+		 使用当前指定给该工厂对象的文本创建 TextLine 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>callback</apiItemName><apiType value="Function"/><apiDesc>为创建的每一 TextLine 对象调用的回调函数。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 使用当前指定给该工厂对象的文本创建 TextLine 对象。
+		 
+		 <p>文本行使用当前指定的文本和格式创建，合成时位于指定给 <codeph>compositionBounds</codeph> 属性的边界范围内。创建每一行时，工厂会调用 <codeph>callback</codeph> 参数指定的函数。该函数接受 TextLine 对象作为参数，负责显示文本行。</p>
+		 
+		 <p>要创建一组不同的文本行，可更改所需的任何属性，并再次调用 <codeph>createTextLines()</codeph>。</p>
+		  
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.factory:StringTextLineFactory:configuration:get"><apiName>configuration</apiName><shortdesc> 
+		 内部 TextFlow 对象使用的配置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:IConfiguration</apiValueClassifier></apiValueDef><apiDesc> 
+		 内部 TextFlow 对象使用的配置。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:StringTextLineFactory:defaultConfiguration:get"><apiName>defaultConfiguration</apiName><shortdesc> 
+		 在未指定任何配置的情况下由该工厂使用的默认配置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiStatic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:IConfiguration</apiValueClassifier></apiValueDef><apiDesc> 
+		 在未指定任何配置的情况下由该工厂使用的默认配置。 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:StringTextLineFactory:paragraphFormat:get"><apiName>paragraphFormat</apiName><shortdesc> 
+		 段落格式。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 段落格式。 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:StringTextLineFactory:spanFormat:get"><apiName>spanFormat</apiName><shortdesc> 
+		 字符格式。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 字符格式。 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:StringTextLineFactory:textFlowFormat:get"><apiName>textFlowFormat</apiName><shortdesc> 
+		 文本流格式。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 文本流格式。
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:StringTextLineFactory:text:get"><apiName>text</apiName><shortdesc> 
+		 要转换为 TextLine 对象的文本。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 要转换为 TextLine 对象的文本。
+		 
+		 <p>要生成 TextLine，可在设置该 <codeph>text</codeph> 属性和所需格式后调用 <codeph>createTextLines()</codeph>。</p> 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.factory:TextFlowTextLineFactory"><apiName>TextFlowTextLineFactory</apiName><shortdesc>
+ TextFlowTextLineFactory 类提供一种创建 TextLine 以显示文本流中文本的简单方法。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>flashx.textLayout.factory:TextLineFactoryBase</apiBaseClassifier></apiClassifierDef><apiDesc>
+ TextFlowTextLineFactory 类提供一种创建 TextLine 以显示文本流中文本的简单方法。
+ 
+ <p>文本行是静态的，创建时位于单个矩形边框内，但是可以具有多个段落和格式以及内嵌图形。要直接通过字符串创建 TextLine 对象，可使用 StringTextLineFactory。</p> 
+ 
+ <p><b>注意：</b>使用内嵌图形时，InlineGraphicElement 对象的 <codeph>source</codeph> 属性必须是 DisplayObject 的实例或表示嵌入资源的 Class 对象。不能使用 URLRequest 对象。创建行时内嵌图形的宽度和高度用于合成流。 </p>
+ 
+ </apiDesc><example conref="examples\TextFlowTextLineFactory_example.as"><swfblock conref="examples\TextFlowTextLineFactory_example.swf"/></example></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>TextFlow</linktext></link><link href="flashx.textLayout.factory.xml#StringTextLineFactory"><linktext>StringTextLineFactory</linktext></link></related-links><apiConstructor id="flashx.textLayout.factory:TextFlowTextLineFactory:TextFlowTextLineFactory"><apiName>TextFlowTextLineFactory</apiName><shortdesc> 
+		 创建 TextFlowTextLineFactory 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/></apiConstructorDef><apiDesc> 
+		 创建 TextFlowTextLineFactory 对象。 
+		 
+ 		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.factory:TextFlowTextLineFactory:createTextLines"><apiName>createTextLines</apiName><shortdesc>
+		 基于指定文本流创建 TextLine 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>callback</apiItemName><apiType value="Function"/><apiDesc>对生成的每一 TextLine 对象调用的函数。将使用表示任何背景色（如果存在）的 Shape 对象以及文本的 TextLine 对象调用该回调。
+		 </apiDesc></apiParam><apiParam><apiItemName>textFlow</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiDesc>创建文本行所使用的 TextFlow。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc>
+		 基于指定文本流创建 TextLine 对象。
+		 
+		 <p>文本行合成时将位于指定给 <codeph>compositionBounds</codeph> 属性的边界范围内。创建每一行时，工厂会调用 <codeph>callback</codeph> 参数指定的函数。该函数接受 TextLine 对象作为参数，负责显示文本行。如果某行具有背景色，则该工厂还会使用包含一个背景色矩形的 Shape 对象调用该回调函数。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation></apiClassifier><apiClassifier id="flashx.textLayout.factory:TruncationOptions"><apiName>TruncationOptions</apiName><shortdesc> 
+	 TruncationOptions 类指定选项，用于限制由文本行工厂创建的文本的行数，并用于指示行漏掉的时间。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 TruncationOptions 类指定选项，用于限制由文本行工厂创建的文本的行数，并用于指示行漏掉的时间。
+	 
+	 </apiDesc></apiClassifierDetail><apiConstructor id="flashx.textLayout.factory:TruncationOptions:TruncationOptions"><apiName>TruncationOptions</apiName><shortdesc> 
+		 创建 TruncationOptions 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>truncationIndicator</apiItemName><apiType value="String"/><apiData>unknown</apiData><apiDesc>用于指示文本已被截断的字符串。该字符串显示在合成文本的末尾。默认值为水平省略号 (U+2026)。
+		 </apiDesc></apiParam><apiParam><apiItemName>lineCountLimit</apiItemName><apiType value="int"/><apiData>unknown</apiData><apiDesc>以允许的最大行数形式指定截断条件。默认值 <codeph>NO_LINE_COUNT_LIMIT</codeph> 表示没有行数限制。
+		 </apiDesc></apiParam><apiParam><apiItemName>truncationIndicatorFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiData>null</apiData><apiDesc>为截断指示符指定格式。null 格式（默认值）指定截断指示符采用紧邻截断点前的内容的格式。使用简单字符串作为输入的 <codeph>TextLineFactory</codeph> 方法也会忽略此参数，并实现默认行为。
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建 TruncationOptions 对象。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.factory:TruncationOptions:HORIZONTAL_ELLIPSIS"><apiName>HORIZONTAL_ELLIPSIS</apiName><shortdesc>
+		 定义 truncationIndicator 属性值 \u2026，它表示一个水平省略号。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>…</apiData><apiType value="String"/></apiValueDef><apiDesc>
+		 定义 <codeph>truncationIndicator</codeph> 属性值 <codeph>\u2026</codeph>，它表示一个水平省略号。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.factory.xml#TruncationOptions/truncationIndicator"><linktext>truncationIndicator</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.factory:TruncationOptions:NO_LINE_COUNT_LIMIT"><apiName>NO_LINE_COUNT_LIMIT</apiName><shortdesc>
+		 定义 lineCountLimit 属性值 -1，它表示没有限制。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>-1</apiData><apiType value="int"/></apiValueDef><apiDesc>
+		 定义 <codeph>lineCountLimit</codeph> 属性值 <codeph>-1</codeph>，它表示没有限制。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.factory.xml#TruncationOptions/lineCountLimit()"><linktext>lineCountLimit()</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.factory:TruncationOptions:lineCountLimit:get"><apiName>lineCountLimit</apiName><shortdesc> 
+		 要创建的最大行数。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 要创建的最大行数。
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:TruncationOptions:truncationIndicatorFormat:get"><apiName>truncationIndicatorFormat</apiName><shortdesc> 
+		 应用于截断指示器字符串的样式。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 应用于截断指示器字符串的样式。
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:TruncationOptions:truncationIndicator:get"><apiName>truncationIndicator</apiName><shortdesc> 
+		 一个字符串，用于指示由于行数限制内容无法完全显示。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 一个字符串，用于指示由于行数限制内容无法完全显示。
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.factory:TextLineFactoryBase"><apiName>TextLineFactoryBase</apiName><shortdesc>
+ TextLineFactoryBase 类用作 Text Layout Framework 文本行工厂的基类。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion><Exclude kind="method" name="getNextTruncationPosition"/><Exclude kind="method" name="doesComposedTextFit"/><Exclude kind="method" name="callbackWithTextLines"/><Exclude kind="method" name="setContentBounds"/><Exclude kind="property" name="containerController"/></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc>
+ TextLineFactoryBase 类用作 Text Layout Framework 文本行工厂的基类。
+ 
+ <p><b>注意：</b>应用程序代码通常不需要直接创建或使用 TextLineFactoryBase 对象，而是使用派生的文本工厂类之一。</p>
+  
+ </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>flashx.textLayout.elements.TextFlow</linktext></link></related-links><apiConstructor id="flashx.textLayout.factory:TextLineFactoryBase:TextLineFactoryBase"><apiName>TextLineFactoryBase</apiName><shortdesc> 
+		 文本行工厂的基类构造函数。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/></apiConstructorDef><apiDesc> 
+		 文本行工厂的基类构造函数。
+		  
+ 		 <p><b>注意：</b>应用程序代码通常不需要直接创建或使用 TextLineFactoryBase 对象，而是使用派生的文本工厂类之一。</p>
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.factory:TextLineFactoryBase:getContentBounds"><apiName>getContentBounds</apiName><shortdesc>
+		 布局内容位于的最小矩形。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="flash.geom:Rectangle"/></apiReturn></apiOperationDef><apiDesc>
+		 布局内容位于的最小矩形。
+		 
+		 <p><b>注意：</b>截断的行不包括在大小计算中。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.factory:TextLineFactoryBase:compositionBounds:get"><apiName>compositionBounds</apiName><shortdesc>
+		 创建文本行时所在的矩形。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="flash.geom:Rectangle"/></apiValueDef><apiDesc>
+		 创建文本行时所在的矩形。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:TextLineFactoryBase:horizontalScrollPolicy:get"><apiName>horizontalScrollPolicy</apiName><shortdesc> 
+		 指定合成边界范围不够大时如何创建行。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 指定合成边界范围不够大时如何创建行。
+		  
+		 <p>如果设置为 <codeph>ScrollPolicy.ON</codeph> 或 <codeph>ScrollPolicy.AUTO</codeph>，则创建所有行。您负责在可查看区域内滚动行（以及在必要的情况下为此区域之外的行设置蒙版）。如果设置为 <codeph>ScrollPolicy.OFF</codeph>，则仅创建在该合成边界范围内适合的行。</p>
+		 
+		 <p>如果设置了 <codeph>truncationOptions</codeph> 属性，则将忽略滚动策略（并视为 <codeph>ScrollPolicy.OFF</codeph>）。</p> 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#StandardFlowComposer"><linktext>flashx.textLayout.compose.StandardFlowComposer</linktext></link><link href="flashx.textLayout.container.xml#ScrollPolicy"><linktext>flashx.textLayout.container.ScrollPolicy</linktext></link><link href="flashx.textLayout.factory.xml#TextLineFactoryBase/truncationOptions"><linktext>truncationOptions</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.factory:TextLineFactoryBase:isTruncated:get"><apiName>isTruncated</apiName><shortdesc> 
+		 指示最后创建行时是否截断文本。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 指示最后创建行时是否截断文本。
+		  
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:TextLineFactoryBase:swfContext:get"><apiName>swfContext</apiName><shortdesc> 
+		用于根据需要进行 FTE 调用的 ISWFContext 实例。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.compose:ISWFContext</apiValueClassifier></apiValueDef><apiDesc> 
+		用于根据需要进行 FTE 调用的 ISWFContext 实例。 
+		
+		<p>默认情况下，ISWFContext 实现是该 FlowComposerBase 对象。应用程序可以提供一个自定义实现，以使用嵌入在其它 SWF 文件中的字体，或者缓存并重用文本行。</p>
+		
+		</apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#ISWFContext"><linktext>flashx.textLayout.compose.ISWFContext</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.factory:TextLineFactoryBase:truncationOptions:get"><apiName>truncationOptions</apiName><shortdesc> 
+		 指定在文本在合成边界范围内不适合时用于截断文本的选项。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.factory:TruncationOptions</apiValueClassifier></apiValueDef><apiDesc> 
+		 指定在文本在合成边界范围内不适合时用于截断文本的选项。
+		  
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:TextLineFactoryBase:verticalScrollPolicy:get"><apiName>verticalScrollPolicy</apiName><shortdesc> 
+		 指定合成边界范围不够大时如何创建行。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 指定合成边界范围不够大时如何创建行。
+		  
+		 <p>如果设置为 <codeph>ScrollPolicy.ON</codeph> 或 <codeph>ScrollPolicy.AUTO</codeph>，则创建所有行。您负责在可查看区域内滚动行（以及在必要的情况下为此区域之外的行设置蒙版）。如果设置为 <codeph>ScrollPolicy.OFF</codeph>，则仅创建在该合成边界范围内适合的行。</p>
+		 
+		 <p>如果设置了 <codeph>truncationOptions</codeph> 属性，则将忽略滚动策略（并视为 <codeph>ScrollPolicy.OFF</codeph>）。</p> 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#StandardFlowComposer"><linktext>flashx.textLayout.compose.StandardFlowComposer</linktext></link><link href="flashx.textLayout.container.xml#ScrollPolicy"><linktext>flashx.textLayout.container.ScrollPolicy</linktext></link><link href="flashx.textLayout.factory.xml#TextLineFactoryBase/truncationOptions"><linktext>truncationOptions</linktext></link></related-links></apiValue></apiClassifier></apiPackage>

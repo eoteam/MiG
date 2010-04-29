@@ -1,0 +1,1274 @@
+@font-face {
+	src: url("/fonts/Transit/TransNor.otf");
+	font-family: "Transit-Normal";
+	unicode-range:U+0000-U+21FF;
+}
+@font-face {
+	src: url("/fonts/Transit/TransBol.otf");
+	font-family: "Transit-Bold";
+	unicode-range:U+0020-U+21FF;
+}
+/*@font-face {
+src: url("/fonts/Transit/TransBla.otf");
+font-family: "Transit-Black";
+unicode-range:U+0000-U+21FF;
+}
+@font-face {
+src: url("/fonts/Transit/TransBolIta.otf");
+font-family: "Transit-BoldItalic";
+unicode-range:U+0020-U+21FF;
+}
+@font-face {
+src: url("/fonts/Transit/TransIta.otf");
+font-family: "Transit-Italic";
+unicode-range:U+0020-U+21FF;
+}*/
+
+Label{
+	fontFamily: Transit-Normal;
+	color: white;
+	fontSize: 14;
+}
+ScrollBar
+{
+	trackSkin: ClassReference("com.mapx.view.skins.CustomScrollTrackSkin"); 
+	thumbDownSkin: ClassReference("com.mapx.view.skins.CustomScrollThumbSkin");	
+	thumbOverSkin: ClassReference("com.mapx.view.skins.CustomScrollThumbSkin");
+	thumbUpSkin: ClassReference("com.mapx.view.skins.CustomScrollThumbSkin");
+	upArrowSkin: ClassReference( null );
+	downArrowSkin: ClassReference( null );
+} 
+HSlider{
+	trackSkin: ClassReference("com.mapx.view.skins.migSliderTrackSkin"); 
+	thumbDisabledSkin: ClassReference("com.mapx.view.skins.migSliderThumbSkin");
+	thumbDownSkin: ClassReference("com.mapx.view.skins.migSliderThumbSkin");	
+	thumbOverSkin: ClassReference("com.mapx.view.skins.migSliderThumbSkin");
+	thumbUpSkin: ClassReference("com.mapx.view.skins.migSliderThumbSkin");
+	
+}
+CheckBox{
+	disabledIcon: Embed(source="migAssets/flex_skins.swf", symbol="CheckBox_disabledIcon"); 
+	upIcon: Embed(source="migAssets/flex_skins.swf", symbol="CheckBox_upIcon"); 
+	overIcon: Embed(source="migAssets/flex_skins.swf", symbol="CheckBox_overIcon"); 
+	downIcon: Embed(source="migAssets/flex_skins.swf", symbol="CheckBox_downIcon"); 
+	selectedUpIcon: Embed(source="migAssets/flex_skins.swf", symbol="CheckBox_selectedUpIcon"); 
+	selectedOverIcon: Embed(source="migAssets/flex_skins.swf", symbol="CheckBox_selectedOverIcon"); 
+	selectedDownIcon: Embed(source="migAssets/flex_skins.swf", symbol="CheckBox_selectedDownIcon"); 
+	selectedDisabledIcon: Embed(source="migAssets/flex_skins.swf", symbol="CheckBox_selectedDisabledIcon"); 
+}
+NumericStepper {
+	borderStyle: none;
+	highlightAlphas: 0, 0;
+	
+	iconColor: #CCCCCC;
+	backgroundColor: #111111;
+	backgroundAlpha:0;
+	color: #ffffff;
+	fontSize: 14;
+	paddingLeft: 4;
+	
+	/* downArrowDisabledSkin: Embed(source="migAssets/library.swf", symbol="numStepperDown"); 
+	downArrowDownSkin: Embed(source="migAssets/library.swf", symbol="numStepperDown"); 
+	downArrowOverSkin: Embed(source="migAssets/library.swf", symbol="numStepperDown"); 
+	downArrowUpSkin: Embed(source="migAssets/library.swf", symbol="numStepperDown"); 
+	
+	upArrowDisabledSkin: Embed(source="migAssets/library.swf", symbol="numStepperUp"); 
+	upArrowDownSkin: Embed(source="migAssets/library.swf", symbol="numStepperUp"); 
+	upArrowOverSkin: Embed(source="migAssets/library.swf", symbol="numStepperUp"); 
+	upArrowUpSkin: Embed(source="migAssets/library.swf", symbol="numStepperUp");  */
+	upArrowDisabledSkin: ClassReference("com.mapx.view.skins.StepperUpArrowSkin");
+	upArrowDownSkin: ClassReference("com.mapx.view.skins.StepperUpArrowSkin");
+	upArrowOverSkin: ClassReference("com.mapx.view.skins.StepperUpArrowSkin");
+	upArrowUpSkin: ClassReference("com.mapx.view.skins.StepperUpArrowSkin");
+	
+	downArrowDisabledSkin: ClassReference("com.mapx.view.skins.StepperDownArrowSkin");
+	downArrowDownSkin: ClassReference("com.mapx.view.skins.StepperDownArrowSkin");
+	downArrowOverSkin: ClassReference("com.mapx.view.skins.StepperDownArrowSkin");
+	downArrowUpSkin: ClassReference("com.mapx.view.skins.StepperDownArrowSkin"); 
+	
+}
+.plusButton{
+	disabledSkin: Embed(source="migAssets/library.swf", symbol="plus"); 
+	downSkin: Embed(source="migAssets/library.swf", symbol="plus");
+	overSkin: Embed(source="migAssets/library.swf", symbol="plus");
+	upSkin: Embed(source="migAssets/library.swf", symbol="plus");
+}
+.resizeButton{
+	disabledSkin: Embed(source="migAssets/library.swf", symbol="corner_grapple_icon"); 
+	downSkin: Embed(source="migAssets/library.swf", symbol="corner_grapple_icon");
+	overSkin: Embed(source="migAssets/library.swf", symbol="corner_grapple_icon");
+	upSkin: Embed(source="migAssets/library.swf", symbol="corner_grapple_icon");
+}
+.minusButton{
+	disabledSkin: Embed(source="migAssets/library.swf", symbol="minus"); 
+	downSkin: Embed(source="migAssets/library.swf", symbol="minus");
+	overSkin: Embed(source="migAssets/library.swf", symbol="minus");
+	upSkin: Embed(source="migAssets/library.swf", symbol="minus");
+}
+Alert{
+	fontWeight: normal;
+	backgroundColor: #111111;
+	backgroundAlpha: 0.98;
+	borderColor: #666666;
+	headerHeight: 23;
+	borderAlpha: 0.98;
+	cornerRadius: 0;
+	dropShadowEnabled: false;
+	highlightAlphas: 0,0;
+	fontFamily: Transit-Normal;
+	color: white;
+	fontSize: 14;
+	paddingBottom: 5;
+	borderThicknessBottom: 2;
+	borderThicknessLeft: 2;
+	borderThicknessRight: 2;
+	borderThicknessTop: 0;
+	
+}
+TitleWindow{
+	closeButtonDisabledSkin:ClassReference("com.mapx.view.skins.CloseButtonUp"); 
+	closeButtonDownSkin:ClassReference("com.mapx.view.skins.CloseButtonUp"); 
+	closeButtonOverSkin: ClassReference("com.mapx.view.skins.CloseButtonUp"); 
+	closeButtonUpSkin: ClassReference("com.mapx.view.skins.CloseButtonUp");
+	fontWeight: normal;
+	backgroundColor: #111111;
+	backgroundAlpha: 0.98;
+	borderColor: #666666;
+	headerHeight: 24;
+	borderAlpha: 1;
+	cornerRadius: 0;
+	dropShadowEnabled: true;
+	shadowDistance: 4;
+	shadowDirection: right;
+	highlightAlphas: 0.2,0.02;
+	fontFamily: Transit-Normal;
+	color: white;
+	fontSize: 14;
+	borderThicknessBottom: 2;
+	borderThicknessLeft: 2;
+	borderThicknessRight: 2;
+	borderThicknessTop: 0;
+	titleStyleName: "defaultTitleWindowTitle";
+}
+.defaultTitleWindowTitle{
+	fontWeight:normal;
+	fontFamily: Transit-Normal;
+	
+}
+TextArea{
+	themeColor:#ED1C58;
+	
+}
+
+.popupmessage
+{
+	color: white;
+	font-family: Transit-Normal;
+	font-size: 18pt;
+	text-align: left;
+	embedFonts: true;
+	text-decoration: none;
+	text-transform: none;	
+}
+global
+{
+	modalTransparencyBlur: 0;
+	modalTransparency: 0;
+	modalTransparencyColor: #191919;
+	modalTransparencyDuration: 200;
+}
+ToolTip{
+	fontFamily: Transit-Normal;
+	fontSize: 12pt;
+	color: black;
+	cornerRadius: 0;
+}
+.errorTip {
+	borderColor: #FFFBD9;
+	fontFamily: Transit-Normal;
+	color: black;
+	fontSize: 12;
+	fontWeight: normal;
+}
+
+ContainerButton {
+	backgroundColor: #ffffff;
+	backgroundOverColor: #333333;
+	color: #333333;
+	font-family: Transit-Bold;
+	font-size: 18pt;
+	text-align: left;
+	text-decoration: none;
+	text-transform: none;
+	textOverColor: #ffffff;
+	paddingTop: 7;
+	paddingBottom: 7;
+	paddingLeft: 7;
+	paddingRight: 20;
+	/*upIcon: ClassReference("com.mapx.view.skins.com.map.assets.FolderIcon");
+	overIcon: ClassReference("com.mapx.view.skins.com.map.assets.FolderIcon");*/
+}
+Button{
+	
+	color: #ffffff;
+	embedFonts: true;
+	fontFamily: Transit-Bold;
+	font-weight: normal;
+	text-align: left;
+	fontSize: 13;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #000000;
+	disabledColor: #333333;
+	verticalGap: 2;
+	paddingLeft: 2;
+	paddingTop: 0; 
+	cornerRadius: 0;
+	themeColor: #ED1C58;
+	highlightColors:#FFFFFF,#FFFFFF;
+	highlightAlphas:0.2,0;
+	fillColors:#666666,#666666;
+	borderColor:#4D4D4D;
+}
+/*
+//------------------------------
+//  VDividedBox
+//------------------------------
+*/
+/*VDividedBox
+{
+
+dividerThickness: 1;
+dividerColor: #ffee00;
+dividerSkin: Embed(source="migAssets/flex_skins.swf",symbol="DividedBox_dividerSkin"); 
+verticalGap: 1;
+}*/
+
+
+/*
+//------------------------------
+//  HDividedBox
+//------------------------------
+*/
+HDividedBox
+{
+	
+	dividerThickness: 1;
+	dividerColor: #ffee00;
+	/* 	dividerSkin: Embed(source="migAssets/flex_skins.swf",symbol="DividedBox_dividerSkin"); */
+	horizontalGap: 1;
+}
+.defaultList{
+	alternatingItemColors: #111111, #0A0A0A;
+	borderStyle:none;
+	backgroundAlpha:0.5;
+	backgroundColor:#000000;
+}
+DataGrid {
+	font-family: Transit-Normal;
+	font-size: 13pt;
+	alternatingItemColors: #191819, #111111;
+	headerColors: #888888, #777777;
+	horizontalGridLines: false;
+	letterSpacing: 0;
+	verticalGridLineColor: #333333;
+	rollOverColor: #ED1C58;
+	selectionColor: #ED1C58;
+	borderThickness: 0;
+	color: #ffffff;
+	backgroundColor: #191919;
+	textAlign: left;
+	textSelectedColor: #ffffff;
+	textRollOverColor: #ffffff;
+	themeColor: #ed1c58;
+	headerStyleName: "dataGridHeaderStyle";
+	sortArrowSkin: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderOpenIcon");
+}
+List {
+	font-family: Transit-Normal;
+	font-size: 13pt;
+	letterSpacing: 0;
+	verticalGridLineColor: #333333;
+	rollOverColor: #ED1C58;
+	selectionColor: #ED1C58;
+	borderThickness: 0;
+	color: #ffffff;
+	backgroundColor: #191919;
+	textAlign: left;
+	textSelectedColor: #ffffff;
+	textRollOverColor: #ffffff;
+	themeColor: #ed1c58;
+	dropIndicatorSkin: ClassReference("com.mapx.view.skins.TreeDropIndicator");
+}
+.customFieldsList
+{
+	backgroundAlpha: 0;
+}
+AdvancedDataGrid {
+	font-family: Transit-Normal;
+	font-size: 13pt;
+	alternatingItemColors: #191819, #111111;
+	headerColors: #888888, #777777;
+	horizontalGridLines: false;
+	letterSpacing: 0;
+	verticalGridLineColor: #333333;
+	rollOverColor: #ED1C58;
+	selectionColor: #ED1C58;
+	borderThickness: 0;
+	color: #ffffff;
+	backgroundColor: #191919;
+	textAlign: left;
+	textSelectedColor: #ffffff;
+	textRollOverColor: #ffffff;
+	themeColor: #ed1c58;
+	headerStyleName: "dataGridHeaderStyle";
+	disclosureClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderClosedIcon");
+	disclosureOpenIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderOpenIcon");
+	dropIndicatorSkin: ClassReference("com.mapx.view.skins.TreeDropIndicator");
+	openDuration:0;
+	headerSeparatorSkin: Embed(source="migAssets/flex_skins.swf",symbol="DataGrid_headerSeparatorSkin");
+}
+.mediaManagerGrid
+{
+	dropIndicatorSkin: ClassReference("com.mapx.view.skins.OffsetedDropIndicator");
+}
+
+
+.dataGridHeaderStyle{
+	color: #FFFFFF;
+	font-family: Transit-Normal;
+	font-size: 12pt;
+	paddingBottom: 0;
+	paddingTop: 0;
+	textAlign: left;
+}
+
+
+/*
+//------------------------------
+//  ComboBox
+//------------------------------
+*/
+ComboBox
+{
+	fontWeight: normal;
+	font-family: Transit-Bold;
+	cornerRadius: 0;
+	color: #ffffff;
+	selectionColor: #ED1C58;
+	textSelectedColor: #ffffff;
+	rollOverColor: #ED1C58;
+	textRollOverColor: #ffffff;
+	alternatingItemColors: #111111, #111111;
+	fontSize: 12;	 	
+	borderColor: #111111;
+	iconColor: #FFFFFF;
+	dropdownStyleName: "comboBoxDropDowns";
+	disabledColor: #AAAAAA; 
+	
+}  
+.comboBoxBlack{
+	cornerRadius: 0;
+	color: #ffffff;
+	highlightAlphas: 0.1, 0.02;
+	fillAlphas: 1, 1, 1, 1;
+	fillColors: #111111, #111111, #111111, #111111;
+	backgroundAlpha: 1;
+	selectionColor: #ED1C58;
+	textSelectedColor: #ffffff;
+	rollOverColor: #ED1C58;
+	textRollOverColor: #ffffff;
+	alternatingItemColors: #111111, #111111;
+	backgroundColor: #111111;
+	borderColor: #111111;
+	iconColor: #FFFFFF;
+	borderStyle: "none";
+	dropdownStyleName: "comboBoxDropDowns";
+	disabledColor: #AAAAAA;
+}
+.comboBoxDropDowns{
+	dropShadowEnabled: false;
+	backgroundColor: #111111;
+	borderColor: #111111;
+}
+.migComboBox {
+	skin: ClassReference("com.mapx.view.skins.DefaultComboBoxSkin");
+	fontSize: 13;
+	color: #ffffff;
+	highlightAlphas: 0, 0;
+	fillAlphas: 1, 1, 1, 1;
+	fillColors: #111111, #111111, #111111, #111111;
+	backgroundAlpha: 1;
+	selectionColor: #ED1C58;
+	textSelectedColor: #ffffff;
+	rollOverColor: #ED1C58;
+	textRollOverColor: #ffffff;
+	alternatingItemColors: #111111, #111111;
+	backgroundColor: #111111;
+}
+.dataGridComboBox {
+	fontFamily: Transit-Normal;
+	fillAlphas: 0,0,0,0;  
+	highlightAlphas:0,0; 
+	cornerRadius: 0;
+	borderColor: #111111;
+	borderThickness:0;
+}
+TileList
+{
+	dropIndicatorSkin: ClassReference("com.mapx.view.skins.TreeDropIndicator");
+}
+
+Tree
+{
+	defaultLeafIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_noIcon");
+	/* disclosureClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderClosedIcon"); */
+	/* disclosureOpenIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderOpenIcon"); */
+	
+	folderClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_noIcon");
+	folderOpenIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_noIcon");
+	backgroundAlpha: 0;
+	borderThickness: 0;
+	color: #333333;
+	rollOverColor: #333333;
+	selectionColor: #333333;
+	font-family: Transit-Bold;
+	font-size: 13pt;
+	text-align: left;
+	text-decoration: none;
+	text-transform: none;
+	textRollOverColor: #ffffff;
+	textSelectedColor: #ffffff;
+	/* alternatingItemColors: #ff0000, #ffffff; */
+	/* useRollOver: false; */ 
+}
+.managerTree{
+	color: #FFFFFF;
+	disclosureClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderClosedIcon");
+	disclosureOpenIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderOpenIcon");
+	textRollOverColor: #ffffff;
+	textSelectedColor: #ffffff;
+}
+.containerTree{
+	color: #3F3F3F;
+	disclosureClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderClosedIconGray");
+	disclosureOpenIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderOpenIconGray");
+	/* folderClosedIcon: Embed(source="migAssets/library.swf",symbol="containerGrayUp");
+	folderOpenIcon: Embed(source="migAssets/library.swf",symbol="containerGrayUp"); */
+	textRollOverColor: #ffffff;
+	textSelectedColor: #ffffff;
+	dropIndicatorSkin: ClassReference("com.mapx.view.skins.TreeDropIndicator");
+	
+}
+.documentationTree{
+	color: #ffffff;
+	disclosureClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderClosedIcon");
+	disclosureOpenIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderOpenIcon");
+	textRollOverColor: #ffffff;
+	textSelectedColor: #ffffff;
+	selectionColor: #ED1C58;
+}
+Button{
+	fontWeight: normal;
+	color:#FFFFFF;
+	fontFamily: Transit-Bold;
+	fontSize: 13;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #000000;
+	disabledColor: #333333;
+}
+.defaultButton
+{
+	skin: ClassReference("com.mapx.view.skins.DefaultButtonSkin");
+	color: #ffffff;
+	embedFonts: true;
+	fontFamily: Transit-Bold;
+	font-weight: normal;
+	text-align: left;
+	fontSize: 13;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #000000;
+	disabledColor: #333333;
+	verticalGap: 2;
+	paddingLeft: 2;
+	paddingTop: 0; 
+}
+.defaultBlackButton
+{
+	skin: ClassReference("com.mapx.view.skins.DefaultBlackButtonSkin");
+	color: #ffffff;
+	embedFonts: true;
+	fontFamily: Transit-Bold;
+	font-weight: normal;
+	text-align: left;
+	fontSize: 13;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #000000;
+	disabledColor: #ffffff;
+	verticalGap: 2;
+	paddingLeft: 2;
+	paddingTop: 0; 
+	fillColors: #000000,#000000;
+	fillAlphas:1,1;
+	highlightAlphas: 0.1,0.2;
+}
+.textOnlyButton
+{
+	skin: ClassReference("com.mapx.view.skins.TextOnlyButtonSkin");
+	color: #ffffff;
+	embedFonts: true;
+	fontFamily: Transit-Bold;
+	font-weight: normal;
+	text-align: left;
+	fontSize: 13;
+	textRollOverColor: #ed1c58;
+	textSelectedColor: #000000;
+	disabledColor: #ffffff;
+	verticalGap: 2;
+	paddingLeft: 0;
+	paddingTop: 0; 
+}
+
+
+.comboBoxHeaderButton{
+	skin: ClassReference("com.mapx.view.skins.ComboBoxHeaderButtonSkin");
+	color: #ffffff;
+	embedFonts: true;
+	fontFamily: Transit-Bold;
+	font-weight: normal;
+	text-align: left;
+	fontSize: 13;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #000000;
+	disabledColor: #333333;
+	verticalGap: 2;
+	paddingLeft: 2;
+	paddingTop: 0; 
+	
+}
+.defaultButtonBackground{
+	backgroundImage: ClassReference("com.mapx.view.skins.GradientBackground");
+	backgroundSize: "100%";
+	fillColors: #808080, #595959;
+	fillAlphas: 1, 1;
+}
+.defaultButtonHighlight{
+	backgroundImage: ClassReference("com.mapx.view.skins.GradientBackground");
+	backgroundSize: "100%";
+	fillColors: #FFFFFF, #FFFFFF;
+	fillAlphas: 0.1, 0.02;
+}
+.defaultButtonOverBackground{
+	backgroundImage: ClassReference("com.mapx.view.skins.GradientBackground");
+	backgroundSize: "100%";
+	fillColors: #ED1C58, #BD1E53;
+	fillAlphas: 1, 1;
+	
+} 
+.fullScreenButton{
+	disabledSkin: Embed(source="migAssets/library.swf", symbol="fullScreen"); 
+	downSkin: Embed(source="migAssets/library.swf", symbol="fullScreen");
+	overSkin: Embed(source="migAssets/library.swf", symbol="fullScreen");
+	upSkin: Embed(source="migAssets/library.swf", symbol="fullScreen"); 
+	
+}
+
+/* content tree styles */
+.contentTreeStyle
+{
+	border-thickness: 0;
+	background-alpha: 0;
+}
+
+/* content viewer styles */
+.contentViewWindowShade
+{
+	headerClass: ClassReference("mx.controls.Button");
+	headerStyleName: defaultButton;
+	background-color: #efefef;
+}
+
+.contentViewWindowShadeHeader
+{
+	font-family: Transit-Bold;
+	font-size: 24px;
+	corner-radius: 0;
+	
+}
+.locationHeader
+{
+	color: white;
+	font-family: Transit-Bold;
+	font-size: 14pt;
+	text-align: left;
+	text-decoration: none;
+	text-transform: none;
+}
+.statusModCopy
+{
+	color: #ffffff;
+	font-family: Transit-Normal;
+	font-size: 12pt;
+	text-align: left;
+	text-decoration: none;
+	text-transform: none;
+}
+
+.removeButton {
+	color: #333333;
+	font-family: Transit-Normal;
+	font-size: 12pt;
+	text-align: left;
+	text-decoration: none;
+	text-transform: none;
+	textRollOverColor: #ffffff;
+}
+.boldCopy {
+	color: white;
+	font-family: Transit-Bold;
+	font-weight: normal;
+	font-size: 14pt;
+	text-align: left;
+	text-decoration: none;
+	embedFonts: true;
+}
+
+.bodyCopy {
+	color: white;
+	font-family: Transit-Normal;
+	font-weight: normal;
+	font-size: 14pt;
+	text-align: left;
+	text-decoration: none;
+	embedFonts: true;
+}
+
+.bodyCopy2 {
+	color: white;
+	font-family: Transit-Normal;
+	font-weight: normal;
+	font-size: 12pt;
+	text-align: left;
+	text-decoration: none;
+	embedFonts: true;
+}
+.contentHeaderSub {
+	color: #999999;
+	font-family: Transit-Normal;
+	font-weight: normal;
+	font-size: 14pt;
+	text-align: left;
+	text-decoration: none;
+	embedFonts: true;
+}
+.contentTabNavigator
+{
+	
+	cornerRadius: 0;
+	highlightAlphas: 0, 0;
+	tabHeight: 22;
+	borderThickness: 1;
+	borderStyle: solid;
+	paddingTop: -1;
+	tabStyleName: "contentTab";
+	selectedTabTextStyleName: "contentTabSelected";
+}
+.contentTab
+{
+	color: white;
+	embedFonts: true;
+	fontFamily: Transit-Normal;
+	/* fontWeight: normal; */
+	fontSize: 14pt;	
+	textRollOverColor: #ffffff;
+	
+	highlightAlphas: 0, 0;
+	fillAlphas: 0, 0;
+	backgroundAlpha: 1;
+	backgroundColor: #595959;
+	
+	borderColor: #666666;
+	themeColor: #666666;
+	cornerRadius: 0;
+	textAlign: center;
+	/* fillColors: #595959, #595959; */
+}
+.contentTabSelected
+{
+	fontFamily: Transit-Normal;
+	/* fontWeight: normal; */
+	fontSize: 14pt;	
+	embedFonts: true;
+	color: white;
+}
+.contentTabItem{
+	backgroundImage: ClassReference("com.mapx.view.skins.GradientBackground");
+	backgroundSize: "100%";
+	fillColors: #595959, #262626;
+	fillAlphas: 1, 1;
+	embedFonts: true;
+}
+.transparentTabNavigator{
+	color: #B3B3B3;
+	backgroundAlpha: 0;
+	cornerRadius: 0;
+	highlightAlphas: 0, 0;
+	tabHeight: 22;
+	borderThickness: 1;
+	borderStyle: solid;
+	borderColor:#666666;
+	paddingTop: -1;
+	tabStyleName: "transparentTab";
+	selectedTabTextStyleName: "transparentSelectedTab";
+	
+	firstTabStyleName: "transparentTab";
+	lastTabStyleName: "transparentTab";
+	
+	borderSides: top;
+}
+.transparentTab{
+	color: #B3B3B3;
+	embedFonts: true;
+	fontFamily: Transit-Normal;
+	fontSize: 13pt;	
+	textRollOverColor: #ffffff;
+	
+	highlightAlphas: 0.05, 0;
+	fillAlphas: 0, 0;
+	backgroundAlpha: 1;
+	backgroundColor: #111111; 
+	
+	borderColor: #666666;
+	themeColor: #666666;
+	cornerRadius: 0;
+	textAlign: center;
+	
+}
+.transparentSelectedTab{
+	color: #FFFFFF;
+}
+.toolsContainer{
+	backgroundImage: ClassReference("com.mapx.view.skins.GradientBackground");
+	backgroundSize: "100%";
+	fillColors: #595959, #262626;
+	fillAlphas: 1, 1;
+}
+.toolsHeaderBG{
+	backgroundImage: ClassReference("com.mapx.view.skins.GradientBackground");
+	backgroundSize: "100%";
+	fillColors: #222222, #151515;
+	fillAlphas: 1, 1;
+	borderStyle:solid;
+	borderThickness:1;
+	borderColor:#666666;
+	borderSides: top,right,left;
+}
+.toolsTabNavigator{
+	color: #B3B3B3;
+	backgroundAlpha: 0;
+	cornerRadius: 0;
+	highlightAlphas: 0, 0;
+	tabHeight: 22;
+	borderThickness: 1;
+	borderStyle: solid;
+	borderColor:#666666;
+	paddingTop: -1;
+	tabStyleName: "toolsTab";
+	selectedTabTextStyleName: "transparentSelectedTab";
+	
+	firstTabStyleName: "toolsTab";
+	lastTabStyleName: "toolsTab";
+	
+	borderSides: top;
+	
+}
+.toolsTab{
+	color: #B3B3B3;
+	embedFonts: true;
+	fontFamily: Transit-Normal;
+	fontSize: 13pt;	
+	textRollOverColor: #ffffff;
+	
+	highlightAlphas: 0.05, 0;
+	fillAlphas: 0, 0;
+	backgroundAlpha: 1;
+	backgroundColor: #595959; 
+	
+	borderColor: #666666;
+	themeColor: #666666;
+	cornerRadius: 0;
+	textAlign: center;
+	
+}
+.toolPanelToggleButton{
+	disabledSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
+	downSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
+	overSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
+	upSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
+	selectedDownSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
+	selectedOverSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
+	selectedUpSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
+	
+	disabledIcon: Embed(source="migAssets/library.swf", symbol="toolPanelOpenedIcon"); 
+	upIcon: Embed(source="migAssets/library.swf", symbol="toolPanelOpenedIcon"); 
+	overIcon: Embed(source="migAssets/library.swf", symbol="toolPanelOpenedIcon"); 
+	downIcon: Embed(source="migAssets/library.swf", symbol="toolPanelOpenedIcon"); 
+	selectedUpIcon: Embed(source="migAssets/library.swf", symbol="toolPanelClosedIcon"); 
+	selectedOverIcon: Embed(source="migAssets/library.swf", symbol="toolPanelClosedIcon"); 
+	selectedDownIcon: Embed(source="migAssets/library.swf", symbol="toolPanelClosedIcon"); 
+	selectedDisabledIcon: Embed(source="migAssets/library.swf", symbol="toolPanelClosedIcon");
+	
+}
+TextInput{
+	background-color: #333333;
+	color: white;
+	fontFamily: Transit-Normal;
+	fontWeight: normal;
+	fontSize: 14pt;
+	focusColor: #000000;
+	themeColor: #ed1c58;
+}
+.inputFieldTitle{
+	color: white;
+	fontFamily: Transit-Bold;
+	fontWeight: normal;
+	fontSize: 14pt;
+	
+}
+.inputFieldBlack{
+	color: white;
+	fontFamily: Transit-Normal;
+	fontWeight: normal;
+	fontSize: 14pt;
+	backgroundColor: black;
+	disabledColor: #666666;
+	backgroundDisabledColor:#000000;	
+	borderStyle: none;
+	paddingLeft: 3;
+	paddingRight: 3;
+	textSelectionColor: #ff0011;
+}
+.inputFieldGray{
+	color: white;
+	disabledColor: #FFFFFF;
+	fontFamily: Transit-Normal;
+	fontWeight: normal;
+	fontSize: 14pt;
+	backgroundColor: #666666;
+	borderStyle: none;
+	paddingLeft: 3;
+	paddingRight: 3;
+	textSelectionColor: #ff2233;
+}
+.richInputField{
+	color: white;
+	backgroundColor: black;
+}
+.treeManagerItem{
+	backgroundImage: ClassReference("com.mapx.view.skins.GradientBackground");
+	backgroundSize: "100%";
+	fillColors: #808080, #595959;
+	fillAlphas: 1, 1;
+}
+.treeContainerItem{
+	backgroundImage: ClassReference("com.mapx.view.skins.GradientBackground");
+	backgroundSize: "100%";
+	fillColors: #FFFFFF, #D9D9D9;
+	fillAlphas: 1, 1;
+}
+.treeOverItem{
+	backgroundImage: ClassReference("com.mapx.view.skins.GradientBackground");
+	backgroundSize: "100%";
+	fillColors: #ED1C58, #BD1E53;
+	fillAlphas: 1, 1;
+}
+.searchButton{
+	disabledSkin: Embed(source="migAssets/library.swf", symbol="searchUp"); 
+	downSkin: Embed(source="migAssets/library.swf", symbol="searchUp");
+	overSkin: Embed(source="migAssets/library.swf", symbol="searchSelectedUp");
+	upSkin: Embed(source="migAssets/library.swf", symbol="searchUp"); 
+	selectedDownSkin: Embed(source="migAssets/library.swf", symbol="searchSelectedUp");
+	selectedOverSkin: Embed(source="migAssets/library.swf", symbol="searchSelectedUp");
+	selectedUpSkin: Embed(source="migAssets/library.swf", symbol="searchSelectedUp"); 	
+}
+.addContainerButton{
+	disabledSkin: Embed(source="migAssets/library.swf", symbol="addContainerDisabled"); 
+	downSkin: Embed(source="migAssets/library.swf", symbol="addContainerUp");
+	overSkin: Embed(source="migAssets/library.swf", symbol="addContainerOver");
+	upSkin: Embed(source="migAssets/library.swf", symbol="addContainerUp"); 
+	selectedDownSkin: Embed(source="migAssets/library.swf", symbol="addContainerOver");
+	selectedOverSkin: Embed(source="migAssets/library.swf", symbol="addContainerOver");
+	selectedUpSkin: Embed(source="migAssets/library.swf", symbol="addContainerOver"); 	
+}
+.addButton{
+	disabledSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
+	downSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
+	overSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
+	upSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
+	selectedDownSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
+	selectedOverSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
+	selectedUpSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
+	color: #ffffff;
+	embedFonts: true;
+	fontFamily: Transit-Bold;
+	font-weight: normal;
+	text-align: left;
+	fontSize: 13;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #000000;
+	disabledColor: #333333;
+	verticalGap: 2;
+	paddingLeft: 2;
+	paddingTop: 0; 
+}
+.trashButton{
+	disabledSkin: Embed(source="migAssets/library.swf", symbol="trashUp"); 
+	downSkin: Embed(source="migAssets/library.swf", symbol="trashUp");
+	overSkin: Embed(source="migAssets/library.swf", symbol="trashUp");
+	upSkin: Embed(source="migAssets/library.swf", symbol="trashUp"); 
+	selectedDownSkin: Embed(source="migAssets/library.swf", symbol="trashSelectedUp");
+	selectedOverSkin: Embed(source="migAssets/library.swf", symbol="trashSelectedUp");
+	selectedUpSkin: Embed(source="migAssets/library.swf", symbol="trashSelectedUp"); 	
+}
+
+.addUserButton{
+	disabledSkin: Embed(source="migAssets/library.swf", symbol="addUserUp"); 
+	downSkin: Embed(source="migAssets/library.swf", symbol="addUserUp");
+	overSkin: Embed(source="migAssets/library.swf", symbol="addUserSelectedUp");
+	upSkin: Embed(source="migAssets/library.swf", symbol="addUserUp"); 
+	selectedDownSkin: Embed(source="migAssets/library.swf", symbol="addUserSelectedUp");
+	selectedOverSkin: Embed(source="migAssets/library.swf", symbol="addUserSelectedUp");
+	selectedUpSkin: Embed(source="migAssets/library.swf", symbol="addUserSelectedUp"); 	
+}
+.addUserGroupButton{
+	disabledSkin: Embed(source="migAssets/library.swf", symbol="addGroupIcon"); 
+	downSkin: Embed(source="migAssets/library.swf", symbol="addGroupIcon");
+	overSkin: Embed(source="migAssets/library.swf", symbol="addGroupIconSelected");
+	upSkin: Embed(source="migAssets/library.swf", symbol="addGroupIcon"); 
+	selectedDownSkin: Embed(source="migAssets/library.swf", symbol="addGroupIconSelected");
+	selectedOverSkin: Embed(source="migAssets/library.swf", symbol="addGroupIconSelected");
+	selectedUpSkin: Embed(source="migAssets/library.swf", symbol="addGroupIconSelected"); 	
+}
+.addTagButton{
+	disabledSkin: Embed(source="migAssets/library.swf", symbol="addTagUp"); 
+	downSkin: Embed(source="migAssets/library.swf", symbol="addTagUp");
+	overSkin: Embed(source="migAssets/library.swf", symbol="addTagUp");
+	upSkin: Embed(source="migAssets/library.swf", symbol="addTagUp"); 
+	selectedDownSkin: Embed(source="migAssets/library.swf", symbol="addTagSelectedUp");
+	selectedOverSkin: Embed(source="migAssets/library.swf", symbol="addTagSelectedUp");
+	selectedUpSkin: Embed(source="migAssets/library.swf", symbol="addTagSelectedUp"); 	
+}
+.linkButtonUp{
+	disabledSkin: Embed(source="migAssets/library.swf", symbol="linkTargetDisabled"); 
+	downSkin: Embed(source="migAssets/library.swf", symbol="linkTargetUp");
+	overSkin: Embed(source="migAssets/library.swf", symbol="linkTargetUp");
+	upSkin: Embed(source="migAssets/library.swf", symbol="linkTargetUp"); 
+}
+
+/*-------------- video --------------*/
+.playToggle{
+	upSkin: ClassReference("com.mapx.view.skins.RightArrowUpSkin");
+	overSkin: ClassReference("com.mapx.view.skins.RightArrowUpSkin");
+	downSkin: ClassReference("com.mapx.view.skins.RightArrowUpSkin");
+	selectedUpSkin: ClassReference("com.mapx.view.skins.PauseUpSkin");
+	selectedOverSkin: ClassReference("com.mapx.view.skins.PauseUpSkin");
+	selectedDownSkin: ClassReference("com.mapx.view.skins.PauseUpSkin");
+	
+}
+.scrubHSlider{
+	trackSkin: ClassReference("com.mapx.view.skins.ScrubSliderTrackSkin"); 
+	thumbDisabledSkin: ClassReference("com.mapx.view.skins.ScrubSliderThumbSkin");
+	thumbDownSkin: ClassReference("com.mapx.view.skins.ScrubSliderThumbSkin");	
+	thumbOverSkin: ClassReference("com.mapx.view.skins.ScrubSliderThumbSkin");
+	thumbUpSkin: ClassReference("com.mapx.view.skins.ScrubSliderThumbSkin");
+	
+}
+.volumeHSlider{
+	trackSkin: ClassReference("com.mapx.view.skins.VolumeSliderTrackSkin");
+	thumbDownSkin: ClassReference("com.mapx.view.skins.VolumeSliderThumbSkin");	
+	thumbOverSkin: ClassReference("com.mapx.view.skins.VolumeSliderThumbSkin");
+	thumbUpSkin: ClassReference("com.mapx.view.skins.VolumeSliderThumbSkin"); 
+}
+.videoLoaderBar{
+	barColor: #222222;
+	borderColor: #CCCCCC;
+	barSkin: ClassReference("com.mapx.view.skins.LoadingBarSkin");
+	trackSkin: ClassReference("com.mapx.view.skins.LoadingBarTrackSkin"); 
+}
+
+
+.textBGToggleButton{
+	disabledSkin: Embed(source="migAssets/library.swf", symbol="toggleTextBG_white"); 
+	downSkin: Embed(source="migAssets/library.swf", symbol="toggleTextBG_white");
+	overSkin: Embed(source="migAssets/library.swf", symbol="toggleTextBG_white");
+	upSkin: Embed(source="migAssets/library.swf", symbol="toggleTextBG_white"); 
+	selectedDownSkin: Embed(source="migAssets/library.swf", symbol="toggleTextBG_black");
+	selectedOverSkin: Embed(source="migAssets/library.swf", symbol="toggleTextBG_black");
+	selectedUpSkin: Embed(source="migAssets/library.swf", symbol="toggleTextBG_black"); 	
+}
+
+.dateChooser {
+	cornerRadius: 0;
+	headerColors: #888888, #777777;
+	fillAlphas: 0.91, 0.4, 0.75, 0.65;
+	fillColors: #888888, #999999, #0033cc, #99ff00;
+	todayColor: #ed1c58;
+	rollOverColor: #ed1c58;
+	selectionColor: #ed1c58;
+	color: #ffffff;
+	borderColor: #aab3b3;
+	backgroundColor: #111111;
+	backgroundAlpha: 1;
+	themeColor: #ed1c58;
+	dropShadowEnabled: false;
+	headerStyleName: "dateChooserHeaderStyle";
+	weekDayStyleName: "dateChooserWeekDayStyle";
+}
+.dateChooserHeaderStyle{
+	color: white;
+	font-family: Transit-Bold;
+	font-weight: normal;
+	
+}
+.dateChooserWeekDayStyle {
+	color: white;
+	font-family: Transit-Bold;
+	font-weight: normal;
+}
+
+.dateChooserTextInput {
+	color: white;
+	fontFamily: Transit-Normal;
+	fontWeight: normal;
+	fontSize: 14pt;
+	backgroundColor: #111111;
+	backgroundAlpha: 0;
+	disabledColor: #666666;
+	backgroundDisabledColor:#000000;	
+	borderStyle: none;
+	borderColor: #999999;
+	paddingLeft: 3;
+	paddingRight: 3;
+	textSelectionColor: #ff0011;
+}
+
+.leftPanelCollapseButton{
+	disabledSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconRight"); 
+	downSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconLeft");
+	overSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconLeft");
+	upSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconLeft"); 
+	selectedDownSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconRight");
+	selectedOverSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconRight");
+	selectedUpSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconRight"); 	
+}
+.rightPanelCollapseButton{
+	disabledSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconRight"); 
+	downSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconRight");
+	overSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconRight");
+	upSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconRight"); 
+	selectedDownSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconLeft");
+	selectedOverSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconLeft");
+	selectedUpSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconLeft"); 	
+}
+
+
+/*
+//------------------------------
+//  Full Screen Image Viewer
+//------------------------------
+*/
+.controlBarContainer{
+	backgroundAlpha:0.85;
+	backgroundColor:#191919;
+	borderStyle:solid;
+	borderColor:#666666;
+	paddingLeft: 15;
+	paddingRight: 15;
+}
+.nextImageButton{
+	disabledSkin: Embed(source="migAssets/library.swf", symbol="nextImageIcon"); 
+	downSkin: Embed(source="migAssets/library.swf", symbol="nextImageIcon");
+	overSkin: Embed(source="migAssets/library.swf", symbol="nextImageIcon");
+	upSkin: Embed(source="migAssets/library.swf", symbol="nextImageIcon");
+}
+.previousImageButton{
+	disabledSkin: Embed(source="migAssets/library.swf", symbol="previousImageIcon"); 
+	downSkin: Embed(source="migAssets/library.swf", symbol="previousImageIcon");
+	overSkin: Embed(source="migAssets/library.swf", symbol="previousImageIcon");
+	upSkin: Embed(source="migAssets/library.swf", symbol="previousImageIcon");
+}
+
+/* Front End Fonts begin here */
+
+/* separator */
+/*
+//------------------------------
+//  Text Editor
+//------------------------------
+*/
+.sectionTextEditor
+{
+	backgroundAlpha: 1;
+	backgroundColor: #0F0F0F;
+	leading: 9;
+	embedFonts: true;
+	font-size: 12pt;
+	borderThicknessBottom:0; 
+	borderThicknessLeft:0; 
+	borderThicknessRight:0; 
+	borderThicknessTop:0;  
+	dropShadowEnabled:false;
+	borderThickness:0; 
+	paddingBottom:0; 
+	paddingLeft:0; 
+	paddingRight:0; 
+	paddingTop:0;	 
+	headerHeight:0;
+	roundedBottomCorners: 0;
+	borderColor: #000000;
+} 
+.sectionCopy
+{
+	color: #000000;
+	font-family: "Transit-Normal";
+	leading: 9;
+	embedFonts: true;
+	font-size: 12pt;
+}
+
+
+/*
+//------------------------------
+//  Task List
+//------------------------------
+*/
+
+.taskFilesButton{
+	disabledSkin: Embed(source="migAssets/library.swf", symbol="documentSmallSolid"); 
+	downSkin: Embed(source="migAssets/library.swf", symbol="documentSmallSolid");
+	overSkin: Embed(source="migAssets/library.swf", symbol="documentSmallSolid");
+	upSkin: Embed(source="migAssets/library.swf", symbol="documentSmallSolid");
+}
+
+.commentBackground{
+	backgroundImage: ClassReference("com.mapx.view.skins.GradientBackground");
+	backgroundSize: "100%";
+	fillColors: #F7D959,#FFCE00;
+	fillAlphas: 1, 1;
+}
+
+.commentInput{
+	color: #FFFFFF;
+	font-family: "Transit-Normal";
+	fontSize:14;
+	backgroundColor:#252525;
+	borderColor:#999999;
+	
+}
+.taskListVDividedBox{
+	dividerSkin: Embed(source="migAssets/library.swf",symbol="dividerIconDefault"); 
+	dividerThickness:8;
+	paddingLeft:10;
+	paddingRight:10;
+}
+.userNotesPanel{
+	borderColor: #ffce00;
+	borderAlpha: 1;
+	cornerRadius: 3;
+	backgroundAlpha: 1;
+	highlightAlphas: 0, 0;
+	headerColors: #f7d959, #ffce00;
+	footerColors: #f7d959, #ffce00;
+	backgroundColor: #ffce00;
+	shadowDistance: 4;
+	titleStyleName: "userNotePanelTitle";
+}
+.userNotesPanelNoFocus{
+	borderColor: #ffce00;
+	borderAlpha: 1;
+	cornerRadius: 3;
+	backgroundAlpha: 0.5;
+	highlightAlphas: 0, 0;
+	headerColors: #f7d959, #ffce00;
+	footerColors: #f7d959, #ffce00;
+	backgroundColor: #ffce00;
+	shadowDistance: 4;
+	titleStyleName: "userNotePanelTitle";	
+}
+
+.userNotePanelTitle {
+	color: black;
+	font-family: Transit-Bold;
+	font-weight: normal;
+	font-size: 14pt;
+	text-align: left;
+	text-decoration: none;
+	embedFonts: true;
+}
+
+.managerGrayCell
+{
+	fontFamily: Transit-Normal;
+	color: #666666;
+	fontWeight: normal;
+	fontSize: 14pt;
+	backgroundColor: black;
+	disabledColor: #666666;
+	backgroundDisabledColor:#000000;	
+	borderStyle: none;
+	paddingLeft: 3;
+	paddingRight: 3;
+	textSelectionColor: #666666;	
+}
+.selectionRectangleStyle
+{
+	backgroundAlpha: 0.2;
+	backgroundColor: #ED1C58;
+	borderColor: #FFFFFF;
+	borderStyle: inset;
+	borderThickness: 2;
+	cornerRadius: 0;
+}
+
+
+
+/* calendar */
+.calendarHeader {
+	text-align: right;
+	font-size: 12;
+	font-family: Transit-Bold;
+	font-weight: normal;
+	color: #000000;
+	backgroundColor: #666666;
+}
+CalendarEventRenderer {
+	font-size: 10;	
+	font-family: Transit-Normal;
+	font-weight: normal;	
+	color: #FFFFFF;	
+}
+CalendarHours {
+	text-align: right;
+	font-size: 12;	
+	color: #FFFFFF;
+	font-family: Transit-Normal;
+	font-weight: normal;	
+}
+CalendarDisplay {
+	hourDividerThickness: 2;
+	hourDividerColor: #666666;	
+	hourBackgroundColor: #666666;
+	allDayDividerThickness: 2;
+	allDayDividerColor: #FFFFFF;	
+	allDayBackgroundColor: #111111;
+	allDayColor: #111111;
+	hourThickness: 1;
+	hourColor: #FFFFFF;
+	dayStyleName: "calendarDay";
+	dayHeaderStyleName: "calendarHeader";	
+}
+.calendarDay
+{
+	backgroundColor: #111111;
+	disabledBackgroundColor: #333333;
+	borderColor: #FFFFFF;
+}

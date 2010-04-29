@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<apiPackage id="flashx.undo"><apiName>flashx.undo</apiName><apiDetail/><apiClassifier id="flashx.undo:UndoManager"><apiName>UndoManager</apiName><shortdesc> 
+	 La classe UndoManager gère l’historique des opérations de modification dans un flux de texte afin que ces opérations puissent être annulées et rétablies. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseInterface>flashx.undo:IUndoManager</apiBaseInterface><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 La classe UndoManager gère l’historique des opérations de modification dans un flux de texte afin que ces opérations puissent être annulées et rétablies. 
+	 
+	 <p>Le gestionnaire d’annulation conserve deux piles d’objets IOperation. Lorsqu’une opération pouvant être inversée est exécutée, elle est placée dans la pile d’annulation. Si cette opération est annulée, elle est supprimée de la pile d’annulation, inversée et placée dans la pile de rétablissement. De même, si cette opération est ensuite rétablie, elle est supprimée de la pile de rétablissement, réexécutée, puis à nouveau placée dans la pile d’annulation. Si une autre opération est exécutée en premier, la pile de rétablissement est effacée. </p>
+	 
+	 <p>Si l’objet TextFlow est modifié directement (et non via des appels au gestionnaire de modification, mais directement par des appels aux objets FlowElement gérés), le gestionnaire de modification efface la pile de rétablissement pour que la pile reste synchronisée avec l’état actuel.</p>
+	 
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link></related-links><apiConstructor id="flashx.undo:UndoManager:UndoManager"><apiName>UndoManager</apiName><shortdesc>
+		 Crée un objet UndoManager.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/></apiConstructorDef><apiDesc>
+		 Crée un objet UndoManager.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.undo:UndoManager:canRedo"><apiName>canRedo</apiName><shortdesc conref="IUndoManager#canRedo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="Boolean"/><apiDesc>Valeur booléenne <codeph>true</codeph> si la pile de rétablissement comporte une opération pouvant être rétablie. Sinon, la valeur <codeph>false</codeph> est renvoyée.
+		 
+		 </apiDesc></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#canRedo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:canUndo"><apiName>canUndo</apiName><shortdesc conref="IUndoManager#canUndo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="Boolean"/><apiDesc>Valeur booléenne <codeph>true</codeph> si la pile d’annulation comporte une opération pouvant être inversée. Sinon, la valeur <codeph>false</codeph> est renvoyée.
+		 
+		 </apiDesc></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#canUndo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:clearAll"><apiName>clearAll</apiName><shortdesc conref="IUndoManager#clearAll()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#clearAll()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:clearRedo"><apiName>clearRedo</apiName><shortdesc conref="IUndoManager#clearRedo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#clearRedo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:peekRedo"><apiName>peekRedo</apiName><shortdesc conref="IUndoManager#peekRedo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier><apiDesc>Objet IOperation pouvant être rétabli ou valeur <codeph>null</codeph> si la pile ne comporte aucune opération pouvant être rétablie.
+		 
+		 </apiDesc></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#peekRedo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:peekUndo"><apiName>peekUndo</apiName><shortdesc conref="IUndoManager#peekUndo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier><apiDesc>Objet IOperation pouvant être annulé ou valeur <codeph>null</codeph> si la pile ne comporte aucune opération pouvant être annulée.
+		 
+		 </apiDesc></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#peekUndo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:popRedo"><apiName>popRedo</apiName><shortdesc conref="IUndoManager#popRedo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier><apiDesc>Objet IOperation pouvant être rétabli ou valeur <codeph>null</codeph> si la pile ne comporte aucune opération pouvant être rétablie.
+		 </apiDesc></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#popRedo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:popUndo"><apiName>popUndo</apiName><shortdesc conref="IUndoManager#popUndo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier><apiDesc>Objet IOperation pouvant être annulé ou valeur <codeph>null</codeph> si la pile ne comporte aucune opération pouvant être annulée.
+		 
+		 </apiDesc></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#popUndo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:pushRedo"><apiName>pushRedo</apiName><shortdesc conref="IUndoManager#pushRedo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiParam></apiOperationDef><apiDesc conref="IUndoManager#pushRedo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:pushUndo"><apiName>pushUndo</apiName><shortdesc conref="IUndoManager#pushUndo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiParam></apiOperationDef><apiDesc conref="IUndoManager#pushUndo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:redo"><apiName>redo</apiName><shortdesc conref="IUndoManager#redo()"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#redo()"> 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.edit.xml#IEditManager/redo"><linktext>flashx.textLayout.edit.IEditManager.redo</linktext></link></related-links></apiOperation><apiOperation id="flashx.undo:UndoManager:undo"><apiName>undo</apiName><shortdesc conref="IUndoManager#undo()"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#undo()"> 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.edit.xml#IEditManager/undo"><linktext>flashx.textLayout.edit.IEditManager.undo</linktext></link></related-links></apiOperation><apiValue id="flashx.undo:UndoManager:undoAndRedoItemLimit:get"><apiName>undoAndRedoItemLimit</apiName><shortdesc conref="IUndoManager#undoAndRedoItemLimit()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc conref="IUndoManager#undoAndRedoItemLimit()">
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.undo:IOperation"><apiName>IOperation</apiName><shortdesc> 
+	 IOperation définit l’interface des opérations pouvant être annulées et rétablies.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc> 
+	 IOperation définit l’interface des opérations pouvant être annulées et rétablies.
+	  
+	 </apiDesc></apiClassifierDetail><apiOperation id="flashx.undo:IOperation:flashx.undo:IOperation:performRedo"><apiName>performRedo</apiName><shortdesc> 
+		 Réexécute l’opération.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 Réexécute l’opération.
+		 
+		 <p>L’opération doit également se placer dans la pile d’annulation. </p>
+		  
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IOperation:flashx.undo:IOperation:performUndo"><apiName>performUndo</apiName><shortdesc> 
+		 Inverse l’opération.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 Inverse l’opération.
+		 
+		 <p>L’opération doit également se placer dans la pile de rétablissement.</p> 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation></apiClassifier><apiClassifier id="flashx.undo:IUndoManager"><apiName>IUndoManager</apiName><shortdesc>
+	 IUndoManager définit l’interface de gestion des piles d’annulation et de rétablissement.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc>
+	 IUndoManager définit l’interface de gestion des piles d’annulation et de rétablissement.
+	 
+	 <p>Un gestionnaire d’annulation conserve une pile d’opérations pouvant être annulées et rétablies.</p>
+	 
+	 </apiDesc></apiClassifierDetail><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:canRedo"><apiName>canRedo</apiName><shortdesc>
+		 Indique s’il existe actuellement une opération pouvant être rétablie. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>Valeur booléenne <codeph>true</codeph> si la pile de rétablissement comporte une opération pouvant être rétablie. Sinon, la valeur <codeph>false</codeph> est renvoyée.
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc>
+		 Indique s’il existe actuellement une opération pouvant être rétablie. 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:canUndo"><apiName>canUndo</apiName><shortdesc>
+		 Indique s’il existe actuellement une opération pouvant être annulée.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>Valeur booléenne <codeph>true</codeph> si la pile d’annulation comporte une opération pouvant être inversée. Sinon, la valeur <codeph>false</codeph> est renvoyée.
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc>
+		 Indique s’il existe actuellement une opération pouvant être annulée.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:clearAll"><apiName>clearAll</apiName><shortdesc>
+		 Efface à la fois l’historique d’annulation et de rétablissement. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc>
+		 Efface à la fois l’historique d’annulation et de rétablissement. 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:clearRedo"><apiName>clearRedo</apiName><shortdesc>
+		 Efface la pile de rétablissement. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc>
+		 Efface la pile de rétablissement. 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:peekRedo"><apiName>peekRedo</apiName><shortdesc>
+		 Renvoie la prochaine opération à rétablir. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>Objet IOperation pouvant être rétabli ou valeur <codeph>null</codeph> si la pile ne comporte aucune opération pouvant être rétablie.
+		 
+		 </apiDesc><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>
+		 Renvoie la prochaine opération à rétablir. 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:peekUndo"><apiName>peekUndo</apiName><shortdesc>
+		 Renvoie la prochaine opération à annuler.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>Objet IOperation pouvant être annulé ou valeur <codeph>null</codeph> si la pile ne comporte aucune opération pouvant être annulée.
+		 
+		 </apiDesc><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>
+		 Renvoie la prochaine opération à annuler.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:popRedo"><apiName>popRedo</apiName><shortdesc>
+		 Supprime la prochaine opération à rétablir à partir de la pile de rétablissement et la renvoie. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>Objet IOperation pouvant être rétabli ou valeur <codeph>null</codeph> si la pile ne comporte aucune opération pouvant être rétablie.
+		 </apiDesc><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>
+		 Supprime la prochaine opération à rétablir à partir de la pile de rétablissement et la renvoie. 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:popUndo"><apiName>popUndo</apiName><shortdesc>
+		 Supprime la prochaine opération à annuler à partir de la pile d’annulation et la renvoie.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>Objet IOperation pouvant être annulé ou valeur <codeph>null</codeph> si la pile ne comporte aucune opération pouvant être annulée.
+		 
+		 </apiDesc><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>
+		 Supprime la prochaine opération à annuler à partir de la pile d’annulation et la renvoie.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:pushRedo"><apiName>pushRedo</apiName><shortdesc>
+		 Ajoute une opération pouvant être rétablie à la pile de rétablissement. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiParam></apiOperationDef><apiDesc>
+		 Ajoute une opération pouvant être rétablie à la pile de rétablissement. 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:pushUndo"><apiName>pushUndo</apiName><shortdesc>
+		 Ajoute une opération pouvant être annulée à la pile d’annulation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiParam></apiOperationDef><apiDesc>
+		 Ajoute une opération pouvant être annulée à la pile d’annulation.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:redo"><apiName>redo</apiName><shortdesc> 
+		 Supprime le prochain objet IOperation de la pile de rétablissement et appelle la fonction performRedo() de cet objet.</shortdesc><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 Supprime le prochain objet IOperation de la pile de rétablissement et appelle la fonction performRedo() de cet objet.
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.edit.xml#IEditManager/redo"><linktext>flashx.textLayout.edit.IEditManager.redo</linktext></link><link href="flashx.undo.xml#IUndoManager/canRedo"><linktext>flashx.undo.IUndoManager.canRedo</linktext></link><link href="flashx.undo.xml#IUndoManager/clearRedo"><linktext>flashx.undo.IUndoManager.clearRedo</linktext></link><link href="flashx.undo.xml#IUndoManager/peekRedo"><linktext>flashx.undo.IUndoManager.peekRedo</linktext></link><link href="flashx.undo.xml#IUndoManager/pushRedo"><linktext>flashx.undo.IUndoManager.pushRedo</linktext></link><link href="flashx.undo.xml#IUndoManager/popRedo"><linktext>flashx.undo.IUndoManager.popRedo</linktext></link></related-links></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:undo"><apiName>undo</apiName><shortdesc> 
+		 Supprime le prochain objet IOperation de la pile d’annulation et appelle la fonction performUndo() de cet objet.</shortdesc><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 Supprime le prochain objet IOperation de la pile d’annulation et appelle la fonction performUndo() de cet objet.
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.edit.xml#IEditManager/undo"><linktext>flashx.textLayout.edit.IEditManager.undo</linktext></link><link href="flashx.undo.xml#IUndoManager/canUndo"><linktext>flashx.undo.IUndoManager.canUndo</linktext></link><link href="flashx.undo.xml#IUndoManager/clearUndo"><linktext>flashx.undo.IUndoManager.clearUndo</linktext></link><link href="flashx.undo.xml#IUndoManager/peekUndo"><linktext>flashx.undo.IUndoManager.peekUndo</linktext></link><link href="flashx.undo.xml#IUndoManager/pushUndo"><linktext>flashx.undo.IUndoManager.pushUndo</linktext></link><link href="flashx.undo.xml#IUndoManager/popUndo"><linktext>flashx.undo.IUndoManager.popUndo</linktext></link></related-links></apiOperation><apiValue id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:undoAndRedoItemLimit:get"><apiName>undoAndRedoItemLimit</apiName><shortdesc>
+		 Le nombre maximal d’opérations pouvant être rétablies ou annulées à suivre.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc>
+		 Le nombre maximal d’opérations pouvant être rétablies ou annulées à suivre.
+		 
+		 <p>Pour désactiver la fonction d’annulation, définissez cette valeur sur 0.</p> 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier></apiPackage>

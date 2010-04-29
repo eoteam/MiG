@@ -1,0 +1,821 @@
+<apiPackage id="flashx.textLayout.compose"><apiName>flashx.textLayout.compose</apiName><apiDetail/><apiClassifier id="flashx.textLayout.compose:StandardFlowComposer"><apiName>StandardFlowComposer</apiName><shortdesc> 
+	The StandardFlowComposer class provides a standard composer and container manager.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion><Exclude kind="method" name="createBackgroundManager"/></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseInterface>flashx.textLayout.compose:IFlowComposer</apiBaseInterface><apiBaseClassifier>flashx.textLayout.compose:FlowComposerBase</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	The StandardFlowComposer class provides a standard composer and container manager. 
+	
+	<p>Each call to <codeph>compose()</codeph> or <codeph>updateAllControllers()</codeph> normalizes the text flow as a first step.  
+	The normalizing process checks the parts of the TextFlow object that were modified and takes the following steps:
+	<ol>
+	<li> Deletes empty FlowLeafElement and SubParagraphGroupElement objects.</li>
+	<li> Merges sibling spans that have identical attributes.</li>
+	<li> Adds an empty paragraph if a flow is empty.</li>
+ 	</ol>
+ 	</p>
+	
+	<p>To use a StandardFlowComposer, assign it to the
+	<codeph>flowComposer</codeph> property of a TextFlow object. Call the <codeph>updateAllControllers()</codeph>
+	method to lay out and display the text in the containers attached to the flow composer.</p>
+	
+	<p><b>Note:</b> For simple, static text flows, you can also use the one of the text line factory classes.
+	These factory classes will typically create lines with less overhead than a flow composer, but do not
+	support editing, dynamic changes, or user interaction.</p>
+	
+	</apiDesc><example conref="examples\StandardFlowComposer_ClassExample.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow/flowComposer"><linktext>flashx.textLayout.elements.TextFlow.flowComposer</linktext></link></related-links><apiConstructor id="flashx.textLayout.compose:StandardFlowComposer:StandardFlowComposer"><apiName>StandardFlowComposer</apiName><shortdesc> 
+		Creates a StandardFlowComposer object.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/></apiConstructorDef><apiDesc> 
+		Creates a StandardFlowComposer object. 
+		
+		<p>To use an StandardFlowComposer object, assign it to the
+		<codeph>flowComposer</codeph> property of a TextFlow object. Call the <codeph>updateAllControllers()</codeph>
+		method to lay out and display the text in the containers attached to the flow composer.</p>
+		
+		</apiDesc><example conref="examples\StandardFlowComposer_constructor.as"/></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:addControllerAt"><apiName>addControllerAt</apiName><shortdesc conref="IFlowComposer#addControllerAt()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>The ContainerController object to add.
+		 </apiDesc></apiParam><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>A numeric index that specifies the position in the controller list at which to insert the ContainerController object.
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#addControllerAt()"> </apiDesc><example conref="examples\StandardFlowComposer_addControllerAt.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:addController"><apiName>addController</apiName><shortdesc conref="IFlowComposer#addController()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>The ContainerController object to add.
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#addController()"> </apiDesc><example conref="examples\StandardFlowComposer_addController.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:composeToController"><apiName>composeToController</apiName><shortdesc conref="IFlowComposer#composeToController()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="Boolean"/><apiDesc>true if anything changed.
+		 
+		 </apiDesc></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiData>unknown</apiData><apiDesc>compose at least up to this container in the TextFlow. If controllerIndex is greater than the number of controllers, compose to the end of the last container.
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#composeToController()"> </apiDesc><example conref="examples\StandardFlowComposer_composeToController.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:composeToPosition"><apiName>composeToPosition</apiName><shortdesc conref="IFlowComposer#composeToPosition()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="Boolean"/><apiDesc>true if anything changed.
+		 
+		 </apiDesc></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiData>unknown</apiData><apiDesc>compose at least up to this position in the TextFlow. By default or if absolutePosition is past the end of the flow compose to the end of the flow.
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#composeToPosition()"> </apiDesc><example conref="examples\StandardFlowComposer_composeToPosition.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:compose"><apiName>compose</apiName><shortdesc> 
+		 Calculates how many lines are necessary to display the content in the root element of the flow and the positions of these 
+		 lines in the flow's display containers.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>true if anything changed.
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc> 
+		 Calculates how many lines are necessary to display the content in the root element of the flow and the positions of these 
+		 lines in the flow's display containers.
+		 
+		 <p>The <codeph>compose()</codeph> method only composes content if it has changed since the last composition operation. 
+		 Results are saved so that subsequent
+		 calls to <codeph>compose()</codeph> or <codeph>updateAllControllers()</codeph> do not perform an additional recomposition
+		 if the flow content has not changed.</p>
+		 
+		 <p>If the contents of any container have changed, the method returns <codeph>true</codeph>.</p>
+		 
+		 </apiDesc><example conref="examples\StandardFlowComposer_compose.as"/></apiOperationDetail><related-links><link href="flashx.textLayout.compose.xml#StandardFlowComposer/updateAllControllers()"><linktext>updateAllControllers()</linktext></link><link href="flashx.textLayout.compose.xml#StandardFlowComposer/updateToController()"><linktext>updateToController()</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:findControllerIndexAtPosition"><apiName>findControllerIndexAtPosition</apiName><shortdesc> 
+		 Returns the index of the controller containing the content at the specified position.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>the index of the container controller or -1 if not found.
+		 
+		 </apiDesc><apiType value="int"/></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>The position of the content for which the container index is sought.
+		 </apiDesc></apiParam><apiParam><apiItemName>preferPrevious</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>Specifies which container index to return when the position is between the last element in 
+		 one container and the first element in the next.
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Returns the index of the controller containing the content at the specified position. 
+		 
+		 <p>A position can be considered to be the division between two characters or other elements of a text flow. If 
+		 the value in <codeph>absolutePosition</codeph> is a position between the last character of one 
+		 container and the first character of the next, then the preceding container is returned if
+		 the <codeph>preferPrevious</codeph> parameter is set to <codeph>true</codeph> and the later container is returned if
+		 the <codeph>preferPrevious</codeph> parameter is set to <codeph>false</codeph>.</p>
+		 
+		 <p>The method returns -1 if the content at the specified position is not in any container or is outside
+		 the range of positions in the text flow.</p>
+		 
+		 </apiDesc><example conref="examples\StandardFlowComposer_findControllerIndexAtPosition.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:getAbsoluteStart"><apiName>getAbsoluteStart</apiName><shortdesc> 
+		 Returns the absolute position of the first content element in the specified ContainerController object.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>the position before the first character or graphic in the ContainerController.
+		 
+		 </apiDesc><apiType value="int"/></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>A ContainerController object associated with this flow composer.
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Returns the absolute position of the first content element in the specified ContainerController object.
+		 
+		 <p>A position is calculated by counting the division between two characters or other elements of a text flow. 
+		 The position preceding the first element of a flow is zero. An absolute position is the position
+		 counting from the beginning of the flow.</p>
+		 
+		 </apiDesc><example conref="examples\StandardFlowComposer_getAbsoluteStart.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:getControllerAt"><apiName>getControllerAt</apiName><shortdesc conref="IFlowComposer#getControllerAt()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>the ContainerController object at the specified position.
+		 
+		 </apiDesc></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>The index of the ContainerController object to return.
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#getControllerAt()"> </apiDesc><example conref="examples\StandardFlowComposer_getControllerAt.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:getControllerIndex"><apiName>getControllerIndex</apiName><shortdesc conref="IFlowComposer#getControllerIndex()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata><asCustoms><player>version AIR 1.5
+	 	 </player></asCustoms></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="int"/><apiDesc>the index of the specified ContainerController object or -1 if the controller is not attached to this flow composer.
+		 
+		 </apiDesc></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>A reference to the ContainerController object to find.
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#getControllerIndex()"> </apiDesc><example conref="examples\StandardFlowComposer_getControllerIndex.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:interactionManagerChanged"><apiName>interactionManagerChanged</apiName><shortdesc>
+		 Called by the TextFlow when the interaction manager changes.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>newInteractionManager</apiItemName><apiOperationClassifier>flashx.textLayout.edit:ISelectionManager</apiOperationClassifier><apiDesc>The new ISelectionManager instance.
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc>
+		 Called by the TextFlow when the interaction manager changes. 
+		 
+		 <p>This function is called automatically. Your code does not typically need to call this
+		 method. Classes that extend StandardFlowComposer can override this method to update
+		 event listeners and other properties that depend on the interaction manager.</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:protected:preCompose"><apiName>preCompose</apiName><shortdesc> Returns true if composition is necessary, false otherwise </shortdesc><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="protected"/><apiReturn><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc> Returns true if composition is necessary, false otherwise </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:removeAllControllers"><apiName>removeAllControllers</apiName><shortdesc conref="IFlowComposer#removeAllControllers()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc conref="IFlowComposer#removeAllControllers()"> </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:removeControllerAt"><apiName>removeControllerAt</apiName><shortdesc conref="IFlowComposer#removeControllerAt()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>The index of the ContainerController object to remove.
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#removeControllerAt()"> </apiDesc><example conref="examples\StandardFlowController_removeControllerAt.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:removeController"><apiName>removeController</apiName><shortdesc conref="IFlowComposer#removeController()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>The ContainerController instance to remove.
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#removeController()"> </apiDesc><example conref="examples\StandardFlowController_removeController.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:setFocus"><apiName>setFocus</apiName><shortdesc> 
+		 Sets the focus to the container that contains the location specified by the absolutePosition
+		 parameter.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>Specifies the position in the text flow of the container to receive focus.
+		 </apiDesc></apiParam><apiParam><apiItemName>leanLeft</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>If true and the position is before the first character in a container, sets focus to the end of 
+		  the previous container.
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Sets the focus to the container that contains the location specified by the <codeph>absolutePosition</codeph>
+		 parameter. 
+		 
+		 <p>The StandardFlowComposer calls the <codeph>setFocus()</codeph> method of the ContainerController object
+		 containing the specified text flow position.</p>
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.display.xml#Stage/focus"><linktext>flash.display.Stage.focus</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:setRootElement"><apiName>setRootElement</apiName><shortdesc conref="IFlowComposer#setRootElement()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>newRootElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:ContainerFormattedElement</apiOperationClassifier></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#setRootElement()"> </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:updateAllControllers"><apiName>updateAllControllers</apiName><shortdesc> 
+		 Composes the content of the root element and updates the display.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>true if anything changed.
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc> 
+		 Composes the content of the root element and updates the display.  
+		 
+		 <p>Text layout is conducted in two phases: composition and display. In the composition phase,
+		 the flow composer calculates how many lines are necessary to display the content as well as the position of these 
+		 lines in the flow's display containers. In the display phase, 
+		 the flow composer updates the display object children of its containers. The <codeph>updateAllControllers()</codeph>
+		 method initiates both phases in sequence. The StandardFlowComposer keeps track of changes to content
+		 so that a full cycle of composition and display is only performed when necessary.</p>
+		 
+		 <p>This method updates all the text lines and the display list immediately and synchronously.</p>
+		 
+		 <p>If the contents of any container is changed, the method returns <codeph>true</codeph>.</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:updateToController"><apiName>updateToController</apiName><shortdesc> 
+		 Composes and updates the display up to and including the container at the specified index.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc><codeph>true</codeph>, if anything changed.
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiData>unknown</apiData><apiDesc>index of the last container to update (by default updates all containers)
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Composes and updates the display up to and including the container at the specified index.
+		 
+		 <p>The <codeph>updateToController()</codeph> method composes the content and 
+		 updates the display of all containers up to and including the container at the specified index.
+		 For example, if you have a chain of 20 containers and specify an index of 10, 
+		 <codeph>updateToController()</codeph> ensures that the first through the tenth (indexes 0-9) 
+		 containers are composed and displayed. Composition stops at that point. If <codeph>controllerIndex</codeph> 
+		 is -1 (or not specified), then all containers are updated.</p>
+		 
+		 <p>This method updates all the text lines and the display list immediately and synchronously.</p>
+		 
+		 <p>If the contents of any container is changed, the method returns <codeph>true</codeph>.</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.compose:StandardFlowComposer:composing:get"><apiName>composing</apiName><shortdesc> 
+		 True, if the flow composer is currently performing a composition operation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 True, if the flow composer is currently performing a composition operation. 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:StandardFlowComposer:numControllers:get"><apiName>numControllers</apiName><shortdesc conref="IFlowComposer#numControllers"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc conref="IFlowComposer#numControllers"> </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:StandardFlowComposer:rootElement:get"><apiName>rootElement</apiName><shortdesc conref="IFlowComposer#rootElement"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:ContainerFormattedElement</apiValueClassifier></apiValueDef><apiDesc conref="IFlowComposer#rootElement"> </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.compose:TextFlowLineLocation"><apiName>TextFlowLineLocation</apiName><shortdesc> 
+	 The TextFlowLineLocation class is an enumeration class that defines constants for specifying the location
+	 of a line within a paragraph.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 The TextFlowLineLocation class is an enumeration class that defines constants for specifying the location
+	 of a line within a paragraph.
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="" invalidHref="flashx.textLayout.compose.ParagraphElement.xml"><linktext>ParagraphElement</linktext></link><link href="" invalidHref="flashx.textLayout.compose.TextFlow.xml"><linktext>TextFlow</linktext></link></related-links><apiValue id="flashx.textLayout.compose:TextFlowLineLocation:FIRST"><apiName>FIRST</apiName><shortdesc> Specifies the first line in a paragraph.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>1</apiData><apiType value="uint"/></apiValueDef><apiDesc> Specifies the first line in a paragraph. 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLineLocation:LAST"><apiName>LAST</apiName><shortdesc> Specifies the last line in a paragraph.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>4</apiData><apiType value="uint"/></apiValueDef><apiDesc> Specifies the last line in a paragraph.
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLineLocation:MIDDLE"><apiName>MIDDLE</apiName><shortdesc> Specifies a middle line in a paragraph - neither the first nor the last line.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>2</apiData><apiType value="uint"/></apiValueDef><apiDesc> Specifies a middle line in a paragraph - neither the first nor the last line. 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLineLocation:ONLY"><apiName>ONLY</apiName><shortdesc> Specifies both the first and last lines in a paragraph.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>5</apiData><apiType value="uint"/></apiValueDef><apiDesc> Specifies both the first and last lines in a paragraph.
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.compose:FlowComposerBase"><apiName>FlowComposerBase</apiName><shortdesc> 
+	 The FlowComposerBase class is the base class for Text Layout Framework flow composer classes, which control the 
+	 composition of text lines in ContainerController objects.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion><Exclude kind="method" name="checkFirstDamage"/><Exclude kind="method" name="debugCheckTextFlowLines"/><Exclude kind="property" name="lines"/><Exclude kind="method" name="addLine"/><Exclude kind="method" name="initializeLines"/></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 The FlowComposerBase class is the base class for Text Layout Framework flow composer classes, which control the 
+	 composition of text lines in ContainerController objects.
+	 
+	 <p>FlowComposerBase is a utility class that implements methods and properties that are common
+	 to several types of flow composer. Application code would not typically instantiate or use this class
+	 (unless extending it to create a custom flow composer).</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow/flowComposer"><linktext>flashx.textLayout.elements.TextFlow.flowComposer</linktext></link></related-links><apiConstructor id="flashx.textLayout.compose:FlowComposerBase:FlowComposerBase"><apiName>FlowComposerBase</apiName><shortdesc> Constructor.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/></apiConstructorDef><apiDesc> Constructor. 
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.compose:FlowComposerBase:damage"><apiName>damage</apiName><shortdesc conref="IFlowComposer#damage()"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>startPosition</apiItemName><apiType value="int"/><apiDesc>beginning of range to damage
+		 </apiDesc></apiParam><apiParam><apiItemName>damageLength</apiItemName><apiType value="int"/><apiDesc>number of characters to damage
+		 </apiDesc></apiParam><apiParam><apiItemName>damageType</apiItemName><apiType value="String"/><apiDesc>type of damage.  One of flashx.textLayout.compose.FlowDamageType
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#damage()"> 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:FlowComposerBase:findLineAtPosition"><apiName>findLineAtPosition</apiName><shortdesc conref="IFlowComposer#findLineAtPosition()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.textLayout.compose:TextFlowLine</apiOperationClassifier><apiDesc>the TextFlowLine containing the content at the specified position, or null if not found.
+		
+		</apiDesc></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>The position of the content for which you want the TextFlowLine object.
+		</apiDesc></apiParam><apiParam><apiItemName>preferPrevious</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>	Specifies which line to return when the position is between the last element of 
+		one line and the first element of the next.
+		
+		</apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#findLineAtPosition()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:FlowComposerBase:findLineIndexAtPosition"><apiName>findLineIndexAtPosition</apiName><shortdesc conref="IFlowComposer#findLineIndexAtPosition()"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="int"/><apiDesc>the index of the text line at the specified position. If not found, treats as past the end and returns the
+		 number of lines.
+		 	 
+		 </apiDesc></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>The position of the content for which you want the text line.
+		 </apiDesc></apiParam><apiParam><apiItemName>preferPrevious</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>Specifies which container index to return when the position is between the last line in 
+		 one container and the first line in the next.
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#findLineIndexAtPosition()"> 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:FlowComposerBase:getLineAt"><apiName>getLineAt</apiName><shortdesc conref="IFlowComposer#getLineAt()"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.textLayout.compose:TextFlowLine</apiOperationClassifier><apiDesc>the TextFlowLine with the specified line number, or <codeph>null</codeph>, if not found.
+		 
+		 </apiDesc></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>	The line number of the TextFlowLine object to return.
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#getLineAt()"> 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:FlowComposerBase:isDamaged"><apiName>isDamaged</apiName><shortdesc conref="IFlowComposer#isDamaged()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="Boolean"/><apiDesc>true if any of the TextFlowLine objects from the start of the flow up to the line containing the content at
+		 <codeph>absolutePosition</codeph> are marked as damaged.
+		 
+		 </apiDesc></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>the last position in the area of interest
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#isDamaged()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:FlowComposerBase:updateLengths"><apiName>updateLengths</apiName><shortdesc conref="IFlowComposer#updateLengths()"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>startPosition</apiItemName><apiType value="int"/><apiDesc>beginning of change in length
+		 </apiDesc></apiParam><apiParam><apiItemName>deltaLength</apiItemName><apiType value="int"/><apiDesc>change in number of characters.
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#updateLengths()"> 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.compose:FlowComposerBase:damageAbsoluteStart:get"><apiName>damageAbsoluteStart</apiName><shortdesc>
+		 The absolute position immediately preceding the first element in the text
+		 flow that requires composition and updating.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc>
+		 The absolute position immediately preceding the first element in the text
+		 flow that requires composition and updating.
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:FlowComposerBase:numLines:get"><apiName>numLines</apiName><shortdesc conref="IFlowComposer#numLines"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc conref="IFlowComposer#numLines"> </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:FlowComposerBase:swfContext:get"><apiName>swfContext</apiName><shortdesc> 
+		The ISWFContext instance used to make FTE calls as needed.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.compose:ISWFContext</apiValueClassifier></apiValueDef><apiDesc> 
+		The ISWFContext instance used to make FTE calls as needed. 
+		
+		<p>By default, the ISWFContext implementation is this FlowComposerBase object.
+		Applications can provide a custom implementation to use fonts
+		embedded in a different SWF file or to cache and reuse text lines.</p>
+		
+		</apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#ISWFContext"><linktext>flashx.textLayout.compose.ISWFContext</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:FlowComposerBase:textFlow:get"><apiName>textFlow</apiName><shortdesc> 
+		The TextFlow object to which this flow composer is attached.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:TextFlow</apiValueClassifier></apiValueDef><apiDesc> 
+		The TextFlow object to which this flow composer is attached. 
+		
+		</apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>flashx.textLayout.elements.TextFlow</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.compose:ITextLineCreator"><apiName>ITextLineCreator</apiName><shortdesc> 
+	 ITextLineCreator defines an interface for creating TextLine objects for an IFlowComposer instance.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc> 
+	 ITextLineCreator defines an interface for creating TextLine objects for an IFlowComposer instance.
+	 
+	 <p>The ITextLineCreator interface wraps the FTE line creation methods.
+	 There are basically two reasons why an application might want to use 
+	 this interface to control the line creation. First,
+	 if the application has a SWF that contains a font, and you want to 
+	 use that font from a different SWF, you can reuse the
+	 font if the TextLine was created from the same SWF that has the font. 
+	 Second, you can get a faster recompose time by reusing 
+	 existing TextLines. TLF does that internally, and when it is reusing 
+	 it will call recreateTextLine instead of createTextLine.
+	 Your application may have additional TextLines that it knows can be reused. 
+	 If so, in your implementation of createTextLine,
+	 you may call TextBlock.recreateTextLine with the line to be reused instead 
+	 of TextBlock.createTextLine.</p>
+	 
+	 </apiDesc><example conref="examples\ITextLineCreator_ClassExample.as"/></apiClassifierDetail><related-links><link href="" invalidHref="flast.text.engine.TextLine.xml"><linktext>flast.text.engine.TextLine</linktext></link><link href="flashx.textLayout.compose.xml#IFlowComposer"><linktext>flashx.textLayout.compose.IFlowComposer</linktext></link><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>TextFlow</linktext></link></related-links><apiOperation id="flashx.textLayout.compose:ITextLineCreator:flashx.textLayout.compose:ITextLineCreator:createTextLine"><apiName>createTextLine</apiName><shortdesc> 
+		 Creates a TextLine object for a flow composer.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>TextLine the created TextLine object
+		  
+		 </apiDesc><apiType value="flash.text.engine:TextLine"/></apiReturn><apiParam><apiItemName>textBlock</apiItemName><apiType value="flash.text.engine:TextBlock"/><apiDesc>The TextBlock object for which the line is to be created.
+		 </apiDesc></apiParam><apiParam><apiItemName>previousLine</apiItemName><apiType value="flash.text.engine:TextLine"/><apiData>null</apiData><apiDesc>The previous line created for the TextBlock, if any.
+		 </apiDesc></apiParam><apiParam><apiItemName>width</apiItemName><apiType value="Number"/><apiData>1000000</apiData><apiDesc>The maximum width of the line.
+		 </apiDesc></apiParam><apiParam><apiItemName>lineOffset</apiItemName><apiType value="Number"/><apiData>0.0</apiData><apiDesc>An optional offset value.
+		 </apiDesc></apiParam><apiParam><apiItemName>fitSomething</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>If <codeph>true</codeph>, at least one character or inline graphic must be fit on the line
+		 even if that element causes the line to exceed the value in the <codeph>width</codeph> parameter.
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Creates a TextLine object for a flow composer.
+		 
+		 <p>Called by a flow composer when a text line must be created.</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:ITextLineCreator:flashx.textLayout.compose:ITextLineCreator:recreateTextLine"><apiName>recreateTextLine</apiName><shortdesc> 
+		 Recreates a TextLine object for a flow composer.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>TextLine the recreated TextLine object
+		 
+		 </apiDesc><apiType value="flash.text.engine:TextLine"/></apiReturn><apiParam><apiItemName>textBlock</apiItemName><apiType value="flash.text.engine:TextBlock"/><apiDesc>The TextBlock object for which the line is to be created.
+		 </apiDesc></apiParam><apiParam><apiItemName>textLine</apiItemName><apiType value="flash.text.engine:TextLine"/><apiDesc>The previous line created for the TextBlock, if any.
+		 </apiDesc></apiParam><apiParam><apiItemName>previousLine</apiItemName><apiType value="flash.text.engine:TextLine"/><apiData>null</apiData><apiDesc>The maximum width of the line.
+		 </apiDesc></apiParam><apiParam><apiItemName>width</apiItemName><apiType value="Number"/><apiData>1000000</apiData><apiDesc>An optional offset value.
+		 </apiDesc></apiParam><apiParam><apiItemName>lineOffset</apiItemName><apiType value="Number"/><apiData>0.0</apiData><apiDesc>If <codeph>true</codeph>, at least one character or inline graphic must be fit on the line
+		 even if that element causes the line to exceed the value in the <codeph>width</codeph> parameter.
+		 
+		 </apiDesc></apiParam><apiParam><apiItemName>fitSomething</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc> 
+		 Recreates a TextLine object for a flow composer.
+		 
+		 <p>Called by a flow composer when a text line must be recreated.</p>
+		 
+		 <p><b>Note:</b> The TextBlock <codeph>recreateTextLine()</codeph> method is available starting in
+		 Flash Player 10.1 and AIR 2.0. To implement this method so that it is compatible with
+		 earlier runtimes, test for the existence of the <codeph>recreateTextLine()</codeph> method 
+		 on the TextBlock object before calling it.</p>
+		  
+		 </apiDesc><example conref="examples\ITextLineCreator_recreateTextLine.as"/></apiOperationDetail></apiOperation></apiClassifier><apiClassifier id="flashx.textLayout.compose:TextLineRecycler"><apiName>TextLineRecycler</apiName><shortdesc> 
+	 The TextLineRecycler class provides support for recycling of TextLines.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 The TextLineRecycler class provides support for recycling of TextLines.  Some player versions support a recreateTextLine.  Passing TextLines
+	 to the recycler makes them available for reuse.  This improves Player performance.
+	 
+	 </apiDesc></apiClassifierDetail><apiOperation id="flashx.textLayout.compose:TextLineRecycler:addLineForReuse"><apiName>addLineForReuse</apiName><shortdesc>
+		 Add a TextLine to the pool for reuse.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>textLine</apiItemName><apiType value="flash.text.engine:TextLine"/></apiParam></apiOperationDef><apiDesc>
+		 Add a TextLine to the pool for reuse. TextLines for reuse should have null userData and null parent. 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:TextLineRecycler:getLineForReuse"><apiName>getLineForReuse</apiName><shortdesc>
+		 Return a TextLine from the pool for reuse.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiType value="flash.text.engine:TextLine"/></apiReturn></apiOperationDef><apiDesc>
+		 Return a TextLine from the pool for reuse. 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.compose:TextLineRecycler:textLineRecyclerEnabled:get"><apiName>textLineRecyclerEnabled</apiName><shortdesc> Controls if the TLF recycler enabled.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiStatic/><apiValueAccess value="readwrite"/><apiType value="Boolean"/></apiValueDef><apiDesc> Controls if the TLF recycler enabled.   It can only be enabled in 10.1 or later players.
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.compose:TextFlowLine"><apiName>TextFlowLine</apiName><shortdesc> 
+	 The TextFlowLine class represents a single line of text in a text flow.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseInterface>flashx.textLayout.compose:IVerticalJustificationLine</apiBaseInterface><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 The TextFlowLine class represents a single line of text in a text flow.
+	 
+	 <p>Use this class to access information about how a line of text has been composed: its position, 
+	 height, width, and so on. When the text flow (TextFlow) is modified, the lines immediately before and at the  
+	 site of the modification are marked as invalid because they need to be recomposed. Lines after
+	 the site of the modification might not be damaged immediately, but they might be regenerated once the
+	 text is composed. You can access a TextFlowLine that has been damaged, but any values you access
+	 reflect the old state of the TextFlow. When the TextFlow is recomposed, it generates new lines and you can 
+	 get the new line for a given position by calling <codeph>TextFlow.flowComposer.findLineAtPosition()</codeph>.</p>
+	 
+	 </apiDesc></apiClassifierDetail><apiConstructor id="flashx.textLayout.compose:TextFlowLine:TextFlowLine"><apiName>TextFlowLine</apiName><shortdesc> Constructor - creates a new TextFlowLine instance.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>textLine</apiItemName><apiType value="flash.text.engine:TextLine"/><apiDesc>The TextLine display object to use for this line.
+		 </apiDesc></apiParam><apiParam><apiItemName>paragraph</apiItemName><apiOperationClassifier>flashx.textLayout.elements:ParagraphElement</apiOperationClassifier><apiDesc>The paragraph (ParagraphElement) in which to place the line.
+		 </apiDesc></apiParam><apiParam><apiItemName>outerTargetWidth</apiItemName><apiType value="Number"/><apiData>0</apiData><apiDesc>The width the line is composed to, excluding indents.
+		 </apiDesc></apiParam><apiParam><apiItemName>lineOffset</apiItemName><apiType value="Number"/><apiData>0</apiData><apiDesc>The line's offset in pixels from the appropriate container inset (as dictated by paragraph direction and container block progression), prior to alignment of lines in the paragraph. 
+		 </apiDesc></apiParam><apiParam><apiItemName>absoluteStart</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>The character position in the text flow at which the line begins.
+		 </apiDesc></apiParam><apiParam><apiItemName>numChars</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>The number of characters in the line.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> Constructor - creates a new TextFlowLine instance. 
+		  <p><b>Note</b>: No client should call this. It's exposed for writing your own composer.</p>
+		 
+		 </apiDesc></apiConstructorDetail><related-links><link href="" invalidHref="flash.text.engine.TextLine.xml"><linktext>flash.text.engine.TextLine</linktext></link><link href="" invalidHref="flashx.textLayout.compose.ParagraphElement.xml"><linktext>ParagraphElement</linktext></link><link href="flashx.textLayout.compose.xml#TextFlowLine/absoluteStart"><linktext>absoluteStart</linktext></link><link href="flashx.textLayout.compose.xml#TextFlowLine/numChars"><linktext>numChars</linktext></link></related-links></apiConstructor><apiOperation id="flashx.textLayout.compose:TextFlowLine:tlf_internal:computePointSelectionRectangle"><apiName>computePointSelectionRectangle</apiName><shortdesc/><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="tlf_internal"/><apiReturn><apiType value="flash.geom:Rectangle"/></apiReturn><apiParam><apiItemName>idx</apiItemName><apiType value="int"/></apiParam><apiParam><apiItemName>container</apiItemName><apiType value="flash.display:DisplayObject"/></apiParam><apiParam><apiItemName>prevLine</apiItemName><apiOperationClassifier>flashx.textLayout.compose:TextFlowLine</apiOperationClassifier></apiParam><apiParam><apiItemName>nextLine</apiItemName><apiOperationClassifier>flashx.textLayout.compose:TextFlowLine</apiOperationClassifier></apiParam><apiParam><apiItemName>constrainSelRect</apiItemName><apiType value="Boolean"/></apiParam></apiOperationDef></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:TextFlowLine:getBounds"><apiName>getBounds</apiName><shortdesc> 
+		 Returns the bounds of the line as a rectangle.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>a rectangle that represents the boundaries of the line.
+		 
+		 </apiDesc><apiType value="flash.geom:Rectangle"/></apiReturn></apiOperationDef><apiDesc> 
+		 Returns the bounds of the line as a rectangle.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:TextFlowLine:getTextLine"><apiName>getTextLine</apiName><shortdesc> 
+		 Returns the flash.text.engine.TextLine object for this line, which might be recreated 
+		 if it does not exist due to garbage collection.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>object for this line or <codeph>null</codeph> if the TextLine object cannot be 
+		 recreated.
+		 
+		 </apiDesc><apiType value="flash.text.engine:TextLine"/></apiReturn><apiParam><apiItemName>forceValid</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>if true, the TextLine is regenerated, if it exists but is invalid.
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Returns the <codeph>flash.text.engine.TextLine</codeph> object for this line, which might be recreated 
+		 if it does not exist due to garbage collection. Set <codeph>forceValid</codeph> to <codeph>true</codeph>
+		 to cause the TextLine to be regenerated. Returns null if the TextLine cannot be recreated.
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.text.engine.TextLine.xml"><linktext>TextLine</linktext></link></related-links></apiOperation><apiValue id="flashx.textLayout.compose:TextFlowLine:absoluteStart:get"><apiName>absoluteStart</apiName><shortdesc> 
+		 The location of the line as an absolute character position in the TextFlow object.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 The location of the line as an absolute character position in the TextFlow object.
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flashx.textLayout.compose.TextFlow.xml"><linktext>TextFlow</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:ascent:get"><apiName>ascent</apiName><shortdesc conref="flash.text.engine.TextLine#ascent"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc conref="flash.text.engine.TextLine#ascent"> 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:columnIndex:get"><apiName>columnIndex</apiName><shortdesc> The number of the column in which the line has been placed, with the first column being 0.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> The number of the column in which the line has been placed, with the first column being 0.
+		 	
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:controller:get"><apiName>controller</apiName><shortdesc> 
+		 The controller (ContainerController object) for the container in which the line has been placed.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.container:ContainerController</apiValueClassifier></apiValueDef><apiDesc> 
+		 The controller (ContainerController object) for the container in which the line has been placed.
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.container.xml#ContainerController"><linktext>flashx.textLayout.container.ContainerController</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:descent:get"><apiName>descent</apiName><shortdesc conref="flash.text.engine.TextLine#descent"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc conref="flash.text.engine.TextLine#descent"> 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:height:get"><apiName>height</apiName><shortdesc> The height of the line in pixels.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc> The height of the line in pixels.
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#TextFlowLine/width"><linktext>width</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:lineOffset:get"><apiName>lineOffset</apiName><shortdesc> 
+		 The line's offset in pixels from the appropriate container inset (as dictated by paragraph direction and container block progression), 
+		 prior to alignment of lines in the paragraph.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 The line's offset in pixels from the appropriate container inset (as dictated by paragraph direction and container block progression), 
+		 prior to alignment of lines in the paragraph.
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:location:get"><apiName>location</apiName><shortdesc> 
+		 One of the values from TextFlowLineLocation for specifying a line's location within a paragraph.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 One of the values from TextFlowLineLocation for specifying a line's location within a paragraph.
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flashx.textLayout.compose.ParagraphElement.xml"><linktext>ParagraphElement</linktext></link><link href="flashx.textLayout.compose.xml#TextFlowLineLocation"><linktext>TextFlowLineLocation</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:paragraph:get"><apiName>paragraph</apiName><shortdesc> 
+		 The paragraph (ParagraphElement) in which the line resides.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:ParagraphElement</apiValueClassifier></apiValueDef><apiDesc> 
+		 The paragraph (ParagraphElement) in which the line resides.
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flashx.textLayout.compose.ParagraphElement.xml"><linktext>ParagraphElement</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:spaceAfter:get"><apiName>spaceAfter</apiName><shortdesc> 
+		 The amount of space to leave after the line.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 The amount of space to leave after the line.
+		 <p>If the line is the last line of a paragraph that has a space-after, the line will have
+		 a <codeph>spaceAfter</codeph> value. If the line comes at the bottom of a column, then the <codeph>spaceAfter</codeph>
+		 is ignored. Otherwise, the line comes before another line in the column, and the following line must be positioned vertically to
+		 insure that there is at least this much space left between this last line of the paragraph and the first
+		 line of the following paragraph.</p> 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.formats.xml#TextLayoutFormat/paragraphSpaceAfter"><linktext>TextLayoutFormat.paragraphSpaceAfter</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:spaceBefore:get"><apiName>spaceBefore</apiName><shortdesc> 
+		 The amount of space to leave before the line.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 The amount of space to leave before the line.
+		 <p>If the line is the first line of a paragraph that has a space-before applied, the line will have
+		 a <codeph>spaceBefore</codeph> value. If the line comes at the top of a column, <codeph>spaceBefore</codeph> is ignored. 
+		 Otherwise, the line follows another line in the column, and it is positioned vertically to insure that there is
+		 at least this much space left between this line and the last line of the preceding paragraph.</p> 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.formats.xml#TextLayoutFormat/paragraphSpaceBefore"><linktext>TextLayoutFormat.paragraphSpaceBefore</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:textHeight:get"><apiName>textHeight</apiName><shortdesc>
+		 The height of the text line, which is equal to ascent plus descent.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc>
+		 The height of the text line, which is equal to <codeph>ascent</codeph> plus <codeph>descent</codeph>. The 
+		 value is calculated based on the difference between the baselines that bound the line, either 
+		 ideographic top and bottom or ascent and descent depending on whether the baseline at y=0 
+		 is ideographic (for example, TextBaseline.IDEOGRAPHIC_TOP) or not. 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.text.engine.TextBaseline.xml"><linktext>TextBaseline</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:textLength:get"><apiName>textLength</apiName><shortdesc> 
+		 The number of characters to the next line, including trailing spaces.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 The number of characters to the next line, including trailing spaces. 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:textLineExists:get"><apiName>textLineExists</apiName><shortdesc> 
+		 Indicates whether the flash.text.engine.TextLine object for this TextFlowLine exists.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 Indicates whether the <codeph>flash.text.engine.TextLine</codeph> object for this TextFlowLine exists.  
+		 The value is <codeph>true</codeph> if the TextLine object has <i>not</i> been garbage collected and 
+		 <codeph>false</codeph> if it has been.
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.text.engine.TextLine.xml"><linktext>TextLine</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:unjustifiedTextWidth:get"><apiName>unjustifiedTextWidth</apiName><shortdesc> 
+		 The width of the line if it was not justified.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 The width of the line if it was not justified. For unjustified text, this value is the same as <codeph>textLength</codeph>. 
+		 For justified text, this value is what the length would have been without justification, and <codeph>textLength</codeph> 
+		 represents the actual line width. For example, when the following String is justified and assigned a width of 500, it 
+		 has an actual width of 500 but an unjustified width of 268.9921875. 
+		 
+		 <p>TBD: add graphic of justified line </p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:validity:get"><apiName>validity</apiName><shortdesc> The validity of the line.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="String"/></apiValueDef><apiDesc> The validity of the line. 
+		 <p>A line can be invalid if the text, the attributes applied to it, or the controller settings have
+		 changed since the line was created. An invalid line can still be displayed, and you can use it, but the values
+		 used will be the values at the time it was created. The line represented by <codeph>textLine</codeph> also will be in an
+		 invalid state. </p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#TextFlowLine/textLine"><linktext>textLine</linktext></link><link href="" invalidHref="flash.text.engine.xml#TextLine/validity"><linktext>TextLine.validity</linktext></link><link href="flashx.textLayout.compose.xml#TextFlowLine/GEOMETRY_DAMAGED"><linktext>GEOMETRY_DAMAGED</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:x:get"><apiName>x</apiName><shortdesc> 
+		 The horizontal position of the line relative to its container, expressed as the offset in pixels from the 
+		 left of the container.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 The horizontal position of the line relative to its container, expressed as the offset in pixels from the 
+		 left of the container.
+		 <p><b>Note: </b>Although this property is technically <codeph>read-write</codeph>, 
+		 you should treat it as <codeph>read-only</codeph>. The setter exists only to satisfy the
+		 requirements of the IVerticalJustificationLine interface that defines both a getter and setter for this property.
+		 Use of the setter, though possible, will lead to unpredictable results.
+		 </p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#TextFlowLine/y"><linktext>y</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:y:get"><apiName>y</apiName><shortdesc> 
+		 The vertical position of the line relative to its container, expressed as the offset in pixels from the top 
+		 of the container.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 The vertical position of the line relative to its container, expressed as the offset in pixels from the top 
+		 of the container.
+		 <p><b>Note: </b>Although this property is technically <codeph>read-write</codeph>, 
+		 you should treat it as <codeph>read-only</codeph>. The setter exists only to satisfy the
+		 requirements of the IVerticalJustificationLine interface that defines both a getter and setter for this property.
+		 Use of the setter, though possible, will lead to unpredictable results.
+		 </p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#TextFlowLine/x"><linktext>x</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.compose:FlowDamageType"><apiName>FlowDamageType</apiName><shortdesc>
+	  The FlowDamageType class is an enumeration class that defines types of damage for damage methods and events.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc>
+	  The FlowDamageType class is an enumeration class that defines types of damage for damage methods and events.
+	 When the text content is updated, these changes are reflected in the TextLines after an update. TextLines are 
+	 marked with a flag that specifies whether or not they are valid, or up to date with all text
+	 changes. When the text is first updated, all lines are marked valid or static. After the text has been changed,
+	 and before the next update, lines will be marked with a FlowDamageType that specifies what about the line
+	 is invalid. Once the update is done, lines will again be marked as valid or static.
+	 
+	 </apiDesc></apiClassifierDetail><apiValue id="flashx.textLayout.compose:FlowDamageType:GEOMETRY"><apiName>GEOMETRY</apiName><shortdesc>
+		 Value is used to set the validity property if the line has been invalidated by other lines 
+		 moving around.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>geometry</apiData><apiType value="String"/></apiValueDef><apiDesc>
+		 Value is used to set the <codeph>validity</codeph> property if the line has been invalidated by other lines 
+		 moving around. For instance, a line above may have been created, so this line needs to be moved down.
+		 The text line might or might not need recreating at the next compose operation. 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#TextFlowLine/validity"><linktext>flashx.textLayout.compose.TextFlowLine.validity</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:FlowDamageType:INVALID"><apiName>INVALID</apiName><shortdesc> 
+		 Value is used to set the validity property if the text content has changed since the
+		 line was originally created.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>invalid</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 Value is used to set the <codeph>validity</codeph> property if the text content has changed since the
+		 line was originally created. Invalid lines needs to be recreated before they are used for selection
+		 or to display the text content changes.
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#TextFlowLine/validity"><linktext>flashx.textLayout.compose.TextFlowLine.validity</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.compose:IFlowComposer"><apiName>IFlowComposer</apiName><shortdesc>
+	 IFlowComposer defines the interface for managing the layout and display of a text flow.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc>
+	 IFlowComposer defines the interface for managing the layout and display of a text flow.
+	 
+	 <p>Text flows displayed with a flow composer implementation can be dynamic and interactive.
+	 A flow composer manages one or more display controller. Each controller is associated with
+	 a display object container (such as a Sprite) through which the lines created for the text
+	 flow are ultimately displayed. The following diagram illustrates the relationship between TextFlow,
+	 IFlowComposer, ContainerController, and DisplayObjectContainer objects:</p>
+	 
+	 <p><adobeimage alt="IFlowComposer" href="../../../images/textLayout_singleController.gif"/></p>
+	 
+	 <p>A flow composer calculates which portion of a text flow fits in each container and 
+	 adds the appropriate text lines to the container's display object. The IFlowComposer interface 
+	 defines separate methods for layout calculations and for updating the display. IFlowComposer also 
+	 defines methods for incrementally composing and updating a text flow. These methods can be used 
+	 to avoid blocking the user interface when updating long text flows.</p>
+	 
+	 <p>In addition to managing text composition and display, a flow composer controls which container has focus, 
+	 manages the display of the selection highlight (which can cross container boundaries), and provides
+	 direct access to all the TextLine objects in the flow.</p>
+	 
+	 <p>To use an IFlowComposer implementation, assign an instance of that implementation to the
+	 <codeph>flowComposer</codeph> property of a TextFlow object. Call the <codeph>updateAllControllers()</codeph>
+	 method to lay out and display the text in the containers attached to the flow composer.</p>
+	 
+	 <p><b>Note:</b> For simple, static text flows, you can also use the one of the text line factory classes.
+	 These factory classes will typically create lines with less overhead than a flow composer, but do not
+	 support editing, dynamic changes, or user interaction.</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.container.xml#ContainerController"><linktext>ContainerController</linktext></link><link href="flashx.textLayout.compose.xml#FlowComposerBase"><linktext>FlowComposerBase</linktext></link><link href="flashx.textLayout.compose.xml#StandardFlowComposer"><linktext>StandardFlowComposer</linktext></link><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>TextFlow</linktext></link><link href="flashx.textLayout.factory.xml#StringTextLineFactory"><linktext>StringTextLineFactory</linktext></link><link href="flashx.textLayout.factory.xml#TextFlowTextLineFactory"><linktext>TextFlowTextLineFactory</linktext></link></related-links><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:addControllerAt"><apiName>addControllerAt</apiName><shortdesc> 
+		 Adds a controller to this IFlowComposer instance at the specified index.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>The ContainerController object to add.
+		 </apiDesc></apiParam><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>A numeric index that specifies the position in the controller list at which to insert the ContainerController object.
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Adds a controller to this IFlowComposer instance at the specified index.
+		 
+		 <p>The list of controllers is 0-based (the first controller has an index of 0).</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:addController"><apiName>addController</apiName><shortdesc> 
+		 Adds a controller to this IFlowComposer instance.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>The ContainerController object to add.
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Adds a controller to this IFlowComposer instance.
+		 
+		 <p>The container is added to the end of the container list.</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:composeToController"><apiName>composeToController</apiName><shortdesc> 
+		 Composes the content of the root element up to and including the container at the specified index.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>true if anything changed.
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiData>unknown</apiData><apiDesc>compose at least up to this container in the TextFlow. If controllerIndex is greater than the number of controllers, compose to the end of the last container.
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Composes the content of the root element up to and including the container at the specified index.
+		 
+		 <p>If the contents of any container up to and including the container at the specified
+		 index has changed, the method returns <codeph>true</codeph>. If <codeph>index</codeph> is greater than the number of controllers
+		 (or not specified), then all containers are composed.</p>
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.compose.xml#IFlowComposer/updateAllControllers()"><linktext>updateAllControllers()</linktext></link><link href="flashx.textLayout.compose.xml#IFlowComposer/updateToController()"><linktext>updateToController()</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:composeToPosition"><apiName>composeToPosition</apiName><shortdesc> 
+		 Composes the content of the root element up to the specified position.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>true if anything changed.
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiData>unknown</apiData><apiDesc>compose at least up to this position in the TextFlow. By default or if absolutePosition is past the end of the flow compose to the end of the flow.
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Composes the content of the root element up to the specified position.
+		 
+		 <p>If the contents of any container up to and including the container holding the content at the specified
+		 position has changed, the method returns <codeph>true</codeph>. If <codeph>absolutePosition</codeph> is greater than the length of the TextFlow 
+		 (or not specified), then the entire flow is composed.</p>
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.compose.xml#IFlowComposer/updateAllControllers()"><linktext>updateAllControllers()</linktext></link><link href="flashx.textLayout.compose.xml#IFlowComposer/updateToController()"><linktext>updateToController()</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:compose"><apiName>compose</apiName><shortdesc> 
+		 Calculates how many lines are necessary to display the content in the root element of the flow and the positions of these 
+		 lines in the flow's display containers.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>true if anything changed.
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc> 
+		 Calculates how many lines are necessary to display the content in the root element of the flow and the positions of these 
+		 lines in the flow's display containers.
+		 
+		 <p>Implementations of this method should not update the display, but should save the results so that subsequent
+		 calls to <codeph>compose()</codeph> or <codeph>updateAllControllers()</codeph> do not perform an additional recomposition
+		 if the flow content has not changed.</p>
+		 
+		 <p>If the contents of any container have changed, the method must return <codeph>true</codeph>.</p>
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.compose.xml#IFlowComposer/updateAllControllers()"><linktext>updateAllControllers()</linktext></link><link href="flashx.textLayout.compose.xml#IFlowComposer/updateToController()"><linktext>updateToController()</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:damage"><apiName>damage</apiName><shortdesc> Mark lines as damaged and needing a recompose.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>startPosition</apiItemName><apiType value="int"/><apiDesc>beginning of range to damage
+		 </apiDesc></apiParam><apiParam><apiItemName>damageLength</apiItemName><apiType value="int"/><apiDesc>number of characters to damage
+		 </apiDesc></apiParam><apiParam><apiItemName>damageType</apiItemName><apiType value="String"/><apiDesc>type of damage.  One of flashx.textLayout.compose.FlowDamageType
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> Mark lines as damaged and needing a recompose.
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.compose.xml#FlowDamageType"><linktext>flashx.textLayout.compose.FlowDamageType</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:findControllerIndexAtPosition"><apiName>findControllerIndexAtPosition</apiName><shortdesc> 
+		 Returns the index of the controller containing the content at the specified position.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>the index of the container controller or -1 if not found.
+		 
+		 </apiDesc><apiType value="int"/></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>The position of the content for which the container index is sought.
+		 </apiDesc></apiParam><apiParam><apiItemName>preferPrevious</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>Specifies which container index to return when the position is between the last element in 
+		 one container and the first element in the next.
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Returns the index of the controller containing the content at the specified position. 
+		 
+		 <p>A position can be considered to be the division between two characters or other elements of a text flow. If 
+		 the value in <codeph>absolutePosition</codeph> is a position between the last character of one 
+		 container and the first character of the next, then the preceding container is returned if
+		 the <codeph>preferPrevious</codeph> parameter is set to <codeph>true</codeph> and the later container is returned if
+		 the <codeph>preferPrevious</codeph> parameter is set to <codeph>false</codeph>.</p>
+		 
+		 <p>The method must return -1 if the content at the specified position is not in any container or is outside
+		 the range of positions in the text flow.</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:findLineAtPosition"><apiName>findLineAtPosition</apiName><shortdesc> 
+		Returns the TextFlowLine object containing the content at the specified position.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>the TextFlowLine containing the content at the specified position, or null if not found.
+		
+		</apiDesc><apiOperationClassifier>flashx.textLayout.compose:TextFlowLine</apiOperationClassifier></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>The position of the content for which you want the TextFlowLine object.
+		</apiDesc></apiParam><apiParam><apiItemName>preferPrevious</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>	Specifies which line to return when the position is between the last element of 
+		one line and the first element of the next.
+		
+		</apiDesc></apiParam></apiOperationDef><apiDesc> 
+		Returns the TextFlowLine object containing the content at the specified position.
+		
+		<p>A position can be considered to be the division between two characters or other elements of a text flow. If 
+		the value in <codeph>absolutePosition</codeph> is a position between the last element of one 
+		line and the first element of the next, then the preceding line is returned if
+		the <codeph>preferPrevious</codeph> parameter is set to <codeph>true</codeph> and the later line is returned if
+		the <codeph>preferPrevious</codeph> parameter is set to <codeph>false</codeph>.</p>
+		
+		</apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:findLineIndexAtPosition"><apiName>findLineIndexAtPosition</apiName><shortdesc> 
+		 Returns the sequential line number of the TextFlowLine object that contains the content at the specified position.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>the index of the text line at the specified position. If not found, treats as past the end and returns the
+		 number of lines.
+		 	 
+		 </apiDesc><apiType value="int"/></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>The position of the content for which you want the text line.
+		 </apiDesc></apiParam><apiParam><apiItemName>preferPrevious</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>Specifies which container index to return when the position is between the last line in 
+		 one container and the first line in the next.
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Returns the sequential line number of the TextFlowLine object that contains the content at the specified position. 
+		 
+		 <p>The number of the first line is 0 and the number of the last line is equal to the number of lines minus one.
+		 If the position specified in <codeph>absolutePosition</codeph> is past the end of the text flow, this method must return
+		 the number that will be assigned to the next new line added to the text flow (which is equal to the number of current lines).</p>
+		 
+		 <p>A position can be considered to be the division between two characters or other elements of a text flow. If 
+		 the value in <codeph>absolutePosition</codeph> is a position between the last line of one 
+		 container and the first line of the next, then the preceding container is returned if
+		 the <codeph>preferPrevious</codeph> parameter is set to <codeph>true</codeph> and the later container is returned if
+		 the <codeph>preferPrevious</codeph> parameter is set to <codeph>false</codeph>.</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:getControllerAt"><apiName>getControllerAt</apiName><shortdesc> 
+		 Returns the ContainerController object at the specified index.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>the ContainerController object at the specified position.
+		 
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>The index of the ContainerController object to return.
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Returns the ContainerController object at the specified index. 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:getControllerIndex"><apiName>getControllerIndex</apiName><shortdesc> 
+		 Returns the index of the specified ContainerController object.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>the index of the specified ContainerController object or -1 if the controller is not attached to this flow composer.
+		 
+		 </apiDesc><apiType value="int"/></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>A reference to the ContainerController object to find.
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Returns the index of the specified ContainerController object. 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:getLineAt"><apiName>getLineAt</apiName><shortdesc> 
+		 Returns the line with the specified line number.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>the TextFlowLine with the specified line number, or <codeph>null</codeph>, if not found.
+		 
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.compose:TextFlowLine</apiOperationClassifier></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>	The line number of the TextFlowLine object to return.
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Returns the line with the specified line number. 
+		 
+		 <p>The list of lines is numbered from zero to the number of lines minus one. If the value in <codeph>index</codeph>
+		 is outside the bounds of the list of lines, then this function returns <codeph>null</codeph>.</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:interactionManagerChanged"><apiName>interactionManagerChanged</apiName><shortdesc>
+		 Called by the TextFlow when the interaction manager changes.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>newInteractionManager</apiItemName><apiOperationClassifier>flashx.textLayout.edit:ISelectionManager</apiOperationClassifier><apiDesc>The new ISelectionManager instance.
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc>
+		 Called by the TextFlow when the interaction manager changes. 
+		 
+		 <p>Implementations of IFlowComposer should update event listeners and properties
+		 that reference the interaction manager.</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:isDamaged"><apiName>isDamaged</apiName><shortdesc> 
+		 Indicates whether any TextFlowLine objects between the beginning of the flow and the line containing the content at 
+		 the specified position are marked as damaged.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>true if any of the TextFlowLine objects from the start of the flow up to the line containing the content at
+		 <codeph>absolutePosition</codeph> are marked as damaged.
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>the last position in the area of interest
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Indicates whether any TextFlowLine objects between the beginning of the flow and the line containing the content at 
+		 the specified position are marked as damaged. 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:removeAllControllers"><apiName>removeAllControllers</apiName><shortdesc> 
+		 Removes all controllers from this IFlowComposer instance.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 Removes all controllers from this IFlowComposer instance. 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:removeControllerAt"><apiName>removeControllerAt</apiName><shortdesc> 
+		 Removes the controller at the specified index from this IFlowComposer instance.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>The index of the ContainerController object to remove.
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Removes the controller at the specified index from this IFlowComposer instance.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:removeController"><apiName>removeController</apiName><shortdesc> 
+		 Removes a controller from this IFlowComposer instance.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>The ContainerController instance to remove.
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Removes a controller from this IFlowComposer instance. 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:setFocus"><apiName>setFocus</apiName><shortdesc> 
+		 Sets the focus to the container that contains the location specified by the absolutePosition
+		 parameter.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>Specifies the position in the text flow of the container to receive focus.
+		 </apiDesc></apiParam><apiParam><apiItemName>preferPrevious</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>If true and the position is the before the first character in a container, sets focus to the end of 
+		  the previous container.
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Sets the focus to the container that contains the location specified by the <codeph>absolutePosition</codeph>
+		 parameter. 
+		 
+		 <p>It is the responsibility of the implementation to define what setting the focus means. For example, an 
+		 implementation could use the built-in <codeph>focus</codeph> property of the Stage object (as long as the
+		 containers were InteractiveObjects) or the implementation could manage the focus some other way.</p>
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.display.xml#Stage/focus"><linktext>flash.display.Stage.focus</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:setRootElement"><apiName>setRootElement</apiName><shortdesc/><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>newRootElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:ContainerFormattedElement</apiOperationClassifier></apiParam></apiOperationDef></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:updateAllControllers"><apiName>updateAllControllers</apiName><shortdesc> 
+		 Composes the content of the root element and updates the display.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>true if anything changed.
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc> 
+		 Composes the content of the root element and updates the display.  
+		 
+		 <p>Text layout is typically conducted in two phases: composition and display. In the composition phase,
+		 the flow composer calculates how many lines are necesary to display the content as well as the position of these 
+		 lines in the flow's display containers. In the display phase, 
+		 the flow composer updates the display object children of its containers. The <codeph>updateAllControllers()</codeph>
+		 method is expected to carry out both phases. An efficient implementation will keep track of changes to content
+		 so that a full cycle of composition and display is only performed when necessary.</p>
+		 
+		 <p>This method updates all the text lines and the display list immediately and synchronously.</p>
+		 
+		 <p>If the contents of any container is changed, the method must return <codeph>true</codeph>.</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:updateLengths"><apiName>updateLengths</apiName><shortdesc> Update the lengths in the lines to maintain mapping to the TextFlow.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>startPosition</apiItemName><apiType value="int"/><apiDesc>beginning of change in length
+		 </apiDesc></apiParam><apiParam><apiItemName>deltaLength</apiItemName><apiType value="int"/><apiDesc>change in number of characters.
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> Update the lengths in the lines to maintain mapping to the TextFlow. 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:updateToController"><apiName>updateToController</apiName><shortdesc> 
+		 Composes and updates the display up to and including the container at the specified index.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>true if anything changed.
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiData>unknown</apiData><apiDesc>index of the last container to update, by default will update all containers
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Composes and updates the display up to and including the container at the specified index.
+		 
+		 <p>The <codeph>updateToController()</codeph> method is expected to both compose the content and 
+		 update the display so that all containers up to and including the container at the specified index are current.
+		 For example, if you have a chain of twenty containers and specify an index of 10, 
+		 <codeph>updateToController()</codeph> must ensures that the first through the tenth (indexes 0-9) containers
+		 are composed and displayed. Composition can stop at that point. If <codeph>controllerIndex</codeph> 
+		 is -1 (or not specified), then all containers should be updated.</p>
+		 
+		 <p>This method updates all the text lines and the display list immediately and synchronously.</p>
+		 
+		 <p>If the contents of any container is changed, the method must return <codeph>true</codeph>.</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:composing:get"><apiName>composing</apiName><shortdesc> 
+		 True, if the flow composer is currently performing a composition operation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 True, if the flow composer is currently performing a composition operation.
+		  
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:damageAbsoluteStart:get"><apiName>damageAbsoluteStart</apiName><shortdesc> 
+		 The first invalid position in the root element, as an absolute position from the start of the flow.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 The first invalid position in the root element, as an absolute position from the start of the flow.
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:numControllers:get"><apiName>numControllers</apiName><shortdesc> 
+		 The number of containers assigned to this IFlowComposer instance.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 The number of containers assigned to this IFlowComposer instance. 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:numLines:get"><apiName>numLines</apiName><shortdesc> 
+		 The total number of lines in the flow.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 The total number of lines in the flow. 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:rootElement:get"><apiName>rootElement</apiName><shortdesc> 
+		 The root element associated with this IFlowComposer instance.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:ContainerFormattedElement</apiValueClassifier></apiValueDef><apiDesc> 
+		 The root element associated with this IFlowComposer instance. 
+		 
+		 <p>Only a TextFlow object can be a root element.</p>
+		  
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.elements.xml#ContainerFormattedElement"><linktext>ContainerFormattedElement</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:swfContext:get"><apiName>swfContext</apiName><shortdesc> 
+		 The ISWFContext instance to be used for calls that must be made in a specific SWF context  
+		 
+		 Implementations of IFlowComposer should allow this property to be set so that users
+		 of the interface can create lines in a different SWF context than the one containing the 
+		 implementation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.compose:ISWFContext</apiValueClassifier></apiValueDef><apiDesc> 
+		 The ISWFContext instance to be used for calls that must be made in a specific SWF context  
+		 
+		 <p>Implementations of IFlowComposer should allow this property to be set so that users
+		 of the interface can create lines in a different SWF context than the one containing the 
+		 implementation.  A default implementation of ISWFContext should also be supplied.</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flashx.elements.ISWFContext.xml"><linktext>ISWFContext</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.compose:ISWFContext"><apiName>ISWFContext</apiName><shortdesc> 
+	 The ISWFContext interface allows a SWF file to share its context with other SWF files that load it.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc> 
+	 The ISWFContext interface allows a SWF file to share its context with other SWF files that load it.
+	 An application that loads a SWF file of type ISWFContext can call methods in the context of the loaded SWF file.
+	 The main usage is for calling the FTE TextLine creation methods.
+	 
+	 <p>There are two reasons for an application to use 
+	 this interface to control TextLine creation: </p>
+	 <ul>
+	   <li><b>Reuse an embedded font: </b> if an application wants to use a font embedded in a loaded SWF file,
+	 the application can access the font if a TextLine
+	 is created in the context of the loaded SWF file.</li>
+	   <li><b>Reuse existing TextLine instances</b>: reusing existing TextLine instances can result in faster recompose times. 
+	 TLF reuses existing TextLine instances internally. TLF reuses 
+	 a TextLine by calling <codeph>TextBlock.recreateTextLine()</codeph>
+	 instead of <codeph>TextBlock.createTextLine()</codeph> when TLF recognizes that a TextLine is extant.</li>
+	 </ul>
+	 
+	 
+	 <p>Your application may have additional TextLine instances that can be reused. 
+	 To manually reuse existing TextLine instances:</p>
+	 <ol>
+	   <li>trap calls to <codeph>TextBlock.createTextLine()</codeph>, then</li>
+	   <li>call <codeph>TextBlock.recreateTextLine()</codeph> with the extant TextLine instance instead 
+	 of <codeph>TextBlock.createTextLine()</codeph>.</li>
+	 </ol>
+	 <p>Please note, however, that the <codeph>TextBlock.recreateTextLine()</codeph> is available
+	 only in Flash Player 10.1 and later.</p>
+	 
+	 </apiDesc><example conref="examples\EmbeddedFontLineCreator.as"/><example conref="examples\FontConsumer.as"/></apiClassifierDetail><related-links><link href="" invalidHref="flash.text.engine.xml#TextBlock/createTextLine()"><linktext>flash.text.engine.TextBlock.createTextLine()</linktext></link><link href="" invalidHref="flash.text.engine.xml#TextBlock/recreateTextLine()"><linktext>flash.text.engine.TextBlock.recreateTextLine()</linktext></link></related-links><apiOperation id="flashx.textLayout.compose:ISWFContext:flashx.textLayout.compose:ISWFContext:callInContext"><apiName>callInContext</apiName><shortdesc>
+	      A way to call a method in a client controlled context.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>Whatever the function returns, if anything.
+	     
+	      </apiDesc><apiType value="any"/></apiReturn><apiParam><apiItemName>fn</apiItemName><apiType value="Function"/><apiDesc>The function or method to call
+	      </apiDesc></apiParam><apiParam><apiItemName>thisArg</apiItemName><apiType value="Object"/><apiDesc>The this pointer for the function
+	      </apiDesc></apiParam><apiParam><apiItemName>argArray</apiItemName><apiType value="Array"/><apiDesc>The arguments for the function
+	      </apiDesc></apiParam><apiParam><apiItemName>returns</apiItemName><apiType value="Boolean"/><apiData>true</apiData><apiDesc>If true, the function returns a value
+	     
+	      </apiDesc></apiParam></apiOperationDef><apiDesc>
+	      A way to call a method in a client controlled context.
+	     
+	      </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flashx.textLayout.compose.xml#Function/apply()"><linktext>Function.apply()</linktext></link></related-links></apiOperation></apiClassifier><apiClassifier id="flashx.textLayout.compose:IVerticalJustificationLine"><apiName>IVerticalJustificationLine</apiName><shortdesc> 
+	 The IVerticalJustificationLine interface defines the methods and properties required to allow
+	 the vertical justification of text lines.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc> 
+	 The IVerticalJustificationLine interface defines the methods and properties required to allow
+	 the vertical justification of text lines.
+	 
+	 </apiDesc></apiClassifierDetail><apiValue id="flashx.textLayout.compose:IVerticalJustificationLine:flashx.textLayout.compose:IVerticalJustificationLine:ascent:get"><apiName>ascent</apiName><shortdesc conref="flash.text.engine.TextLine#ascent"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc conref="flash.text.engine.TextLine#ascent"> 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:IVerticalJustificationLine:flashx.textLayout.compose:IVerticalJustificationLine:descent:get"><apiName>descent</apiName><shortdesc conref="flash.text.engine.TextLine#descent"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc conref="flash.text.engine.TextLine#descent"> 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:IVerticalJustificationLine:flashx.textLayout.compose:IVerticalJustificationLine:height:get"><apiName>height</apiName><shortdesc> The height of the line in pixels.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc> The height of the line in pixels.
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#IVerticalJustificationLine/width"><linktext>width</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:IVerticalJustificationLine:flashx.textLayout.compose:IVerticalJustificationLine:x:get"><apiName>x</apiName><shortdesc> 
+		 The horizontal position of the line relative to its container, expressed as the offset in pixels from the 
+		 left of the container.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 The horizontal position of the line relative to its container, expressed as the offset in pixels from the 
+		 left of the container.
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#IVerticalJustificationLine/y"><linktext>y</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:IVerticalJustificationLine:flashx.textLayout.compose:IVerticalJustificationLine:y:get"><apiName>y</apiName><shortdesc> 
+		 The vertical position of the line relative to its container, expressed as the offset in pixels from the top 
+		 of the container.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 The vertical position of the line relative to its container, expressed as the offset in pixels from the top 
+		 of the container.
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#IVerticalJustificationLine/x"><linktext>x</linktext></link></related-links></apiValue></apiClassifier></apiPackage>

@@ -1,0 +1,619 @@
+<?xml version="1.0"?>
+<apiPackage id="flashx.textLayout.compose"><apiName>flashx.textLayout.compose</apiName><apiDetail/><apiClassifier id="flashx.textLayout.compose:ITextLineCreator"><apiName>ITextLineCreator</apiName><shortdesc> 
+	 ITextLineCreator 可定义一个用于为 IFlowComposer 实例创建 TextLine 对象的接口。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc> 
+	 ITextLineCreator 可定义一个用于为 IFlowComposer 实例创建 TextLine 对象的接口。
+	 
+	 <p>ITextLineCreator 接口包装用于创建 FTE 行的方法。至于为何应用程序可能需要使用此接口控制行的创建，通常有两个原因。首先，如果应用程序具有包含某字体的 SWF，而您想从其它 SWF 使用该字体，则当通过含有该字体的同一 SWF 创建 TextLine 时，您可以重用该字体。第二，通过重用现有 TextLine，可以获得更快的响应时间。TLF 在内部实现这一点，当它重用时，将会调用 recreateTextLine 而不是 createTextLine。您的应用程序可能有已知可以重用的 TextLine。若如此，可以在 createTextLine 实现中使用将重用的行调用 TextBlock.recreateTextLine 而不是 TextBlock.createTextLine。</p>
+	 
+	 </apiDesc><example conref="examples\ITextLineCreator_ClassExample.as"/></apiClassifierDetail><related-links><link href="" invalidHref="flast.text.engine.TextLine.xml"><linktext>flast.text.engine.TextLine</linktext></link><link href="flashx.textLayout.compose.xml#IFlowComposer"><linktext>flashx.textLayout.compose.IFlowComposer</linktext></link><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>TextFlow</linktext></link></related-links><apiOperation id="flashx.textLayout.compose:ITextLineCreator:flashx.textLayout.compose:ITextLineCreator:createTextLine"><apiName>createTextLine</apiName><shortdesc> 
+		 为流合成器创建 TextLine 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>创建的 TextLine 对象
+		  
+		 </apiDesc><apiType value="flash.text.engine:TextLine"/></apiReturn><apiParam><apiItemName>textBlock</apiItemName><apiType value="flash.text.engine:TextBlock"/><apiDesc>将为其创建行的 TextBlock 对象。
+		 </apiDesc></apiParam><apiParam><apiItemName>previousLine</apiItemName><apiType value="flash.text.engine:TextLine"/><apiData>null</apiData><apiDesc>为 TextBlock 创建的上一行（如果有）。
+		 </apiDesc></apiParam><apiParam><apiItemName>width</apiItemName><apiType value="Number"/><apiData>1000000</apiData><apiDesc>行的最大宽度。
+		 </apiDesc></apiParam><apiParam><apiItemName>lineOffset</apiItemName><apiType value="Number"/><apiData>0.0</apiData><apiDesc>一个可选的偏移值。
+		 </apiDesc></apiParam><apiParam><apiItemName>fitSomething</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>如果为 <codeph>true</codeph>，至少必须在行中加入一个字符或内嵌图形，即使该元素会导致行超出 <codeph>width</codeph> 参数指定的宽度时也是如此。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 为流合成器创建 TextLine 对象。
+		 
+		 <p>必须创建文本行时由流合成器调用。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:ITextLineCreator:flashx.textLayout.compose:ITextLineCreator:recreateTextLine"><apiName>recreateTextLine</apiName><shortdesc> 
+		 为流合成器重新创建 TextLine 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>重新创建的 TextLine 对象
+		 
+		 </apiDesc><apiType value="flash.text.engine:TextLine"/></apiReturn><apiParam><apiItemName>textBlock</apiItemName><apiType value="flash.text.engine:TextBlock"/><apiDesc>将为其创建行的 TextBlock 对象。
+		 </apiDesc></apiParam><apiParam><apiItemName>textLine</apiItemName><apiType value="flash.text.engine:TextLine"/><apiDesc>为 TextBlock 创建的上一行（如果有）。
+		 </apiDesc></apiParam><apiParam><apiItemName>previousLine</apiItemName><apiType value="flash.text.engine:TextLine"/><apiData>null</apiData><apiDesc>行的最大宽度。
+		 </apiDesc></apiParam><apiParam><apiItemName>width</apiItemName><apiType value="Number"/><apiData>1000000</apiData><apiDesc>一个可选的偏移值。
+		 </apiDesc></apiParam><apiParam><apiItemName>lineOffset</apiItemName><apiType value="Number"/><apiData>0.0</apiData><apiDesc>如果为 <codeph>true</codeph>，至少必须在行中加入一个字符或内嵌图形，即使该元素会导致行超出 <codeph>width</codeph> 参数指定的宽度时也是如此。
+		 
+		 </apiDesc></apiParam><apiParam><apiItemName>fitSomething</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc> 
+		 为流合成器重新创建 TextLine 对象。
+		 
+		 <p>必须重新创建文本行时由流合成器调用。</p>
+		 
+		 <p><b>注意：</b>从 Flash Player 10.1 和 AIR 2.0 开始，就提供了 TextBlock <codeph>recreateTextLine()</codeph> 方法。为了实现此方法，以使它与较早的运行时兼容，请在调用 TextBlock 对象上的 <codeph>recreateTextLine()</codeph> 方法之前，测试该方法是否存在。</p>
+		  
+		 </apiDesc><example conref="examples\ITextLineCreator_recreateTextLine.as"/></apiOperationDetail></apiOperation></apiClassifier><apiClassifier id="flashx.textLayout.compose:TextFlowLine"><apiName>TextFlowLine</apiName><shortdesc> 
+	 TextFlowLine 类表示文本流中的单个文本行。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseInterface>flashx.textLayout.compose:IVerticalJustificationLine</apiBaseInterface><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 TextFlowLine 类表示文本流中的单个文本行。
+	 
+	 <p>使用该类可以访问有关如何合成文本行的信息：其位置、高度、宽度等。当修改了文本流 (TextFlow) 时，位于修改位置及其之前位置的文本行将被标记为无效，因为它们需要重新合成。位于修改位置之后的行可能不会立即损坏，但是可能在重新合成文本后立即重新生成。可以访问受损的 TextFlowLine，但是访问的任何值反映的都是 TextFlow 的原有状态。重新合成 TextFlow 时，它会生成新行，您可以通过调用 <codeph>TextFlow.flowComposer.findLineAtPosition()</codeph> 获取给定位置的新行。</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="" invalidHref="flashx.textLayout.compose.TextFlow.xml"><linktext>TextFlow</linktext></link></related-links><apiConstructor id="flashx.textLayout.compose:TextFlowLine:TextFlowLine"><apiName>TextFlowLine</apiName><shortdesc> 构造函数 - 创建新 TextFlowLine 实例。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>textLine</apiItemName><apiType value="flash.text.engine:TextLine"/><apiDesc>将用于该行的 TextLine 显示对象。
+		 </apiDesc></apiParam><apiParam><apiItemName>paragraph</apiItemName><apiOperationClassifier>flashx.textLayout.elements:ParagraphElement</apiOperationClassifier><apiDesc>将该行放置到的段落 (ParagraphElement)。
+		 </apiDesc></apiParam><apiParam><apiItemName>outerTargetWidth</apiItemName><apiType value="Number"/><apiData>0</apiData><apiDesc>合成行时的宽度，不包括缩进。
+		 </apiDesc></apiParam><apiParam><apiItemName>lineOffset</apiItemName><apiType value="Number"/><apiData>0</apiData><apiDesc>在对齐段落中的行之前，行与相应容器边界（由段落方向和容器块行进方向表示）之间的偏移（像素数）。 
+		 </apiDesc></apiParam><apiParam><apiItemName>absoluteStart</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>文本流中行的起始字符位置。
+		 </apiDesc></apiParam><apiParam><apiItemName>numChars</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>行中的字符数。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 构造函数 - 创建新 TextFlowLine 实例。 
+		  <p><b>注意</b>：任何客户端均不应调用此。其用于创建自定义合成器。</p>
+		 
+		 </apiDesc></apiConstructorDetail><related-links><link href="" invalidHref="flash.text.engine.TextLine.xml"><linktext>flash.text.engine.TextLine</linktext></link><link href="" invalidHref="flashx.textLayout.compose.ParagraphElement.xml"><linktext>ParagraphElement</linktext></link><link href="flashx.textLayout.compose.xml#TextFlowLine/absoluteStart"><linktext>absoluteStart</linktext></link><link href="flashx.textLayout.compose.xml#TextFlowLine/numChars"><linktext>numChars</linktext></link></related-links></apiConstructor><apiOperation id="flashx.textLayout.compose:TextFlowLine:getBounds"><apiName>getBounds</apiName><shortdesc> 
+		 将行边界范围返回为一个矩形。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>表示行边界范围的矩形。
+		 
+		 </apiDesc><apiType value="flash.geom:Rectangle"/></apiReturn></apiOperationDef><apiDesc> 
+		 将行边界范围返回为一个矩形。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:TextFlowLine:getTextLine"><apiName>getTextLine</apiName><shortdesc> 
+		 返回该行的 flash.text.engine.TextLine 对象，如果由于垃圾收集而使该对象不存在，则可能会重新创建。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>该行的对象，如果无法重新创建 TextLine 对象，则为 <codeph>null</codeph>。
+		 
+		 </apiDesc><apiType value="flash.text.engine:TextLine"/></apiReturn><apiParam><apiItemName>forceValid</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>如果为 true，则会重新生成 TextLine（如果它存在但无效）。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 返回该行的 <codeph>flash.text.engine.TextLine</codeph> 对象，如果由于垃圾收集而使该对象不存在，则可能会重新创建。将 <codeph>forceValid</codeph> 设置为 <codeph>true</codeph> 会重新生成 TextLine。如果无法重新创建 TextLine，则返回 null。
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.text.engine.TextLine.xml"><linktext>TextLine</linktext></link></related-links></apiOperation><apiValue id="flashx.textLayout.compose:TextFlowLine:absoluteStart:get"><apiName>absoluteStart</apiName><shortdesc> 
+		 TextFlow 对象中行的位置，是绝对字符位置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 TextFlow 对象中行的位置，是绝对字符位置。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flashx.textLayout.compose.TextFlow.xml"><linktext>TextFlow</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:ascent:get"><apiName>ascent</apiName><shortdesc conref="flash.text.engine.TextLine#ascent"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc conref="flash.text.engine.TextLine#ascent"> 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:columnIndex:get"><apiName>columnIndex</apiName><shortdesc> 该行所在的列编号，第一列为 0。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 该行所在的列编号，第一列为 0。
+		 	
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:controller:get"><apiName>controller</apiName><shortdesc> 
+		 放置了该行的容器的控制器（ContainerController 对象）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.container:ContainerController</apiValueClassifier></apiValueDef><apiDesc> 
+		 放置了该行的容器的控制器（ContainerController 对象）。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.container.xml#ContainerController"><linktext>flashx.textLayout.container.ContainerController</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:descent:get"><apiName>descent</apiName><shortdesc conref="flash.text.engine.TextLine#descent"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc conref="flash.text.engine.TextLine#descent"> 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:height:get"><apiName>height</apiName><shortdesc> 行的高度（像素数）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc> 行的高度（像素数）。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#TextFlowLine/width"><linktext>width</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:lineOffset:get"><apiName>lineOffset</apiName><shortdesc> 
+		 在对齐段落中的行之前，行与相应容器边界（由段落方向和容器块行进方向表示）之间的偏移（像素数）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 在对齐段落中的行之前，行与相应容器边界（由段落方向和容器块行进方向表示）之间的偏移（像素数）。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:location:get"><apiName>location</apiName><shortdesc> 
+		 来自 TextFlowLineLocation 的一个值，用于指定一行在段落内的位置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 来自 TextFlowLineLocation 的一个值，用于指定一行在段落内的位置。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flashx.textLayout.compose.ParagraphElement.xml"><linktext>ParagraphElement</linktext></link><link href="flashx.textLayout.compose.xml#TextFlowLineLocation"><linktext>TextFlowLineLocation</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:paragraph:get"><apiName>paragraph</apiName><shortdesc> 
+		 行所在的段落 (ParagraphElement)。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:ParagraphElement</apiValueClassifier></apiValueDef><apiDesc> 
+		 行所在的段落 (ParagraphElement)。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flashx.textLayout.compose.ParagraphElement.xml"><linktext>ParagraphElement</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:spaceAfter:get"><apiName>spaceAfter</apiName><shortdesc> 
+		 行之后留出的空格数。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 行之后留出的空格数。
+		 <p>如果该行是后面包含空格的段落中的最后一行，则该行将具有 <codeph>spaceAfter</codeph> 值。如果该行位于一个列的底端，则会忽略 <codeph>spaceAfter</codeph>。否则，该行位于列中其它行之前，且必须垂直放置下一行，才可确保在此段落中的最后一行与下一段落中的第一行之间至少留有这些空格。</p> 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.formats.xml#TextLayoutFormat/paragraphSpaceAfter"><linktext>TextLayoutFormat.paragraphSpaceAfter</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:spaceBefore:get"><apiName>spaceBefore</apiName><shortdesc> 
+		 行之前留出的空格数。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 行之前留出的空格数。
+		 <p>如果该行是前面包含空格的段落中的第一行，则该行将具有 <codeph>spaceBefore</codeph> 值。如果该行位于列的顶端，则会忽略 <codeph>spaceBefore</codeph>。否则，该行位于列中其它行之后，且会垂直放置，以确保在该行与上一段落中的最后一行之间至少留有这些空格。</p> 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.formats.xml#TextLayoutFormat/paragraphSpaceBefore"><linktext>TextLayoutFormat.paragraphSpaceBefore</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:textHeight:get"><apiName>textHeight</apiName><shortdesc>
+		 文本行的高度，等于 ascent + descent。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc>
+		 文本行的高度，等于 <codeph>ascent</codeph> + <codeph>descent</codeph>。该值根据限制行的基线之间的差进行计算，可以是表意字符顶部和底部或 ascent 和 descent，具体取决于 y=0 的基线是否是表意的（例如 TextBaseline.IDEOGRAPHIC_TOP）。 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.text.engine.TextBaseline.xml"><linktext>TextBaseline</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:textLength:get"><apiName>textLength</apiName><shortdesc> 
+		 下一行的字符数，包括末尾空格。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 下一行的字符数，包括末尾空格。 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:textLineExists:get"><apiName>textLineExists</apiName><shortdesc> 
+		 指示该 TextFlowLine 是否具有 flash.text.engine.TextLine 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 指示该 TextFlowLine 是否具有 <codeph>flash.text.engine.TextLine</codeph> 对象。如果<i>未</i>对 TextLine 对象进行垃圾收集，则该值为 <codeph>true</codeph>，否则为 <codeph>false</codeph>。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.text.engine.TextLine.xml"><linktext>TextLine</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:unjustifiedTextWidth:get"><apiName>unjustifiedTextWidth</apiName><shortdesc> 
+		 行未两端对齐时的宽度。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 行未两端对齐时的宽度。对于未两端对齐的文本，该值与 <codeph>textLength</codeph> 相同。对于两端对齐的文本，该值是未两端对齐时的文本长度，而 <codeph>textLength</codeph> 表示实际的行宽。例如，当将以下字符串两端对齐并具有 500 宽度值时，该字符串的实际宽度为 500，而未两端对齐的字符串宽度为 268.9921875。 
+		 
+		 <p>TBD：添加两端对齐行的图形 </p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:validity:get"><apiName>validity</apiName><shortdesc> 行的有效性。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="String"/></apiValueDef><apiDesc> 行的有效性。 
+		 <p>如果自创建一行之后更改了文本、应用于该行的属性或控制器设置，则该行可能无效。一个无效的行仍然可以显示，您也可以使用该行，但是使用的值将是创建该行时的值。<codeph>textLine</codeph> 表示的行也会处于无效状态。 </p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#TextFlowLine/textLine"><linktext>textLine</linktext></link><link href="" invalidHref="flash.text.engine.xml#TextLine/validity"><linktext>TextLine.validity</linktext></link><link href="flashx.textLayout.compose.xml#TextFlowLine/GEOMETRY_DAMAGED"><linktext>GEOMETRY_DAMAGED</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:x:get"><apiName>x</apiName><shortdesc> 
+		 该行相对于其容器的水平位置，以距容器左侧的像素偏移表示。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 该行相对于其容器的水平位置，以距容器左侧的像素偏移表示。
+		 <p><b>注意：</b>尽管此属性在技术上为<codeph>读写</codeph>属性，但应将其作为<codeph>只读</codeph>属性对待。setter 存在仅仅是为了满足 IVerticalJustificationLine 接口的要求，该接口为该属性定义 getter 和 setter。尽管有可能使用 setter，但使用它将导致不可预测的结果。
+		 </p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#TextFlowLine/y"><linktext>y</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:y:get"><apiName>y</apiName><shortdesc> 
+		 行相对于其容器的垂直位置，表达为距容器顶部的偏移（以像素为单位）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 行相对于其容器的垂直位置，表达为距容器顶部的偏移（以像素为单位）。
+		 <p><b>注意：</b>尽管此属性在技术上为<codeph>读写</codeph>属性，但应将其作为<codeph>只读</codeph>属性对待。setter 存在仅仅是为了满足 IVerticalJustificationLine 接口的要求，该接口为该属性定义 getter 和 setter。尽管有可能使用 setter，但使用它将导致不可预测的结果。
+		 </p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#TextFlowLine/x"><linktext>x</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.compose:FlowComposerBase"><apiName>FlowComposerBase</apiName><shortdesc> 
+	 FlowComposerBase 类是 Text Layout Framework 流合成器类的基类，用于控制 ContainerController 对象中文本行的合成。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion><Exclude kind="method" name="checkFirstDamage"/><Exclude kind="method" name="debugCheckTextFlowLines"/><Exclude kind="property" name="lines"/><Exclude kind="method" name="addLine"/><Exclude kind="method" name="initializeLines"/></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 FlowComposerBase 类是 Text Layout Framework 流合成器类的基类，用于控制 ContainerController 对象中文本行的合成。
+	 
+	 <p>FlowComposerBase 是一个实用程序类，用于实现多种类型的流合成器通用的方法和属性。应用程序代码通常不会实例化或使用该类，除非将其扩展为创建自定义流合成器。</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow/flowComposer"><linktext>flashx.textLayout.elements.TextFlow.flowComposer</linktext></link></related-links><apiConstructor id="flashx.textLayout.compose:FlowComposerBase:FlowComposerBase"><apiName>FlowComposerBase</apiName><shortdesc> 构造函数。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/></apiConstructorDef><apiDesc> 构造函数。 
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.compose:FlowComposerBase:damage"><apiName>damage</apiName><shortdesc conref="IFlowComposer#damage()"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>startPosition</apiItemName><apiType value="int"/><apiDesc>要损坏的范围的开头
+		 </apiDesc></apiParam><apiParam><apiItemName>damageLength</apiItemName><apiType value="int"/><apiDesc>要损坏的字符数
+		 </apiDesc></apiParam><apiParam><apiItemName>damageType</apiItemName><apiType value="String"/><apiDesc>损坏的类型。flashx.textLayout.compose.FlowDamageType 之一
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#damage()"> 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:FlowComposerBase:findLineAtPosition"><apiName>findLineAtPosition</apiName><shortdesc conref="IFlowComposer#findLineAtPosition()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.textLayout.compose:TextFlowLine</apiOperationClassifier><apiDesc>包含指定位置处内容的 TextFlowLine，如果未找到则为 null。
+		
+		</apiDesc></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>需要使用 TextFlowLine 对象的内容的位置。
+		</apiDesc></apiParam><apiParam><apiItemName>preferPrevious</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>	指定当位置介于一行中最后一个元素与下一行中第一个元素之间时，返回哪一行。
+		
+		</apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#findLineAtPosition()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:FlowComposerBase:findLineIndexAtPosition"><apiName>findLineIndexAtPosition</apiName><shortdesc conref="IFlowComposer#findLineIndexAtPosition()"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="int"/><apiDesc>指定位置的文本行的索引。如果未找到，则视为超出末尾范围并返回行数。
+		 	 
+		 </apiDesc></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>需要文本行的内容的位置。
+		 </apiDesc></apiParam><apiParam><apiItemName>preferPrevious</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>指定当位置介于一个容器中最后一行与下一个容器中第一行之间时，返回哪一个容器的索引。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#findLineIndexAtPosition()"> 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:FlowComposerBase:getLineAt"><apiName>getLineAt</apiName><shortdesc conref="IFlowComposer#getLineAt()"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.textLayout.compose:TextFlowLine</apiOperationClassifier><apiDesc>具有指定行号的 TextFlowLine，如果未找到则为 <codeph>null</codeph>。
+		 
+		 </apiDesc></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>	要返回的 TextFlowLine 对象的行号。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#getLineAt()"> 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:FlowComposerBase:isDamaged"><apiName>isDamaged</apiName><shortdesc conref="IFlowComposer#isDamaged()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="Boolean"/><apiDesc>如果在流起始位置到包含 <codeph>absolutePosition</codeph> 位置处内容的行之间，有任何 TextFlowLine 对象标记为受损，则为 true。
+		 
+		 </apiDesc></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>感兴趣区域中的最后一个位置
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#isDamaged()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:FlowComposerBase:updateLengths"><apiName>updateLengths</apiName><shortdesc conref="IFlowComposer#updateLengths()"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>startPosition</apiItemName><apiType value="int"/><apiDesc>长度上更改的开始
+		 </apiDesc></apiParam><apiParam><apiItemName>deltaLength</apiItemName><apiType value="int"/><apiDesc>字符数更改。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#updateLengths()"> 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.compose:FlowComposerBase:damageAbsoluteStart:get"><apiName>damageAbsoluteStart</apiName><shortdesc>
+		 需要合成和更新的文本流中第一个元素之前的绝对位置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc>
+		 需要合成和更新的文本流中第一个元素之前的绝对位置。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:FlowComposerBase:numLines:get"><apiName>numLines</apiName><shortdesc conref="IFlowComposer#numLines"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc conref="IFlowComposer#numLines"> </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:FlowComposerBase:swfContext:get"><apiName>swfContext</apiName><shortdesc> 
+		用于根据需要进行 FTE 调用的 ISWFContext 实例。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.compose:ISWFContext</apiValueClassifier></apiValueDef><apiDesc> 
+		用于根据需要进行 FTE 调用的 ISWFContext 实例。 
+		
+		<p>默认情况下，ISWFContext 实现是该 FlowComposerBase 对象。应用程序可以提供一个自定义实现，以使用嵌入在其它 SWF 文件中的字体，或者缓存并重用文本行。</p>
+		
+		</apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#ISWFContext"><linktext>flashx.textLayout.compose.ISWFContext</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:FlowComposerBase:textFlow:get"><apiName>textFlow</apiName><shortdesc> 
+		此流合成器连接到的 TextFlow 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:TextFlow</apiValueClassifier></apiValueDef><apiDesc> 
+		此流合成器连接到的 TextFlow 对象。 
+		
+		</apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>flashx.textLayout.elements.TextFlow</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.compose:ISWFContext"><apiName>ISWFContext</apiName><shortdesc> 
+	 ISWFContext 接口允许一个 SWF 文件与加载它的其他 SWF 文件共享其上下文。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc> 
+	 ISWFContext 接口允许一个 SWF 文件与加载它的其他 SWF 文件共享其上下文。加载 ISWFContext 类型的 SWF 文件的应用程序可调用加载的 SWF 文件上下文中的方法。主要用途是调用 FTE TextLine 创建方法。
+	 
+	 <p>应用程序使用此接口控制 TextLine 创建的原因有两个： </p>
+	 <ul>
+	   <li><b>重用嵌入字体：</b>如果应用程序希望使用嵌入在加载的 SWF 文件中的字体，那么，如果加载的 SWF 文件中的上下文中创建了 TextLine，则应用程序可访问该字体。</li>
+	   <li><b>重用现有的 TextLine 实例</b>：重用现有的 TextLine 实例会使重新合成比较快。TLF 在内部重用现有的 TextLine 实例。当 TLF 识别 TextLine 是现存的实例时，TLF 通过调用 <codeph>TextBlock.recreateTextLine()</codeph> 而不是 <codeph>TextBlock.createTextLine()</codeph> 来重用 TextLine。</li>
+	 </ul>
+	 
+	 
+	 <p>您的应用程序可能包含其他可重用的 TextLine 实例。手动重用现有的 TextLine 实例：</p>
+	 <ol>
+	   <li>捕获对 <codeph>TextBlock.createTextLine()</codeph> 的调用，然后</li>
+	   <li>使用现存的 TextLine 实例调用 <codeph>TextBlock.recreateTextLine()</codeph>，而不是调用 <codeph>TextBlock.createTextLine()</codeph>。</li>
+	 </ol>
+	 <p>但请注意，<codeph>TextBlock.recreateTextLine()</codeph> 仅在 Flash Player 10.1 和更高版本中可用。</p>
+	 
+	 </apiDesc><example conref="examples\EmbeddedFontLineCreator.as"/><example conref="examples\FontConsumer.as"/></apiClassifierDetail><related-links><link href="" invalidHref="flash.text.engine.xml#TextBlock/createTextLine()"><linktext>flash.text.engine.TextBlock.createTextLine()</linktext></link><link href="" invalidHref="flash.text.engine.xml#TextBlock/recreateTextLine()"><linktext>flash.text.engine.TextBlock.recreateTextLine()</linktext></link></related-links><apiOperation id="flashx.textLayout.compose:ISWFContext:flashx.textLayout.compose:ISWFContext:callInContext"><apiName>callInContext</apiName><shortdesc>
+	      在客户端控制的上下文中调用方法的方式。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>该函数返回的任何内容（如果返回任何内容）。
+	     
+	      </apiDesc><apiType value="any"/></apiReturn><apiParam><apiItemName>fn</apiItemName><apiType value="Function"/><apiDesc>要调用的函数或方法
+	      </apiDesc></apiParam><apiParam><apiItemName>thisArg</apiItemName><apiType value="Object"/><apiDesc>该函数的 this 指针
+	      </apiDesc></apiParam><apiParam><apiItemName>argArray</apiItemName><apiType value="Array"/><apiDesc>该函数的参数
+	      </apiDesc></apiParam><apiParam><apiItemName>returns</apiItemName><apiType value="Boolean"/><apiData>true</apiData><apiDesc>若为 true，则该函数会返回一个值
+	     
+	      </apiDesc></apiParam></apiOperationDef><apiDesc>
+	      在客户端控制的上下文中调用方法的方式。
+	     
+	      </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flashx.textLayout.compose.xml#Function/apply()"><linktext>Function.apply()</linktext></link></related-links></apiOperation></apiClassifier><apiClassifier id="flashx.textLayout.compose:IFlowComposer"><apiName>IFlowComposer</apiName><shortdesc>
+	 IFlowComposer 定义用于管理文本流布局和显示的接口。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc>
+	 IFlowComposer 定义用于管理文本流布局和显示的接口。
+	 
+	 <p>使用流合成器实现显示的文本流可以是动态和交互式的。流合成器可管理一个或多个显示控制器。每个控制器与一个显示对象容器（例如 Sprite）关联，为文本流创建的行通过该容器最终显示。下图演示了 TextFlow、IFlowComposer、ContainerController 和 DisplayObjectContainer 对象之间的关系：</p>
+	 
+	 <p><adobeimage alt="IFlowComposer" href="../../../images/textLayout_singleController.gif"/></p>
+	 
+	 <p>流合成器可计算一个文本流的合成部分适合位于哪个容器中，并将相应的文本行添加到对应容器的显示对象。IFlowComposer 接口为布局计算和显示更新定义了不同的方法。IFlowComposer 还定义用于增量合成和更新文本流的方法。这些方法可用于避免在更新长文本流时遮挡用户界面。</p>
+	 
+	 <p>除了管理文本的合成和显示之外，流合成器还可控制哪一个容器具有焦点，管理加亮选择内容（可能跨越容器边界）的显示，并提供对流中所有 TextLine 对象的直接访问。</p>
+	 
+	 <p>要使用 IFlowComposer 实现，请将该实现的实例指定给 TextFlow 对象的 <codeph>flowComposer</codeph> 属性。调用 <codeph>updateAllControllers()</codeph> 方法可对连接到流合成器的容器中的文本设置布局，并显示这些文本。</p>
+	 
+	 <p><b>注意：</b>对于简单、静态的文本流，也可以使用文本行工厂类之一。这些工厂类创建行时的开销通常比流合成器小，但是不支持编辑、动态更改或用户交互。</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.container.xml#ContainerController"><linktext>ContainerController</linktext></link><link href="flashx.textLayout.compose.xml#FlowComposerBase"><linktext>FlowComposerBase</linktext></link><link href="flashx.textLayout.compose.xml#StandardFlowComposer"><linktext>StandardFlowComposer</linktext></link><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>TextFlow</linktext></link><link href="flashx.textLayout.factory.xml#StringTextLineFactory"><linktext>StringTextLineFactory</linktext></link><link href="flashx.textLayout.factory.xml#TextFlowTextLineFactory"><linktext>TextFlowTextLineFactory</linktext></link></related-links><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:addControllerAt"><apiName>addControllerAt</apiName><shortdesc> 
+		 将控制器添加到该 IFlowComposer 实例的指定索引位置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>要添加的 ContainerController 对象。
+		 </apiDesc></apiParam><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>数字索引，指定了在控制器列表中插入 ContainerController 对象的位置。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 将控制器添加到该 IFlowComposer 实例的指定索引位置。
+		 
+		 <p>控制器列表从零开始（第一个控制器的索引为 0）。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:addController"><apiName>addController</apiName><shortdesc> 
+		 将控制器添加到该 IFlowComposer 实例。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>要添加的 ContainerController 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 将控制器添加到该 IFlowComposer 实例。
+		 
+		 <p>容器被添加到容器列表末尾。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:composeToController"><apiName>composeToController</apiName><shortdesc> 
+		 合成根元素的内容，包括位于指定索引的容器及其之前的容器。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>如果更改了任何内容，则为 true。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiData>unknown</apiData><apiDesc>至少合成 TextFlow 中此容器及其之前容器的内容。如果 controllerIndex 大于控制器数，则合成到最后一个容器的结尾。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 合成根元素的内容，包括位于指定索引的容器及其之前的容器。
+		 
+		 <p>如果位于指定索引的容器及其之前的任何容器中的内容发生了更改，则该方法将返回 <codeph>true</codeph>。如果 <codeph>index</codeph> 大于控制器数（或未指定），则会合成所有容器。</p>
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.compose.xml#IFlowComposer/updateAllControllers()"><linktext>updateAllControllers()</linktext></link><link href="flashx.textLayout.compose.xml#IFlowComposer/updateToController()"><linktext>updateToController()</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:composeToPosition"><apiName>composeToPosition</apiName><shortdesc> 
+		 合成根元素内容，包括指定位置及其之前的内容。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>如果更改了任何内容，则为 true。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiData>unknown</apiData><apiDesc>至少合成 TextFlow 中此位置及之前的内容。默认情况下合成到流的结尾，或者如果 absolutePosition 超过流的结尾，则合成到流的结尾。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 合成根元素内容，包括指定位置及其之前的内容。
+		 
+		 <p>如果包含指定位置处内容的容器及其之前的任何容器中的内容发生了更改，则该方法将返回 <codeph>true</codeph>。如果 <codeph>absolutePosition</codeph> 大于 TextFlow 的长度（或未指定），则会合成整个流。</p>
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.compose.xml#IFlowComposer/updateAllControllers()"><linktext>updateAllControllers()</linktext></link><link href="flashx.textLayout.compose.xml#IFlowComposer/updateToController()"><linktext>updateToController()</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:compose"><apiName>compose</apiName><shortdesc> 
+		 计算要显示文本流根元素的内容所需的行数，并计算这些行在流显示容器中的位置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>如果更改了任何内容，则为 true。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc> 
+		 计算要显示文本流根元素的内容所需的行数，并计算这些行在流显示容器中的位置。
+		 
+		 <p>该方法的实现不应更新显示，而应保存结果，以使 <codeph>compose()</codeph> 或 <codeph>updateAllControllers()</codeph> 的后续调用在流内容无更改时不会执行额外的重新合成。</p>
+		 
+		 <p>如果更改了任何容器的内容，则该方法一定返回 <codeph>true</codeph>。</p>
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.compose.xml#IFlowComposer/updateAllControllers()"><linktext>updateAllControllers()</linktext></link><link href="flashx.textLayout.compose.xml#IFlowComposer/updateToController()"><linktext>updateToController()</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:damage"><apiName>damage</apiName><shortdesc> 将行标记为已损坏并需要重新合成。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>startPosition</apiItemName><apiType value="int"/><apiDesc>要损坏的范围的开头
+		 </apiDesc></apiParam><apiParam><apiItemName>damageLength</apiItemName><apiType value="int"/><apiDesc>要损坏的字符数
+		 </apiDesc></apiParam><apiParam><apiItemName>damageType</apiItemName><apiType value="String"/><apiDesc>损坏的类型。flashx.textLayout.compose.FlowDamageType 之一
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 将行标记为已损坏并需要重新合成。
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.compose.xml#FlowDamageType"><linktext>flashx.textLayout.compose.FlowDamageType</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:findControllerIndexAtPosition"><apiName>findControllerIndexAtPosition</apiName><shortdesc> 
+		 返回包含指定位置处内容的控制器的索引。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>容器控制器的索引，如果未找到则为 -1。
+		 
+		 </apiDesc><apiType value="int"/></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>查找容器索引时该索引对应的内容位置。
+		 </apiDesc></apiParam><apiParam><apiItemName>preferPrevious</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>指定当位置介于一个容器中最后一个元素与下一个容器中第一个元素之间时，返回哪一个容器的索引。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 返回包含指定位置处内容的控制器的索引。 
+		 
+		 <p>可将位置视为一个文本流中两个字符或其它元素之间的分界。如果 <codeph>absolutePosition</codeph> 值指定的位置介于一个容器中最后一个字符与下一个容器中第一个字符之间，那么，当 <codeph>preferPrevious</codeph> 参数设置为 <codeph>true</codeph> 时将返回前一个容器，而 <codeph>preferPrevious</codeph> 参数设置为 <codeph>false</codeph> 时则返回后一个容器。</p>
+		 
+		 <p>如果位于指定位置的内容不在任何容器中或超出了文本流的位置范围，则该方法一定返回 -1。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:findLineAtPosition"><apiName>findLineAtPosition</apiName><shortdesc> 
+		返回包含指定位置处内容的 TextFlowLine 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>包含指定位置处内容的 TextFlowLine，如果未找到则为 null。
+		
+		</apiDesc><apiOperationClassifier>flashx.textLayout.compose:TextFlowLine</apiOperationClassifier></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>需要使用 TextFlowLine 对象的内容的位置。
+		</apiDesc></apiParam><apiParam><apiItemName>preferPrevious</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>	指定当位置介于一行中最后一个元素与下一行中第一个元素之间时，返回哪一行。
+		
+		</apiDesc></apiParam></apiOperationDef><apiDesc> 
+		返回包含指定位置处内容的 TextFlowLine 对象。
+		
+		<p>可将位置视为一个文本流中两个字符或其它元素之间的分界。如果 <codeph>absolutePosition</codeph> 值表示的位置介于一行中最后一个元素与下一行中第一个元素之间，那么，当 <codeph>preferPrevious</codeph> 参数设置为 <codeph>true</codeph> 时将返回前一行，而 <codeph>preferPrevious</codeph> 参数设置为 <codeph>false</codeph> 时则会返回后一行。</p>
+		
+		</apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:findLineIndexAtPosition"><apiName>findLineIndexAtPosition</apiName><shortdesc> 
+		 返回包含指定位置处内容的 TextFlowLine 对象的顺序行号。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>指定位置的文本行的索引。如果未找到，则视为超出末尾范围并返回行数。
+		 	 
+		 </apiDesc><apiType value="int"/></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>需要文本行的内容的位置。
+		 </apiDesc></apiParam><apiParam><apiItemName>preferPrevious</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>指定当位置介于一个容器中最后一行与下一个容器中第一行之间时，返回哪一个容器的索引。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 返回包含指定位置处内容的 TextFlowLine 对象的顺序行号。 
+		 
+		 <p>第一行的编号为 0，最后一行的编号等于行数减一。如果 <codeph>absolutePosition</codeph> 指定的位置超出了文本流的末尾，则该方法一定返回将指定给添加到文本流中下一个新行的编号（等于当前行的行数）。</p>
+		 
+		 <p>可将位置视为一个文本流中两个字符或其它元素之间的分界。如果 <codeph>absolutePosition</codeph> 值表示的位置介于一个容器中最后一行与下一个容器中第一行之间，那么，当 <codeph>preferPrevious</codeph> 参数设置为 <codeph>true</codeph> 时将返回前一个容器，而 <codeph>preferPrevious</codeph> 参数设置为 <codeph>false</codeph> 时则会返回后一个容器。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:getControllerAt"><apiName>getControllerAt</apiName><shortdesc> 
+		 返回位于指定索引的 ContainerController 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>位于指定位置的 ContainerController 对象。
+		 
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>要返回的 ContainerController 对象的索引。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 返回位于指定索引的 ContainerController 对象。 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:getControllerIndex"><apiName>getControllerIndex</apiName><shortdesc> 
+		 返回指定 ContainerController 对象的索引。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>指定的 ContainerController 对象的索引，如果该控制器没有连接到此流合成器，则为 -1。
+		 
+		 </apiDesc><apiType value="int"/></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>对要查找的 ContainerController 对象的引用。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 返回指定 ContainerController 对象的索引。 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:getLineAt"><apiName>getLineAt</apiName><shortdesc> 
+		 返回具有指定行号的行。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>具有指定行号的 TextFlowLine，如果未找到则为 <codeph>null</codeph>。
+		 
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.compose:TextFlowLine</apiOperationClassifier></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>	要返回的 TextFlowLine 对象的行号。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 返回具有指定行号的行。 
+		 
+		 <p>行列表从零开始编号，直到行数减一。如果 <codeph>index</codeph> 的值超出了行列表的范围限制，则该函数返回 <codeph>null</codeph>。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:interactionManagerChanged"><apiName>interactionManagerChanged</apiName><shortdesc>
+		 交互管理器改变时由 TextFlow 调用。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>newInteractionManager</apiItemName><apiOperationClassifier>flashx.textLayout.edit:ISelectionManager</apiOperationClassifier><apiDesc>新的 ISelectionManager 实例。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc>
+		 交互管理器改变时由 TextFlow 调用。 
+		 
+		 <p>IFlowComposer 的实现应该更新事件侦听器和引用交互管理器的属性。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:isDamaged"><apiName>isDamaged</apiName><shortdesc> 
+		 指示在流起始位置与包含指定位置处内容的行之间，是否有任何 TextFlowLine 对象标记为受损。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>如果在流起始位置到包含 <codeph>absolutePosition</codeph> 位置处内容的行之间，有任何 TextFlowLine 对象标记为受损，则为 true。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>感兴趣区域中的最后一个位置
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 指示在流起始位置与包含指定位置处内容的行之间，是否有任何 TextFlowLine 对象标记为受损。 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:removeAllControllers"><apiName>removeAllControllers</apiName><shortdesc> 
+		 从该 IFlowComposer 实例删除所有控制器。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 从该 IFlowComposer 实例删除所有控制器。 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:removeControllerAt"><apiName>removeControllerAt</apiName><shortdesc> 
+		 从该 IFlowComposer 实例删除位于指定索引的控制器。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>要删除的 ContainerController 对象的索引。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 从该 IFlowComposer 实例删除位于指定索引的控制器。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:removeController"><apiName>removeController</apiName><shortdesc> 
+		 从该 IFlowComposer 实例删除一个控制器。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>要删除的 ContainerController 实例。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 从该 IFlowComposer 实例删除一个控制器。 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:setFocus"><apiName>setFocus</apiName><shortdesc> 
+		 将焦点设置到包含由 absolutePosition 参数指定的位置的容器。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>指定要获得焦点的容器在文本流中的位置。
+		 </apiDesc></apiParam><apiParam><apiItemName>preferPrevious</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>如果为 true 且位置位于一个容器中第一个字符之前，则将焦点设置到上一个容器的末尾。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 将焦点设置到包含由<codeph> absolutePosition</codeph> 参数指定的位置的容器。 
+		 
+		 <p>定义设置焦点含义的工作由实现负责。例如，实现可能使用 Stage 对象的内置 <codeph>focus</codeph> 属性（只要容器是 InteractiveObject），或者实现可能以其它方式管理焦点。</p>
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.display.xml#Stage/focus"><linktext>flash.display.Stage.focus</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:setRootElement"><apiName>setRootElement</apiName><shortdesc/><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>newRootElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:ContainerFormattedElement</apiOperationClassifier></apiParam></apiOperationDef></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:updateAllControllers"><apiName>updateAllControllers</apiName><shortdesc> 
+		 合成根元素的内容并更新显示。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>如果更改了任何内容，则为 true。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc> 
+		 合成根元素的内容并更新显示。  
+		 
+		 <p>文本布局通常在以下两个阶段进行设置：合成和显示。在合成阶段中，流合成器计算要显示内容所需的行数，以及这些行在流显示容器中的位置。在显示阶段中，流合成器更新其容器的显示子对象。<codeph>updateAllControllers()</codeph> 方法应该执行所有这两个阶段。高效的实现将会跟踪对内容所做的更改，使得只在必需时才执行完整的合成和显示阶段周期。</p>
+		 
+		 <p>该方法立即且同步更新所有文本行和显示列表。</p>
+		 
+		 <p>如果更改了任何容器的内容，则该方法一定返回 <codeph>true</codeph>。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:updateLengths"><apiName>updateLengths</apiName><shortdesc> 更新行中的长度以维护到 TextFlow 的映射。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>startPosition</apiItemName><apiType value="int"/><apiDesc>长度上更改的开始
+		 </apiDesc></apiParam><apiParam><apiItemName>deltaLength</apiItemName><apiType value="int"/><apiDesc>字符数更改。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 更新行中的长度以维护到 TextFlow 的映射。 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:updateToController"><apiName>updateToController</apiName><shortdesc> 
+		 合成位于指定索引的容器及其之前容器的内容，并更新显示。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>如果更改了任何内容，则为 true。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiData>unknown</apiData><apiDesc>要更新的最后一个容器的索引，默认情况下更新所有容器
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 合成位于指定索引的容器及其之前容器的内容，并更新显示。
+		 
+		 <p><codeph>updateToController()</codeph> 方法应该既合成内容，又更新显示，使位于指定索引的容器及其之前的所有容器保持最新。例如，如果您有含 20 个容器的容器链，并指定索引为 10，则 <codeph>updateToController()</codeph> 将使第一个到第十个（索引为 0-9）容器都合成并显示。合成过程可能在该点停止。如果 <codeph>controllerIndex</codeph> 为 -1（或未指定），则应更新所有容器。</p>
+		 
+		 <p>该方法立即且同步更新所有文本行和显示列表。</p>
+		 
+		 <p>如果更改了任何容器的内容，则该方法一定返回 <codeph>true</codeph>。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:composing:get"><apiName>composing</apiName><shortdesc> 
+		 如果流合成器当前正在执行合成操作，则为 True。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 如果流合成器当前正在执行合成操作，则为 True。
+		  
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:damageAbsoluteStart:get"><apiName>damageAbsoluteStart</apiName><shortdesc> 
+		 根元素中第一个无效位置（从流起始位置开始的绝对位置）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 根元素中第一个无效位置（从流起始位置开始的绝对位置）。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:numControllers:get"><apiName>numControllers</apiName><shortdesc> 
+		 指定给该 IFlowComposer 实例的容器数。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 指定给该 IFlowComposer 实例的容器数。 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:numLines:get"><apiName>numLines</apiName><shortdesc> 
+		 流中的文本行总数。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 流中的文本行总数。 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:rootElement:get"><apiName>rootElement</apiName><shortdesc> 
+		 与该 IFlowComposer 实例关联的根元素。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:ContainerFormattedElement</apiValueClassifier></apiValueDef><apiDesc> 
+		 与该 IFlowComposer 实例关联的根元素。 
+		 
+		 <p>仅 TextFlow 对象可以是根元素。</p>
+		  
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.elements.xml#ContainerFormattedElement"><linktext>ContainerFormattedElement</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:swfContext:get"><apiName>swfContext</apiName><shortdesc> 
+		 ISWFContext 实例，用于在特定 SWF 上下文中必须进行的调用。IFlowComposer 的实现应该允许设置此属性，以使该接口的用户可以在包含该实现的 SWF 上下文之外的其它 SWF 上下文中创建行。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.compose:ISWFContext</apiValueClassifier></apiValueDef><apiDesc> 
+		 ISWFContext 实例，用于在特定 SWF 上下文中必须进行的调用  
+		 
+		 <p>IFlowComposer 的实现应该允许设置此属性，以使该接口的用户可以在包含该实现的 SWF 上下文之外的其它 SWF 上下文中创建行。还应该提供一个默认 ISWFContext 实现。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flashx.elements.ISWFContext.xml"><linktext>ISWFContext</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.compose:StandardFlowComposer"><apiName>StandardFlowComposer</apiName><shortdesc> 
+	StandardFlowComposer 类提供了一个标准的合成器和容器管理器。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion><Exclude kind="method" name="createBackgroundManager"/></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseInterface>flashx.textLayout.compose:IFlowComposer</apiBaseInterface><apiBaseClassifier>flashx.textLayout.compose:FlowComposerBase</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	StandardFlowComposer 类提供了一个标准的合成器和容器管理器。 
+	
+	<p>每次调用 <codeph>compose()</codeph> 或 <codeph>updateAllControllers()</codeph> 时将首先规范化文本流。规范化过程将检查 TextFlow 对象的已修改部分，并执行下列步骤：
+	<ol>
+	<li> 删除空的 FlowLeafElement 和 SubParagraphGroupElement 对象。</li>
+	<li> 合并具有相同属性的同级跨距。</li>
+	<li> 如果一个流为空，添加一个空段落。</li>
+ 	</ol>
+ 	</p>
+	
+	<p>要使用 StandardFlowComposer，请将其指定给 TextFlow 对象的 <codeph>flowComposer</codeph> 属性。调用 <codeph>updateAllControllers()</codeph> 方法可对连接到流合成器的容器中的文本设置布局，并显示这些文本。</p>
+	
+	<p><b>注意：</b>对于简单、静态的文本流，也可以使用文本行工厂类之一。这些工厂类创建行时的开销通常比流合成器小，但是不支持编辑、动态更改或用户交互。</p>
+	
+	</apiDesc><example conref="examples\StandardFlowComposer_ClassExample.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow/flowComposer"><linktext>flashx.textLayout.elements.TextFlow.flowComposer</linktext></link></related-links><apiConstructor id="flashx.textLayout.compose:StandardFlowComposer:StandardFlowComposer"><apiName>StandardFlowComposer</apiName><shortdesc> 
+		创建 StandardFlowComposer 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/></apiConstructorDef><apiDesc> 
+		创建 StandardFlowComposer 对象。 
+		
+		<p>要使用 StandardFlowComposer 对象，请将其指定给 TextFlow 对象的 <codeph>flowComposer</codeph> 属性。调用 <codeph>updateAllControllers()</codeph> 方法可对连接到流合成器的容器中的文本设置布局，并显示这些文本。</p>
+		
+		</apiDesc><example conref="examples\StandardFlowComposer_constructor.as"/></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:addControllerAt"><apiName>addControllerAt</apiName><shortdesc conref="IFlowComposer#addControllerAt()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>要添加的 ContainerController 对象。
+		 </apiDesc></apiParam><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>数字索引，指定了在控制器列表中插入 ContainerController 对象的位置。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#addControllerAt()"> </apiDesc><example conref="examples\StandardFlowComposer_addControllerAt.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:addController"><apiName>addController</apiName><shortdesc conref="IFlowComposer#addController()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>要添加的 ContainerController 对象。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#addController()"> </apiDesc><example conref="examples\StandardFlowComposer_addController.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:composeToController"><apiName>composeToController</apiName><shortdesc conref="IFlowComposer#composeToController()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="Boolean"/><apiDesc>如果更改了任何内容，则为 true。
+		 
+		 </apiDesc></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiData>unknown</apiData><apiDesc>至少合成 TextFlow 中此容器及其之前容器的内容。如果 controllerIndex 大于控制器数，则合成到最后一个容器的结尾。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#composeToController()"> </apiDesc><example conref="examples\StandardFlowComposer_composeToController.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:composeToPosition"><apiName>composeToPosition</apiName><shortdesc conref="IFlowComposer#composeToPosition()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="Boolean"/><apiDesc>如果更改了任何内容，则为 true。
+		 
+		 </apiDesc></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiData>unknown</apiData><apiDesc>至少合成 TextFlow 中此位置及之前的内容。默认情况下合成到流的结尾，或者如果 absolutePosition 超过流的结尾，则合成到流的结尾。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#composeToPosition()"> </apiDesc><example conref="examples\StandardFlowComposer_composeToPosition.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:compose"><apiName>compose</apiName><shortdesc> 
+		 计算要显示文本流根元素的内容所需的行数，并计算这些行在流显示容器中的位置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>如果更改了任何内容，则为 true。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc> 
+		 计算要显示文本流根元素的内容所需的行数，并计算这些行在流显示容器中的位置。
+		 
+		 <p>如果自上次合成操作后更改了内容，则 <codeph>compose()</codeph> 方法只会合成内容。结果将会被保存，使得对 <codeph>compose()</codeph> 或 <codeph>updateAllControllers()</codeph> 的后续调用在流内容无更改时不会额外执行重新合成。</p>
+		 
+		 <p>如果更改了任何容器的内容，则该方法返回 <codeph>true</codeph>。</p>
+		 
+		 </apiDesc><example conref="examples\StandardFlowComposer_compose.as"/></apiOperationDetail><related-links><link href="flashx.textLayout.compose.xml#StandardFlowComposer/updateAllControllers()"><linktext>updateAllControllers()</linktext></link><link href="flashx.textLayout.compose.xml#StandardFlowComposer/updateToController()"><linktext>updateToController()</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:findControllerIndexAtPosition"><apiName>findControllerIndexAtPosition</apiName><shortdesc> 
+		 返回包含指定位置处内容的控制器的索引。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>容器控制器的索引，如果未找到则为 -1。
+		 
+		 </apiDesc><apiType value="int"/></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>查找容器索引时该索引对应的内容位置。
+		 </apiDesc></apiParam><apiParam><apiItemName>preferPrevious</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>指定当位置介于一个容器中最后一个元素与下一个容器中第一个元素之间时，返回哪一个容器的索引。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 返回包含指定位置处内容的控制器的索引。 
+		 
+		 <p>可将位置视为一个文本流中两个字符或其它元素之间的分界。如果 <codeph>absolutePosition</codeph> 值指定的位置介于一个容器中最后一个字符与下一个容器中第一个字符之间，那么，当 <codeph>preferPrevious</codeph> 参数设置为 <codeph>true</codeph> 时将返回前一个容器，而 <codeph>preferPrevious</codeph> 参数设置为 <codeph>false</codeph> 时则返回后一个容器。</p>
+		 
+		 <p>如果位于指定位置的内容不在任何容器中或超出了文本流的位置范围，则该方法返回 -1。</p>
+		 
+		 </apiDesc><example conref="examples\StandardFlowComposer_findControllerIndexAtPosition.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:getAbsoluteStart"><apiName>getAbsoluteStart</apiName><shortdesc> 
+		 返回指定 ContainerController 对象中第一个内容元素的绝对位置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>ContainerController 中第一个字符或图形之前的位置。
+		 
+		 </apiDesc><apiType value="int"/></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>与该流合成器关联的 ContainerController 对象。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 返回指定 ContainerController 对象中第一个内容元素的绝对位置。
+		 
+		 <p>位置是通过计算一个文本流中两个字符或其它元素之间的分界而计算的。文本流中第一个元素之前的位置为零。绝对位置是从流起始位置开始计算的位置。</p>
+		 
+		 </apiDesc><example conref="examples\StandardFlowComposer_getAbsoluteStart.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:getControllerAt"><apiName>getControllerAt</apiName><shortdesc conref="IFlowComposer#getControllerAt()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>位于指定位置的 ContainerController 对象。
+		 
+		 </apiDesc></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>要返回的 ContainerController 对象的索引。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#getControllerAt()"> </apiDesc><example conref="examples\StandardFlowComposer_getControllerAt.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:getControllerIndex"><apiName>getControllerIndex</apiName><shortdesc conref="IFlowComposer#getControllerIndex()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata><asCustoms><player>version AIR 1.5
+	 	 </player></asCustoms></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="int"/><apiDesc>指定的 ContainerController 对象的索引，如果该控制器没有连接到此流合成器，则为 -1。
+		 
+		 </apiDesc></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>对要查找的 ContainerController 对象的引用。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#getControllerIndex()"> </apiDesc><example conref="examples\StandardFlowComposer_getControllerIndex.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:interactionManagerChanged"><apiName>interactionManagerChanged</apiName><shortdesc>
+		 交互管理器改变时由 TextFlow 调用。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>newInteractionManager</apiItemName><apiOperationClassifier>flashx.textLayout.edit:ISelectionManager</apiOperationClassifier><apiDesc>新的 ISelectionManager 实例。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc>
+		 交互管理器改变时由 TextFlow 调用。 
+		 
+		 <p>此函数是自动调用的。您的代码通常不需要调用此方法。扩展 StandardFlowComposer 的类可以覆盖此方法，以更新事件侦听器和依赖于交互管理器的其它属性。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:protected:preCompose"><apiName>preCompose</apiName><shortdesc> 如果必须进行合成，则返回 true，否则返回 false </shortdesc><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="protected"/><apiReturn><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc> 如果必须进行合成，则返回 true，否则返回 false </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:removeAllControllers"><apiName>removeAllControllers</apiName><shortdesc conref="IFlowComposer#removeAllControllers()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc conref="IFlowComposer#removeAllControllers()"> </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:removeControllerAt"><apiName>removeControllerAt</apiName><shortdesc conref="IFlowComposer#removeControllerAt()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>要删除的 ContainerController 对象的索引。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#removeControllerAt()"> </apiDesc><example conref="examples\StandardFlowController_removeControllerAt.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:removeController"><apiName>removeController</apiName><shortdesc conref="IFlowComposer#removeController()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>要删除的 ContainerController 实例。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#removeController()"> </apiDesc><example conref="examples\StandardFlowController_removeController.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:setFocus"><apiName>setFocus</apiName><shortdesc> 
+		 将焦点设置到包含由 absolutePosition 参数指定的位置的容器。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>指定要获得焦点的容器在文本流中的位置。
+		 </apiDesc></apiParam><apiParam><apiItemName>leanLeft</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>如果为 true 且位置位于一个容器中第一个字符之前，则将焦点设置到上一个容器的末尾。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 将焦点设置到包含由<codeph> absolutePosition</codeph> 参数指定的位置的容器。 
+		 
+		 <p>StandardFlowComposer 调用包含指定文本流位置的 ContainerController 对象的 <codeph>setFocus()</codeph> 方法。</p>
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.display.xml#Stage/focus"><linktext>flash.display.Stage.focus</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:setRootElement"><apiName>setRootElement</apiName><shortdesc conref="IFlowComposer#setRootElement()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>newRootElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:ContainerFormattedElement</apiOperationClassifier></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#setRootElement()"> </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:updateAllControllers"><apiName>updateAllControllers</apiName><shortdesc> 
+		 合成根元素的内容并更新显示。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>如果更改了任何内容，则为 true。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc> 
+		 合成根元素的内容并更新显示。  
+		 
+		 <p>文本布局在以下两个阶段进行设置：合成和显示。在合成阶段中，流合成器计算要显示内容所需的行数，以及这些行在流显示容器中的位置。在显示阶段中，流合成器更新其容器的显示子对象。<codeph>updateAllControllers()</codeph> 方法按先后顺序启动这两个阶段。StandardFlowComposer 会跟踪对内容所做的更改，使得只在必需时才执行完整的合成和显示阶段周期。</p>
+		 
+		 <p>该方法立即且同步更新所有文本行和显示列表。</p>
+		 
+		 <p>如果更改了任何容器的内容，则该方法返回 <codeph>true</codeph>。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:updateToController"><apiName>updateToController</apiName><shortdesc> 
+		 合成位于指定索引的容器及其之前容器的内容，并更新显示。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>如果更改了任何内容，则为 <codeph>true</codeph>。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiData>unknown</apiData><apiDesc>要更新的最后一个容器的索引（默认情况下更新所有容器）
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 合成位于指定索引的容器及其之前容器的内容，并更新显示。
+		 
+		 <p><codeph>updateToController()</codeph> 方法可以合成位于指定索引的容器及其之前所有容器的内容，并更新这些容器的显示。例如，如果您有含 20 个容器的容器链，并指定索引为 10，则 <codeph>updateToController()</codeph> 确保合成并显示第一个到第十个（索引为 0-9）的容器。合成过程在该点停止。如果 <codeph>controllerIndex</codeph> 为 -1（或未指定），则会更新所有容器。</p>
+		 
+		 <p>该方法立即且同步更新所有文本行和显示列表。</p>
+		 
+		 <p>如果更改了任何容器的内容，则该方法返回 <codeph>true</codeph>。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.compose:StandardFlowComposer:composing:get"><apiName>composing</apiName><shortdesc> 
+		 如果流合成器当前正在执行合成操作，则为 True。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 如果流合成器当前正在执行合成操作，则为 True。 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:StandardFlowComposer:numControllers:get"><apiName>numControllers</apiName><shortdesc conref="IFlowComposer#numControllers"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc conref="IFlowComposer#numControllers"> </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:StandardFlowComposer:rootElement:get"><apiName>rootElement</apiName><shortdesc conref="IFlowComposer#rootElement"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:ContainerFormattedElement</apiValueClassifier></apiValueDef><apiDesc conref="IFlowComposer#rootElement"> </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.compose:IVerticalJustificationLine"><apiName>IVerticalJustificationLine</apiName><shortdesc> 
+	 IVerticalJustificationLine 接口定义允许文本行的垂直两端对齐所需的方法和属性。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc> 
+	 IVerticalJustificationLine 接口定义允许文本行的垂直两端对齐所需的方法和属性。
+	 
+	 </apiDesc></apiClassifierDetail><apiValue id="flashx.textLayout.compose:IVerticalJustificationLine:flashx.textLayout.compose:IVerticalJustificationLine:ascent:get"><apiName>ascent</apiName><shortdesc conref="flash.text.engine.TextLine#ascent"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc conref="flash.text.engine.TextLine#ascent"> 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:IVerticalJustificationLine:flashx.textLayout.compose:IVerticalJustificationLine:descent:get"><apiName>descent</apiName><shortdesc conref="flash.text.engine.TextLine#descent"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc conref="flash.text.engine.TextLine#descent"> 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:IVerticalJustificationLine:flashx.textLayout.compose:IVerticalJustificationLine:height:get"><apiName>height</apiName><shortdesc> 行的高度（像素数）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc> 行的高度（像素数）。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#IVerticalJustificationLine/width"><linktext>width</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:IVerticalJustificationLine:flashx.textLayout.compose:IVerticalJustificationLine:x:get"><apiName>x</apiName><shortdesc> 
+		 该行相对于其容器的水平位置，以距容器左侧的像素偏移表示。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 该行相对于其容器的水平位置，以距容器左侧的像素偏移表示。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#IVerticalJustificationLine/y"><linktext>y</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:IVerticalJustificationLine:flashx.textLayout.compose:IVerticalJustificationLine:y:get"><apiName>y</apiName><shortdesc> 
+		 行相对于其容器的垂直位置，表达为距容器顶部的偏移（以像素为单位）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 行相对于其容器的垂直位置，表达为距容器顶部的偏移（以像素为单位）。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#IVerticalJustificationLine/x"><linktext>x</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.compose:TextFlowLineLocation"><apiName>TextFlowLineLocation</apiName><shortdesc> 
+	 TextFlowLineLocation 类是一个枚举类，定义用于指定一行在段落内所在位置的常量。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 TextFlowLineLocation 类是一个枚举类，定义用于指定一行在段落内所在位置的常量。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="" invalidHref="flashx.textLayout.compose.ParagraphElement.xml"><linktext>ParagraphElement</linktext></link><link href="" invalidHref="flashx.textLayout.compose.TextFlow.xml"><linktext>TextFlow</linktext></link></related-links><apiValue id="flashx.textLayout.compose:TextFlowLineLocation:FIRST"><apiName>FIRST</apiName><shortdesc> 指定段落中的第一行。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>1</apiData><apiType value="uint"/></apiValueDef><apiDesc> 指定段落中的第一行。 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLineLocation:LAST"><apiName>LAST</apiName><shortdesc> 指定段落中的最后一行。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>4</apiData><apiType value="uint"/></apiValueDef><apiDesc> 指定段落中的最后一行。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLineLocation:MIDDLE"><apiName>MIDDLE</apiName><shortdesc> 指定段落中的中间一行 - 既不是第一行也不是最后一行。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>2</apiData><apiType value="uint"/></apiValueDef><apiDesc> 指定段落中的中间一行 - 既不是第一行也不是最后一行。 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLineLocation:ONLY"><apiName>ONLY</apiName><shortdesc> 指定段落中的第一行及最后一行。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>5</apiData><apiType value="uint"/></apiValueDef><apiDesc> 指定段落中的第一行及最后一行。
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.compose:TextLineRecycler"><apiName>TextLineRecycler</apiName><shortdesc> 
+	 TextLineRecycler 类为循环利用 TextLine 提供支持。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 TextLineRecycler 类为循环利用 TextLine 提供支持。某些播放器版本支持 recreateTextLine。将 TextLine 传递给回收站将使其可以重用。这样可提高播放器性能。
+	 
+	 </apiDesc></apiClassifierDetail><apiOperation id="flashx.textLayout.compose:TextLineRecycler:addLineForReuse"><apiName>addLineForReuse</apiName><shortdesc>
+		 向池中添加一个 TextLine 以便重用。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>textLine</apiItemName><apiType value="flash.text.engine:TextLine"/></apiParam></apiOperationDef><apiDesc>
+		 向池中添加一个 TextLine 以便重用。可以重用的 TextLine 应具有 null userData 和 null 父项。 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:TextLineRecycler:getLineForReuse"><apiName>getLineForReuse</apiName><shortdesc>
+		 从池中返回一个 TextLine 以便重用。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiType value="flash.text.engine:TextLine"/></apiReturn></apiOperationDef><apiDesc>
+		 从池中返回一个 TextLine 以便重用。 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.compose:TextLineRecycler:textLineRecyclerEnabled:get"><apiName>textLineRecyclerEnabled</apiName><shortdesc> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiStatic/><apiValueAccess value="readwrite"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.compose:FlowDamageType"><apiName>FlowDamageType</apiName><shortdesc>
+	  FlowDamageType 类是为损坏方法和事件定义损坏类型的枚举类。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc>
+	  FlowDamageType 类是为损坏方法和事件定义损坏类型的枚举类。
+	 
+	 </apiDesc></apiClassifierDetail><apiValue id="flashx.textLayout.compose:FlowDamageType:GEOMETRY"><apiName>GEOMETRY</apiName><shortdesc>
+		 如果该行由于移动其它行而无效，则该值用于设置 validity 属性。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>geometry</apiData><apiType value="String"/></apiValueDef><apiDesc>
+		 如果该行由于移动其它行而无效，则该值用于设置 <codeph>validity </codeph>属性。文本行在下一次合成操作时可能需要也可能不需要重新创建。 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#TextFlowLine/validity"><linktext>flashx.textLayout.compose.TextFlowLine.validity</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:FlowDamageType:INVALID"><apiName>INVALID</apiName><shortdesc> 
+		 指定处理损坏时 IFlowComposer 所使用的无效损坏类型。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>invalid</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 指定处理损坏时 IFlowComposer 所使用的无效损坏类型。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#TextFlowLine/validity"><linktext>flashx.textLayout.compose.TextFlowLine.validity</linktext></link></related-links></apiValue></apiClassifier></apiPackage>

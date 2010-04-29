@@ -1,0 +1,571 @@
+<?xml version="1.0"?>
+<apiPackage id="flashx.textLayout.operations"><apiName>flashx.textLayout.operations</apiName><apiDetail/><apiClassifier id="flashx.textLayout.operations:FlowOperation"><apiName>FlowOperation</apiName><shortdesc> 
+	 La classe FlowOperation est la classe de base de toutes les opérations Text Layout Framework.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseInterface>flashx.undo:IOperation</apiBaseInterface><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 La classe FlowOperation est la classe de base de toutes les opérations Text Layout Framework. 
+	 
+	 <p>Les opérations sont les transformations d’un flux de texte. Une classe Operation définit la logique de l’exécution et de l’annulation de la transformation. Les opérations sont exécutées par un gestionnaire de modification. La plupart des applications n’ont pas besoin de créer ou de gérer directement les opérations (sauf si elles implémentent un gestionnaire de modification personnalisé). </p>
+	 
+	 <p>Lorsqu’une opération est exécutée, le gestionnaire de modification distribue un objet Operation au sein de l’objet FlowOperationEvent. Vous pouvez interroger cet objet Operation pour décider si vous autorisez ou non l’opération, si vous effectuez également ou non une autre opération ou si vous mettez à jour ou non les éléments associés de l’interface utilisateur. </p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:FlowOperation:FlowOperation"><apiName>FlowOperation</apiName><shortdesc> 
+		 Crée l’objet FlowOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>textFlow</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiDesc>Flux de texte auquel cette opération est appliquée.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Crée l’objet FlowOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:FlowOperation:canUndo"><apiName>canUndo</apiName><shortdesc>	
+		 Vérifie si cette opération doit être placée dans la pile d’annulation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>true signifie qu’il est nécessaire de placer l’opération dans la pile d’annulation. false signifie qu’il n’est pas nécessaire de placer l’opération dans la pile d’annulation.
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc>	
+		 Vérifie si cette opération doit être placée dans la pile d’annulation.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.operations:FlowOperation:doOperation"><apiName>doOperation</apiName><shortdesc> 
+		 Exécute l’opération</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>Renvoie la valeur booléenne <codeph>true</codeph> si l’opération a réussi. Sinon, la valeur <codeph>false</codeph> est renvoyée.
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc> 
+		 Exécute l’opération 
+		 
+		 <p>Cette méthode doit être remplacée dans les classes dérivées. Cette méthode de classe de base n’a aucun effet. Il est déconseillé d’appeler la méthode <codeph>doOperation()</codeph> directement. Le gestionnaire de modification appelle la méthode lorsqu’il exécute l’opération. </p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.operations:FlowOperation:redo"><apiName>redo</apiName><shortdesc>	
+		 Réexécute l’opération.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>L’objet SelectionState transmis à l’opération lorsqu’elle a été effectuée. Cet objet SelectionState peut être la sélection actuelle ou une sélection créée spécialement pour l’opération.  
+		 
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>	
+		 Réexécute l’opération. 
+		 
+		 <p>Cette méthode doit être remplacée dans les classes dérivées. Cette méthode de classe de base n’a aucun effet. Il est déconseillé d’appeler la méthode <codeph>redo()</codeph> directement. Le gestionnaire de modification appelle la méthode lorsqu’il réexécute l’opération.  </p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.operations:FlowOperation:undo"><apiName>undo</apiName><shortdesc>	
+		 Inverse l’opération.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>L’objet SelectionState transmis à l’opération lorsqu’elle a été effectuée. Cet objet SelectionState peut être la sélection actuelle ou une sélection créée spécialement pour l’opération.  
+		 
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>	
+		 Inverse l’opération. 
+		 
+		 <p>Cette méthode doit être remplacée dans les classes dérivées. Cette méthode de classe de base n’a aucun effet. Il est déconseillé d’appeler la méthode <codeph>undo()</codeph> directement. Le gestionnaire de modification appelle la méthode lorsqu’il inverse l’opération. </p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:FlowOperation:userData"><apiName>userData</apiName><shortdesc> 
+		 Données arbitraires associées à un élément. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiType value=""/></apiValueDef><apiDesc> 
+		 Données arbitraires associées à un élément.  
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowOperation:beginGeneration:get"><apiName>beginGeneration</apiName><shortdesc>
+		 Génération de flux de texte avant l’opération. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="uint"/></apiValueDef><apiDesc>
+		 Génération de flux de texte avant l’opération. 
+		   
+		 <p>Une génération de 0 indique que l’opération n’est pas terminée. </p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowOperation:endGeneration:get"><apiName>endGeneration</apiName><shortdesc> 
+		 Génération de flux de texte après l’opération.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="uint"/></apiValueDef><apiDesc> 
+		 Génération de flux de texte après l’opération.
+		 
+		 <p>Une génération de 0 indique que l’opération n’est pas terminée. </p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowOperation:textFlow:get"><apiName>textFlow</apiName><shortdesc> 
+		 Objet TextFlow auquel cette opération est appliquée.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.elements:TextFlow</apiValueClassifier></apiValueDef><apiDesc> 
+		 Objet TextFlow auquel cette opération est appliquée.
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:FlowElementOperation"><apiName>FlowElementOperation</apiName><shortdesc>
+	 La classe FlowElementOperation est la classe de base des opérations de transformation d’un élément FlowElement.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 La classe FlowElementOperation est la classe de base des opérations de transformation d’un élément FlowElement.
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.formats.xml#TextLayoutFormat"><linktext>flashx.textLayout.formats.TextLayoutFormat</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:FlowElementOperation:FlowElementOperation"><apiName>FlowElementOperation</apiName><shortdesc> 
+		 Crée un objet FlowElementOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Spécifie l’objet TextFlow sur lequel cette opération agit. 
+		 </apiDesc></apiParam><apiParam><apiItemName>targetElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiDesc>Spécifie l’élément que cette opération modifie.
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>Décalage à partir du début de l’élément <codeph>targetElement</codeph>.
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiData>-1</apiData><apiDesc>Décalage à partir de la fin de l’élément <codeph>targetElement</codeph>.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Crée un objet FlowElementOperation.
+		  
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:FlowElementOperation:relativeEnd:get"><apiName>relativeEnd</apiName><shortdesc> 
+		 relativeEnd Un décalage à partir du début de l’élément targetElement 
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 relativeEnd Un décalage à partir du début de l’élément <codeph>targetElement</codeph>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowElementOperation:relativeStart:get"><apiName>relativeStart</apiName><shortdesc> 
+		 relativeStart Décalage à partir du début de l’élément targetElement.>
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 relativeStart Décalage à partir du début de l’élément <codeph>targetElement</codeph>.>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowElementOperation:targetElement:get"><apiName>targetElement</apiName><shortdesc> 
+		 targetElement Spécifie l’élément que cette opération modifie.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.elements:FlowElement</apiValueClassifier></apiValueDef><apiDesc> 
+		 targetElement Spécifie l’élément que cette opération modifie.
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:CutOperation"><apiName>CutOperation</apiName><shortdesc>
+	 La classe CutOperation encapsule une opération de coupage. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 La classe CutOperation encapsule une opération de coupage. 
+	 
+	 <p>La plage spécifiée est supprimée du flux de texte. </p>
+	 
+	 <p><b>Remarque :</b> le gestionnaire de modification est chargé de la copie du texte résiduel dans le Presse-Papiers. L’annulation d’une opération de coupage ne rétablit pas l’état d’origine du Presse-papiers. </p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:CutOperation:flashx.textLayout.operations:CutOperation"><apiName>CutOperation</apiName><shortdesc> 
+		 Crée un objet CutOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Plage de texte à couper.
+		 </apiDesc></apiParam><apiParam><apiItemName>scrapToCut</apiItemName><apiOperationClassifier>flashx.textLayout.edit:TextScrap</apiOperationClassifier><apiDesc>Copie du texte supprimé. 
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Crée un objet CutOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:CutOperation:scrapToCut:get"><apiName>scrapToCut</apiName><shortdesc> 
+		 Scraptocut Le texte d’origine supprimé 
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.edit:TextScrap</apiValueClassifier></apiValueDef><apiDesc> 
+		 Scraptocut Le texte d’origine supprimé 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyElementUserStyleOperation"><apiName>ApplyElementUserStyleOperation</apiName><shortdesc>
+	 La classe ApplyElementUserStyleOperation encapsule un changement d’une valeur de style d’un élément.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowElementOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 La classe ApplyElementUserStyleOperation encapsule un changement d’une valeur de style d’un élément.
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#FlowElement/userStyles"><linktext>flashx.textLayout.elements.FlowElement.userStyles</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyElementUserStyleOperation:ApplyElementUserStyleOperation"><apiName>ApplyElementUserStyleOperation</apiName><shortdesc> 
+		 Crée un objet ApplyElementUserStyleOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Décrit la plage de texte à laquelle appliquer le style. 
+		 </apiDesc></apiParam><apiParam><apiItemName>targetElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiDesc>Spécifie l’élément à modifier. 
+		 </apiDesc></apiParam><apiParam><apiItemName>styleName</apiItemName><apiType value="String"/><apiDesc>Nom du style à modifier.
+		 </apiDesc></apiParam><apiParam><apiItemName>value</apiItemName><apiType value="any"/><apiDesc>Nouvelle valeur de style.
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>Décalage à partir du début de l’élément cible. 
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiData>-1</apiData><apiDesc>Décalage à partir du début de l’élément cible.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Crée un objet ApplyElementUserStyleOperation.
+		 
+		 <p>Si les paramètres <codeph>relativeStart</codeph> et <codeph>relativeEnd</codeph> sont définis, l’élément existant est divisé en plusieurs éléments, la partie sélectionnée utilisant la nouvelle valeur de style et le reste utilisant la valeur de style existante.</p>
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ApplyElementUserStyleOperation:newValue:get"><apiName>newValue</apiName><shortdesc> 
+		 Nouvelle valeur de style.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/></apiValueDef><apiDesc> 
+		 Nouvelle valeur de style.
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ApplyElementUserStyleOperation:styleName:get"><apiName>styleName</apiName><shortdesc> 
+		 Nom du style modifié.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 Nom du style modifié. 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyFormatOperation"><apiName>ApplyFormatOperation</apiName><shortdesc>
+	 La classe ApplyFormatOperation encapsule un changement de style.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 La classe ApplyFormatOperation encapsule un changement de style.
+	 
+	 <p>Une opération ApplyFormatOperation applique le format de nœud terminal au texte de la plage spécifiée (aucune modification n’est apportée si la plage spécifiée est un point unique). Elle applique le format de paragraphe au moins partiellement à tous les paragraphes de la plage (ou un seul paragraphe si cette plage est un point unique). Elle applique le format de conteneur au moins partiellement à tous les conteneurs de la plage (ou un seul conteneur si cette plage est un point unique).</p>
+	 
+	 </apiDesc><example conref="examples\ApplyFormatOperation_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyFormatOperation:ApplyFormatOperation"><apiName>ApplyFormatOperation</apiName><shortdesc> 
+		 Crée un objet ApplyFormatOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Définit la plage de texte à laquelle le format est appliqué. 
+		  </apiDesc></apiParam><apiParam><apiItemName>leafFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiDesc> Format à appliquer aux objets LeafFlowElement de la plage sélectionnée. 
+		  </apiDesc></apiParam><apiParam><apiItemName>paragraphFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiDesc>Format à appliquer aux objets ParagraphElement de la plage sélectionnée.
+		  </apiDesc></apiParam><apiParam><apiItemName>containerFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiData>null</apiData><apiDesc>Format à appliquer aux conteneurs de la plage sélectionnée.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Crée un objet ApplyFormatOperation.
+		 
+		  </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:ApplyFormatOperation:redo"><apiName>redo</apiName><shortdesc/><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiIsOverride/><apiReturn><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:ApplyFormatOperation:containerFormat:get"><apiName>containerFormat</apiName><shortdesc> 
+		 Propriétés du format à appliquer aux conteneurs de la plage.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Propriétés du format à appliquer aux conteneurs de la plage.
+		 
+		 <p>Les formats de tous les conteneurs au sein de la plage sont mis à jour au moins partiellement. Si la plage de cette opération est un point, un seul conteneur est mis à jour. Si la valeur de <codeph>containerFormat</codeph> est <codeph>null</codeph>, aucun format de conteneur n’est modifié.</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ApplyFormatOperation:leafFormat:get"><apiName>leafFormat</apiName><shortdesc> 
+		 Propriétés du format à appliquer aux éléments de nœud terminal de la plage.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Propriétés du format à appliquer aux éléments de nœud terminal de la plage.
+		 
+		 <p>Si la plage de cette opération est un point, ou si la valeur de <codeph>leafFormat</codeph> est <codeph>null</codeph>, aucun format d’élément de nœud terminal n’est modifié.</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ApplyFormatOperation:paragraphFormat:get"><apiName>paragraphFormat</apiName><shortdesc> 
+		 Propriétés du format à appliquer aux paragraphes de la plage.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Propriétés du format à appliquer aux paragraphes de la plage.
+		 
+		 <p>Les formats de tous les paragraphes au sein de la plage sont mis à jour au moins partiellement. Si la plage de cette opération est un point, un seul paragraphe est mis à jour. Si la valeur de <codeph>paragraphFormat</codeph> est <codeph>null</codeph>, aucun format de paragraphe n’est modifié.</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ClearFormatOnElementOperation"><apiName>ClearFormatOnElementOperation</apiName><shortdesc>
+	 La classe ClearFormatOnElementOperation encapsule un changement de style dans un élément.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowElementOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 La classe ClearFormatOnElementOperation encapsule un changement de style dans un élément.
+	 
+	 <p>Cette opération annule la définition d’un ou plusieurs formats sur un élément d’enchaînement.</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.formats.xml#TextLayoutFormat"><linktext>flashx.textLayout.formats.TextLayoutFormat</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link><link href="flashx.textLayout.operations.xml#ApplyFormatToElementOperation"><linktext>ApplyFormatToElementOperation</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ClearFormatOnElementOperation:ClearFormatOnElementOperation"><apiName>ClearFormatOnElementOperation</apiName><shortdesc> 
+		Crée un objet ClearFormatOnElementOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Spécifie le flux de texte contenant l’élément auquel cette opération est appliquée.
+		</apiDesc></apiParam><apiParam><apiItemName>targetElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiDesc>Spécifie l’élément auquel cette opération est appliquée.
+		</apiDesc></apiParam><apiParam><apiItemName>format</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiDesc>Formats à appliquer dans cette opération. 
+		 
+		</apiDesc></apiParam><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiData>0</apiData></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiData>-1</apiData></apiParam></apiConstructorDef><apiDesc> 
+		Crée un objet ClearFormatOnElementOperation. 
+		
+		</apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ClearFormatOnElementOperation:format:get"><apiName>format</apiName><shortdesc> 
+		 Formats de caractère appliqués dans cette opération.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Formats de caractère appliqués dans cette opération.
+		 
+		 <p>Si la valeur est <codeph>null</codeph>, aucun format de caractère n’est modifié.</p> 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:CompositeOperation"><apiName>CompositeOperation</apiName><shortdesc>
+	 La classe CompositeOperation encapsule un groupe de transformations gérées comme unité. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 La classe CompositeOperation encapsule un groupe de transformations gérées comme unité. 
+	 
+	 <p>La classe CompositeOperation propose un mécanisme de regroupement qui permet de combiner plusieurs opérations FlowOperation en une seule opération atomique. Le regroupement des opérations permet de les annuler et rétablir comme une seule unité. Par exemple, plusieurs insertions de caractères uniques suivies de plusieurs retours arrière peuvent être annulés comme s’il s’agissait d’une seule opération. Le groupement fournit également un mécanisme de représentation des opérations complexes. Par exemple, une opération de remplacement qui modifie plusieurs plages de texte peut être représentée et gérée comme une seule opération composite. </p>
+	 
+	 <p><b>Remarque :</b> il peut être plus efficace de fusionner des opérations atomiques individuelles plutôt que de combiner des opérations séparées dans un groupe. Par exemple, plusieurs insertions de caractères séquentiels peuvent être facilement représentées sous la forme d’une seule opération d’insertion, et l’annulation ou le rétablissement de cette opération unique est plus efficace qu’annuler ou rétablir un groupe d’opérations d’insertion. </p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:CompositeOperation:CompositeOperation"><apiName>CompositeOperation</apiName><shortdesc> 
+		 Crée un objet CompositeOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operations</apiItemName><apiType value="Array"/><apiData>null</apiData><apiDesc>Opérations à regrouper. 
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Crée un objet CompositeOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:CompositeOperation:addOperation"><apiName>addOperation</apiName><shortdesc> 
+		 Ajouter une opération supplémentaire à la fin de la liste.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.textLayout.operations:FlowOperation</apiOperationClassifier></apiParam></apiOperationDef><apiDesc> 
+		 Ajouter une opération supplémentaire à la fin de la liste. 
+		 
+		 <p>La nouvelle opération doit fonctionner sur le même objet TextFlow que les autres opérations de la liste. </p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:CompositeOperation:operations:get"><apiName>operations</apiName><shortdesc>
+		 Tableau contenant les opérations regroupées par cette opération composite. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Array"/></apiValueDef><apiDesc>
+		 Tableau contenant les opérations regroupées par cette opération composite. 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:InsertInlineGraphicOperation"><apiName>InsertInlineGraphicOperation</apiName><shortdesc>
+	 La classe InsertInlineGraphicOperation encapsule l’insertion d’un graphique intégré dans un flux de texte.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 La classe InsertInlineGraphicOperation encapsule l’insertion d’un graphique intégré dans un flux de texte.
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#InlineGraphicElement"><linktext>flashx.textLayout.elements.InlineGraphicElement</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:InsertInlineGraphicOperation:flashx.textLayout.operations:InsertInlineGraphicOperation"><apiName>InsertInlineGraphicOperation</apiName><shortdesc> 
+		 Crée un objet InsertInlineGraphicsOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Décrit le point d’insertion. Si une plage est sélectionnée, l’opération supprime le contenu de cette plage. 
+		 </apiDesc></apiParam><apiParam><apiItemName>source</apiItemName><apiType value="Object"/><apiDesc>Graphique source (chaîne uri, objet URLRequest, DisplayObject ou Class d’une ressource incorporée).  
+		 </apiDesc></apiParam><apiParam><apiItemName>width</apiItemName><apiType value="Object"/><apiDesc>Largeur à affecter (nombre de pixels, pourcentage ou la chaîne « auto ») 
+		 </apiDesc></apiParam><apiParam><apiItemName>height</apiItemName><apiType value="Object"/><apiDesc>Hauteur à affecter (nombre de pixels, pourcentage ou la chaîne « auto »)
+		 </apiDesc></apiParam><apiParam><apiItemName>options</apiItemName><apiType value="Object"/><apiData>null</apiData><apiDesc>aucun pris en charge. 
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Crée un objet InsertInlineGraphicsOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:InsertInlineGraphicOperation:redo"><apiName>redo</apiName><shortdesc>
+		 Réexécute l’opération après son annulation. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiIsOverride/><apiReturn><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>
+		 Réexécute l’opération après son annulation. 
+		 
+		 <p>Cette fonction est appelée par le gestionnaire de modification, lorsque cela est nécessaire. </p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:InsertInlineGraphicOperation:height:get"><apiName>height</apiName><shortdesc conref="flashx.textLayout.elements.InlineGraphicElement#height"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc conref="flashx.textLayout.elements.InlineGraphicElement#height"> 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flashx.textLayout.xml#InlineGraphicElement/height"><linktext>flashx.textLayout.InlineGraphicElement.height</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.operations:InsertInlineGraphicOperation:options:get"><apiName>options</apiName><shortdesc> 
+		 Les options ne sont pas prises en charge 
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc> 
+		 Les options ne sont pas prises en charge 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:InsertInlineGraphicOperation:source:get"><apiName>source</apiName><shortdesc conref="flashx.textLayout.elements.InlineGraphicElement#source">	
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc conref="flashx.textLayout.elements.InlineGraphicElement#source">	
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:InsertInlineGraphicOperation:width:get"><apiName>width</apiName><shortdesc conref="flashx.textLayout.elements.InlineGraphicElement#width"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc conref="flashx.textLayout.elements.InlineGraphicElement#width"> 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:RedoOperation"><apiName>RedoOperation</apiName><shortdesc> 
+	 La classe RedoOperation encapsule une opération de rétablissement.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowOperation</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 La classe RedoOperation encapsule une opération de rétablissement.
+	 
+	 </apiDesc><example conref="examples\RedoOperation_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:RedoOperation:RedoOperation"><apiName>RedoOperation</apiName><shortdesc> 
+		 Crée un objet RedoOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.textLayout.operations:FlowOperation</apiOperationClassifier><apiDesc>Opération à rétablir. 
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Crée un objet RedoOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:RedoOperation:operation:get"><apiName>operation</apiName><shortdesc> 
+		 Opération à rétablir. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.operations:FlowOperation</apiValueClassifier></apiValueDef><apiDesc> 
+		 Opération à rétablir. 
+		  
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ClearFormatOperation"><apiName>ClearFormatOperation</apiName><shortdesc>
+	 La classe ClearFormatOperation renferme un moyen d’annuler la définition des formats.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 La classe ClearFormatOperation renferme un moyen d’annuler la définition des formats.
+	 
+	 <p>Une opération UndefineFormatOperation annule la définition des propriétés définies dans le format de nœud terminal sur le texte de la plage spécifiée (aucune modification n’est effectuée si la plage spécifiée est un point unique). Elle annule la définition des propriétés définies dans le format de paragraphe pour tous les paragraphes se trouvant au moins partiellement dans la plage (ou un seul paragraphe si cette plage est un point unique). Enfin, elle annule la définition des propriétés spécifiées dans le format de conteneur (au moins partiellement) sur tous les conteneurs de la plage (ou sur un seul conteneur si cette plage est un point unique).</p>
+	 
+	 </apiDesc><example conref="examples\ApplyFormatOperation_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ClearFormatOperation:ClearFormatOperation"><apiName>ClearFormatOperation</apiName><shortdesc> 
+		 Crée un objet ClearFormatOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Définit la plage de texte à laquelle le format est appliqué.
+		  </apiDesc></apiParam><apiParam><apiItemName>leafFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiDesc> Format dont les valeurs définies indiquent des propriétés dont la définition doit être annulée pour des objets LeafFlowElement dans la plage sélectionnée.
+		  </apiDesc></apiParam><apiParam><apiItemName>paragraphFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiDesc>Format dont les valeurs définies indiquent des propriétés dont la définition doit être annulée pour des objets ParagraphElement dans la plage sélectionnée.
+		  </apiDesc></apiParam><apiParam><apiItemName>containerFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiData>null</apiData><apiDesc>Format dont les valeurs spécifiées indiquent les propriétés dont il faut annuler la définition sur les objets ContainerController de la plage sélectionnée.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Crée un objet ClearFormatOperation.
+		 
+		  </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:ClearFormatOperation:redo"><apiName>redo</apiName><shortdesc/><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiIsOverride/><apiReturn><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:ClearFormatOperation:containerFormat:get"><apiName>containerFormat</apiName><shortdesc> 
+		 Propriétés du format dont il faut annuler la définition sur les conteneurs dans la plage.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Propriétés du format dont la définition doit être annulée sur les conteneurs de la plage.
+		 
+		 <p>Les formats de tous les conteneurs au sein de la plage sont mis à jour au moins partiellement. Si la plage de cette opération est un point, un seul conteneur est mis à jour. Si la valeur de <codeph>containerFormat</codeph> est <codeph>null</codeph>, aucun format de conteneur n’est modifié.</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ClearFormatOperation:leafFormat:get"><apiName>leafFormat</apiName><shortdesc> 
+		 Propriétés du format dont la définition doit être annulée sur les éléments de nœud terminal de la plage.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Propriétés du format dont la définition doit être annulée sur les éléments de nœud terminal de la plage.
+		 
+		 <p>Si la plage de cette opération est un point, ou si la valeur de <codeph>leafFormat</codeph> est <codeph>null</codeph>, aucun format d’élément de nœud terminal n’est modifié.</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ClearFormatOperation:paragraphFormat:get"><apiName>paragraphFormat</apiName><shortdesc> 
+		 Propriétés du format dont la définition doit être annulée sur les paragraphes de la plage.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Propriétés du format dont la définition doit être annulée sur les paragraphes de la plage.
+		 
+		 <p>Les formats de tous les paragraphes au sein de la plage sont mis à jour au moins partiellement. Si la plage de cette opération est un point, un seul paragraphe est mis à jour. Si la valeur de <codeph>paragraphFormat</codeph> est <codeph>null</codeph>, aucun format de paragraphe n’est modifié.</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:FlowTextOperation"><apiName>FlowTextOperation</apiName><shortdesc> 
+	 La classe FlowTextOperation est la classe de base des opérations de transformation d’une plage de texte.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowOperation</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 La classe FlowTextOperation est la classe de base des opérations de transformation d’une plage de texte.
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:FlowTextOperation:FlowTextOperation"><apiName>FlowTextOperation</apiName><shortdesc> 
+		 Crée l’objet FlowTextOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Spécifie la sélection appropriée. Si appropriée à l’opération, la propriété <codeph>operationState</codeph> décrit la plage de texte à laquelle s’applique cette opération. Sinon, la propriété <codeph>operationState</codeph> permet d’enregistrer l’état de sélection en cours afin de pouvoir le restaurer lors de l’annulation de l’opération.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Crée l’objet FlowTextOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:FlowTextOperation:redo"><apiName>redo</apiName><shortdesc>	
+		 	
+		 Réexécute l’opération.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiIsOverride/><apiReturn><apiDesc>L’objet SelectionState transmis à l’opération lorsqu’elle a été effectuée. Cet objet SelectionState peut être la sélection actuelle ou une sélection créée spécialement pour l’opération.  
+		 
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>	
+		 	
+		 Réexécute l’opération. 
+		 
+		 <p>Cette méthode doit être remplacée dans les classes dérivées. Cette méthode de classe de base n’a aucun effet. Il est déconseillé d’appeler la méthode <codeph>redo()</codeph> directement. Le gestionnaire de modification appelle la méthode lorsqu’il réexécute l’opération.  </p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:FlowTextOperation:absoluteEnd:get"><apiName>absoluteEnd</apiName><shortdesc> 
+		 Point de terminaison absolu de la plage de texte à laquelle cette opération est appliquée. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 Point de terminaison absolu de la plage de texte à laquelle cette opération est appliquée.  
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowTextOperation:absoluteStart:get"><apiName>absoluteStart</apiName><shortdesc> 
+		 Point de début absolu de la plage de texte à laquelle cette opération est appliquée.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 Point de début absolu de la plage de texte à laquelle cette opération est appliquée.
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowTextOperation:originalSelectionState:get"><apiName>originalSelectionState</apiName><shortdesc> 
+		 Etat de sélection au début de l’opération. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.edit:SelectionState</apiValueClassifier></apiValueDef><apiDesc> 
+		 Etat de sélection au début de l’opération.  
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:DeleteTextOperation"><apiName>DeleteTextOperation</apiName><shortdesc>
+	 La classe DeleteTextOperation encapsule la suppression d’une plage de texte. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 La classe DeleteTextOperation encapsule la suppression d’une plage de texte. 
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:DeleteTextOperation:DeleteTextOperation"><apiName>DeleteTextOperation</apiName><shortdesc> 
+		 Crée une opération DeleteTextOperation. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Plage de texte d’origine. 
+		 </apiDesc></apiParam><apiParam><apiItemName>deleteSelectionState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiData>null</apiData><apiDesc>Plage de texte à supprimer, si elle est différente de celle décrite par <codeph>operationState</codeph> (la valeur est définie sur <codeph>null</codeph> pour supprimer la plage décrite par <codeph>operationState</codeph>).
+		 </apiDesc></apiParam><apiParam><apiItemName>allowMerge</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>La valeur est définie sur <codeph>true</codeph> si cette opération peut être fusionnée avec l’opération suivante ou précédente.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Crée une opération DeleteTextOperation. 
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:DeleteTextOperation:allowMerge:get"><apiName>allowMerge</apiName><shortdesc> 
+		 Indique si cette opération peut être fusionnée avec d’autres d’opérations exécutées avant ou après elle. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 Indique si cette opération peut être fusionnée avec d’autres d’opérations exécutées avant ou après elle. 
+		 
+		 <p>Certaines opérations de suppression, par exemple, une séquence de frappes de touches Retour arrière, peuvent être fusionnées en une seule opération, de sorte que l’annulation de l’opération inverse l’intégralité de la séquence. </p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:DeleteTextOperation:deleteSelectionState:get"><apiName>deleteSelectionState</apiName><shortdesc> 
+		 deleteSelectionState La plage de texte à supprimer 
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.edit:SelectionState</apiValueClassifier></apiValueDef><apiDesc> 
+		 deleteSelectionState La plage de texte à supprimer 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyLinkOperation"><apiName>ApplyLinkOperation</apiName><shortdesc>
+	 La classe ApplyLinkOperation encapsule une opération de création ou de modification de lien.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 La classe ApplyLinkOperation encapsule une opération de création ou de modification de lien.
+	 
+	 </apiDesc><example conref="examples\ApplyLinkOperation_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#LinkElement"><linktext>flashx.textLayout.elements.LinkElement</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyLinkOperation:flashx.textLayout.operations:ApplyLinkOperation"><apiName>ApplyLinkOperation</apiName><shortdesc> 
+		 Crée un objet ApplyLinkOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Plage de texte à laquelle l’opération est appliquée. 
+		 </apiDesc></apiParam><apiParam><apiItemName>href</apiItemName><apiType value="String"/><apiDesc>URI à associer au lien. Si href est une chaîne vide, l’URI des liens dans la sélection est supprimé.
+		 </apiDesc></apiParam><apiParam><apiItemName>target</apiItemName><apiType value="String"/><apiDesc>Cible du lien.
+		 </apiDesc></apiParam><apiParam><apiItemName>extendToLinkBoundary</apiItemName><apiType value="Boolean"/><apiDesc>Indique si la sélection doit être étendue pour inclure l’intégralité du texte des liens existants qui sont chevauchés par la sélection, puis applique la modification. 
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Crée un objet ApplyLinkOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ApplyLinkOperation:extendToLinkBoundary:get"><apiName>extendToLinkBoundary</apiName><shortdesc>
+		 extendToLinkBoundary Indique si la sélection doit être étendue pour inclure l’intégralité du texte des liens existants qui sont chevauchés par la sélection, puis applique la modification.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Boolean"/></apiValueDef><apiDesc>
+		 extendToLinkBoundary Indique si la sélection doit être étendue pour inclure l’intégralité du texte des liens existants qui sont chevauchés par la sélection, puis applique la modification.
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ApplyLinkOperation:href:get"><apiName>href</apiName><shortdesc> 
+		 href URI à associer au lien.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 href URI à associer au lien. Si href est une chaîne vide, l’URI des liens dans la sélection est supprimé.
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ApplyLinkOperation:target:get"><apiName>target</apiName><shortdesc>
+		 target Cible du lien.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc>
+		 target Cible du lien.
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:PasteOperation"><apiName>PasteOperation</apiName><shortdesc>
+	 La classe PasteOperation encapsule une opération de collage.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 La classe PasteOperation encapsule une opération de collage.
+	 
+	 <p>La plage spécifiée est remplacée par le nouveau contenu.</p>
+	 
+	 <p><b>Remarque :</b> le gestionnaire de modification est chargé de la copie du contenu du Presse-Papiers.</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:PasteOperation:PasteOperation"><apiName>PasteOperation</apiName><shortdesc> 
+		 Crée un objet PasteOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Décrit le point d’insertion ou une plage de texte à remplacer.
+		 </apiDesc></apiParam><apiParam><apiItemName>textScrap</apiItemName><apiOperationClassifier>flashx.textLayout.edit:TextScrap</apiOperationClassifier><apiDesc>Contenu à coller dans le flux de texte. 
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Crée un objet PasteOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:PasteOperation:textScrap:get"><apiName>textScrap</apiName><shortdesc> 
+		 textScrap Le texte en cours de collage 
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.edit:TextScrap</apiValueClassifier></apiValueDef><apiDesc> 
+		 textScrap Le texte en cours de collage 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:SplitParagraphOperation"><apiName>SplitParagraphOperation</apiName><shortdesc>
+	 La classe SplitParagraphOperation encapsule un changement qui divise un paragraphe en deux éléments. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 La classe SplitParagraphOperation encapsule un changement qui divise un paragraphe en deux éléments. 
+	 
+	 <p>L’opération crée un nouveau paragraphe contenant le texte situé entre la position spécifiée et la fin du paragraphe. Si une plage de texte est spécifiée, le texte de la plage est d’abord supprimé. </p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#ParagraphElement"><linktext>flashx.textLayout.elements.ParagraphElement</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:SplitParagraphOperation:flashx.textLayout.operations:SplitParagraphOperation"><apiName>SplitParagraphOperation</apiName><shortdesc> 
+		 Crée un objet SplitParagraphOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Décrit le point auquel scinder le paragraphe. Si une plage de texte est spécifiée, le contenu de la plage est supprimé.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Crée un objet SplitParagraphOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyElementIDOperation"><apiName>ApplyElementIDOperation</apiName><shortdesc>
+	 La classe ChangeElementIDOperation encapsule un changement d’ID d’élément.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowElementOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 La classe ChangeElementIDOperation encapsule un changement d’ID d’élément.
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#FlowElement"><linktext>flashx.textLayout.elements.FlowElement</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyElementIDOperation:ApplyElementIDOperation"><apiName>ApplyElementIDOperation</apiName><shortdesc> 
+		 Crée un objet ChangeElementIDOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Spécifie l’état de sélection avant l’opération
+		 </apiDesc></apiParam><apiParam><apiItemName>targetElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiDesc>Spécifie l’élément à modifier
+		 </apiDesc></apiParam><apiParam><apiItemName>newID</apiItemName><apiType value="String"/><apiDesc>ID à affecter
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>Décalage à partir du début de l’élément cible. 
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiData>-1</apiData><apiDesc>Décalage à partir du début de l’élément cible.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Crée un objet ChangeElementIDOperation. 
+		 
+		 <p>Si les paramètres <codeph>relativeStart</codeph> ou <codeph>relativeEnd</codeph> sont définis, l’élément existant est divisé en deux éléments, l’un à l’aide de l’ID existant et l’autre à l’aide du nouvel ID. Si les deux paramètres sont définis, alors l’élément existant est divisé en trois éléments. Les premier et dernier éléments de l’ensemble sont les deux affectés à l’ID original. </p>
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ApplyElementIDOperation:newID:get"><apiName>newID</apiName><shortdesc> 
+		 ID affecté par cette opération.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 ID affecté par cette opération.
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyFormatToElementOperation"><apiName>ApplyFormatToElementOperation</apiName><shortdesc>
+	 La classe ApplyFormatToElementOperation encapsule un changement de style sur un élément.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowElementOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 La classe ApplyFormatToElementOperation encapsule un changement de style sur un élément.
+	 
+	 <p>Cette opération applique un ou plusieurs formats à un élément de flux. </p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.formats.xml#TextLayoutFormat"><linktext>flashx.textLayout.formats.TextLayoutFormat</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyFormatToElementOperation:ApplyFormatToElementOperation"><apiName>ApplyFormatToElementOperation</apiName><shortdesc> 
+		Crée un objet ApplyFormatToElementOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Spécifie le flux de texte contenant l’élément auquel cette opération est appliquée.
+		</apiDesc></apiParam><apiParam><apiItemName>targetElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiDesc>Spécifie l’élément auquel cette opération est appliquée.
+		</apiDesc></apiParam><apiParam><apiItemName>format</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiDesc>Formats à appliquer dans cette opération. 
+		 
+		</apiDesc></apiParam><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiData>0</apiData></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiData>-1</apiData></apiParam></apiConstructorDef><apiDesc> 
+		Crée un objet ApplyFormatToElementOperation. 
+		
+		</apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ApplyFormatToElementOperation:format:get"><apiName>format</apiName><shortdesc> 
+		 Formats de caractère appliqués dans cette opération.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Formats de caractère appliqués dans cette opération.
+		 
+		 <p>Si la valeur est <codeph>null</codeph>, aucun format de caractère n’est modifié.</p> 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyTCYOperation"><apiName>ApplyTCYOperation</apiName><shortdesc> 
+	 La classe ApplyTCYOperation encapsule une transformation TCY.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 La classe ApplyTCYOperation encapsule une transformation TCY.
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TCYElement"><linktext>flashx.textLayout.elements.TCYElement</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyTCYOperation:ApplyTCYOperation"><apiName>ApplyTCYOperation</apiName><shortdesc> 
+		 Crée un objet ApplyTCYOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Décrit la plage de texte à laquelle l’opération est appliquée. 
+		 </apiDesc></apiParam><apiParam><apiItemName>tcyOn</apiItemName><apiType value="Boolean"/><apiDesc>Indique si vous souhaitez appliquer une mise en forme TCY (<codeph>true</codeph>) ou supprimer une mise en forme TCY (<codeph>false</codeph>).
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Crée un objet ApplyTCYOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ApplyTCYOperation:tcyOn:get"><apiName>tcyOn</apiName><shortdesc> 
+		 Indique si l’opération applique ou supprime une mise en forme TCY. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 Indique si l’opération applique ou supprime une mise en forme TCY. 
+		 
+		 <p>Si la valeur est <codeph>true</codeph>, l’opération transforme la plage en élément TCY. Si la valeur est <codeph>false</codeph>, l’opération supprime la mise en forme TCY du premier élément TCY de la palge.</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.elements.xml#TCYElement"><linktext>flashx.textLayout.elements.TCYElement</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:CopyOperation"><apiName>CopyOperation</apiName><shortdesc>
+	 La classe CopyOperation encapsule un opération de copie. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 La classe CopyOperation encapsule un opération de copie. 
+	 
+	 <p><b>Remarque :</b> l’opération est chargée de la copie du texte résiduel dans le Presse-Papiers. L’annulation d’une opération de copie ne rétablit pas l’état d’origine du Presse-papiers. </p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:CopyOperation:CopyOperation"><apiName>CopyOperation</apiName><shortdesc> 
+		 Crée un objet CopyOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Plage de texte à copier.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Crée un objet CopyOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor></apiClassifier><apiClassifier id="flashx.textLayout.operations:InsertTextOperation"><apiName>InsertTextOperation</apiName><shortdesc>
+	 La classe InsertTextOperation encapsule une opération d’insertion de texte.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 La classe InsertTextOperation encapsule une opération d’insertion de texte.
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:InsertTextOperation:InsertTextOperation"><apiName>InsertTextOperation</apiName><shortdesc> 
+		 Crée un objet InsertTextOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Décrit le point d’insertion ou la plage de texte. 
+		 </apiDesc></apiParam><apiParam><apiItemName>text</apiItemName><apiType value="String"/><apiDesc>Chaîne à insérer.
+		 </apiDesc></apiParam><apiParam><apiItemName>deleteSelectionState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiData>null</apiData><apiDesc>Décrit la plage de texte à supprimer avant de procéder à l’insertion, si elle est différente de celle décrite par <codeph>operationState</codeph>.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Crée un objet InsertTextOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:InsertTextOperation:redo"><apiName>redo</apiName><shortdesc>
+		 Réexécute l’opération après son annulation. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiIsOverride/><apiReturn><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>
+		 Réexécute l’opération après son annulation. 
+		 
+		 <p>Cette fonction est appelée par le gestionnaire de modification, lorsque cela est nécessaire. </p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:InsertTextOperation:characterFormat:get"><apiName>characterFormat</apiName><shortdesc> 
+		 Format de caractère appliqué au texte inséré. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Format de caractère appliqué au texte inséré. 
+		  
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:InsertTextOperation:deleteSelectionState:get"><apiName>deleteSelectionState</apiName><shortdesc> 
+		 Texte supprimé par cette opération, le cas échéant. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.edit:SelectionState</apiValueClassifier></apiValueDef><apiDesc> 
+		 Texte supprimé par cette opération, le cas échéant. 
+		 
+		 <p>La valeur est <codeph>null</codeph> si aucun texte n’est supprimé.</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:InsertTextOperation:text:get"><apiName>text</apiName><shortdesc> 
+		 Texte inséré par cette opération. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 Texte supprimé par cette opération. 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:UndoOperation"><apiName>UndoOperation</apiName><shortdesc> 
+	 La classe UndoOperation encapsule une opération d’annulation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowOperation</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 La classe UndoOperation encapsule une opération d’annulation.
+	 
+	 </apiDesc><example conref="examples\UndoOperation_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:UndoOperation:UndoOperation"><apiName>UndoOperation</apiName><shortdesc> 
+		 Crée un objet UndoOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>op</apiItemName><apiOperationClassifier>flashx.textLayout.operations:FlowOperation</apiOperationClassifier><apiDesc>Opération à annuler. 
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Crée un objet UndoOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:UndoOperation:operation:get"><apiName>operation</apiName><shortdesc> 
+		 Opération à annuler. </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.operations:FlowOperation</apiValueClassifier></apiValueDef><apiDesc> 
+		 Opération à annuler.  
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyElementStyleNameOperation"><apiName>ApplyElementStyleNameOperation</apiName><shortdesc>
+	 La classe ApplyElementStyleNameOperation encapsule un changement du nom de style.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowElementOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 La classe ApplyElementStyleNameOperation encapsule un changement du nom de style.
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#FlowElement/styleName"><linktext>flashx.textLayout.elements.FlowElement.styleName</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyElementStyleNameOperation:ApplyElementStyleNameOperation"><apiName>ApplyElementStyleNameOperation</apiName><shortdesc> 
+		 Crée un objet ApplyElementStyleNameOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Décrit la sélection en cours.
+		 </apiDesc></apiParam><apiParam><apiItemName>targetElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiDesc>Spécifie l’élément à modifier. 
+		 </apiDesc></apiParam><apiParam><apiItemName>newStyleName</apiItemName><apiType value="String"/><apiDesc>Nom de style à affecter. 
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>Décalage à partir du début de l’élément cible. 
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiData>-1</apiData><apiDesc>Décalage à partir du début de l’élément cible.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Crée un objet ApplyElementStyleNameOperation. 
+		 
+		 <p>Si les paramètres <codeph>relativeStart</codeph> et <codeph>relativeEnd</codeph> sont définis, l’élément existant est divisé en plusieurs éléments, la partie sélectionnée à l’aide du nouveau nom de style et le reste à l’aide du nom de style existant.</p>
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ApplyElementStyleNameOperation:newStyleName:get"><apiName>newStyleName</apiName><shortdesc> 
+		 Nom de style affecté par cette opération.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 Nom de style affecté par cette opération.
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ModifyInlineGraphicOperation"><apiName>ModifyInlineGraphicOperation</apiName><shortdesc>
+	 La classe InsertInlineGraphicOperation encapsule la modification d’un graphique intégré existant.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 La classe InsertInlineGraphicOperation encapsule la modification d’un graphique intégré existant.
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#InlineGraphicElement"><linktext>flashx.textLayout.elements.InlineGraphicElement</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ModifyInlineGraphicOperation:flashx.textLayout.operations:ModifyInlineGraphicOperation"><apiName>ModifyInlineGraphicOperation</apiName><shortdesc> 
+		 Crée un objet ModifyInlineGraphicsOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Décrit le point d’insertion. Si une plage est sélectionnée, l’opération supprime le contenu de cette plage. 
+		 </apiDesc></apiParam><apiParam><apiItemName>source</apiItemName><apiType value="Object"/><apiDesc>Graphique source (chaîne uri, objet URLRequest, DisplayObject ou Class d’une ressource incorporée).  
+		 </apiDesc></apiParam><apiParam><apiItemName>width</apiItemName><apiType value="Object"/><apiDesc>Largeur à affecter (nombre de pixels, pourcentage ou la chaîne « auto ») 
+		 </apiDesc></apiParam><apiParam><apiItemName>height</apiItemName><apiType value="Object"/><apiDesc>Hauteur à affecter (nombre de pixels, pourcentage ou la chaîne « auto »)
+		 </apiDesc></apiParam><apiParam><apiItemName>options</apiItemName><apiType value="Object"/><apiData>null</apiData><apiDesc>aucun pris en charge. 
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Crée un objet ModifyInlineGraphicsOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ModifyInlineGraphicOperation:height:get"><apiName>height</apiName><shortdesc conref="flashx.textLayout.elements.InlineGraphicElement#height"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc conref="flashx.textLayout.elements.InlineGraphicElement#height"> 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ModifyInlineGraphicOperation:options:get"><apiName>options</apiName><shortdesc> 
+		 Les options ne sont pas prises en charge 
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc> 
+		 Les options ne sont pas prises en charge 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ModifyInlineGraphicOperation:source:get"><apiName>source</apiName><shortdesc conref="flashx.textLayout.elements.InlineGraphicElement#source">	
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc conref="flashx.textLayout.elements.InlineGraphicElement#source">	
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ModifyInlineGraphicOperation:width:get"><apiName>width</apiName><shortdesc conref="flashx.textLayout.elements.InlineGraphicElement#width"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc conref="flashx.textLayout.elements.InlineGraphicElement#width"> 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier></apiPackage>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox  xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" 
+	 verticalAlign="middle" horizontalAlign="left"
+	 paddingTop="2" paddingBottom="2" paddingRight="2" 
+	 paddingLeft="{padding}" 
+	 implements="mx.controls.listClasses.IDropInListItemRenderer"
+	 backgroundAlpha="0" xmlns:controls="com.mapx.view.controls.*">
+	
+	<mx:Script>
+		<![CDATA[
+		import mx.core.UITextField;
+		import mx.events.FlexEvent;
+		import mx.controls.advancedDataGridClasses.AdvancedDataGridListData;
+		import mx.controls.listClasses.BaseListData;
+	    	
+        [Bindable] private var _listData:BaseListData;
+    	[Bindable] public var padding:Number;
+		public function get listData():BaseListData
+		{
+			return _listData;
+		}
+		public function set listData(value:BaseListData):void
+		{
+			_listData = value;
+		}				
+        override public function get data():Object
+        {
+            return super.data;
+        }    
+		override public function set data(value:Object):void 
+		{  
+			super.data = value;  
+         } 
+ 
+		]]>
+	</mx:Script>
+		<mx:SWFLoader source="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#tagIcon')" />
+		<mx:Binding source="AdvancedDataGridListData(this._listData).indent" destination="padding" />
+</mx:HBox>

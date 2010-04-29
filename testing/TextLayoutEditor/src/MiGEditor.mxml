@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				layout="absolute" minWidth="955" minHeight="600" 
+				xmlns:local="*"
+				preinitialize="loadCSS()"
+				creationPolicy="none"
+				xmlns:components="com.adobe.components.*" 
+				xmlns:controls="com.mapx.view.controls.*" xmlns:containers="com.mapx.view.containers.*" xmlns:tools="com.mapx.view.tools.*">
+
+	<mx:Script>
+		<![CDATA[
+			import com.mapx.view.controls.AdvancedColorPicker;
+			import com.mapx.view.controls.MiGTLFTextArea;
+			
+			import mx.controls.TextArea;
+			import mx.events.FlexEvent;
+			import mx.events.StyleEvent;
+			import mx.managers.PopUpManager;
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				var textArea:MiGTLFTextArea = new MiGTLFTextArea();
+				textArea.percentHeight = 100;
+				textArea.percentWidth = 100;
+				textArea.minStateParent = desTray.contentBody;
+				textArea.maxStateParent = tab;
+				desTray.container.addChild(textArea);
+				textArea.addEventListener(FlexEvent.CREATION_COMPLETE,handleArea);
+			}
+			private function handleArea(event:FlexEvent):void {
+				editor.addTextArea(MiGTLFTextArea(event.target));
+			}
+			private function loadCSS():void
+			{				
+				var myevent:IEventDispatcher = StyleManager.loadStyleDeclarations("css/mig.swf");
+				myevent.addEventListener(StyleEvent.COMPLETE, createComponents);
+			}
+			private function createComponents(event:StyleEvent): void	
+			{
+				createComponentsFromDescriptors();
+			}
+		]]>
+	</mx:Script>
+	<mx:HDividedBox width="100%" height="100%" id="container" top="100" right="100" bottom="100" left="100">
+		<mx:Canvas width="100%" height="100%"  id="tab">
+			<containers:MinMaxTray maxHeight="350" width="90%" headerLabel="Description" id="desTray"/>
+		</mx:Canvas>
+		<tools:MiGTLFTextEditor width="100%" height="100%" id="editor"  />
+		
+	</mx:HDividedBox>
+	<mx:HBox >
+		<mx:Button click="button1_clickHandler(event)"  label="add area" />
+		<controls:colorPicker />
+		<mx:ColorPicker />
+	</mx:HBox>
+
+<!--	<mx:Style source="../../textLayout_ui/src/flashx/textLayout/ui/VellumGUIStyles.css"/>-->
+	<mx:Style>
+		@namespace tlf "flashx.textLayout.elements.*";
+		
+		tlf|TextFlow
+		{
+			columnCount:            "1";
+			textIndent:             '15';
+			paragraphSpaceAfter:	"15";
+			paddingTop:             "4";
+			paddingLeft:            "4";
+			fontLookup: "embeddedCFF";
+			renderingMode: "cff";
+			fontFamily: "FreigMicBoo";
+			
+		}
+	</mx:Style>
+</mx:Application>

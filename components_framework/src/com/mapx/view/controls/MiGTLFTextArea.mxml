@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:controls="com.mapx.view.controls.*"  mouseDown="mouseDownHandler(event)" 
+		 horizontalGap="0" creationComplete="creationCompleteHandler(event)" xmlns:textEditBar="textEditBar.*">
+	<mx:Script>
+		<![CDATA[
+			import com.map.controller.ControllerLocator;
+			import com.map.event.ApplicationEvent;
+			import com.map.event.EventBus;
+			
+			import flash.geom.Point;
+			import flash.text.engine.FontLookup;
+			
+			import flashx.textLayout.conversion.ConversionType;
+			import flashx.textLayout.conversion.TextConverter;
+			import flashx.textLayout.edit.ISelectionManager;
+			import flashx.textLayout.elements.Configuration;
+			import flashx.textLayout.elements.ParagraphElement;
+			import flashx.textLayout.elements.SpanElement;
+			import flashx.textLayout.elements.TextFlow;
+			import flashx.textLayout.events.FlowOperationEvent;
+			
+			import mx.binding.utils.BindingUtils;
+			import mx.binding.utils.ChangeWatcher;
+			import mx.controls.buttonBarClasses.ButtonBarButton;
+			import mx.core.Application;
+			import mx.core.UIComponent;
+			import mx.events.EffectEvent;
+			import mx.events.FlexEvent;
+			import mx.events.ItemClickEvent;
+			
+
+			private var _htmlText:String;
+			private var _xhtmlText:String;
+			private var _text:String;
+			
+			private var prevParent:UIComponent;
+			private var pt:Point;
+			private var wWatcher:ChangeWatcher, hWatcher:ChangeWatcher;
+
+			[Bindable] public var includeTools:Boolean = true;
+			[Bindable] public var holderColor:uint;
+			[Bindable] public var editable:Boolean = true;
+			
+			public var firstTime:Boolean = true;
+			public var changed:Boolean = false;
+			
+			public var minStateYParent:UIComponent;
+			public var minStateXParent:UIComponent;
+			public var maxStateParent:UIComponent;
+			
+			public var cfg:Configuration;	
+			public var format:String = TextConverter.TEXT_FIELD_HTML_FORMAT; // 0-1
+			public var prevIndex:int = -1;
+			public var manage:Boolean = true;
+			public var activeFlow:TextFlow;
+			
+			private function importMarkup():void {
+			
+			}				
+			private function togglebuttonbar1_itemClickHandler(event:ItemClickEvent):void {
+				commit();
+				if(ButtonBarButton(event.relatedObject).selected && event.index != prevIndex)
+				{
+					stack.selectedIndex=1;
+					prevIndex = event.index;
+					if(event.item.format != 'xhtml')
+						markupTextArea.text = TextConverter.export(activeFlow,event.item.format,ConversionType.STRING_TYPE).toString();					
+					else
+						markupTextArea.text = this.richTextEditorToHtml(_htmlText);	
+				}
+				else
+				{	
+					stack.selectedIndex = 0;
+					markups.selectedIndex = prevIndex = -1;
+				}
+			}
+			private function changeHanlder(event:FlowOperationEvent):void {		
+				trace(event.type);
+				changed = true;
+				this.dispatchEvent(new Event("change"));
+			}
+			private function createEmptyFlow():TextFlow
+			{
+				var newFlow:TextFlow = new TextFlow();
+				var para:ParagraphElement = new ParagraphElement();
+				para.addChild(new SpanElement());
+				newFlow.addChild(para);
+				return newFlow;
+			}
+			public function set htmlText(value:String):void {
+				if(value != '')
+					activeFlow = TextConverter.importToFlow(value,format,TextFlow.defaultConfiguration);
+				else
+					activeFlow = createEmptyFlow();
+				changed = true;
+				commit();
+				activeFlow.addEventListener(FlowOperationEvent.FLOW_OPERATION_COMPLETE,changeHanlder);
+			}
+			public function get htmlText():String {
+				return _htmlText;
+			}
+			public function get text():String {
+				return _text;
+			}
+			public function get xhtmlText():String {
+				return _xhtmlText;
+			}
+			private function creationCompleteHandler(event:FlexEvent):void {
+				holderColor = ControllerLocator.controller.textEditorColor
+				_xhtmlText = this.richTextEditorToHtml(_htmlText);
+				textPanel.changeContainerSetup(activeFlow);
+			}
+			public function commit():void {
+				if(changed) {
+					_text		= 	TextConverter.export(activeFlow,TextConverter.PLAIN_TEXT_FORMAT,ConversionType.STRING_TYPE).toString();
+					if(_text != '') {
+						_htmlText	= 	TextConverter.export(activeFlow,format,ConversionType.STRING_TYPE).toString();
+						_xhtmlText	=	richTextEditorToHtml(_htmlText);
+					}
+					else {
+						_xhtmlText = _htmlText = '';
+					}
+					changed = false;
+				}
+			}
+			private function fullScreen_clickHandler():void {
+				if(fsButton.selected) {  
+					pt = Application.application.localToGlobal(new Point(minStateXParent.x,minStateYParent.y));
+					prevParent = this.parent as UIComponent;
+					maxStateParent.addChild(this);
+					this.includeInLayout = false;
+					this.x = pt.x; this.y = pt.y;
+					moveEff.xTo = 0;moveEff.yTo = -25;
+					resize.widthTo = maxStateParent.width;
+					resize.heightTo = maxStateParent.height+25;
+					eff.removeEventListener(EffectEvent.EFFECT_END,handleMinResize);
+					eff.addEventListener(EffectEvent.EFFECT_END,handleMaxResize);
+					eff.play();
+				}
+				else {
+					wWatcher.unwatch();
+					hWatcher.unwatch();
+					moveEff.xTo = pt.x;
+					moveEff.yTo = pt.y;
+					resize.widthTo = prevParent.width;
+					resize.heightTo = prevParent.height;
+					eff.removeEventListener(EffectEvent.EFFECT_END,handleMaxResize);
+					eff.addEventListener(EffectEvent.EFFECT_END,handleMinResize);
+					eff.play();
+				}
+			}
+			private function handleMinResize(event:Event):void {
+				prevParent.addChild(this);
+				this.includeInLayout = true;
+				this.x = this.y = 0;
+				this.percentHeight = this.percentWidth = 100;
+			}
+			private function handleMaxResize(event:Event):void {
+				wWatcher = BindingUtils.bindProperty(this,"width",maxStateParent,"width");
+				hWatcher = BindingUtils.bindProperty(this,"newHeight",maxStateParent,"height");	
+			}
+			public function set newHeight(value:Number):void {
+				this.height = value+25;
+			}
+			public function get newHeight():Number {
+				return height-25;
+			}
+			private function findAndRemoveAttributeNames(xml:XML,find:String,in_tags_named:String=""):XML {
+				var ok:Boolean=true;
+				if(in_tags_named != "" && xml.localName() != in_tags_named){
+					ok=false;
+				}
+				if(xml.@[find] != null && ok){
+					delete xml.@[find];
+				}
+				var n:int=0;
+				var c:XML;
+				while(n <xml.children().length()){
+					c=xml.children()[n];
+					findAndRemoveAttributeNames(c,find);
+					n++;
+				}
+				return xml;
+			}
+			private function findAndReplaceAttributeNames(xml:XML,find:String,replace:String,in_tags_named:String=""):XML {
+				var ok:Boolean=true;
+				if(in_tags_named != "" && xml.localName() != in_tags_named){
+					ok=false;
+				}
+				if(xml.attribute(find).length() > 0 && ok){
+					xml.@[replace]=xml.@[find];
+					delete xml.@[find];
+				}
+				var n:int=0;
+				var c:XML;
+				while(n <xml.children().length()){
+					c=xml.children()[n];
+					findAndReplaceAttributeNames(c,find,replace);
+					n++;
+				}
+				return xml;
+			}	
+			private function removeDefaultNamespaceFromXML(xml:XML):XML {
+				var rawXMLString:String = xml.toXMLString();
+				
+				/* Define the regex pattern to remove the default namespace from the 
+				String representation of the XML result. */
+				var xmlnsPattern:RegExp = 
+					new RegExp("xmlns=[^\"]*\"[^\"]*\"", "gi");
+				
+				/* Replace the default namespace from the String representation of the 
+				result XML with an empty string. */
+				var cleanXMLString:String = rawXMLString.replace(xmlnsPattern, "");
+				
+				// Create a new XML Object from the String just created
+				return new XML(cleanXMLString);
+			}			
+			private function processAttributes(xml:XML):XML {
+				if(xml.attribute('textDecoration').length() > 0 && xml.attribute('lineThrough').length() > 0) {	
+					var td:String = xml.@textDecoration.toString();
+					var lt:String = xml.@lineThrough.toString();
+					var v:String = '';
+					if(td != 'none')
+						v = 'underline'+' ';
+					if(lt != "false")
+						v += 'line-through';
+					if(v != '')
+						xml.@textDecoration =v;
+					else
+					{
+						delete xml.@textDecoration;
+					}
+					delete xml.@lineThrough;
+				}				
+				var value:String; 
+				if(xml.attribute('fontSize').length() > 0)
+				{
+					value = xml.@fontSize.toString();
+					if(value.toString() == "12")
+						delete xml.@fontSize;
+				}
+				if(xml.attribute('fontFamily').length() > 0)
+				{
+					value = xml.@fontFamily.toString();
+					if(value.toString() == textPanel.getStyle('fontFamily'))	
+						delete xml.@fontFamily;
+				}				
+				if(xml.attribute('color').length() > 0)
+				{
+					value = xml.@color.toString();
+					if(value == '0x0')
+						delete xml.@color;
+					else
+						xml.@color = '#'+value.substr(2,6);
+				}
+				if(xml.attribute('fontWeight').length() > 0)
+				{
+					value = xml.@fontWeight.toString();
+					if(value.toString() == "normal")
+						delete xml.@fontWeight;
+				}
+				if(xml.attribute('fontStyle').length() > 0)
+				{
+					value = xml.@fontStyle.toString();
+					if(value.toString() == "normal")
+						delete xml.@fontStyle;
+				}				
+				if(xml.attribute('backgroundColor').length() > 0)
+				{
+					value = xml.@backgroundColor.toString();
+					if(value == "transparent")
+						delete xml.@backgroundColor;
+					else
+						xml.@backgroundColor = '#'+value.substr(2,6);
+				}				
+				if(xml.attribute('textIndent').length() > 0)
+				{
+					value = xml.@textIndent.toString();
+					if(value == "0")
+						delete xml.@textIndent;
+				}
+				if(xml.attribute('textAlign').length() > 0)
+				{
+					value = xml.@textAlign.toString();
+					if(value == "left")
+						delete xml.@textAlign;
+				}				
+				if(xml.attribute('paragraphStartIndent').length() > 0)
+				{
+					value = xml.@paragraphStartIndent.toString();
+					if(value == "0")
+						delete xml.@paragraphStartIndent;
+				}
+				if(xml.attribute('paragraphEndIndent').length() > 0)
+				{
+					value = xml.@paragraphEndIndent.toString();
+					if(value == "0")
+						delete xml.@paragraphEndIndent;
+				}
+				if(xml.attribute('lineHeight').length() > 0)
+				{
+					value = xml.@lineHeight.toString();
+					if(value == "120%")
+						delete xml.@lineHeight;
+				}				
+				
+				var n:int=0;
+				var c:XML;
+				while(n <xml.children().length()){
+					c=xml.children()[n];
+					processAttributes(c);
+					n++;
+				}
+				return xml;				
+			}				
+			private function richTextEditorToHtml(value:String):String {
+				if(value != '') {
+					XML.prettyPrinting = false;
+					XML.ignoreWhitespace = false;
+					XML.prettyIndent = 0;
+					
+					var xml:XML = XML(value);
+					xml = removeDefaultNamespaceFromXML(xml);
+					xml = findAndRemoveAttributeNames(xml,'alignmentBaseline');
+					xml = findAndRemoveAttributeNames(xml,'backgroundAlpha');
+					xml = findAndRemoveAttributeNames(xml,'cffHinting');
+					xml = findAndRemoveAttributeNames(xml,'digitWidth');
+					xml = findAndRemoveAttributeNames(xml,'digitCase');
+					
+					xml = findAndRemoveAttributeNames(xml,'leadingModel');
+					xml = findAndRemoveAttributeNames(xml,'breakOpportunity');				
+					
+					xml = findAndRemoveAttributeNames(xml,'renderingMode');
+					xml = findAndRemoveAttributeNames(xml,'typographicCase');
+					xml = findAndRemoveAttributeNames(xml,'cffHinting');
+					xml = findAndRemoveAttributeNames(xml,'ligatureLevel');
+					xml = findAndRemoveAttributeNames(xml,'kerning');
+					xml = findAndRemoveAttributeNames(xml,'dominantBaseline');
+					
+					xml = findAndRemoveAttributeNames(xml,'textRotation');
+					xml = findAndRemoveAttributeNames(xml,'justificationStyle');
+					xml = findAndRemoveAttributeNames(xml,'justificationRule');
+					
+					xml = findAndRemoveAttributeNames(xml,'paragraphSpaceBefore');
+					xml = findAndRemoveAttributeNames(xml,'paragraphSpaceAfter');
+					
+					xml = findAndRemoveAttributeNames(xml,'columnCount');
+					xml = findAndRemoveAttributeNames(xml,'columnWidth');
+					xml = findAndRemoveAttributeNames(xml,'columnGap');
+					xml = findAndRemoveAttributeNames(xml,'lineBreak');
+					xml = findAndRemoveAttributeNames(xml,'xmlns');
+					xml = findAndRemoveAttributeNames(xml,'whiteSpaceCollapse');
+					
+					xml = findAndRemoveAttributeNames(xml,'textAlpha');
+					xml = findAndRemoveAttributeNames(xml,'locale');
+					xml = findAndRemoveAttributeNames(xml,'fontLookup');
+					xml = findAndRemoveAttributeNames(xml,'baselineShift');
+					xml = findAndRemoveAttributeNames(xml,'direction');
+					
+					xml = findAndRemoveAttributeNames(xml,'textJustify');
+					xml = findAndRemoveAttributeNames(xml,'textAlignLast');
+					
+					xml = findAndRemoveAttributeNames(xml,'trackingLeft');
+					xml = findAndRemoveAttributeNames(xml,'trackingRight');
+					
+					xml = processAttributes(xml);
+					
+					xml = findAndReplaceAttributeNames(xml,"fontSize","font-size");
+					xml = findAndReplaceAttributeNames(xml,"fontStyle","font-style");
+					xml = findAndReplaceAttributeNames(xml,"fontFamily","font-family");
+					xml = findAndReplaceAttributeNames(xml,"fontWeight","font-weight");
+					xml = findAndReplaceAttributeNames(xml,"textDecoration","text-decoration");
+					xml = findAndReplaceAttributeNames(xml,"textIndent","text-indent");
+					xml = findAndReplaceAttributeNames(xml,"textAlign","text-align");
+					xml = findAndReplaceAttributeNames(xml,"lineHeight","line-height");
+					xml = findAndReplaceAttributeNames(xml,"backgroundColor","background-color");
+					
+					xml = findAndReplaceAttributeNames(xml,"paragraphStartIndent","padding-left");
+					xml = findAndReplaceAttributeNames(xml,"paragraphEndIndent","padding-right");
+					
+					var pattern:RegExp;
+					var str:String = xml.children().toXMLString();
+					
+					pattern = /color=\"(.*?)\"/gi;
+					str = str.replace(pattern, "color:$1;");
+					
+					pattern = /font-size=\"(.*?)\"/gi;
+					str = str.replace(pattern, "font-size:$1px;");
+					
+					pattern = /font-style=\"(.*?)\"/gi;
+					str = str.replace(pattern, "font-style:$1;");				
+					
+					pattern = /font-family=\"(.*?)\"/gi;
+					str = str.replace(pattern, "font-family:$1;");
+					
+					pattern = /font-weight=\"(.*?)\"/gi;
+					str = str.replace(pattern, "font-weight:$1;");				
+					
+					pattern = /text-align=\"(.*?)\"/gi;
+					str = str.replace(pattern, "text-align:$1;");
+					
+					pattern = /background-color=\"(.*?)\"/gi;
+					str = str.replace(pattern, "background-color:$1;");
+					
+					pattern = /padding-left=\"(.*?)\"/gi;
+					str = str.replace(pattern, "padding-left:$1px;");
+					
+					pattern = /padding-right=\"(.*?)\"/gi;
+					str = str.replace(pattern, "padding-right:$1px;");
+					
+					pattern = /text-indent=\"(.*?)\"/gi;
+					str = str.replace(pattern, "text-indent:$1px;");	
+					
+					pattern = /text-decoration=\"(.*?)\"/gi;
+					str = str.replace(pattern, "text-decoration:$1;");	
+					
+					pattern = /line-height=\"(.*?)\"/gi;
+					str = str.replace(pattern, "line-height:$1px;");	
+					
+					pattern = /<span/gi;
+					str = str.replace(pattern, '<span style="');
+					pattern = /<\/span.*?>/gi;
+					str = str.replace(pattern, '<\/span>');
+					
+					//format <p> tag
+					pattern = /<p/gi;
+					str = str.replace(pattern, '<p style="');
+					pattern = /<\/p>/gi;
+					str = str.replace(pattern, '<\/p>');
+					
+					
+					str = str.split('style=" ').join('style="');
+					str = str.split(';>').join(';">');
+					str = str.split(';/>').join(';"/>');
+					
+					str = str.split(' style=">').join('>');
+					str = str.split(' style="/>').join('/>');
+					XML.ignoreWhitespace = true;
+					return str;
+				}
+				else
+					return '';
+			} 
+			private function editor_pasteHandler(event:Event):void {
+				
+			}
+			private function handleCreationComplete(): void {
+
+			}			
+			public function doFocus():void {
+				if (activeFlow) {
+					var selMgr:ISelectionManager = activeFlow.interactionManager;
+					if (selMgr && textPanel.visible) {
+						selMgr.setFocus();
+					}
+				}
+			}		
+			private function handleFocusIn(event:FocusEvent):void {
+				if (activeFlow) {
+					var selMgr:ISelectionManager = activeFlow.interactionManager;
+					if (selMgr && textPanel.visible) {
+						selMgr.setFocus();
+					}
+				}
+			}
+			private function mouseDownHandler(event:MouseEvent):void {
+				if(firstTime) {
+					firstTime = false;
+					EventBus.getInstance().dispatchEvent(new ApplicationEvent(ApplicationEvent.TEXTEDITOR,[this,ControllerLocator.controller.htmlRendering]));	
+					if (activeFlow)
+					{
+						var selMgr:ISelectionManager = activeFlow.interactionManager;
+						if (selMgr && textPanel.visible) {
+							selMgr.setFocus();
+						}
+					}
+				}
+			}
+
+		]]>
+	</mx:Script>
+	<mx:Metadata>
+		[Event(name="selectionChange", type="flash.events.Event")]
+		[Event(name="change", type="flash.events.Event")]
+	</mx:Metadata>
+	<mx:ViewStack width="100%" height="100%" creationPolicy="all" id="stack">	
+		<mx:Canvas id="holder" width="100%" height="100%" backgroundColor="{holderColor}">
+			<mx:UIComponent id="spellDrawing" width="100%" height="100%"  />
+			<mx:UIComponent id="spellDrawing2" width="100%" height="100%"  />
+			<mx:UIComponent id="searchDrawing" width="100%" height="100%"  />
+			<mx:UIComponent id="searchDrawing2" width="100%" height="100%" visible="false"  />
+			<textEditBar:SingleContainerView id="textPanel" left="5" bottom="5" right="5" top="5" width="100%" height="100%" focusIn="handleFocusIn(event)" backgroundAlpha="0" />
+		</mx:Canvas>	
+		
+		<mx:Canvas width="100%" height="100%" backgroundColor="0xCCCCCC"  >
+			<mx:TextArea backgroundAlpha="0"  id="markupTextArea" fontSize="14"  fontFamily="Transit-Normal"  width="100%"  color="0" minHeight="{this.height}" />	
+		</mx:Canvas>	
+	</mx:ViewStack>
+	<mx:Canvas styleName="toolsContainer" height="{this.height}" includeInLayout="{includeTools}" visible="{includeTools}">
+		<mx:VBox width="100%" height="100%"  horizontalAlign="center" paddingTop="5" paddingLeft="4" paddingRight="4">
+			<mx:Button toggle="true" click="fullScreen_clickHandler()"  icon="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#fullScreen')"  width="30" paddingLeft="5" id="fsButton"/>
+			<mx:ToggleButtonBar verticalGap="2" selectedIndex="-1" id="markups" direction="vertical" itemClick="togglebuttonbar1_itemClickHandler(event)">
+				<mx:dataProvider>
+					<mx:ArrayCollection>
+						<mx:Object label="HTML" format="{TextConverter.TEXT_FIELD_HTML_FORMAT}" />
+						<mx:Object label="TLF" format="{TextConverter.TEXT_LAYOUT_FORMAT}" />
+						<mx:Object label="XHTML" format="xhtml" />
+					</mx:ArrayCollection>
+				</mx:dataProvider>
+			</mx:ToggleButtonBar>
+			<mx:Button toggle="true"  id="importBtn" label="Import" clear="importMarkup()"/>
+		</mx:VBox>	
+	</mx:Canvas> 
+	<mx:Parallel duration="300" target="{this}" id="eff">
+		<mx:Move xTo="0" yTo="0" id="moveEff" />
+		<mx:Resize id="resize"  />		
+	</mx:Parallel>
+
+</mx:HBox>

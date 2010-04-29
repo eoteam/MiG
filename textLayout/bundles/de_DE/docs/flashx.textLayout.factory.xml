@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<apiPackage id="flashx.textLayout.factory"><apiName>flashx.textLayout.factory</apiName><apiDetail/><apiClassifier id="flashx.textLayout.factory:StringTextLineFactory"><apiName>StringTextLineFactory</apiName><shortdesc>
+ Die StringTextLineFactory-Klasse stellt eine einfache Methode zur Erstellung von TextLines aus einem String bereit.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>flashx.textLayout.factory:TextLineFactoryBase</apiBaseClassifier></apiClassifierDef><apiDesc>
+ Die StringTextLineFactory-Klasse stellt eine einfache Methode zur Erstellung von TextLines aus einem String bereit. 
+ 
+ <p>Die Textzeilen sind statisch und werden mithilfe eines einzelnen Formats und eines einzelnen Absatzes erstellt. Die Zeilen werden so erstellt, dass sie in das angegebene Begrenzungsrechteck passen.</p>
+ 
+ <p>Die StringTextLineFactory stellt eine effiziente Methode zur Erstellung von TextLines bereit, da einzelne TextFlow-, ParagraphElement-, SpanElement- und ContainerController-Objekte für zahlreiche wiederholte Aufrufe wiederverwendet werden. Sie können eine einzelne Factory erstellen und immer wieder verwenden. Außerdem können Sie die gleichartigen Teile bei jedem Aufruf erneut verwenden, z. B. können Sie die verschiedenen Formate und Begrenzungen neu verwenden.</p> 
+ 
+ <p><b>Hinweis:</b> Um statische Zeilen zu erstellen, die mehrere Formate oder Absätze verwenden oder Inline-Grafiken enthalten, verwenden Sie eine TextFlowTextLineFactory und ein TextFlow-Objekt.  </p>
+ 
+ </apiDesc><example conref="examples\StringTextLineFactory_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.factory.xml#TextFlowTextLineFactory"><linktext>TextFlowTextLineFactory</linktext></link></related-links><apiConstructor id="flashx.textLayout.factory:StringTextLineFactory:StringTextLineFactory"><apiName>StringTextLineFactory</apiName><shortdesc> 
+		 Erstellt ein StringTextLineFactory-Objekt.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>configuration</apiItemName><apiOperationClassifier>flashx.textLayout.elements:IConfiguration</apiOperationClassifier><apiData>null</apiData><apiDesc>Das zum Festlegen der Eigenschaften des internen TextFlow-Objekts verwendete Konfigurationsobjekt, das zum Zusammenstellen von Zeilen verwendet wird, die von dieser Factory erstellt wurden. 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Erstellt ein StringTextLineFactory-Objekt.  
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.factory:StringTextLineFactory:createTextLines"><apiName>createTextLines</apiName><shortdesc> 
+		 Erstellt TextLine-Objekte mithilfe des Texts, der derzeit dem Factory-Objekt zugewiesen ist.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>callback</apiItemName><apiType value="Function"/><apiDesc>Die für jedes erstellte TextLine-Objekt aufgerufene Rückruffunktion.
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Erstellt TextLine-Objekte mithilfe des Texts, der derzeit dem Factory-Objekt zugewiesen ist.
+		 
+		 <p>Die Textzeilen werden mithilfe des derzeit zugewiesenen Texts und Formats erstellt und werden so zusammengestellt, dass sie in die von der <codeph>compositionBounds</codeph>-Eigenschaft zugewiesenen Abgrenzungen passen. Bei der Erstellung der Zeilen ruft die Factory die im <codeph>callback</codeph>-Parameter festgelegte Funktion auf. Das TextLine-Objekt wird an diese Funktion übergeben und diese steuert die Anzeige der Zeile.</p>
+		 
+		 <p>Um einen anderen Zeilensatz zu erstellen, ändern Sie die gewünschten Eigenschaften und rufen <codeph>createTextLines()</codeph> erneut auf.</p>
+		  
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.factory:StringTextLineFactory:configuration:get"><apiName>configuration</apiName><shortdesc> 
+		 Die vom internen TextFlow-Objekt verwendete Konfiguration.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:IConfiguration</apiValueClassifier></apiValueDef><apiDesc> 
+		 Die vom internen TextFlow-Objekt verwendete Konfiguration.
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:StringTextLineFactory:defaultConfiguration:get"><apiName>defaultConfiguration</apiName><shortdesc> 
+		 Die von dieser Factory verwendete Standardkonfiguration, falls keine angegeben ist.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiStatic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:IConfiguration</apiValueClassifier></apiValueDef><apiDesc> 
+		 Die von dieser Factory verwendete Standardkonfiguration, falls keine angegeben ist. 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:StringTextLineFactory:paragraphFormat:get"><apiName>paragraphFormat</apiName><shortdesc> 
+		 Das Absatzformat.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Das Absatzformat. 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:StringTextLineFactory:spanFormat:get"><apiName>spanFormat</apiName><shortdesc> 
+		 Das Zeichenformat.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Das Zeichenformat. 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:StringTextLineFactory:textFlowFormat:get"><apiName>textFlowFormat</apiName><shortdesc> 
+		 Das Textflussformat.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Das Textflussformat.
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:StringTextLineFactory:text:get"><apiName>text</apiName><shortdesc> 
+		 Der in TextLine-Objekte zu konvertierende Text.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 Der in TextLine-Objekte zu konvertierende Text.
+		 
+		 <p>Um TextLines zu erstellen, rufen Sie <codeph>createTextLines()</codeph> auf, nachdem Sie die <codeph>text</codeph>-Eigenschaft und die gewünschten Formate festgelegt haben.</p> 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.factory:TextFlowTextLineFactory"><apiName>TextFlowTextLineFactory</apiName><shortdesc>
+ Die TextFlowTextLineFactory -Klasse stellt eine einfache Methode zur Erstellung von TextLines zum Anzeigen von Text aus einem Textfluss bereit.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>flashx.textLayout.factory:TextLineFactoryBase</apiBaseClassifier></apiClassifierDef><apiDesc>
+ Die TextFlowTextLineFactory -Klasse stellt eine einfache Methode zur Erstellung von TextLines zum Anzeigen von Text aus einem Textfluss bereit.
+ 
+ <p>Die erstellten Textzeilen sind statisch und passen in ein einzelnes Begrenzungsrechteck, können jedoch mehrere Absätze und Formate sowie Inline-Grafiken enthalten. Um TextLine-Objekte direkt aus einem String zu erstellen, verwenden Sie StringTextLineFactory.</p> 
+ 
+ <p><b>Hinweis:</b> Wenn Sie Inline-Grafiken verwenden, muss die <codeph>source</codeph>-Eigenschaft des InlineGraphicElement-Objekts entweder eine Instanz eines DisplayObjects oder ein Class-Objekt sein, das ein eingebettetes Element repräsentiert. URLRequest-Objekte können nicht verwendet werden. Die Breite und Höhe der Inline-Grafik zum Zeitpunkt der Erstellung wird zum Zusammenstellen des Flusses verwendet. </p>
+ 
+ </apiDesc><example conref="examples\TextFlowTextLineFactory_example.as"><swfblock conref="examples\TextFlowTextLineFactory_example.swf"/></example></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>TextFlow</linktext></link><link href="flashx.textLayout.factory.xml#StringTextLineFactory"><linktext>StringTextLineFactory</linktext></link></related-links><apiConstructor id="flashx.textLayout.factory:TextFlowTextLineFactory:TextFlowTextLineFactory"><apiName>TextFlowTextLineFactory</apiName><shortdesc> 
+		 Erstellt ein TextFlowTextLineFactory-Objekt.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/></apiConstructorDef><apiDesc> 
+		 Erstellt ein TextFlowTextLineFactory-Objekt. 
+		 
+ 		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.factory:TextFlowTextLineFactory:createTextLines"><apiName>createTextLines</apiName><shortdesc>
+		 Erstellt TextLine-Objekte aus dem festgelegten Textfluss.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>callback</apiItemName><apiType value="Function"/><apiDesc>Funktion, die mit jedem erstellten TextLine-Objekt aufgerufen wird. Der Rückruf wird mit einem Shape-Objekt, das eine Hintergrundfarbe (falls vorhanden) darstellt, und mit den TextLine-Objekten für den Text durchgeführt.
+		 </apiDesc></apiParam><apiParam><apiItemName>textFlow</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiDesc>Der TextFlow, aus dem die Zeilen erstellt werden.
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc>
+		 Erstellt TextLine-Objekte aus dem festgelegten Textfluss.
+		 
+		 <p>Die Textzeilen werden so zusammengestellt, dass sie in die Abgrenzungen passen, die der <codeph>compositionBounds</codeph>-Eigenschaft zugewiesen wurden. Bei der Erstellung der Zeilen ruft die Factory die im <codeph>callback</codeph>-Parameter festgelegte Funktion auf. Das TextLine-Objekt wird an diese Funktion übergeben und diese steuert die Anzeige der Zeile. Wenn eine Zeile über eine Hintergrundfarbe verfügt, ruft die Factory ebenfalls die Rückruffunktion mit einem Shape-Objekt auf, das ein Rechteck in der Hintergrundfarbe enthält.</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation></apiClassifier><apiClassifier id="flashx.textLayout.factory:TruncationOptions"><apiName>TruncationOptions</apiName><shortdesc> 
+	 Die TruncationOptions-Klasse legt Optionen zum Einschränken der Anzahl von Textzeilen, die von der Textzeilen-Factory erstellt werden, und zum Angeben von ausgelassenen Zeilen fest.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 Die TruncationOptions-Klasse legt Optionen zum Einschränken der Anzahl von Textzeilen, die von der Textzeilen-Factory erstellt werden, und zum Angeben von ausgelassenen Zeilen fest.
+	 
+	 </apiDesc></apiClassifierDetail><apiConstructor id="flashx.textLayout.factory:TruncationOptions:TruncationOptions"><apiName>TruncationOptions</apiName><shortdesc> 
+		 Erstellt ein TruncationOptions-Objekt.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>truncationIndicator</apiItemName><apiType value="String"/><apiData>unknown</apiData><apiDesc>der String, der zum Anzeigen der Textverkürzung verwendet wurde. Er wird am Ende des zusammengestellten Texts angezeigt. Der Standardwert ist das horizontale Auslassungszeichen (U+2026).
+		 </apiDesc></apiParam><apiParam><apiItemName>lineCountLimit</apiItemName><apiType value="int"/><apiData>unknown</apiData><apiDesc>legt ein Verkürzungskriterium in Form der maximal zulässigen Zeilenanzahl fest. Der Standardwert <codeph>NO_LINE_COUNT_LIMIT</codeph> zeigt an, dass es keine Beschränkung in der Zeilenanzahl gibt.
+		 </apiDesc></apiParam><apiParam><apiItemName>truncationIndicatorFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiData>null</apiData><apiDesc>legt das Format für den Verkürzungsindikator fest. Ein Nullformat (der Standardwert) legt fest, dass der Verkürzungsindikator das Format des Inhalts unmittelbar vor dem Verkürzungspunkt übernimmt. Außerdem ignorieren die <codeph>TextLineFactory</codeph>-Methoden, die einen einfachen String als Eingabe annehmen, diesen Parameter und implementieren das Standardverhalten.
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Erstellt ein TruncationOptions-Objekt.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.factory:TruncationOptions:HORIZONTAL_ELLIPSIS"><apiName>HORIZONTAL_ELLIPSIS</apiName><shortdesc>
+		 Definiert den truncationIndicator-Eigenschaftswert (\u2026), der ein horizontales Auslassungszeichen darstellt.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>…</apiData><apiType value="String"/></apiValueDef><apiDesc>
+		 Definiert den <codeph>truncationIndicator</codeph>-Eigenschaftswert (<codeph>\u2026</codeph>), der ein horizontales Auslassungszeichen darstellt.
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.factory.xml#TruncationOptions/truncationIndicator"><linktext>truncationIndicator</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.factory:TruncationOptions:NO_LINE_COUNT_LIMIT"><apiName>NO_LINE_COUNT_LIMIT</apiName><shortdesc>
+		 Definiert den lineCountLimit-Eigenschaftswert (-1), der keine Beschränkung darstellt.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>-1</apiData><apiType value="int"/></apiValueDef><apiDesc>
+		 Definiert den <codeph>lineCountLimit</codeph>-Eigenschaftswert (<codeph>-1</codeph>), der keine Beschränkung darstellt.
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.factory.xml#TruncationOptions/lineCountLimit()"><linktext>lineCountLimit()</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.factory:TruncationOptions:lineCountLimit:get"><apiName>lineCountLimit</apiName><shortdesc> 
+		 Die maximale Anzahl der zu erstellenden Zeilen.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 Die maximale Anzahl der zu erstellenden Zeilen.
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:TruncationOptions:truncationIndicatorFormat:get"><apiName>truncationIndicatorFormat</apiName><shortdesc> 
+		 Der Stil, der auf den Verkürzungsindikatorstring angewendet wird.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Der Stil, der auf den Verkürzungsindikatorstring angewendet wird.
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:TruncationOptions:truncationIndicator:get"><apiName>truncationIndicator</apiName><shortdesc> 
+		 Ein String, der angibt, dass der Inhalt nicht vollständig angezeigt werden kann, da eine Zeilenbeschränkung vorliegt.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 Ein String, der angibt, dass der Inhalt nicht vollständig angezeigt werden kann, da eine Zeilenbeschränkung vorliegt.
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.factory:TextLineFactoryBase"><apiName>TextLineFactoryBase</apiName><shortdesc>
+ Die TextLineFactoryBase-Klasse dient als die Basisklasse für Textzeilen-Factories des Text Layout Framework.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion><Exclude kind="method" name="getNextTruncationPosition"/><Exclude kind="method" name="doesComposedTextFit"/><Exclude kind="method" name="callbackWithTextLines"/><Exclude kind="method" name="setContentBounds"/><Exclude kind="property" name="containerController"/></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc>
+ Die TextLineFactoryBase-Klasse dient als die Basisklasse für Textzeilen-Factories des Text Layout Framework.
+ 
+ <p><b>Hinweis:</b> Anwendungscode muss normalerweise kein TextLineFactoryBase-Objekt direkt erstellen oder verwenden. Verwenden Sie stattdessen eine der abgeleiteten Factory-Klassen des Texts.</p>
+  
+ </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>flashx.textLayout.elements.TextFlow</linktext></link></related-links><apiConstructor id="flashx.textLayout.factory:TextLineFactoryBase:TextLineFactoryBase"><apiName>TextLineFactoryBase</apiName><shortdesc> 
+		 Basisklassenkonstruktor für Textzeilen-Factories.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/></apiConstructorDef><apiDesc> 
+		 Basisklassenkonstruktor für Textzeilen-Factories.
+		  
+ 		 <p><b>Hinweis:</b> Anwendungscode muss normalerweise kein TextLineFactoryBase-Objekt direkt erstellen oder verwenden. Verwenden Sie stattdessen eine der abgeleiteten Factory-Klassen des Texts.</p>
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.factory:TextLineFactoryBase:getContentBounds"><apiName>getContentBounds</apiName><shortdesc>
+		 Das kleinste Rechteck, in das der formatierte Inhalt passt.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="flash.geom:Rectangle"/></apiReturn></apiOperationDef><apiDesc>
+		 Das kleinste Rechteck, in das der formatierte Inhalt passt.
+		 
+		 <p><b>Hinweis:</b>: Verkürzte Zeilen werden nicht in die Größenberechnung einbezogen.</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.factory:TextLineFactoryBase:compositionBounds:get"><apiName>compositionBounds</apiName><shortdesc>
+		 Das Rechteck, in dem Textzeilen erstellt werden.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="flash.geom:Rectangle"/></apiValueDef><apiDesc>
+		 Das Rechteck, in dem Textzeilen erstellt werden.
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:TextLineFactoryBase:horizontalScrollPolicy:get"><apiName>horizontalScrollPolicy</apiName><shortdesc> 
+		 Gibt an, wie Zeilen erstellt werden, wenn die zusammengesetzten Grenzen nicht groß genug sind.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 Gibt an, wie Zeilen erstellt werden, wenn die zusammengesetzten Grenzen nicht groß genug sind.
+		  
+		 <p>Wenn <codeph>ScrollPolicy.ON</codeph> oder <codeph>ScrollPolicy.AUTO</codeph> festgelegt ist, werden alle Zeilen erstellt. Sie müssen einen Bildlauf der Zeilen im sichtbaren Bereich durchführen (und Zeilen außerhalb dieses Bereichs gegebenenfalls maskieren). Wenn <codeph>ScrollPolicy.OFF</codeph> festgelegt wurde, werden nur Zeilen innerhalb der Zusammenstellungsgrenzen erstellt.</p>
+		 
+		 <p>Wenn die <codeph>truncationOptions</codeph>-Eigenschaft festgelegt ist, wird die Bildlaufrichtlinie ignoriert (und wie <codeph>ScrollPolicy.OFF</codeph> behandelt).</p> 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#StandardFlowComposer"><linktext>flashx.textLayout.compose.StandardFlowComposer</linktext></link><link href="flashx.textLayout.container.xml#ScrollPolicy"><linktext>flashx.textLayout.container.ScrollPolicy</linktext></link><link href="flashx.textLayout.factory.xml#TextLineFactoryBase/truncationOptions"><linktext>truncationOptions</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.factory:TextLineFactoryBase:isTruncated:get"><apiName>isTruncated</apiName><shortdesc> 
+		 Gibt an, ob bei der letzten Erstellung von Zeilen Text gekürzt wurde.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 Gibt an, ob bei der letzten Erstellung von Zeilen Text gekürzt wurde.
+		  
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:TextLineFactoryBase:swfContext:get"><apiName>swfContext</apiName><shortdesc> 
+		Die ISWFContext-Instanz für ggf. notwendige FTE-Aufrufe.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.compose:ISWFContext</apiValueClassifier></apiValueDef><apiDesc> 
+		Die ISWFContext-Instanz für ggf. notwendige FTE-Aufrufe. 
+		
+		<p>Standardmäßig ist die ISWFContext-Implementierung dieses FlowComposerBase-Objekt. Anwendungen können eine benutzerdefinierte Implementierung bereitstellen, um in eine andere SWF-Datei eingebettete Schriftarten zu verwenden oder Textzeilen zwischenzuspeichern und erneut zu verwenden.</p>
+		
+		</apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#ISWFContext"><linktext>flashx.textLayout.compose.ISWFContext</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.factory:TextLineFactoryBase:truncationOptions:get"><apiName>truncationOptions</apiName><shortdesc> 
+		 Gibt die Optionen zum Kürzen von Text an, falls der Text nicht in die zusammengesetzten Grenzen passt.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.factory:TruncationOptions</apiValueClassifier></apiValueDef><apiDesc> 
+		 Gibt die Optionen zum Kürzen von Text an, falls der Text nicht in die zusammengesetzten Grenzen passt.
+		  
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.factory:TextLineFactoryBase:verticalScrollPolicy:get"><apiName>verticalScrollPolicy</apiName><shortdesc> 
+		 Gibt an, wie Zeilen erstellt werden, wenn die zusammengesetzten Grenzen nicht groß genug sind.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 Gibt an, wie Zeilen erstellt werden, wenn die zusammengesetzten Grenzen nicht groß genug sind.
+		  
+		 <p>Wenn <codeph>ScrollPolicy.ON</codeph> oder <codeph>ScrollPolicy.AUTO</codeph> festgelegt ist, werden alle Zeilen erstellt. Sie müssen einen Bildlauf der Zeilen im sichtbaren Bereich durchführen (und Zeilen außerhalb dieses Bereichs gegebenenfalls maskieren). Wenn <codeph>ScrollPolicy.OFF</codeph> festgelegt wurde, werden nur Zeilen innerhalb der Zusammenstellungsgrenzen erstellt.</p>
+		 
+		 <p>Wenn die <codeph>truncationOptions</codeph>-Eigenschaft festgelegt ist, wird die Bildlaufrichtlinie ignoriert (und wie <codeph>ScrollPolicy.OFF</codeph> behandelt).</p> 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#StandardFlowComposer"><linktext>flashx.textLayout.compose.StandardFlowComposer</linktext></link><link href="flashx.textLayout.container.xml#ScrollPolicy"><linktext>flashx.textLayout.container.ScrollPolicy</linktext></link><link href="flashx.textLayout.factory.xml#TextLineFactoryBase/truncationOptions"><linktext>truncationOptions</linktext></link></related-links></apiValue></apiClassifier></apiPackage>

@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<apiPackage id="flashx.textLayout.utils"><apiName>flashx.textLayout.utils</apiName><apiDetail/><apiClassifier id="flashx.textLayout.utils:CharacterUtil"><apiName>CharacterUtil</apiName><shortdesc> 
+	 文字に関する情報を管理および取得するユーティリティ。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 文字に関する情報を管理および取得するユーティリティ。このクラスのメソッドは静的であるため、構文 <codeph>CharacterUtil.method(<i>パラメーター</i>)</codeph> を使用して呼び出す必要があります。
+	 
+	 </apiDesc></apiClassifierDetail><apiOperation id="flashx.textLayout.utils:CharacterUtil:isHighSurrogate"><apiName>isHighSurrogate</apiName><shortdesc> 
+		 charCode 引数がサロゲートペアの上位ワードである場合、true を返します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc><codeph>charCode</codeph> 引数がサロゲートペアの上位サロゲートである場合は、<codeph>true</codeph>。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>charCode</apiItemName><apiType value="int"/><apiDesc>文字コードを表す整数。文字コードは通常、16 進数形式で表されます。例えば、空白文字の文字コードは数値 <codeph>0x0020</codeph> で表すことができます。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 <codeph>charCode</codeph> 引数がサロゲートペアの上位ワードである場合、<codeph>true</codeph> を返します。サロゲートペアは、表現するのに 16 ビット超を必要とするコードポイントの 1 つの文字を表します。このため、そのコードポイントを表現するには、上位サロゲートと下位サロゲートの 2 つの 16 ビットワードの組み合わせが必要です。
+		 <p>このメソッドを、一連の文字を処理する際に使用することで、間違ってサロゲートペアを不完全な片割れに分割するのを防ぐことができます。</p>
+		 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:CharacterUtil:isLowSurrogate"><apiName>isLowSurrogate</apiName><shortdesc> 
+		 charCode 引数がサロゲートペアの下位ワードである場合、true を返します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc><codeph>charCode</codeph> 引数がサロゲートペアの下位ワードである場合は、<codeph>true</codeph>。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>charCode</apiItemName><apiType value="int"/><apiDesc>文字コードを表す整数。文字コードは通常、16 進数形式で表されます。例えば、空白文字の文字コードは数値 <codeph>0x0020</codeph> で表すことができます。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 <codeph>charCode</codeph> 引数がサロゲートペアの下位ワードである場合、<codeph>true</codeph> を返します。サロゲートペアは、表現するのに 16 ビット超を必要とするコードポイントの 1 つの文字を表します。このため、そのコードポイントを表現するには、上位サロゲートと下位サロゲートの 2 つの 16 ビットワードの組み合わせが必要です。
+		 <p>このメソッドを、一連の文字を処理する際に使用することで、間違ってサロゲートペアを不完全な片割れに分割するのを防ぐことができます。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:CharacterUtil:isWhitespace"><apiName>isWhitespace</apiName><shortdesc> 
+		 charCode が空白文字の場合、true を返します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc><codeph>charCode</codeph> が空白文字の場合は、<codeph>true</codeph>。 
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>charCode</apiItemName><apiType value="int"/><apiDesc>文字コードを表す整数。文字コードは通常、16 進数形式で表されます。例えば、空白文字の文字コードは数値 <codeph>0x0020</codeph> で表すことができます。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 <codeph>charCode</codeph> が空白文字の場合、<codeph>true</codeph> を返します。 
+		 <p>次の表に、このメソッドで空白文字と見なされるすべての文字を示します。
+		 </p>
+		 <adobetable class="innertable">
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		  <tgroup cols="3"><thead><row><entry>文字コード</entry><entry>Unicode 文字名</entry><entry>カテゴリー</entry></row></thead><tbody><row><entry><codeph>0x0020</codeph></entry><entry>SPACE</entry><entry>スペース区切り文字</entry></row><row><entry><codeph>0x1680</codeph></entry><entry>OGHAM SPACE MARK</entry><entry>スペース区切り文字</entry></row><row><entry><codeph>0x180E</codeph></entry><entry>MONGOLIAN VOWEL SEPARATOR</entry><entry>スペース区切り文字</entry></row><row><entry><codeph>0x2000</codeph></entry><entry>EN QUAD</entry><entry>スペース区切り文字</entry></row><row><entry><codeph>0x2001</codeph></entry><entry>EM QUAD</entry><entry>スペース区切り文字</entry></row><row><entry><codeph>0x2002</codeph></entry><entry>EN SPACE</entry><entry>スペース区切り文字</entry></row><row><entry><codeph>0x2003</codeph></entry><entry>EM SPACE</entry><entry>スペース区切り文字</entry></row><row><entry><codeph>0x2004</codeph></entry><entry>THREE-PER-EM SPACE</entry><entry>スペース区切り文字</entry></row><row><entry><codeph>0x2005</codeph></entry><entry>FOUR-PER-EM SPACE</entry><entry>スペース区切り文字</entry></row><row><entry><codeph>0x2006</codeph></entry><entry>SIX-PER-EM SPACE</entry><entry>スペース区切り文字</entry></row><row><entry><codeph>0x2007</codeph></entry><entry>FIGURE SPACE</entry><entry>スペース区切り文字</entry></row><row><entry><codeph>0x2008</codeph></entry><entry>PUNCTUATION SPACE</entry><entry>スペース区切り文字</entry></row><row><entry><codeph>0x2009</codeph></entry><entry>THIN SPACE</entry><entry>スペース区切り文字</entry></row><row><entry><codeph>0x200A</codeph></entry><entry>HAIR SPACE</entry><entry>スペース区切り文字</entry></row><row><entry><codeph>0x202F</codeph></entry><entry>NARROW NO-BREAK SPACE</entry><entry>スペース区切り文字</entry></row><row><entry><codeph>0x205F</codeph></entry><entry>MEDIUM MATHEMATICAL SPACE</entry><entry>スペース区切り文字</entry></row><row><entry><codeph>0x3000</codeph></entry><entry>IDEOGRAPHIC SPACE</entry><entry>スペース区切り文字</entry></row><row><entry><codeph>0x2028</codeph></entry><entry>LINE SEPARATOR</entry><entry>行の区切り記号</entry></row><row><entry><codeph>0x2029</codeph></entry><entry>PARAGRAPH SEPARATOR</entry><entry>段落の区切り記号</entry></row><row><entry><codeph>0x0009</codeph></entry><entry>CHARACTER TABULATION</entry><entry>その他</entry></row><row><entry><codeph>0x000A</codeph></entry><entry>LINE FEED</entry><entry>その他</entry></row><row><entry><codeph>0x000B</codeph></entry><entry>LINE TABULATION</entry><entry>その他</entry></row><row><entry><codeph>0x000C</codeph></entry><entry>FORM FEED</entry><entry>その他</entry></row><row><entry><codeph>0x000D</codeph></entry><entry>CARRIAGE RETURN</entry><entry>その他</entry></row><row><entry><codeph>0x0085</codeph></entry><entry>NEXT LINE</entry><entry>その他</entry></row><row><entry><codeph>0x00A0</codeph></entry><entry>NO-BREAK SPACE</entry><entry>その他</entry></row></tbody></tgroup></adobetable>
+
+		 
+		 </apiDesc></apiOperationDetail></apiOperation></apiClassifier><apiClassifier id="flashx.textLayout.utils:NavigationUtil"><apiName>NavigationUtil</apiName><shortdesc> 
+	 TextRange を処理するユーティリティ。このクラスのメソッドは静的であるため、構文 NavigationUtil.method(パラメーター) を使用して呼び出す必要があります。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 TextRange を処理するユーティリティ。このクラスのメソッドは静的であるため、構文 <codeph>NavigationUtil.method</codeph>(<i>パラメーター</i>) を使用して呼び出す必要があります。
+	 
+	 </apiDesc></apiClassifierDetail><apiOperation id="flashx.textLayout.utils:NavigationUtil:endOfDocument"><apiName>endOfDocument</apiName><shortdesc>
+		 ドキュメントの末尾に TextRange を設定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>選択範囲が変更された場合は、true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>activeIndex のみを移動すべきことを示します。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 ドキュメントの末尾に TextRange を設定します。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:endOfLine"><apiName>endOfLine</apiName><shortdesc>
+		 行の末尾に TextRange を設定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>選択範囲が変更された場合は、true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>activeIndex のみを移動すべきことを示します。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 行の末尾に TextRange を設定します。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:endOfParagraph"><apiName>endOfParagraph</apiName><shortdesc>
+		 段落の末尾に TextRange を設定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>選択範囲が変更された場合は、true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>activeIndex のみを移動すべきことを示します。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 段落の末尾に TextRange を設定します。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:nextAtomPosition"><apiName>nextAtomPosition</apiName><shortdesc> 
+		 次のアトムの絶対位置を返します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiType value="int"/></apiReturn><apiParam><apiItemName>flowRoot</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier></apiParam><apiParam><apiItemName>absolutePos</apiItemName><apiType value="int"/></apiParam></apiOperationDef><apiDesc> 
+		 次のアトムの絶対位置を返します。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:nextCharacter"><apiName>nextCharacter</apiName><shortdesc>
+		 TextRange を 1 文字前に設定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>選択範囲が変更された場合は、true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>activeIndex のみを移動すべきことを示します。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 TextRange を 1 文字前に設定します。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:nextLine"><apiName>nextLine</apiName><shortdesc>
+		 TextRange を 1 行下に設定します。
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>選択範囲が変更された場合は、true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>activeIndex のみを移動すべきことを示します。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 TextRange を 1 行下に設定します。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:nextPage"><apiName>nextPage</apiName><shortdesc>
+		 TextRange を 1 ページ下に設定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>選択範囲が変更された場合は、true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>activeIndex のみを移動すべきことを示します。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 TextRange を 1 ページ下に設定します。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:nextWordPosition"><apiName>nextWordPosition</apiName><shortdesc> 
+		 次の単語の先頭の絶対位置を返します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiType value="int"/></apiReturn><apiParam><apiItemName>flowRoot</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier></apiParam><apiParam><apiItemName>absolutePos</apiItemName><apiType value="int"/></apiParam></apiOperationDef><apiDesc> 
+		 次の単語の先頭の絶対位置を返します。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:nextWord"><apiName>nextWord</apiName><shortdesc>
+		 TextRange を 1 語前に設定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>選択範囲が変更された場合は、true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>activeIndex のみを移動すべきことを示します。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 TextRange を 1 語前に設定します。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:previousAtomPosition"><apiName>previousAtomPosition</apiName><shortdesc> 
+		 前のアトムの絶対位置を返します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiType value="int"/></apiReturn><apiParam><apiItemName>flowRoot</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier></apiParam><apiParam><apiItemName>absolutePos</apiItemName><apiType value="int"/></apiParam></apiOperationDef><apiDesc> 
+		 前のアトムの絶対位置を返します。 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:previousCharacter"><apiName>previousCharacter</apiName><shortdesc>
+		 TextRange を 1 文字後ろに設定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>選択範囲が変更された場合は、true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>activeIndex のみを移動すべきことを示します。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 TextRange を 1 文字後ろに設定します。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:previousLine"><apiName>previousLine</apiName><shortdesc>
+		 TextRange を 1 行上に設定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>選択範囲が変更された場合は、true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>activeIndex のみを移動すべきことを示します。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 TextRange を 1 行上に設定します。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:previousPage"><apiName>previousPage</apiName><shortdesc>
+		 TextRange を 1 ページ上に設定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>選択範囲が変更された場合は、true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>activeIndex のみを移動すべきことを示します。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 TextRange を 1 ページ上に設定します。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:previousWordPosition"><apiName>previousWordPosition</apiName><shortdesc> 
+		 前の単語の先頭の絶対位置を返します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiType value="int"/></apiReturn><apiParam><apiItemName>flowRoot</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier></apiParam><apiParam><apiItemName>absolutePos</apiItemName><apiType value="int"/></apiParam></apiOperationDef><apiDesc> 
+		 前の単語の先頭の絶対位置を返します。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:previousWord"><apiName>previousWord</apiName><shortdesc>
+		 TextRange を 1 語後ろに設定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>選択範囲が変更された場合は、true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>activeIndex のみを移動すべきことを示します。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 TextRange を 1 語後ろに設定します。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:startOfDocument"><apiName>startOfDocument</apiName><shortdesc>
+		 TextRange をドキュメントの先頭に設定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>選択範囲が変更された場合は、true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>activeIndex のみを移動すべきことを示します。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 TextRange をドキュメントの先頭に設定します。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:startOfLine"><apiName>startOfLine</apiName><shortdesc>
+		 TextRange を行の先頭に設定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>選択範囲が変更された場合は、true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>activeIndex のみを移動すべきことを示します。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 TextRange を行の先頭に設定します。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:startOfParagraph"><apiName>startOfParagraph</apiName><shortdesc>
+		 TextRange を段落の先頭に設定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>選択範囲が変更された場合は、true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>activeIndex のみを移動すべきことを示します。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 TextRange を段落の先頭に設定します。
+		 </apiDesc></apiOperationDetail></apiOperation></apiClassifier></apiPackage>

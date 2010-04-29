@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flexLibProperties includeAllClasses="false" version="3">
+  <includeClasses>
+    <classEntry path="com.ComponentClasses"/>
+    <classEntry path="org.mig.view.controls.MultilineTextInput"/>
+    <classEntry path="flexlib.FlexlibClasses"/>
+    <classEntry path="sjd.SJDClasses"/>
+    <classEntry path="org.mig.view.containers.GradientCanvas"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

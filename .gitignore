@@ -1,0 +1,15 @@
+.metadata
+components/bin/components.swc
+framework/bin/framework.swc
+textLayout/bin/textLayout.swc
+textLayout_ui/bin/textLayout_ui.swc
+components_framework/bin/components_framework.swc
+framework/.actionScriptProperties
+framework/.flexLibProperties
+airapp/bin-debug/
+webapp/bin-debug/
+testing/TextLayoutEditor/bin/
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev

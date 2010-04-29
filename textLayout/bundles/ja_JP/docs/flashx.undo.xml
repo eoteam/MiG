@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<apiPackage id="flashx.undo"><apiName>flashx.undo</apiName><apiDetail/><apiClassifier id="flashx.undo:UndoManager"><apiName>UndoManager</apiName><shortdesc> 
+	 UndoManager クラスでは、テキストフローの編集操作履歴を管理し、これらの操作の取り消しおよびやり直しを実行できるようにします。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseInterface>flashx.undo:IUndoManager</apiBaseInterface><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 UndoManager クラスでは、テキストフローの編集操作履歴を管理し、これらの操作の取り消しおよびやり直しを実行できるようにします。
+	 
+	 <p>取り消しマネージャーは、IOperation オブジェクトの 2 つのスタックを管理します。取り消し可能な操作を実行すると、操作は取り消しスタックに置かれます。その操作を取り消すと、操作は取り消しスタックから削除され、取り消されて、やり直しスタックに置かれます。同様に、その操作をやり直すと、操作はやり直しスタックから削除され、再実行されて、再び取り消しスタックに置かれます。他の操作を先に実行すると、やり直しスタックはクリアされます。</p>
+	 
+	 <p>TextFlow が直接変更された場合（編集マネージャーの呼び出しを介してではなく、管理する FlowElement オブジェクトの直接呼び出しを介して）、編集マネージャーは取り消しスタックをクリアして、スタックが現在の状態と同期しなくなるのを防ぎます。</p>
+	 
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link></related-links><apiConstructor id="flashx.undo:UndoManager:UndoManager"><apiName>UndoManager</apiName><shortdesc>
+		 UndoManager オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/></apiConstructorDef><apiDesc>
+		 UndoManager オブジェクトを作成します。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.undo:UndoManager:canRedo"><apiName>canRedo</apiName><shortdesc conref="IUndoManager#canRedo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="Boolean"/><apiDesc>やり直しスタックにやり直し可能な操作がある場合、Boolean は <codeph>true</codeph> です。それ以外の場合は <codeph>false</codeph> です。
+		 
+		 </apiDesc></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#canRedo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:canUndo"><apiName>canUndo</apiName><shortdesc conref="IUndoManager#canUndo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="Boolean"/><apiDesc>取り消しスタックに取り消し可能な操作がある場合、Boolean は <codeph>true</codeph> です。それ以外の場合は <codeph>false</codeph> です。
+		 
+		 </apiDesc></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#canUndo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:clearAll"><apiName>clearAll</apiName><shortdesc conref="IUndoManager#clearAll()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#clearAll()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:clearRedo"><apiName>clearRedo</apiName><shortdesc conref="IUndoManager#clearRedo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#clearRedo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:peekRedo"><apiName>peekRedo</apiName><shortdesc conref="IUndoManager#peekRedo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier><apiDesc>IOperation。やり直し可能な IOperation オブジェクト、またはスタックにやり直し可能な操作がない場合は <codeph>null</codeph>。
+		 
+		 </apiDesc></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#peekRedo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:peekUndo"><apiName>peekUndo</apiName><shortdesc conref="IUndoManager#peekUndo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier><apiDesc>IOperation。取り消し可能な IOperation オブジェクト、またはスタックに取り消し可能な操作がない場合は <codeph>null</codeph>。
+		 
+		 </apiDesc></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#peekUndo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:popRedo"><apiName>popRedo</apiName><shortdesc conref="IUndoManager#popRedo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier><apiDesc>IOperation。やり直し可能な IOperation オブジェクト、またはスタックにやり直し可能な操作がない場合は <codeph>null</codeph>。
+		 </apiDesc></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#popRedo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:popUndo"><apiName>popUndo</apiName><shortdesc conref="IUndoManager#popUndo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier><apiDesc>IOperation。取り消し可能な IOperation オブジェクト、またはスタックに取り消し可能な操作がない場合は <codeph>null</codeph>。
+		 
+		 </apiDesc></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#popUndo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:pushRedo"><apiName>pushRedo</apiName><shortdesc conref="IUndoManager#pushRedo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiParam></apiOperationDef><apiDesc conref="IUndoManager#pushRedo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:pushUndo"><apiName>pushUndo</apiName><shortdesc conref="IUndoManager#pushUndo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiParam></apiOperationDef><apiDesc conref="IUndoManager#pushUndo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:redo"><apiName>redo</apiName><shortdesc conref="IUndoManager#redo()"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#redo()"> 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.edit.xml#IEditManager/redo"><linktext>flashx.textLayout.edit.IEditManager.redo</linktext></link></related-links></apiOperation><apiOperation id="flashx.undo:UndoManager:undo"><apiName>undo</apiName><shortdesc conref="IUndoManager#undo()"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#undo()"> 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.edit.xml#IEditManager/undo"><linktext>flashx.textLayout.edit.IEditManager.undo</linktext></link></related-links></apiOperation><apiValue id="flashx.undo:UndoManager:undoAndRedoItemLimit:get"><apiName>undoAndRedoItemLimit</apiName><shortdesc conref="IUndoManager#undoAndRedoItemLimit()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc conref="IUndoManager#undoAndRedoItemLimit()">
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.undo:IOperation"><apiName>IOperation</apiName><shortdesc> 
+	 IOperation では、取り消しおよびやり直しが可能な操作のインターフェイスを定義します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc> 
+	 IOperation では、取り消しおよびやり直しが可能な操作のインターフェイスを定義します。
+	  
+	 </apiDesc></apiClassifierDetail><apiOperation id="flashx.undo:IOperation:flashx.undo:IOperation:performRedo"><apiName>performRedo</apiName><shortdesc> 
+		 操作を再実行します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 操作を再実行します。
+		 
+		 <p>操作の取り消しスタックへの配置も行われます。</p>
+		  
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IOperation:flashx.undo:IOperation:performUndo"><apiName>performUndo</apiName><shortdesc> 
+		 操作を取り消します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 操作を取り消します。
+		 
+		 <p>操作のやり直しスタックへの配置も行われます。</p> 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation></apiClassifier><apiClassifier id="flashx.undo:IUndoManager"><apiName>IUndoManager</apiName><shortdesc>
+	 IUndoManager は、取り消しおよびやり直しスタックを管理するインターフェイスを定義します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc>
+	 IUndoManager は、取り消しおよびやり直しスタックを管理するインターフェイスを定義します。
+	 
+	 <p>取り消しマネージャーは、取り消しおよびやり直しが可能な操作のスタックを管理します。</p>
+	 
+	 </apiDesc></apiClassifierDetail><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:canRedo"><apiName>canRedo</apiName><shortdesc>
+		 現在、やり直し可能な操作があるかどうかを示します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>やり直しスタックにやり直し可能な操作がある場合、Boolean は <codeph>true</codeph> です。それ以外の場合は <codeph>false</codeph> です。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc>
+		 現在、やり直し可能な操作があるかどうかを示します。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:canUndo"><apiName>canUndo</apiName><shortdesc>
+		 現在、取り消し可能な操作があるかどうかを示します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>取り消しスタックに取り消し可能な操作がある場合、Boolean は <codeph>true</codeph> です。それ以外の場合は <codeph>false</codeph> です。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc>
+		 現在、取り消し可能な操作があるかどうかを示します。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:clearAll"><apiName>clearAll</apiName><shortdesc>
+		 取り消しおよびやり直し履歴の両方をクリアします。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc>
+		 取り消しおよびやり直し履歴の両方をクリアします。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:clearRedo"><apiName>clearRedo</apiName><shortdesc>
+		 やり直しスタックをクリアします。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc>
+		 やり直しスタックをクリアします。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:peekRedo"><apiName>peekRedo</apiName><shortdesc>
+		 次のやり直し操作を返します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>IOperation。やり直し可能な IOperation オブジェクト、またはスタックにやり直し可能な操作がない場合は <codeph>null</codeph>。
+		 
+		 </apiDesc><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>
+		 次のやり直し操作を返します。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:peekUndo"><apiName>peekUndo</apiName><shortdesc>
+		 次の取り消し操作を返します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>IOperation。取り消し可能な IOperation オブジェクト、またはスタックに取り消し可能な操作がない場合は <codeph>null</codeph>。
+		 
+		 </apiDesc><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>
+		 次の取り消し操作を返します。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:popRedo"><apiName>popRedo</apiName><shortdesc>
+		 やり直しスタックから次のやり直し操作を削除して、返します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>IOperation。やり直し可能な IOperation オブジェクト、またはスタックにやり直し可能な操作がない場合は <codeph>null</codeph>。
+		 </apiDesc><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>
+		 やり直しスタックから次のやり直し操作を削除して、返します。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:popUndo"><apiName>popUndo</apiName><shortdesc>
+		 取り消しスタックから次の取り消し操作を削除して、返します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>IOperation。取り消し可能な IOperation オブジェクト、またはスタックに取り消し可能な操作がない場合は <codeph>null</codeph>。
+		 
+		 </apiDesc><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>
+		 取り消しスタックから次の取り消し操作を削除して、返します。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:pushRedo"><apiName>pushRedo</apiName><shortdesc>
+		 やり直しスタックにやり直し可能な操作を追加します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiParam></apiOperationDef><apiDesc>
+		 やり直しスタックにやり直し可能な操作を追加します。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:pushUndo"><apiName>pushUndo</apiName><shortdesc>
+		 取り消しスタックに取り消し可能な操作を追加します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiParam></apiOperationDef><apiDesc>
+		 取り消しスタックに取り消し可能な操作を追加します。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:redo"><apiName>redo</apiName><shortdesc> 
+		 やり直しスタックから次の IOperation オブジェクトを削除し、そのオブジェクトの performRedo() 関数を呼び出します。</shortdesc><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 やり直しスタックから次の IOperation オブジェクトを削除し、そのオブジェクトの performRedo() 関数を呼び出します。
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.edit.xml#IEditManager/redo"><linktext>flashx.textLayout.edit.IEditManager.redo</linktext></link><link href="flashx.undo.xml#IUndoManager/canRedo"><linktext>flashx.undo.IUndoManager.canRedo</linktext></link><link href="flashx.undo.xml#IUndoManager/clearRedo"><linktext>flashx.undo.IUndoManager.clearRedo</linktext></link><link href="flashx.undo.xml#IUndoManager/peekRedo"><linktext>flashx.undo.IUndoManager.peekRedo</linktext></link><link href="flashx.undo.xml#IUndoManager/pushRedo"><linktext>flashx.undo.IUndoManager.pushRedo</linktext></link><link href="flashx.undo.xml#IUndoManager/popRedo"><linktext>flashx.undo.IUndoManager.popRedo</linktext></link></related-links></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:undo"><apiName>undo</apiName><shortdesc> 
+		 取り消しスタックから次の IOperation オブジェクトを削除し、そのオブジェクトの performUndo() 関数を呼び出します。</shortdesc><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 取り消しスタックから次の IOperation オブジェクトを削除し、そのオブジェクトの performUndo() 関数を呼び出します。
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.edit.xml#IEditManager/undo"><linktext>flashx.textLayout.edit.IEditManager.undo</linktext></link><link href="flashx.undo.xml#IUndoManager/canUndo"><linktext>flashx.undo.IUndoManager.canUndo</linktext></link><link href="flashx.undo.xml#IUndoManager/clearUndo"><linktext>flashx.undo.IUndoManager.clearUndo</linktext></link><link href="flashx.undo.xml#IUndoManager/peekUndo"><linktext>flashx.undo.IUndoManager.peekUndo</linktext></link><link href="flashx.undo.xml#IUndoManager/pushUndo"><linktext>flashx.undo.IUndoManager.pushUndo</linktext></link><link href="flashx.undo.xml#IUndoManager/popUndo"><linktext>flashx.undo.IUndoManager.popUndo</linktext></link></related-links></apiOperation><apiValue id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:undoAndRedoItemLimit:get"><apiName>undoAndRedoItemLimit</apiName><shortdesc>
+		 追跡する取り消しおよびやり直し可能な操作の最大数です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc>
+		 追跡する取り消しおよびやり直し可能な操作の最大数です。
+		 
+		 <p>取り消し機能を無効にするには、この値を 0 に設定します。</p> 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier></apiPackage>

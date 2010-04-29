@@ -1,0 +1,571 @@
+<?xml version="1.0"?>
+<apiPackage id="flashx.textLayout.operations"><apiName>flashx.textLayout.operations</apiName><apiDetail/><apiClassifier id="flashx.textLayout.operations:FlowOperation"><apiName>FlowOperation</apiName><shortdesc> 
+	 FlowOperation 类是所有文本布局框架操作的基类。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseInterface>flashx.undo:IOperation</apiBaseInterface><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 FlowOperation 类是所有文本布局框架操作的基类。 
+	 
+	 <p>这些操作是文本流的转换。Operation 类定义执行和撤消转换的逻辑。这些操作由编辑管理器执行。大多数应用程序不需要直接创建或管理操作（除非执行自定义编辑管理器）。</p>
+	 
+	 <p>执行某一操作时，编辑管理器分派 FlowOperationEvent 对象中的 Operation 对象。您可以查询该 Operation 对象以确定是否允许该操作，确定是否执行一些其它操作，以及确定是否更新相关的用户界面元素。</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:FlowOperation:FlowOperation"><apiName>FlowOperation</apiName><shortdesc> 
+		 创建 FlowOperation 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>textFlow</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiDesc>要应用该操作的文本流。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建 FlowOperation 对象。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:FlowOperation:canUndo"><apiName>canUndo</apiName><shortdesc>	
+		 测试此操作是否被放置在撤消堆栈上。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>true 意味着将操作推入到撤消堆栈中。false 意味着不推入此操作。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc>	
+		 测试此操作是否被放置在撤消堆栈上。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.operations:FlowOperation:doOperation"><apiName>doOperation</apiName><shortdesc> 
+		 执行操作。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>如果操作成功，则布尔值为 <codeph>true</codeph>，否则为 <codeph>false</codeph>。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc> 
+		 执行操作。 
+		 
+		 <p>该方法必须在派生类中被覆盖。基类方法不执行任何操作。不应直接调用 <codeph>doOperation()</codeph>。当执行操作时，编辑管理器将调用该方法。 </p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.operations:FlowOperation:redo"><apiName>redo</apiName><shortdesc>	
+		 重新执行操作。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>执行操作时传递给操作的 SelectionState 对象。SelectionState 对象可以是当前选择，或者专门为该操作创建的选择。 
+		 
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>	
+		 重新执行操作。 
+		 
+		 <p>该方法必须在派生类中被覆盖。基类方法不执行任何操作。不应直接调用 <codeph>redo()</codeph>。当重新执行操作时，编辑管理器将调用该方法。 </p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.operations:FlowOperation:undo"><apiName>undo</apiName><shortdesc>	
+		 取消操作。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>执行操作时传递给操作的 SelectionState 对象。SelectionState 对象可以是当前选择，或者专门为该操作创建的选择。 
+		 
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>	
+		 取消操作。 
+		 
+		 <p>该方法必须在派生类中被覆盖。基类方法不执行任何操作。不应直接调用 <codeph>undo()</codeph>。当取消操作时，编辑管理器将调用该方法。 </p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:FlowOperation:userData"><apiName>userData</apiName><shortdesc> 
+		 与元素关联的任意数据。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiType value=""/></apiValueDef><apiDesc> 
+		 与元素关联的任意数据。 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowOperation:beginGeneration:get"><apiName>beginGeneration</apiName><shortdesc>
+		 操作之前生成文本流。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="uint"/></apiValueDef><apiDesc>
+		 操作之前生成文本流。
+		   
+		 <p>如果生成 0，则指示操作没有完成。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowOperation:endGeneration:get"><apiName>endGeneration</apiName><shortdesc> 
+		 操作之后生成文本流。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="uint"/></apiValueDef><apiDesc> 
+		 操作之后生成文本流。
+		 
+		 <p>如果生成 0，则指示操作没有完成。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowOperation:textFlow:get"><apiName>textFlow</apiName><shortdesc> 
+		 要应用该操作的 TextFlow 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.elements:TextFlow</apiValueClassifier></apiValueDef><apiDesc> 
+		 要应用该操作的 TextFlow 对象。
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:FlowElementOperation"><apiName>FlowElementOperation</apiName><shortdesc>
+	 FlowElementOperation 类是用于转换 FlowElement 的操作的基类。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 FlowElementOperation 类是用于转换 FlowElement 的操作的基类。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.formats.xml#TextLayoutFormat"><linktext>flashx.textLayout.formats.TextLayoutFormat</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:FlowElementOperation:FlowElementOperation"><apiName>FlowElementOperation</apiName><shortdesc> 
+		 创建 FlowElementOperation 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>指定该操作针对的 TextFlow 对象。
+		 </apiDesc></apiParam><apiParam><apiItemName>targetElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiDesc>指定该操作修改的元素。
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>距 <codeph>targetElement</codeph> 开头的偏移量。
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiData>-1</apiData><apiDesc>距 <codeph>targetElement</codeph> 末尾的偏移量。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建 FlowElementOperation 对象。
+		  
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:FlowElementOperation:relativeEnd:get"><apiName>relativeEnd</apiName><shortdesc> 
+		 relativeEnd 距 targetElement 开头的偏移量
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 relativeEnd 距 <codeph>targetElement</codeph> 开头的偏移量
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowElementOperation:relativeStart:get"><apiName>relativeStart</apiName><shortdesc> 
+		 relativeStart 距 targetElement 开头的偏移量。>
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 relativeStart 距 <codeph>targetElement</codeph> 开头的偏移量。>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowElementOperation:targetElement:get"><apiName>targetElement</apiName><shortdesc> 
+		 targetElement 指定该操作修改的元素。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.elements:FlowElement</apiValueClassifier></apiValueDef><apiDesc> 
+		 targetElement 指定该操作修改的元素。
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:CutOperation"><apiName>CutOperation</apiName><shortdesc>
+	 CutOperation 类封装剪切操作。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 CutOperation 类封装剪切操作。
+	 
+	 <p>从文本流中删除指定的范围。</p>
+	 
+	 <p><b>注意：</b>编辑管理器负责将文本片段复制到剪贴板中。撤消剪切操作不会恢复初始剪贴板状态。</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:CutOperation:flashx.textLayout.operations:CutOperation"><apiName>CutOperation</apiName><shortdesc> 
+		 创建 CutOperation 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>要剪切的文本的范围。
+		 </apiDesc></apiParam><apiParam><apiItemName>scrapToCut</apiItemName><apiOperationClassifier>flashx.textLayout.edit:TextScrap</apiOperationClassifier><apiDesc>删除的文本的副本。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建 CutOperation 对象。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:CutOperation:scrapToCut:get"><apiName>scrapToCut</apiName><shortdesc> 
+		 scrapToCut 最初被删除的文本
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.edit:TextScrap</apiValueClassifier></apiValueDef><apiDesc> 
+		 scrapToCut 最初被删除的文本
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyElementUserStyleOperation"><apiName>ApplyElementUserStyleOperation</apiName><shortdesc>
+	 ApplyElementUserStyleOperation 类封装元素样式值的更改。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowElementOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 ApplyElementUserStyleOperation 类封装元素样式值的更改。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#FlowElement/userStyles"><linktext>flashx.textLayout.elements.FlowElement.userStyles</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyElementUserStyleOperation:ApplyElementUserStyleOperation"><apiName>ApplyElementUserStyleOperation</apiName><shortdesc> 
+		 创建 ApplyElementUserStyleOperation 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>描述要设置样式的文本的范围。
+		 </apiDesc></apiParam><apiParam><apiItemName>targetElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiDesc>指定要更改的元素。
+		 </apiDesc></apiParam><apiParam><apiItemName>styleName</apiItemName><apiType value="String"/><apiDesc>要更改的样式的名称。
+		 </apiDesc></apiParam><apiParam><apiItemName>value</apiItemName><apiType value="any"/><apiDesc>新样式值。
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>距目标元素开头的偏移量。
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiData>-1</apiData><apiDesc>距目标元素末尾的偏移量。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建 ApplyElementUserStyleOperation 对象。
+		 
+		 <p>如果设置了 <codeph>relativeStart</codeph> 和 <codeph>relativeEnd</codeph> 参数，则会将现有元素拆分为多个元素，选择的部分使用新样式值，其它部分使用现有样式值。</p>
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ApplyElementUserStyleOperation:newValue:get"><apiName>newValue</apiName><shortdesc> 
+		 新样式值。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/></apiValueDef><apiDesc> 
+		 新样式值。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ApplyElementUserStyleOperation:styleName:get"><apiName>styleName</apiName><shortdesc> 
+		 所更改的样式的名称。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 所更改的样式的名称。 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyFormatOperation"><apiName>ApplyFormatOperation</apiName><shortdesc>
+	 ApplyFormatOperation 类封装样式更改。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 ApplyFormatOperation 类封装样式更改。
+	 
+	 <p>ApplyFormatOperation 将页格式应用于指定范围的文本（如果指定的范围为单个点，不会进行任何更改）。它将段落格式应用于至少部分在该范围内的段落（如果范围为单个点，则应用于单个段落）。它将容器格式应用于至少部分在该范围内的容器（如果范围为单个点，则应用于单个容器）。</p>
+	 
+	 </apiDesc><example conref="examples\ApplyFormatOperation_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyFormatOperation:ApplyFormatOperation"><apiName>ApplyFormatOperation</apiName><shortdesc> 
+		 创建 ApplyFormatOperation 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>定义要应用格式的文本范围。
+		  </apiDesc></apiParam><apiParam><apiItemName>leafFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiDesc> 要应用于选定范围的 LeafFlowElement 对象的格式。
+		  </apiDesc></apiParam><apiParam><apiItemName>paragraphFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiDesc>要应用于选定范围的 ParagraphElement 对象的格式。
+		  </apiDesc></apiParam><apiParam><apiItemName>containerFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiData>null</apiData><apiDesc>要应用于选定范围的容器的格式。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建 ApplyFormatOperation 对象。
+		 
+		  </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:ApplyFormatOperation:redo"><apiName>redo</apiName><shortdesc/><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiIsOverride/><apiReturn><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:ApplyFormatOperation:containerFormat:get"><apiName>containerFormat</apiName><shortdesc> 
+		 要应用于该范围的容器的格式属性。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 要应用于该范围的容器的格式属性。
+		 
+		 <p>更新至少部分在该范围内的容器的格式。如果该操作的范围为一个点，则更新单个容器。如果 <codeph>containerFormat</codeph> 为 <codeph>null</codeph>，则不更改任何容器格式。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ApplyFormatOperation:leafFormat:get"><apiName>leafFormat</apiName><shortdesc> 
+		 要应用于该范围的页元素的格式属性。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 要应用于该范围的页元素的格式属性。
+		 
+		 <p>如果该操作的范围为一个点，或者 <codeph>leafFormat</codeph> 为 <codeph>null</codeph>，则不会更改任何页元素格式。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ApplyFormatOperation:paragraphFormat:get"><apiName>paragraphFormat</apiName><shortdesc> 
+		 要应用于该范围的段落的格式属性。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 要应用于该范围的段落的格式属性。
+		 
+		 <p>更新至少部分在该范围内的段落的格式。如果该操作的范围为一个点，则更新单个段落。如果 <codeph>paragraphFormat</codeph> 为 <codeph>null</codeph>，则不更改任何段落格式。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ClearFormatOnElementOperation"><apiName>ClearFormatOnElementOperation</apiName><shortdesc>
+	 ClearFormatOnElementOperation 类封装对元素的样式更改。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowElementOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 ClearFormatOnElementOperation 类封装对元素的样式更改。
+	 
+	 <p>此操作对流元素的一个或多个格式取消定义。</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.formats.xml#TextLayoutFormat"><linktext>flashx.textLayout.formats.TextLayoutFormat</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link><link href="flashx.textLayout.operations.xml#ApplyFormatToElementOperation"><linktext>ApplyFormatToElementOperation</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ClearFormatOnElementOperation:ClearFormatOnElementOperation"><apiName>ClearFormatOnElementOperation</apiName><shortdesc> 
+		创建 ClearFormatOnElementOperation 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>指定包含要应用该操作的元素的文本流。
+		</apiDesc></apiParam><apiParam><apiItemName>targetElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiDesc>指定要应用该操作的元素。
+		</apiDesc></apiParam><apiParam><apiItemName>format</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiDesc>该操作中要应用的格式。
+		 
+		</apiDesc></apiParam><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiData>0</apiData></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiData>-1</apiData></apiParam></apiConstructorDef><apiDesc> 
+		创建 ClearFormatOnElementOperation 对象。 
+		
+		</apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ClearFormatOnElementOperation:format:get"><apiName>format</apiName><shortdesc> 
+		 该操作中应用的字符格式。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 该操作中应用的字符格式。
+		 
+		 <p>如果为 <codeph>null</codeph>，则不更改任何字符格式。</p> 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:CompositeOperation"><apiName>CompositeOperation</apiName><shortdesc>
+	 CompositeOperation 类封装作为一个单元管理的一组转换。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 CompositeOperation 类封装作为一个单元管理的一组转换。
+	 
+	 <p>CompositeOperation 类提供将多个 FlowOperation 组合为单个原子操作的成组机制。通过将操作成组，可以将这些操作作为一个单元进行撤消和重做。例如，插入几个单字符，再按几下 Backspace 键，这些操作可以一起撤消，就好像它们是单个操作一样。成组还提供表示复杂操作的机制。例如，可以将用于修改多个文本范围的替换操作作为一个合成操作进行表示和管理。</p>
+	 
+	 <p><b>注意：</b>合并各原子操作比将单独操作组合到一个组中效率更高。例如，几个连续字符插入操作可以很容易地表示为单个插入操作，因此撤消或重做此单个操作比撤消或重做一组插入操作效率更高。</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:CompositeOperation:CompositeOperation"><apiName>CompositeOperation</apiName><shortdesc> 
+		 创建 CompositeOperation 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operations</apiItemName><apiType value="Array"/><apiData>null</apiData><apiDesc>要成组的操作。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建 CompositeOperation 对象。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:CompositeOperation:addOperation"><apiName>addOperation</apiName><shortdesc> 
+		 在列表的末尾添加其它操作。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.textLayout.operations:FlowOperation</apiOperationClassifier></apiParam></apiOperationDef><apiDesc> 
+		 在列表的末尾添加其它操作。 
+		 
+		 <p>新操作必须与列表中的其它操作一样针对同一个 TextFlow 对象进行操作。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:CompositeOperation:operations:get"><apiName>operations</apiName><shortdesc>
+		 包含由此合成操作成组的操作的数组。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Array"/></apiValueDef><apiDesc>
+		 包含由此合成操作成组的操作的数组。
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:InsertInlineGraphicOperation"><apiName>InsertInlineGraphicOperation</apiName><shortdesc>
+	 InsertInlineGraphicOperation 类封装内嵌图形插入到文本流的操作。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 InsertInlineGraphicOperation 类封装内嵌图形插入到文本流的操作。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#InlineGraphicElement"><linktext>flashx.textLayout.elements.InlineGraphicElement</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:InsertInlineGraphicOperation:flashx.textLayout.operations:InsertInlineGraphicOperation"><apiName>InsertInlineGraphicOperation</apiName><shortdesc> 
+		 创建 InsertInlineGraphicsOperation 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>描述插入点。如果选择了范围，该操作将删除该范围的内容。
+		 </apiDesc></apiParam><apiParam><apiItemName>source</apiItemName><apiType value="Object"/><apiDesc>图形源（uri 字符串、URLRequest、DisplayObject 或嵌入资源的类）。 
+		 </apiDesc></apiParam><apiParam><apiItemName>width</apiItemName><apiType value="Object"/><apiDesc>要指定的宽度（像素数、百分比或字符串“auto”）。
+		 </apiDesc></apiParam><apiParam><apiItemName>height</apiItemName><apiType value="Object"/><apiDesc>要指定的高度（像素数、百分比或字符串“auto”）。
+		 </apiDesc></apiParam><apiParam><apiItemName>options</apiItemName><apiType value="Object"/><apiData>null</apiData><apiDesc>全不支持
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建 InsertInlineGraphicsOperation 对象。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:InsertInlineGraphicOperation:redo"><apiName>redo</apiName><shortdesc>
+		 撤消操作后重新执行操作。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiIsOverride/><apiReturn><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>
+		 撤消操作后重新执行操作。
+		 
+		 <p>在必要时，该函数由编辑管理器调用。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:InsertInlineGraphicOperation:height:get"><apiName>height</apiName><shortdesc conref="flashx.textLayout.elements.InlineGraphicElement#height"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc conref="flashx.textLayout.elements.InlineGraphicElement#height"> 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flashx.textLayout.xml#InlineGraphicElement/height"><linktext>flashx.textLayout.InlineGraphicElement.height</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.operations:InsertInlineGraphicOperation:options:get"><apiName>options</apiName><shortdesc> 
+		 不支持选项
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc> 
+		 不支持选项
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:InsertInlineGraphicOperation:source:get"><apiName>source</apiName><shortdesc conref="flashx.textLayout.elements.InlineGraphicElement#source">	
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc conref="flashx.textLayout.elements.InlineGraphicElement#source">	
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:InsertInlineGraphicOperation:width:get"><apiName>width</apiName><shortdesc conref="flashx.textLayout.elements.InlineGraphicElement#width"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc conref="flashx.textLayout.elements.InlineGraphicElement#width"> 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:RedoOperation"><apiName>RedoOperation</apiName><shortdesc> 
+	 RedoOperation 类封装重做操作。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowOperation</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 RedoOperation 类封装重做操作。
+	 
+	 </apiDesc><example conref="examples\RedoOperation_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:RedoOperation:RedoOperation"><apiName>RedoOperation</apiName><shortdesc> 
+		 创建 RedoOperation 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.textLayout.operations:FlowOperation</apiOperationClassifier><apiDesc>要重做的操作。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建 RedoOperation 对象。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:RedoOperation:operation:get"><apiName>operation</apiName><shortdesc> 
+		 要重做的操作。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.operations:FlowOperation</apiValueClassifier></apiValueDef><apiDesc> 
+		 要重做的操作。
+		  
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ClearFormatOperation"><apiName>ClearFormatOperation</apiName><shortdesc>
+	 ClearFormatOperation 类封装对格式取消定义的方式。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 ClearFormatOperation 类封装对格式取消定义的方式。
+	 
+	 <p>UndefineFormatOperation 针对指定范围的文本对在叶格式中设置的属性取消定义（如果指定的范围为单个点，不会进行任何更改）。它针对至少部分在该范围内的段落对在段落格式中设置的属性取消定义（如果范围为单个点，则对单个段落取消定义）。它针对至少部分在该范围内的容器对在容器格式中设置的属性取消定义（如果范围为单个点，则对单个容器取消定义）。</p>
+	 
+	 </apiDesc><example conref="examples\ApplyFormatOperation_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ClearFormatOperation:ClearFormatOperation"><apiName>ClearFormatOperation</apiName><shortdesc> 
+		 创建 ClearFormatOperation 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>定义要应用格式的文本范围。
+		  </apiDesc></apiParam><apiParam><apiItemName>leafFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiDesc> 其设置的值指示对所选范围内的 LeafFlowElement 对象取消定义的属性的格式。
+		  </apiDesc></apiParam><apiParam><apiItemName>paragraphFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiDesc>其设置的值指示对所选范围内的 ParagraphElement 对象取消定义的属性的格式。
+		  </apiDesc></apiParam><apiParam><apiItemName>containerFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiData>null</apiData><apiDesc>其设置的值指示对所选范围内的 ContainerController 对象取消定义的属性的格式。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建 ClearFormatOperation 对象。
+		 
+		  </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:ClearFormatOperation:redo"><apiName>redo</apiName><shortdesc/><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiIsOverride/><apiReturn><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:ClearFormatOperation:containerFormat:get"><apiName>containerFormat</apiName><shortdesc> 
+		 要在范围内的容器上取消定义的格式属性。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 要在范围内的容器上取消定义的格式属性。
+		 
+		 <p>更新至少部分在该范围内的容器的格式。如果该操作的范围为一个点，则更新单个容器。如果 <codeph>containerFormat</codeph> 为 <codeph>null</codeph>，则不更改任何容器格式。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ClearFormatOperation:leafFormat:get"><apiName>leafFormat</apiName><shortdesc> 
+		 要在范围内的页元素上取消定义的格式属性。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 要在范围内的页元素上取消定义的格式属性。
+		 
+		 <p>如果该操作的范围为一个点，或者 <codeph>leafFormat</codeph> 为 <codeph>null</codeph>，则不会更改任何页元素格式。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ClearFormatOperation:paragraphFormat:get"><apiName>paragraphFormat</apiName><shortdesc> 
+		 要在范围内的段落上取消定义的格式属性。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 要在范围内的段落上取消定义的格式属性。
+		 
+		 <p>更新至少部分在该范围内的段落的格式。如果该操作的范围为一个点，则更新单个段落。如果 <codeph>paragraphFormat</codeph> 为 <codeph>null</codeph>，则不更改任何段落格式。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:FlowTextOperation"><apiName>FlowTextOperation</apiName><shortdesc> 
+	 FlowTextOperation 是用于转换一定范围文本的操作的基类。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowOperation</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 FlowTextOperation 是用于转换一定范围文本的操作的基类。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:FlowTextOperation:FlowTextOperation"><apiName>FlowTextOperation</apiName><shortdesc> 
+		 创建 FlowTextOperation 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>指定相关选择内容。如果与该操作有关，则 <codeph>operationState</codeph> 描述此操作所应用到的文本范围。否则，<codeph>operationState</codeph> 用于保存当前选择状态，这样当撤消该操作时可以将其复原。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建 FlowTextOperation 对象。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:FlowTextOperation:redo"><apiName>redo</apiName><shortdesc>	
+		 	
+		 重新执行操作。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiIsOverride/><apiReturn><apiDesc>执行操作时传递给操作的 SelectionState 对象。SelectionState 对象可以是当前选择，或者专门为该操作创建的选择。 
+		 
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>	
+		 	
+		 重新执行操作。 
+		 
+		 <p>该方法必须在派生类中被覆盖。基类方法不执行任何操作。不应直接调用 <codeph>redo()</codeph>。当重新执行操作时，编辑管理器将调用该方法。 </p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:FlowTextOperation:absoluteEnd:get"><apiName>absoluteEnd</apiName><shortdesc> 
+		 要应用该操作的文本范围的结束点绝对值。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 要应用该操作的文本范围的结束点绝对值。 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowTextOperation:absoluteStart:get"><apiName>absoluteStart</apiName><shortdesc> 
+		 要应用该操作的文本范围的起始点绝对值。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 要应用该操作的文本范围的起始点绝对值。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowTextOperation:originalSelectionState:get"><apiName>originalSelectionState</apiName><shortdesc> 
+		 操作开始时的选择状态。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.edit:SelectionState</apiValueClassifier></apiValueDef><apiDesc> 
+		 操作开始时的选择状态。 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:DeleteTextOperation"><apiName>DeleteTextOperation</apiName><shortdesc>
+	 DeleteTextOperation 类封装一定范围文本的删除操作。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 DeleteTextOperation 类封装一定范围文本的删除操作。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:DeleteTextOperation:DeleteTextOperation"><apiName>DeleteTextOperation</apiName><shortdesc> 
+		 创建 DeleteTextOperation 操作。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>文本的初始范围。
+		 </apiDesc></apiParam><apiParam><apiItemName>deleteSelectionState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiData>null</apiData><apiDesc>要删除的文本的范围，如果不同于由 <codeph>operationState</codeph> 描述的范围。（如果设置为 <codeph>null</codeph>，将删除由 <codeph>operationState</codeph> 描述的范围。）
+		 </apiDesc></apiParam><apiParam><apiItemName>allowMerge</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>如果该操作可以与下一操作或上一操作进行合并，请设置为 <codeph>true</codeph>。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建 DeleteTextOperation 操作。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:DeleteTextOperation:allowMerge:get"><apiName>allowMerge</apiName><shortdesc> 
+		 指示该操作是否可以与该操作之前或之后执行的操作进行合并。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 指示该操作是否可以与该操作之前或之后执行的操作进行合并。
+		 
+		 <p>若干删除操作（例如，按 Backspace 键的键击序列）可以合并为一个操作，以便撤消该操作时取消整个序列。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:DeleteTextOperation:deleteSelectionState:get"><apiName>deleteSelectionState</apiName><shortdesc> 
+		 deleteSelectionState 要删除的文本的范围
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.edit:SelectionState</apiValueClassifier></apiValueDef><apiDesc> 
+		 deleteSelectionState 要删除的文本的范围
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyLinkOperation"><apiName>ApplyLinkOperation</apiName><shortdesc>
+	 ApplyLinkOperation 类封装链接创建或修改操作。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 ApplyLinkOperation 类封装链接创建或修改操作。
+	 
+	 </apiDesc><example conref="examples\ApplyLinkOperation_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#LinkElement"><linktext>flashx.textLayout.elements.LinkElement</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyLinkOperation:flashx.textLayout.operations:ApplyLinkOperation"><apiName>ApplyLinkOperation</apiName><shortdesc> 
+		 创建 ApplyLinkOperation 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>要应用该操作的文本范围。
+		 </apiDesc></apiParam><apiParam><apiItemName>href</apiItemName><apiType value="String"/><apiDesc>要与链接关联的 URI。如果 href 为空字符串，则删除选择内容中的链接的 URI。
+		 </apiDesc></apiParam><apiParam><apiItemName>target</apiItemName><apiType value="String"/><apiDesc>链接的目标。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendToLinkBoundary</apiItemName><apiType value="Boolean"/><apiDesc>是否扩展所选对象以包含由所选对象覆盖的任何现有链接的完整文本，然后应用更改。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建 ApplyLinkOperation 对象。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ApplyLinkOperation:extendToLinkBoundary:get"><apiName>extendToLinkBoundary</apiName><shortdesc>
+		 extendToLinkBoundary 是否扩展所选对象以包含由所选对象覆盖的任何现有链接的完整文本，然后应用更改。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Boolean"/></apiValueDef><apiDesc>
+		 extendToLinkBoundary 是否扩展所选对象以包含由所选对象覆盖的任何现有链接的完整文本，然后应用更改。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ApplyLinkOperation:href:get"><apiName>href</apiName><shortdesc> 
+		 href 要与链接关联的 URI。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 href 要与链接关联的 URI。如果 href 为空字符串，则删除选择内容中的链接的 URI。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ApplyLinkOperation:target:get"><apiName>target</apiName><shortdesc>
+		 target 链接的目标。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc>
+		 target 链接的目标。
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:PasteOperation"><apiName>PasteOperation</apiName><shortdesc>
+	 PasteOperation 类封装粘贴操作。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 PasteOperation 类封装粘贴操作。
+	 
+	 <p>指定的范围替换为新内容。</p>
+	 
+	 <p><b>注意：</b>编辑管理器负责复制剪贴板的内容。</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:PasteOperation:PasteOperation"><apiName>PasteOperation</apiName><shortdesc> 
+		 创建 PasteOperation 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>描述要替换的文本的插入点或范围。
+		 </apiDesc></apiParam><apiParam><apiItemName>textScrap</apiItemName><apiOperationClassifier>flashx.textLayout.edit:TextScrap</apiOperationClassifier><apiDesc>要粘贴到文本流中的内容。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建 PasteOperation 对象。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:PasteOperation:textScrap:get"><apiName>textScrap</apiName><shortdesc> 
+		 textScrap 被粘贴的文本
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.edit:TextScrap</apiValueClassifier></apiValueDef><apiDesc> 
+		 textScrap 被粘贴的文本
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:SplitParagraphOperation"><apiName>SplitParagraphOperation</apiName><shortdesc>
+	 SplitParagraphOperation 类封装将一个段落拆分为两个元素的更改。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 SplitParagraphOperation 类封装将一个段落拆分为两个元素的更改。
+	 
+	 <p>该操作创建新的段落，新段落包含从指定位置到该段落末尾的文本。如果指定了文本的范围，则首先删除该范围的文本。</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#ParagraphElement"><linktext>flashx.textLayout.elements.ParagraphElement</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:SplitParagraphOperation:flashx.textLayout.operations:SplitParagraphOperation"><apiName>SplitParagraphOperation</apiName><shortdesc> 
+		 创建 SplitParagraphOperation 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>描述拆分段落所在的点。如果指定了文本的范围，将删除该范围的内容。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建 SplitParagraphOperation 对象。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyElementIDOperation"><apiName>ApplyElementIDOperation</apiName><shortdesc>
+	 ChangeElementIDOperation 类封装元素 ID 更改。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowElementOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 ChangeElementIDOperation 类封装元素 ID 更改。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#FlowElement"><linktext>flashx.textLayout.elements.FlowElement</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyElementIDOperation:ApplyElementIDOperation"><apiName>ApplyElementIDOperation</apiName><shortdesc> 
+		 创建 ChangeElementIDOperation 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>指定操作之前的选择状态。
+		 </apiDesc></apiParam><apiParam><apiItemName>targetElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiDesc>指定要更改的元素。
+		 </apiDesc></apiParam><apiParam><apiItemName>newID</apiItemName><apiType value="String"/><apiDesc>要指定的 ID。
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>距目标元素开头的偏移量。
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiData>-1</apiData><apiDesc>距目标元素末尾的偏移量。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建 ChangeElementIDOperation 对象。 
+		 
+		 <p>如果设置了 <codeph>relativeStart</codeph> 和 <codeph>relativeEnd</codeph> 参数，则会将现有元素拆分为两个元素，一个元素使用现有 ID，另一个元素使用新 ID。如果同时设置了两个参数，则会将现有元素拆分为三个元素。为该集的第一个元素和最后一个元素都指定原始 ID。</p>
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ApplyElementIDOperation:newID:get"><apiName>newID</apiName><shortdesc> 
+		 由该操作指定的 ID。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 由该操作指定的 ID。
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyFormatToElementOperation"><apiName>ApplyFormatToElementOperation</apiName><shortdesc>
+	 ApplyFormatToElementOperation 类封装对元素的样式更改。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowElementOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 ApplyFormatToElementOperation 类封装对元素的样式更改。
+	 
+	 <p>该操作将一种或多种格式应用于流元素。</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.formats.xml#TextLayoutFormat"><linktext>flashx.textLayout.formats.TextLayoutFormat</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyFormatToElementOperation:ApplyFormatToElementOperation"><apiName>ApplyFormatToElementOperation</apiName><shortdesc> 
+		创建 ApplyFormatToElementOperation 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>指定包含要应用该操作的元素的文本流。
+		</apiDesc></apiParam><apiParam><apiItemName>targetElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiDesc>指定要应用该操作的元素。
+		</apiDesc></apiParam><apiParam><apiItemName>format</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiDesc>该操作中要应用的格式。
+		 
+		</apiDesc></apiParam><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiData>0</apiData></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiData>-1</apiData></apiParam></apiConstructorDef><apiDesc> 
+		创建 ApplyFormatToElementOperation 对象。 
+		
+		</apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ApplyFormatToElementOperation:format:get"><apiName>format</apiName><shortdesc> 
+		 该操作中应用的字符格式。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 该操作中应用的字符格式。
+		 
+		 <p>如果为 <codeph>null</codeph>，则不更改任何字符格式。</p> 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyTCYOperation"><apiName>ApplyTCYOperation</apiName><shortdesc> 
+	 ApplyTCYOperation 类封装 TCY 转换。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 ApplyTCYOperation 类封装 TCY 转换。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TCYElement"><linktext>flashx.textLayout.elements.TCYElement</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyTCYOperation:ApplyTCYOperation"><apiName>ApplyTCYOperation</apiName><shortdesc> 
+		 创建 ApplyTCYOperation 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>描述要应用该操作的文本范围。
+		 </apiDesc></apiParam><apiParam><apiItemName>tcyOn</apiItemName><apiType value="Boolean"/><apiDesc>指定是应用 TCY (<codeph>true</codeph>) 还是删除 TCY (<codeph>false</codeph>)。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建 ApplyTCYOperation 对象。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ApplyTCYOperation:tcyOn:get"><apiName>tcyOn</apiName><shortdesc> 
+		 指示该操作是应用还是删除 TCY 格式设置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 指示该操作是应用还是删除 TCY 格式设置。
+		 
+		 <p>如果为 <codeph>true</codeph>，则该操作将范围转换为 TCY 元素。如果为 <codeph>false</codeph>，则该操作从范围的第一个 TCY 元素删除 TCY 格式设置。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.elements.xml#TCYElement"><linktext>flashx.textLayout.elements.TCYElement</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:CopyOperation"><apiName>CopyOperation</apiName><shortdesc>
+	 CopyOperation 类封装复制操作。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 CopyOperation 类封装复制操作。
+	 
+	 <p><b>注意：</b>该操作负责将文本片段复制到剪贴板中。撤消复制操作不会恢复初始剪贴板状态。</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:CopyOperation:CopyOperation"><apiName>CopyOperation</apiName><shortdesc> 
+		 创建 CopyOperation 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>要复制的文本的范围。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建 CopyOperation 对象。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor></apiClassifier><apiClassifier id="flashx.textLayout.operations:InsertTextOperation"><apiName>InsertTextOperation</apiName><shortdesc>
+	 InsertTextOperation 类封装文本插入操作。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 InsertTextOperation 类封装文本插入操作。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:InsertTextOperation:InsertTextOperation"><apiName>InsertTextOperation</apiName><shortdesc> 
+		 创建 InsertTextOperation 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>描述文本的插入点或范围。
+		 </apiDesc></apiParam><apiParam><apiItemName>text</apiItemName><apiType value="String"/><apiDesc>要插入的字符串。
+		 </apiDesc></apiParam><apiParam><apiItemName>deleteSelectionState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiData>null</apiData><apiDesc>描述执行插入之前要删除的文本的范围，如果不同于由 <codeph>operationState</codeph> 描述的范围。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建 InsertTextOperation 对象。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:InsertTextOperation:redo"><apiName>redo</apiName><shortdesc>
+		 撤消操作后重新执行操作。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiIsOverride/><apiReturn><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>
+		 撤消操作后重新执行操作。
+		 
+		 <p>在必要时，该函数由编辑管理器调用。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:InsertTextOperation:characterFormat:get"><apiName>characterFormat</apiName><shortdesc> 
+		 应用于插入文本的字符格式。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 应用于插入文本的字符格式。
+		  
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:InsertTextOperation:deleteSelectionState:get"><apiName>deleteSelectionState</apiName><shortdesc> 
+		 由该操作删除的文本（如果删除了任何文本）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.edit:SelectionState</apiValueClassifier></apiValueDef><apiDesc> 
+		 由该操作删除的文本（如果删除了任何文本）。
+		 
+		 <p><codeph>null</codeph>（如果未删除任何文本）。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:InsertTextOperation:text:get"><apiName>text</apiName><shortdesc> 
+		 由该操作插入的文本。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 由该操作插入的文本。 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:UndoOperation"><apiName>UndoOperation</apiName><shortdesc> 
+	 UndoOperation 类封装撤消操作。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowOperation</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 UndoOperation 类封装撤消操作。
+	 
+	 </apiDesc><example conref="examples\UndoOperation_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:UndoOperation:UndoOperation"><apiName>UndoOperation</apiName><shortdesc> 
+		 创建 UndoOperation 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>op</apiItemName><apiOperationClassifier>flashx.textLayout.operations:FlowOperation</apiOperationClassifier><apiDesc>要撤消的操作。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建 UndoOperation 对象。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:UndoOperation:operation:get"><apiName>operation</apiName><shortdesc> 
+		 要撤消的操作。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.operations:FlowOperation</apiValueClassifier></apiValueDef><apiDesc> 
+		 要撤消的操作。 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyElementStyleNameOperation"><apiName>ApplyElementStyleNameOperation</apiName><shortdesc>
+	 ApplyElementStyleNameOperation 类封装样式名称更改。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowElementOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 ApplyElementStyleNameOperation 类封装样式名称更改。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#FlowElement/styleName"><linktext>flashx.textLayout.elements.FlowElement.styleName</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyElementStyleNameOperation:ApplyElementStyleNameOperation"><apiName>ApplyElementStyleNameOperation</apiName><shortdesc> 
+		 创建 ApplyElementStyleNameOperation 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>描述当前选择。
+		 </apiDesc></apiParam><apiParam><apiItemName>targetElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiDesc>指定要更改的元素。
+		 </apiDesc></apiParam><apiParam><apiItemName>newStyleName</apiItemName><apiType value="String"/><apiDesc>要指定的样式名称。
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>距目标元素开头的偏移量。
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiData>-1</apiData><apiDesc>距目标元素末尾的偏移量。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建 ApplyElementStyleNameOperation 对象。 
+		 
+		 <p>如果设置了 <codeph>relativeStart</codeph> 和 <codeph>relativeEnd</codeph> 参数，则会将现有元素拆分为多个元素，选定部分使用新样式名称，其它部分使用现有样式名称。</p>
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ApplyElementStyleNameOperation:newStyleName:get"><apiName>newStyleName</apiName><shortdesc> 
+		 由该操作指定的样式名称。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 由该操作指定的样式名称。
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ModifyInlineGraphicOperation"><apiName>ModifyInlineGraphicOperation</apiName><shortdesc>
+	 InsertInlineGraphicOperation 类封装现有内嵌图形的修改。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 InsertInlineGraphicOperation 类封装现有内嵌图形的修改。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#InlineGraphicElement"><linktext>flashx.textLayout.elements.InlineGraphicElement</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ModifyInlineGraphicOperation:flashx.textLayout.operations:ModifyInlineGraphicOperation"><apiName>ModifyInlineGraphicOperation</apiName><shortdesc> 
+		 创建 ModifyInlineGraphicsOperation 对象。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>描述插入点。如果选择了范围，该操作将删除该范围的内容。
+		 </apiDesc></apiParam><apiParam><apiItemName>source</apiItemName><apiType value="Object"/><apiDesc>图形源（uri 字符串、URLRequest、DisplayObject 或嵌入资源的类）。 
+		 </apiDesc></apiParam><apiParam><apiItemName>width</apiItemName><apiType value="Object"/><apiDesc>要指定的宽度（像素数、百分比或字符串“auto”）。
+		 </apiDesc></apiParam><apiParam><apiItemName>height</apiItemName><apiType value="Object"/><apiDesc>要指定的高度（像素数、百分比或字符串“auto”）。
+		 </apiDesc></apiParam><apiParam><apiItemName>options</apiItemName><apiType value="Object"/><apiData>null</apiData><apiDesc>全不支持
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 创建 ModifyInlineGraphicsOperation 对象。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ModifyInlineGraphicOperation:height:get"><apiName>height</apiName><shortdesc conref="flashx.textLayout.elements.InlineGraphicElement#height"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc conref="flashx.textLayout.elements.InlineGraphicElement#height"> 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ModifyInlineGraphicOperation:options:get"><apiName>options</apiName><shortdesc> 
+		 不支持选项
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc> 
+		 不支持选项
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ModifyInlineGraphicOperation:source:get"><apiName>source</apiName><shortdesc conref="flashx.textLayout.elements.InlineGraphicElement#source">	
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc conref="flashx.textLayout.elements.InlineGraphicElement#source">	
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ModifyInlineGraphicOperation:width:get"><apiName>width</apiName><shortdesc conref="flashx.textLayout.elements.InlineGraphicElement#width"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc conref="flashx.textLayout.elements.InlineGraphicElement#width"> 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier></apiPackage>

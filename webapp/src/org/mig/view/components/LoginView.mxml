@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox 
+	xmlns:controls="org.mig.view.controls.*" 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	backgroundColor="0x1111111" backgroundAlpha="0.95" 
+	paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5" 
+	top="27" height="320"  width="300" verticalGap="2"
+	styleName="bodyCopy" clipContent="false"
+	implements="org.mig.view.interfaces.ILoginView">
+	
+	<mx:Script>
+		<![CDATA[
+			import org.mig.events.LoginEvent;
+			import org.mig.model.vo.user.LoginToken;
+			import org.mig.model.vo.user.User;
+			import org.mig.view.interfaces.ILoginView;
+			
+			public var complete:Boolean = false;
+			private var _editViewEnabled:Boolean = false;
+
+			[Bindable] public var user:User;
+
+			public function set editViewEnabled(newVal:Boolean):void
+			{
+				_editViewEnabled = newVal;
+				handleEditViewChanged();
+			}
+			public function get editViewEnabled():Boolean
+			{
+				return _editViewEnabled;
+			}
+			
+			private function handleEditViewChanged():void
+			{
+				if(_editViewEnabled == true)
+				{
+					usernameField2.enabled = true;
+					passwordField2.enabled = true;
+					emailField2.enabled = true;
+					
+					editFormVBox.alpha = 1;
+					editButton.label = "Save";
+				}else
+				{
+					usernameField2.enabled = false;
+					passwordField2.enabled = false;
+					emailField2.enabled = false;
+					
+					editFormVBox.alpha = 0.5;
+					editButton.label = "Edit User";
+				}
+			}
+			private function logout():void
+			{
+				
+			}
+			public function login():void 
+			{
+				var event:LoginEvent = new LoginEvent(LoginEvent.LOGIN,new LoginToken(usernameField.text,passwordField.text));
+				this.dispatchEvent(event);
+			}
+			
+			
+			private function submitRequestData():void 
+			{
+				this.dispatchEvent(new Event("forgotInfo"));
+			}
+			
+			private function handleRequestComplete(event:Event):void
+			{
+				var _data:XMLList = event.target.xml.children();
+				if(_data.success == "true")
+				{
+					statusText.text = "Your User Information Has Been Sent To Your Email";
+				}
+				else
+				{
+					statusText.text = event.target.xml.toString();
+				}	
+			}           
+			private function handleLogOutRequest(event:Event):void
+			{
+				/*	if(currentstate != "LOGGEDOUT")
+				this.logOut();	*/
+			}
+		]]>
+	</mx:Script>
+	<mx:Number id="viewIndex">0</mx:Number>
+	<mx:String id="prompt">User</mx:String>
+	<mx:ViewStack width="100%" height="100%" selectedIndex="{viewIndex}" id="stack">
+		
+		<mx:VBox width="100%" height="100%" id="loginView">
+			<mx:Label text="Username" styleName="bodyCopy" />
+			<controls:MiGTextInput  styleName="inputFieldGray" id="usernameField"   width="80%"  />
+			<mx:Spacer height="3" />
+			<mx:Label text="Password" styleName="bodyCopy" />
+			<controls:MiGTextInput   styleName="inputFieldGray"  id="passwordField" displayAsPassword="true" width="80%" enter="login()" />
+			<mx:Spacer height="3" />
+			<mx:CheckBox id="rememberLogin"  color="#888888" label="Remember me on this computer"/>
+			<mx:Button styleName="textOnlyButton" color="#888888" label="Forget your password?" click="viewIndex=1"
+				 mouseChildren="false" buttonMode="true" />
+			 
+		    <mx:Spacer height="3" />
+		    <mx:Button id="loginButton"  styleName="defaultButton" label="Login" click="login()"/>		
+	    </mx:VBox>
+	    
+	    <mx:VBox width="100%" height="100%" id="requestView">
+	    	<mx:Label text="User Information Request" styleName="bodyCopy" />
+	    	<controls:MiGTextInput  styleName="inputFieldGray" width="80%"  id="emailField" text="Email Address"  />
+	    	<mx:Spacer height="15" />
+			<mx:HBox horizontalGap="3">
+				<mx:Button styleName="defaultButton" label="Cancel" click="viewIndex=0"/>
+        		<mx:Button styleName="defaultButton" label="Send Request" click="submitRequestData();"/>
+    		</mx:HBox>		    	
+	    </mx:VBox>
+	    
+	    <mx:VBox width="100%" height="100%" id="editView" verticalGap="5">
+	    	<mx:VBox id="editFormVBox" width="100%" height="100%" verticalGap="5" paddingTop="0" paddingRight="0" paddingLeft="0" paddingBottom="0"
+	    		  alpha="0.5">
+	    		<mx:Label text="Username" styleName="bodyCopy" />
+				<controls:MiGTextInput  styleName="inputFieldGray" id="usernameField2" text="{user.username}"  width="80%" enabled="false" />
+				<mx:Spacer height="3" />
+				<mx:Label text="Password" styleName="bodyCopy" />	
+				<controls:MiGTextInput  styleName="inputFieldGray" id="passwordField2"  displayAsPassword="true" text="{user.password}" width="80%" enabled="false"  />
+			    <mx:Spacer height="3" />
+				<mx:Label text="Email" styleName="bodyCopy" />
+				<controls:MiGTextInput  styleName="inputFieldGray" id="emailField2" text="{user.email}"  width="80%" enabled="false" />
+				<mx:Spacer height="3" />
+				<mx:Label text="Permissions" styleName="bodyCopy" paddingBottom="0" />
+				<mx:Label text="{user.privilegesString}" styleName="bodyCopy" alpha="0.4" paddingTop="-5" />
+	    	</mx:VBox>
+	    		    
+			<!--<controls:MiGTextInput  styleName="inputFieldGray" id="permissionsField" text="{_login.permissions}"  width="80%" enabled="false"/>-->
+		    <mx:HBox width="100%" paddingTop="12" horizontalGap="3">
+		   		 <mx:Button styleName="defaultButton" label="Cancel" click="editViewEnabled=false;this.visible = false;" />
+		   		 <mx:Button id="logOutButton" styleName="defaultButton" label="Log Out" click="logout()" />
+		   		 <!--<mx:Button  id="editButton" styleName="defaultButton" label="Edit User" click="editButton.label='Save';editFormVBox.alpha=1" />-->
+		   		 <mx:Button  id="editButton" styleName="defaultButton" label="Edit User" click="editViewEnabled =! editViewEnabled" />	 		 	
+		   		 
+		    </mx:HBox>
+		   
+	    </mx:VBox>		    
+	</mx:ViewStack>
+	<mx:Spacer height="3" />
+	<mx:Text id="statusText" height="20"/>    
+
+	<mx:StringValidator source="{usernameField}" property="text" minLength="4" maxLength="20"/>
+	<mx:StringValidator source="{passwordField}" property="text" minLength="4" maxLength="20"/>
+	<mx:EmailValidator source="{emailField}" property="text"  required="true"/>
+</mx:VBox>
+				

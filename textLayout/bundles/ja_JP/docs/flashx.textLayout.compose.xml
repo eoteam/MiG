@@ -1,0 +1,619 @@
+<?xml version="1.0"?>
+<apiPackage id="flashx.textLayout.compose"><apiName>flashx.textLayout.compose</apiName><apiDetail/><apiClassifier id="flashx.textLayout.compose:ITextLineCreator"><apiName>ITextLineCreator</apiName><shortdesc> 
+	 ITextLineCreator は、IFlowComposer インスタンスの TextLine オブジェクトを作成するインターフェイスを定義します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc> 
+	 ITextLineCreator は、IFlowComposer インスタンスの TextLine オブジェクトを作成するインターフェイスを定義します。
+	 
+	 <p>ITextLineCreator インターフェイスは、FTE 行作成メソッドをラップします。アプリケーションでこのインターフェイスを使用して行作成を制御する理由は、2 つあります。第 1 に、あるフォントを含む SWF があり、このフォントを別の SWF から使用したい場合、TextLine がこのフォントを含む同じ SWF から作成されていれば、フォントを再利用できます。第 2 に、既存の TextLines を再利用することで、迅速に再構成できます。TLF は内部的にこの処理を行い、再利用時には、createTextLine ではなく recreateTextLine を呼び出します。アプリケーションに、再利用可能な TextLines を追加できます。その場合、createTextLine の実装で、再利用する行と共に、TextBlock.createTextLine ではなく TextBlock.recreateTextLine を呼び出すことができます。</p>
+	 
+	 </apiDesc><example conref="examples\ITextLineCreator_ClassExample.as"/></apiClassifierDetail><related-links><link href="" invalidHref="flast.text.engine.TextLine.xml"><linktext>flast.text.engine.TextLine</linktext></link><link href="flashx.textLayout.compose.xml#IFlowComposer"><linktext>flashx.textLayout.compose.IFlowComposer</linktext></link><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>TextFlow</linktext></link></related-links><apiOperation id="flashx.textLayout.compose:ITextLineCreator:flashx.textLayout.compose:ITextLineCreator:createTextLine"><apiName>createTextLine</apiName><shortdesc> 
+		 フローコンポーザー用に TextLine オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>TextLine。作成された TextLine オブジェクト
+		  
+		 </apiDesc><apiType value="flash.text.engine:TextLine"/></apiReturn><apiParam><apiItemName>textBlock</apiItemName><apiType value="flash.text.engine:TextBlock"/><apiDesc>行を作成する TextBlock オブジェクト。
+		 </apiDesc></apiParam><apiParam><apiItemName>previousLine</apiItemName><apiType value="flash.text.engine:TextLine"/><apiData>null</apiData><apiDesc>TextBlock に作成された前の行（ある場合）。
+		 </apiDesc></apiParam><apiParam><apiItemName>width</apiItemName><apiType value="Number"/><apiData>1000000</apiData><apiDesc>行の最大幅。
+		 </apiDesc></apiParam><apiParam><apiItemName>lineOffset</apiItemName><apiType value="Number"/><apiData>0.0</apiData><apiDesc>オプションのオフセット値。
+		 </apiDesc></apiParam><apiParam><apiItemName>fitSomething</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc><codeph>true</codeph> の場合、そのエレメントにより行が <codeph>width</codeph> パラメーターの値を超える場合であっても、少なくとも 1 つの文字またはインライングラフィックが行に収まる必要があります。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 フローコンポーザー用に TextLine オブジェクトを作成します。
+		 
+		 <p>テキスト行を作成する必要がある場合に、フローコンポーザーによって呼び出されます。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:ITextLineCreator:flashx.textLayout.compose:ITextLineCreator:recreateTextLine"><apiName>recreateTextLine</apiName><shortdesc> 
+		 フローコンポーザー用に TextLine オブジェクトを再作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>TextLine。再作成された TextLine オブジェクト
+		 
+		 </apiDesc><apiType value="flash.text.engine:TextLine"/></apiReturn><apiParam><apiItemName>textBlock</apiItemName><apiType value="flash.text.engine:TextBlock"/><apiDesc>行を作成する TextBlock オブジェクト。
+		 </apiDesc></apiParam><apiParam><apiItemName>textLine</apiItemName><apiType value="flash.text.engine:TextLine"/><apiDesc>TextBlock に作成された前の行（ある場合）。
+		 </apiDesc></apiParam><apiParam><apiItemName>previousLine</apiItemName><apiType value="flash.text.engine:TextLine"/><apiData>null</apiData><apiDesc>行の最大幅。
+		 </apiDesc></apiParam><apiParam><apiItemName>width</apiItemName><apiType value="Number"/><apiData>1000000</apiData><apiDesc>オプションのオフセット値。
+		 </apiDesc></apiParam><apiParam><apiItemName>lineOffset</apiItemName><apiType value="Number"/><apiData>0.0</apiData><apiDesc><codeph>true</codeph> の場合、そのエレメントにより行が <codeph>width</codeph> パラメーターの値を超える場合であっても、少なくとも 1 つの文字またはインライングラフィックが行に収まる必要があります。
+		 
+		 </apiDesc></apiParam><apiParam><apiItemName>fitSomething</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc> 
+		 フローコンポーザー用に TextLine オブジェクトを再作成します。
+		 
+		 <p>テキスト行を再作成する必要がある場合に、フローコンポーザーによって呼び出されます。</p>
+		 
+		 <p><b>注意：</b>TextBlock の <codeph>recreateTextLine()</codeph> メソッドは、Flash Player 10.1 および AIR 2.0 から使用できます。以前のランタイムと互換性を持つようにこのメソッドを実装するには、TextBlock オブジェクトに <codeph>recreateTextLine()</codeph> メソッドが存在するかどうかをテストしてから、このメソッドを呼び出してください。</p>
+		  
+		 </apiDesc><example conref="examples\ITextLineCreator_recreateTextLine.as"/></apiOperationDetail></apiOperation></apiClassifier><apiClassifier id="flashx.textLayout.compose:TextFlowLine"><apiName>TextFlowLine</apiName><shortdesc> 
+	 TextFlowLine クラスは、テキストフロー内の単一行テキストを表します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseInterface>flashx.textLayout.compose:IVerticalJustificationLine</apiBaseInterface><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 TextFlowLine クラスは、テキストフロー内の単一行テキストを表します。
+	 
+	 <p>このクラスを使用して、テキストの行がその位置、高さ、幅などを構成されている方法に関する情報にアクセスできます。テキストフロー（TextFlow）が変更されると、変更された箇所の行とその直前の行は、再構成が必要となるため、不正としてマークされます。変更された箇所の後の行は即座に損傷されませんが、テキストが構成されると、再生成される場合があります。損傷された TextFlowLine にアクセスすることは可能ですが、アクセスするすべての値は TextFlow の古い状態を反映したものとなります。TextFlow が再構成されると、新しい行が作成され、<codeph>TextFlow.flowComposer.findLineAtPosition()</codeph> を呼び出して新しい行を指定の位置に置くことができます。</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="" invalidHref="flashx.textLayout.compose.TextFlow.xml"><linktext>TextFlow</linktext></link></related-links><apiConstructor id="flashx.textLayout.compose:TextFlowLine:TextFlowLine"><apiName>TextFlowLine</apiName><shortdesc> コンストラクター - 新しい TextFlowLine インスタンスを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>textLine</apiItemName><apiType value="flash.text.engine:TextLine"/><apiDesc>この行に使用される TextLine 表示オブジェクトです。
+		 </apiDesc></apiParam><apiParam><apiItemName>paragraph</apiItemName><apiOperationClassifier>flashx.textLayout.elements:ParagraphElement</apiOperationClassifier><apiDesc>行を配置する段落（ParagraphElement）です。
+		 </apiDesc></apiParam><apiParam><apiItemName>outerTargetWidth</apiItemName><apiType value="Number"/><apiData>0</apiData><apiDesc>構成の目標の行の幅（インデントを除く）です。
+		 </apiDesc></apiParam><apiParam><apiItemName>lineOffset</apiItemName><apiType value="Number"/><apiData>0</apiData><apiDesc>段落内で行を揃える前の、（段落の方向とコンテナのブロックの進行方向により決定される）適切なコンテナのインセットを基点とする行のオフセット（ピクセル単位）です。 
+		 </apiDesc></apiParam><apiParam><apiItemName>absoluteStart</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>テキストフロー内で行が開始される文字の位置です。
+		 </apiDesc></apiParam><apiParam><apiItemName>numChars</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>行内の文字数です。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> コンストラクター - 新しい TextFlowLine インスタンスを作成します。 
+		  <p><b>注意</b>：クライアントはこれを呼び出すことができません。これは、ユーザー自身のコンポーザーを記述するために公開されています。</p>
+		 
+		 </apiDesc></apiConstructorDetail><related-links><link href="" invalidHref="flash.text.engine.TextLine.xml"><linktext>flash.text.engine.TextLine</linktext></link><link href="" invalidHref="flashx.textLayout.compose.ParagraphElement.xml"><linktext>ParagraphElement</linktext></link><link href="flashx.textLayout.compose.xml#TextFlowLine/absoluteStart"><linktext>absoluteStart</linktext></link><link href="flashx.textLayout.compose.xml#TextFlowLine/numChars"><linktext>numChars</linktext></link></related-links></apiConstructor><apiOperation id="flashx.textLayout.compose:TextFlowLine:getBounds"><apiName>getBounds</apiName><shortdesc> 
+		 行の境界を矩形として返します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>行の境界を表す矩形です。
+		 
+		 </apiDesc><apiType value="flash.geom:Rectangle"/></apiReturn></apiOperationDef><apiDesc> 
+		 行の境界を矩形として返します。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:TextFlowLine:getTextLine"><apiName>getTextLine</apiName><shortdesc> 
+		 この行の flash.text.engine.TextLine オブジェクトを返します。このオブジェクトは、ガベージコレクションが原因で消失している場合、再作成される場合があります。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>この行のオブジェク、または TextLine オブジェクトを再作成できない場合は <codeph>null</codeph> です。
+		 
+		 </apiDesc><apiType value="flash.text.engine:TextLine"/></apiReturn><apiParam><apiItemName>forceValid</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>true の場合、存在するが無効な場合、TextLine は再生成されます。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 この行の <codeph>flash.text.engine.TextLine</codeph> オブジェクトを返します。このオブジェクトは、ガベージコレクションが原因で消失している場合、再作成される場合があります。TextLine を再生成させるには、<codeph>forceValid</codeph> を <codeph>true</codeph> に設定します。TextLine を再生成できない場合、null を返します。
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.text.engine.TextLine.xml"><linktext>TextLine</linktext></link></related-links></apiOperation><apiValue id="flashx.textLayout.compose:TextFlowLine:absoluteStart:get"><apiName>absoluteStart</apiName><shortdesc> 
+		 TextFlow オブジェクト内の絶対文字位置としての位置です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 TextFlow オブジェクト内の絶対文字位置としての位置です。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flashx.textLayout.compose.TextFlow.xml"><linktext>TextFlow</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:ascent:get"><apiName>ascent</apiName><shortdesc conref="flash.text.engine.TextLine#ascent"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc conref="flash.text.engine.TextLine#ascent"> 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:columnIndex:get"><apiName>columnIndex</apiName><shortdesc> 行が配置される列の番号で、最初の列は 0 です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 行が配置される列の番号で、最初の列は 0 です。
+		 	
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:controller:get"><apiName>controller</apiName><shortdesc> 
+		 行が配置されるコンテナに対するコントローラー（ContainerController オブジェクト）です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.container:ContainerController</apiValueClassifier></apiValueDef><apiDesc> 
+		 行が配置されるコンテナに対するコントローラー（ContainerController オブジェクト）です。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.container.xml#ContainerController"><linktext>flashx.textLayout.container.ContainerController</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:descent:get"><apiName>descent</apiName><shortdesc conref="flash.text.engine.TextLine#descent"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc conref="flash.text.engine.TextLine#descent"> 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:height:get"><apiName>height</apiName><shortdesc> 行の高さ（ピクセル単位）です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc> 行の高さ（ピクセル単位）です。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#TextFlowLine/width"><linktext>width</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:lineOffset:get"><apiName>lineOffset</apiName><shortdesc> 
+		 段落内で行を揃える前の、（段落の方向とコンテナのブロックの進行方向により決定される）適切なコンテナのインセットを基点とする行のオフセット（ピクセル単位）です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 段落内で行を揃える前の、（段落の方向とコンテナのブロックの進行方向により決定される）適切なコンテナのインセットを基点とする行のオフセット（ピクセル単位）です。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:location:get"><apiName>location</apiName><shortdesc> 
+		 TextFlowLineLocation の値の 1 つで、段落内の行の位置を指定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 TextFlowLineLocation の値の 1 つで、段落内の行の位置を指定します。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flashx.textLayout.compose.ParagraphElement.xml"><linktext>ParagraphElement</linktext></link><link href="flashx.textLayout.compose.xml#TextFlowLineLocation"><linktext>TextFlowLineLocation</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:paragraph:get"><apiName>paragraph</apiName><shortdesc> 
+		 行が配置されている段落（ParagraphElement）です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:ParagraphElement</apiValueClassifier></apiValueDef><apiDesc> 
+		 行が配置されている段落（ParagraphElement）です。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flashx.textLayout.compose.ParagraphElement.xml"><linktext>ParagraphElement</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:spaceAfter:get"><apiName>spaceAfter</apiName><shortdesc> 
+		 行後に空ける余白の量です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 行後に空ける余白の量です。
+		 <p>行が段落の最後の行で、行後に余白が適用されている場合、その行には <codeph>spaceAfter</codeph> の値が適用されます。行が列の一番下に来ると、<codeph>spaceAfter</codeph> は無視されます。そうでないと、その行は列内の他の行の前に入り、段落のこの最後の行と次の段落の最初の行の間に少なくともこの量の余白を保つようにするために、以降の行は垂直に配置されてしまいます。</p> 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.formats.xml#TextLayoutFormat/paragraphSpaceAfter"><linktext>TextLayoutFormat.paragraphSpaceAfter</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:spaceBefore:get"><apiName>spaceBefore</apiName><shortdesc> 
+		 行前に空ける余白の量です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 行前に空ける余白の量です。
+		 <p>行が段落の最初の行で、行前に余白が適用されている場合、その行には <codeph>spaceBefore</codeph> の値が適用されます。行が列の一番上に来ると、<codeph>spaceBefore</codeph> は無視されます。そうでないと、その行は列内の他の行の後に入り、この最初の行と前の段落の最後の行の間に少なくともこの量の余白を保つようにするために、垂直に配置されます。</p> 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.formats.xml#TextLayoutFormat/paragraphSpaceBefore"><linktext>TextLayoutFormat.paragraphSpaceBefore</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:textHeight:get"><apiName>textHeight</apiName><shortdesc>
+		 テキスト行の高さ、つまり ascent + descent に等しくなります。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc>
+		 テキスト行の高さ、つまり <codeph>ascent</codeph> + <codeph>descent</codeph> に等しくなります。値は、y=0 のベースラインが文字（例：TextBaseline.IDEOGRAPHIC_TOP）であるかどうかにより、行を結合する文字の最上部と最下部、またはアセントとディセントのいずれかのベースライン間の差に基づいて計算されます。 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.text.engine.TextBaseline.xml"><linktext>TextBaseline</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:textLength:get"><apiName>textLength</apiName><shortdesc> 
+		 次の行までの文字数（行末のスペースを含む）です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 次の行までの文字数（行末のスペースを含む）です。 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:textLineExists:get"><apiName>textLineExists</apiName><shortdesc> 
+		 この TextFlowLine の flash.text.engine.TextLine オブジェクトが存在するかどうかを示します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 この TextFlowLine の <codeph>flash.text.engine.TextLine</codeph> オブジェクトが存在するかどうかを示します。値は、TextLine オブジェクトがガベージコレクションされて<i>いない</i>場合 <codeph>true</codeph>、されている場合 <codeph>false</codeph> となります。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flash.text.engine.TextLine.xml"><linktext>TextLine</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:unjustifiedTextWidth:get"><apiName>unjustifiedTextWidth</apiName><shortdesc> 
+		 均等配置をしていない場合の行の幅です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 均等配置をしていない場合の行の幅です。均等配置されていないテキストの場合、この値は <codeph>textLength</codeph> と同じです。均等配置されているテキストの場合、この値は均等配置されていなかった場合の長さであり、<codeph>textLength</codeph> の値が実際の行の幅を表します。例えば、次のストリングが均等配置され、幅に 500 を割り当てられた場合は、実際の幅が 500 ですが、均等配置されていない幅は 268.9921875 になります。 
+		 
+		 <p>  </p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:validity:get"><apiName>validity</apiName><shortdesc> 行の有効性です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="String"/></apiValueDef><apiDesc> 行の有効性です。 
+		 <p>行の作成後に、テキスト、それに適用されている属性、またはコントローラー設定が変更されると、行が無効になる場合があります。無効な行は、表示して使用することはできますが、その使用されている値は作成時の値である可能性があります。<codeph>textLine</codeph> により表現される行もまた、無効な状態である場合があります。 </p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#TextFlowLine/textLine"><linktext>textLine</linktext></link><link href="" invalidHref="flash.text.engine.xml#TextLine/validity"><linktext>TextLine.validity</linktext></link><link href="flashx.textLayout.compose.xml#TextFlowLine/GEOMETRY_DAMAGED"><linktext>GEOMETRY_DAMAGED</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:x:get"><apiName>x</apiName><shortdesc> 
+		 行のコンテナに対する水平方向の相対位置です。コンテナの左側からのオフセット（ピクセル単位）で表現されます。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 行のコンテナに対する水平方向の相対位置です。コンテナの左側からのオフセット（ピクセル単位）で表現されます。
+		 <p><b>メモ：</b>このプロパティは技術的には <codeph>read-write</codeph> ですが、<codeph>read-only</codeph> として扱う必要があります。setter は、IVerticalJustificationLine インターフェイスの要件を満たすためだけに存在します。このインターフェイスにはこのプロパティの getter と setter の両方が定義されています。setter を使用することは可能ですが、予期しない結果につながります。
+		 </p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#TextFlowLine/y"><linktext>y</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLine:y:get"><apiName>y</apiName><shortdesc> 
+		 行のコンテナに対する垂直方向の相対位置です。コンテナの上部からのオフセット（ピクセル単位）で表現されます。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 行のコンテナに対する垂直方向の相対位置です。コンテナの上部からのオフセット（ピクセル単位）で表現されます。
+		 <p><b>メモ：</b>このプロパティは技術的には <codeph>read-write</codeph> ですが、<codeph>read-only</codeph> として扱う必要があります。setter は、IVerticalJustificationLine インターフェイスの要件を満たすためだけに存在します。このインターフェイスにはこのプロパティの getter と setter の両方が定義されています。setter を使用することは可能ですが、予期しない結果につながります。
+		 </p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#TextFlowLine/x"><linktext>x</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.compose:FlowComposerBase"><apiName>FlowComposerBase</apiName><shortdesc> 
+	 FlowComposerBase クラスは、Text Layout Framework フローコンポーザークラスの基本クラスで、ContainerController オブジェクトのテキスト行の構成を制御します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion><Exclude kind="method" name="checkFirstDamage"/><Exclude kind="method" name="debugCheckTextFlowLines"/><Exclude kind="property" name="lines"/><Exclude kind="method" name="addLine"/><Exclude kind="method" name="initializeLines"/></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 FlowComposerBase クラスは、Text Layout Framework フローコンポーザークラスの基本クラスで、ContainerController オブジェクトのテキスト行の構成を制御します。
+	 
+	 <p>FlowComposerBase は、複数タイプのフローコンポーザーに共通するメソッドとプロパティを実装するユーティリティクラスです。アプリケーションコードは一般に、このクラスをインスタンス化または使用しません（カスタムフローコンポーザーを作成するために拡張する場合を除く）。</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow/flowComposer"><linktext>flashx.textLayout.elements.TextFlow.flowComposer</linktext></link></related-links><apiConstructor id="flashx.textLayout.compose:FlowComposerBase:FlowComposerBase"><apiName>FlowComposerBase</apiName><shortdesc> コンストラクターです。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/></apiConstructorDef><apiDesc> コンストラクターです。 
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.compose:FlowComposerBase:damage"><apiName>damage</apiName><shortdesc conref="IFlowComposer#damage()"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>startPosition</apiItemName><apiType value="int"/><apiDesc>損傷範囲の始点
+		 </apiDesc></apiParam><apiParam><apiItemName>damageLength</apiItemName><apiType value="int"/><apiDesc>損傷の文字数
+		 </apiDesc></apiParam><apiParam><apiItemName>damageType</apiItemName><apiType value="String"/><apiDesc>損傷のタイプ。flashx.textLayout.compose.FlowDamageType の 1 つ
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#damage()"> 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:FlowComposerBase:findLineAtPosition"><apiName>findLineAtPosition</apiName><shortdesc conref="IFlowComposer#findLineAtPosition()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.textLayout.compose:TextFlowLine</apiOperationClassifier><apiDesc>指定された位置のコンテンツを含む TextFlowLine、または見つからない場合は null。
+		
+		</apiDesc></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>TextFlowLine オブジェクトが必要なコンテンツの位置。
+		</apiDesc></apiParam><apiParam><apiItemName>preferPrevious</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>	ある行の最後のエレメントと次の行の最初のエレメントの間に位置がある場合に、返される行を指定します。
+		
+		</apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#findLineAtPosition()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:FlowComposerBase:findLineIndexAtPosition"><apiName>findLineIndexAtPosition</apiName><shortdesc conref="IFlowComposer#findLineIndexAtPosition()"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="int"/><apiDesc>指定された位置のテキスト行のインデックス。見つからない場合は、末尾よりも後として処理し、行数を返します。
+		 	 
+		 </apiDesc></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>テキスト行が必要なコンテンツの位置。
+		 </apiDesc></apiParam><apiParam><apiItemName>preferPrevious</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>あるコンテナの最後の行と次のコンテナの最初の行の間に位置がある場合に、返されるコンテナインデックスを指定します。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#findLineIndexAtPosition()"> 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:FlowComposerBase:getLineAt"><apiName>getLineAt</apiName><shortdesc conref="IFlowComposer#getLineAt()"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.textLayout.compose:TextFlowLine</apiOperationClassifier><apiDesc>指定された行番号の TextFlowLine、または見つからない場合は <codeph>null</codeph>。
+		 
+		 </apiDesc></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>	返す TextFlowLine オブジェクトの行番号。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#getLineAt()"> 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:FlowComposerBase:isDamaged"><apiName>isDamaged</apiName><shortdesc conref="IFlowComposer#isDamaged()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="Boolean"/><apiDesc>フローの開始から <codeph>absolutePosition</codeph> のコンテンツを含む行までの TextFlowLine オブジェクトに損傷とマークされるものがある場合は、true。
+		 
+		 </apiDesc></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>該当領域の最後の位置
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#isDamaged()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:FlowComposerBase:updateLengths"><apiName>updateLengths</apiName><shortdesc conref="IFlowComposer#updateLengths()"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>startPosition</apiItemName><apiType value="int"/><apiDesc>長さの変更の開始位置
+		 </apiDesc></apiParam><apiParam><apiItemName>deltaLength</apiItemName><apiType value="int"/><apiDesc>文字数の変更。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#updateLengths()"> 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.compose:FlowComposerBase:damageAbsoluteStart:get"><apiName>damageAbsoluteStart</apiName><shortdesc>
+		 構成と更新が必要なテキストフローの、最初のエレメントの直前の絶対位置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc>
+		 構成と更新が必要なテキストフローの、最初のエレメントの直前の絶対位置。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:FlowComposerBase:numLines:get"><apiName>numLines</apiName><shortdesc conref="IFlowComposer#numLines"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc conref="IFlowComposer#numLines"> </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:FlowComposerBase:swfContext:get"><apiName>swfContext</apiName><shortdesc> 
+		必要に応じて FTE 呼び出しを行うために使用される ISWFContext インスタンスです。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.compose:ISWFContext</apiValueClassifier></apiValueDef><apiDesc> 
+		必要に応じて FTE 呼び出しを行うために使用される ISWFContext インスタンスです。 
+		
+		<p>デフォルトでは、ISWFContext 実装はこの FlowComposerBase オブジェクトです。アプリケーションでは、別の SWF ファイルに埋め込まれているフォントを使用したりテキスト行をキャッシュして再利用したりするための、カスタム実装を用意できます。</p>
+		
+		</apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#ISWFContext"><linktext>flashx.textLayout.compose.ISWFContext</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:FlowComposerBase:textFlow:get"><apiName>textFlow</apiName><shortdesc> 
+		このフローコンポーザーが関連付けられている TextFlow オブジェクト。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:TextFlow</apiValueClassifier></apiValueDef><apiDesc> 
+		このフローコンポーザーが関連付けられている TextFlow オブジェクト。 
+		
+		</apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>flashx.textLayout.elements.TextFlow</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.compose:ISWFContext"><apiName>ISWFContext</apiName><shortdesc> 
+	 ISWFContext インターフェイスを使用すると、SWF ファイルは、自身をロードする他のファイルとコンテキストを共有することができます。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc> 
+	 ISWFContext インターフェイスを使用すると、SWF ファイルは、自身をロードする他のファイルとコンテキストを共有することができます。ISWFContext タイプの SWF ファイルをロードするアプリケーションは、ロードした SWF ファイルのコンテキストでメソッドを呼び出すことができます。主な使用方法は、FTE TextLine 作成メソッドの呼び出しです。
+	 
+	 <p>アプリケーションは、次の 2 つの理由により、TextLine 作成の制御にこのインターフェイスを使用します。 </p>
+	 <ul>
+	   <li><b>埋め込みフォントの再利用：</b>アプリケーションで、ロードした SWF ファイル内の埋め込みフォントを使用する場合、ロードした SWF ファイルのコンテキストで TextLine が作成されていれば、アプリケーションはその埋め込みフォントにアクセスできます。</li>
+	   <li><b>既存の TextLine インスタンスの再利用：</b>既存の TextLine インスタンスを再利用することで、再構成に要する時間が短縮されます。TLF は、既存の TexeLine インスタンスを内部的に再利用します。TLF は、TextLine がまだ存在していると認識したときに、<codeph>TextBlock.createTextLine()</codeph> ではなく <codeph>TextBlock.recreateTextLine()</codeph> を呼び出すことによって、TextLine を再利用します。</li>
+	 </ul>
+	 
+	 
+	 <p>アプリケーション内に、再利用可能な他の TextLine インスタンスがある可能性があります。既存の TextLine インスタンスを手動で再利用するには、次の手順に従います。</p>
+	 <ol>
+	   <li><codeph>TextBlock.createTextLine</codeph> の呼び出しをトラップします。</li>
+	   <li><codeph>TextBlock.createTextLine()</codeph> ではなく、存在している TextLine インスタンスを指定して <codeph>TextBlock.recreateTextLine()</codeph> を呼び出します。</li>
+	 </ol>
+	 <p>ただし、<codeph>TextBlock.recreateTextLine()</codeph> は、Flash Player 10.1 以降でのみ使用できます。</p>
+	 
+	 </apiDesc><example conref="examples\EmbeddedFontLineCreator.as"/><example conref="examples\FontConsumer.as"/></apiClassifierDetail><related-links><link href="" invalidHref="flash.text.engine.xml#TextBlock/createTextLine()"><linktext>flash.text.engine.TextBlock.createTextLine()</linktext></link><link href="" invalidHref="flash.text.engine.xml#TextBlock/recreateTextLine()"><linktext>flash.text.engine.TextBlock.recreateTextLine()</linktext></link></related-links><apiOperation id="flashx.textLayout.compose:ISWFContext:flashx.textLayout.compose:ISWFContext:callInContext"><apiName>callInContext</apiName><shortdesc>
+	      クライアントで制御されるコンテキストでメソッドを呼び出す方法です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>関数から返されるものすべて（返された場合）
+	     
+	      </apiDesc><apiType value="any"/></apiReturn><apiParam><apiItemName>fn</apiItemName><apiType value="Function"/><apiDesc>呼び出す関数またはメソッド
+	      </apiDesc></apiParam><apiParam><apiItemName>thisArg</apiItemName><apiType value="Object"/><apiDesc>関数の this ポインター
+	      </apiDesc></apiParam><apiParam><apiItemName>argArray</apiItemName><apiType value="Array"/><apiDesc>関数の引数
+	      </apiDesc></apiParam><apiParam><apiItemName>returns</apiItemName><apiType value="Boolean"/><apiData>true</apiData><apiDesc>true の場合、関数は値を返します
+	     
+	      </apiDesc></apiParam></apiOperationDef><apiDesc>
+	      クライアントで制御されるコンテキストでメソッドを呼び出す方法です。
+	     
+	      </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flashx.textLayout.compose.xml#Function/apply()"><linktext>Function.apply()</linktext></link></related-links></apiOperation></apiClassifier><apiClassifier id="flashx.textLayout.compose:IFlowComposer"><apiName>IFlowComposer</apiName><shortdesc>
+	 IFlowComposer は、テキストフローのレイアウトと表示を管理するインターフェイスを定義します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc>
+	 IFlowComposer は、テキストフローのレイアウトと表示を管理するインターフェイスを定義します。
+	 
+	 <p>フローコンポーザー実装で表示されるテキストフローには、動的およびインタラクティブなテキストフローを指定できます。フローコンポーザーは、1 つ以上の表示コントローラーを管理します。各コントローラーは表示オブジェクトコンテナ（Sprite など）に関連付けられており、それによって、テキストフローに作成された行が最終的に表示されます。次の図は、TextFlow、IFlowComposer、ContainerController および DisplayObjectContainer オブジェクト間の関係を示しています。</p>
+	 
+	 <p><adobeimage alt="IFlowComposer" href="../../../images/textLayout_singleController.gif"/></p>
+	 
+	 <p>フローコンポーザーは各コンテナに収まるテキストフロー部分を計算し、適切なテキスト行をコンテナの表示オブジェクトに追加します。IFlowComposer インターフェイスは、レイアウトの計算および表示の更新に、別個のメソッドを定義します。また、IFlowComposer はテキストフローを徐々に構成および更新するメソッドも定義します。これらのメソッドを使用して、長いテキストフローを更新する際に、ユーザーインターフェイスをブロックするのを避けることができます。</p>
+	 
+	 <p>テキストの構成と表示を管理するほかに、フローコンポーザーはフォーカスを持つコンテナを制御し、選択ハイライトの表示を管理し（コンテナ境界を交差できる）、フロー内のすべての TextLine オブジェクトへの直接アクセスを提供します。</p>
+	 
+	 <p>IFlowComposer 実装を使用するには、この実装のインスタンスを TextFlow オブジェクトの <codeph>flowComposer</codeph> プロパティに割り当てます。<codeph>updateAllControllers()</codeph> メソッドを呼び出して、フローコンポーザーに関連付けられているコンテナでテキストをレイアウトおよび表示します。</p>
+	 
+	 <p><b>メモ：</b>単純な静的テキストフローの場合、テキスト行のファクトリークラスの 1 つを使用することもできます。これらのファクトリークラスを使用すると、一般にフローコンポーザーよりも少ないオーバーヘッドで行を作成できますが、編集、動的な変更、ユーザー操作はサポートされません。</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.container.xml#ContainerController"><linktext>ContainerController</linktext></link><link href="flashx.textLayout.compose.xml#FlowComposerBase"><linktext>FlowComposerBase</linktext></link><link href="flashx.textLayout.compose.xml#StandardFlowComposer"><linktext>StandardFlowComposer</linktext></link><link href="flashx.textLayout.elements.xml#TextFlow"><linktext>TextFlow</linktext></link><link href="flashx.textLayout.factory.xml#StringTextLineFactory"><linktext>StringTextLineFactory</linktext></link><link href="flashx.textLayout.factory.xml#TextFlowTextLineFactory"><linktext>TextFlowTextLineFactory</linktext></link></related-links><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:addControllerAt"><apiName>addControllerAt</apiName><shortdesc> 
+		 コンテナを、指定されたインデックスにあるこの IFlowComposer インスタンスに追加します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>追加する ContainerController オブジェクトです。
+		 </apiDesc></apiParam><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>コントローラーリストで ContainerController オブジェクトを挿入する位置を指定する数値インデックスです。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 コンテナを、指定されたインデックスにあるこの IFlowComposer インスタンスに追加します。
+		 
+		 <p>コントローラーのリストは 0 を基準としています（最初のコントローラーのインデックスは 0 です）。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:addController"><apiName>addController</apiName><shortdesc> 
+		 コントローラーをこの IFlowComposer インスタンスに追加します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>追加する ContainerController オブジェクトです。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 コントローラーをこの IFlowComposer インスタンスに追加します。
+		 
+		 <p>コンテナがコンテナリストの末尾に追加されます。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:composeToController"><apiName>composeToController</apiName><shortdesc> 
+		 指定されたインデックスにあるコンテナまで、ルートエレメントのコンテンツを構成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>何かが変更された場合は true。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiData>unknown</apiData><apiDesc>テキストフローで少なくともこのコンテナまで構成します。コントローラーの数よりも controllerIndex が大きい場合は、最終コンテナの最後まで構成します。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 指定されたインデックスにあるコンテナまで、ルートエレメントのコンテンツを構成します。
+		 
+		 <p>指定されたインデックスにあるコンテナまでのいずれかコンテナのコンテンツが変更された場合、メソッドは <codeph>true</codeph> を返します。コントローラーの数よりも <codeph>index</codeph> が大きい場合（または指定されていない場合）、すべてのコンテナが構成されます。</p>
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.compose.xml#IFlowComposer/updateAllControllers()"><linktext>updateAllControllers()</linktext></link><link href="flashx.textLayout.compose.xml#IFlowComposer/updateToController()"><linktext>updateToController()</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:composeToPosition"><apiName>composeToPosition</apiName><shortdesc> 
+		 指定された位置までルートエレメントのコンテンツを構成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>何かが変更された場合は true。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiData>unknown</apiData><apiDesc>テキストフローで少なくともこの位置まで構成します。デフォルトまたはフローの末尾が absolutePosition を超える場合、フローの最後まで構成されます。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 指定された位置までルートエレメントのコンテンツを構成します。
+		 
+		 <p>指定された位置のコンテンツを保持するコンテナまでのいずれかのコンテナのコンテンツが変更された場合、メソッドは <codeph>true</codeph> を返します。<codeph>absolutePosition</codeph> が TextFlow の長さよりも大きい場合（または指定されていない場合）、フロー全体が構成されます。</p>
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.compose.xml#IFlowComposer/updateAllControllers()"><linktext>updateAllControllers()</linktext></link><link href="flashx.textLayout.compose.xml#IFlowComposer/updateToController()"><linktext>updateToController()</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:compose"><apiName>compose</apiName><shortdesc> 
+		 フローのルートエレメントのコンテンツを表示するために必要な行数、およびフローの表示コンテナでのこれらの行の位置を計算します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>何かが変更された場合は true。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc> 
+		 フローのルートエレメントのコンテンツを表示するために必要な行数、およびフローの表示コンテナでのこれらの行の位置を計算します。
+		 
+		 <p>このメソッドの実装で表示を更新することはできませんが、フローコンテンツが変更されていない場合、以後の <codeph>compose()</codeph> または <codeph>updateAllControllers()</codeph> の呼び出しで追加の再構成が実行されないように、結果を保存する必要があります。</p>
+		 
+		 <p>いずれかのコンテナのコンテンツが変更された場合、メソッドは <codeph>true</codeph> を返す必要があります。</p>
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.compose.xml#IFlowComposer/updateAllControllers()"><linktext>updateAllControllers()</linktext></link><link href="flashx.textLayout.compose.xml#IFlowComposer/updateToController()"><linktext>updateToController()</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:damage"><apiName>damage</apiName><shortdesc> 損傷していて再構成が必要なものとして行にマークをつけます。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>startPosition</apiItemName><apiType value="int"/><apiDesc>損傷範囲の始点
+		 </apiDesc></apiParam><apiParam><apiItemName>damageLength</apiItemName><apiType value="int"/><apiDesc>損傷の文字数
+		 </apiDesc></apiParam><apiParam><apiItemName>damageType</apiItemName><apiType value="String"/><apiDesc>損傷のタイプ。flashx.textLayout.compose.FlowDamageType の 1 つ
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 損傷していて再構成が必要なものとして行にマークをつけます。
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.compose.xml#FlowDamageType"><linktext>flashx.textLayout.compose.FlowDamageType</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:findControllerIndexAtPosition"><apiName>findControllerIndexAtPosition</apiName><shortdesc> 
+		 指定された位置のコンテンツを含むコントローラーのインデックスを返します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>コンテナコントローラーのインデックス、またはない場合は -1。
+		 
+		 </apiDesc><apiType value="int"/></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>コンテナインデックスがシークされるコンテンツの位置です。
+		 </apiDesc></apiParam><apiParam><apiItemName>preferPrevious</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>あるコンテナの最終エレメントと次のコンテナの最初のエレメントの間に位置がある場合に、返されるコンテナインデックスを指定します。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 指定された位置のコンテンツを含むコントローラーのインデックスを返します。 
+		 
+		 <p>位置は、テキストフローの 2 つの文字間または他のエレメント間の仕切りと見なすことができます。<codeph>absolutePosition</codeph> の値が、あるコンテナの最後の文字と次のコンテナの最初の文字の間の位置である場合、<codeph>preferPrevious</codeph> パラメーターが <codeph>true</codeph> に設定されている場合は前のコンテナが返され、<codeph>preferPrevious</codeph> パラメーターが <codeph>false</codeph> に設定されている場合は後のコンテナが返されます。</p>
+		 
+		 <p>指定された位置のコンテンツがどのコンテナにもない場合、またはテキストフローの位置の範囲外にある場合、メソッドは -1 を返す必要があります。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:findLineAtPosition"><apiName>findLineAtPosition</apiName><shortdesc> 
+		指定された位置のコンテンツを含む、TextFlowLine オブジェクトを返します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>指定された位置のコンテンツを含む TextFlowLine、または見つからない場合は null。
+		
+		</apiDesc><apiOperationClassifier>flashx.textLayout.compose:TextFlowLine</apiOperationClassifier></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>TextFlowLine オブジェクトが必要なコンテンツの位置。
+		</apiDesc></apiParam><apiParam><apiItemName>preferPrevious</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>	ある行の最後のエレメントと次の行の最初のエレメントの間に位置がある場合に、返される行を指定します。
+		
+		</apiDesc></apiParam></apiOperationDef><apiDesc> 
+		指定された位置のコンテンツを含む、TextFlowLine オブジェクトを返します。
+		
+		<p>位置は、テキストフローの 2 つの文字間または他のエレメント間の仕切りと見なすことができます。<codeph>absolutePosition</codeph> の値が、ある行の最後のエレメントと次の行の最初のエレメントの間の位置である場合、<codeph>preferPrevious</codeph> パラメーターが <codeph>true</codeph> に設定されている場合は前の行が返され、<codeph>preferPrevious</codeph> パラメーターが <codeph>false</codeph>  に設定されている場合は後の行が返されます。</p>
+		
+		</apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:findLineIndexAtPosition"><apiName>findLineIndexAtPosition</apiName><shortdesc> 
+		 指定された位置のコンテンツを含む TextFlowLine オブジェクトの、連続する行番号を返します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>指定された位置のテキスト行のインデックス。見つからない場合は、末尾よりも後として処理し、行数を返します。
+		 	 
+		 </apiDesc><apiType value="int"/></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>テキスト行が必要なコンテンツの位置。
+		 </apiDesc></apiParam><apiParam><apiItemName>preferPrevious</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>あるコンテナの最後の行と次のコンテナの最初の行の間に位置がある場合に、返されるコンテナインデックスを指定します。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 指定された位置のコンテンツを含む TextFlowLine オブジェクトの、連続する行番号を返します。 
+		 
+		 <p>最初の行の番号は 0 で、最後の行の番号は行数から 1 を引いた数です。<codeph>absolutePosition</codeph> で指定された位置がテキストフローの末尾よりも後の場合、このメソッドはテキストフローに追加された次の新規行に割り当てられる数（現在の行数）を返す必要があります。</p>
+		 
+		 <p>位置は、テキストフローの 2 つの文字間または他のエレメント間の仕切りと見なすことができます。<codeph>absolutePosition</codeph> の値が、あるコンテナの最後の行と次のコンテナの最初の行の間の位置である場合、<codeph>preferPrevious</codeph> パラメーターが <codeph>true</codeph> に設定されている場合は前のコンテナが返され、<codeph>preferPrevious</codeph> パラメーターが <codeph>false</codeph> に設定されている場合は後のコンテナが返されます。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:getControllerAt"><apiName>getControllerAt</apiName><shortdesc> 
+		 指定されたインデックスにある ContainerController オブジェクトを返します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>指定された位置の ContainerController オブジェクトです。
+		 
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>返す ContainerController オブジェクトのインデックスです。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 指定されたインデックスにある ContainerController オブジェクトを返します。 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:getControllerIndex"><apiName>getControllerIndex</apiName><shortdesc> 
+		 指定された ContainerController オブジェクトのインデックスを返します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>指定された ContainerController オブジェクトのインデックス、またはこのフローコンポーザーにコントローラーが関連付けられていない場合は -1。
+		 
+		 </apiDesc><apiType value="int"/></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>検索する ContainerController オブジェクトへの参照です。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 指定された ContainerController オブジェクトのインデックスを返します。 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:getLineAt"><apiName>getLineAt</apiName><shortdesc> 
+		 指定された行番号の行を返します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>指定された行番号の TextFlowLine、または見つからない場合は <codeph>null</codeph>。
+		 
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.compose:TextFlowLine</apiOperationClassifier></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>	返す TextFlowLine オブジェクトの行番号。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 指定された行番号の行を返します。 
+		 
+		 <p>行のリストには、ゼロから行数マイナス 1 の数までの番号が付けられています。<codeph>index</codeph> の値が行リストの範囲外の場合、この関数は <codeph>null</codeph> を返します。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:interactionManagerChanged"><apiName>interactionManagerChanged</apiName><shortdesc>
+		 操作マネージャーの変更時に TextFlow によって呼び出されます。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>newInteractionManager</apiItemName><apiOperationClassifier>flashx.textLayout.edit:ISelectionManager</apiOperationClassifier><apiDesc>新しい ISelectionManager インスタンス。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc>
+		 操作マネージャーの変更時に TextFlow によって呼び出されます。 
+		 
+		 <p>IFlowComposer の実装は、操作マネージャーを参照するイベントリスナーおよびプロパティを更新する必要があります。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:isDamaged"><apiName>isDamaged</apiName><shortdesc> 
+		 フローの開始と指定された位置のコンテンツを含む行との間の TextFlowLine オブジェクトに、損傷とマークされるものがあるかどうかを示します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>フローの開始から <codeph>absolutePosition</codeph> のコンテンツを含む行までの TextFlowLine オブジェクトに損傷とマークされるものがある場合は、true。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>該当領域の最後の位置
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 フローの開始と指定された位置のコンテンツを含む行との間の TextFlowLine オブジェクトに、損傷とマークされるものがあるかどうかを示します。 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:removeAllControllers"><apiName>removeAllControllers</apiName><shortdesc> 
+		 この IFlowComposer インスタンスからすべてのコントローラーを削除します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 この IFlowComposer インスタンスからすべてのコントローラーを削除します。 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:removeControllerAt"><apiName>removeControllerAt</apiName><shortdesc> 
+		 この IFlowComposer インスタンスから、指定されたインデックスにあるコントローラーを削除します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>削除する ContainerController オブジェクトのインデックスです。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 この IFlowComposer インスタンスから、指定されたインデックスにあるコントローラーを削除します。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:removeController"><apiName>removeController</apiName><shortdesc> 
+		 この IFlowComposer インスタンスから 1 つのコントローラーを削除します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>削除する ContainerController インスタンスです。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 この IFlowComposer インスタンスから 1 つのコントローラーを削除します。 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:setFocus"><apiName>setFocus</apiName><shortdesc> 
+		 absolutePosition パラメーターによって指定された位置を含むコンテナにフォーカスを設定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>フォーカスを受け取るコンテナのテキストフローでの位置を指定します。
+		 </apiDesc></apiParam><apiParam><apiItemName>preferPrevious</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>true で、位置がコンテナの最初の文字より前の場合、前のコンテナの末尾にフォーカスを設定します。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 <codeph>absolutePosition</codeph> パラメーターで指定された位置を含むコンテナにフォーカスを設定します。 
+		 
+		 <p>実装では、フォーカスの設定とは何かを定義します。例えば、実装では Stage オブジェクトの組み込みの <codeph>focus</codeph> プロパティを使用できます（コンテナが InteractiveObjects の場合）。また、フォーカスを他の方法で管理することもできます。</p>
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.display.xml#Stage/focus"><linktext>flash.display.Stage.focus</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:setRootElement"><apiName>setRootElement</apiName><shortdesc/><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>newRootElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:ContainerFormattedElement</apiOperationClassifier></apiParam></apiOperationDef></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:updateAllControllers"><apiName>updateAllControllers</apiName><shortdesc> 
+		 ルートエレメントのコンテンツを構成し、表示を更新します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>何かが変更された場合は true。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc> 
+		 ルートエレメントのコンテンツを構成し、表示を更新します。  
+		 
+		 <p>テキストレイアウトは通常、構成と表示の 2 つの段階で行われます。構成段階では、フローコンポーザーは、コンテンツの表示に必要な行数およびフローの表示コンテナでのこれらの行の位置を計算します。表示段階では、フローコンポーザーはコンテナの表示オブジェクトの子を更新します。<codeph>updateAllControllers()</codeph> メソッドは、両方の段階を実行します。効率的な実装では、コンテンツへの変更を監視し、必要な場合にのみ、構成および表示のフルサイクルが実行されるようにします。</p>
+		 
+		 <p>このメソッドはすべてのテキスト行を更新し、リストを直ちに同期的に表示します。</p>
+		 
+		 <p>いずれかのコンテナのコンテンツが変更されると、メソッドは <codeph>true</codeph> を返します。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:updateLengths"><apiName>updateLengths</apiName><shortdesc> TextFlow へのマッピングが維持されるように行の長さを更新します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>startPosition</apiItemName><apiType value="int"/><apiDesc>長さの変更の開始位置
+		 </apiDesc></apiParam><apiParam><apiItemName>deltaLength</apiItemName><apiType value="int"/><apiDesc>文字数の変更。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> TextFlow へのマッピングが維持されるように行の長さを更新します。 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:updateToController"><apiName>updateToController</apiName><shortdesc> 
+		 指定されたインデックスにあるコンテナまで、表示を構成および更新します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>何かが変更された場合は true。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiData>unknown</apiData><apiDesc>更新する最後のコンテナのインデックス。デフォルトでは、すべてのコンテナが更新されます。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 指定されたインデックスにあるコンテナまで、表示を構成および更新します。
+		 
+		 <p><codeph>updateToController()</codeph> メソッドはコンテンツの構成と表示の更新の両方を実行し、指定されたインデックスにあるコンテナまでのすべてのコンテナが最新になるようにします。例えば、20 個のコンテナチェーンがあり、10 というインデックスを指定した場合、<codeph>updateToController()</codeph> により最初から 10 番目までの（インデックス 0 から 9）コンテナが構成および表示されます。構成は、そのポイントで終了できます。<codeph>controllerIndex</codeph> が -1（または指定されていない場合）、すべてのコンテナを更新する必要があります。</p>
+		 
+		 <p>このメソッドはすべてのテキスト行を更新し、リストを直ちに同期的に表示します。</p>
+		 
+		 <p>いずれかのコンテナのコンテンツが変更されると、メソッドは <codeph>true</codeph> を返します。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:composing:get"><apiName>composing</apiName><shortdesc> 
+		 フローコンポーザーが現在、構成操作を実行している場合は True。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 フローコンポーザーが現在、構成操作を実行している場合は True。
+		  
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:damageAbsoluteStart:get"><apiName>damageAbsoluteStart</apiName><shortdesc> 
+		 フローの開始からの絶対位置としての、ルートエレメント内の最初の無効な位置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 フローの開始からの絶対位置としての、ルートエレメント内の最初の無効な位置。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:numControllers:get"><apiName>numControllers</apiName><shortdesc> 
+		 この IFlowComposer インスタンスに割り当てられているコンテナ数。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 この IFlowComposer インスタンスに割り当てられているコンテナ数。 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:numLines:get"><apiName>numLines</apiName><shortdesc> 
+		 フロー内の合計行数。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 フロー内の合計行数。 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:rootElement:get"><apiName>rootElement</apiName><shortdesc> 
+		 この IFlowComposer インスタンスに関連付けられているルートエレメント。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:ContainerFormattedElement</apiValueClassifier></apiValueDef><apiDesc> 
+		 この IFlowComposer インスタンスに関連付けられているルートエレメント。 
+		 
+		 <p>ルートエレメントにすることができるのは、TextFlow オブジェクトのみです。</p>
+		  
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.elements.xml#ContainerFormattedElement"><linktext>ContainerFormattedElement</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:IFlowComposer:flashx.textLayout.compose:IFlowComposer:swfContext:get"><apiName>swfContext</apiName><shortdesc> 
+		 特定の SWF コンテキストでの呼び出しで使用する ISWFContext インスタンスです。IFlowComposer の実装では、インターフェイスのユーザーが実装を含む SWF コンテキスト以外の SWF コンテキストで行を作成できるように、このプロパティの設定を許可する必要があります。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.compose:ISWFContext</apiValueClassifier></apiValueDef><apiDesc> 
+		 特定の SWF コンテキストでの呼び出しで使用する ISWFContext インスタンス  
+		 
+		 <p>IFlowComposer の実装では、インターフェイスのユーザーが実装を含む SWF コンテキスト以外の SWF コンテキストで行を作成できるように、このプロパティの設定を許可する必要があります。ISWFContext のデフォルト実装も提供する必要があります。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flashx.elements.ISWFContext.xml"><linktext>ISWFContext</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.compose:StandardFlowComposer"><apiName>StandardFlowComposer</apiName><shortdesc> 
+	StandardFlowComposer クラスは、標準のコンポーザーとコンテナマネージャーを提供します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion><Exclude kind="method" name="createBackgroundManager"/></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseInterface>flashx.textLayout.compose:IFlowComposer</apiBaseInterface><apiBaseClassifier>flashx.textLayout.compose:FlowComposerBase</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	StandardFlowComposer クラスは、標準のコンポーザーとコンテナマネージャーを提供します。 
+	
+	<p><codeph>compose()</codeph> または <codeph>updateAllControllers()</codeph> を呼び出すたびに、テキストフローは最初の手順として正規化されます。正規化プロセスでは TextFlow オブジェクトの変更部分がチェックされ、次の手順が実行されます。
+	<ol>
+	<li> 空の FlowLeafElement オブジェクトと SubParagraphGroupElement オブジェクトが削除されます。</li>
+	<li> 同じ属性を持つ兄弟範囲が結合されます。</li>
+	<li> フローが空の場合、空の段落が追加されます。</li>
+ 	</ol>
+ 	</p>
+	
+	<p>StandardFlowComposer を使用するには、TextFlow オブジェクトの <codeph>flowComposer</codeph> プロパティに割り当てます。<codeph>updateAllControllers()</codeph> メソッドを呼び出して、フローコンポーザーに関連付けられているコンテナでテキストをレイアウトおよび表示します。</p>
+	
+	<p><b>メモ：</b>単純な静的テキストフローの場合、テキスト行のファクトリークラスの 1 つを使用することもできます。これらのファクトリークラスを使用すると、一般にフローコンポーザーよりも少ないオーバーヘッドで行を作成できますが、編集、動的な変更、ユーザー操作はサポートされません。</p>
+	
+	</apiDesc><example conref="examples\StandardFlowComposer_ClassExample.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TextFlow/flowComposer"><linktext>flashx.textLayout.elements.TextFlow.flowComposer</linktext></link></related-links><apiConstructor id="flashx.textLayout.compose:StandardFlowComposer:StandardFlowComposer"><apiName>StandardFlowComposer</apiName><shortdesc> 
+		StandardFlowComposer オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/></apiConstructorDef><apiDesc> 
+		StandardFlowComposer オブジェクトを作成します。 
+		
+		<p>StandardFlowComposer オブジェクトを使用するには、TextFlow オブジェクトの <codeph>flowComposer</codeph> プロパティに割り当てます。<codeph>updateAllControllers()</codeph> メソッドを呼び出して、フローコンポーザーに関連付けられているコンテナでテキストをレイアウトおよび表示します。</p>
+		
+		</apiDesc><example conref="examples\StandardFlowComposer_constructor.as"/></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:addControllerAt"><apiName>addControllerAt</apiName><shortdesc conref="IFlowComposer#addControllerAt()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>追加する ContainerController オブジェクトです。
+		 </apiDesc></apiParam><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>コントローラーリストで ContainerController オブジェクトを挿入する位置を指定する数値インデックスです。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#addControllerAt()"> </apiDesc><example conref="examples\StandardFlowComposer_addControllerAt.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:addController"><apiName>addController</apiName><shortdesc conref="IFlowComposer#addController()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>追加する ContainerController オブジェクトです。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#addController()"> </apiDesc><example conref="examples\StandardFlowComposer_addController.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:composeToController"><apiName>composeToController</apiName><shortdesc conref="IFlowComposer#composeToController()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="Boolean"/><apiDesc>何かが変更された場合は true。
+		 
+		 </apiDesc></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiData>unknown</apiData><apiDesc>テキストフローで少なくともこのコンテナまで構成します。コントローラーの数よりも controllerIndex が大きい場合は、最終コンテナの最後まで構成します。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#composeToController()"> </apiDesc><example conref="examples\StandardFlowComposer_composeToController.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:composeToPosition"><apiName>composeToPosition</apiName><shortdesc conref="IFlowComposer#composeToPosition()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="Boolean"/><apiDesc>何かが変更された場合は true。
+		 
+		 </apiDesc></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiData>unknown</apiData><apiDesc>テキストフローで少なくともこの位置まで構成します。デフォルトまたはフローの末尾が absolutePosition を超える場合、フローの最後まで構成されます。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#composeToPosition()"> </apiDesc><example conref="examples\StandardFlowComposer_composeToPosition.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:compose"><apiName>compose</apiName><shortdesc> 
+		 フローのルートエレメントのコンテンツを表示するために必要な行数、およびフローの表示コンテナでのこれらの行の位置を計算します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>何かが変更された場合は true。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc> 
+		 フローのルートエレメントのコンテンツを表示するために必要な行数、およびフローの表示コンテナでのこれらの行の位置を計算します。
+		 
+		 <p>最後の構成操作以降に変更された場合、<codeph>compose()</codeph> メソッドはコンテンツのみを構成します。フローコンテンツが変更されていない場合、以後の <codeph>compose()</codeph> または <codeph>updateAllControllers()</codeph> の呼び出しで追加の再構成が実行されないように、結果が保存されます。</p>
+		 
+		 <p>いずれかのコンテナのコンテンツが変更された場合、メソッドは <codeph>true</codeph> を返します。</p>
+		 
+		 </apiDesc><example conref="examples\StandardFlowComposer_compose.as"/></apiOperationDetail><related-links><link href="flashx.textLayout.compose.xml#StandardFlowComposer/updateAllControllers()"><linktext>updateAllControllers()</linktext></link><link href="flashx.textLayout.compose.xml#StandardFlowComposer/updateToController()"><linktext>updateToController()</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:findControllerIndexAtPosition"><apiName>findControllerIndexAtPosition</apiName><shortdesc> 
+		 指定された位置のコンテンツを含むコントローラーのインデックスを返します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>コンテナコントローラーのインデックス、またはない場合は -1。
+		 
+		 </apiDesc><apiType value="int"/></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>コンテナインデックスがシークされるコンテンツの位置です。
+		 </apiDesc></apiParam><apiParam><apiItemName>preferPrevious</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>あるコンテナの最終エレメントと次のコンテナの最初のエレメントの間に位置がある場合に、返されるコンテナインデックスを指定します。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 指定された位置のコンテンツを含むコントローラーのインデックスを返します。 
+		 
+		 <p>位置は、テキストフローの 2 つの文字間または他のエレメント間の仕切りと見なすことができます。<codeph>absolutePosition</codeph> の値が、あるコンテナの最後の文字と次のコンテナの最初の文字の間の位置である場合、<codeph>preferPrevious</codeph> パラメーターが <codeph>true</codeph> に設定されている場合は前のコンテナが返され、<codeph>preferPrevious</codeph> パラメーターが <codeph>false</codeph> に設定されている場合は後のコンテナが返されます。</p>
+		 
+		 <p>指定された位置のコンテンツがどのコンテナにもない場合、またはテキストフローの位置の範囲外にある場合、メソッドは -1 を返します。</p>
+		 
+		 </apiDesc><example conref="examples\StandardFlowComposer_findControllerIndexAtPosition.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:getAbsoluteStart"><apiName>getAbsoluteStart</apiName><shortdesc> 
+		 指定された ContainerController オブジェクトの最初のコンテンツエレメントの絶対位置を返します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>ContainerController の最初の文字またはグラフィックの前の位置です。
+		 
+		 </apiDesc><apiType value="int"/></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>このフローコンポーザーと関連付けられている ContainerController オブジェクト。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 指定された ContainerController オブジェクトの最初のコンテンツエレメントの絶対位置を返します。
+		 
+		 <p>位置は、テキストフローの 2 つの文字または他のエレメント間の仕切りをカウントして計算されます。フローの最初のエレメントの前の位置は、ゼロです。絶対位置は、フローの先頭からカウントする位置です。</p>
+		 
+		 </apiDesc><example conref="examples\StandardFlowComposer_getAbsoluteStart.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:getControllerAt"><apiName>getControllerAt</apiName><shortdesc conref="IFlowComposer#getControllerAt()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>指定された位置の ContainerController オブジェクトです。
+		 
+		 </apiDesc></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>返す ContainerController オブジェクトのインデックスです。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#getControllerAt()"> </apiDesc><example conref="examples\StandardFlowComposer_getControllerAt.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:getControllerIndex"><apiName>getControllerIndex</apiName><shortdesc conref="IFlowComposer#getControllerIndex()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata><asCustoms><player>version AIR 1.5
+	 	 </player></asCustoms></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="int"/><apiDesc>指定された ContainerController オブジェクトのインデックス、またはこのフローコンポーザーにコントローラーが関連付けられていない場合は -1。
+		 
+		 </apiDesc></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>検索する ContainerController オブジェクトへの参照です。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#getControllerIndex()"> </apiDesc><example conref="examples\StandardFlowComposer_getControllerIndex.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:interactionManagerChanged"><apiName>interactionManagerChanged</apiName><shortdesc>
+		 操作マネージャーの変更時に TextFlow によって呼び出されます。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>newInteractionManager</apiItemName><apiOperationClassifier>flashx.textLayout.edit:ISelectionManager</apiOperationClassifier><apiDesc>新しい ISelectionManager インスタンス。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc>
+		 操作マネージャーの変更時に TextFlow によって呼び出されます。 
+		 
+		 <p>この関数は、自動的に呼び出されます。通常、コードでは、このメソッドを呼び出す必要はありません。StandardFlowComposer を拡張するクラスは、このメソッドをオーバーライドすることにより、操作マネージャーに依存するイベントリスナーとその他のプロパティを更新できます。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:protected:preCompose"><apiName>preCompose</apiName><shortdesc> 構成が必要な場合は true、必要ない場合は false を返します </shortdesc><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="protected"/><apiReturn><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc> 構成が必要な場合は true、必要ない場合は false を返します </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:removeAllControllers"><apiName>removeAllControllers</apiName><shortdesc conref="IFlowComposer#removeAllControllers()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc conref="IFlowComposer#removeAllControllers()"> </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:removeControllerAt"><apiName>removeControllerAt</apiName><shortdesc conref="IFlowComposer#removeControllerAt()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiDesc>削除する ContainerController オブジェクトのインデックスです。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#removeControllerAt()"> </apiDesc><example conref="examples\StandardFlowController_removeControllerAt.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:removeController"><apiName>removeController</apiName><shortdesc conref="IFlowComposer#removeController()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>controller</apiItemName><apiOperationClassifier>flashx.textLayout.container:ContainerController</apiOperationClassifier><apiDesc>削除する ContainerController インスタンスです。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#removeController()"> </apiDesc><example conref="examples\StandardFlowController_removeController.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:setFocus"><apiName>setFocus</apiName><shortdesc> 
+		 absolutePosition パラメーターによって指定された位置を含むコンテナにフォーカスを設定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>absolutePosition</apiItemName><apiType value="int"/><apiDesc>フォーカスを受け取るコンテナのテキストフローでの位置を指定します。
+		 </apiDesc></apiParam><apiParam><apiItemName>leanLeft</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>true で、位置がコンテナの最初の文字より前の場合、前のコンテナの末尾にフォーカスを設定します。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 <codeph>absolutePosition</codeph> パラメーターで指定された位置を含むコンテナにフォーカスを設定します。 
+		 
+		 <p>StandardFlowComposer は、指定されたテキストフロー位置を含む ContainerController オブジェクトの <codeph>setFocus()</codeph> メソッドを呼び出します。</p>
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.display.xml#Stage/focus"><linktext>flash.display.Stage.focus</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:setRootElement"><apiName>setRootElement</apiName><shortdesc conref="IFlowComposer#setRootElement()"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>newRootElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:ContainerFormattedElement</apiOperationClassifier></apiParam></apiOperationDef><apiDesc conref="IFlowComposer#setRootElement()"> </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:updateAllControllers"><apiName>updateAllControllers</apiName><shortdesc> 
+		 ルートエレメントのコンテンツを構成し、表示を更新します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>何かが変更された場合は true。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc> 
+		 ルートエレメントのコンテンツを構成し、表示を更新します。  
+		 
+		 <p>テキストレイアウトは、構成と表示の 2 つの段階で行われます。構成段階では、フローコンポーザーは、コンテンツの表示に必要な行数およびフローの表示コンテナでのこれらの行の位置を計算します。表示段階では、フローコンポーザーはコンテナの表示オブジェクトの子を更新します。<codeph>updateAllControllers()</codeph> メソッドは、両方の段階を順番に実行します。StandardFlowComposer はコンテンツへの変更を監視して、必要な場合にのみ、構成および表示のフルサイクルが実行されるようにします。</p>
+		 
+		 <p>このメソッドはすべてのテキスト行を更新し、リストを直ちに同期的に表示します。</p>
+		 
+		 <p>いずれかのコンテナのコンテンツが変更されると、メソッドは <codeph>true</codeph> を返します。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:StandardFlowComposer:updateToController"><apiName>updateToController</apiName><shortdesc> 
+		 指定されたインデックスにあるコンテナまで、表示を構成および更新します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>何かが変更された場合は <codeph>true</codeph>。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>index</apiItemName><apiType value="int"/><apiData>unknown</apiData><apiDesc>更新する最後のコンテナのインデックス（デフォルトでは、すべてのコンテナが更新されます）
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 指定されたインデックスにあるコンテナまで、表示を構成および更新します。
+		 
+		 <p><codeph>updateToController()</codeph> メソッドはコンテンツを構成し、指定されたインデックスにあるコンテナまで、すべてのコンテナの表示を更新します。例えば、20 個のコンテナチェーンがあり、10 というインデックスを指定した場合、<codeph>updateToController()</codeph> により最初から 10 番目までの（インデックス 0 から 9）コンテナが構成および表示されます。構成は、そのポイントで終了します。<codeph>controllerIndex</codeph> が -1（または指定されていない場合）、すべてのコンテナが更新されます。</p>
+		 
+		 <p>このメソッドはすべてのテキスト行を更新し、リストを直ちに同期的に表示します。</p>
+		 
+		 <p>いずれかのコンテナのコンテンツが変更されると、メソッドは <codeph>true</codeph> を返します。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.compose:StandardFlowComposer:composing:get"><apiName>composing</apiName><shortdesc> 
+		 フローコンポーザーが現在、構成操作を実行している場合は True。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 フローコンポーザーが現在、構成操作を実行している場合は True。 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:StandardFlowComposer:numControllers:get"><apiName>numControllers</apiName><shortdesc conref="IFlowComposer#numControllers"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc conref="IFlowComposer#numControllers"> </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:StandardFlowComposer:rootElement:get"><apiName>rootElement</apiName><shortdesc conref="IFlowComposer#rootElement"> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.elements:ContainerFormattedElement</apiValueClassifier></apiValueDef><apiDesc conref="IFlowComposer#rootElement"> </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.compose:IVerticalJustificationLine"><apiName>IVerticalJustificationLine</apiName><shortdesc> 
+	 IVerticalJustificationLine インターフェイスは、テキスト行の垂直方向の均等配置を可能にするためのメソッドとプロパティを定義します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc> 
+	 IVerticalJustificationLine インターフェイスは、テキスト行の垂直方向の均等配置を可能にするためのメソッドとプロパティを定義します。
+	 
+	 </apiDesc></apiClassifierDetail><apiValue id="flashx.textLayout.compose:IVerticalJustificationLine:flashx.textLayout.compose:IVerticalJustificationLine:ascent:get"><apiName>ascent</apiName><shortdesc conref="flash.text.engine.TextLine#ascent"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc conref="flash.text.engine.TextLine#ascent"> 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:IVerticalJustificationLine:flashx.textLayout.compose:IVerticalJustificationLine:descent:get"><apiName>descent</apiName><shortdesc conref="flash.text.engine.TextLine#descent"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc conref="flash.text.engine.TextLine#descent"> 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:IVerticalJustificationLine:flashx.textLayout.compose:IVerticalJustificationLine:height:get"><apiName>height</apiName><shortdesc> 行の高さ（ピクセル単位）です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Number"/></apiValueDef><apiDesc> 行の高さ（ピクセル単位）です。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#IVerticalJustificationLine/width"><linktext>width</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:IVerticalJustificationLine:flashx.textLayout.compose:IVerticalJustificationLine:x:get"><apiName>x</apiName><shortdesc> 
+		 行のコンテナに対する水平方向の相対位置です。コンテナの左側からのオフセット（ピクセル単位）で表現されます。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 行のコンテナに対する水平方向の相対位置です。コンテナの左側からのオフセット（ピクセル単位）で表現されます。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#IVerticalJustificationLine/y"><linktext>y</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:IVerticalJustificationLine:flashx.textLayout.compose:IVerticalJustificationLine:y:get"><apiName>y</apiName><shortdesc> 
+		 行のコンテナに対する垂直方向の相対位置です。コンテナの上部からのオフセット（ピクセル単位）で表現されます。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Number"/></apiValueDef><apiDesc> 
+		 行のコンテナに対する垂直方向の相対位置です。コンテナの上部からのオフセット（ピクセル単位）で表現されます。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#IVerticalJustificationLine/x"><linktext>x</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.compose:TextFlowLineLocation"><apiName>TextFlowLineLocation</apiName><shortdesc> 
+	 TextFlowLineLocation クラスは、段落内の行の位置を指定するための定数を定義する列挙クラスです。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 TextFlowLineLocation クラスは、段落内の行の位置を指定するための定数を定義する列挙クラスです。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="" invalidHref="flashx.textLayout.compose.ParagraphElement.xml"><linktext>ParagraphElement</linktext></link><link href="" invalidHref="flashx.textLayout.compose.TextFlow.xml"><linktext>TextFlow</linktext></link></related-links><apiValue id="flashx.textLayout.compose:TextFlowLineLocation:FIRST"><apiName>FIRST</apiName><shortdesc> 段落の最初の行を指定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>1</apiData><apiType value="uint"/></apiValueDef><apiDesc> 段落の最初の行を指定します。 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLineLocation:LAST"><apiName>LAST</apiName><shortdesc> 段落の最後の行を指定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>4</apiData><apiType value="uint"/></apiValueDef><apiDesc> 段落の最後の行を指定します。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLineLocation:MIDDLE"><apiName>MIDDLE</apiName><shortdesc> 段落の中間の行を指定します（最初の行と最後の行は指定できません）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>2</apiData><apiType value="uint"/></apiValueDef><apiDesc> 段落の中間の行を指定します（最初の行と最後の行は指定できません）。 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.compose:TextFlowLineLocation:ONLY"><apiName>ONLY</apiName><shortdesc> 段落の最初の行と最後の行の両方を指定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>5</apiData><apiType value="uint"/></apiValueDef><apiDesc> 段落の最初の行と最後の行の両方を指定します。
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.compose:TextLineRecycler"><apiName>TextLineRecycler</apiName><shortdesc> 
+	 TextLineRecycler クラスは、TextLines のリサイクルに対するサポートを提供します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 TextLineRecycler クラスは、TextLines のリサイクルに対するサポートを提供します。Player の一部のバージョンは recreateTextLine をサポートします。リサイクラーに TextLines を渡すと、TextLines は再利用可能になります。これにより、Player のパフォーマンスが向上します。
+	 
+	 </apiDesc></apiClassifierDetail><apiOperation id="flashx.textLayout.compose:TextLineRecycler:addLineForReuse"><apiName>addLineForReuse</apiName><shortdesc>
+		 再利用のために TextLine をプールに追加します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>textLine</apiItemName><apiType value="flash.text.engine:TextLine"/></apiParam></apiOperationDef><apiDesc>
+		 再利用のために TextLine をプールに追加します。再利用する TextLines は、userData および親が null である必要があります。 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:TextLineRecycler:getLineForReuse"><apiName>getLineForReuse</apiName><shortdesc>
+		 再利用のために、プールから TextLine を返します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiType value="flash.text.engine:TextLine"/></apiReturn></apiOperationDef><apiDesc>
+		 再利用のために、プールから TextLine を返します。 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.compose:TextLineRecycler:textLineRecyclerEnabled:get"><apiName>textLineRecyclerEnabled</apiName><shortdesc> </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiStatic/><apiValueAccess value="readwrite"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.compose:FlowDamageType"><apiName>FlowDamageType</apiName><shortdesc>
+	  FlowDamageType クラスは、損傷メソッドおよびイベントの損傷タイプを定義する列挙クラスです。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc>
+	  FlowDamageType クラスは、損傷メソッドおよびイベントの損傷タイプを定義する列挙クラスです。
+	 
+	 </apiDesc></apiClassifierDetail><apiValue id="flashx.textLayout.compose:FlowDamageType:GEOMETRY"><apiName>GEOMETRY</apiName><shortdesc>
+		 値は、移動する他の行によって行が無効化された場合に、validity プロパティを設定するために使用されます。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>geometry</apiData><apiType value="String"/></apiValueDef><apiDesc>
+		 値は、移動する他の行によって行が無効化された場合に、<codeph>validity</codeph> プロパティを設定するために使用されます。次の構成操作時に、テキスト行を再作成する必要がある場合とない場合があります。 
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#TextFlowLine/validity"><linktext>flashx.textLayout.compose.TextFlowLine.validity</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.compose:FlowDamageType:INVALID"><apiName>INVALID</apiName><shortdesc> 
+		 IFlowComposer で損傷を処理するときに使用される無効な損傷タイプを指定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>invalid</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 IFlowComposer で損傷を処理するときに使用される無効な損傷タイプを指定します。
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#TextFlowLine/validity"><linktext>flashx.textLayout.compose.TextFlowLine.validity</linktext></link></related-links></apiValue></apiClassifier></apiPackage>

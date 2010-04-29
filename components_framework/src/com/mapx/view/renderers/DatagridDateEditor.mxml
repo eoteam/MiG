@@ -1,0 +1,56 @@
+<mx:Box xmlns:mx="http://www.adobe.com/2006/mxml" implements="mx.controls.listClasses.IDropInListItemRenderer"
+	paddingLeft="5" paddingRight="5" width="100%" horizontalScrollPolicy="off">
+
+    <mx:Script>
+        <![CDATA[
+		import mx.controls.dataGridClasses.DataGridListData;
+		import mx.controls.listClasses.BaseListData;
+         
+        private var _listData:BaseListData;
+        [Bindable] public var textColor:Number = 0xffffff; 
+		public function get listData():BaseListData
+		{
+			return _listData;
+		}
+		
+		// Define the setter method,
+		public function set listData(value:BaseListData):void
+		{
+			_listData = value;
+		}		
+        override public function get data():Object
+        {
+      	      return super.data;
+        }            
+        override public function set data(value:Object):void
+        {
+        	 super.data = value;
+        	 if(value != null)
+        	 {
+    	 		this.enabled = true;
+    	 		this.alpha = 1;
+				date = new Date();
+				date.time=Number(data[DataGridListData(this.listData).dataField]);		
+				if(dateField)
+					dateField.selectedDate = date;
+				if(dateLabel)
+					dateLabel.text = dateFormatter.format(date).toString();   	 		
+    	 		this.validateProperties();
+        	 }	           	 
+        }
+		public function handleDateChange():void
+		{
+			this.data[DataGridListData(this.listData).dataField] = dateField.selectedDate.time;
+		}
+		[Bindable] private var date:Date;
+		[Bindable] public var dateEditable:Boolean = true;
+        ]]>
+    </mx:Script>   
+    <mx:Canvas>
+		<mx:DateField yearNavigationEnabled="true"  creationComplete="if(date)dateField.selectedDate=date"  visible="{dateEditable}" width="100%" textInputStyleName="dateChooserTextInput" dateChooserStyleName="dateChooser"
+		 color="0x000000" paddingLeft="0"  id="dateField" change="handleDateChange()"
+		paddingRight="2"/>  
+		<mx:Label styleName="regularCopy" creationComplete="if(date)dateLabel.text=date.toDateString()" color="{textColor}"  id="dateLabel" visible="{!dateEditable}" /> 	
+    </mx:Canvas>
+	<mx:DateFormatter id="dateFormatter"  formatString="MM/DD/YY"/>
+</mx:Box>			

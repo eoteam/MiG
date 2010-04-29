@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"  creationComplete="init()" minHeight="200" minWidth="200">
+	
+	<mx:Metadata>
+		[Style(name="resizeCursorSkin", type="Class", inherit="no")]
+		[Style(name="resizeCursorXOffset", type="Number", inherit="no")]
+		[Style(name="resizeCursorYOffset", type="Number", inherit="no")]		
+	</mx:Metadata>
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.CursorManager;
+			import mx.controls.Button;
+			private var resizeButton:Button;
+			public var cornerHandleSize:Number = 10;
+			[Embed(source="/flexlib/mdi/assets/img/resizeCursorTLBR.gif")]
+			private static var DEFAULT_RESIZE_CURSOR_TL_BR:Class;
+			private static var DEFAULT_RESIZE_CURSOR_TL_BR_X_OFFSET:Number = -10;
+			private static var DEFAULT_RESIZE_CURSOR_TL_BR_Y_OFFSET:Number = -10;
+			private static var classConstructed:Boolean = classConstruct();
+			
+			private var dragStartMouseX:Number;
+			private var dragStartMouseY:Number;
+			private var dragMaxX:Number;
+			private var dragMaxY:Number;
+			private var dragAmountX:Number;
+			private var dragAmountY:Number;			
+			
+			private var savedWindowRect:Rectangle;
+			private static function classConstruct():Boolean
+			{
+				var selector:CSSStyleDeclaration = new CSSStyleDeclaration();
+				selector.defaultFactory = function():void
+				{
+					this.resizeCursorSkin = DEFAULT_RESIZE_CURSOR_TL_BR;
+					this.resizeCursorXOffset = DEFAULT_RESIZE_CURSOR_TL_BR_X_OFFSET;
+					this.resizeCursorYOffset = DEFAULT_RESIZE_CURSOR_TL_BR_Y_OFFSET;
+				}
+				StyleManager.setStyleDeclaration("ResizableTitleWindow", selector, false);
+				return true;				
+			}					
+			protected function init():void
+			{
+			
+			}
+			override protected function createChildren():void
+			{
+				super.createChildren();
+				if(!resizeButton)
+				{
+					resizeButton = new Button();
+					//resizeButton.styleName = "resizeButton";
+					resizeButton.width = resizeButton.height = cornerHandleSize;
+					resizeButton.focusEnabled = false;
+					rawChildren.addChild(resizeButton);		
+					resizeButton.addEventListener(MouseEvent.ROLL_OVER, onResizeButtonRollOver, false, 0, true);
+					resizeButton.addEventListener(MouseEvent.ROLL_OUT, onResizeButtonRollOut, false, 0, true);
+					resizeButton.addEventListener(MouseEvent.MOUSE_DOWN, onResizeButtonPress, false, 0, true);								
+				}
+			}
+			private function onResizeButtonRollOver(event:MouseEvent):void
+			{
+				// only floating windows can be resized
+				// event.buttonDown is to detect being dragged over
+				if(!event.buttonDown)
+				{
+					setCursor();
+				}
+			}			
+			private function onResizeButtonRollOut(event:MouseEvent):void
+			{
+				if(!event.buttonDown)
+				{
+					CursorManager.removeCursor(CursorManager.currentCursorID);
+				}
+			}
+			private function setCursor():void
+			{
+				CursorManager.removeCursor(CursorManager.currentCursorID);
+				CursorManager.setCursor(this.getStyle('resizeCursorSkin'),2,this.getStyle('resizeCursorXOffset'),this.getStyle('resizeCursorYOffset'));									
+			}
+			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+			{
+				super.updateDisplayList(unscaledWidth,unscaledHeight);
+				resizeButton.x = this.width - cornerHandleSize * .5;
+				resizeButton.y = this.height - cornerHandleSize * .5;
+				resizeButton.width = resizeButton.height = cornerHandleSize;			
+			}
+			private function onResizeButtonPress(event:MouseEvent):void
+			{
+				setCursor();
+				savedWindowRect = new Rectangle(this.x, this.y, this.width, this.height);				
+				dragStartMouseX = parent.mouseX;
+				dragStartMouseY = parent.mouseY;				
+				dragMaxX = savedWindowRect.x + (savedWindowRect.width - minWidth);
+				dragMaxY = savedWindowRect.y + (savedWindowRect.height - minHeight);
+				
+				systemManager.addEventListener(Event.ENTER_FRAME, updateWindowSize, false, 0, true);
+				systemManager.addEventListener(MouseEvent.MOUSE_MOVE, onResizeButtonDrag, false, 0, true);
+				systemManager.addEventListener(MouseEvent.MOUSE_UP, onResizeButtonRelease, false, 0, true);
+				systemManager.stage.addEventListener(Event.MOUSE_LEAVE, onMouseLeaveStage, false, 0, true);	
+			}
+			private function onResizeButtonDrag(event:MouseEvent):void
+			{
+
+			}
+			private function updateWindowSize(event:Event):void
+			{
+				
+				dragAmountX = parent.mouseX - dragStartMouseX;
+				dragAmountY = parent.mouseY - dragStartMouseY;
+				
+				if(parent.mouseX < parent.width && parent.mouseY < parent.height)
+				{
+					this.width = Math.max(savedWindowRect.width + dragAmountX, minWidth);
+					this.height = Math.max(savedWindowRect.height + dragAmountY, minHeight);
+				}
+			}
+			
+			private function onResizeButtonRelease(event:MouseEvent = null):void
+			{
+				//currentResizeHandle = null;
+				systemManager.removeEventListener(Event.ENTER_FRAME, updateWindowSize);
+				systemManager.removeEventListener(MouseEvent.MOUSE_MOVE, onResizeButtonDrag);
+				systemManager.removeEventListener(MouseEvent.MOUSE_UP, onResizeButtonRelease);
+				systemManager.stage.removeEventListener(Event.MOUSE_LEAVE, onMouseLeaveStage);
+				CursorManager.removeCursor(CursorManager.currentCursorID);
+			}
+			
+			private function onMouseLeaveStage(event:Event):void
+			{
+				onResizeButtonRelease();
+				systemManager.stage.removeEventListener(Event.MOUSE_LEAVE, onMouseLeaveStage);
+			}						
+		]]>
+	</mx:Script>
+</mx:TitleWindow>

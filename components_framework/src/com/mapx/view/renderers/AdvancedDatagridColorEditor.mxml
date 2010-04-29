@@ -1,0 +1,54 @@
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" implements="mx.controls.listClasses.IDropInListItemRenderer"
+ width="100%" horizontalScrollPolicy="off" xmlns:controls="com.mapx.view.controls.*">
+
+    <mx:Script>
+        <![CDATA[
+    	import mx.managers.PopUpManager;
+		import mx.managers.PopUpManagerChildList;
+    	import com.mapx.view.controls.AdvancedColorPicker;
+    	import mx.core.Application;
+		import mx.controls.advancedDataGridClasses.AdvancedDataGridListData;
+		import mx.controls.listClasses.BaseListData;
+        
+        private var _listData:BaseListData;
+          
+		public function get listData():BaseListData
+		{
+			return _listData;
+		}
+		
+		// Define the setter method,
+		public function set listData(value:BaseListData):void
+		{
+			_listData = value;
+		}		
+        override public function get data():Object
+        {
+            return super.data;
+        }            
+        override public function set data(value:Object):void
+        {
+        	 super.data = value;
+        	 if(value != null)
+        	 {
+    	 		this.enabled = true;
+    	 		this.alpha = 1;
+				if(data[AdvancedDataGridListData(this.listData).dataField] != -1)
+				{
+					color= uint(data[AdvancedDataGridListData(this.listData).dataField]);		
+				}        	 		
+
+        	 }	           	 
+        }
+		[Bindable] private var color:Number;
+		[Bindable] public var colorEditable:Boolean = true;
+
+			
+			private	function setColor(event:Event):void {
+					data[AdvancedDataGridListData(this.listData).dataField]= colorPicker.selectedColor;
+				}	
+		
+        ]]>	
+    </mx:Script>   
+	<controls:colorPicker id="colorPicker"  selectedColor="{color}" valueCommit="setColor(event)" enabled="{colorEditable}" />
+</mx:Canvas>			

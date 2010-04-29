@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CanvasButtonAccordionHeader   buttonMode="true" mouseChildren="false" useHandCursor="true"
+	 skin="{null}" upSkin="{null}" overSkin="{null}" downSkin="{null}" 
+	 selectedUpSkin="{null}" selectedDownSkin="{null}" selectedOverSkin="{null}" 
+	xmlns="flexlib.containers.accordionClasses.*"  creationComplete="init()"
+	xmlns:mx="http://www.adobe.com/2006/mxml">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.containers.Accordion;
+			import flexlib.events.WindowShadeEvent;
+			import flexlib.containers.WindowShade;
+			
+			[Embed(source='../../../../../../webapp/src/migAssets/library.swf#Tree_folderClosedIcon')]
+			[Bindable]
+				private var closeIcon:Class;
+
+			[Embed(source='../../../../../../webapp/src/migAssets/library.swf#Tree_folderOpenIcon')]
+			[Bindable]
+				private var openIcon:Class;
+			
+			private function init():void
+			{
+				headerLabel.styleName = this.styleName;
+				this.textField.visible = false;
+				if(this.parent != null)
+				{
+					if(this.parent is WindowShade)
+					{
+						WindowShade(this.parent).addEventListener(WindowShadeEvent.OPEN_BEGIN,setOpenIcon);
+						WindowShade(this.parent).addEventListener(WindowShadeEvent.CLOSE_END,setCloseIcon);
+					}
+				}
+			}	
+			public function setIcon(open:Boolean):void
+			{
+				if(open)
+					icon.source = openIcon;
+				else
+					icon.source = closeIcon;
+			}	
+			private function setOpenIcon(event:Event):void
+			{
+				icon.source = openIcon
+			}			
+			private function setCloseIcon(event:Event):void
+			{
+				icon.source = closeIcon;
+			}
+		]]>
+	</mx:Script>
+	<mx:VBox width="100%" verticalGap="0">
+		<mx:HBox width="100%" verticalAlign="middle" >
+			<mx:Text text="{this.label}" id="headerLabel" color="#ffffff" />
+			<mx:SWFLoader source="{closeIcon}"  id="icon"/>
+		</mx:HBox>
+		<!--<mx:HRule width="100%" strokeColor="white" strokeWidth="1" />-->
+	</mx:VBox>
+</CanvasButtonAccordionHeader>
+
+ 

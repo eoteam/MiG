@@ -1,0 +1,571 @@
+<?xml version="1.0"?>
+<apiPackage id="flashx.textLayout.operations"><apiName>flashx.textLayout.operations</apiName><apiDetail/><apiClassifier id="flashx.textLayout.operations:FlowOperation"><apiName>FlowOperation</apiName><shortdesc> 
+	 Класс FlowOperation является базовым классом для всех операций инфраструктуры Text Layout Framework.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseInterface>flashx.undo:IOperation</apiBaseInterface><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 Класс FlowOperation является базовым классом для всех операций инфраструктуры Text Layout Framework. 
+	 
+	 <p>Операции представляют собой преобразования текстового потока. Класс Operation определяет логику выполнения и отмены преобразования. Операции выполняются диспетчером редактирования. Для большинства приложений не требуется непосредственное создание операций или управление ими (за исключением реализации пользовательского диспетчера редактирования).</p>
+	 
+	 <p>При выполнении операции объект Operation передается диспетчером редактирования в составе объекта FlowOperationEvent. В этом случае можно осуществить запрос к этому объекту Operation и разрешить или запретить выполнение операции, указать на необходимость выполнения какой-либо другой операции или обновить связанные элементы пользовательского интерфейса.</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:FlowOperation:FlowOperation"><apiName>FlowOperation</apiName><shortdesc> 
+		 Создает объект FlowOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>textFlow</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiDesc>Текстовый поток, к которому применяется эта операция.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Создает объект FlowOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:FlowOperation:canUndo"><apiName>canUndo</apiName><shortdesc>	
+		 Проверьте, следует ли поместить эту операцию в стек отмены.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>Если имеет значение true, операцию следует поместить в стек отмены. Если значение false, операцию не следует помещать в стек отмены.
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc>	
+		 Проверьте, следует ли поместить эту операцию в стек отмены.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.operations:FlowOperation:doOperation"><apiName>doOperation</apiName><shortdesc> 
+		 Выполняет операцию</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>Логическое значение <codeph>true</codeph>, если операция была успешно завершена. В противном случае <codeph>false</codeph>.
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc> 
+		 Выполняет операцию 
+		 
+		 <p>Указанный метод должен быть отменен в полученных классах. Базовый метод класса не выполняет действий. Непосредственный вызов метода <codeph>doOperation()</codeph> не требуется. Он вызывается диспетчером редактирования при выполнении операции. </p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.operations:FlowOperation:redo"><apiName>redo</apiName><shortdesc>	
+		 Обеспечивает повторное выполнение операции.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>Объект SelectionState, переданный в операцию при ее выполнении. Этот объект SelectionState может быть текущим выделением или выделением, созданным специально для операции. 
+		 
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>	
+		 Обеспечивает повторное выполнение операции. 
+		 
+		 <p>Указанный метод должен быть отменен в полученных классах. Базовый метод класса не выполняет действий. Непосредственный вызов метода <codeph>redo()</codeph> не требуется. Диспетчер редактирования обеспечивает вызов данного метода при повторном выполнении операции. </p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.operations:FlowOperation:undo"><apiName>undo</apiName><shortdesc>	
+		 Отменяет операцию.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>Объект SelectionState, переданный в операцию при ее выполнении. Этот объект SelectionState может быть текущим выделением или выделением, созданным специально для операции. 
+		 
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>	
+		 Отменяет операцию. 
+		 
+		 <p>Указанный метод должен быть отменен в полученных классах. Базовый метод класса не выполняет действий. Непосредственный вызов метода <codeph>undo()</codeph> не требуется. Он вызывается диспетчером редактирования при отмене операции. </p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:FlowOperation:userData"><apiName>userData</apiName><shortdesc> 
+		 Произвольные данные, связанные с элементом.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiType value=""/></apiValueDef><apiDesc> 
+		 Произвольные данные, связанные с элементом. 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowOperation:beginGeneration:get"><apiName>beginGeneration</apiName><shortdesc>
+		 Создание текстового потока перед операцией.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="uint"/></apiValueDef><apiDesc>
+		 Создание текстового потока перед операцией.
+		   
+		 <p>Созданное значение 0 указывает на то, что операция не была завершена.</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowOperation:endGeneration:get"><apiName>endGeneration</apiName><shortdesc> 
+		 Создание текстового потока после операции.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="uint"/></apiValueDef><apiDesc> 
+		 Создание текстового потока после операции.
+		 
+		 <p>Созданное значение 0 указывает на то, что операция не была завершена.</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowOperation:textFlow:get"><apiName>textFlow</apiName><shortdesc> 
+		 Объект TextFlow, к которому применяется эта операция.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.elements:TextFlow</apiValueClassifier></apiValueDef><apiDesc> 
+		 Объект TextFlow, к которому применяется эта операция.
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:FlowElementOperation"><apiName>FlowElementOperation</apiName><shortdesc>
+	 Класс FlowElementOperation является базовым классом для операций, обеспечивающих преобразование элемента FlowElement.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 Класс FlowElementOperation является базовым классом для операций, обеспечивающих преобразование элемента FlowElement.
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.formats.xml#TextLayoutFormat"><linktext>flashx.textLayout.formats.TextLayoutFormat</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:FlowElementOperation:FlowElementOperation"><apiName>FlowElementOperation</apiName><shortdesc> 
+		 Создает объект FlowElementOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Указывает объект TextFlow, для которого выполняется эта операция.
+		 </apiDesc></apiParam><apiParam><apiItemName>targetElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiDesc>Указывает элемент, изменяемый этой операцией.
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>Смещение с начала <codeph>targetElement</codeph>.
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiData>-1</apiData><apiDesc>Смещение с конца <codeph>targetElement</codeph>.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Создает объект FlowElementOperation.
+		  
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:FlowElementOperation:relativeEnd:get"><apiName>relativeEnd</apiName><shortdesc> 
+		 relativeEnd: смещение от начала targetElement.
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 relativeEnd: смещение от начала <codeph>targetElement</codeph>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowElementOperation:relativeStart:get"><apiName>relativeStart</apiName><shortdesc> 
+		 relativeStart: смещение от начала targetElement.>
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 relativeStart: смещение от начала <codeph>targetElement</codeph>.>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowElementOperation:targetElement:get"><apiName>targetElement</apiName><shortdesc> 
+		 targetElement: указывает элемент, изменяемый этой операцией.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.elements:FlowElement</apiValueClassifier></apiValueDef><apiDesc> 
+		 targetElement: указывает элемент, изменяемый этой операцией.
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:CutOperation"><apiName>CutOperation</apiName><shortdesc>
+	 Класс CutOperation инкапсулирует операцию вырезания.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 Класс CutOperation инкапсулирует операцию вырезания.
+	 
+	 <p>Указанный диапазон удаляется из текстового потока.</p>
+	 
+	 <p><b>Примечание.</b> Диспетчер редактирования применяется для копирования вырезанных фрагментов текста в буфер обмена. При отмене операции вырезания исходное состояние буфера обмена не восстанавливается.</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:CutOperation:flashx.textLayout.operations:CutOperation"><apiName>CutOperation</apiName><shortdesc> 
+		 Создает объект CutOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Диапазон текста, который должен быть вырезан.
+		 </apiDesc></apiParam><apiParam><apiItemName>scrapToCut</apiItemName><apiOperationClassifier>flashx.textLayout.edit:TextScrap</apiOperationClassifier><apiDesc>Копия удаленного текста.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Создает объект CutOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:CutOperation:scrapToCut:get"><apiName>scrapToCut</apiName><shortdesc> 
+		 scrapToCut: исходный удаленный текст
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.edit:TextScrap</apiValueClassifier></apiValueDef><apiDesc> 
+		 scrapToCut: исходный удаленный текст
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyElementUserStyleOperation"><apiName>ApplyElementUserStyleOperation</apiName><shortdesc>
+	 Класс ApplyElementUserStyleOperation инкапсулирует изменение значения стиля элемента.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowElementOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 Класс ApplyElementUserStyleOperation инкапсулирует изменение значения стиля элемента.
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#FlowElement/userStyles"><linktext>flashx.textLayout.elements.FlowElement.userStyles</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyElementUserStyleOperation:ApplyElementUserStyleOperation"><apiName>ApplyElementUserStyleOperation</apiName><shortdesc> 
+		 Создает объект ApplyElementUserStyleOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Описывает диапазон текста для применения стиля.
+		 </apiDesc></apiParam><apiParam><apiItemName>targetElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiDesc>Указывает элемент, который должен быть изменен.
+		 </apiDesc></apiParam><apiParam><apiItemName>styleName</apiItemName><apiType value="String"/><apiDesc>Имя стиля, который должен быть изменен.
+		 </apiDesc></apiParam><apiParam><apiItemName>value</apiItemName><apiType value="any"/><apiDesc>Новое значение стиля.
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>Смещение с начала целевого элемента.
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiData>-1</apiData><apiDesc>Смещение с конца целевого элемента.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Создает объект ApplyElementUserStyleOperation.
+		 
+		 <p>Если параметры <codeph>relativeStart</codeph> и <codeph>relativeEnd</codeph> установлены, то существующий элемент разделяется на несколько элементов. При этом в выбранной части используется новое значение стиля, а в оставшейся применяется существующее значение стиля.</p>
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ApplyElementUserStyleOperation:newValue:get"><apiName>newValue</apiName><shortdesc> 
+		 Новое значение стиля.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/></apiValueDef><apiDesc> 
+		 Новое значение стиля.
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ApplyElementUserStyleOperation:styleName:get"><apiName>styleName</apiName><shortdesc> 
+		 Имя измененного стиля.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 Имя измененного стиля. 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyFormatOperation"><apiName>ApplyFormatOperation</apiName><shortdesc>
+	 Класс ApplyFormatOperation инкапсулирует изменение стиля.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 Класс ApplyFormatOperation инкапсулирует изменение стиля.
+	 
+	 <p>Класс ApplyFormatOperation обеспечивает применение формата листа к тексту в указанном диапазоне (если указанным диапазоном является отдельная точка, изменения не вносятся). Он обеспечивает применение формата абзаца к любым абзацам, по крайней мере, частично в рамках диапазона (или к одиночному абзацу, если диапазон включает в себя одну точку). Кроме того, формат контейнера применяется к любым контейнерам, по крайней мере, частично в рамках диапазона (или к одиночному контейнеру, если диапазон включает в себя одну точку).</p>
+	 
+	 </apiDesc><example conref="examples\ApplyFormatOperation_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyFormatOperation:ApplyFormatOperation"><apiName>ApplyFormatOperation</apiName><shortdesc> 
+		 Создает объект ApplyFormatOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Определяет диапазон текста, к которому применяется формат.
+		  </apiDesc></apiParam><apiParam><apiItemName>leafFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiDesc> Формат, применяемый к объектам LeafFlowElement в выбранном диапазоне.
+		  </apiDesc></apiParam><apiParam><apiItemName>paragraphFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiDesc>Формат, применяемый к объектам ParagraphElement в выбранном диапазоне.
+		  </apiDesc></apiParam><apiParam><apiItemName>containerFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiData>null</apiData><apiDesc>Формат, применяемый к контейнерам в выбранном диапазоне.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Создает объект ApplyFormatOperation.
+		 
+		  </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:ApplyFormatOperation:redo"><apiName>redo</apiName><shortdesc/><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiIsOverride/><apiReturn><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:ApplyFormatOperation:containerFormat:get"><apiName>containerFormat</apiName><shortdesc> 
+		 Свойства формата, применяемые к контейнерам в диапазоне.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Свойства формата, применяемые к контейнерам в диапазоне.
+		 
+		 <p>Форматы любых контейнеров, по крайней мере частично обновляются внутри диапазона. Если диапазоном этой операции является точка, обновляется отдельный контейнер. Если <codeph>containerFormat</codeph> имеет значение <codeph>null</codeph>, не изменяется ни один формат контейнера.</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ApplyFormatOperation:leafFormat:get"><apiName>leafFormat</apiName><shortdesc> 
+		 Свойства формата, применяемого к элементам листа в диапазоне.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Свойства формата, применяемого к элементам листа в диапазоне.
+		 
+		 <p>Если диапазоном этой операции является точка или если <codeph>leafFormat</codeph> имеет значение <codeph>null</codeph>, не изменяется ни один формат элемента листа.</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ApplyFormatOperation:paragraphFormat:get"><apiName>paragraphFormat</apiName><shortdesc> 
+		 Свойства формата, применяемого к абзацам в диапазоне.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Свойства формата, применяемого к абзацам в диапазоне.
+		 
+		 <p>Форматы любых абзацев внутри диапазона обновляются, по крайней мере, частично. Если диапазоном этой операции является точка, обновляется отдельный абзац. Если свойство <codeph>paragraphFormat</codeph> имеет значение <codeph>null</codeph>, не изменяется ни один формат абзаца.</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ClearFormatOnElementOperation"><apiName>ClearFormatOnElementOperation</apiName><shortdesc>
+	 Класс ClearFormatOnElementOperation предоставляет средства для изменения стиля элемента.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowElementOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 Класс ClearFormatOnElementOperation предоставляет средства для изменения стиля элемента.
+	 
+	 <p>Эта операция отменяет определение одного или нескольких форматов в элементе потока.</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.formats.xml#TextLayoutFormat"><linktext>flashx.textLayout.formats.TextLayoutFormat</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link><link href="flashx.textLayout.operations.xml#ApplyFormatToElementOperation"><linktext>ApplyFormatToElementOperation</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ClearFormatOnElementOperation:ClearFormatOnElementOperation"><apiName>ClearFormatOnElementOperation</apiName><shortdesc> 
+		Создает объект ClearFormatOnElementOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Указывает текстовый поток, содержащий элемент, к которому применяется эта операция.
+		</apiDesc></apiParam><apiParam><apiItemName>targetElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiDesc>указывает элемент, к которому применяется эта операция.
+		</apiDesc></apiParam><apiParam><apiItemName>format</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiDesc>Форматы, применяемые в этой операции.
+		 
+		</apiDesc></apiParam><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiData>0</apiData></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiData>-1</apiData></apiParam></apiConstructorDef><apiDesc> 
+		Создает объект ClearFormatOnElementOperation. 
+		
+		</apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ClearFormatOnElementOperation:format:get"><apiName>format</apiName><shortdesc> 
+		 Форматы символов, применяемые в этой операции.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Форматы символов, применяемые в этой операции.
+		 
+		 <p>При значении <codeph>null</codeph> ни один формат символа не изменяется.</p> 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:CompositeOperation"><apiName>CompositeOperation</apiName><shortdesc>
+	 Класс CompositeOperation инкапсулирует группу преобразований, управляемую в виде единого блока.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 Класс CompositeOperation обеспечивает механизм группировки, позволяющий объединять несколько операций FlowOperation в отдельную атомарную операцию.
+	 
+	 <p>Класс CompositeOperation обеспечивает механизм группировки, позволяющий объединять несколько операций FlowOperation в отдельную атомарную операцию. Операции группировки позволяют отменять и повторно выполнять их единым блоком. Например, несколько действий вставки отдельных символов, сопровождаемых несколькими нажатиями клавиши Backspace, могут быть совместно отменены, как если бы представляли собой отдельную операцию. Группировка также обеспечивает механизм представления сложных операций. Например, операция замены, изменяющая более чем один диапазон текста, может представляться и подлежать управлению как отдельная составная операция.</p>
+	 
+	 <p><b>Примечание.</b> В некоторых ситуациях более эффективным может быть объединение отдельных атомарных операций, а не объединение отдельных операций в группу. Например, несколько последовательных действий по вставке символов могут быть представлены в виде единой операции вставки и отмена или повторное выполнение этой отдельной операции может быть эффективнее отмены или повторного выполнения группы операций вставки.</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:CompositeOperation:CompositeOperation"><apiName>CompositeOperation</apiName><shortdesc> 
+		 Создает объект CompositeOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operations</apiItemName><apiType value="Array"/><apiData>null</apiData><apiDesc>Группируемые операции.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Создает объект CompositeOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:CompositeOperation:addOperation"><apiName>addOperation</apiName><shortdesc> 
+		 Добавляет дополнительную операцию в конец списка.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.textLayout.operations:FlowOperation</apiOperationClassifier></apiParam></apiOperationDef><apiDesc> 
+		 Добавляет дополнительную операцию в конец списка. 
+		 
+		 <p>Новая операция должна выполняться в том же объекте TextFlow, в котором выполняются другие операции из списка.</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:CompositeOperation:operations:get"><apiName>operations</apiName><shortdesc>
+		 Массив, содержащий операции, сгруппированные при помощи этой составной операции.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Array"/></apiValueDef><apiDesc>
+		 Массив, содержащий операции, сгруппированные при помощи этой составной операции.
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:InsertInlineGraphicOperation"><apiName>InsertInlineGraphicOperation</apiName><shortdesc>
+	 Класс InsertInlineGraphicOperation инкапсулирует вставку вложенного графического элемента в текстовый поток.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 Класс InsertInlineGraphicOperation инкапсулирует вставку вложенного графического элемента в текстовый поток.
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#InlineGraphicElement"><linktext>flashx.textLayout.elements.InlineGraphicElement</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:InsertInlineGraphicOperation:flashx.textLayout.operations:InsertInlineGraphicOperation"><apiName>InsertInlineGraphicOperation</apiName><shortdesc> 
+		 Создает объект InsertInlineGraphicsOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Описывает точку вставки. В случае выбора диапазона операция обеспечивает удаление содержимого этого диапазона.
+		 </apiDesc></apiParam><apiParam><apiItemName>source</apiItemName><apiType value="Object"/><apiDesc>Источник изображения (строка uri, URLRequest, DisplayObject или класс встроенного ресурса). 
+		 </apiDesc></apiParam><apiParam><apiItemName>width</apiItemName><apiType value="Object"/><apiDesc>Назначаемая ширина (количество пикселей, процентное значение или строка «auto»)
+		 </apiDesc></apiParam><apiParam><apiItemName>height</apiItemName><apiType value="Object"/><apiDesc>Назначаемая высота (количество пикселей, процентное значение или строка «auto»)
+		 </apiDesc></apiParam><apiParam><apiItemName>options</apiItemName><apiType value="Object"/><apiData>null</apiData><apiDesc>Не поддерживается
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Создает объект InsertInlineGraphicsOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:InsertInlineGraphicOperation:redo"><apiName>redo</apiName><shortdesc>
+		 Обеспечивает повторное выполнение операции после ее отмены.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiIsOverride/><apiReturn><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>
+		 Обеспечивает повторное выполнение операции после ее отмены.
+		 
+		 <p>Эта функция вызывается диспетчером редактирования в случае необходимости.</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:InsertInlineGraphicOperation:height:get"><apiName>height</apiName><shortdesc conref="flashx.textLayout.elements.InlineGraphicElement#height"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc conref="flashx.textLayout.elements.InlineGraphicElement#height"> 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flashx.textLayout.xml#InlineGraphicElement/height"><linktext>flashx.textLayout.InlineGraphicElement.height</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.operations:InsertInlineGraphicOperation:options:get"><apiName>options</apiName><shortdesc> 
+		 параметры не поддерживаются
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc> 
+		 параметры не поддерживаются
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:InsertInlineGraphicOperation:source:get"><apiName>source</apiName><shortdesc conref="flashx.textLayout.elements.InlineGraphicElement#source">	
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc conref="flashx.textLayout.elements.InlineGraphicElement#source">	
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:InsertInlineGraphicOperation:width:get"><apiName>width</apiName><shortdesc conref="flashx.textLayout.elements.InlineGraphicElement#width"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc conref="flashx.textLayout.elements.InlineGraphicElement#width"> 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:RedoOperation"><apiName>RedoOperation</apiName><shortdesc> 
+	 Класс RedoOperation инкапсулирует операцию повторения.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowOperation</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 Класс RedoOperation инкапсулирует операцию повторения.
+	 
+	 </apiDesc><example conref="examples\RedoOperation_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:RedoOperation:RedoOperation"><apiName>RedoOperation</apiName><shortdesc> 
+		 Создает объект RedoOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.textLayout.operations:FlowOperation</apiOperationClassifier><apiDesc>Повторяемая операция.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Создает объект RedoOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:RedoOperation:operation:get"><apiName>operation</apiName><shortdesc> 
+		 Повторяемая операция.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.operations:FlowOperation</apiValueClassifier></apiValueDef><apiDesc> 
+		 Повторяемая операция.
+		  
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ClearFormatOperation"><apiName>ClearFormatOperation</apiName><shortdesc>
+	 Класс ClearFormatOperation предоставляет средства для отмены определения форматов.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 Класс ClearFormatOperation предоставляет средства для отмены определения форматов.
+	 
+	 <p>Класс UndefineFormatOperation отменяет определение свойств, заданных для формата листа, в тексте в указанном диапазоне (если указанным диапазоном является отдельная точка, изменения не вносятся). Он отменяет определение свойств, заданных в формате абзаца для любых абзацев, которые хотя бы частично находятся в пределах диапазона (или для одиночного абзаца, если диапазон состоит из одной точки). Кроме того, отменяется определение свойств, заданных для формата контейнера, в любых контейнерах, по крайней мере, частично в рамках диапазона (или к одиночному контейнеру, если диапазон включает в себя одну точку).</p>
+	 
+	 </apiDesc><example conref="examples\ApplyFormatOperation_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ClearFormatOperation:ClearFormatOperation"><apiName>ClearFormatOperation</apiName><shortdesc> 
+		 Создает объект ClearFormatOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Определяет диапазон текста, к которому применяется формат.
+		  </apiDesc></apiParam><apiParam><apiItemName>leafFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiDesc> Формат, установленные значения которого обозначают свойства для отмены определения объектов LeafFlowElement в выбранном диапазоне.
+		  </apiDesc></apiParam><apiParam><apiItemName>paragraphFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiDesc>Формат, установленные значения которого обозначают свойства для отмены определения объектов ParagraphElement в выбранном диапазоне.
+		  </apiDesc></apiParam><apiParam><apiItemName>containerFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiData>null</apiData><apiDesc>Формат, заданные значения которого указывают свойства для отмены определения объектов ContainerController в выбранном диапазоне.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Создает объект ClearFormatOperation.
+		 
+		  </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:ClearFormatOperation:redo"><apiName>redo</apiName><shortdesc/><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiIsOverride/><apiReturn><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:ClearFormatOperation:containerFormat:get"><apiName>containerFormat</apiName><shortdesc> 
+		 Свойства формата, определение которых следует отменить для контейнеров в диапазоне.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Свойства формата для отмены определений контейнеров в диапазоне.
+		 
+		 <p>Форматы любых контейнеров, по крайней мере частично обновляются внутри диапазона. Если диапазоном этой операции является точка, обновляется отдельный контейнер. Если <codeph>containerFormat</codeph> имеет значение <codeph>null</codeph>, не изменяется ни один формат контейнера.</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ClearFormatOperation:leafFormat:get"><apiName>leafFormat</apiName><shortdesc> 
+		 Свойства формата для отмены определений элементов листа в диапазоне.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Свойства формата для отмены определений элементов листа в диапазоне.
+		 
+		 <p>Если диапазоном этой операции является точка или если <codeph>leafFormat</codeph> имеет значение <codeph>null</codeph>, не изменяется ни один формат элемента листа.</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ClearFormatOperation:paragraphFormat:get"><apiName>paragraphFormat</apiName><shortdesc> 
+		 Свойства формата для отмены определений абзацев в диапазоне.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Свойства формата для отмены определений абзацев в диапазоне.
+		 
+		 <p>Форматы любых абзацев внутри диапазона обновляются, по крайней мере, частично. Если диапазоном этой операции является точка, обновляется отдельный абзац. Если свойство <codeph>paragraphFormat</codeph> имеет значение <codeph>null</codeph>, не изменяется ни один формат абзаца.</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:FlowTextOperation"><apiName>FlowTextOperation</apiName><shortdesc> 
+	 Класс FlowTextOperation является базовым классом для операций, преобразующих диапазон текста.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowOperation</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 Класс FlowTextOperation является базовым классом для операций, преобразующих диапазон текста.
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:FlowTextOperation:FlowTextOperation"><apiName>FlowTextOperation</apiName><shortdesc> 
+		 Создает объект FlowTextOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Указывает соответствующее выделение. Если это релевантно для операции, то <codeph>operationState</codeph> описывает диапазон текста, к которому применяется эта операция. В противном случае <codeph>operationState</codeph> используется для сохранения текущего состояния выделения для его восстановления при отмене операции.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Создает объект FlowTextOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:FlowTextOperation:redo"><apiName>redo</apiName><shortdesc>	
+		 	
+		 Обеспечивает повторное выполнение операции.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiIsOverride/><apiReturn><apiDesc>Объект SelectionState, переданный в операцию при ее выполнении. Этот объект SelectionState может быть текущим выделением или выделением, созданным специально для операции. 
+		 
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>	
+		 	
+		 Обеспечивает повторное выполнение операции. 
+		 
+		 <p>Указанный метод должен быть отменен в полученных классах. Базовый метод класса не выполняет действий. Непосредственный вызов метода <codeph>redo()</codeph> не требуется. Диспетчер редактирования обеспечивает вызов данного метода при повторном выполнении операции. </p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:FlowTextOperation:absoluteEnd:get"><apiName>absoluteEnd</apiName><shortdesc> 
+		 Абсолютная конечная точка диапазона текста, к которому применяется эта операция.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 Абсолютная конечная точка диапазона текста, к которому применяется эта операция. 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowTextOperation:absoluteStart:get"><apiName>absoluteStart</apiName><shortdesc> 
+		 Абсолютная начальная точка диапазона текста, к которому применяется эта операция.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 Абсолютная начальная точка диапазона текста, к которому применяется эта операция.
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowTextOperation:originalSelectionState:get"><apiName>originalSelectionState</apiName><shortdesc> 
+		 Состояние выбора в начале операции.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.edit:SelectionState</apiValueClassifier></apiValueDef><apiDesc> 
+		 Состояние выбора в начале операции. 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:DeleteTextOperation"><apiName>DeleteTextOperation</apiName><shortdesc>
+	 Класс DeleteTextOperation инкапсулирует удаление диапазона текста.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 Класс DeleteTextOperation инкапсулирует удаление диапазона текста.
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:DeleteTextOperation:DeleteTextOperation"><apiName>DeleteTextOperation</apiName><shortdesc> 
+		 Создает операцию DeleteTextOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Исходный диапазон текста.
+		 </apiDesc></apiParam><apiParam><apiItemName>deleteSelectionState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiData>null</apiData><apiDesc>Диапазон удаляемого текста (если он отличается от диапазона, описанного в <codeph>operationState</codeph>). (Установите значение <codeph>null</codeph> для удаления диапазона, описанного при помощи <codeph>operationState</codeph>.)
+		 </apiDesc></apiParam><apiParam><apiItemName>allowMerge</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>Значение <codeph>true</codeph> устанавливается, если эта операция может быть объединена со следующей или предыдущей операцией.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Создает операцию DeleteTextOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:DeleteTextOperation:allowMerge:get"><apiName>allowMerge</apiName><shortdesc> 
+		 Указывает на возможность объединения этой операции с операциями, выполняемыми до или после нее.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 Указывает на возможность объединения этой операции с операциями, выполняемыми до или после нее.
+		 
+		 <p>Некоторые операции удаления, например последовательность нажатия клавиш Backspace, могут быть эффективно объединены в одну операцию, поэтому при отмене операции будет аннулирована вся последовательность.</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:DeleteTextOperation:deleteSelectionState:get"><apiName>deleteSelectionState</apiName><shortdesc> 
+		 deleteSelectionState: диапазон текста для удаления
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.edit:SelectionState</apiValueClassifier></apiValueDef><apiDesc> 
+		 deleteSelectionState: диапазон текста для удаления
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyLinkOperation"><apiName>ApplyLinkOperation</apiName><shortdesc>
+	 Класс ApplyLinkOperation инкапсулирует создание ссылки или операцию изменения.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 Класс ApplyLinkOperation инкапсулирует создание ссылки или операцию изменения.
+	 
+	 </apiDesc><example conref="examples\ApplyLinkOperation_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#LinkElement"><linktext>flashx.textLayout.elements.LinkElement</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyLinkOperation:flashx.textLayout.operations:ApplyLinkOperation"><apiName>ApplyLinkOperation</apiName><shortdesc> 
+		 Создает объект ApplyLinkOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Текстовый диапазон, к которому применяется операция.
+		 </apiDesc></apiParam><apiParam><apiItemName>href</apiItemName><apiType value="String"/><apiDesc>URI для связи со ссылкой. Если href равен пустой строке, то URI ссылок в выделенной части удаляется.
+		 </apiDesc></apiParam><apiParam><apiItemName>target</apiItemName><apiType value="String"/><apiDesc>Целевой объект ссылки.
+		 </apiDesc></apiParam><apiParam><apiItemName>extendToLinkBoundary</apiItemName><apiType value="Boolean"/><apiDesc>Необходимо ли расширять выбор для включения всей текстовой информации любых существующих ссылок, на которые накладывается выбор, а затем вносить изменение.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Создает объект ApplyLinkOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ApplyLinkOperation:extendToLinkBoundary:get"><apiName>extendToLinkBoundary</apiName><shortdesc>
+		 extendToLinkBoundary: необходимо ли расширять выбор для включения всей текстовой информации любых существующих ссылок, на которые накладывается выбор, а затем вносить изменение.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Boolean"/></apiValueDef><apiDesc>
+		 extendToLinkBoundary: необходимо ли расширять выбор для включения всей текстовой информации любых существующих ссылок, на которые накладывается выбор, а затем вносить изменение.
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ApplyLinkOperation:href:get"><apiName>href</apiName><shortdesc> 
+		 href: URI для связи со ссылкой.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 href: URI для связи со ссылкой. Если href равен пустой строке, то URI ссылок в выделенной части удаляется.
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ApplyLinkOperation:target:get"><apiName>target</apiName><shortdesc>
+		 target: целевой объект ссылки.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc>
+		 target: целевой объект ссылки.
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:PasteOperation"><apiName>PasteOperation</apiName><shortdesc>
+	 Класс PasteOperation инкапсулирует операцию вставки.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 Класс PasteOperation инкапсулирует операцию вставки.
+	 
+	 <p>Указанный диапазон заменяется новым содержимым.</p>
+	 
+	 <p><b>Примечание.</b> Диспетчер редактирования применяется для копирования содержимого буфера обмена.</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:PasteOperation:PasteOperation"><apiName>PasteOperation</apiName><shortdesc> 
+		 Создает объект PasteOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Описывает точку вставки или диапазон текста, подлежащий замене.
+		 </apiDesc></apiParam><apiParam><apiItemName>textScrap</apiItemName><apiOperationClassifier>flashx.textLayout.edit:TextScrap</apiOperationClassifier><apiDesc>Содержимое, вставляемое в текстовый поток.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Создает объект PasteOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:PasteOperation:textScrap:get"><apiName>textScrap</apiName><shortdesc> 
+		 textScrap: вставляемый текст
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.edit:TextScrap</apiValueClassifier></apiValueDef><apiDesc> 
+		 textScrap: вставляемый текст
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:SplitParagraphOperation"><apiName>SplitParagraphOperation</apiName><shortdesc>
+	 Класс SplitParagraphOperation инкапсулирует изменение, обеспечивающее разделение абзаца на два элемента.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 Класс SplitParagraphOperation инкапсулирует изменение, обеспечивающее разделение абзаца на два элемента.
+	 
+	 <p>Операция обеспечивает создание нового абзаца, содержащего текст из заданной позиции в конце абзаца. При указании диапазона текста вначале удаляется текст из этого диапазона.</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#ParagraphElement"><linktext>flashx.textLayout.elements.ParagraphElement</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:SplitParagraphOperation:flashx.textLayout.operations:SplitParagraphOperation"><apiName>SplitParagraphOperation</apiName><shortdesc> 
+		 Создает объект SplitParagraphOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Описывает точку, в которой абзац должен быть разделен. Если указан диапазон текста, удаляется содержимое этого диапазона.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Создает объект SplitParagraphOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyElementIDOperation"><apiName>ApplyElementIDOperation</apiName><shortdesc>
+	 Класс ChangeElementIDOperation инкапсулирует изменение идентификатора элемента.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowElementOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 Класс ChangeElementIDOperation инкапсулирует изменение идентификатора элемента.
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#FlowElement"><linktext>flashx.textLayout.elements.FlowElement</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyElementIDOperation:ApplyElementIDOperation"><apiName>ApplyElementIDOperation</apiName><shortdesc> 
+		 Создает объект ChangeElementIDOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Указывает состояние выбора перед выполнением операции
+		 </apiDesc></apiParam><apiParam><apiItemName>targetElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiDesc>Указывает элемент, который должен быть изменен
+		 </apiDesc></apiParam><apiParam><apiItemName>newID</apiItemName><apiType value="String"/><apiDesc>Назначаемый идентификатор
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>Смещение с начала целевого элемента.
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiData>-1</apiData><apiDesc>Смещение с конца целевого элемента.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Создает объект ChangeElementIDOperation. 
+		 
+		 <p>Если установлены параметры <codeph>relativeStart</codeph> или <codeph>relativeEnd</codeph>, то существующий элемент разделяется на два элемента, один из которых использует существующий идентификатор, а другой использует новый идентификатор. Если установлены оба параметра, то существующий элемент разделяется на три элемента. Исходный идентификатор присваивается первому и последнему элементу набора.</p>
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ApplyElementIDOperation:newID:get"><apiName>newID</apiName><shortdesc> 
+		 Идентификатор, назначенный этой операцией.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 Идентификатор, назначенный этой операцией.
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyFormatToElementOperation"><apiName>ApplyFormatToElementOperation</apiName><shortdesc>
+	 Класс ApplyFormatToElementOperation инкапсулирует изменение стиля элемента.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowElementOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 Класс ApplyFormatToElementOperation инкапсулирует изменение стиля элемента.
+	 
+	 <p>Эта операция обеспечивает применение одного или нескольких форматов к элементу потока.</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.formats.xml#TextLayoutFormat"><linktext>flashx.textLayout.formats.TextLayoutFormat</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyFormatToElementOperation:ApplyFormatToElementOperation"><apiName>ApplyFormatToElementOperation</apiName><shortdesc> 
+		Создает объект ApplyFormatToElementOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Указывает текстовый поток, содержащий элемент, к которому применяется эта операция.
+		</apiDesc></apiParam><apiParam><apiItemName>targetElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiDesc>указывает элемент, к которому применяется эта операция.
+		</apiDesc></apiParam><apiParam><apiItemName>format</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiDesc>Форматы, применяемые в этой операции.
+		 
+		</apiDesc></apiParam><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiData>0</apiData></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiData>-1</apiData></apiParam></apiConstructorDef><apiDesc> 
+		Создает объект ApplyFormatToElementOperation. 
+		
+		</apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ApplyFormatToElementOperation:format:get"><apiName>format</apiName><shortdesc> 
+		 Форматы символов, применяемые в этой операции.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Форматы символов, применяемые в этой операции.
+		 
+		 <p>При значении <codeph>null</codeph> ни один формат символа не изменяется.</p> 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyTCYOperation"><apiName>ApplyTCYOperation</apiName><shortdesc> 
+	 Класс ApplyTCYOperation инкапсулирует преобразование TCY.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 Класс ApplyTCYOperation инкапсулирует преобразование TCY.
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TCYElement"><linktext>flashx.textLayout.elements.TCYElement</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyTCYOperation:ApplyTCYOperation"><apiName>ApplyTCYOperation</apiName><shortdesc> 
+		 Создает объект ApplyTCYOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Описывает диапазон текста, к которому применяется операция.
+		 </apiDesc></apiParam><apiParam><apiItemName>tcyOn</apiItemName><apiType value="Boolean"/><apiDesc>Указывает на необходимость применения TCY (<codeph>true</codeph>) или удаления TCY (<codeph>false</codeph>).
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Создает объект ApplyTCYOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ApplyTCYOperation:tcyOn:get"><apiName>tcyOn</apiName><shortdesc> 
+		 Указывает на применение или удаление форматирования TCY при выполнении операции.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 Указывает на применение или удаление форматирования TCY при выполнении операции.
+		 
+		 <p>Если значение равно <codeph>true</codeph>, операция обеспечивает преобразование диапазона в элемент TCY. Если значением является <codeph>false</codeph>, операция обеспечивает удаление форматирования TCY из первого элемента TCY в диапазоне.</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.elements.xml#TCYElement"><linktext>flashx.textLayout.elements.TCYElement</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:CopyOperation"><apiName>CopyOperation</apiName><shortdesc>
+	 Класс CopyOperation включает в себя операцию копирования.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 Класс CopyOperation включает в себя операцию копирования.
+	 
+	 <p><b>Примечание.</b> Операция применяется для копирования вырезанных фрагментов текста в буфер обмена. При отмене операции копирования исходное состояние буфера обмена не восстанавливается.</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:CopyOperation:CopyOperation"><apiName>CopyOperation</apiName><shortdesc> 
+		 Создает объект CopyOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Диапазон текста, который должен быть скопирован.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Создает объект CopyOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor></apiClassifier><apiClassifier id="flashx.textLayout.operations:InsertTextOperation"><apiName>InsertTextOperation</apiName><shortdesc>
+	 Класс InsertTextOperation инкапсулирует операцию вставки текста.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 Класс InsertTextOperation инкапсулирует операцию вставки текста.
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:InsertTextOperation:InsertTextOperation"><apiName>InsertTextOperation</apiName><shortdesc> 
+		 Создает объект InsertTextOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Описывает точку вставки или диапазон текста.
+		 </apiDesc></apiParam><apiParam><apiItemName>text</apiItemName><apiType value="String"/><apiDesc>Вставляемая строка.
+		 </apiDesc></apiParam><apiParam><apiItemName>deleteSelectionState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiData>null</apiData><apiDesc>Описывает диапазон текста, который должен быть удален перед вставкой, если он отличается от диапазона, описанного при помощи свойства <codeph>operationState</codeph>.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Создает объект InsertTextOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:InsertTextOperation:redo"><apiName>redo</apiName><shortdesc>
+		 Обеспечивает повторное выполнение операции после ее отмены.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiIsOverride/><apiReturn><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>
+		 Обеспечивает повторное выполнение операции после ее отмены.
+		 
+		 <p>Эта функция вызывается диспетчером редактирования в случае необходимости.</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:InsertTextOperation:characterFormat:get"><apiName>characterFormat</apiName><shortdesc> 
+		 Формат символов, примененный к вставленному тексту.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 Формат символов, примененный к вставленному тексту.
+		  
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:InsertTextOperation:deleteSelectionState:get"><apiName>deleteSelectionState</apiName><shortdesc> 
+		 Текст, удаленный при выполнении этой операции, если таковой существует.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.edit:SelectionState</apiValueClassifier></apiValueDef><apiDesc> 
+		 Текст, удаленный при выполнении этой операции, если таковой существует.
+		 
+		 <p><codeph>null</codeph>, если текст не был удален.</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:InsertTextOperation:text:get"><apiName>text</apiName><shortdesc> 
+		 Текст, вставленный данной операцией.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 Текст, вставленный данной операцией. 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:UndoOperation"><apiName>UndoOperation</apiName><shortdesc> 
+	 Класс UndoOperation инкапсулирует операцию отмены.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowOperation</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 Класс UndoOperation инкапсулирует операцию отмены.
+	 
+	 </apiDesc><example conref="examples\UndoOperation_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:UndoOperation:UndoOperation"><apiName>UndoOperation</apiName><shortdesc> 
+		 Создает объект UndoOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>op</apiItemName><apiOperationClassifier>flashx.textLayout.operations:FlowOperation</apiOperationClassifier><apiDesc>Отменяемая операция.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Создает объект UndoOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:UndoOperation:operation:get"><apiName>operation</apiName><shortdesc> 
+		 Отменяемая операция.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.operations:FlowOperation</apiValueClassifier></apiValueDef><apiDesc> 
+		 Отменяемая операция. 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyElementStyleNameOperation"><apiName>ApplyElementStyleNameOperation</apiName><shortdesc>
+	 Класс ApplyElementStyleNameOperation инкапсулирует изменение имени стиля.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowElementOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 Класс ApplyElementStyleNameOperation инкапсулирует изменение имени стиля.
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#FlowElement/styleName"><linktext>flashx.textLayout.elements.FlowElement.styleName</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyElementStyleNameOperation:ApplyElementStyleNameOperation"><apiName>ApplyElementStyleNameOperation</apiName><shortdesc> 
+		 Создает объект ApplyElementStyleNameOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Описывает текущее выделение.
+		 </apiDesc></apiParam><apiParam><apiItemName>targetElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiDesc>Указывает элемент, который должен быть изменен.
+		 </apiDesc></apiParam><apiParam><apiItemName>newStyleName</apiItemName><apiType value="String"/><apiDesc>Назначаемое имя стиля.
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>Смещение с начала целевого элемента.
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiData>-1</apiData><apiDesc>Смещение с конца целевого элемента.
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Создает объект ApplyElementStyleNameOperation. 
+		 
+		 <p>Если установлены параметры <codeph>relativeStart</codeph> и <codeph>relativeEnd</codeph>, то существующий элемент разделяется на несколько элементов. При этом выделенная часть использует новое имя стиля, а остальная часть – существующее имя стиля.</p>
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ApplyElementStyleNameOperation:newStyleName:get"><apiName>newStyleName</apiName><shortdesc> 
+		 Имя стиля, назначенное этой операцией.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 Имя стиля, назначенное этой операцией.
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ModifyInlineGraphicOperation"><apiName>ModifyInlineGraphicOperation</apiName><shortdesc>
+	 Класс InsertInlineGraphicOperation инкапсулирует изменение существующего вложенного графического элемента.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 Класс InsertInlineGraphicOperation инкапсулирует изменение существующего вложенного графического элемента.
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#InlineGraphicElement"><linktext>flashx.textLayout.elements.InlineGraphicElement</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ModifyInlineGraphicOperation:flashx.textLayout.operations:ModifyInlineGraphicOperation"><apiName>ModifyInlineGraphicOperation</apiName><shortdesc> 
+		 Создает объект ModifyInlineGraphicsOperation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>Описывает точку вставки. В случае выбора диапазона операция обеспечивает удаление содержимого этого диапазона.
+		 </apiDesc></apiParam><apiParam><apiItemName>source</apiItemName><apiType value="Object"/><apiDesc>Источник изображения (строка uri, URLRequest, DisplayObject или класс встроенного ресурса). 
+		 </apiDesc></apiParam><apiParam><apiItemName>width</apiItemName><apiType value="Object"/><apiDesc>Назначаемая ширина (количество пикселей, процентное значение или строка «auto»)
+		 </apiDesc></apiParam><apiParam><apiItemName>height</apiItemName><apiType value="Object"/><apiDesc>Назначаемая высота (количество пикселей, процентное значение или строка «auto»)
+		 </apiDesc></apiParam><apiParam><apiItemName>options</apiItemName><apiType value="Object"/><apiData>null</apiData><apiDesc>Не поддерживается
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 Создает объект ModifyInlineGraphicsOperation.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ModifyInlineGraphicOperation:height:get"><apiName>height</apiName><shortdesc conref="flashx.textLayout.elements.InlineGraphicElement#height"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc conref="flashx.textLayout.elements.InlineGraphicElement#height"> 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ModifyInlineGraphicOperation:options:get"><apiName>options</apiName><shortdesc> 
+		 параметры не поддерживаются
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc> 
+		 параметры не поддерживаются
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ModifyInlineGraphicOperation:source:get"><apiName>source</apiName><shortdesc conref="flashx.textLayout.elements.InlineGraphicElement#source">	
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc conref="flashx.textLayout.elements.InlineGraphicElement#source">	
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ModifyInlineGraphicOperation:width:get"><apiName>width</apiName><shortdesc conref="flashx.textLayout.elements.InlineGraphicElement#width"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc conref="flashx.textLayout.elements.InlineGraphicElement#width"> 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier></apiPackage>

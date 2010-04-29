@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+		   xmlns:flow="library://ns.adobe.com/flashx/textLayout"
+		   xmlns:textEditBar="textEditBar.*"
+		   xmlns:txui="flashx.textLayout.ui.*"
+		   xmlns:txrulers="flashx.textLayout.ui.rulers.*"
+		   xmlns:txinsp="flashx.textLayout.ui.inspectors.*"
+		   xmlns:controls="com.mapx.view.controls.*"
+		   horizontalScrollPolicy="off"
+		   label="Text Editor"
+		   backgroundColor="#D9D9D9" 
+		   styleName="toolsContainer"
+		   creationComplete="handleCreationComplete()" xmlns:tools="com.mapx.view.tools.*" >
+	
+	<mx:Script>
+		<![CDATA[
+			import com.map.event.ApplicationEvent;
+			import com.map.event.EventBus;
+			import com.map.event.ManagerEvent;
+			import com.mapx.view.controls.MiGTLFTextArea;
+			
+			import flash.text.engine.FontLookup;
+			import flash.text.engine.RenderingMode;
+			
+			import flashx.textLayout.container.ContainerController;
+			import flashx.textLayout.edit.EditManager;
+			import flashx.textLayout.edit.EditingMode;
+			import flashx.textLayout.edit.ElementRange;
+			import flashx.textLayout.edit.ISelectionManager;
+			import flashx.textLayout.edit.SelectionFormat;
+			import flashx.textLayout.edit.SelectionManager;
+			import flashx.textLayout.edit.SelectionState;
+			import flashx.textLayout.elements.Configuration;
+			import flashx.textLayout.elements.InlineGraphicElementStatus;
+			import flashx.textLayout.elements.TextFlow;
+			import flashx.textLayout.events.SelectionEvent;
+			import flashx.textLayout.events.StatusChangeEvent;
+			import flashx.textLayout.formats.TextLayoutFormat;
+			import flashx.textLayout.ui.inspectors.TextInspectorController;
+			import flashx.undo.IUndoManager;
+			import flashx.undo.UndoManager;
+			
+			import mx.core.UIComponent;
+			import mx.events.ResizeEvent;
+			
+			import textEditBar.FileIOHelper;
+			import textEditBar.SingleContainerView;
+			
+			private const MIN_HEIGHT:Number = 22;
+			[Bindable] private var _opened:Boolean = true;	
+			private var bottomPanels:Array = [];
+			private var activeFlow:TextFlow;
+			private var editingMode:String = EditingMode.READ_WRITE;
+			private var counter:int = 1;
+			private var undoManager:IUndoManager;
+			private var textPanel:SingleContainerView;
+			private var textArea:MiGTLFTextArea;
+			
+			private var resizing:Boolean = false;
+			private var prevW:Number;
+			private var prevH:Number;
+			
+			private function toggleState():void {
+				if(!_opened){
+					this.setCurrentState("closed",true);
+					
+				}
+				else {
+					this.setCurrentState("open",true);	
+				}
+			}	
+			public function get opened():Boolean{
+				return _opened;
+			}
+			public function set opened(value:Boolean):void{
+				_opened = value;
+				toggleState();
+			}
+			
+			private function handleCreationComplete(): void
+			{
+				undoManager = new UndoManager();
+				FileIOHelper.parentWindow = this;
+				FileIOHelper.changeContent = changeContent;
+				var numPanels:int = bottomTabs.numChildren;
+				bottomPanels = [this.fileWidget,this.linkElementProps,this.foreignElementProps];			
+				EventBus.getInstance().addEventListener(ManagerEvent.LOADED,handleManager);
+			}
+			private function handleManager(event:ManagerEvent):void {
+				if(event.manager.name == 'FontManager') {
+					/* this.fontDDL.dataProvider = ManagerBase(event.manager).dataCollection;
+					cfg = TextFlow.defaultConfiguration;
+					
+					var normalTLF:TextLayoutFormat = new TextLayoutFormat(cfg.defaultLinkNormalFormat);
+					normalTLF.color = 0xFF00FF;
+					normalTLF.backgroundColor = 0x0000FF;
+					normalTLF.backgroundAlpha = 1;
+					
+					var hoverTLF:TextLayoutFormat = new TextLayoutFormat(cfg.defaultLinkHoverFormat);
+					hoverTLF.color = 0xFF00FF;
+					hoverTLF.backgroundColor = 0x0000FF;
+					hoverTLF.backgroundAlpha = 1;
+					hoverTLF.textDecoration = TextDecoration.NONE;
+					
+					var activeTLF:TextLayoutFormat = new TextLayoutFormat(cfg.defaultLinkActiveFormat);
+					activeTLF.color = 0x00FF00;
+					
+					cfg.defaultLinkActiveFormat = normalTLF;
+					cfg.defaultLinkHoverFormat = hoverTLF;
+					cfg.defaultLinkActiveFormat = activeTLF;
+					TextFlow.defaultConfiguration = cfg; */
+					
+
+					initializeConfiguration();					
+					EventBus.getInstance().addEventListener(ApplicationEvent.TEXTEDITOR,handleTextEditor);
+					//EventBus.getInstance().addEventListener(ApplicationEvent.TEXTEDITOR,handleTextEditor);
+				}
+			}
+			private function handleTextEditor(event:ApplicationEvent):void {
+				//this.editorBGColor = ControllerLocator.controller.textEditorColor;
+				if(event.args[1] == false)
+				{
+					var area:MiGTLFTextArea = event.args[0] as MiGTLFTextArea;
+					if(area != textArea) {
+						if(textArea) {
+							textArea.firstTime = true;
+							textArea.removeEventListener(ResizeEvent.RESIZE,handleHolderResize);
+						}
+						textArea = area;
+						textPanel = area.textPanel;						
+						changeContent();
+						textArea.addEventListener(ResizeEvent.RESIZE,handleHolderResize);							
+					}
+					else if(textArea)
+						textArea.doFocus();
+				}
+			}	
+			
+			private function initializeConfiguration():void {
+				var config:Configuration = TextFlow.defaultConfiguration;
+				config.unfocusedSelectionFormat = new SelectionFormat(0xffffff, 1.0, BlendMode.DIFFERENCE, 0xffffff, 1.0, BlendMode.DIFFERENCE, 0);
+				config.inactiveSelectionFormat = new SelectionFormat(0xffffff, 1.0, BlendMode.DIFFERENCE, 0xffffff, 1.0, BlendMode.DIFFERENCE, 0);
+				config.manageTabKey = true;
+				
+				var initialFormat:TextLayoutFormat = new TextLayoutFormat();
+				initialFormat.fontLookup = FontLookup.EMBEDDED_CFF;
+				initialFormat.renderingMode = RenderingMode.CFF;
+				config.textFlowInitialFormat = initialFormat;
+			}
+			private function handleHolderResize(event:ResizeEvent):void {
+				if(spell.spellBounds.length > 0 || findreplace.searchBounds.length > 0)
+				{
+					textArea.spellDrawing.graphics.clear();
+					textArea.searchDrawing.graphics.clear();
+					if(!resizing)
+						this.addEventListener(Event.ENTER_FRAME,application1_enterFrameHandler);
+				}
+			}
+			private function application1_enterFrameHandler(event:Event):void {
+				if(prevW == textArea.width && prevH == textArea.height)
+				{
+					resizing = false;
+					this.removeEventListener(Event.ENTER_FRAME,application1_enterFrameHandler);		
+					findreplace.resizeSearch();
+					spell.resizeSpelling();
+				}
+				prevW = textArea.width;
+				prevH = textArea.height;
+			}
+			private function setActiveFlow(newActiveFlow:TextFlow):void {
+				TextInspectorController.Instance().activeFlow = newActiveFlow;
+				for (var i:int = bottomPanels.length - 1; i >= 0; --i)
+					bottomPanels[i].activeFlow = newActiveFlow;
+			}
+			public function setInteractionManager(selectType:String):void {
+				editingMode = selectType;
+				var uiActiveFlow:TextFlow = null;
+				
+				if (activeFlow)	
+				{
+					switch (selectType)
+					{
+						case EditingMode.READ_ONLY:
+							if (activeFlow.interactionManager)
+								activeFlow.interactionManager = null;
+							break;
+						case EditingMode.READ_WRITE:
+							// either direction should work.
+							new EditManager(undoManager).textFlow = activeFlow;
+							activeFlow.interactionManager = new EditManager(undoManager);
+							
+							activeFlow.addEventListener(SelectionEvent.SELECTION_CHANGE,mySelectionChangeListener,false,0,true);
+							uiActiveFlow = activeFlow;
+							activeFlow.interactionManager.selectRange(0, 0);
+							break;
+						case EditingMode.READ_SELECT:
+							activeFlow.interactionManager = new SelectionManager();
+							activeFlow.addEventListener(SelectionEvent.SELECTION_CHANGE,mySelectionChangeListener,false,0,true);
+							break;
+					}
+					setActiveFlow(uiActiveFlow);
+					updateEscapeKeyListener();
+					updateForSelectedElementRange(new SelectionState( activeFlow, 0, 0));
+				}
+			}
+			public function detachActiveFlow(deleteTheComposer:Boolean):void {
+				if (activeFlow && activeFlow.flowComposer != null)
+				{
+					// Detach the containers from the display list
+					for (var idx:int = 0; idx < activeFlow.flowComposer.numControllers; idx++)
+					{
+						var controller:ContainerController = activeFlow.flowComposer.getControllerAt(idx);
+						var oldContainer:DisplayObject = controller.container;
+						if (oldContainer && oldContainer.parent)
+						{
+							Canvas(oldContainer.parent).rawChildren.removeChild(oldContainer);
+						}
+					}
+					activeFlow.flowComposer.removeAllControllers();
+					
+					// also shuts down inline graphics - need another API if we want to do this another way
+					if (deleteTheComposer)
+						activeFlow.flowComposer = null;
+				}		
+			}
+			private function mySelectionChangeListener(e:SelectionEvent):void
+			{
+				updateForSelectedElementRange(e ? e.selectionState : null);
+			}
+			
+			/**
+			 * Update the GUI for a particular selection range.
+			 * @private
+			 * @param range may be null
+			 */
+			private function updateForSelectedElementRange(selectionState:SelectionState):void
+			{
+				var range:ElementRange = selectionState ? ElementRange.createElementRange(selectionState.textFlow, selectionState.absoluteStart, selectionState.absoluteEnd) : null;
+				var selMgr:ISelectionManager = activeFlow.interactionManager;
+				
+				for (var i:int = bottomPanels.length - 1; i >= 0; --i)
+					bottomPanels[i].update(range);
+				
+				if (selMgr && textPanel.visible)
+					selMgr.setFocus();
+			}			
+			private function changeContent():void{
+				// Remove old containers from the display list
+				if (undoManager != null) 
+					undoManager.clearAll();
+/* 				if (activeFlow)
+				{
+					detachActiveFlow(true);
+					activeFlow.removeEventListener(StatusChangeEvent.INLINE_GRAPHIC_STATUS_CHANGE,recomposeOnLoadComplete);
+				} */
+				
+				// set activeFlow (note: this variable is used in the mxml code below.)
+				activeFlow = textArea.activeFlow;
+				if (!activeFlow)
+					return;
+				
+				activeFlow.addEventListener(StatusChangeEvent.INLINE_GRAPHIC_STATUS_CHANGE,recomposeOnLoadComplete,false,0,true);
+				activeFlow.interactionManager = new EditManager(undoManager);
+				activeFlow.addEventListener(SelectionEvent.SELECTION_CHANGE,mySelectionChangeListener,false,0,true);
+				setActiveFlow(activeFlow);
+				activeFlow.interactionManager.selectRange(activeFlow.interactionManager.absoluteEnd, activeFlow.interactionManager.absoluteEnd);
+				updateEscapeKeyListener();
+				activeFlow.flowComposer.updateAllControllers();
+			
+				findreplace.textArea = textArea;
+				spell.textArea = textArea;
+				findreplace.activeFlow = activeFlow; 
+				spell.activeFlow = activeFlow;
+				textArea.doFocus();
+				
+				//vruler.RedrawRuler();
+				//hruler.RedrawRuler();
+			}
+			private function recomposeOnLoadComplete(e:StatusChangeEvent):void {
+				if (e.status == InlineGraphicElementStatus.ERROR)
+					trace("IOERROR loading inlinegraphicelement",e.errorEvent.toString());
+				if (e.element.getTextFlow() == activeFlow && e.status == InlineGraphicElementStatus.SIZE_PENDING)
+					activeFlow.flowComposer.updateAllControllers();
+			}
+			private function keyListener(event:KeyboardEvent):void
+			{
+				if (event.keyCode == Keyboard.ESCAPE)
+					activeFlow.interactionManager.selectRange(-1,-1);
+			}
+			
+			private function updateEscapeKeyListener():void
+			{
+				for (var i:int = 0; i < activeFlow.flowComposer.numControllers; i++)
+				{
+					var controller:ContainerController = activeFlow.flowComposer.getControllerAt(i);
+					var container:DisplayObject = controller.container as DisplayObject;
+					if (activeFlow.interactionManager)
+						container.addEventListener(KeyboardEvent.KEY_DOWN, keyListener,false,0,true);
+					else 
+						container.removeEventListener(KeyboardEvent.KEY_DOWN, keyListener);
+				}
+			}	
+			private function initLinkBar():void {
+				var canvas:Canvas = new Canvas();
+				canvas.percentWidth = 100;
+				UIComponent(linkElementProps.getChildAt(0)).addChild(canvas);
+				canvas.addChild(linkElementProps.linkTextInput);
+				var linkSocket:LinkSocket = new LinkSocket();
+				canvas.addChild(linkSocket);
+				linkSocket.linkInput = linkElementProps.linkTextInput;
+				linkSocket.setStyle("right",6);				
+			}
+			private function initGraphicsBar():void {
+				//var canvas:Canvas = new Canvas();
+				//canvas.percentWidth = 100;
+				//UIComponent(foreignElementProps.getChildAt(0)).addChild(canvas);
+				//canvas.addChild(foreignElementProps.imageURL);
+				var linkSocket:LinkSocket = new LinkSocket();
+				UIComponent(foreignElementProps.getChildAt(0)).addChild(linkSocket);
+				linkSocket.linkInput = foreignElementProps.imageURL;
+				linkSocket.setStyle("right",6);		
+			}
+		
+		]]>
+	</mx:Script>
+<!--	<mx:Style source="MiGTLFEditorCSS.css" />-->
+	<mx:Canvas width="100%" height="22" styleName="toolsHeaderBG" />
+	
+	<mx:TabNavigator id="bottomTabs" width="100%" height="100%" creationPolicy="all"  historyManagementEnabled="false" styleName="toolsTabNavigator"
+	paddingLeft="4" paddingRight="4" paddingTop="10">
+		<txinsp:CharacterPropertyEditor active="true" label="Character" width="100%" height="100%" />
+		<txinsp:ParagraphPropertyEditor active="true" label="Paragraph" width="100%" height="100%"/>
+		<txinsp:AdvancedTextPropertyEditor active="true"  label="Advanced Character" width="100%" height="100%"/>
+		<txinsp:AntiAliasPropertyEditor active="true" label="Antialias" width="100%" height="100%"/>
+		<txinsp:TextContainerPropertyEditor active="true" label="Container" width="100%" height="100%"/>
+		<txinsp:TextFlowPropertyEditor active="true" label="Flow" width="100%" height="100%"/>	
+		<mx:Canvas label="Links" width="100%" height="100%">
+			<textEditBar:LinkBar id="linkElementProps" creationPolicy="all"	 width="100%" creationComplete="initLinkBar()"/>  	
+		</mx:Canvas>
+		<mx:Canvas label="Graphics" width="100%" height="100%">
+			<textEditBar:GraphicBar id="foreignElementProps" creationPolicy="all"  width="100%" creationComplete="initGraphicsBar()"/>
+		</mx:Canvas>
+		<tools:EditorFindReplace width="100%"  label="Find/Replace"  paddingLeft="10" paddingTop="5" paddingRight="10"  id="findreplace" />	
+		<tools:EditorSpellChecker width="100%" height="100%" label="Spell Check" paddingLeft="10" paddingTop="5" paddingRight="10" id="spell"/>	
+
+	</mx:TabNavigator>
+	<mx:Canvas label="SOURCE" width="100%" height="28" visible="false">
+		<textEditBar:FileServices id="fileWidget" fileChoose="FileIOHelper.fileChoose(event.fileName)" 
+								  textLayoutExport="FileIOHelper.textLayoutExport(activeFlow)" 
+								  htmlExport="FileIOHelper.htmlExport(activeFlow)" includeInLayout="false" width="100%"/> 
+	</mx:Canvas>
+	
+	<mx:Button top="5" right="6" width="10" toggle="true" selected="{_opened}" click="opened =! opened" styleName="toolPanelToggleButton"
+	mouseChildren="false" buttonMode="true" />	
+	
+	<mx:states>
+		<mx:State id="closed" name="closed" >
+			<mx:SetProperty name="height" value="{MIN_HEIGHT}"/>
+			<mx:SetProperty name="maxHeight" value="{MIN_HEIGHT}"/>		
+		</mx:State>
+		<mx:State id="open" name="open" >
+			<mx:SetProperty name="height" value="100%"/>
+		</mx:State>
+	</mx:states>
+</mx:Canvas>

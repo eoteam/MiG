@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="10" height="10">
+	<mx:Script>
+		<![CDATA[
+			[Bindable] private var _color:Number;
+			public function set color(value:Number):void
+			{
+				_color = value;
+				this.graphics.clear();
+				this.graphics.lineStyle(0,0xffffff,0);
+				this.graphics.beginFill(_color);
+				this.graphics.drawCircle(5,5,5);
+				this.graphics.endFill();
+			}
+		]]>
+	</mx:Script>
+</mx:Canvas>

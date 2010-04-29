@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml">
+	<mx:Script>
+		<![CDATA[
+			import com.greensock.TweenMax;
+			import com.greensock.easing.Expo;
+			
+			[Bindable] private var status:String = "";
+			private var statusRefreshTimer:Timer = new Timer(4000);
+
+			private function clearStatus():void {
+				container.alpha = 0;
+				status = "";
+				statusRefreshTimer.stop();
+				statusRefreshTimer.removeEventListener(TimerEvent.TIMER, handleRefreshTimer);
+			}
+			public function updateStatus(newStatus:String):void {
+				if(statusRefreshTimer.hasEventListener(TimerEvent.TIMER))
+					clearStatus();
+				container.alpha = 1;
+				status = newStatus;
+				statusRefreshTimer.addEventListener(TimerEvent.TIMER, handleRefreshTimer);
+				statusRefreshTimer.start();
+			}
+			
+			private function handleRefreshTimer(event:TimerEvent):void {
+				TweenMax.to(container,1, {alpha:0, ease:Expo.easeOut, onComplete:clearStatus});
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:Canvas id="container" width="100%" backgroundColor="0xed1c58" alpha="0">
+		<mx:Text width="100%" styleName="statusModCopy" selectable="false" htmlText="{status}" height="18"/>	
+	</mx:Canvas>
+</mx:Canvas>

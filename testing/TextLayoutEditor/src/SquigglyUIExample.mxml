@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ADOBE SYSTEMS INCORPORATED
+ Copyright 2009 Adobe Systems Incorporated
+ All Rights Reserved.
+
+NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the 
+terms of the Adobe license agreement accompanying it.  If you have received this file from a 
+source other than Adobe, then your use, modification, or distribution of it requires the prior 
+written permission of Adobe.
+-->
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical">		
+<mx:Script>
+	<![CDATA[
+/**
+ * @exampleText The following SquigglyUIExample MXML demonstrates how to use Squiggly UI API to easily integrate Squiggly with your own UI component.
+ * 
+ * Note that the results from this example may differ based on dictionary file.
+ * 
+ * Only one line code is taken:
+ * <ol>
+ *  <li>
+ *  Call Squiggly <code>SpellUI.enableSpelling</code> method to attach the <code>TextArea</code> component and the dictionary file.
+ *  </li>
+ * </ol>
+ * 
+ * Note: to make this example work properly, please make sure you have the proper dictionary file in the specified folder 
+ * and put the Squiggly libraries (both AdobeSpellingEngine.swc and AdobeSpellingUI.swc) in you libs folder.
+ */
+			//import com.adobe.linguistics.spelling.SpellUI;	
+			
+			private function enableFeature():void {
+				//SpellUI.enableSpelling(textArea, "usa.zwl");
+			}
+			private function disableFeature() :void {
+				//SpellUI.disableSpelling(textArea);
+			
+			}
+	]]>
+</mx:Script>
+		
+	<mx:TextArea id="textArea" width="20%" height="20%" fontSize="30" text="Spell cheecking in TextArea "/>
+	<mx:Button id="tt1" label="disable Feature" click="disableFeature()" /> 
+	<mx:Button id="tt2" label="enable Feature" click="enableFeature()" /> 
+			
+</mx:Application>
+

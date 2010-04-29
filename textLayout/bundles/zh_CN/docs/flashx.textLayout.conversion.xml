@@ -1,0 +1,377 @@
+<?xml version="1.0"?>
+<apiPackage id="flashx.textLayout.conversion"><apiName>flashx.textLayout.conversion</apiName><apiDetail/><apiClassifier id="flashx.textLayout.conversion:TextConverter"><apiName>TextConverter</apiName><shortdesc> 
+	 这是用于处理导入和导出的网关类。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 这是用于处理导入和导出的网关类。该类用作对文本布局框架中转换功能的统一访问点。
+	 </apiDesc><example conref="examples\TextConverter_example.as"/></apiClassifierDetail><apiOperation id="flashx.textLayout.conversion:TextConverter:export"><apiName>export</apiName><shortdesc> 
+		 将 TextFlow 导出为指定格式。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>对象 - TextFlow 的导出形式
+		 </apiDesc><apiType value="Object"/></apiReturn><apiParam><apiItemName>source</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiDesc>源内容
+		 </apiDesc></apiParam><apiParam><apiItemName>format</apiItemName><apiType value="String"/><apiDesc>输出格式
+		 </apiDesc></apiParam><apiParam><apiItemName>conversionType</apiItemName><apiType value="String"/><apiDesc>所导出数据的类型
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 将 TextFlow 导出为指定格式。支持的格式包括 FXG、HTML、纯文本和 TextLayout Markup。
+		 <p>使用该类提供的四个静态常量之一来指定 <codeph>format</codeph> 参数：
+		 <ul>
+		 <li>TextConverter.TEXT_FIELD_HTML_FORMAT</li>
+		 <li>TextConverter.PLAIN_TEXT_FORMAT</li>
+		 <li>TextConverter.TEXT_LAYOUT_FORMAT</li>
+		 </ul>
+		 </p>
+		 <p>使用 ConversionType 类提供的以下两个静态常量之一，在 <codeph>conversionType</codeph> 参数中指定导出数据的类型：
+		 <ul>
+		 <li>ConversionType.STRING_TYPE</li>
+		 <li>ConversionType.XML_TYPE</li>
+		 </ul>
+		 </p>
+		 
+		 以指定格式返回 TextFlow 的表示形式。
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.conversion.xml#TextConverter/TEXT_FIELD_HTML_FORMAT"><linktext>TEXT_FIELD_HTML_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/PLAIN_TEXT_FORMAT"><linktext>PLAIN_TEXT_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/TEXT_LAYOUT_FORMAT"><linktext>TEXT_LAYOUT_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#ConversionType"><linktext>flashx.textLayout.conversion.ConversionType</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.conversion:TextConverter:getExporter"><apiName>getExporter</apiName><shortdesc> 
+		 创建导出过滤器。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>可以按指定格式导出的 ITextExporter 文本过滤器
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.conversion:ITextExporter</apiOperationClassifier></apiReturn><apiParam><apiItemName>format</apiItemName><apiType value="String"/><apiDesc>所导出数据的目标格式
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 创建导出过滤器。返回导出过滤器，可使用该过滤器从 TextFlow 导出到源字符串或 XML 对象。如果您要执行很多单独的导出，可以使用此函数。这与调用 <codeph>flashx.textLayout.conversion.TextConverter.export()</codeph> 等效。
+		 <p>使用该类提供的四个静态常量之一来指定 <codeph>format</codeph> 参数：
+		 <ul>
+		 <li>TextConverter.TEXT_FIELD_HTML_FORMAT</li>
+		 <li>TextConverter.PLAIN_TEXT_FORMAT</li>
+		 <li>TextConverter.TEXT_LAYOUT_FORMAT</li>
+		 </ul>
+		 </p>
+		 </apiDesc><example conref="examples\getExporter_example.as"/></apiOperationDetail><related-links><link href="flashx.textLayout.conversion.xml#TextConverter/TEXT_FIELD_HTML_FORMAT"><linktext>TEXT_FIELD_HTML_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/PLAIN_TEXT_FORMAT"><linktext>PLAIN_TEXT_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/TEXT_LAYOUT_FORMAT"><linktext>TEXT_LAYOUT_FORMAT</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.conversion:TextConverter:getImporter"><apiName>getImporter</apiName><shortdesc> 
+		 创建导入过滤器。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>可以导入源数据的 ITextImporter 文本过滤器
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.conversion:ITextImporter</apiOperationClassifier></apiReturn><apiParam><apiItemName>format</apiItemName><apiType value="String"/><apiDesc>源内容的格式。使用来自 flashx.textLayout.conversion.TextConverter.TEXT_LAYOUT_FORMAT、PLAIN_TEXT_FORMAT、TEXT_FIELD_HTML_FORMAT 等的常量。
+		 </apiDesc></apiParam><apiParam><apiItemName>config</apiItemName><apiOperationClassifier>flashx.textLayout.elements:IConfiguration</apiOperationClassifier><apiData>null</apiData><apiDesc>   在该导入期间要使用的配置。null 表示采用当前默认值。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 创建导入过滤器。返回导入过滤器，可使用该过滤器从源字符串或 XML 对象导入到 TextFlow。如果您需要执行很多单独的导入，或者希望在导入期间处理错误，可使用此函数。这与调用 <codeph>flashx.textLayout.conversion.TextConverter.importToFlow()</codeph> 等效。
+		 <p>使用该类提供的四个静态常量之一来指定 <codeph>format</codeph> 参数：
+		 <ul>
+		 <li>TextConverter.TEXT_FIELD_HTML_FORMAT</li>
+		 <li>TextConverter.PLAIN_TEXT_FORMAT</li>
+		 <li>TextConverter.TEXT_LAYOUT_FORMAT</li>
+		 </ul>
+		 </p>
+		 </apiDesc><example conref="examples\getImporter_example.as"/></apiOperationDetail><related-links><link href="flashx.textLayout.conversion.xml#TextConverter/TEXT_FIELD_HTML_FORMAT"><linktext>TEXT_FIELD_HTML_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/PLAIN_TEXT_FORMAT"><linktext>PLAIN_TEXT_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/TEXT_LAYOUT_FORMAT"><linktext>TEXT_LAYOUT_FORMAT</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.conversion:TextConverter:importToFlow"><apiName>importToFlow</apiName><shortdesc> 
+		 基于指定格式的源内容创建 TextFlow。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>基于源创建的 TextFlow。
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier></apiReturn><apiParam><apiItemName>source</apiItemName><apiType value="Object"/><apiDesc>源内容
+		 </apiDesc></apiParam><apiParam><apiItemName>format</apiItemName><apiType value="String"/><apiDesc>源内容格式
+		 </apiDesc></apiParam><apiParam><apiItemName>config</apiItemName><apiOperationClassifier>flashx.textLayout.elements:IConfiguration</apiOperationClassifier><apiData>null</apiData><apiDesc>   创建新的 TextFlow 时要使用的 IConfiguration
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 基于指定格式的源内容创建 TextFlow。支持的格式包括 HTML、纯文本和 TextLayout Markup。
+		 <p>使用该类提供的四个静态常量之一来指定 <codeph>format</codeph> 参数：
+		 <ul>
+		 <li>TextConverter.TEXT_FIELD_HTML_FORMAT</li>
+		 <li>TextConverter.PLAIN_TEXT_FORMAT</li>
+		 <li>TextConverter.TEXT_LAYOUT_FORMAT</li>
+		 </ul>
+		 </p>
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.conversion.xml#TextConverter/TEXT_FIELD_HTML_FORMAT"><linktext>TEXT_FIELD_HTML_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/PLAIN_TEXT_FORMAT"><linktext>PLAIN_TEXT_FORMAT</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/TEXT_LAYOUT_FORMAT"><linktext>TEXT_LAYOUT_FORMAT</linktext></link></related-links></apiOperation><apiValue id="flashx.textLayout.conversion:TextConverter:PLAIN_TEXT_FORMAT"><apiName>PLAIN_TEXT_FORMAT</apiName><shortdesc> 
+		 纯文本格式。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>plainTextFormat</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 纯文本格式。使用此常量，可基于简单无格式的字符串创建 TextFlow，或基于 TextFlow 创建简单无格式的字符串。
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.conversion:TextConverter:TEXT_FIELD_HTML_FORMAT"><apiName>TEXT_FIELD_HTML_FORMAT</apiName><shortdesc> 
+		 HTML 格式。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>textFieldHTMLFormat</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 HTML 格式。使用此常量，可用 HTML 格式从 TextFlow 导入或导出到 TextFlow。Text Layout Framework HTML 支持 <codeph>flash.text</codeph> 包中的 TextField 类所支持的标记和属性子集。
+		 <p>下表列出了对于导入和导出过程支持的 HTML 标记和属性（TextField 支持但 Text Layout Framework 不支持的标记和属性被专门描述为不支持）：</p>
+		 
+		 
+		 <adobetable class="innertable">
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 <tgroup cols="2"><thead><row><entry>
+		 标签
+		 </entry><entry>
+		 说明
+		 </entry></row></thead><tbody><row>
+		 
+		 <entry>
+		 锚标签
+		 </entry>
+		 
+		 <entry>
+		 <codeph>&lt;a></codeph> 标签创建超文本链接并支持以下属性：
+		 <ul>
+		 
+		 <li>
+		 <codeph>target</codeph>：指定加载页面的目标窗口的名称。选项包括 <codeph>_self</codeph>、<codeph>_blank</codeph>、<codeph>_parent</codeph> 和 <codeph>_top</codeph>。<codeph>_self</codeph> 选项指定当前窗口中的当前帧，<codeph>_blank</codeph> 指定一个新窗口，<codeph>_parent</codeph> 指定当前帧的父级，而 <codeph>_top</codeph> 指定当前窗口中的顶级帧。 
+		 </li>
+		 
+		 <li>
+		 <codeph>href</codeph>：指定一个 URL。该 URL 可以是绝对路径，也可以是相对路径（相对于加载该页的 SWF 文件的位置）。<codeph>http://www.adobe.com</codeph> 示例表示对 URL 的绝对引用；<codeph>/index.html</codeph> 示例表示相对引用。绝对 URL 必须以 http:// 为前缀，否则 Flash 会将其视为相对 URL。<b>注意：</b>与 TextField 类不同，不支持 ActionScript <codeph>link</codeph> 事件。也不支持 <codeph>a:link</codeph>、<codeph>a:hover</codeph> 和 <codeph>a:active</codeph> 样式。
+		 </li>
+		 
+		 </ul>
+		 
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 粗体标签
+		 </entry>
+		 
+		 <entry>
+		 <codeph>&lt;b></codeph> 标签以粗体形式呈现文本。粗体必须可用于所使用的字体。
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 换行标签
+		 </entry>
+		 <entry>
+		 <codeph>&lt;br></codeph> 标记将在文本中创建一个换行符。
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 字体标签
+		 </entry>
+		 
+		 <entry>
+		 <codeph>&lt;font></codeph> 标签指定一种字体或一个字体列表来显示文本。字体标签支持以下属性：
+		 <ul>
+		 
+		 <li>
+		 <codeph>color</codeph>：只支持十六进制颜色 (<codeph>#FFFFFF</codeph>) 值。 
+		 </li>
+		 
+		 <li>
+		 <codeph>face</codeph>：指定要使用的字体的名称。如下例所示，您可以指定一个以逗号分隔的字体名称的列表，在这种情况下，Flash Player 选择第一个可用字体。如果本地计算机系统上未安装指定的字体，或 SWF 文件中未嵌入指定的字体，则 Flash Player 将选择替代字体。 
+		 </li>
+		 
+		 <li>
+		 <codeph>size</codeph>：指定字体的大小。您可以使用绝对像素大小（如 16 或 18），也可以使用相对磅值（如 +2 或 -4）。 
+		 </li>
+		 
+		 <li>
+		 <codeph>letterspacing</codeph>：指定应用到每个字符右侧的间距（手动字距微调），以像素为单位。 
+		 </li>
+		 
+		 <li>
+		 <codeph>kerning</codeph>：指定字距微调处于启用状态还是禁用状态。非零值表示启用字距微调，而零表示禁用字距微调。  
+		 </li>
+		 
+		 </ul>
+		 
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 图像标签
+		 </entry>
+		 
+		 <entry>
+		 使用 <codeph>&lt;img></codeph> 标记，可将外部图像文件（JPEG、GIF、PNG）、SWF 文件和影片剪辑嵌入到文本中。  
+		 
+		  <p><codeph>&lt;img></codeph> 标签支持以下属性： </p>
+		 
+		 <ul>
+		 
+		 <li>
+		 <codeph>src</codeph>：指定图像或 SWF 文件的 URL，或库中影片剪辑元件的链接标识符。此属性是必需的，所有其它属性都是可选的。外部文件（JPEG、GIF、PNG 和 SWF 文件）只有在完全下载之后才能显示。 
+		 </li>
+		 
+		 <li>
+		 <codeph>width</codeph>：所插入的图像、SWF 文件或影片剪辑的宽度（以像素为单位）。 
+		 </li>
+		 
+		 <li>
+		 <codeph>height</codeph>：所插入的图像、SWF 文件或影片剪辑的高度（以像素为单位）。 
+		 </li>
+		 </ul>
+		 <p><b>注意：</b>与 TextField 类不同，不支持下列属性：<codeph>align</codeph>、<codeph>hspace</codeph>、<codeph>vspace</codeph>、<codeph>id</codeph> 和 <codeph>checkPolicyFile</codeph>。</p>
+		 
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 斜体标签
+		 </entry>
+		 
+		 <entry>
+		 <codeph>&lt;i></codeph> 标签以斜体形式显示标签中的文本。斜体必须可用于所使用的字体。
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 <i>列表项标签</i>
+		 </entry>
+		 
+		 <entry>
+		 <b>注意：</b>与 TextField 类不同，不支持 List 项标签。
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 段落标签
+		 </entry>
+		 
+		 <entry>
+		 <codeph>&lt;p></codeph> 标签创建一个新段落。<codeph>&lt;p></codeph> 标签支持以下属性：
+		 <ul>
+		 
+		 <li>
+		 align：指定段落内文本的对齐方式；有效值为 <codeph>left</codeph>、<codeph>right</codeph>、<codeph>justify</codeph> 和 <codeph>center</codeph>。 
+		 </li>
+		 
+		 <li>
+		 class：指定可以用于设置样式的类名称 
+		 </li>
+		 
+		 </ul>
+		 
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 Span 标签
+		 </entry>
+		 
+		 <entry>
+		 
+		 <codeph>&lt;span></codeph> 标签支持以下属性：
+		 
+		 <ul>
+		 
+		 <li>
+		 class：指定可以用于设置样式的类名称 
+		 </li>
+		 
+		 </ul>
+		 
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 文本格式标签
+		 </entry>
+		 
+		 <entry>
+		  <p>使用 <codeph>&lt;textformat></codeph> 标签可在文本字段中使用 TextFormat 类的段落格式设置属性的子集，其中包括行距、缩进、边距和 Tab 停靠位。您可以将 <codeph>&lt;textformat></codeph> 标签与内置 HTML 标签结合使用。 </p>
+		 
+		  <p><codeph>&lt;textformat></codeph> 标签具有以下属性： </p>
+		 <ul>
+		 
+		 
+		 <li>
+		 <codeph>indent</codeph>：指定从左边距到段落中第一个字符的缩进；对应于 <codeph>TextFormat.indent</codeph>。正数和负数均可以接受。 
+		 </li>
+		 
+		 <li>
+		 <codeph>blockindent</codeph>：指定应用到段落中的所有行的缩进。
+		 </li>
+		 
+		 <li>
+		 <codeph>leftmargin</codeph>：指定段落的左边距（以磅为单位）；对应于 <codeph>TextFormat.leftMargin</codeph>。 
+		 </li>
+		 
+		 <li>
+		 <codeph>rightmargin</codeph>：指定段落的右边距（以磅为单位）；对应于 <codeph>TextFormat.rightMargin</codeph>。 
+		 </li>
+		 
+		 	<li>
+		 <codeph>leading</codeph>：指定一行的上缘和上一行的下缘之间的行距（行高度），以像素为单位。
+		 </li>
+		 
+		 	<li>
+		 <codeph>tabstops</codeph>：指定段落中制表位位置的以逗号分隔的列表。 
+		 </li>
+		 </ul>
+		 
+		 </entry>
+		 </row><row>
+		 
+		 <entry>
+		 下划线标签
+		 </entry>
+		 
+		 <entry>
+		 <codeph>&lt;u></codeph> 标签为标签文本添加下划线。
+		 </entry>
+		 </row></tbody></tgroup></adobetable>
+
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.conversion:TextConverter:TEXT_LAYOUT_FORMAT"><apiName>TEXT_LAYOUT_FORMAT</apiName><shortdesc> 
+		 TextLayout 格式。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>textLayoutFormat</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 TextLayout 格式。使用此常量，可用 TextLayout 标记格式从 TextFlow 导入或导出到 TextFlow。文本布局格式将检测下列错误：
+		 <ul>
+		 <li>意外命名空间</li>
+		 <li>未知元素</li>
+		 <li>未知属性</li>
+		 </ul>
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.conversion:ITextExporter"><apiName>ITextExporter</apiName><shortdesc> 
+	 用于将 TextFlow 实例中的文本内容以 String 或 XML 格式导出的接口。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc> 
+	 用于将 TextFlow 实例中的文本内容以 String 或 XML 格式导出的接口。 
+	 </apiDesc></apiClassifierDetail><apiOperation id="flashx.textLayout.conversion:ITextExporter:flashx.textLayout.conversion:ITextExporter:export"><apiName>export</apiName><shortdesc> 
+		 将 TextFlow 实例中的文本内容以 String 或 XML 格式导出。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>对象 - 导出的内容
+		 </apiDesc><apiType value="Object"/></apiReturn><apiParam><apiItemName>source</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiDesc>要导出的 TextFlow
+		 </apiDesc></apiParam><apiParam><apiItemName>conversionType</apiItemName><apiType value="String"/><apiDesc>	返回字符串 (STRING_TYPE) 或 XML (XML_TYPE)。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 将 TextFlow 实例中的文本内容以 String 或 XML 格式导出。
+		 <p>将 <codeph>conversionType</codeph> 参数设置为下列值之一：
+		 <ul>
+		   <li><codeph>flashx.textLayout.conversion.ConversionType.STRING_TYPE</codeph>；</li>
+		   <li><codeph>flashx.textLayout.conversion.ConversionType.XML_TYPE</codeph>。</li>
+		 </ul>
+		 </p>
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.conversion.xml#ConversionType"><linktext>flashx.textLayout.conversion.ConversionType</linktext></link></related-links></apiOperation></apiClassifier><apiClassifier id="flashx.textLayout.conversion:PlainTextExporter"><apiName>PlainTextExporter</apiName><shortdesc> 
+	 适用于纯文本格式的导出过滤器。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseInterface>flashx.textLayout.conversion:ITextExporter</apiBaseInterface><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 适用于纯文本格式的导出过滤器。T此类提供 <codeph>TextConverter.export()</codeph> 静态方法的一个替代方法，用于导出纯文本。如果 PlainTextExporter 类的两个属性（<codeph>paragraphSeparator</codeph> 和 <codeph>stripDiscretionaryHyphens</codeph> 属性）分别包含其默认值 <codeph>"\n"</codeph> 和 <codeph>true</codeph>，则 PlainTextExporter 类的 <codeph>export()</codeph> 方法会产生与 <codeph>TextConverter.export()</codeph> 静态方法相同的输出字符串。
+	 </apiDesc><example conref="examples\PlainTextExporter_example.as"/></apiClassifierDetail><apiConstructor id="flashx.textLayout.conversion:PlainTextExporter:PlainTextExporter"><apiName>PlainTextExporter</apiName><shortdesc>
+		 构造函数 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/></apiConstructorDef><apiDesc>
+		 构造函数 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.conversion:PlainTextExporter:export"><apiName>export</apiName><shortdesc> 
+		 将 TextFlow 对象的内容导出为纯文本。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>对象 - 导出的内容
+		 
+		 </apiDesc><apiType value="Object"/></apiReturn><apiParam><apiItemName>source</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiDesc>要导出的文本流对象
+		 </apiDesc></apiParam><apiParam><apiItemName>conversionType</apiItemName><apiType value="String"/><apiDesc>	要返回的类型 (STRING_TYPE)。此参数仅接受一个值：<codeph>ConversionType.STRING_TYPE</codeph>，但是，因为此类实现 ITextExporter 接口，所以这是必要的。接口方法 <codeph>ITextExporter.export()</codeph> 需要此参数。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 将 TextFlow 对象的内容导出为纯文本。<codeph>paragraphSeparator</codeph> 和 <codeph>stripDiscretionaryHyphens</codeph> 属性的值会影响此方法产生的输出。
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.conversion.xml#PlainTextExporter/paragraphSeparator"><linktext>paragraphSeparator</linktext></link><link href="flashx.textLayout.conversion.xml#PlainTextExporter/stripDiscretionaryHyphens"><linktext>stripDiscretionaryHyphens</linktext></link><link href="flashx.textLayout.conversion.xml#ConversionType/STRING_TYPE"><linktext>ConversionType.STRING_TYPE</linktext></link></related-links></apiOperation><apiValue id="flashx.textLayout.conversion:PlainTextExporter:paragraphSeparator:get"><apiName>paragraphSeparator</apiName><shortdesc> 指定用于分隔段落的字符序列（在文本流的等效纯文本中）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 指定用于分隔段落的字符序列（在文本流的等效纯文本中）。在最后一段之后不会添加段落分隔符。默认值为“\n”。 
+  		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.conversion:PlainTextExporter:stripDiscretionaryHyphens:get"><apiName>stripDiscretionaryHyphens</apiName><shortdesc> 此标志指示是否应在导出过程中去除文本内的任意连字符。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Boolean"/></apiValueDef><apiDesc> 此标志指示是否应在导出过程中去除文本内的任意连字符。任意连字符（也称为“软连字符”）指示在必须在两行之间拆分单词的情况下断开单词的位置。任意连字符的 Unicode 字符为 <codeph>\u00AD</codeph>。
+		 <p>如果将 <codeph>stripDiscretionaryHyphens</codeph> 属性设置为 <codeph>true</codeph>，则即使位于原始文本中的任意连字符是原始文本的组成部分，这些任意连字符也不会出现在导出的文本中。如果为 <codeph>false</codeph>，则任意连字符将出现在导出文本中，默认值为 <codeph>true</codeph>。</p>
+  		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.conversion:ConversionType"><apiName>ConversionType</apiName><shortdesc>
+	 所导出文本的格式值。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 所导出文本的格式值。<codeph>STRING_TYPE</codeph> 和 <codeph>XML_TYPE</codeph> 值可用于 ITextExporter 接口和 TextFilter 类的 export() 方法的 <codeph>conversionType</codeph> 参数。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.conversion.xml#ITextExporter/export()"><linktext>flashx.textLayout.conversion.ITextExporter.export()</linktext></link><link href="flashx.textLayout.conversion.xml#TextConverter/export()"><linktext>flashx.textLayout.conversion.TextConverter.export()</linktext></link></related-links><apiValue id="flashx.textLayout.conversion:ConversionType:STRING_TYPE"><apiName>STRING_TYPE</apiName><shortdesc> 
+		 导出为 String 类型。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>stringType</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 导出为 String 类型。 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.conversion:ConversionType:XML_TYPE"><apiName>XML_TYPE</apiName><shortdesc> 
+		 导出为 XML 类型。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiAccess value="public"/><apiStatic/><apiData>xmlType</apiData><apiType value="String"/></apiValueDef><apiDesc> 
+		 导出为 XML 类型。
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.conversion:ITextImporter"><apiName>ITextImporter</apiName><shortdesc> 
+	 用于将文本内容从外部源导入到 TextFlow 中的接口。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc> 
+	 用于将文本内容从外部源导入到 TextFlow 中的接口。 
+	 </apiDesc></apiClassifierDetail><apiOperation id="flashx.textLayout.conversion:ITextImporter:flashx.textLayout.conversion:ITextImporter:importToFlow"><apiName>importToFlow</apiName><shortdesc> 
+		 从外部源导入文本内容并将其转换为 TextFlow。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>基于源创建的 TextFlow。
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier></apiReturn><apiParam><apiItemName>source</apiItemName><apiType value="Object"/><apiDesc>	要转换的数据
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 从外部源导入文本内容并将其转换为 TextFlow。
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.conversion:ITextImporter:flashx.textLayout.conversion:ITextImporter:errors:get"><apiName>errors</apiName><shortdesc> 
+		 在解析期间遇到的错误。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="Vector$String"/></apiValueDef><apiDesc> 
+		 在解析期间遇到的错误。如果没有错误将为空。值是一个字符串矢量。
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.conversion:ITextImporter:flashx.textLayout.conversion:ITextImporter:throwOnError:get"><apiName>throwOnError</apiName><shortdesc> 
+		 如果 throwOnError 为 true，则导入期间解析错误会引发异常。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 如果 throwOnError 为 <codeph>true</codeph>，则导入期间解析错误会引发异常。 
+	 	 </apiDesc></apiValueDetail></apiValue></apiClassifier></apiPackage>

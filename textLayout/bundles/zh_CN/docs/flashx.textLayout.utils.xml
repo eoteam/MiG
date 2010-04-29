@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<apiPackage id="flashx.textLayout.utils"><apiName>flashx.textLayout.utils</apiName><apiDetail/><apiClassifier id="flashx.textLayout.utils:CharacterUtil"><apiName>CharacterUtil</apiName><shortdesc> 
+	 用于管理和获取字符相关信息的实用程序。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 用于管理和获取字符相关信息的实用程序。此类的方法都是静态方法，必须使用语法 <codeph>CharacterUtil.method(<i>parameter</i>)</codeph> 进行调用。
+	 
+	 </apiDesc></apiClassifierDetail><apiOperation id="flashx.textLayout.utils:CharacterUtil:isHighSurrogate"><apiName>isHighSurrogate</apiName><shortdesc> 
+		 如果代理对中 charCode 参数是高位字，则返回 true。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>如果代理对中 <codeph>charCode</codeph> 为高位代理，则为 <codeph>true</codeph>。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>charCode</apiItemName><apiType value="int"/><apiDesc>用于表示字符代码的整数。字符代码通常使用十六进制格式表示。例如，空格字符的字符代码可以使用十六进制数 <codeph>0x0020</codeph> 表示。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 如果代理对中 <codeph>charCode</codeph> 参数是高位字，则返回 <codeph>true</codeph>。如果字符需要使用 16 位以上的数字进行表示，则代理对使用一个代码点表示该字符，因此需要使用两个 16 位字（高位代理和低位代理）组合才可包含其代码点。
+		 <p>在处理一连串字符时可以使用该方法，以确保您不会无意中将代理对分成不完整的两部分。</p>
+		 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:CharacterUtil:isLowSurrogate"><apiName>isLowSurrogate</apiName><shortdesc> 
+		 如果代理对中 charCode 参数是低位字，则返回 true。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>如果代理对中 <codeph>charCode</codeph> 为低位代理，则为 <codeph>true</codeph>。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>charCode</apiItemName><apiType value="int"/><apiDesc>用于表示字符代码的整数。字符代码通常使用十六进制格式表示。例如，空格字符的字符代码可以使用十六进制数 <codeph>0x0020</codeph> 表示。
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 如果代理对中 <codeph>charCode</codeph> 参数是低位字，则返回 <codeph>true</codeph>。如果字符需要使用 16 位以上的数字进行表示，则代理对使用一个代码点表示该字符，因此需要使用两个 16 位字（高位代理和低位代理）组合才可包含其代码点。
+		 <p>在处理一连串字符时可以使用该方法，以确保您不会无意中将代理对分成不完整的两部分。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:CharacterUtil:isWhitespace"><apiName>isWhitespace</apiName><shortdesc> 
+		 如果 charCode 为空格字符，则返回 true。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>如果 <codeph>charCode</codeph> 为空格字符，则为 <codeph>true</codeph>。 
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>charCode</apiItemName><apiType value="int"/><apiDesc>用于表示字符代码的整数。字符代码通常使用十六进制格式表示。例如，空格字符的字符代码可以使用十六进制数 <codeph>0x0020</codeph> 表示。
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 如果 <codeph>charCode</codeph> 为空格字符，则返回 <codeph>true</codeph>。 
+		 <p>下表描述该方法认为是空格字符的所有字符。
+		 </p>
+		 <adobetable class="innertable">
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		     
+		  <tgroup cols="3"><thead><row><entry>字符代码</entry><entry>Unicode 字符名称</entry><entry>类别</entry></row></thead><tbody><row><entry><codeph>0x0020</codeph></entry><entry>SPACE</entry><entry>空格分隔符</entry></row><row><entry><codeph>0x1680</codeph></entry><entry>OGHAM SPACE MARK</entry><entry>空格分隔符</entry></row><row><entry><codeph>0x180E</codeph></entry><entry>MONGOLIAN VOWEL SEPARATOR</entry><entry>空格分隔符</entry></row><row><entry><codeph>0x2000</codeph></entry><entry>EN QUAD</entry><entry>空格分隔符</entry></row><row><entry><codeph>0x2001</codeph></entry><entry>EM QUAD</entry><entry>空格分隔符</entry></row><row><entry><codeph>0x2002</codeph></entry><entry>EN SPACE</entry><entry>空格分隔符</entry></row><row><entry><codeph>0x2003</codeph></entry><entry>EM SPACE</entry><entry>空格分隔符</entry></row><row><entry><codeph>0x2004</codeph></entry><entry>THREE-PER-EM SPACE</entry><entry>空格分隔符</entry></row><row><entry><codeph>0x2005</codeph></entry><entry>FOUR-PER-EM SPACE</entry><entry>空格分隔符</entry></row><row><entry><codeph>0x2006</codeph></entry><entry>SIX-PER-EM SPACE</entry><entry>空格分隔符</entry></row><row><entry><codeph>0x2007</codeph></entry><entry>FIGURE SPACE</entry><entry>空格分隔符</entry></row><row><entry><codeph>0x2008</codeph></entry><entry>PUNCTUATION SPACE</entry><entry>空格分隔符</entry></row><row><entry><codeph>0x2009</codeph></entry><entry>THIN SPACE</entry><entry>空格分隔符</entry></row><row><entry><codeph>0x200A</codeph></entry><entry>HAIR SPACE</entry><entry>空格分隔符</entry></row><row><entry><codeph>0x202F</codeph></entry><entry>NARROW NO-BREAK SPACE</entry><entry>空格分隔符</entry></row><row><entry><codeph>0x205F</codeph></entry><entry>MEDIUM MATHEMATICAL SPACE</entry><entry>空格分隔符</entry></row><row><entry><codeph>0x3000</codeph></entry><entry>IDEOGRAPHIC SPACE</entry><entry>空格分隔符</entry></row><row><entry><codeph>0x2028</codeph></entry><entry>LINE SEPARATOR</entry><entry>行分隔符</entry></row><row><entry><codeph>0x2029</codeph></entry><entry>PARAGRAPH SEPARATOR</entry><entry>段落分隔符</entry></row><row><entry><codeph>0x0009</codeph></entry><entry>CHARACTER TABULATION</entry><entry>其它</entry></row><row><entry><codeph>0x000A</codeph></entry><entry>LINE FEED</entry><entry>其它</entry></row><row><entry><codeph>0x000B</codeph></entry><entry>LINE TABULATION</entry><entry>其它</entry></row><row><entry><codeph>0x000C</codeph></entry><entry>FORM FEED</entry><entry>其它</entry></row><row><entry><codeph>0x000D</codeph></entry><entry>CARRIAGE RETURN</entry><entry>其它</entry></row><row><entry><codeph>0x0085</codeph></entry><entry>NEXT LINE</entry><entry>其它</entry></row><row><entry><codeph>0x00A0</codeph></entry><entry>NO-BREAK SPACE</entry><entry>其它</entry></row></tbody></tgroup></adobetable>
+
+		 
+		 </apiDesc></apiOperationDetail></apiOperation></apiClassifier><apiClassifier id="flashx.textLayout.utils:NavigationUtil"><apiName>NavigationUtil</apiName><shortdesc> 
+	 用于操作 TextRange 的实用程序。此类的方法都是静态方法，必须使用语法 NavigationUtil.method(parameter) 进行调用。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiFinal/><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 用于操作 TextRange 的实用程序。此类的方法都是静态方法，必须使用语法 <codeph>NavigationUtil.method(<i>parameter</i>)</codeph> 进行调用。
+	 
+	 </apiDesc></apiClassifierDetail><apiOperation id="flashx.textLayout.utils:NavigationUtil:endOfDocument"><apiName>endOfDocument</apiName><shortdesc>
+		 在文档末尾设置 TextRange。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>如果更改所选对象，则为 true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>指示仅 activeIndex 将会移动。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 在文档末尾设置 TextRange。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:endOfLine"><apiName>endOfLine</apiName><shortdesc>
+		 在行末尾设置 TextRange。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>如果更改所选对象，则为 true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>指示仅 activeIndex 将会移动。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 在行末尾设置 TextRange。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:endOfParagraph"><apiName>endOfParagraph</apiName><shortdesc>
+		 在段落末尾设置 TextRange。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>如果更改所选对象，则为 true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>指示仅 activeIndex 将会移动。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 在段落末尾设置 TextRange。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:nextAtomPosition"><apiName>nextAtomPosition</apiName><shortdesc> 
+		 返回下一个原子的绝对位置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiType value="int"/></apiReturn><apiParam><apiItemName>flowRoot</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier></apiParam><apiParam><apiItemName>absolutePos</apiItemName><apiType value="int"/></apiParam></apiOperationDef><apiDesc> 
+		 返回下一个原子的绝对位置。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:nextCharacter"><apiName>nextCharacter</apiName><shortdesc>
+		 向前一个字符设置 TextRange。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>如果更改所选对象，则为 true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>指示仅 activeIndex 将会移动。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 向前一个字符设置 TextRange。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:nextLine"><apiName>nextLine</apiName><shortdesc>
+		 向下一行设置 TextRange。
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>如果更改所选对象，则为 true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>指示仅 activeIndex 将会移动。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 向下一行设置 TextRange。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:nextPage"><apiName>nextPage</apiName><shortdesc>
+		 向下一页设置 TextRange。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>如果更改所选对象，则为 true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>指示仅 activeIndex 将会移动。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 向下一页设置 TextRange。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:nextWordPosition"><apiName>nextWordPosition</apiName><shortdesc> 
+		 返回下一个字开头的绝对位置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiType value="int"/></apiReturn><apiParam><apiItemName>flowRoot</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier></apiParam><apiParam><apiItemName>absolutePos</apiItemName><apiType value="int"/></apiParam></apiOperationDef><apiDesc> 
+		 返回下一个字开头的绝对位置。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:nextWord"><apiName>nextWord</apiName><shortdesc>
+		 向前一个字设置 TextRange。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>如果更改所选对象，则为 true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>指示仅 activeIndex 将会移动。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 向前一个字设置 TextRange。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:previousAtomPosition"><apiName>previousAtomPosition</apiName><shortdesc> 
+		 返回上一个原子的绝对位置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiType value="int"/></apiReturn><apiParam><apiItemName>flowRoot</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier></apiParam><apiParam><apiItemName>absolutePos</apiItemName><apiType value="int"/></apiParam></apiOperationDef><apiDesc> 
+		 返回上一个原子的绝对位置。 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:previousCharacter"><apiName>previousCharacter</apiName><shortdesc>
+		 向后一个字符设置 TextRange。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>如果更改所选对象，则为 true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>指示仅 activeIndex 将会移动。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 向后一个字符设置 TextRange。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:previousLine"><apiName>previousLine</apiName><shortdesc>
+		 向上一行设置 TextRange。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>如果更改所选对象，则为 true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>指示仅 activeIndex 将会移动。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 向上一行设置 TextRange。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:previousPage"><apiName>previousPage</apiName><shortdesc>
+		 向上一页设置 TextRange。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>如果更改所选对象，则为 true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>指示仅 activeIndex 将会移动。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 向上一页设置 TextRange。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:previousWordPosition"><apiName>previousWordPosition</apiName><shortdesc> 
+		 返回上一个字开头的绝对位置。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiType value="int"/></apiReturn><apiParam><apiItemName>flowRoot</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier></apiParam><apiParam><apiItemName>absolutePos</apiItemName><apiType value="int"/></apiParam></apiOperationDef><apiDesc> 
+		 返回上一个字开头的绝对位置。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:previousWord"><apiName>previousWord</apiName><shortdesc>
+		 向后一个字设置 TextRange。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>如果更改所选对象，则为 true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>指示仅 activeIndex 将会移动。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 向后一个字设置 TextRange。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:startOfDocument"><apiName>startOfDocument</apiName><shortdesc>
+		 在文档开头设置 TextRange。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>如果更改所选对象，则为 true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>指示仅 activeIndex 将会移动。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 在文档开头设置 TextRange。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:startOfLine"><apiName>startOfLine</apiName><shortdesc>
+		 在行开头设置 TextRange。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>如果更改所选对象，则为 true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>指示仅 activeIndex 将会移动。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 在行开头设置 TextRange。
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.utils:NavigationUtil:startOfParagraph"><apiName>startOfParagraph</apiName><shortdesc>
+		 在段落开头设置 TextRange。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiStatic/><apiReturn><apiDesc>如果更改所选对象，则为 true。
+		 </apiDesc><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>range</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextRange</apiOperationClassifier><apiDesc>指示仅 activeIndex 将会移动。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendSelection</apiItemName><apiType value="Boolean"/><apiData>false</apiData></apiParam></apiOperationDef><apiDesc>
+		 在段落开头设置 TextRange。
+		 </apiDesc></apiOperationDetail></apiOperation></apiClassifier></apiPackage>

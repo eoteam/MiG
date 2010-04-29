@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<controls:MigTree
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:controls="org.mig.view.controls.*"
+	width="100%" paddingLeft="0" paddingBottom="3" paddingTop="0" paddingRight="0"
+	itemRenderer="org.mig.view.renderers.ContentTreeRenderer"
+	allowMultipleSelection="true"
+	dragMoveEnabled="true"
+	dragEnabled="true" 
+	dropEnabled="true"
+	selectable="true" 
+	autoCloseOnDrop="false"
+	folderClosedIcon="{containerIcon}"
+	folderOpenIcon="{containerIcon}"
+	styleName="containerTree"
+	doubleClickEnabled="true"
+	iconField="{ContentNode(data).config.@icon}"
+	showRoot="true">
+
+	<mx:Script>
+		<![CDATA[
+			import org.mig.model.vo.ContentNode;
+			[Bindable]
+			[Embed(source='/migAssets/library.swf#containerGrayUp')]
+			public var containerIcon:Class;
+		]]>
+	</mx:Script>
+</controls:MigTree>

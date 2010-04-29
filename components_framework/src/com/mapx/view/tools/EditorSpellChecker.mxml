@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="handleCreationComplete(event)">
+
+	<mx:Script>
+		<![CDATA[
+			import com.adobe.linguistics.spelling.SpellChecker;
+			import com.adobe.linguistics.spelling.SpellingDictionary;
+			import com.mapx.view.controls.MiGTLFTextArea;
+			
+			import flashx.textLayout.elements.SpanElement;
+			import flashx.textLayout.elements.TextFlow;
+			
+			import mx.core.UIComponent;
+			import mx.events.FlexEvent;
+			
+			import textEditBar.SingleContainerView;
+			public var activeFlow:TextFlow;
+			public var textArea:MiGTLFTextArea;
+			//spell check
+			public var spellBounds:Array = [];
+			private var spellIndex:int;
+			private var _dictionary:SpellingDictionary = new SpellingDictionary();
+			private var _misspellingsCache:Object = {};
+			private var _spellChecker:SpellChecker = new SpellChecker();
+			private var _spellCheckerEnabled:Boolean;
+			
+			private function handleCreationComplete(event:FlexEvent):void {
+				_dictionary.addEventListener(Event.COMPLETE,handleLoadComplete);
+				var myURL:URLRequest = new URLRequest("usa.zwl");
+				_dictionary.load(myURL);
+			}			
+			private function handleLoadComplete(event:Event):void {
+				_spellChecker.addDictionary(_dictionary);
+				_spellCheckerEnabled = true;
+			}
+			public function resizeSpelling():void {
+				var span:SpanElement;
+				var bbox:Rectangle;
+				var relativePosition:int;
+				for each(var item:Object in spellBounds)
+				{
+					span = activeFlow.findLeaf(item.start) as SpanElement;
+					relativePosition = item.start - span.getParagraph().getAbsoluteStart();	
+					bbox= TLFUtils.spanBBox(span,item.start,relativePosition,item.length,activeFlow,textArea.textPanel);					
+					textArea.spellDrawing.graphics.moveTo(bbox.x,bbox.y);
+					textArea.spellDrawing.graphics.beginFill(0xFF0000,0.2);
+					textArea.spellDrawing.graphics.drawRect(bbox.x, bbox.y, bbox.width, bbox.height);
+					textArea.spellDrawing.graphics.endFill();						
+				} 	
+				textArea.spellDrawing2.graphics.copyFrom(textArea.spellDrawing.graphics);	
+				if(spellBounds.length > 0 && this.spellCheckBtn.selected)
+					TLFUtils.highlightBlock(spellBounds[spellIndex],0xFF0000,textArea.spellDrawing,activeFlow,textArea.textPanel);					
+			}
+			private function button4_clickHandler(event:MouseEvent):void {
+				var num:int = checkSpelling(spellCheckBtn.selected);
+			}
+			private function button7_clickHandler(event:MouseEvent):void {
+				textArea.spellDrawing.graphics.clear();
+				textArea.spellDrawing.graphics.copyFrom(textArea.spellDrawing2.graphics);
+				spellIndex--;
+				if(spellIndex < 0)
+					spellIndex = spellBounds.length-1;		
+				TLFUtils.highlightBlock(spellBounds[spellIndex],0xFF0000,textArea.spellDrawing,activeFlow,textArea.textPanel);
+				this.suggestionList.dataProvider = this._spellChecker.getSuggestions(spellBounds[spellIndex].word);
+				selectedWordLabel.text = spellBounds[spellIndex].word;
+			}
+			private function button8_clickHandler(event:MouseEvent):void {
+				textArea.spellDrawing.graphics.clear();
+				textArea.spellDrawing.graphics.copyFrom(textArea.spellDrawing2.graphics);
+				spellIndex++;
+				if(spellIndex == spellBounds.length)
+					spellIndex = 0;		
+				TLFUtils.highlightBlock(spellBounds[spellIndex],0xFF0000,textArea.spellDrawing,activeFlow,textArea.textPanel);
+				var list:Array = this._spellChecker.getSuggestions(spellBounds[spellIndex].word);
+				var tmp:Array = [];
+				for each(var sugg:String in list)
+				{
+					var item:Object = new Object();
+					item.word = sugg;
+					tmp.push(item);
+				}
+				this.suggestionList.dataProvider = tmp;
+				selectedWordLabel.text = spellBounds[spellIndex].word;
+			}
+			private function handleSuggestion():void
+			{
+				var item:Object = spellBounds[spellIndex];
+				var span:SpanElement = activeFlow.findLeaf(item.start) as SpanElement;
+				var relativePosition:int = item.start - span.getParagraph().getAbsoluteStart();	
+				span.replaceText(relativePosition,relativePosition+item.length,this.suggestionList.selectedItem.toString());
+				this.checkSpelling(true);
+			}
+			private function checkSpelling(on:Boolean=false):uint
+			{
+				activeFlow.flowComposer.updateAllControllers();
+				textArea.spellDrawing.graphics.clear();
+				textArea.spellDrawing2.graphics.clear();
+				if(!on)
+				{
+					//var txtLayFmt:TextLayoutFormat = textArea.getFormatOfRange(null,0,textArea.text.length);
+					//txtLayFmt.backgroundColor = 0xFFFFFF;
+					//textArea.setFormatOfRange(txtLayFmt,0,textArea.text.length);
+					spellIndex = 0;
+					return 0;
+				}
+				
+				var mispellings:uint = 0;
+				spellBounds = [];
+				if(_spellCheckerEnabled)
+				{
+					var wordPattern:RegExp =/\b\w+\b/g;
+					var inputValue:String = textArea.text;
+					var offset:int;
+					var curPos:int;
+					var res:Array = inputValue.match(wordPattern);
+					if(res==null)
+					{
+						return mispellings;
+					}
+					
+					var wordChecker:Object = {};
+					
+					for(var i:uint = 0;i<res.length;i++)
+					{	
+						var word:String = res[i];
+						if(wordChecker[word])
+						{
+							continue;
+						}
+						
+						wordChecker[word] = 1;
+						
+						var n:int = 0;
+						var ar:Array = [];
+						var count:uint;
+						while(n>-1)
+						{
+							count++;
+							n = inputValue.indexOf(word,n);
+							if(n!=-1)
+							{
+								ar.push(n);
+								n = n+word.length;
+							}
+						}
+						
+						for(var j:uint = 0;j<ar.length;j++)
+						{
+							curPos = ar[j];
+							var startPos:uint = curPos;
+							var endPos:uint = curPos+word.length;
+							if(!_spellChecker.checkWord(word))
+							{
+								mispellings++;
+								_misspellingsCache[word] = 1;
+								//trace(word);
+								var span:SpanElement = activeFlow.findLeaf(startPos) as SpanElement;
+								var relativePosition:int = startPos - span.getParagraph().getAbsoluteStart();	
+								var bbox:Rectangle = TLFUtils.spanBBox(span,startPos,relativePosition,word.length,activeFlow,textArea.textPanel);					
+								textArea.spellDrawing.graphics.moveTo(bbox.x,bbox.y);
+								textArea.spellDrawing.graphics.beginFill(0xFF0000,0.2);
+								textArea.spellDrawing.graphics.drawRect(bbox.x, bbox.y, bbox.width, bbox.height);
+								textArea.spellDrawing.graphics.endFill();
+								spellBounds.push({start:startPos,length:word.length,word:word});
+							}
+							else if(_spellChecker.checkWord(word))
+							{
+								if(_misspellingsCache[word])
+								{
+									//txtLayFmt.backgroundColor = 0xFFFFFF;
+									//textArea.setFormatOfRange(txtLayFmt,startPos,endPos);
+									delete _misspellingsCache[word];
+								}
+							}
+						}
+					}
+					textArea.spellDrawing2.graphics.clear();
+					textArea.spellDrawing2.graphics.copyFrom(textArea.spellDrawing.graphics);						
+					TLFUtils.highlightBlock(spellBounds[spellIndex],0xFF0000,textArea.spellDrawing,activeFlow,textArea.textPanel);					
+				}
+				if(mispellings > 0)
+					numMisspells.text = mispellings + ' words are misspelled';
+				else
+					numMisspells.text = '';				
+				return mispellings;
+			}	
+		]]>
+	</mx:Script>
+	
+	<mx:HBox>
+		<mx:CheckBox label="Check Spelling" click="button4_clickHandler(event)" id="spellCheckBtn" />
+		<mx:Button click="button7_clickHandler(event)"  icon="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#tree_RightIcon')" width="30"  toolTip="prev" />			
+		<mx:Button click="button8_clickHandler(event)"  icon="@Embed(source='../../../../../../webapp/src/migAssets/flex_skins.swf#Tree_folderClosedIcon')" width="30" toolTip="next"  />							
+		<mx:Label id="numMisspells" />
+	</mx:HBox>
+	<mx:VBox height="100%" paddingBottom="5">
+		<mx:HBox horizontalGap="2">
+			<mx:Label text="Suggestions for"  />
+			<mx:Label styleName="boldCopy" fontSize="14" id="selectedWordLabel" />
+		</mx:HBox>
+		<mx:DataGrid headerHeight="0"  itemClick="handleSuggestion()"  width="350" id="suggestionList" height="100%">
+			<mx:columns>
+				<mx:DataGridColumn dataField="word" />
+			</mx:columns>
+		</mx:DataGrid>
+	</mx:VBox>
+</mx:VBox>

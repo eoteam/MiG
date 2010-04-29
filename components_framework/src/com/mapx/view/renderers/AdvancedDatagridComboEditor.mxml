@@ -1,0 +1,89 @@
+<mx:Box xmlns:mx="http://www.adobe.com/2006/mxml" implements="mx.controls.listClasses.IDropInListItemRenderer"
+	paddingLeft="0" paddingRight="0" width="100%" horizontalScrollPolicy="off">
+
+    <mx:Script>
+        <![CDATA[
+        import mx.controls.advancedDataGridClasses.AdvancedDataGridListData;
+        import mx.events.DropdownEvent;
+		import mx.controls.advancedDataGridClasses.AdvancedDataGridListData;
+		import mx.controls.listClasses.BaseListData;
+         
+        private var _listData:BaseListData;
+          
+		public function get listData():BaseListData
+		{
+			return _listData;
+		}
+		
+		// Define the setter method,
+		public function set listData(value:BaseListData):void
+		{
+			_listData = value;
+		}		
+        override public function get data():Object
+        {
+            return super.data;
+        }                       
+
+            override public function set data(value:Object):void
+            {
+            	 super.data = value;
+            	 if(data != null)
+            	 {
+            	 	if(voField)
+            	 	{
+            	 		for each(var vo:Object in _dp)
+            	 		{
+            	 			if(vo[voField] == data[AdvancedDataGridListData(this.listData).dataField])
+            	 			{
+            	 				selectedIndex = _dp.indexOf(vo);
+            	 				break;
+            	 			}
+            	 			else
+            	 				selectedIndex = data[AdvancedDataGridListData(this.listData).dataField];
+            	 		}
+            	 	}	
+            	 	else
+            	 		selectedIndex = data[AdvancedDataGridListData(this.listData).dataField];
+            	 	if(data.parent == null)
+            	 	{
+            	 		this.enabled = false;
+            	 		this.visible = false;
+            	 		this.alpha = 0;
+            	 	}
+            	 	else
+            	 	{
+            	 		this.enabled = true;
+            	 		this.visible = true;
+            	 		this.alpha = 1;
+            	 	}
+            	 }	           	 
+            }
+
+			public function handleClose(event:DropdownEvent):void
+			{
+				if(voField && combo.selectedItem)
+					this.data[AdvancedDataGridListData(this.listData).dataField] = combo.selectedItem[voField];
+				else
+					this.data[AdvancedDataGridListData(this.listData).dataField] = combo.selectedIndex;
+			}
+			
+			[Bindable] private var _dp:Array;
+			public function set dataProvider(dp:Array):void
+			{
+				_dp = dp;
+			}
+			[Bindable] private var selectedIndex:int;
+			public var voField:String;
+			[Bindable] public var comboEditable:Boolean = true;
+        ]]>
+    </mx:Script>   
+
+	<mx:Canvas>
+		<mx:ComboBox  id="combo" width="100%"
+			close="handleClose(event)" selectedIndex="{selectedIndex}"  prompt="" height="22" maxHeight="22" dataProvider="{_dp}"
+			 styleName="dataGridComboBox" visible="{comboEditable}">
+		</mx:ComboBox>	
+		<mx:Label styleName="regularCopy" text="{combo.selectedIndex}" visible="{!comboEditable}" />	
+	</mx:Canvas>
+</mx:Box>

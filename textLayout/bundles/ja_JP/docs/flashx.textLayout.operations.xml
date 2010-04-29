@@ -1,0 +1,571 @@
+<?xml version="1.0"?>
+<apiPackage id="flashx.textLayout.operations"><apiName>flashx.textLayout.operations</apiName><apiDetail/><apiClassifier id="flashx.textLayout.operations:FlowOperation"><apiName>FlowOperation</apiName><shortdesc> 
+	  FlowOperation クラスは、すべての Text Layout Framework 操作の基本クラスです。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseInterface>flashx.undo:IOperation</apiBaseInterface><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	  FlowOperation クラスは、すべての Text Layout Framework 操作の基本クラスです。 
+	 
+	 <p>操作では、テキストフローを変換します。Operation クラスは、変換の実行および取り消しに関するロジックを定義します。操作は編集マネージャーによって実行されます。ほとんどのアプリケーションでは、操作を直接作成または管理する必要はありません（カスタム編集マネージャーが実装されている場合を除く）。</p>
+	 
+	 <p>操作を実行すると、編集マネージャーにより FlowOperationEvent オブジェクト内で Operation オブジェクトが送出されます。この Operation オブジェクトを照会して、操作を許可するかどうかを決定し、他の操作も実行するかどうか、または関連するユーザーインターフェイスを更新するかどうか、を決定できます。</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:FlowOperation:FlowOperation"><apiName>FlowOperation</apiName><shortdesc> 
+		 FlowOperation オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>textFlow</apiItemName><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier><apiDesc>この操作を適用するテキストフロー。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 FlowOperation オブジェクトを作成します。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:FlowOperation:canUndo"><apiName>canUndo</apiName><shortdesc>	
+		 この操作が取り消しスタックに配置されている場合、テストします。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>true の場合、この操作を取り消しスタックにプッシュします。false の場合、この操作をプッシュしません。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc>	
+		 この操作が取り消しスタックに配置されている場合、テストします。
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.operations:FlowOperation:doOperation"><apiName>doOperation</apiName><shortdesc> 
+		 操作を実行します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>操作が成功した場合、Boolean は <codeph>true</codeph> です。それ以外の場合は <codeph>false</codeph> です。
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc> 
+		 操作を実行します。 
+		 
+		 <p>このメソッドは派生クラスで上書きされる必要があります。基本クラスメソッドは何も実行しません。<codeph>doOperation()</codeph> を直接呼び出すことはできません。このメソッドは、操作の実行時に編集マネージャーによって呼び出されます。 </p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.operations:FlowOperation:redo"><apiName>redo</apiName><shortdesc>	
+		 操作を再実行します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>実行時に操作に渡される SelectionState オブジェクト。この SelectionState オブジェクトは、現在の選択にすることも、操作用に特別に作成された選択にすることもできます。 
+		 
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>	
+		 操作を再実行します。 
+		 
+		 <p>このメソッドは派生クラスで上書きされる必要があります。基本クラスメソッドは何も実行しません。<codeph>redo()</codeph> を直接呼び出すことはできません。このメソッドは、操作の再実行時に編集マネージャーによって呼び出されます。 </p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.operations:FlowOperation:undo"><apiName>undo</apiName><shortdesc>	
+		 操作を取り消します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>実行時に操作に渡される SelectionState オブジェクト。この SelectionState オブジェクトは、現在の選択にすることも、操作用に特別に作成された選択にすることもできます。 
+		 
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>	
+		 操作を取り消します。 
+		 
+		 <p>このメソッドは派生クラスで上書きされる必要があります。基本クラスメソッドは何も実行しません。<codeph>undo()</codeph> を直接呼び出すことはできません。このメソッドは、操作の取り消し時に編集マネージャーによって呼び出されます。 </p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:FlowOperation:userData"><apiName>userData</apiName><shortdesc> 
+		 エレメントに関連付けられている任意のデータ。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiType value=""/></apiValueDef><apiDesc> 
+		 エレメントに関連付けられている任意のデータ。 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowOperation:beginGeneration:get"><apiName>beginGeneration</apiName><shortdesc>
+		 操作前のテキストフロー生成。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="uint"/></apiValueDef><apiDesc>
+		 操作前のテキストフロー生成。
+		   
+		 <p>0 が生成された場合、操作が完了しなかったことを示します。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowOperation:endGeneration:get"><apiName>endGeneration</apiName><shortdesc> 
+		 操作後のテキストフロー生成。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="uint"/></apiValueDef><apiDesc> 
+		 操作後のテキストフロー生成。
+		 
+		 <p>0 が生成された場合、操作が完了しなかったことを示します。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowOperation:textFlow:get"><apiName>textFlow</apiName><shortdesc> 
+		 この操作を適用する TextFlow オブジェクト。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.elements:TextFlow</apiValueClassifier></apiValueDef><apiDesc> 
+		 この操作を適用する TextFlow オブジェクト。
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:FlowElementOperation"><apiName>FlowElementOperation</apiName><shortdesc>
+	 FlowElementOperation クラスは、FlowElement を変換する操作の基本クラスです。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 FlowElementOperation クラスは、FlowElement を変換する操作の基本クラスです。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.formats.xml#TextLayoutFormat"><linktext>flashx.textLayout.formats.TextLayoutFormat</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:FlowElementOperation:FlowElementOperation"><apiName>FlowElementOperation</apiName><shortdesc> 
+		 FlowElementOperation オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>この操作の対象となる TextFlow オブジェクトを指定します。
+		 </apiDesc></apiParam><apiParam><apiItemName>targetElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiDesc>この操作で変更するエレメントを指定します。
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc><codeph>targetElement</codeph> の先頭からのオフセット。
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiData>-1</apiData><apiDesc><codeph>targetElement</codeph> の末尾からのオフセット。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 FlowElementOperation オブジェクトを作成します。
+		  
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:FlowElementOperation:relativeEnd:get"><apiName>relativeEnd</apiName><shortdesc> 
+		 relativeEnd：targetElement の先頭からのオフセット
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 relativeEnd：<codeph>targetElement</codeph> の先頭からのオフセット
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowElementOperation:relativeStart:get"><apiName>relativeStart</apiName><shortdesc> 
+		 relativeStart：targetElement の先頭からのオフセット。>
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 relativeStart：<codeph>targetElement</codeph> の先頭からのオフセット。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowElementOperation:targetElement:get"><apiName>targetElement</apiName><shortdesc> 
+		 targetElement：この操作で変更するエレメントを指定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.elements:FlowElement</apiValueClassifier></apiValueDef><apiDesc> 
+		 targetElement：この操作で変更するエレメントを指定します。
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:CutOperation"><apiName>CutOperation</apiName><shortdesc>
+	 CutOperation クラスは、切り取り操作をカプセル化します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 CutOperation クラスは、切り取り操作をカプセル化します。
+	 
+	 <p>指定された範囲が、テキストフローから削除されます。</p>
+	 
+	 <p><b>メモ：</b>テキストスクラップのクリップボードへのコピーは、編集マネージャーによって行われます。切り取り操作を取り消しても、元のクリップボードの状態は復元されません。</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:CutOperation:flashx.textLayout.operations:CutOperation"><apiName>CutOperation</apiName><shortdesc> 
+		 CutOperation オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>切り取るテキスト範囲。
+		 </apiDesc></apiParam><apiParam><apiItemName>scrapToCut</apiItemName><apiOperationClassifier>flashx.textLayout.edit:TextScrap</apiOperationClassifier><apiDesc>削除されたテキストのコピー。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 CutOperation オブジェクトを作成します。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:CutOperation:scrapToCut:get"><apiName>scrapToCut</apiName><shortdesc> 
+		 scrapToCut：削除されたオリジナルのテキスト
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.edit:TextScrap</apiValueClassifier></apiValueDef><apiDesc> 
+		 scrapToCut：削除されたオリジナルのテキスト
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyElementUserStyleOperation"><apiName>ApplyElementUserStyleOperation</apiName><shortdesc>
+	 ApplyElementUserStyleOperation クラスは、エレメントのスタイル値の変更をカプセル化します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowElementOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 ApplyElementUserStyleOperation クラスは、エレメントのスタイル値の変更をカプセル化します。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#FlowElement/userStyles"><linktext>flashx.textLayout.elements.FlowElement.userStyles</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyElementUserStyleOperation:ApplyElementUserStyleOperation"><apiName>ApplyElementUserStyleOperation</apiName><shortdesc> 
+		 ApplyElementUserStyleOperation オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>スタイルを設定するテキスト範囲を示します。
+		 </apiDesc></apiParam><apiParam><apiItemName>targetElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiDesc>変更するエレメントを指定します。
+		 </apiDesc></apiParam><apiParam><apiItemName>styleName</apiItemName><apiType value="String"/><apiDesc>変更するスタイルの名前。
+		 </apiDesc></apiParam><apiParam><apiItemName>value</apiItemName><apiType value="any"/><apiDesc>新しいスタイル値。
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>ターゲットエレメントの先頭からのオフセット。
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiData>-1</apiData><apiDesc>ターゲットエレメントの末尾からのオフセット。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 ApplyElementUserStyleOperation オブジェクトを作成します。
+		 
+		 <p><codeph>relativeStart</codeph> および <codeph>relativeEnd</codeph> パラメーターが設定されている場合、選択した部分は新しいスタイル値を使用して、残りは既存のスタイル値を使用して、既存のエレメントが複数のエレメントに分割されます。</p>
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ApplyElementUserStyleOperation:newValue:get"><apiName>newValue</apiName><shortdesc> 
+		 新しいスタイル値。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/></apiValueDef><apiDesc> 
+		 新しいスタイル値。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ApplyElementUserStyleOperation:styleName:get"><apiName>styleName</apiName><shortdesc> 
+		 変更されたスタイルの名前です。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 変更されたスタイルの名前です。 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyFormatOperation"><apiName>ApplyFormatOperation</apiName><shortdesc>
+	 ApplyFormatOperation クラスはスタイルの変更をカプセル化します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 ApplyFormatOperation クラスはスタイルの変更をカプセル化します。
+	 
+	 <p>ApplyFormatOperation は、リーフフォーマットを指定された範囲のテキストに適用します（指定された範囲が単一ポイントの場合、変更は行われません）。段落フォーマットを任意の段落（範囲内の少なくとも一部分）に適用します（範囲が単一ポイントの場合は単一段落）。また、コンテナフォーマットを任意のコンテナ（範囲内の少なくとも一部分）に適用します（範囲が単一ポイントの場合は単一コンテナ）。</p>
+	 
+	 </apiDesc><example conref="examples\ApplyFormatOperation_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyFormatOperation:ApplyFormatOperation"><apiName>ApplyFormatOperation</apiName><shortdesc> 
+		 ApplyFormatOperation オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>フォーマットを適用するテキスト範囲を定義します。
+		  </apiDesc></apiParam><apiParam><apiItemName>leafFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiDesc> 選択された範囲で LeafFlowElement オブジェクトに適用するフォーマット。
+		  </apiDesc></apiParam><apiParam><apiItemName>paragraphFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiDesc>選択された範囲で ParagraphElement オブジェクトに適用するフォーマット。
+		  </apiDesc></apiParam><apiParam><apiItemName>containerFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiData>null</apiData><apiDesc>選択された範囲でコンテナに適用するフォーマット。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 ApplyFormatOperation オブジェクトを作成します。
+		 
+		  </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:ApplyFormatOperation:redo"><apiName>redo</apiName><shortdesc/><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiIsOverride/><apiReturn><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:ApplyFormatOperation:containerFormat:get"><apiName>containerFormat</apiName><shortdesc> 
+		 範囲内でコンテナに適用するフォーマットプロパティ。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 範囲内でコンテナに適用するフォーマットプロパティ。
+		 
+		 <p>任意のコンテナ（範囲内の少なくとも一部分）のフォーマットが更新されます。この操作の範囲がポイントの場合、単一コンテナが更新されます。<codeph>containerFormat</codeph> が <codeph>null</codeph> の場合、コンテナフォーマットは変更されません。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ApplyFormatOperation:leafFormat:get"><apiName>leafFormat</apiName><shortdesc> 
+		 範囲内でリーフエレメントに適用するフォーマットプロパティ。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 範囲内でリーフエレメントに適用するフォーマットプロパティ。
+		 
+		 <p>この操作の範囲がポイントの場合、または <codeph>leafFormat</codeph> が <codeph>null</codeph> の場合、リーフエレメントフォーマットは変更されません。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ApplyFormatOperation:paragraphFormat:get"><apiName>paragraphFormat</apiName><shortdesc> 
+		 範囲内で段落に適用するフォーマットプロパティ。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 範囲内で段落に適用するフォーマットプロパティ。
+		 
+		 <p>任意の段落（範囲内の少なくとも一部分）のフォーマットが更新されます。この操作の範囲がポイントの場合、単一段落が更新されます。<codeph>paragraphFormat</codeph> が <codeph>null</codeph> の場合、段落フォーマットは変更されません。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ClearFormatOnElementOperation"><apiName>ClearFormatOnElementOperation</apiName><shortdesc>
+	 ClearFormatOnElementOperation クラスは、エレメントに対するスタイル変更をカプセル化します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowElementOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 ClearFormatOnElementOperation クラスは、エレメントに対するスタイル変更をカプセル化します。
+	 
+	 <p>この操作により、1 つ以上のフォーマットをフローエレメントに対して未定義にします。</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.formats.xml#TextLayoutFormat"><linktext>flashx.textLayout.formats.TextLayoutFormat</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link><link href="flashx.textLayout.operations.xml#ApplyFormatToElementOperation"><linktext>ApplyFormatToElementOperation</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ClearFormatOnElementOperation:ClearFormatOnElementOperation"><apiName>ClearFormatOnElementOperation</apiName><shortdesc> 
+		ClearFormatOnElementOperation オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>この操作を適用するエレメントを含むテキストフローを指定します。
+		</apiDesc></apiParam><apiParam><apiItemName>targetElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiDesc>この操作を適用するエレメントを指定します。
+		</apiDesc></apiParam><apiParam><apiItemName>format</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiDesc>この操作で適用するフォーマット。
+		 
+		</apiDesc></apiParam><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiData>0</apiData></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiData>-1</apiData></apiParam></apiConstructorDef><apiDesc> 
+		ClearFormatOnElementOperation オブジェクトを作成します。 
+		
+		</apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ClearFormatOnElementOperation:format:get"><apiName>format</apiName><shortdesc> 
+		 この操作で適用する文字フォーマット。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 この操作で適用する文字フォーマット。
+		 
+		 <p><codeph>null</codeph> の場合、文字フォーマットは変更されません。</p> 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:CompositeOperation"><apiName>CompositeOperation</apiName><shortdesc>
+	 CompositeOperation クラスは、1 つの単位として管理される変換のグループをカプセル化します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 CompositeOperation クラスは、1 つの単位として管理される変換のグループをカプセル化します。
+	 
+	 <p>CompositeOperation クラスは、複数の FlowOperations を単一のアトミック操作に結合するグループ化メカニズムを提供します。グループ化操作により、1 つの単位として操作を取り消しおよびやり直しできます。例えば、複数の単一文字を挿入後に複数のバックスペースを挿入した場合、これらを単一操作としてまとめて取り消すことができます。グループ化は、複合操作を表すメカニズムも提供します。例えば、複数のテキスト範囲を変更する置換操作を、1 つの複合操作として表し、管理できます。</p>
+	 
+	 <p><b>メモ：</b>個々の操作をグループに統合するよりは、個々のアトミック操作を結合するほうが効率的です。例えば、連続する文字の挿入は、容易に単一の挿入操作として表すことができ、その挿入操作の取り消しまたはやり直しは、挿入操作のグループの取り消しまたはやり直しよりも効率的です。</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:CompositeOperation:CompositeOperation"><apiName>CompositeOperation</apiName><shortdesc> 
+		 CompositeOperation オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operations</apiItemName><apiType value="Array"/><apiData>null</apiData><apiDesc>グループ化する操作。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 CompositeOperation オブジェクトを作成します。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:CompositeOperation:addOperation"><apiName>addOperation</apiName><shortdesc> 
+		 リストの末尾にその他の操作を追加します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.textLayout.operations:FlowOperation</apiOperationClassifier></apiParam></apiOperationDef><apiDesc> 
+		 リストの末尾にその他の操作を追加します。 
+		 
+		 <p>新しい操作は、リストの他の操作と同じ TextFlow オブジェクトで実行する必要があります。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:CompositeOperation:operations:get"><apiName>operations</apiName><shortdesc>
+		 この複合操作によってグループ化された操作を含む配列。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Array"/></apiValueDef><apiDesc>
+		 この複合操作によってグループ化された操作を含む配列。
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:InsertInlineGraphicOperation"><apiName>InsertInlineGraphicOperation</apiName><shortdesc>
+	 InsertInlineGraphicOperation クラスは、テキストフローへのインライングラフィックの挿入をカプセル化します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 InsertInlineGraphicOperation クラスは、テキストフローへのインライングラフィックの挿入をカプセル化します。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#InlineGraphicElement"><linktext>flashx.textLayout.elements.InlineGraphicElement</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:InsertInlineGraphicOperation:flashx.textLayout.operations:InsertInlineGraphicOperation"><apiName>InsertInlineGraphicOperation</apiName><shortdesc> 
+		 InsertInlineGraphicsOperation オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>挿入ポイントを示します。範囲が選択されている場合、操作によってその範囲のコンテンツが削除されます。
+		 </apiDesc></apiParam><apiParam><apiItemName>source</apiItemName><apiType value="Object"/><apiDesc>グラフィックソース（埋め込みアセットの URI ストリング、URLRequest、DisplayObject、またはクラス）。 
+		 </apiDesc></apiParam><apiParam><apiItemName>width</apiItemName><apiType value="Object"/><apiDesc>割り当てる幅（ピクセル数、パーセント、またはストリング 'auto'）。
+		 </apiDesc></apiParam><apiParam><apiItemName>height</apiItemName><apiType value="Object"/><apiDesc>割り当てる高さ（ピクセル数、パーセント、またはストリング 'auto'）。
+		 </apiDesc></apiParam><apiParam><apiItemName>options</apiItemName><apiType value="Object"/><apiData>null</apiData><apiDesc>none がサポートされています
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 InsertInlineGraphicsOperation オブジェクトを作成します。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:InsertInlineGraphicOperation:redo"><apiName>redo</apiName><shortdesc>
+		 取り消し後に操作を再実行します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiIsOverride/><apiReturn><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>
+		 取り消し後に操作を再実行します。
+		 
+		 <p>この関数は、必要に応じて編集マネージャーによって呼び出されます。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:InsertInlineGraphicOperation:height:get"><apiName>height</apiName><shortdesc conref="flashx.textLayout.elements.InlineGraphicElement#height"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc conref="flashx.textLayout.elements.InlineGraphicElement#height"> 
+		 </apiDesc></apiValueDetail><related-links><link href="" invalidHref="flashx.textLayout.xml#InlineGraphicElement/height"><linktext>flashx.textLayout.InlineGraphicElement.height</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.operations:InsertInlineGraphicOperation:options:get"><apiName>options</apiName><shortdesc> 
+		 options はサポートされていません
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc> 
+		 options はサポートされていません
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:InsertInlineGraphicOperation:source:get"><apiName>source</apiName><shortdesc conref="flashx.textLayout.elements.InlineGraphicElement#source">	
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc conref="flashx.textLayout.elements.InlineGraphicElement#source">	
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:InsertInlineGraphicOperation:width:get"><apiName>width</apiName><shortdesc conref="flashx.textLayout.elements.InlineGraphicElement#width"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc conref="flashx.textLayout.elements.InlineGraphicElement#width"> 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:RedoOperation"><apiName>RedoOperation</apiName><shortdesc> 
+	 RedoOperation クラスはやり直し操作をカプセル化します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowOperation</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 RedoOperation クラスはやり直し操作をカプセル化します。
+	 
+	 </apiDesc><example conref="examples\RedoOperation_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:RedoOperation:RedoOperation"><apiName>RedoOperation</apiName><shortdesc> 
+		 RedoOperation オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.textLayout.operations:FlowOperation</apiOperationClassifier><apiDesc>やり直す操作。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 RedoOperation オブジェクトを作成します。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:RedoOperation:operation:get"><apiName>operation</apiName><shortdesc> 
+		 やり直す操作。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.operations:FlowOperation</apiValueClassifier></apiValueDef><apiDesc> 
+		 やり直す操作。
+		  
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ClearFormatOperation"><apiName>ClearFormatOperation</apiName><shortdesc>
+	 ClearFormatOperation クラスは、フォーマットを未定義にする方法をカプセル化します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 ClearFormatOperation クラスは、フォーマットを未定義にする方法をカプセル化します。
+	 
+	 <p>ApplyFormatOperation は、指定された範囲のテキストに対して、リームフォーマット内に設定されたプロパティを未定義にします（指定された範囲が単一ポイントの場合、変更は行われません）。段落フォーマット内のプロパティセットを任意の段落（範囲内の少なくとも一部分）に対して未定義にします（範囲が単一ポイントの場合は単一段落）。また、コンテナフォーマット内のプロパティセットを任意のコンテナ（範囲内の少なくとも一部分）に対して未定義にします（範囲が単一ポイントの場合は単一コンテナ）。</p>
+	 
+	 </apiDesc><example conref="examples\ApplyFormatOperation_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ClearFormatOperation:ClearFormatOperation"><apiName>ClearFormatOperation</apiName><shortdesc> 
+		 ClearFormatOperation オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>フォーマットを適用するテキスト範囲を定義します。
+		  </apiDesc></apiParam><apiParam><apiItemName>leafFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiDesc> このフォーマットの設定値は、選択範囲内の LeafFlowElement オブジェクトに対して未定義にするプロパティを示します。
+		  </apiDesc></apiParam><apiParam><apiItemName>paragraphFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiDesc>このフォーマットの設定値は、選択範囲内の ParagraphElement オブジェクトに対して未定義にするプロパティを示します。
+		  </apiDesc></apiParam><apiParam><apiItemName>containerFormat</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiData>null</apiData><apiDesc>このフォーマットの設定値は、選択範囲内の ContainerController オブジェクトに対して未定義にするプロパティを示します。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 ClearFormatOperation オブジェクトを作成します。
+		 
+		  </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:ClearFormatOperation:redo"><apiName>redo</apiName><shortdesc/><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiIsOverride/><apiReturn><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:ClearFormatOperation:containerFormat:get"><apiName>containerFormat</apiName><shortdesc> 
+		 範囲内のコンテナに対して未定義にするフォーマットプロパティ。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 範囲内のコンテナに対して未定義にするフォーマットプロパティ。
+		 
+		 <p>任意のコンテナ（範囲内の少なくとも一部分）のフォーマットが更新されます。この操作の範囲がポイントの場合、単一コンテナが更新されます。<codeph>containerFormat</codeph> が <codeph>null</codeph> の場合、コンテナフォーマットは変更されません。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ClearFormatOperation:leafFormat:get"><apiName>leafFormat</apiName><shortdesc> 
+		 範囲内のリーフエレメントに対して未定義にするフォーマットプロパティ。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 範囲内のリーフエレメントに対して未定義にするフォーマットプロパティ。
+		 
+		 <p>この操作の範囲がポイントの場合、または <codeph>leafFormat</codeph> が <codeph>null</codeph> の場合、リーフエレメントフォーマットは変更されません。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ClearFormatOperation:paragraphFormat:get"><apiName>paragraphFormat</apiName><shortdesc> 
+		 範囲内の段落に対して未定義にするフォーマットプロパティ。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 範囲内の段落に対して未定義にするフォーマットプロパティ。
+		 
+		 <p>任意の段落（範囲内の少なくとも一部分）のフォーマットが更新されます。この操作の範囲がポイントの場合、単一段落が更新されます。<codeph>paragraphFormat</codeph> が <codeph>null</codeph> の場合、段落フォーマットは変更されません。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:FlowTextOperation"><apiName>FlowTextOperation</apiName><shortdesc> 
+	  FlowTextOperation は、テキスト範囲を変換する操作の基本クラスです。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowOperation</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	  FlowTextOperation は、テキスト範囲を変換する操作の基本クラスです。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:FlowTextOperation:FlowTextOperation"><apiName>FlowTextOperation</apiName><shortdesc> 
+		 FlowTextOperation オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>関連する選択範囲を指定します。操作に関連する場合、<codeph>operationState</codeph> は、この操作が適用されるテキスト範囲を示します。それ以外の場合、<codeph>operationState</codeph> は、現在の選択状態を保存するために使用されます。これにより、操作を取り消しても、現在の選択状態を復元できます。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 FlowTextOperation オブジェクトを作成します。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:FlowTextOperation:redo"><apiName>redo</apiName><shortdesc>	
+		 	
+		 操作を再実行します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiIsOverride/><apiReturn><apiDesc>実行時に操作に渡される SelectionState オブジェクト。この SelectionState オブジェクトは、現在の選択にすることも、操作用に特別に作成された選択にすることもできます。 
+		 
+		 </apiDesc><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>	
+		 	
+		 操作を再実行します。 
+		 
+		 <p>このメソッドは派生クラスで上書きされる必要があります。基本クラスメソッドは何も実行しません。<codeph>redo()</codeph> を直接呼び出すことはできません。このメソッドは、操作の再実行時に編集マネージャーによって呼び出されます。 </p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:FlowTextOperation:absoluteEnd:get"><apiName>absoluteEnd</apiName><shortdesc> 
+		 この操作を適用する、テキスト範囲の絶対終了ポイント。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 この操作を適用する、テキスト範囲の絶対終了ポイント。 
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowTextOperation:absoluteStart:get"><apiName>absoluteStart</apiName><shortdesc> 
+		 この操作を適用する、テキスト範囲の絶対開始ポイント。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc> 
+		 この操作を適用する、テキスト範囲の絶対開始ポイント。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:FlowTextOperation:originalSelectionState:get"><apiName>originalSelectionState</apiName><shortdesc> 
+		 操作開始時の選択状態。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.edit:SelectionState</apiValueClassifier></apiValueDef><apiDesc> 
+		 操作開始時の選択状態。 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:DeleteTextOperation"><apiName>DeleteTextOperation</apiName><shortdesc>
+	 DeleteTextOperation クラスは、テキスト範囲の削除部分をカプセル化します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 DeleteTextOperation クラスは、テキスト範囲の削除部分をカプセル化します。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:DeleteTextOperation:DeleteTextOperation"><apiName>DeleteTextOperation</apiName><shortdesc> 
+		 DeleteTextOperation 操作を作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>元のテキスト範囲。
+		 </apiDesc></apiParam><apiParam><apiItemName>deleteSelectionState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiData>null</apiData><apiDesc><codeph>operationState</codeph> で示される範囲と異なる場合は、削除するテキスト範囲。（<codeph>operationState</codeph> で示される範囲を削除する場合は、<codeph>null</codeph> に設定します。）
+		 </apiDesc></apiParam><apiParam><apiItemName>allowMerge</apiItemName><apiType value="Boolean"/><apiData>false</apiData><apiDesc>この操作を次の操作または前の操作と結合できる場合は、<codeph>true</codeph> に設定します。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 DeleteTextOperation 操作を作成します。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:DeleteTextOperation:allowMerge:get"><apiName>allowMerge</apiName><shortdesc> 
+		 この操作を前の操作または次の操作と結合できるかどうかを示します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 この操作を前の操作または次の操作と結合できるかどうかを示します。
+		 
+		 <p>Backspace キーストロークシーケンスなど一部の削除操作を 1 つの操作に結合して、この操作を取り消すことで、シーケンス全体を取り消すことができます。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:DeleteTextOperation:deleteSelectionState:get"><apiName>deleteSelectionState</apiName><shortdesc> 
+		 deleteSelectionState：削除するテキスト範囲
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.edit:SelectionState</apiValueClassifier></apiValueDef><apiDesc> 
+		 deleteSelectionState：削除するテキスト範囲
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyLinkOperation"><apiName>ApplyLinkOperation</apiName><shortdesc>
+	 ApplyLinkOperation クラスは、リンク作成または変更操作をカプセル化します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 ApplyLinkOperation クラスは、リンク作成または変更操作をカプセル化します。
+	 
+	 </apiDesc><example conref="examples\ApplyLinkOperation_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#LinkElement"><linktext>flashx.textLayout.elements.LinkElement</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyLinkOperation:flashx.textLayout.operations:ApplyLinkOperation"><apiName>ApplyLinkOperation</apiName><shortdesc> 
+		 ApplyLinkOperation オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>操作を適用するテキスト範囲。
+		 </apiDesc></apiParam><apiParam><apiItemName>href</apiItemName><apiType value="String"/><apiDesc>リンクに関連付けられている URI。href が空のストリングである場合、選択範囲のリンクの URI は削除されます。
+		 </apiDesc></apiParam><apiParam><apiItemName>target</apiItemName><apiType value="String"/><apiDesc>リンクのターゲット。
+		 </apiDesc></apiParam><apiParam><apiItemName>extendToLinkBoundary</apiItemName><apiType value="Boolean"/><apiDesc>選択範囲を拡張して、選択範囲と重複する既存リンクのテキスト全体を含め、その後に変更を適用するかどうか。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 ApplyLinkOperation オブジェクトを作成します。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ApplyLinkOperation:extendToLinkBoundary:get"><apiName>extendToLinkBoundary</apiName><shortdesc>
+		 extendToLinkBoundary：選択範囲を拡張して、選択範囲と重複する既存リンクのテキスト全体を含め、その後に変更を適用するかどうか。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Boolean"/></apiValueDef><apiDesc>
+		 extendToLinkBoundary：選択範囲を拡張して、選択範囲と重複する既存リンクのテキスト全体を含め、その後に変更を適用するかどうか。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ApplyLinkOperation:href:get"><apiName>href</apiName><shortdesc> 
+		 href：リンクに関連付けられている URI。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 href：リンクに関連付けられている URI。href が空のストリングである場合、選択範囲のリンクの URI は削除されます。
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ApplyLinkOperation:target:get"><apiName>target</apiName><shortdesc>
+		 target：リンクのターゲット。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc>
+		 target：リンクのターゲット。
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:PasteOperation"><apiName>PasteOperation</apiName><shortdesc>
+	 PasteOperation クラスは、ペースト操作をカプセル化します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 PasteOperation クラスは、ペースト操作をカプセル化します。
+	 
+	 <p>指定された範囲は、新しいコンテンツで置き換えられます。</p>
+	 
+	 <p><b>メモ：</b>クリップボードのコンテンツのコピーは、編集マネージャーによって行われます。</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:PasteOperation:PasteOperation"><apiName>PasteOperation</apiName><shortdesc> 
+		 PasteOperation オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>挿入ポイントまたは置換するテキスト範囲を示します。
+		 </apiDesc></apiParam><apiParam><apiItemName>textScrap</apiItemName><apiOperationClassifier>flashx.textLayout.edit:TextScrap</apiOperationClassifier><apiDesc>テキストフローにペーストするコンテンツ。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 PasteOperation オブジェクトを作成します。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:PasteOperation:textScrap:get"><apiName>textScrap</apiName><shortdesc> 
+		 textScrap：ペーストされるテキスト
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.edit:TextScrap</apiValueClassifier></apiValueDef><apiDesc> 
+		 textScrap：ペーストされるテキスト
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:SplitParagraphOperation"><apiName>SplitParagraphOperation</apiName><shortdesc>
+	 SplitParagraphOperation クラスは、段落を 2 つのエレメントに分割する変更をカプセル化します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 SplitParagraphOperation クラスは、段落を 2 つのエレメントに分割する変更をカプセル化します。
+	 
+	 <p>この操作では、指定された位置から段落の末尾までのテキストを含む、新しい段落を作成します。テキスト範囲が指定されている場合、その範囲のテキストが最初に削除されます。</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#ParagraphElement"><linktext>flashx.textLayout.elements.ParagraphElement</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:SplitParagraphOperation:flashx.textLayout.operations:SplitParagraphOperation"><apiName>SplitParagraphOperation</apiName><shortdesc> 
+		 SplitParagraphOperation オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>段落を分割するポイントを示します。テキスト範囲が指定されている場合、その範囲のコンテンツが削除されます。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 SplitParagraphOperation オブジェクトを作成します。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyElementIDOperation"><apiName>ApplyElementIDOperation</apiName><shortdesc>
+	 ChangeElementIDOperation クラスは、エレメント ID の変更をカプセル化します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowElementOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 ChangeElementIDOperation クラスは、エレメント ID の変更をカプセル化します。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#FlowElement"><linktext>flashx.textLayout.elements.FlowElement</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyElementIDOperation:ApplyElementIDOperation"><apiName>ApplyElementIDOperation</apiName><shortdesc> 
+		 ChangeElementIDOperation オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>操作前の選択状態の指定
+		 </apiDesc></apiParam><apiParam><apiItemName>targetElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiDesc>変更するエレメントの指定
+		 </apiDesc></apiParam><apiParam><apiItemName>newID</apiItemName><apiType value="String"/><apiDesc>割り当てる ID
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>ターゲットエレメントの先頭からのオフセット。
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiData>-1</apiData><apiDesc>ターゲットエレメントの末尾からのオフセット。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 ChangeElementIDOperation オブジェクトを作成します。 
+		 
+		 <p><codeph>relativeStart</codeph> パラメーターまたは <codeph>relativeEnd</codeph> パラメーターを設定した場合は、既存のエレメントが 2 つのエレメントに分割され、一方では既存の ID が、もう一方では新しい ID が使用されます。両方のパラメーターを設定した場合、既存のエレメントは、3 つのエレメントに分割されます。このセットの最初と最後の両方のエレメントには、元の ID が割り当てられます。</p>
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ApplyElementIDOperation:newID:get"><apiName>newID</apiName><shortdesc> 
+		 この操作で割り当てられる ID。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 この操作で割り当てられる ID。
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyFormatToElementOperation"><apiName>ApplyFormatToElementOperation</apiName><shortdesc>
+	 ApplyFormatToElementOperation クラスはエレメントに対するスタイル変更をカプセル化します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowElementOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 ApplyFormatToElementOperation クラスはエレメントに対するスタイル変更をカプセル化します。
+	 
+	 <p>この操作により、1 つ以上のフォーマットがフローエレメントに適用されます。</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.formats.xml#TextLayoutFormat"><linktext>flashx.textLayout.formats.TextLayoutFormat</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyFormatToElementOperation:ApplyFormatToElementOperation"><apiName>ApplyFormatToElementOperation</apiName><shortdesc> 
+		ApplyFormatToElementOperation オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>この操作を適用するエレメントを含むテキストフローを指定します。
+		</apiDesc></apiParam><apiParam><apiItemName>targetElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiDesc>この操作を適用するエレメントを指定します。
+		</apiDesc></apiParam><apiParam><apiItemName>format</apiItemName><apiOperationClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiOperationClassifier><apiDesc>この操作で適用するフォーマット。
+		 
+		</apiDesc></apiParam><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiData>0</apiData></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiData>-1</apiData></apiParam></apiConstructorDef><apiDesc> 
+		ApplyFormatToElementOperation オブジェクトを作成します。 
+		
+		</apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ApplyFormatToElementOperation:format:get"><apiName>format</apiName><shortdesc> 
+		 この操作で適用する文字フォーマット。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 この操作で適用する文字フォーマット。
+		 
+		 <p><codeph>null</codeph> の場合、文字フォーマットは変更されません。</p> 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyTCYOperation"><apiName>ApplyTCYOperation</apiName><shortdesc> 
+	 ApplyTCYOperation クラスは TCY 変換をカプセル化します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 ApplyTCYOperation クラスは TCY 変換をカプセル化します。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#TCYElement"><linktext>flashx.textLayout.elements.TCYElement</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyTCYOperation:ApplyTCYOperation"><apiName>ApplyTCYOperation</apiName><shortdesc> 
+		 ApplyTCYOperation オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>操作を適用するテキスト範囲を示します。
+		 </apiDesc></apiParam><apiParam><apiItemName>tcyOn</apiItemName><apiType value="Boolean"/><apiDesc>TCY を適用するか（<codeph>true</codeph>）、TCY を削除するか（<codeph>false</codeph>）を指定します。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 ApplyTCYOperation オブジェクトを作成します。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ApplyTCYOperation:tcyOn:get"><apiName>tcyOn</apiName><shortdesc> 
+		 操作で TCY フォーマットを適用するか削除するかを指定します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Boolean"/></apiValueDef><apiDesc> 
+		 操作で TCY フォーマットを適用するか削除するかを指定します。
+		 
+		 <p><codeph>true</codeph> の場合、範囲は TCY エレメントに変換されます。<codeph>false</codeph> の場合、範囲の最初の TCY エレメントから TCY フォーマットが削除されます。</p>
+		 
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.elements.xml#TCYElement"><linktext>flashx.textLayout.elements.TCYElement</linktext></link></related-links></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:CopyOperation"><apiName>CopyOperation</apiName><shortdesc>
+	 CopyOperation クラスはコピー操作をカプセル化します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 CopyOperation クラスはコピー操作をカプセル化します。
+	 
+	 <p><b>メモ：</b>この操作は、テキストスクラップをクリップボードにコピーする操作を行います。コピー操作を取り消しても、元のクリップボードの状態は復元されません。</p>
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:CopyOperation:CopyOperation"><apiName>CopyOperation</apiName><shortdesc> 
+		 CopyOperation オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>コピーするテキスト範囲です。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 CopyOperation オブジェクトを作成します。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor></apiClassifier><apiClassifier id="flashx.textLayout.operations:InsertTextOperation"><apiName>InsertTextOperation</apiName><shortdesc>
+	 InsertTextOperation クラスはテキスト挿入操作をカプセル化します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 InsertTextOperation クラスはテキスト挿入操作をカプセル化します。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:InsertTextOperation:InsertTextOperation"><apiName>InsertTextOperation</apiName><shortdesc> 
+		 InsertTextOperation オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>挿入ポイントまたはテキスト範囲を示します。
+		 </apiDesc></apiParam><apiParam><apiItemName>text</apiItemName><apiType value="String"/><apiDesc>挿入するストリング。
+		 </apiDesc></apiParam><apiParam><apiItemName>deleteSelectionState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiData>null</apiData><apiDesc><codeph>operationState</codeph> で示される範囲と異なる場合は、挿入前に削除するテキスト範囲を示します。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 InsertTextOperation オブジェクトを作成します。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.textLayout.operations:InsertTextOperation:redo"><apiName>redo</apiName><shortdesc>
+		 取り消し後に操作を再実行します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiIsOverride/><apiReturn><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>
+		 取り消し後に操作を再実行します。
+		 
+		 <p>この関数は、必要に応じて編集マネージャーによって呼び出されます。</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.operations:InsertTextOperation:characterFormat:get"><apiName>characterFormat</apiName><shortdesc> 
+		 挿入テキストに適用される文字フォーマット。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 挿入テキストに適用される文字フォーマット。
+		  
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:InsertTextOperation:deleteSelectionState:get"><apiName>deleteSelectionState</apiName><shortdesc> 
+		 この操作で削除されるテキスト（ある場合）。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.edit:SelectionState</apiValueClassifier></apiValueDef><apiDesc> 
+		 この操作で削除されるテキスト（ある場合）。
+		 
+		 <p>削除するテキストがない場合は <codeph>null</codeph>。</p>
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:InsertTextOperation:text:get"><apiName>text</apiName><shortdesc> 
+		 この操作で挿入されるテキスト。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 この操作で挿入されるテキスト。 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:UndoOperation"><apiName>UndoOperation</apiName><shortdesc> 
+	 UndoOperation クラスは、取り消し操作をカプセル化します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowOperation</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 UndoOperation クラスは、取り消し操作をカプセル化します。
+	 
+	 </apiDesc><example conref="examples\UndoOperation_example.as"/></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:UndoOperation:UndoOperation"><apiName>UndoOperation</apiName><shortdesc> 
+		 UndoOperation オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>op</apiItemName><apiOperationClassifier>flashx.textLayout.operations:FlowOperation</apiOperationClassifier><apiDesc>取り消す操作。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 UndoOperation オブジェクトを作成します。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:UndoOperation:operation:get"><apiName>operation</apiName><shortdesc> 
+		 取り消す操作。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiValueClassifier>flashx.textLayout.operations:FlowOperation</apiValueClassifier></apiValueDef><apiDesc> 
+		 取り消す操作。 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ApplyElementStyleNameOperation"><apiName>ApplyElementStyleNameOperation</apiName><shortdesc>
+	 ApplyElementStyleNameOperation クラスは、スタイル名の変更をカプセル化します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowElementOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 ApplyElementStyleNameOperation クラスは、スタイル名の変更をカプセル化します。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#FlowElement/styleName"><linktext>flashx.textLayout.elements.FlowElement.styleName</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ApplyElementStyleNameOperation:ApplyElementStyleNameOperation"><apiName>ApplyElementStyleNameOperation</apiName><shortdesc> 
+		 ApplyElementStyleNameOperation オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>現在の選択範囲を示します。
+		 </apiDesc></apiParam><apiParam><apiItemName>targetElement</apiItemName><apiOperationClassifier>flashx.textLayout.elements:FlowElement</apiOperationClassifier><apiDesc>変更するエレメントを指定します。
+		 </apiDesc></apiParam><apiParam><apiItemName>newStyleName</apiItemName><apiType value="String"/><apiDesc>割り当てるスタイル名。
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeStart</apiItemName><apiType value="int"/><apiData>0</apiData><apiDesc>ターゲットエレメントの先頭からのオフセット。
+		 </apiDesc></apiParam><apiParam><apiItemName>relativeEnd</apiItemName><apiType value="int"/><apiData>-1</apiData><apiDesc>ターゲットエレメントの末尾からのオフセット。
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 ApplyElementStyleNameOperation オブジェクトを作成します。 
+		 
+		 <p><codeph>relativeStart</codeph> および <codeph>relativeEnd</codeph> パラメーターが設定されている場合、選択した部分は新しいスタイル名を使用して、残りは既存のスタイル名を使用して、既存のエレメントが複数のエレメントに分割されます。</p>
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ApplyElementStyleNameOperation:newStyleName:get"><apiName>newStyleName</apiName><shortdesc> 
+		 この操作で割り当てられるスタイル名。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="String"/></apiValueDef><apiDesc> 
+		 この操作で割り当てられるスタイル名。
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.textLayout.operations:ModifyInlineGraphicOperation"><apiName>ModifyInlineGraphicOperation</apiName><shortdesc>
+	 InsertInlineGraphicOperation クラスは既存のインライングラフィックの変更をカプセル化します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseClassifier>flashx.textLayout.operations:FlowTextOperation</apiBaseClassifier></apiClassifierDef><apiDesc>
+	 InsertInlineGraphicOperation クラスは既存のインライングラフィックの変更をカプセル化します。
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.elements.xml#InlineGraphicElement"><linktext>flashx.textLayout.elements.InlineGraphicElement</linktext></link><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link><link href="flashx.textLayout.events.xml#FlowOperationEvent"><linktext>flashx.textLayout.events.FlowOperationEvent</linktext></link></related-links><apiConstructor id="flashx.textLayout.operations:ModifyInlineGraphicOperation:flashx.textLayout.operations:ModifyInlineGraphicOperation"><apiName>ModifyInlineGraphicOperation</apiName><shortdesc> 
+		 ModifyInlineGraphicsOperation オブジェクトを作成します。</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/><apiParam><apiItemName>operationState</apiItemName><apiOperationClassifier>flashx.textLayout.edit:SelectionState</apiOperationClassifier><apiDesc>挿入ポイントを示します。範囲が選択されている場合、操作によってその範囲のコンテンツが削除されます。
+		 </apiDesc></apiParam><apiParam><apiItemName>source</apiItemName><apiType value="Object"/><apiDesc>グラフィックソース（埋め込みアセットの URI ストリング、URLRequest、DisplayObject、またはクラス）。 
+		 </apiDesc></apiParam><apiParam><apiItemName>width</apiItemName><apiType value="Object"/><apiDesc>割り当てる幅（ピクセル数、パーセント、またはストリング 'auto'）。
+		 </apiDesc></apiParam><apiParam><apiItemName>height</apiItemName><apiType value="Object"/><apiDesc>割り当てる高さ（ピクセル数、パーセント、またはストリング 'auto'）。
+		 </apiDesc></apiParam><apiParam><apiItemName>options</apiItemName><apiType value="Object"/><apiData>null</apiData><apiDesc>none がサポートされています
+		 
+		 </apiDesc></apiParam></apiConstructorDef><apiDesc> 
+		 ModifyInlineGraphicsOperation オブジェクトを作成します。
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiValue id="flashx.textLayout.operations:ModifyInlineGraphicOperation:height:get"><apiName>height</apiName><shortdesc conref="flashx.textLayout.elements.InlineGraphicElement#height"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc conref="flashx.textLayout.elements.InlineGraphicElement#height"> 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ModifyInlineGraphicOperation:options:get"><apiName>options</apiName><shortdesc> 
+		 options はサポートされていません
+		 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc> 
+		 options はサポートされていません
+		 
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ModifyInlineGraphicOperation:source:get"><apiName>source</apiName><shortdesc conref="flashx.textLayout.elements.InlineGraphicElement#source">	
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc conref="flashx.textLayout.elements.InlineGraphicElement#source">	
+		 </apiDesc></apiValueDetail></apiValue><apiValue id="flashx.textLayout.operations:ModifyInlineGraphicOperation:width:get"><apiName>width</apiName><shortdesc conref="flashx.textLayout.elements.InlineGraphicElement#width"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="Object"/></apiValueDef><apiDesc conref="flashx.textLayout.elements.InlineGraphicElement#width"> 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier></apiPackage>

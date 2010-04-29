@@ -1,0 +1,163 @@
+<apiPackage id="flashx.undo"><apiName>flashx.undo</apiName><apiDetail/><apiClassifier id="flashx.undo:IOperation"><apiName>IOperation</apiName><shortdesc> 
+	 IOperation defines the interface for operations that can be undone and redone.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc> 
+	 IOperation defines the interface for operations that can be undone and redone.
+	  
+	 </apiDesc></apiClassifierDetail><apiOperation id="flashx.undo:IOperation:flashx.undo:IOperation:performRedo"><apiName>performRedo</apiName><shortdesc> 
+		 Reperforms the operation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 Reperforms the operation.
+		 
+		 <p>The operation is also responsible for pushing itself onto the undo stack.</p>
+		  
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IOperation:flashx.undo:IOperation:performUndo"><apiName>performUndo</apiName><shortdesc> 
+		 Reverses the operation.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 Reverses the operation.
+		 
+		 <p>The operation is also responsible for pushing itself onto the redo stack.</p> 
+		 
+		 </apiDesc></apiOperationDetail></apiOperation></apiClassifier><apiClassifier id="flashx.undo:UndoManager"><apiName>UndoManager</apiName><shortdesc> 
+	 The UndoManager class manages the history of editing operations on a text flow so
+	 that these operations can be undone and redone.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiAccess value="public"/><apiStatic/><apiBaseInterface>flashx.undo:IUndoManager</apiBaseInterface><apiBaseClassifier>Object</apiBaseClassifier></apiClassifierDef><apiDesc> 
+	 The UndoManager class manages the history of editing operations on a text flow so
+	 that these operations can be undone and redone.
+	 
+	 <p>The undo manager maintains two stacks of IOperation objects. When a reversible
+	 operation is executed, it is placed on the undo stack. If that operation is undone,
+	 it is removed from the undo stack, reversed, and placed on the redo stack. Likewise, 
+	 if that operation is then redone, it is removed from the redo stack, re-executed, and
+	 then placed onto the undo stack again. If another operation is executed first, the redo 
+	 stack is cleared.</p>
+	 
+	 <p>If the TextFlow is modified directly (not via
+	 calls to the edit manager, but directly via calls to the managed FlowElement objects), then the edit manager
+	 clears the undo stack to prevent the stack from getting out of sync with the current state.</p>
+	 
+	 
+	 </apiDesc></apiClassifierDetail><related-links><link href="flashx.textLayout.edit.xml#EditManager"><linktext>flashx.textLayout.edit.EditManager</linktext></link></related-links><apiConstructor id="flashx.undo:UndoManager:UndoManager"><apiName>UndoManager</apiName><shortdesc>
+		 Creates an UndoManager object.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiConstructorDetail><apiConstructorDef><apiAccess value="public"/></apiConstructorDef><apiDesc>
+		 Creates an UndoManager object.
+		 
+		 </apiDesc></apiConstructorDetail></apiConstructor><apiOperation id="flashx.undo:UndoManager:canRedo"><apiName>canRedo</apiName><shortdesc conref="IUndoManager#canRedo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="Boolean"/><apiDesc>Boolean <codeph>true</codeph>, if there is an operation on the redo stack that can be redone.
+		 Otherwise, <codeph>false</codeph>.
+		 
+		 </apiDesc></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#canRedo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:canUndo"><apiName>canUndo</apiName><shortdesc conref="IUndoManager#canUndo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="Boolean"/><apiDesc>Boolean <codeph>true</codeph>, if there is an operation on the undo stack that can be reversed.
+		 Otherwise, <codeph>false</codeph>.
+		 
+		 </apiDesc></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#canUndo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:clearAll"><apiName>clearAll</apiName><shortdesc conref="IUndoManager#clearAll()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#clearAll()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:clearRedo"><apiName>clearRedo</apiName><shortdesc conref="IUndoManager#clearRedo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#clearRedo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:peekRedo"><apiName>peekRedo</apiName><shortdesc conref="IUndoManager#peekRedo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier><apiDesc>IOperation The redoable IOperation object, or <codeph>null</codeph>, if no redoable operation
+		 is on the stack.
+		 
+		 </apiDesc></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#peekRedo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:peekUndo"><apiName>peekUndo</apiName><shortdesc conref="IUndoManager#peekUndo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier><apiDesc>IOperation The undoable IOperation object, or <codeph>null</codeph>, if no undoable operation
+		 is on the stack.
+		 
+		 </apiDesc></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#peekUndo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:popRedo"><apiName>popRedo</apiName><shortdesc conref="IUndoManager#popRedo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier><apiDesc>IOperation The redoable IOperation object, or <codeph>null</codeph>, if no redoable operation
+		 is on the stack.
+		 </apiDesc></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#popRedo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:popUndo"><apiName>popUndo</apiName><shortdesc conref="IUndoManager#popUndo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier><apiDesc>IOperation The undoable IOperation object, or <codeph>null</codeph>, if no undoable operation
+		 is on the stack.
+		 
+		 </apiDesc></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#popUndo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:pushRedo"><apiName>pushRedo</apiName><shortdesc conref="IUndoManager#pushRedo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiParam></apiOperationDef><apiDesc conref="IUndoManager#pushRedo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:pushUndo"><apiName>pushUndo</apiName><shortdesc conref="IUndoManager#pushUndo()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiParam></apiOperationDef><apiDesc conref="IUndoManager#pushUndo()">
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:UndoManager:redo"><apiName>redo</apiName><shortdesc conref="IUndoManager#redo()"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#redo()"> 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.edit.xml#IEditManager/redo"><linktext>flashx.textLayout.edit.IEditManager.redo</linktext></link></related-links></apiOperation><apiOperation id="flashx.undo:UndoManager:undo"><apiName>undo</apiName><shortdesc conref="IUndoManager#undo()"> 
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc conref="IUndoManager#undo()"> 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.edit.xml#IEditManager/undo"><linktext>flashx.textLayout.edit.IEditManager.undo</linktext></link></related-links></apiOperation><apiValue id="flashx.undo:UndoManager:undoAndRedoItemLimit:get"><apiName>undoAndRedoItemLimit</apiName><shortdesc conref="IUndoManager#undoAndRedoItemLimit()">
+		 </shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc conref="IUndoManager#undoAndRedoItemLimit()">
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier><apiClassifier id="flashx.undo:IUndoManager"><apiName>IUndoManager</apiName><shortdesc>
+	 IUndoManager defines the interface for managing the undo and redo stacks.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiClassifierDetail><apiClassifierDef><apiInterface/><apiAccess value="public"/><apiStatic/><apiBaseClassifier/></apiClassifierDef><apiDesc>
+	 IUndoManager defines the interface for managing the undo and redo stacks.
+	 
+	 <p>An undo manager maintains a stack of operations that can be undone and redone.</p>
+	 
+	 </apiDesc></apiClassifierDetail><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:canRedo"><apiName>canRedo</apiName><shortdesc>
+		 Indicates whether there is currently an operation that can be redone.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>Boolean <codeph>true</codeph>, if there is an operation on the redo stack that can be redone.
+		 Otherwise, <codeph>false</codeph>.
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc>
+		 Indicates whether there is currently an operation that can be redone.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:canUndo"><apiName>canUndo</apiName><shortdesc>
+		 Indicates whether there is currently an operation that can be undone.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>Boolean <codeph>true</codeph>, if there is an operation on the undo stack that can be reversed.
+		 Otherwise, <codeph>false</codeph>.
+		 
+		 </apiDesc><apiType value="Boolean"/></apiReturn></apiOperationDef><apiDesc>
+		 Indicates whether there is currently an operation that can be undone.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:clearAll"><apiName>clearAll</apiName><shortdesc>
+		 Clears both the undo and the redo histories.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc>
+		 Clears both the undo and the redo histories.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:clearRedo"><apiName>clearRedo</apiName><shortdesc>
+		 Clears the redo stack.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc>
+		 Clears the redo stack.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:peekRedo"><apiName>peekRedo</apiName><shortdesc>
+		 Returns the next operation to be redone.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>IOperation The redoable IOperation object, or <codeph>null</codeph>, if no redoable operation
+		 is on the stack.
+		 
+		 </apiDesc><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>
+		 Returns the next operation to be redone.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:peekUndo"><apiName>peekUndo</apiName><shortdesc>
+		 Returns the next operation to be undone.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>IOperation The undoable IOperation object, or <codeph>null</codeph>, if no undoable operation
+		 is on the stack.
+		 
+		 </apiDesc><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>
+		 Returns the next operation to be undone.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:popRedo"><apiName>popRedo</apiName><shortdesc>
+		 Removes the next operation to be redone from the redo stack, and returns it.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>IOperation The redoable IOperation object, or <codeph>null</codeph>, if no redoable operation
+		 is on the stack.
+		 </apiDesc><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>
+		 Removes the next operation to be redone from the redo stack, and returns it.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:popUndo"><apiName>popUndo</apiName><shortdesc>
+		 Removes the next operation to be undone from the undo stack, and returns it.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>IOperation The undoable IOperation object, or <codeph>null</codeph>, if no undoable operation
+		 is on the stack.
+		 
+		 </apiDesc><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc>
+		 Removes the next operation to be undone from the undo stack, and returns it.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:pushRedo"><apiName>pushRedo</apiName><shortdesc>
+		 Adds a redoable operation to the redo stack.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiParam></apiOperationDef><apiDesc>
+		 Adds a redoable operation to the redo stack.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:pushUndo"><apiName>pushUndo</apiName><shortdesc>
+		 Adds an undoable operation to the undo stack.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>operation</apiItemName><apiOperationClassifier>flashx.undo:IOperation</apiOperationClassifier></apiParam></apiOperationDef><apiDesc>
+		 Adds an undoable operation to the undo stack.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:redo"><apiName>redo</apiName><shortdesc> 
+		 Removes the next IOperation object from the redo stack and calls the performRedo() 
+		 function of that object.</shortdesc><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 Removes the next IOperation object from the redo stack and calls the performRedo() 
+		 function of that object.
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.edit.xml#IEditManager/redo"><linktext>flashx.textLayout.edit.IEditManager.redo</linktext></link><link href="flashx.undo.xml#IUndoManager/canRedo"><linktext>flashx.undo.IUndoManager.canRedo</linktext></link><link href="flashx.undo.xml#IUndoManager/clearRedo"><linktext>flashx.undo.IUndoManager.clearRedo</linktext></link><link href="flashx.undo.xml#IUndoManager/peekRedo"><linktext>flashx.undo.IUndoManager.peekRedo</linktext></link><link href="flashx.undo.xml#IUndoManager/pushRedo"><linktext>flashx.undo.IUndoManager.pushRedo</linktext></link><link href="flashx.undo.xml#IUndoManager/popRedo"><linktext>flashx.undo.IUndoManager.popRedo</linktext></link></related-links></apiOperation><apiOperation id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:undo"><apiName>undo</apiName><shortdesc> 
+		 Removes the next IOperation object from the undo stack and calls the performUndo() 
+		 function of that object.</shortdesc><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn></apiOperationDef><apiDesc> 
+		 Removes the next IOperation object from the undo stack and calls the performUndo() 
+		 function of that object.
+		 
+		 </apiDesc></apiOperationDetail><related-links><link href="flashx.textLayout.edit.xml#IEditManager/undo"><linktext>flashx.textLayout.edit.IEditManager.undo</linktext></link><link href="flashx.undo.xml#IUndoManager/canUndo"><linktext>flashx.undo.IUndoManager.canUndo</linktext></link><link href="flashx.undo.xml#IUndoManager/clearUndo"><linktext>flashx.undo.IUndoManager.clearUndo</linktext></link><link href="flashx.undo.xml#IUndoManager/peekUndo"><linktext>flashx.undo.IUndoManager.peekUndo</linktext></link><link href="flashx.undo.xml#IUndoManager/pushUndo"><linktext>flashx.undo.IUndoManager.pushUndo</linktext></link><link href="flashx.undo.xml#IUndoManager/popUndo"><linktext>flashx.undo.IUndoManager.popUndo</linktext></link></related-links></apiOperation><apiValue id="flashx.undo:IUndoManager:flashx.undo:IUndoManager:undoAndRedoItemLimit:get"><apiName>undoAndRedoItemLimit</apiName><shortdesc>
+		 The maximum number of undoable or redoable operations to track.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="int"/></apiValueDef><apiDesc>
+		 The maximum number of undoable or redoable operations to track.
+		 
+		 <p>To disable the undo function, set this value to 0.</p> 
+		 
+		 </apiDesc></apiValueDetail></apiValue></apiClassifier></apiPackage>

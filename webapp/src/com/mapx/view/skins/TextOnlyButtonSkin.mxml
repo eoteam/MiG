@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="init()"  xmlns:controls="com.fxcomponents.controls.*" xmlns:local="*" xmlns:css="css.*">
+   <mx:Script>
+      <![CDATA[
+      	import mx.core.IUITextField;
+         import mx.controls.Button;
+         import mx.core.UITextField;
+         
+         use namespace mx_internal;
+         
+        // private var _button:Button
+         
+         [Bindable]
+         private var textField:IUITextField;
+         
+         private function init():void
+         {
+            parentButton = this.parent as Button;
+            if(parentButton)
+            {
+            	textField = parentButton.getTextField();
+            }
+         }
+         [Bindable]
+         private var parentButton:Button;         
+         
+      ]]>
+   </mx:Script>
+   
+   <!-- States .............................................. -->
+   <mx:states>
+   
+	    <mx:State name="up">
+	        
+		</mx:State>
+		
+		<mx:State name="down">
+		     
+		</mx:State>
+		
+		<mx:State name="over">
+		   
+		</mx:State>
+		
+		<mx:State name="disabled">
+	        
+		</mx:State>
+		
+		<mx:State name="selectedUp" >
+			<mx:SetStyle target="{parentButton}" name="color" value="{this.getStyle('textRollOverColor')}" />
+			
+		</mx:State>
+		<mx:State name="selectedDown" >
+			<mx:SetStyle target="{parentButton}" name="color" value="{this.getStyle('textRollOverColor')}" />
+			
+		</mx:State>
+		<mx:State name="selectedOver" >
+			<mx:SetStyle target="{parentButton}" name="color" value="{this.getStyle('textRollOverColor')}" />
+			
+		</mx:State>
+		   
+	</mx:states>
+
+
+   
+   <!-- Transitions .............................................. -->
+   <mx:transitions>
+		 <!-- Not Selected .............................................. -->
+      <mx:Transition id="toOver" fromState="*" toState="over">
+     
+      </mx:Transition>
+      
+      <mx:Transition id="toUp" fromState="*" toState="up">
+     
+      </mx:Transition>
+      
+      <mx:Transition id="toDown" fromState="*" toState="down">
+      
+      </mx:Transition>
+      
+      
+      <!-- Selected .............................................. -->
+      
+   </mx:transitions>
+
+   
+   
+</mx:Canvas>

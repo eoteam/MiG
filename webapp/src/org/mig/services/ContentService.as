@@ -1,0 +1,59 @@
+package org.mig.services
+{
+	import mx.rpc.AsyncToken;
+	import mx.utils.ObjectUtil;
+	
+	import org.mig.controller.Constants;
+	import org.mig.model.vo.ContentNode;
+	import org.mig.model.vo.content.ContainerNode;
+	import org.mig.model.vo.content.ContentData;
+	import org.mig.model.vo.user.UserPrivileges;
+	import org.mig.services.interfaces.IContentService;
+
+	public class ContentService extends AbstractXMLHTTPService implements IContentService
+	{
+		public function ContentService() {
+			
+		}
+		public function retrieve(content:ContentNode,callback:Function):void {
+			//this is fine here, params are a map object. Im guessing REST will form a URL, but awareness of these vars is tricky
+			if(content is ContainerNode) {
+				var params:Object = new Object();
+				var execute:Boolean = false;			
+				if(ContainerNode(content).isRoot) { //Containers
+					if(content.privileges ==  UserPrivileges.MiGAdmin)
+						params.parentid = "1,2	";
+					else
+						params.parentid = 1;
+				}
+				else {//Anything else, even fixed ones, will onyl get their children
+					params.parentid = ContentData(content.data).id.toString();
+					if(ContainerNode(content).isNesting || content.config.children().length() > 0)
+						execute = true; //good for content leaves AND relational nodes in tabs and trays
+					else {
+						//this.dispatchEvent(new ContentNodeEvent(ContentNodeEvent.READY,this,true));
+						return;
+					}
+				}		
+				params.action = content.config.@action.toString();			
+				params.deleted = 0;
+				if(content.config.attribute("orderby").length() > 0) 
+					params.orderby = content.config.@orderby.toString();
+				if(content.config.attribute("orderdirection").length() > 0) 
+					params.orderdirection = content.config.@orderdirection.toString();
+				if(content.config.attribute("verbosity").length() > 0)
+					params.verbosity = content.config.@verbosity.toString();
+				else
+					params.verbosity = 0;
+				
+				var token:AsyncToken =  this.createService(params,Constants.EXECUTE,handleChildren,ResponseType.DATA,ContentData);
+				token.content = content;
+				token.cmdcallback = callback;
+			}
+		}
+		private function handleChildren(results:Array,token:AsyncToken):void {
+			var callback:Function = token.cmdcallback;
+			callback(results);
+		}
+	}
+}

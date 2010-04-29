@@ -1,0 +1,95 @@
+<mx:HBox 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	implements="mx.controls.listClasses.IDropInListItemRenderer"
+	resize="this.measure()" verticalScrollPolicy="off" paddingLeft="{pad}"
+	horizontalScrollPolicy="off" 
+	width="100%">
+
+    <mx:Script>
+        <![CDATA[
+		import mx.controls.advancedDataGridClasses.AdvancedDataGridListData;
+		import mx.controls.listClasses.BaseListData;
+         
+        private var _listData:BaseListData;
+          
+		public function get listData():BaseListData
+		{
+			return _listData;
+		}
+		
+		// Define the setter method,
+		public function set listData(value:BaseListData):void
+		{
+			_listData = value;
+		}		
+        override public function get data():Object
+        {
+            return super.data;
+        }            
+        override public function set data(value:Object):void
+        {
+        	 super.data = value;
+        	 if(data.parent == null)
+        	 	pad = 0;
+        	 else
+        	 	pad = 15;
+        	 if(value != null)
+        	 {
+				if(value[AdvancedDataGridListData(this.listData).dataField] == 3)
+				{
+					checked = true;
+					imageVisible = false;					
+				}
+				else if(value[AdvancedDataGridListData(this.listData).dataField] == 2)
+				{
+					checked = false;
+					imageVisible = true;
+				}
+				else if(value[AdvancedDataGridListData(this.listData).dataField] == 1)
+				{
+					checked = false;
+					imageVisible = false;
+				}
+        	 }	           	 
+        }
+		public function handleCheckChange():void
+		{
+			var sel:int = check.selected? 3:1;
+			var parent:Object;
+			var checkedChildren:int = 0;
+			data[AdvancedDataGridListData(this.listData).dataField] = sel;
+			if(data.parent == null)
+			{			
+				pad = 0;
+				for each(var child:Object in data.children)
+				{
+					child[AdvancedDataGridListData(this.listData).dataField] = sel;
+				}				
+			}
+			else if(data.parent != null)
+			{
+				pad = 15;	
+				parent = data.parent;
+				for each(child in parent.children)
+				{
+					if(child[AdvancedDataGridListData(this.listData).dataField] == 3)
+						checkedChildren++;
+				}					
+				if(checkedChildren == parent.children.length)
+					parent[AdvancedDataGridListData(this.listData).dataField] = 3;
+				else if (checkedChildren > 0)
+					parent[AdvancedDataGridListData(this.listData).dataField] = 2;
+				else if(checkedChildren == 0)
+					parent[AdvancedDataGridListData(this.listData).dataField] = 1;
+			}		
+		}
+		[Bindable] private var checked:Boolean;
+		[Bindable] private var imageVisible:Boolean;
+        [Bindable] private var pad:Number = 0;	      		
+        ]]>
+    </mx:Script>  
+    <mx:Canvas width="100%" height="100%"> 
+    	<mx:Image id="inner" visible="{imageVisible}" verticalCenter="0" horizontalCenter="0"  width="7" height="7" source="migAssetsmigAssets/images/inner.png"/>
+		<mx:CheckBox id="check" change="handleCheckChange()" selected="{checked}" /> 
+	</mx:Canvas>
+</mx:HBox>		
