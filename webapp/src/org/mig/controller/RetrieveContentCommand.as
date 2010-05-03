@@ -19,7 +19,7 @@ package org.mig.controller
 		public var event:ContentEvent;
 		
 		override public function execute():void {
-			service.retrieve(event.content,processChildren);
+			service.retrieve(event.content);
 		}
 		public function processChildren(results:Array):void {
 			var nesting:Boolean;

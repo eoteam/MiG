@@ -13,13 +13,17 @@ package org.mig.services
 	import mx.rpc.http.HTTPService;
 	import mx.rpc.xml.SimpleXMLDecoder;
 	
+	import org.mig.controller.Constants;
 	import org.mig.events.AlertEvent;
 	import org.robotlegs.mvcs.Actor;
 	
-	public class AbstractXMLHTTPService extends Actor implements IResponder
+	public class AbstractXMLHTTPService extends Actor
 	{
-		public function AbstractXMLHTTPService()
-		{
+		protected var service:HTTPService;
+		protected var resultHandler:Function;
+		protected var faultHandler:Function;
+		
+		public function AbstractXMLHTTPService() {
 			super();
 		}
 		protected function decodeResults(xml:XMLDocument,decodeClass:Class):Array {
@@ -40,35 +44,28 @@ package org.mig.services
 			}
 			return children;
 		}
-		public function result(data:Object):void {
-			//if(data.token.responseType == ResponseType.DATA) {
-				var results:Array = decodeResults(new XMLDocument(data.result.toString()),data.token.decode as Class);
-				data.token.callback(results,data.token);
-			//}
-			//else data.token.callback(data.result,data.token); 
-		}
-		public function fault(info:Object):void {
+		protected function fault(info:Object):void {
 			eventDispatcher.dispatchEvent(new AlertEvent( AlertEvent.SHOW_ALERT, "crap","Crap"));
 		}
-		protected function createService(params:Object,url:String,callback:Function,responseType:String,decode:Class=null):AsyncToken {
-			var service:HTTPService = new HTTPService();
+		protected function createService(params:Object,result:Function):AsyncToken {
+			service = new HTTPService();
 			service.method = URLRequestMethod.POST;
-			service.url = url;
-			if(responseType == ResponseType.DATA)
-				service.resultFormat = HTTPService.RESULT_FORMAT_TEXT;
-			else
-				service.resultFormat = HTTPService.RESULT_FORMAT_OBJECT;
+			service.url = Constants.EXECUTE;
+			service.resultFormat = HTTPService.RESULT_FORMAT_TEXT;
 			var token:AsyncToken;
 			if(params != null)
 				token = service.send(params);
 			else
 				token = service.send();
-			token.decode = decode==null?Object:decode;
-			token.callback = callback;
-			token.responseType = responseType;
-			token.addResponder(this);
-			trace(url);
+			var responder:Responder = new Responder(result,fault);
+			token.addResponder(responder);
 			return token;
+		}
+		public function addResultHandler(resultHandler:Function):void {
+			this.resultHandler = resultHandler;
+		}
+		public function addFaultHandler(faultHandler:Function):void {
+			this.faultHandler = faultHandler;
 		}
 	}
 }

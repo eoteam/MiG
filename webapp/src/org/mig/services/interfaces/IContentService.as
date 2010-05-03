@@ -2,9 +2,9 @@ package org.mig.services.interfaces
 {
 	import org.mig.model.vo.ContentNode;
 
-	public interface IContentService
+	public interface IContentService extends IService
 	{
-		function retrieve(content:ContentNode,callback:Function):void;
+		function retrieve(content:ContentNode):void;
 		
 	}
 }

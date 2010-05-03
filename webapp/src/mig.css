@@ -31,19 +31,19 @@ Label{
 }
 ScrollBar
 {
-	trackSkin: ClassReference("com.mapx.view.skins.CustomScrollTrackSkin"); 
-	thumbDownSkin: ClassReference("com.mapx.view.skins.CustomScrollThumbSkin");	
-	thumbOverSkin: ClassReference("com.mapx.view.skins.CustomScrollThumbSkin");
-	thumbUpSkin: ClassReference("com.mapx.view.skins.CustomScrollThumbSkin");
+	trackSkin: ClassReference("org.mig.view.skins.CustomScrollTrackSkin"); 
+	thumbDownSkin: ClassReference("org.mig.view.skins.CustomScrollThumbSkin");	
+	thumbOverSkin: ClassReference("org.mig.view.skins.CustomScrollThumbSkin");
+	thumbUpSkin: ClassReference("org.mig.view.skins.CustomScrollThumbSkin");
 	upArrowSkin: ClassReference( null );
 	downArrowSkin: ClassReference( null );
 } 
 HSlider{
-	trackSkin: ClassReference("com.mapx.view.skins.migSliderTrackSkin"); 
-	thumbDisabledSkin: ClassReference("com.mapx.view.skins.migSliderThumbSkin");
-	thumbDownSkin: ClassReference("com.mapx.view.skins.migSliderThumbSkin");	
-	thumbOverSkin: ClassReference("com.mapx.view.skins.migSliderThumbSkin");
-	thumbUpSkin: ClassReference("com.mapx.view.skins.migSliderThumbSkin");
+	trackSkin: ClassReference("org.mig.view.skins.migSliderTrackSkin"); 
+	thumbDisabledSkin: ClassReference("org.mig.view.skins.migSliderThumbSkin");
+	thumbDownSkin: ClassReference("org.mig.view.skins.migSliderThumbSkin");	
+	thumbOverSkin: ClassReference("org.mig.view.skins.migSliderThumbSkin");
+	thumbUpSkin: ClassReference("org.mig.view.skins.migSliderThumbSkin");
 	
 }
 CheckBox{
@@ -76,15 +76,15 @@ NumericStepper {
 	upArrowDownSkin: Embed(source="migAssets/library.swf", symbol="numStepperUp"); 
 	upArrowOverSkin: Embed(source="migAssets/library.swf", symbol="numStepperUp"); 
 	upArrowUpSkin: Embed(source="migAssets/library.swf", symbol="numStepperUp");  */
-	upArrowDisabledSkin: ClassReference("com.mapx.view.skins.StepperUpArrowSkin");
-	upArrowDownSkin: ClassReference("com.mapx.view.skins.StepperUpArrowSkin");
-	upArrowOverSkin: ClassReference("com.mapx.view.skins.StepperUpArrowSkin");
-	upArrowUpSkin: ClassReference("com.mapx.view.skins.StepperUpArrowSkin");
+	upArrowDisabledSkin: ClassReference("org.mig.view.skins.StepperUpArrowSkin");
+	upArrowDownSkin: ClassReference("org.mig.view.skins.StepperUpArrowSkin");
+	upArrowOverSkin: ClassReference("org.mig.view.skins.StepperUpArrowSkin");
+	upArrowUpSkin: ClassReference("org.mig.view.skins.StepperUpArrowSkin");
 	
-	downArrowDisabledSkin: ClassReference("com.mapx.view.skins.StepperDownArrowSkin");
-	downArrowDownSkin: ClassReference("com.mapx.view.skins.StepperDownArrowSkin");
-	downArrowOverSkin: ClassReference("com.mapx.view.skins.StepperDownArrowSkin");
-	downArrowUpSkin: ClassReference("com.mapx.view.skins.StepperDownArrowSkin"); 
+	downArrowDisabledSkin: ClassReference("org.mig.view.skins.StepperDownArrowSkin");
+	downArrowDownSkin: ClassReference("org.mig.view.skins.StepperDownArrowSkin");
+	downArrowOverSkin: ClassReference("org.mig.view.skins.StepperDownArrowSkin");
+	downArrowUpSkin: ClassReference("org.mig.view.skins.StepperDownArrowSkin"); 
 	
 }
 .plusButton{
@@ -126,10 +126,10 @@ Alert{
 	
 }
 TitleWindow{
-	closeButtonDisabledSkin:ClassReference("com.mapx.view.skins.CloseButtonUp"); 
-	closeButtonDownSkin:ClassReference("com.mapx.view.skins.CloseButtonUp"); 
-	closeButtonOverSkin: ClassReference("com.mapx.view.skins.CloseButtonUp"); 
-	closeButtonUpSkin: ClassReference("com.mapx.view.skins.CloseButtonUp");
+	closeButtonDisabledSkin:ClassReference("org.mig.view.skins.CloseButtonUp"); 
+	closeButtonDownSkin:ClassReference("org.mig.view.skins.CloseButtonUp"); 
+	closeButtonOverSkin: ClassReference("org.mig.view.skins.CloseButtonUp"); 
+	closeButtonUpSkin: ClassReference("org.mig.view.skins.CloseButtonUp");
 	fontWeight: normal;
 	backgroundColor: #111111;
 	backgroundAlpha: 0.98;
@@ -205,8 +205,8 @@ ContainerButton {
 	paddingBottom: 7;
 	paddingLeft: 7;
 	paddingRight: 20;
-	/*upIcon: ClassReference("com.mapx.view.skins.com.map.assets.FolderIcon");
-	overIcon: ClassReference("com.mapx.view.skins.com.map.assets.FolderIcon");*/
+	/*upIcon: ClassReference("org.mig.view.skins.com.map.assets.FolderIcon");
+	overIcon: ClassReference("org.mig.view.skins.com.map.assets.FolderIcon");*/
 }
 Button{
 	
@@ -297,7 +297,7 @@ List {
 	textSelectedColor: #ffffff;
 	textRollOverColor: #ffffff;
 	themeColor: #ed1c58;
-	dropIndicatorSkin: ClassReference("com.mapx.view.skins.TreeDropIndicator");
+	dropIndicatorSkin: ClassReference("org.mig.view.skins.TreeDropIndicator");
 }
 .customFieldsList
 {
@@ -323,13 +323,13 @@ AdvancedDataGrid {
 	headerStyleName: "dataGridHeaderStyle";
 	disclosureClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderClosedIcon");
 	disclosureOpenIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderOpenIcon");
-	dropIndicatorSkin: ClassReference("com.mapx.view.skins.TreeDropIndicator");
+	dropIndicatorSkin: ClassReference("org.mig.view.skins.TreeDropIndicator");
 	openDuration:0;
 	headerSeparatorSkin: Embed(source="migAssets/flex_skins.swf",symbol="DataGrid_headerSeparatorSkin");
 }
 .mediaManagerGrid
 {
-	dropIndicatorSkin: ClassReference("com.mapx.view.skins.OffsetedDropIndicator");
+	dropIndicatorSkin: ClassReference("org.mig.view.skins.OffsetedDropIndicator");
 }
 
 
@@ -391,7 +391,7 @@ ComboBox
 	borderColor: #111111;
 }
 .migComboBox {
-	skin: ClassReference("com.mapx.view.skins.DefaultComboBoxSkin");
+	skin: ClassReference("org.mig.view.skins.DefaultComboBoxSkin");
 	fontSize: 13;
 	color: #ffffff;
 	highlightAlphas: 0, 0;
@@ -415,7 +415,7 @@ ComboBox
 }
 TileList
 {
-	dropIndicatorSkin: ClassReference("com.mapx.view.skins.TreeDropIndicator");
+	dropIndicatorSkin: ClassReference("org.mig.view.skins.TreeDropIndicator");
 }
 
 Tree
@@ -456,7 +456,7 @@ Tree
 	folderOpenIcon: Embed(source="migAssets/library.swf",symbol="containerGrayUp"); */
 	textRollOverColor: #ffffff;
 	textSelectedColor: #ffffff;
-	dropIndicatorSkin: ClassReference("com.mapx.view.skins.TreeDropIndicator");
+	dropIndicatorSkin: ClassReference("org.mig.view.skins.TreeDropIndicator");
 	
 }
 .documentationTree{
@@ -478,7 +478,7 @@ Button{
 }
 .defaultButton
 {
-	skin: ClassReference("com.mapx.view.skins.DefaultButtonSkin");
+	skin: ClassReference("org.mig.view.skins.DefaultButtonSkin");
 	color: #ffffff;
 	embedFonts: true;
 	fontFamily: Transit-Bold;
@@ -494,7 +494,7 @@ Button{
 }
 .defaultBlackButton
 {
-	skin: ClassReference("com.mapx.view.skins.DefaultBlackButtonSkin");
+	skin: ClassReference("org.mig.view.skins.DefaultBlackButtonSkin");
 	color: #ffffff;
 	embedFonts: true;
 	fontFamily: Transit-Bold;
@@ -513,7 +513,7 @@ Button{
 }
 .textOnlyButton
 {
-	skin: ClassReference("com.mapx.view.skins.TextOnlyButtonSkin");
+	skin: ClassReference("org.mig.view.skins.TextOnlyButtonSkin");
 	color: #ffffff;
 	embedFonts: true;
 	fontFamily: Transit-Bold;
@@ -530,7 +530,7 @@ Button{
 
 
 .comboBoxHeaderButton{
-	skin: ClassReference("com.mapx.view.skins.ComboBoxHeaderButtonSkin");
+	skin: ClassReference("org.mig.view.skins.ComboBoxHeaderButtonSkin");
 	color: #ffffff;
 	embedFonts: true;
 	fontFamily: Transit-Bold;
@@ -546,19 +546,19 @@ Button{
 	
 }
 .defaultButtonBackground{
-	backgroundImage: ClassReference("com.mapx.view.skins.GradientBackground");
+	backgroundImage: ClassReference("org.mig.view.skins.GradientBackground");
 	backgroundSize: "100%";
 	fillColors: #808080, #595959;
 	fillAlphas: 1, 1;
 }
 .defaultButtonHighlight{
-	backgroundImage: ClassReference("com.mapx.view.skins.GradientBackground");
+	backgroundImage: ClassReference("org.mig.view.skins.GradientBackground");
 	backgroundSize: "100%";
 	fillColors: #FFFFFF, #FFFFFF;
 	fillAlphas: 0.1, 0.02;
 }
 .defaultButtonOverBackground{
-	backgroundImage: ClassReference("com.mapx.view.skins.GradientBackground");
+	backgroundImage: ClassReference("org.mig.view.skins.GradientBackground");
 	backgroundSize: "100%";
 	fillColors: #ED1C58, #BD1E53;
 	fillAlphas: 1, 1;
@@ -701,7 +701,7 @@ Button{
 	color: white;
 }
 .contentTabItem{
-	backgroundImage: ClassReference("com.mapx.view.skins.GradientBackground");
+	backgroundImage: ClassReference("org.mig.view.skins.GradientBackground");
 	backgroundSize: "100%";
 	fillColors: #595959, #262626;
 	fillAlphas: 1, 1;
@@ -747,13 +747,13 @@ Button{
 	color: #FFFFFF;
 }
 .toolsContainer{
-	backgroundImage: ClassReference("com.mapx.view.skins.GradientBackground");
+	backgroundImage: ClassReference("org.mig.view.skins.GradientBackground");
 	backgroundSize: "100%";
 	fillColors: #595959, #262626;
 	fillAlphas: 1, 1;
 }
 .toolsHeaderBG{
-	backgroundImage: ClassReference("com.mapx.view.skins.GradientBackground");
+	backgroundImage: ClassReference("org.mig.view.skins.GradientBackground");
 	backgroundSize: "100%";
 	fillColors: #222222, #151515;
 	fillAlphas: 1, 1;
@@ -800,13 +800,13 @@ Button{
 	
 }
 .toolPanelToggleButton{
-	disabledSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
-	downSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
-	overSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
-	upSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
-	selectedDownSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
-	selectedOverSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
-	selectedUpSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
+	disabledSkin: ClassReference("org.mig.view.skins.EmptyButtonSkin");
+	downSkin: ClassReference("org.mig.view.skins.EmptyButtonSkin");
+	overSkin: ClassReference("org.mig.view.skins.EmptyButtonSkin");
+	upSkin: ClassReference("org.mig.view.skins.EmptyButtonSkin");
+	selectedDownSkin: ClassReference("org.mig.view.skins.EmptyButtonSkin");
+	selectedOverSkin: ClassReference("org.mig.view.skins.EmptyButtonSkin");
+	selectedUpSkin: ClassReference("org.mig.view.skins.EmptyButtonSkin");
 	
 	disabledIcon: Embed(source="migAssets/library.swf", symbol="toolPanelOpenedIcon"); 
 	upIcon: Embed(source="migAssets/library.swf", symbol="toolPanelOpenedIcon"); 
@@ -864,19 +864,19 @@ TextInput{
 	backgroundColor: black;
 }
 .treeManagerItem{
-	backgroundImage: ClassReference("com.mapx.view.skins.GradientBackground");
+	backgroundImage: ClassReference("org.mig.view.skins.GradientBackground");
 	backgroundSize: "100%";
 	fillColors: #808080, #595959;
 	fillAlphas: 1, 1;
 }
 .treeContainerItem{
-	backgroundImage: ClassReference("com.mapx.view.skins.GradientBackground");
+	backgroundImage: ClassReference("org.mig.view.skins.GradientBackground");
 	backgroundSize: "100%";
 	fillColors: #FFFFFF, #D9D9D9;
 	fillAlphas: 1, 1;
 }
 .treeOverItem{
-	backgroundImage: ClassReference("com.mapx.view.skins.GradientBackground");
+	backgroundImage: ClassReference("org.mig.view.skins.GradientBackground");
 	backgroundSize: "100%";
 	fillColors: #ED1C58, #BD1E53;
 	fillAlphas: 1, 1;
@@ -900,13 +900,13 @@ TextInput{
 	selectedUpSkin: Embed(source="migAssets/library.swf", symbol="addContainerOver"); 	
 }
 .addButton{
-	disabledSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
-	downSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
-	overSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
-	upSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
-	selectedDownSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
-	selectedOverSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
-	selectedUpSkin: ClassReference("com.mapx.view.skins.EmptyButtonSkin");
+	disabledSkin: ClassReference("org.mig.view.skins.EmptyButtonSkin");
+	downSkin: ClassReference("org.mig.view.skins.EmptyButtonSkin");
+	overSkin: ClassReference("org.mig.view.skins.EmptyButtonSkin");
+	upSkin: ClassReference("org.mig.view.skins.EmptyButtonSkin");
+	selectedDownSkin: ClassReference("org.mig.view.skins.EmptyButtonSkin");
+	selectedOverSkin: ClassReference("org.mig.view.skins.EmptyButtonSkin");
+	selectedUpSkin: ClassReference("org.mig.view.skins.EmptyButtonSkin");
 	color: #ffffff;
 	embedFonts: true;
 	fontFamily: Transit-Bold;
@@ -966,33 +966,33 @@ TextInput{
 
 /*-------------- video --------------*/
 .playToggle{
-	upSkin: ClassReference("com.mapx.view.skins.RightArrowUpSkin");
-	overSkin: ClassReference("com.mapx.view.skins.RightArrowUpSkin");
-	downSkin: ClassReference("com.mapx.view.skins.RightArrowUpSkin");
-	selectedUpSkin: ClassReference("com.mapx.view.skins.PauseUpSkin");
-	selectedOverSkin: ClassReference("com.mapx.view.skins.PauseUpSkin");
-	selectedDownSkin: ClassReference("com.mapx.view.skins.PauseUpSkin");
+	upSkin: ClassReference("org.mig.view.skins.RightArrowUpSkin");
+	overSkin: ClassReference("org.mig.view.skins.RightArrowUpSkin");
+	downSkin: ClassReference("org.mig.view.skins.RightArrowUpSkin");
+	selectedUpSkin: ClassReference("org.mig.view.skins.PauseUpSkin");
+	selectedOverSkin: ClassReference("org.mig.view.skins.PauseUpSkin");
+	selectedDownSkin: ClassReference("org.mig.view.skins.PauseUpSkin");
 	
 }
 .scrubHSlider{
-	trackSkin: ClassReference("com.mapx.view.skins.ScrubSliderTrackSkin"); 
-	thumbDisabledSkin: ClassReference("com.mapx.view.skins.ScrubSliderThumbSkin");
-	thumbDownSkin: ClassReference("com.mapx.view.skins.ScrubSliderThumbSkin");	
-	thumbOverSkin: ClassReference("com.mapx.view.skins.ScrubSliderThumbSkin");
-	thumbUpSkin: ClassReference("com.mapx.view.skins.ScrubSliderThumbSkin");
+	trackSkin: ClassReference("org.mig.view.skins.ScrubSliderTrackSkin"); 
+	thumbDisabledSkin: ClassReference("org.mig.view.skins.ScrubSliderThumbSkin");
+	thumbDownSkin: ClassReference("org.mig.view.skins.ScrubSliderThumbSkin");	
+	thumbOverSkin: ClassReference("org.mig.view.skins.ScrubSliderThumbSkin");
+	thumbUpSkin: ClassReference("org.mig.view.skins.ScrubSliderThumbSkin");
 	
 }
 .volumeHSlider{
-	trackSkin: ClassReference("com.mapx.view.skins.VolumeSliderTrackSkin");
-	thumbDownSkin: ClassReference("com.mapx.view.skins.VolumeSliderThumbSkin");	
-	thumbOverSkin: ClassReference("com.mapx.view.skins.VolumeSliderThumbSkin");
-	thumbUpSkin: ClassReference("com.mapx.view.skins.VolumeSliderThumbSkin"); 
+	trackSkin: ClassReference("org.mig.view.skins.VolumeSliderTrackSkin");
+	thumbDownSkin: ClassReference("org.mig.view.skins.VolumeSliderThumbSkin");	
+	thumbOverSkin: ClassReference("org.mig.view.skins.VolumeSliderThumbSkin");
+	thumbUpSkin: ClassReference("org.mig.view.skins.VolumeSliderThumbSkin"); 
 }
 .videoLoaderBar{
 	barColor: #222222;
 	borderColor: #CCCCCC;
-	barSkin: ClassReference("com.mapx.view.skins.LoadingBarSkin");
-	trackSkin: ClassReference("com.mapx.view.skins.LoadingBarTrackSkin"); 
+	barSkin: ClassReference("org.mig.view.skins.LoadingBarSkin");
+	trackSkin: ClassReference("org.mig.view.skins.LoadingBarTrackSkin"); 
 }
 
 
@@ -1150,7 +1150,7 @@ TextInput{
 }
 
 .commentBackground{
-	backgroundImage: ClassReference("com.mapx.view.skins.GradientBackground");
+	backgroundImage: ClassReference("org.mig.view.skins.GradientBackground");
 	backgroundSize: "100%";
 	fillColors: #F7D959,#FFCE00;
 	fillAlphas: 1, 1;

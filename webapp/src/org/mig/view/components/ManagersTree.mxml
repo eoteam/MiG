@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Tree 
+	xmlns:mx="http://www.adobe.com/2006/mxml"  
+	xmlns:content="com.mapx.view.content.*"
+	 width="100%"  itemRenderer="org.mig.view.renderers.ManagerTreeRenderer" styleName="managerTree"
+	paddingLeft="0" paddingBottom="3" paddingTop="0" paddingRight="0" showRoot="true" labelField="@name"
+	itemClick="handleTreeChange(event)" itemOpen="handleResize(event)" openDuration="0" itemClose="handleResize(event)" >
+
+	
+	<mx:Script>
+		<![CDATA[
+			
+			import mx.collections.ICollectionView;
+			import mx.events.FlexEvent;
+			import mx.events.ListEvent;
+			import mx.events.TreeEvent;
+			
+			import org.mig.model.vo.user.UserPrivileges;
+			import org.mig.view.renderers.ManagerTreeRenderer;
+			
+			private var _selectedColor:uint = 0x333333;
+			
+			private var _rollOverColor:uint = 0xff0000;
+			
+			private var _prevItemRenderer:org.mig.view.renderers.ManagerTreeRenderer;
+			
+
+			public function handleManagers(managersXML:XML):void
+			{
+				tempXML = <node name="Managers"></node>;
+				for each(var result:XML  in managersXML.children())
+				{
+					result.@name = result.name.toString();
+					tempXML.appendChild(result);
+				}
+			}	
+			private function handleTreeChange(event:ListEvent):void
+			{
+				this.expandChildrenOf(this.dataProvider[0],true);
+				var currentItemRenderer:ManagerTreeRenderer = ManagerTreeRenderer(this.itemToItemRenderer(this.selectedItem));
+				if(_prevItemRenderer && _prevItemRenderer != currentItemRenderer)
+				{
+					_prevItemRenderer.selectedColorOff();
+				}
+				currentItemRenderer.selectedColorOn(_selectedColor);
+				_prevItemRenderer = currentItemRenderer;
+				trace(event.toString());
+				
+				if(ManagerTreeRenderer(event.itemRenderer).enabled)
+					this.dispatchEvent(new Event(ManagerTreeRenderer(event.itemRenderer).listData.label,false));
+					
+				
+			}		 	
+			private var managersXML:XML;
+			private var tempXML:XML;
+			public function set privileges(priv:int):void
+			{
+				
+				managersXML =  <list></list>;
+				var managers:XML = <node name="Managers"></node>;
+				managersXML.appendChild(managers);
+				
+				var root:XML = XML(managersXML.node.(@name=="Managers"));
+				
+		 		var users:XML = XML(tempXML..result.(name=="Users"));
+		 		var treeUsers:XML = <node name="Users"></node>;
+		 		if(users.value.toString() == "ON")
+		 			root.appendChild(treeUsers);
+		 		
+		 		var media:XML = XML(tempXML..result.(name=="Media"));
+		 		var treeMedia:XML = <node name="Media"></node>;
+		 		if(media.value.toString() == "ON")
+		 			root.appendChild(treeMedia);
+		 		
+		 		var tags:XML = XML(tempXML..result.(name=="Tags"));
+		 		var treeTags:XML = <node name="Tags"></node>;
+		 		if(tags.value.toString() == "ON")
+		 			root.appendChild(treeTags);
+		 		
+		 		var fonts:XML = XML(tempXML..result.(name=="Fonts"));
+		 		var treeFonts:XML = <node name="Fonts"></node>;
+		 		if(fonts.value.toString() == "ON")
+		 			root.appendChild(treeFonts);
+		 		
+		 		var contacts:XML = XML(tempXML..result.(name=="Contacts"));
+		 		var treeContacts:XML = <node name="Contacts"></node>;
+		 		if(contacts.value.toString() == "ON")
+		 			root.appendChild(treeContacts);
+		 		
+		 		var customFields:XML = XML(tempXML..result.(name=="Custom Fields"));
+		 		var treeCustomFields:XML = <node name="Custom Fields"></node>;
+		 		if(customFields.value.toString() == "ON")
+		 			root.appendChild(treeCustomFields);
+				
+		 	/* 	var events:XML = XML(tempXML..result.(name=="Events"));
+		 		var treeEvents:XML = <node name="Events"></node>;		 		
+		 		if(events.value.toString() == "ON")
+		 			root.appendChild(treeEvents);	  */		
+		 		 		 		
+		 		if(priv == UserPrivileges.Admin || priv == UserPrivileges.MiGAdmin)
+		 		{
+		 			treeMedia.@enabled = media.value == "ON" ? "true":"false";
+		 			treeUsers.@enabled = users.value == "ON" ? "true":"false";
+		 			treeTags.@enabled = tags.value == "ON" ? "true":"false";
+		 			treeFonts.@enabled = fonts.value == "ON" ? "true":"false";
+		 			treeContacts.@enabled = contacts.value == "ON" ? "true":"false";	
+		 			treeCustomFields.@enabled = customFields.value == "ON" ? "true":"false";
+		 			//treeEvents.@enabled = events.value == "ON" ? "true":"false";
+		 		}
+		 		else if(priv == UserPrivileges.Writer1)
+		 		{
+		 			treeMedia.@enabled = media.value == "ON" ? "true":"false";
+		 			treeUsers.@enabled = "false";	
+		 			treeTags.@enabled = tags.value == "ON" ? "true":"false";
+		 			treeFonts.@enabled = fonts.value == "ON" ? "true":"false";
+		 			treeContacts.@enabled = contacts.value == "ON" ? "true":"false";
+		 			treeCustomFields.@enabled = customFields.value == "ON" ? "true":"false";
+		 			//treeEvents.@enabled = events.value == "ON" ? "true":"false";		
+		 		}
+		 		else
+		 		{
+		 			//root.@enabled = "false";
+		 			treeMedia.@enabled = "false";
+		 			treeUsers.@enabled = "false";
+		 			treeTags.@enabled = "false";
+		 			treeContacts.@enabled = "false";			
+		 			treeFonts.@enabled= "false";
+		 			treeCustomFields.@enabled = "false";
+		 			//treeEvents.@enabled = "false";			 			
+		 		}
+		 		 this.dataProvider= managersXML.node;			
+			} 	
+
+			private function handleResize(evt:Event):void
+			{
+				this.parentDocument.openManagers.heightTo = this.measureHeightOfItems();
+				this.parentDocument.openManagers.play();
+			}
+		 	
+		 	
+		]]>
+	</mx:Script>
+</mx:Tree>

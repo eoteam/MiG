@@ -14,11 +14,10 @@ package org.mig.services
 	import org.mig.controller.Constants;
 	import org.mig.events.AlertEvent;
 	import org.mig.events.AppEvent;
-	import org.mig.events.LoginEvent;
 	import org.mig.model.AppModel;
-	import org.mig.model.vo.user.LoginToken;
 	import org.mig.model.vo.user.User;
 	import org.mig.model.vo.user.UserGroup;
+	import org.mig.model.vo.user.UserToken;
 	import org.mig.services.interfaces.IUserService;
 	import org.robotlegs.mvcs.Actor;
 
@@ -28,18 +27,33 @@ package org.mig.services
 		[Inject]
 		public var appModel:AppModel;
 		
-		public function UserService()
-		{
-			
-		}
-		public function login(value:LoginToken):void {
+		public function login(value:UserToken):void {
 			var params:Object = new Object();
-			params.username = value.name;
+			params.username = value.username;
 			params.password = value.password;
 			params.action = "validateUser";			
-			this.createService(params,Constants.EXECUTE,handleLogin,ResponseType.DATA,User);
+			this.createService(params,handleLogin);
 		}
-		private function handleLogin(results:Array,token:AsyncToken):void {	
+		public function loadUsers():void {
+			
+		}
+		public function sendUserInfo(email:String):void {
+			var params:Object = new Object();
+			params.action = "sendUserInformation";
+			params.email =  email;
+			this.createService(params,handleRequestComplete);
+		}
+		public function loadUserGroups():void {
+			var params:Object = new Object();
+			params.action = "getData";
+			params.tablename = "usergroups";
+			this.createService(params,handleUserGroups);
+		}	
+		public function saveUserInfo(token:UserToken):void {
+			
+		}
+		private function handleLogin(data:ResultEvent):void {	
+			var results:Array = this.decodeResults(new XMLDocument(data.result.toString()),User);
 			if(results.length > 0)
 			{
 				appModel.user = results[0];
@@ -76,28 +90,11 @@ package org.mig.services
 			}
 			//currentstate = "LOGGEDIN";*/
 		}
-		public function loadUserGroups():void {
-			var params:Object = new Object();
-			params.action = "getData";
-			params.tablename = "usergroups";
-			
-			this.createService(params,Constants.EXECUTE,handleUserGroups,ResponseType.DATA,UserGroup);
-		}
-		private function handleUserGroups(results:Array):void {
-
+		private function handleUserGroups(data:ResultEvent):void {
+			var results:Array = this.decodeResults(new XMLDocument(data.result.toString()),UserGroup);
 		}	
-		
-		public function loadUsers():void {
-			
-		}
-		public function sendUserInfo(email:String):void {
-			var params:Object = new Object();
-			params.action = "sendUserInformation";
-			params.email =  email;
-			this.createService(params,Constants.EXECUTE,handleRequestComplete,ResponseType.STATUS);
-		}
-		private function handleRequestComplete(data:Object,token:AsyncToken):void {
-			eventDispatcher.dispatchEvent(new LoginEvent(LoginEvent.INFO_SENT,null));
+		private function handleRequestComplete(data:ResultEvent):void {
+
 		}
 	}
 }

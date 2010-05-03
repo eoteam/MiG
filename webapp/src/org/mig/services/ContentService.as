@@ -1,6 +1,9 @@
 package org.mig.services
 {
+	import flash.xml.XMLDocument;
+	
 	import mx.rpc.AsyncToken;
+	import mx.rpc.events.ResultEvent;
 	import mx.utils.ObjectUtil;
 	
 	import org.mig.controller.Constants;
@@ -15,7 +18,7 @@ package org.mig.services
 		public function ContentService() {
 			
 		}
-		public function retrieve(content:ContentNode,callback:Function):void {
+		public function retrieve(content:ContentNode):void {
 			//this is fine here, params are a map object. Im guessing REST will form a URL, but awareness of these vars is tricky
 			if(content is ContainerNode) {
 				var params:Object = new Object();
@@ -46,14 +49,12 @@ package org.mig.services
 				else
 					params.verbosity = 0;
 				
-				var token:AsyncToken =  this.createService(params,Constants.EXECUTE,handleChildren,ResponseType.DATA,ContentData);
+				var token:AsyncToken =  this.createService(params,handleChildren);
 				token.content = content;
-				token.cmdcallback = callback;
 			}
 		}
-		private function handleChildren(results:Array,token:AsyncToken):void {
-			var callback:Function = token.cmdcallback;
-			callback(results);
+		private function handleChildren(data:ResultEvent):void {
+			var results:Array = this.decodeResults(new XMLDocument(data.result.toString()),ContentData);
 		}
 	}
 }

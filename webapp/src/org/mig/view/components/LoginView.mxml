@@ -10,8 +10,6 @@
 	
 	<mx:Script>
 		<![CDATA[
-			import org.mig.events.LoginEvent;
-			import org.mig.model.vo.user.LoginToken;
 			import org.mig.model.vo.user.User;
 			import org.mig.view.interfaces.ILoginView;
 			
@@ -30,18 +28,16 @@
 				return _editViewEnabled;
 			}
 			
-			private function handleEditViewChanged():void
-			{
-				if(_editViewEnabled == true)
-				{
+			private function handleEditViewChanged():void {
+				if(_editViewEnabled == true) {
 					usernameField2.enabled = true;
 					passwordField2.enabled = true;
 					emailField2.enabled = true;
 					
 					editFormVBox.alpha = 1;
 					editButton.label = "Save";
-				}else
-				{
+				}
+				else {
 					usernameField2.enabled = false;
 					passwordField2.enabled = false;
 					emailField2.enabled = false;
@@ -50,38 +46,19 @@
 					editButton.label = "Edit User";
 				}
 			}
-			private function logout():void
-			{
-				
+			public function login():void  {
+				this.dispatchEvent(new Event("logIn"));
 			}
-			public function login():void 
-			{
-				var event:LoginEvent = new LoginEvent(LoginEvent.LOGIN,new LoginToken(usernameField.text,passwordField.text));
-				this.dispatchEvent(event);
+			private function logout():void {
+				this.dispatchEvent(new Event("logOut"));
 			}
-			
-			
-			private function submitRequestData():void 
-			{
+			private function submitRequestData():void  {
 				this.dispatchEvent(new Event("forgotInfo"));
-			}
-			
-			private function handleRequestComplete(event:Event):void
-			{
-				var _data:XMLList = event.target.xml.children();
-				if(_data.success == "true")
-				{
-					statusText.text = "Your User Information Has Been Sent To Your Email";
-				}
-				else
-				{
-					statusText.text = event.target.xml.toString();
-				}	
-			}           
-			private function handleLogOutRequest(event:Event):void
-			{
-				/*	if(currentstate != "LOGGEDOUT")
-				this.logOut();	*/
+			}          
+			private function handleEditButton():void {
+				if(_editViewEnabled)
+					this.dispatchEvent(new Event("saveInfo")); 
+				editViewEnabled =! editViewEnabled;
 			}
 		]]>
 	</mx:Script>
@@ -135,7 +112,7 @@
 		   		 <mx:Button styleName="defaultButton" label="Cancel" click="editViewEnabled=false;this.visible = false;" />
 		   		 <mx:Button id="logOutButton" styleName="defaultButton" label="Log Out" click="logout()" />
 		   		 <!--<mx:Button  id="editButton" styleName="defaultButton" label="Edit User" click="editButton.label='Save';editFormVBox.alpha=1" />-->
-		   		 <mx:Button  id="editButton" styleName="defaultButton" label="Edit User" click="editViewEnabled =! editViewEnabled" />	 		 	
+		   		 <mx:Button  id="editButton" styleName="defaultButton" label="Edit User" click="handleEditButton()" />	 		 	
 		   		 
 		    </mx:HBox>
 		   

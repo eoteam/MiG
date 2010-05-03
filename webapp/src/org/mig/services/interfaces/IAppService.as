@@ -1,6 +1,6 @@
 package org.mig.services.interfaces
 {
-	public interface IAppService
+	public interface IAppService extends IService
 	{
 		function loadConfig():void;
 		
