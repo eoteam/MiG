@@ -16,14 +16,22 @@ package
 	import org.mig.services.interfaces.IAppService;
 	import org.mig.services.interfaces.IContentService;
 	import org.mig.services.interfaces.IUserService;
-	import org.mig.view.components.ContentTree;
-	import org.mig.view.components.LoginView;
-	import org.mig.view.components.MainView;
-	import org.mig.view.components.StatusModule;
-	import org.mig.view.mediators.ContentTreeMediator;
-	import org.mig.view.mediators.LoginViewMediator;
-	import org.mig.view.mediators.MainViewMediator;
-	import org.mig.view.mediators.StatusModuleMediator;
+	import org.mig.view.components.content.ContentGeneralEditor;
+	import org.mig.view.components.content.ContentView;
+	import org.mig.view.components.main.ContentTree;
+	import org.mig.view.components.main.ContentViewer;
+	import org.mig.view.components.main.LoginView;
+	import org.mig.view.components.main.MainView;
+	import org.mig.view.components.main.ManagersTree;
+	import org.mig.view.components.main.StatusModule;
+	import org.mig.view.mediators.content.ContentGeneralEditorMediator;
+	import org.mig.view.mediators.content.ContentViewMediator;
+	import org.mig.view.mediators.main.ContentTreeMediator;
+	import org.mig.view.mediators.main.ContentViewerMediator;
+	import org.mig.view.mediators.main.LoginViewMediator;
+	import org.mig.view.mediators.main.MainViewMediator;
+	import org.mig.view.mediators.main.ManagersTreeMediator;
+	import org.mig.view.mediators.main.StatusModuleMediator;
 	import org.robotlegs.mvcs.Context;
 	
 	public class MiGContext extends Context
@@ -34,26 +42,31 @@ package
 		}
 		override public function startup():void {
 			
-			
+			//top level
 			commandMap.mapEvent(AlertEvent.SHOW_ALERT, ShowAlertCommand, AlertEvent );
-			
 			commandMap.mapEvent(AppEvent.LOGGEDIN,InitCommand,AppEvent);
 			commandMap.mapEvent(AppEvent.CONFIG_LOADED,InitCommand,AppEvent);
+			//content commands
+			commandMap.mapEvent(ContentEvent.RETRIEVE,RetrieveContentCommand,ContentEvent);
 			
+			//services
 			injector.mapSingletonOf(IUserService,UserService ); 
 			injector.mapSingletonOf(IAppService, AppService);
 			injector.mapSingletonOf(IContentService,ContentService);
 			
+			//model
 			injector.mapSingleton(AppModel);
 			injector.mapSingleton(ContentModel);
 			
+			//views
 			mediatorMap.mapView(LoginView, LoginViewMediator);			
 			mediatorMap.mapView(ContentTree,ContentTreeMediator);	
+			mediatorMap.mapView(ManagersTree,ManagersTreeMediator);
 			mediatorMap.mapView(StatusModule,StatusModuleMediator);
 			mediatorMap.mapView(MainView,MainViewMediator);  
-			//content commands
-			commandMap.mapEvent(ContentEvent.RETRIEVE,RetrieveContentCommand,ContentEvent);
-			
+			mediatorMap.mapView(ContentViewer,ContentViewerMediator); 
+			mediatorMap.mapView(ContentView,ContentViewMediator);
+			mediatorMap.mapView(ContentGeneralEditor,ContentGeneralEditorMediator);
 			
 			
 		}

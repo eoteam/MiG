@@ -1,10 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<flexLibProperties includeAllClasses="true" version="3">
+<?xml version="1.0" encoding="UTF-8"?>
+<flexLibProperties includeAllClasses="false" version="3">
   <includeClasses>
-    <classEntry path="com.mapx.view.MiGComponents"/>
-    <classEntry path="com.mapx.view.tools.TLFUtils"/>
-    <classEntry path="com.mapx.view.tools.EditorFindReplace"/>
-    <classEntry path="com.mapx.view.tools.LinkSocket"/>
+    <classEntry path="org.mig.view.MiGComponents"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

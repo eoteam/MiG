@@ -2,6 +2,7 @@ package org.mig.events
 {
 	import flash.events.Event;
 	
+	import org.mig.model.vo.UpdateData;
 	import org.mig.model.vo.ContentNode;
 
 	public class ContentEvent extends Event
@@ -13,15 +14,17 @@ package org.mig.events
 		
 		public static const SELECT:String = "selected";
 		
-		public var content:ContentNode;
-		public function ContentEvent(type:String,content:ContentNode)
-		{
+		public var content:ContentNode; //content, media or subcontainers
+		public var updateData:UpdateData;
+		
+		public function ContentEvent(type:String,content:ContentNode,updateData:UpdateData=null) {
 			this.content = content;
+			this.updateData = updateData;
 			super(type,true,true);
 		}
 		override public function clone() : Event
 		{
-			return new ContentEvent(this.type,this.content);
+			return new ContentEvent(this.type,this.content,this.updateData);
 		}
 	}
 }

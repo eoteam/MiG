@@ -1,5 +1,6 @@
 package org.mig.controller
 {
+	import mx.rpc.events.ResultEvent;
 	import mx.utils.ObjectUtil;
 	
 	import org.mig.events.ContentEvent;
@@ -20,11 +21,13 @@ package org.mig.controller
 		
 		override public function execute():void {
 			service.retrieve(event.content);
+			service.addHandlers(processChildren,service.faultHandler);
 		}
-		public function processChildren(results:Array):void {
+		public function processChildren(data:Object	):void {
+			var results:Array = data.result as Array;
 			var nesting:Boolean;
 			var fixed:Boolean;
-			var content:ContainerNode = event.content as ContainerNode;
+			var content:ContainerNode = data.token.content as ContainerNode;
 			if(results.length > 0) {
 				content.isBranch = true;
 				for each (var item:ContentData in results) {
@@ -53,7 +56,8 @@ package org.mig.controller
 									break;
 								}
 							}
-						}					
+						}	
+						
 						if(containerConfig.attribute("nesting").length() > 0 && containerConfig.@nesting == "1") {
 							containerConfig = ObjectUtil.copy(containerConfig) as XML; //replicate the same config
 							nesting = true;

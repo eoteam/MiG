@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox 
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:view.content="com.map.view.content.*"
+	xmlns:content="com.mapx.view.content.*"
+	 implements="org.mig.view.interfaces.IEditableContentView" 	
+	height="100%" paddingLeft="0"
+	width="100%" verticalGap="2" >
+	
+	<mx:Script>
+		<![CDATA[
+			import org.mig.model.vo.ContentNode;
+			import org.mig.model.vo.content.ContainerNode;
+			import org.mig.view.interfaces.IEditableContentView;
+			
+			private var _content:ContainerNode;	
+			
+			public function set content(value:ContentNode):void {
+				_content = value as ContainerNode;
+			}
+			public function get content():ContentNode {
+				return _content;
+			}
+			public function submit(statusid:int=0):void {
+			
+			}	
+		]]>
+	</mx:Script>
+    <mx:HBox  width="100%" id="topBar" horizontalGap="4">
+    	<!--<mx:Label text="editing:" styleName="contentHeaderSub" />
+    	<mx:Label text="{_data.title}"  styleName="boldCopy" fontSize="14" />-->
+    	<mx:Spacer width="100%" />
+    	<mx:Button label="Cancel" styleName="defaultButton" />
+    	<mx:Button label="Save as Draft" styleName="defaultButton" click="submit(1)" />
+    	<mx:Button label="Publish"  id="submitButton" styleName="defaultButton" click="submit(4)"/>
+    </mx:HBox>
+	<mx:TabNavigator 
+		borderThickness="0" backgroundAlpha="0" 
+		width="100%" verticalGap="0" height="100%" styleName="contentTabNavigator" 
+		selectedTabTextStyleName=""   historyManagementEnabled="false"
+		 id="contentTabs" /><!-- change="handleChange(event)">-->
+</mx:VBox>
+

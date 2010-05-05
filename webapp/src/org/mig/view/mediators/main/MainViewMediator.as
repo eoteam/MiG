@@ -1,11 +1,14 @@
-package org.mig.view.mediators
+package org.mig.view.mediators.main
 {
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	
+	import mx.utils.NameUtil;
+	
 	import org.mig.events.AppEvent;
+	import org.mig.events.ViewEvent;
 	import org.mig.model.AppModel;
-	import org.mig.view.components.MainView;
+	import org.mig.view.components.main.MainView;
 	import org.robotlegs.mvcs.Actor;
 	import org.robotlegs.mvcs.Mediator;
 
@@ -19,6 +22,7 @@ package org.mig.view.mediators
 		
 		public override function onRegister():void {
 			eventMap.mapListener(eventDispatcher,AppEvent.LOGGEDIN,handleLoggedIn,AppEvent);
+			eventMap.mapListener(eventDispatcher,ViewEvent.RESIZE_MANAGER_TREE,handleManagersTreeResize,ViewEvent);
 		}
 		private function handleLoggedIn(event:Event):void {
 			MovieClip(mainView.mainLogo.content).play();
@@ -32,6 +36,11 @@ package org.mig.view.mediators
 			//data wiring
 			mainView.appOptionsCombo.prompt = appModel.prompt;
 			mainView.appOptionsCombo.dataProvider = [appModel.publishedURL,appModel.pendingURL];
+		}
+		
+		private function handleManagersTreeResize(event:ViewEvent):void {
+			mainView.openManagers.heightTo = event.args[0] as Number;
+			mainView.openManagers.play();
 		}
 	}
 }

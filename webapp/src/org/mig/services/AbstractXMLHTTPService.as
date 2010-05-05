@@ -15,18 +15,24 @@ package org.mig.services
 	
 	import org.mig.controller.Constants;
 	import org.mig.events.AlertEvent;
+	import org.mig.model.vo.StatusResult;
 	import org.robotlegs.mvcs.Actor;
 	
 	public class AbstractXMLHTTPService extends Actor
 	{
 		protected var service:HTTPService;
-		protected var resultHandler:Function;
-		protected var faultHandler:Function;
+		protected var token:AsyncToken;
+		protected var decodeClass:Class = Object;
+		
+		protected var _resultHandler:Function;
+		protected var _faultHandler:Function;
+
+		
 		
 		public function AbstractXMLHTTPService() {
 			super();
 		}
-		protected function decodeResults(xml:XMLDocument,decodeClass:Class):Array {
+		protected function decodeData(xml:XMLDocument):Array {
 			var children:Array = [];
 			var xmlDecoder:SimpleXMLDecoder = new SimpleXMLDecoder();
 			if (xml.firstChild.childNodes.length > 0) {
@@ -44,28 +50,45 @@ package org.mig.services
 			}
 			return children;
 		}
+		protected function decodeStatus(xml:XMLDocument):StatusResult {
+			var children:Array = [];
+			var xmlDecoder:SimpleXMLDecoder = new SimpleXMLDecoder();
+			if (xml.firstChild.childNodes.length > 0) {
+				var objectTree:Object = xmlDecoder.decodeXML(xml.firstChild);
+				var result:StatusResult = new StatusResult();
+				for(var prop:String in objectTree)
+					result[prop] = objectTree[prop];
+			}
+			return result;
+		}
 		protected function fault(info:Object):void {
 			eventDispatcher.dispatchEvent(new AlertEvent( AlertEvent.SHOW_ALERT, "crap","Crap"));
 		}
-		protected function createService(params:Object,result:Function):AsyncToken {
+		protected function createService(params:Object,responseType:String,decodeClass:Class=null):void {
 			service = new HTTPService();
 			service.method = URLRequestMethod.POST;
 			service.url = Constants.EXECUTE;
-			service.resultFormat = HTTPService.RESULT_FORMAT_TEXT;
-			var token:AsyncToken;
+			service.resultFormat = HTTPService.RESULT_FORMAT_OBJECT;
+			service.xmlDecode = (responseType == ResponseType.DATA) ? decodeData:decodeStatus;
 			if(params != null)
 				token = service.send(params);
 			else
 				token = service.send();
-			var responder:Responder = new Responder(result,fault);
-			token.addResponder(responder);
-			return token;
+
+			token.params = params;
+			if(decodeClass)
+				this.decodeClass = decodeClass;
 		}
-		public function addResultHandler(resultHandler:Function):void {
-			this.resultHandler = resultHandler;
+		public function addHandlers(resultHandler:Function,faultHandler:Function):void {
+			_faultHandler = faultHandler;
+			_resultHandler = resultHandler;
+			token.addResponder(new Responder(resultHandler,faultHandler));
 		}
-		public function addFaultHandler(faultHandler:Function):void {
-			this.faultHandler = faultHandler;
+		public function get resultHandler():Function {
+			return _resultHandler;
+		}
+		public function get faultHandler():Function {
+			return _faultHandler;
 		}
 	}
 }

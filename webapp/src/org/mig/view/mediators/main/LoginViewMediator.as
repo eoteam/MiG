@@ -1,4 +1,4 @@
-package org.mig.view.mediators
+package org.mig.view.mediators.main
 {
 	import flash.events.Event;
 	
@@ -7,10 +7,11 @@ package org.mig.view.mediators
 	
 	import org.mig.events.AppEvent;
 	import org.mig.model.AppModel;
+	import org.mig.model.vo.StatusResult;
 	import org.mig.model.vo.user.UserToken;
 	import org.mig.services.interfaces.IUserService;
 	import org.mig.utils.LSOHandler;
-	import org.mig.view.components.LoginView;
+	import org.mig.view.components.main.LoginView;
 	import org.mig.view.interfaces.ILoginView;
 	import org.robotlegs.mvcs.Mediator;
 	
@@ -32,7 +33,6 @@ package org.mig.view.mediators
 		private var savedUser:String ="";
 		private var savedPass:String = "";
 		
-
 		override public function onRegister():void {
 			eventMap.mapListener(loginView, "logIn", onLogin, Event);
 			eventMap.mapListener(loginView, "logOut", onLogOut, Event);
@@ -58,18 +58,27 @@ package org.mig.view.mediators
 		}
 		private function onForgotInfo(event:Event):void {
 			userService.sendUserInfo(loginView.emailField.text);
+			userService.addHandlers(handleInfoSent,userService.faultHandler);
 		}
 		private function onLogOut(event:Event):void {
 			
 		}
 		private function onSaveInfo(event:Event):void {
 			
-		}
-		
+		}	
 		//Service notifications
-		private function handleInfoSent():void {
-			loginView.emailField.text = '';
-			loginView.stack.selectedIndex = 0;
+		private function handleInfoSent(data:Object):void {
+			var result:StatusResult = data.result as StatusResult;
+			if(result.success) {
+				loginView.emailField.text = '';
+				loginView.stack.selectedIndex = 0;
+				loginView.statusText.visible = true;
+				loginView.statusText.text = "Your information has been sent to your address";
+				loginView.statusText.visible = false;
+			}
+			else {
+				loginView.statusText.text = "An error occured. Please verify that you provided the correct email address";
+			}
 		}
 		private function handleUserLoggedin(event:AppEvent):void {
 			loginView.statusText.text = "";

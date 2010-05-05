@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" 
-		 paddingBottom="2" paddingTop="2" horizontalGap="0" verticalAlign="middle" 
-		 xmlns:controls="com.mapx.view.controls.*">
+		 paddingBottom="2" paddingTop="2" horizontalGap="0" verticalAlign="middle" xmlns:controls="org.mig.view.controls.*" >
     
     <mx:Metadata>
         [Event(name="change", type="flash.events.Event")]
@@ -10,13 +9,15 @@
 	<mx:Script>
 		<![CDATA[
 			import mx.events.FlexEvent;
-			import com.map.controller.ControllerLocator;
+
+			[Inspectable(defaultValue='5', category="Other", enumeration="1,5,10,15,30")] 
 			
 			[Bindable] private var _selectedDate:Date;
 			[Bindable] public var textInputStyleName:String = "inputFieldBlack"; 
-			[Inspectable(defaultValue='5', category="Other", enumeration="1,5,10,15,30")] 
 			[Bindable] public var minuteIncrement:int = 1;
-		
+			
+			public var offset:Number;
+			
 			public function get selectedDate():Date
 			{
 				//this.validateNow();
@@ -27,7 +28,7 @@
 			public function set selectedDate(value:Date):void
 			{
 				var temp:Date = value;
-				var offset:Number =   ControllerLocator.controller.timeZoneOffset - (-temp.getTimezoneOffset()*60 * 1000);
+				
 				//temp.timezoneOffset = 
 				//offset -= (59*60+59)*1000;
 				temp.setTime(temp.getTime()+offset);
@@ -77,7 +78,7 @@
 					if(_selectedDate != d)
 					{
 						_selectedDate = d;
-						var offset:Number = (-_selectedDate.getTimezoneOffset()*60*1000) - (ControllerLocator.controller.timeZoneOffset);
+						//var offset:Number = 0;//(-_selectedDate.getTimezoneOffset()*60*1000) - (ControllerLocator.controller.timeZoneOffset);
 						//offset -= (59*60+59)*1000;
 						_selectedDate.setTime(_selectedDate.getTime()+offset);						
 						this.dispatchEvent(new Event("change"));

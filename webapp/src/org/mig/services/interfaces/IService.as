@@ -2,8 +2,11 @@ package org.mig.services.interfaces
 {
 	public interface IService
 	{
-		function addResultHandler(resultHandler:Function):void;
-	
-		function addFaultHandler(faultHandler:Function):void;
+		function addHandlers(resultHandler:Function,faultHandler:Function):void;
+		
+		function get resultHandler():Function;
+		
+		function get faultHandler():Function;
+		
 	}
 }

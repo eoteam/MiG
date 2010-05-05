@@ -31,8 +31,9 @@ package org.mig.services
 			var params:Object = new Object();
 			params.username = value.username;
 			params.password = value.password;
-			params.action = "validateUser";			
-			this.createService(params,handleLogin);
+			params.action = "validateUser";	
+			this.createService(params,ResponseType.DATA,User);
+			this.addHandlers(handleLogin,fault);
 		}
 		public function loadUsers():void {
 			
@@ -41,19 +42,20 @@ package org.mig.services
 			var params:Object = new Object();
 			params.action = "sendUserInformation";
 			params.email =  email;
-			this.createService(params,handleRequestComplete);
+			this.createService(params,ResponseType.STATUS);
 		}
 		public function loadUserGroups():void {
 			var params:Object = new Object();
 			params.action = "getData";
 			params.tablename = "usergroups";
-			this.createService(params,handleUserGroups);
+			this.createService(params,ResponseType.DATA,UserGroup)
+			this.addHandlers(handleUserGroups,fault);
 		}	
 		public function saveUserInfo(token:UserToken):void {
 			
 		}
 		private function handleLogin(data:ResultEvent):void {	
-			var results:Array = this.decodeResults(new XMLDocument(data.result.toString()),User);
+			var results:Array = data.result as Array;
 			if(results.length > 0)
 			{
 				appModel.user = results[0];
@@ -74,7 +76,7 @@ package org.mig.services
 				
 				/*				var today:Date = new Date();
 				var op:XmlHttpOperation = new XmlHttpOperation(Constants.EXECUTE);
-				var params:Object = new Object();
+				var params:Object = new Object();	
 				params.lastlogin = today.time;
 				params.action = "updateRecord";
 				params.tablename = "user";
@@ -91,10 +93,7 @@ package org.mig.services
 			//currentstate = "LOGGEDIN";*/
 		}
 		private function handleUserGroups(data:ResultEvent):void {
-			var results:Array = this.decodeResults(new XMLDocument(data.result.toString()),UserGroup);
+			
 		}	
-		private function handleRequestComplete(data:ResultEvent):void {
-
-		}
 	}
 }

@@ -49,12 +49,9 @@ package org.mig.services
 				else
 					params.verbosity = 0;
 				
-				var token:AsyncToken =  this.createService(params,handleChildren);
+				this.createService(params,ResponseType.DATA,ContentData);
 				token.content = content;
 			}
-		}
-		private function handleChildren(data:ResultEvent):void {
-			var results:Array = this.decodeResults(new XMLDocument(data.result.toString()),ContentData);
 		}
 	}
 }

@@ -6,6 +6,7 @@
     <classEntry path="flexlib.FlexlibClasses"/>
     <classEntry path="sjd.SJDClasses"/>
     <classEntry path="org.mig.view.containers.GradientCanvas"/>
+    <classEntry path="org.mig.view.controls.DateTimePicker"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

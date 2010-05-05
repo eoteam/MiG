@@ -119,10 +119,11 @@
 	    </mx:VBox>		    
 	</mx:ViewStack>
 	<mx:Spacer height="3" />
-	<mx:Text id="statusText" height="20"/>    
+	<mx:Text id="statusText" height="20" hideEffect="fadeStatus"/>    
 
 	<mx:StringValidator source="{usernameField}" property="text" minLength="4" maxLength="20"/>
 	<mx:StringValidator source="{passwordField}" property="text" minLength="4" maxLength="20"/>
 	<mx:EmailValidator source="{emailField}" property="text"  required="true"/>
+	<mx:Fade startDelay="1500" duration="500" id="fadeStatus" alphaFrom="1" alphaTo="0" />
 </mx:VBox>
 				

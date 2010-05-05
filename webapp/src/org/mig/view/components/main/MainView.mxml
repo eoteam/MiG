@@ -5,7 +5,7 @@
 		   xmlns:fe="com.fxcomponents.controls.fe.*"
 		   xmlns:assets="org.mig.assets.*"
 		   clipContent="false" height="100%"
-		   creationComplete="handleCreationComplete()">
+		   creationComplete="handleCreationComplete()" xmlns:main="org.mig.view.components.main.*">
 	
 	<mx:Script>
 		<![CDATA[ 
@@ -104,8 +104,8 @@
 		barFillColors="[0xFFFFFF,0xFFFFFF]" dividerThickness="1" dividerSkin="com.fxcomponents.skins.MainDividerSkin" top="{controlBox.height+2}" right="3">
 			
 			<mx:VBox id="treesVBox" width="100%" height="100%" paddingLeft="0" paddingTop="0" paddingRight="0" paddingBottom="0" verticalGap="0">
-				<components:ManagersTree width="100%" id="managersTree" height="24" verticalScrollPolicy="off"  />
-				<components:ContentTree width="300" height="100%" id="contentTree" />	
+				<main:ManagersTree width="100%" id="managersTree" height="24" verticalScrollPolicy="off"  />
+				<main:ContentTree width="100%" height="100%" id="contentTree" />	
 			</mx:VBox>
 			
 			<mx:VBox id="pendingTray" width="100%" height="25" verticalGap="0">
@@ -140,8 +140,8 @@
 	</mx:Canvas>
 	
 	<!-- Main Content Area -->
-	<!--<view:ContentViewer  width="55%" height="100%"  id="contentViewer" horizontalScrollPolicy="off" top="3"/>			
-	-->
+	<main:ContentViewer  width="55%" height="100%"  id="contentViewer" horizontalScrollPolicy="off" top="3"/>			
+	
 	<!-- Media Tools -->
 	<mx:Canvas id="rightMain" width="{RIGHT_SIDEBAR_OPEN_WIDTH}" height="100%">
 		<!--<view:Tools id="editorsView"  width="100%" height="{rightMain.height - 38}" clipContent="true" horizontalScrollPolicy="off"   />
@@ -159,7 +159,7 @@
 		
 		<mx:Text bottom="0" styleName="locationHeader" />
 		<assets:MigLogo right="60" x="-20" visible="false" showEffect="fadeIn" id="topLogo"/>		
-		<components:StatusModule top="{topControls.height+4}" id="statusMod" width="{topControls.width}"  />	
+		<main:StatusModule top="{topControls.height+4}" id="statusMod" width="{topControls.width}"  />	
 		<mx:HBox clipContent="false" verticalAlign="middle" id="topControls" horizontalGap="3" paddingTop="3">
 			<mx:ComboBox styleName="migComboBox" width="160" id="appOptionsCombo" enabled="false"/>
 			<mx:Canvas width="160">
@@ -172,7 +172,7 @@
 	
 	<!--view:MiGSearch width="1002" top="{headerContainer.height+30}" height="400" includeInLayout="false" backgroundAlpha="0.9" id="migSearch" 
 					hideEffect="wipeUp" showEffect="wipeDown"  visible="false" mouseDownOutside="migSearch.visible=false" />-->
-	<components:LoginView id="loginView" minWidth="160" hideEffect="wipeUp" showEffect="wipeDown" left="{160}" visible="false" />	
+	<main:LoginView id="loginView" minWidth="160" hideEffect="wipeUp" showEffect="wipeDown" left="{160}" visible="false" />	
 <!--	<view:NewContentSelector  top="{headerContainer.height+30}"  x="{addButton.x-4}"
 							  id="newContentSelector" name="newContentSelector" hideEffect="wipeUp" showEffect="wipeDown"/>	 -->
 	
@@ -202,6 +202,6 @@
 	<mx:Resize id="closeToolsTray" targets="{[rightMain]}" duration="0" widthTo="{SIDEBAR_CLOSED_WIDTH}" />
 	<mx:Resize id="openToolsTray" targets="{[rightMain]}" duration="0" widthTo="300"/>
 	
-<!--	<mx:Resize id="openManagers" target="{managersTree}" duration="200" />-->
+	<mx:Resize id="openManagers" target="{managersTree}" duration="200" />
 	
 </mx:Canvas>

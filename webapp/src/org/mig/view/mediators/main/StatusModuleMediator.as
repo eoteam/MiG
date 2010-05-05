@@ -1,9 +1,9 @@
-package org.mig.view.mediators
+package org.mig.view.mediators.main
 {
 	import flash.events.Event;
 	
 	import org.mig.events.UserEvent;
-	import org.mig.view.components.StatusModule;
+	import org.mig.view.components.main.StatusModule;
 	import org.robotlegs.mvcs.Mediator;
 	
 	public class StatusModuleMediator extends Mediator

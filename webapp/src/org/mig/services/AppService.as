@@ -35,7 +35,8 @@ package org.mig.services
 			var params:Object = new Object();
 			params.action = "getData";
 			params.tablename = "config";
-			this.createService(params,configHandler);
+			this.createService(params,ResponseType.DATA);
+			this.addHandlers(configHandler,fault);
 		}
 		public function loadConfigFile(url:String):void {
 			var service:HTTPService = new HTTPService();
@@ -45,7 +46,7 @@ package org.mig.services
 			token.addResponder( new Responder(configfileHandler, fault));
 		}
 		private function configHandler(data:ResultEvent):void {
-			var results:Array = decodeResults(new XMLDocument(data.result.toString()),Object);
+			var results:Array = data.result as Array;
 			for each(var item:Object in results) {
 				switch(item.name) {
 					case "prompt":

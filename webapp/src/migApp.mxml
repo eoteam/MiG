@@ -8,7 +8,7 @@
 	 backgroundColor="0x000000"
 	 backgroundGradientColors="[0x1A1A1A,0x111111]" 
 	 backgroundGradientAlphas="[1,1]"
-	 preinitialize="loadCSS(event)" xmlns:local="*" >
+	 preinitialize="loadCSS(event)" xmlns:local="*" xmlns:main="org.mig.view.components.main.*" >
 	<mx:Script>
 		<![CDATA[
 			import mx.events.FlexEvent;
@@ -26,5 +26,5 @@
 		]]>
 	</mx:Script>
 	<local:MiGContext id="migContext"  />
-	<components:MainView width="100%" height="100%"  top="0" right="8" left="8" bottom="8"/>
+	<main:MainView width="100%" height="100%"  top="0" right="8" left="8" bottom="8"/>
 </mx:Application>

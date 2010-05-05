@@ -2,11 +2,12 @@
 <mx:Tree 
 	xmlns:mx="http://www.adobe.com/2006/mxml"  
 	xmlns:content="com.mapx.view.content.*"
-	 width="100%"  itemRenderer="org.mig.view.renderers.ManagerTreeRenderer" styleName="managerTree"
-	paddingLeft="0" paddingBottom="3" paddingTop="0" paddingRight="0" showRoot="true" labelField="@name"
-	itemClick="handleTreeChange(event)" itemOpen="handleResize(event)" openDuration="0" itemClose="handleResize(event)" >
+	itemRenderer="org.mig.view.renderers.ManagerTreeRenderer"
+	styleName="managerTree"
+	paddingLeft="0" paddingBottom="3" paddingTop="0" paddingRight="0" 
+	showRoot="true" labelField="name" openDuration="0" width="100%"
+	itemClick="handleTreeChange(event)" >
 
-	
 	<mx:Script>
 		<![CDATA[
 			
@@ -25,15 +26,6 @@
 			private var _prevItemRenderer:org.mig.view.renderers.ManagerTreeRenderer;
 			
 
-			public function handleManagers(managersXML:XML):void
-			{
-				tempXML = <node name="Managers"></node>;
-				for each(var result:XML  in managersXML.children())
-				{
-					result.@name = result.name.toString();
-					tempXML.appendChild(result);
-				}
-			}	
 			private function handleTreeChange(event:ListEvent):void
 			{
 				this.expandChildrenOf(this.dataProvider[0],true);
@@ -128,14 +120,8 @@
 		 			treeCustomFields.@enabled = "false";
 		 			//treeEvents.@enabled = "false";			 			
 		 		}
-		 		 this.dataProvider= managersXML.node;			
+		 		//	 this.dataProvider= managersXML.node;			
 			} 	
-
-			private function handleResize(evt:Event):void
-			{
-				this.parentDocument.openManagers.heightTo = this.measureHeightOfItems();
-				this.parentDocument.openManagers.play();
-			}
 		 	
 		 	
 		]]>

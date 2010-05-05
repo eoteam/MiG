@@ -2,8 +2,8 @@
 <controls:MigTree
 	xmlns:mx="http://www.adobe.com/2006/mxml"
 	xmlns:controls="org.mig.view.controls.*"
+	xmlns:renderers="org.mig.view.renderers.*"
 	width="100%" paddingLeft="0" paddingBottom="3" paddingTop="0" paddingRight="0"
-	itemRenderer="org.mig.view.renderers.ContentTreeRenderer"
 	allowMultipleSelection="true"
 	dragMoveEnabled="true"
 	dragEnabled="true" 
@@ -25,4 +25,9 @@
 			public var containerIcon:Class;
 		]]>
 	</mx:Script>
+	<controls:itemRenderer>
+		<mx:Component>
+			<renderers:ContentTreeRenderer />
+		</mx:Component>
+	</controls:itemRenderer>
 </controls:MigTree>
