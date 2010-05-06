@@ -13,8 +13,11 @@
 
 -->
 
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:textEditBar="textEditBar.*" verticalAlign="middle"
-		addedToStage="onAddedToStage()" removedFromStage="onRemovedFromStage()" xmlns:controls="com.mapx.view.controls.*">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" 
+		 xmlns:textEditBar="textEditBar.*"
+		 xmlns:controls="org.mig.view.controls.*"
+		 verticalAlign="middle"
+		addedToStage="onAddedToStage()" removedFromStage="onRemovedFromStage()">
 	
 	<mx:Array id="targetArray"> 
 		<mx:String>_blank</mx:String>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application 
 	 xmlns:mx="http://www.adobe.com/2006/mxml"
-	 xmlns:view="org.mig.view.*"
-	 xmlns:mig="org.mig.*" 
-	 xmlns:components="org.mig.view.components.*" 
+	 xmlns:main="org.mig.view.components.main.*"
+	 xmlns:local="*"
 	 creationPolicy="none" layout="absolute"
 	 backgroundColor="0x000000"
 	 backgroundGradientColors="[0x1A1A1A,0x111111]" 
 	 backgroundGradientAlphas="[1,1]"
-	 preinitialize="loadCSS(event)" xmlns:local="*" xmlns:main="org.mig.view.components.main.*" >
+	 preinitialize="loadCSS(event)"
+	 preloader="org.mig.view.skins.SitePreloader">
 	<mx:Script>
 		<![CDATA[
 			import mx.events.FlexEvent;

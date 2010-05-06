@@ -3,9 +3,7 @@
 		 horizontalGap="0" creationComplete="creationCompleteHandler(event)" xmlns:textEditBar="textEditBar.*">
 	<mx:Script>
 		<![CDATA[
-			import com.map.controller.ControllerLocator;
-			import com.map.event.ApplicationEvent;
-			import com.map.event.EventBus;
+
 			
 			import flash.geom.Point;
 			import flash.text.engine.FontLookup;
@@ -106,7 +104,7 @@
 				return _xhtmlText;
 			}
 			private function creationCompleteHandler(event:FlexEvent):void {
-				holderColor = ControllerLocator.controller.textEditorColor
+				holderColor = 0xCECECE;//ControllerLocator.controller.textEditorColor
 				_xhtmlText = this.richTextEditorToHtml(_htmlText);
 				textPanel.changeContainerSetup(activeFlow);
 			}
@@ -466,7 +464,7 @@
 			private function mouseDownHandler(event:MouseEvent):void {
 				if(firstTime) {
 					firstTime = false;
-					EventBus.getInstance().dispatchEvent(new ApplicationEvent(ApplicationEvent.TEXTEDITOR,[this,ControllerLocator.controller.htmlRendering]));	
+					//EventBus.getInstance().dispatchEvent(new ApplicationEvent(ApplicationEvent.TEXTEDITOR,[this,ControllerLocator.controller.htmlRendering]));	
 					if (activeFlow)
 					{
 						var selMgr:ISelectionManager = activeFlow.interactionManager;

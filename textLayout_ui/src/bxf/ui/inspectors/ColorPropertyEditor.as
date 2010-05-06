@@ -24,7 +24,7 @@ package bxf.ui.inspectors
 {
 	import bxf.ui.controls.ConflictOverlay;
 	
-	import com.mapx.view.controls.colorPicker;
+	import org.mig.view.controls.colorPicker;
 	
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;

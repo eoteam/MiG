@@ -1,4 +1,4 @@
-package org.mig.model.media
+package  org.mig.model.vo.media
 {
 	import org.mig.command.ResponseType;
 	import org.mig.command.content.DeleteContentCommand;

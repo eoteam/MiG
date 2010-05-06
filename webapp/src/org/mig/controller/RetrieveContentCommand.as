@@ -21,7 +21,7 @@ package org.mig.controller
 		
 		override public function execute():void {
 			service.retrieve(event.content);
-			service.addHandlers(processChildren,service.faultHandler);
+			service.addHandlers(processChildren);
 		}
 		public function processChildren(data:Object	):void {
 			var results:Array = data.result as Array;

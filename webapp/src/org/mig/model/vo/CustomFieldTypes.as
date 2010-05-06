@@ -15,6 +15,5 @@ package org.mig.model
 		public static const FILE_LINK:int 						= 10;
 		public static const MULTIPLE_SELECT_WITH_ORDER:int 		= 11;
 		
-		public static const TYPES:Array = [BINARY,SELECT];
 	}
 }

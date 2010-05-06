@@ -58,7 +58,7 @@ package org.mig.view.mediators.main
 		}
 		private function onForgotInfo(event:Event):void {
 			userService.sendUserInfo(loginView.emailField.text);
-			userService.addHandlers(handleInfoSent,userService.faultHandler);
+			userService.addHandlers(handleInfoSent);
 		}
 		private function onLogOut(event:Event):void {
 			

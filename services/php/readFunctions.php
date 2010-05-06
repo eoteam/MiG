@@ -1476,4 +1476,21 @@ function sendUserInformation($params) {
 	else 
 		die ("No email was provided");
 }
+
+function getTemplates($params) {
+	
+	$sql = "SELECT templates.*,
+			GROUP_CONCAT(template_customfields.id ORDER BY template_customfields.id ASC) as rowids ,
+ 			GROUP_CONCAT(template_customfields.customfieldid ORDER BY template_customfields.customfieldid ASC) as customfieldids , 
+ 			GROUP_CONCAT(template_customfields.fieldid  ORDER BY template_customfields.fieldid ASC) as fieldids, 
+ 			GROUP_CONCAT(template_customfields.displayorder  ORDER BY template_customfields.displayorder ASC) as displayorders 
+ 			FROM templates LEFT JOIN template_customfields ON template_customfields.templateid = templates.id 
+ 			GROUP BY templates.id ORDER BY templates.id";
+
+	$result = queryDatabase($sql);
+	
+	// return the results
+	return $result;
+	
+}
 ?>

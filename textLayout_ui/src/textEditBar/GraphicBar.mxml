@@ -13,8 +13,11 @@
 
 -->
 
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:textEditBar="textEditBar.*"  verticalAlign="middle"
-	addedToStage="onAddedToStage()" removedFromStage="onRemovedFromStage()" horizontalScrollPolicy="off" verticalScrollPolicy="off" xmlns:controls="com.mapx.view.controls.*">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" 
+		 xmlns:textEditBar="textEditBar.*"
+		 xmlns:controls="org.mig.view.controls.*"
+		 verticalAlign="middle" horizontalScrollPolicy="off" verticalScrollPolicy="off" 
+		 addedToStage="onAddedToStage()" removedFromStage="onRemovedFromStage()" >
 	
 	<mx:Script>
 		<![CDATA[

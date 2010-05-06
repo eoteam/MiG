@@ -9,6 +9,7 @@ package org.mig.events
 		public static const LOGOUT:String = "logout";
 		public static const TIMED_OUT:String = "timedout";
 		public static const CONFIG_LOADED:String = "configLoaded";
+		public static const INIT:String = "init";	
 		
 		public function AppEvent(type:String)
 		{

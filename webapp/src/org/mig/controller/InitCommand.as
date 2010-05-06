@@ -26,12 +26,20 @@ package org.mig.controller
 			if(event.type == AppEvent.LOGGEDIN)
 				service.loadConfig();
 			else if(event.type == AppEvent.CONFIG_LOADED) {
+				
+				//populating content model
 				var config:XML = appModel.config;
 				var contentConfig:XML =  XML(config..config.(@id == "contentController").toString());
 				var root:XML = XML(contentConfig.root[0].toString());
 				contentModel.contentModel = new ContainerNode (root.@name, root,null,null,appModel.user.privileges,true,true,false);
 				eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.RETRIEVE,contentModel.contentModel));
+				
+				
+				//populating customfields
+				service.loadCustomFields();
+				service.addHandlers(handleCustomfields);
 			}
 		}
+		//private function handleCustomfields
 	}
 }

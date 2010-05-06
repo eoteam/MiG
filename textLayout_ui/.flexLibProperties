@@ -4,6 +4,7 @@
     <classEntry path="bxf.BxfClasses"/>
     <classEntry path="flashx.textLayout.UiClasses"/>
     <classEntry path="textEditBar.EditBarClasses"/>
+    <classEntry path="org.mig.view.controls.MiGComponents"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

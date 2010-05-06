@@ -8,6 +8,7 @@
 // VALID ACTION NAMES - FOR SECURITY!
 
 $validMiGActions = array(
+"getTemplates",
 "sendUserInformation",
 "ZipFolder",
 "updateRelatedRecords",
@@ -51,8 +52,8 @@ $allowed_filetypes = array("jpg","jpeg","png","flv","mp3","pdf");
 
 
 //search result
-$arrVerbosity[0] = array("content.id","content.parentid","content.migtitle","content.title","content.statusid","content.url",
-"content.modifieddate","content.is_fixed","content.templateid","content.date");
+$arrVerbosity[0] = array("content.id","content.parentid","content.migtitle","content.statusid",
+"content.modifieddate","content.is_fixed","content.templateid");
 
 
 $arrVerbosity[1] = array("content.id","content.parentid","content.templateid","content.title","content.color","content.url",

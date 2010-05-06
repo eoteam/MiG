@@ -30,7 +30,7 @@ package org.mig.services
 		
 		
 		public function AbstractXMLHTTPService() {
-			super();
+			super();		
 		}
 		protected function decodeData(xml:XMLDocument):Array {
 			var children:Array = [];
@@ -64,12 +64,13 @@ package org.mig.services
 		protected function fault(info:Object):void {
 			eventDispatcher.dispatchEvent(new AlertEvent( AlertEvent.SHOW_ALERT, "crap","Crap"));
 		}
-		protected function createService(params:Object,responseType:String,decodeClass:Class=null):void {
-			service = new HTTPService();
+		protected function createService(params:Object,responseType:String,decodeClass:Class=null):AsyncToken {
+			var service:HTTPService = new HTTPService();
 			service.method = URLRequestMethod.POST;
 			service.url = Constants.EXECUTE;
 			service.resultFormat = HTTPService.RESULT_FORMAT_OBJECT;
 			service.xmlDecode = (responseType == ResponseType.DATA) ? decodeData:decodeStatus;
+			var token:AsyncToken;
 			if(params != null)
 				token = service.send(params);
 			else
@@ -78,6 +79,9 @@ package org.mig.services
 			token.params = params;
 			if(decodeClass)
 				this.decodeClass = decodeClass;
+			else
+				this.decodeClass = Object;
+			return token;
 		}
 		public function addHandlers(resultHandler:Function,faultHandler:Function):void {
 			_faultHandler = faultHandler;

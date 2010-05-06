@@ -46,6 +46,7 @@ package
 			commandMap.mapEvent(AlertEvent.SHOW_ALERT, ShowAlertCommand, AlertEvent );
 			commandMap.mapEvent(AppEvent.LOGGEDIN,InitCommand,AppEvent);
 			commandMap.mapEvent(AppEvent.CONFIG_LOADED,InitCommand,AppEvent);
+
 			//content commands
 			commandMap.mapEvent(ContentEvent.RETRIEVE,RetrieveContentCommand,ContentEvent);
 			

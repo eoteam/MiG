@@ -28,5 +28,9 @@ package org.mig.model
 		public var timeout:int = 10;
 		public var publishedURL:String;
 		public var pendingURL:String;
+		
+		
+		public var customfields:Array = [];
+		
 	}
 }

@@ -5,5 +5,9 @@ package org.mig.services.interfaces
 		function loadConfig():void;
 		
 		function loadConfigFile(url:String):void;
+		
+		function loadCustomFields():void;
+		
+		function loadTemplates():void;
 	}
 }
