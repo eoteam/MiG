@@ -9,7 +9,7 @@ package org.mig.view.interfaces
 	 */
 	public interface IContentView
 	{
-		function set content(contentNode:ContentNode):void;
+		function set content(value:ContentNode):void;
 		
 		function get content():ContentNode;
 		

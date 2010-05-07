@@ -10,6 +10,7 @@ package org.mig.services
 	import mx.rpc.IResponder;
 	import mx.rpc.Responder;
 	import mx.rpc.events.FaultEvent;
+	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
 	import mx.rpc.xml.SimpleXMLDecoder;
 	
@@ -24,13 +25,12 @@ package org.mig.services
 		protected var token:AsyncToken;
 		protected var decodeClass:Class = Object;
 		
-		protected var _resultHandler:Function;
-		protected var _faultHandler:Function;
-
-		
-		
 		public function AbstractXMLHTTPService() {
-			super();		
+			super();
+			service = new HTTPService();
+			service.method = URLRequestMethod.POST;
+			service.url = Constants.EXECUTE;
+			service.resultFormat = HTTPService.RESULT_FORMAT_OBJECT;
 		}
 		protected function decodeData(xml:XMLDocument):Array {
 			var children:Array = [];
@@ -61,38 +61,34 @@ package org.mig.services
 			}
 			return result;
 		}
+		protected function result(event:ResultEvent):void {
+			if(event.token.resultCallBack)
+				event.token.resultCallBack(event);
+		}
 		protected function fault(info:Object):void {
 			eventDispatcher.dispatchEvent(new AlertEvent( AlertEvent.SHOW_ALERT, "crap","Crap"));
 		}
-		protected function createService(params:Object,responseType:String,decodeClass:Class=null):AsyncToken {
-			var service:HTTPService = new HTTPService();
-			service.method = URLRequestMethod.POST;
-			service.url = Constants.EXECUTE;
-			service.resultFormat = HTTPService.RESULT_FORMAT_OBJECT;
+		protected function createService(params:Object,responseType:String,decodeClass:Class=null,resultFunction:Function=null,faultFunction:Function=null):AsyncToken {
+
 			service.xmlDecode = (responseType == ResponseType.DATA) ? decodeData:decodeStatus;
-			var token:AsyncToken;
 			if(params != null)
 				token = service.send(params);
 			else
 				token = service.send();
-
 			token.params = params;
 			if(decodeClass)
 				this.decodeClass = decodeClass;
 			else
 				this.decodeClass = Object;
+			
+			var faultHandler:Function = faultFunction==null?this.fault:faultFunction;
+			var resultHandler:Function = resultFunction==null?this.result:resultFunction;
+			token.addResponder(new Responder(resultHandler,faultHandler));
 			return token;
 		}
-		public function addHandlers(resultHandler:Function,faultHandler:Function):void {
-			_faultHandler = faultHandler;
-			_resultHandler = resultHandler;
-			token.addResponder(new Responder(resultHandler,faultHandler));
-		}
-		public function get resultHandler():Function {
-			return _resultHandler;
-		}
-		public function get faultHandler():Function {
-			return _faultHandler;
-		}
+		public function addHandlers(resultHandler:Function,faultHandler:Function=null):void {
+			token.resultCallBack = resultHandler;
+			token.faultCallBack = faultHandler;
+		}	
 	}
 }

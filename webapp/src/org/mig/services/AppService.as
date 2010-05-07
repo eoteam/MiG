@@ -33,12 +33,11 @@ package org.mig.services
 		public function AppService() {
 		
 		}
-			public function loadConfig():void {
+		public function loadConfig():void {
 			var params:Object = new Object();
 			params.action = "getData";
 			params.tablename = "config";
-			this.createService(params,ResponseType.DATA);
-			this.addHandlers(configHandler,fault);
+			this.createService(params,ResponseType.DATA,Object,configHandler);
 		}
 		public function loadConfigFile(url:String):void {
 			var service:HTTPService = new HTTPService();
@@ -52,14 +51,18 @@ package org.mig.services
 			var params:Object = new  Object();
 			params.action = "getData";
 			params.tablename = "customfieldgroups";
-			this.createService(params,ResponseType.DATA);
-			this.addHandlers(handleCustomFieldGroups,fault);
+			this.createService(params,ResponseType.DATA,Object,handleCustomFieldGroups);
+		}
+		public function loadCustomFieldGroups():void {
+			var params:Object = new  Object();
+			params.action = "getData";
+			params.tablename = "customfields";
+			this.createService(params,ResponseType.DATA,CustomField,handleCustomfields);
 		}
 		public function loadTemplates():void {
 			var params:Object = new  Object();
 			params.action = "getTemplates";
-			this.createService(params,ResponseType.DATA);
-			this.addHandlers(handleTemplates,fault);			
+			this.createService(params,ResponseType.DATA,Object,handleTemplates);		
 		}
 		
 		private function configHandler(data:ResultEvent):void {
@@ -90,12 +93,6 @@ package org.mig.services
 				appModel.customfields.push(item);
 				item.children = [];
 			}
-			
-			var params:Object = new  Object();
-			params.action = "getData";
-			params.tablename = "customfields";
-			this.createService(params,ResponseType.DATA);
-			this.addHandlers(handleCustomfields,fault);
 		}
 		private function handleCustomfields(event:ResultEvent):void {
 			var results:Array = event.result as Array;
@@ -107,7 +104,6 @@ package org.mig.services
 					}
 				}
 			}
-			loadTemplates();
 		}	
 		private function handleTemplates(event:ResultEvent):void {
 			var results:Array = event.result as Array;
@@ -123,14 +119,21 @@ package org.mig.services
 					var cfs4:Array = item.displayorders.split(',');
 					var cfs5:Array = item.rowids.split(',');
 					
-					for (var i:int=0;i<cfs4.length;i++) {
+					for (var i:int=0;i<cfs1.length;i++) {
 						var templateCustomField:TemplateCustomField = new TemplateCustomField();
 						templateCustomField.id = cfs1[i];
-						templateCustomField.customfieldid = cfs1[i];
 						templateCustomField.fieldid = cfs3[i];
 						templateCustomField.displayorder = cfs4[i];
 						templateCustomField.visible = cfs5[i] == '1'?true:false;
-						template.customfields.push(templateCustomField);
+
+						var cfid:int = cfs2[i];
+						for each(var field:CustomField in appModel.customfields) {
+							if(field.id == cfid) {
+								templateCustomField.customfield = field;
+								break;
+							}
+						}
+						template.customfields.addItem(templateCustomField);
 					}
 				}
 			}

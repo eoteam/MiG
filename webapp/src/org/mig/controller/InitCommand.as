@@ -36,10 +36,17 @@ package org.mig.controller
 				
 				
 				//populating customfields
-				service.loadCustomFields();
-				service.addHandlers(handleCustomfields);
+				service.loadCustomFieldGroups()
+				service.addHandlers(handleCustomFieldGroups);
+
 			}
 		}
-		//private function handleCustomfields
+		private function handleCustomFieldGroups(results:Array):void {
+			service.loadCustomFields();
+			service.addHandlers(handleCustomFields);
+		}
+		private function handleCustomFields(results:Array):void {
+			service.loadTemplates();
+		}
 	}
 }

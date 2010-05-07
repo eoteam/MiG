@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	 width="90%" maxHeight="{maxH}"
+	 creationComplete="init()" xmlns:containers="org.mig.view.containers.*">
+	
+	
+	<mx:Script>
+		<![CDATA[
+			import com.map.controller.ControllerLocator;
+			import com.map.model.ContentDataVO;
+			import com.map.model.ContentNode;
+			import com.map.model.MediaContainerNode;
+			import com.map.view.Tools;
+			import com.mapx.model.ContentVO;
+			import com.map.model.CustomField;
+			import com.mapx.view.controls.DateTimePicker;
+			import com.mapx.view.controls.MiGDateField;
+			import com.mapx.view.controls.MiGTLFTextArea;
+			import com.mapx.view.controls.MiGTextInput;
+			import com.mapx.view.controls.colorPicker;
+			
+			import flexlib.containers.FlowContainer;
+			
+			import mx.controls.Button;
+			import mx.controls.CheckBox;
+			import mx.controls.ColorPicker;
+			import mx.controls.ComboBase;
+			import mx.controls.ComboBox;
+			import mx.controls.DateChooser;
+			import mx.controls.DateField;
+			import mx.controls.List;
+			import mx.controls.TextArea;
+			import mx.core.Application;
+			import mx.core.UIComponent;
+			import mx.events.DragEvent;
+			import mx.events.ListEvent;
+			
+			public var field:CustomField;
+			public var vo:ContentDataVO;
+			public var modified:Boolean = false;
+			private var mouseXInit:Number;
+			private var mouseYInit:Number;	
+			private var linkButton:Button;		
+			private var child:UIComponent;	
+			[Bindable] private var maxH:Number = 30;
+			private function init():void
+			{
+				this.headerLabel = field.displayname;			
+				var option:Object;
+				switch(field.fieldtype)
+				{
+					case "binary":
+						child = new CheckBox();
+						CheckBox(child).selected = vo[field.fieldname] == "true"?true:false;
+						this.summaryText = vo[field.fieldname].toString();
+					break;
+					case "select":
+						child = new ComboBox();
+						ComboBox(child).labelField = "value";
+						ComboBox(child).dataProvider = field.optionsArray;
+						for each(option in field.optionsArray)
+						{
+							if(option.index.toString() == vo[field.fieldname])
+							{
+								ComboBox(child).selectedItem = option;
+									this.summaryText = option.value;
+								break;
+							}
+						}
+					break;
+					case "string":
+						child = new MiGTextInput();
+						child.styleName = "inputFieldBlack";
+						child.percentWidth = 100;
+						MiGTextInput(child).text = vo[field.fieldname].toString(); 
+						this.summaryText = vo[field.fieldname].toString().slice(0,150)+'...';
+					break;
+					case "html-text":
+						child = new MiGTLFTextArea();
+						MiGTLFTextArea(child).htmlText = vo[field.fieldname];
+						//child.styleName="sectionTextEditorTextArea";	
+						child.percentWidth =100;
+						maxH = child.height = 350;
+						this.addEventListener('open',handleTray);
+						this.addEventListener('closed',handleTray);		
+						this.summaryText = vo[field.fieldname].toString().slice(0,150)+'...';
+					break;
+					case "text":
+						child = new TextArea();
+						TextArea(child).text = vo[field.fieldname];
+						child.percentWidth =100;
+						maxH = child.height = 200;
+						child.styleName = "bodyCopy";
+						child.setStyle("backgroundColor",0x0f0f0f);	
+						this.summaryText = vo[field.fieldname].toString().slice(0,150)+'...';
+					break;					
+					case "image":
+					break;
+					case "color":
+						child = new com.mapx.view.controls.colorPicker();
+						child.addEventListener("dataChange",dataChangeProxy);	
+						//colorPicker(child).dataProvider=Application.application.globalColors; 
+						colorPicker(child).selectedColor= Number(vo[field.fieldname]);		
+						this.summaryText = Number(vo[field.fieldname]).toString(16);		
+					break;
+					case "multiple-select":
+						child = new FlowContainer();
+						child.percentHeight=100;
+						child.percentWidth=100;
+						this.summaryText = vo[field.fieldname].toString();
+						for each(option in field.optionsArray)
+						{
+							var checkBox:CheckBox = new CheckBox();
+							checkBox.label = option.value;
+							checkBox.data = option;
+							checkBox.addEventListener(Event.CHANGE,handleMultipleSelect);
+							child.addChild(checkBox);
+							if(vo[field.fieldname].toString().search(option.value) != -1)
+								checkBox.selected = true;
+						}
+					break;
+					case "integer":
+						child = new MiGTextInput();
+						child.styleName = "inputFieldBlack";
+						child.percentWidth = 100;
+						MiGTextInput(child).restrict="0-9\\-";
+						MiGTextInput(child).text = vo[field.fieldname];
+						this.summaryText = vo[field.fieldname].toString().slice(0,150)+'...';								
+					break;				
+					case "date":
+						child = new DateTimePicker();
+						if(vo[field.fieldname].toString() != '0')
+						{
+							var date:Date = new Date();
+							date.time = Number(vo[field.fieldname].toString());
+							DateTimePicker(child).selectedDate = date;
+							this.summaryText =  dateFormatter.format(date);	
+						}
+						else
+							DateTimePicker(child).selectedDate = null;
+						
+					break;
+					case "file-link":
+						child = new MiGTextInput();
+						child.styleName = "inputFieldBlack";
+						child.percentWidth = 100;			
+						MiGTextInput(child).text = vo[field.fieldname];						
+						this.summaryText = vo[field.fieldname].toString().slice(0,150)+'...';
+					break;	
+					case "multiple-select-with-order":
+						var dp:Array = [];
+						var summary:String = '';
+						if(vo[field.fieldname].toString() != '')
+						{
+							var selected:Array = vo[field.fieldname].toString().split(',');
+							for each(var index:String in selected)
+							{
+								var item:Object = field.optionsArray[Number(index)-1];
+								item.selected = true;
+								dp.push(item);
+								summary += item.value+', ';
+							}
+						}
+						summary = summary.substring(0,summary.length-2);
+						this.summaryText = summary;
+						for each(item in field.optionsArray)
+						{
+							if(dp.indexOf(item) == -1)
+							{
+								dp.push(item);
+								item.selected = false;
+							}
+						}
+						child = new List();
+						child.percentHeight = 100;
+						child.width = 300;
+						List(child).styleName = 'customFieldsList';
+						List(child).dataProvider = dp;
+						List(child).labelField = "value";
+						List(child).allowDragSelection = true;
+						List(child).dragMoveEnabled = true;
+						List(child).dragEnabled = true;
+						List(child).dropEnabled = true;	
+						var optionRenderer:ClassFactory = new ClassFactory(CFListCheckBox);						
+						List(child).itemRenderer = optionRenderer;
+						List(child).addEventListener(ListEvent.ITEM_CLICK,handleItemClick);
+						List(child).addEventListener(DragEvent.DRAG_COMPLETE,handleItemClick);
+						maxH = 200;
+									
+					break;							
+				}
+				container.addChild(child);
+				child.addEventListener(Event.CHANGE,dataChangeProxy);		
+				if(field.fieldtype == "file-link")
+				{
+					linkButton = new Button();
+					linkButton.styleName = "linkButtonUp";
+					linkButton.toolTip = "Drag to a container to link";
+					linkButton.addEventListener(MouseEvent.MOUSE_DOWN,handleLinkButton);
+					linkButton.setStyle("right",2);
+					linkButton.setStyle("top",0);
+					container.addChild(linkButton);		
+				}				
+						
+			}
+			private function handleLinkButton(event:Event):void
+			{
+				mouseXInit = Application.application.mouseX-linkButton.mouseX+linkButton.width/2;
+				mouseYInit = Application.application.mouseY-linkButton.mouseY+linkButton.height/2;					
+				Application.application.linkingMode = true;
+				Application.application.showDrawingLayer();
+				Application.application.stage.addEventListener(MouseEvent.MOUSE_MOVE,handleMouseMove);
+				Application.application.stage.addEventListener(MouseEvent.MOUSE_UP,removeLine);			
+			}
+			private function handleMouseMove(event:MouseEvent):void
+			{
+				var drawingLayer:UIComponent = Application.application.drawingLayer;
+		 		drawingLayer.graphics.clear(); 
+				drawingLayer.graphics.lineStyle(3, 0xFCEE21, 1); 
+				drawingLayer.graphics.moveTo(mouseXInit, mouseYInit); 
+				drawingLayer.graphics.lineTo(drawingLayer.mouseX, drawingLayer.mouseY);
+				drawingLayer.graphics.endFill();  
+			}
+			private function removeLine(event:Event):void
+			{
+				Application.application.linkingMode = false; 
+				var currPoint:Point = new Point(Application.application.mouseX,Application.application.mouseY);
+				var mediaObjects:Array = Application.application.mainView.rightMain.getObjectsUnderPoint(currPoint);
+				var treeObjects:Array = Application.application.mainView.contentTree.getObjectsUnderPoint(currPoint);
+				
+				if(treeObjects.length > 0)
+				{
+					var node:ContentNode = Application.application.mainView.contentTree.selectedItem;
+					MiGTextInput(this.child).text = "event:content="+node.data.id.toString();
+					MiGTextInput(this.child).setFocus();
+					MiGTextInput(this.child).dispatchEvent(new Event(Event.CHANGE));					
+				}
+				else if(mediaObjects.length > 0)
+				{
+					
+					if(Application.application.mainView.editorsView.linkedResource != null)
+					{
+						var file:MediaContainerNode = Application.application.mainView.editorsView.linkedResource;
+						var mediaPath:String = ControllerLocator.mediaManagerController.mediaURL+file.data.path.toString()+file.data.name.toString();					
+						var baseLink:String = ControllerLocator.mediaManagerController.contentModel.config.@publishedLink;	
+						MiGTextInput(this.child).text = baseLink+mediaPath;
+						MiGTextInput(this.child).setFocus();
+						MiGTextInput(this.child).dispatchEvent(new Event(Event.CHANGE));	
+					}
+				}
+				Application.application.stage.removeEventListener(MouseEvent.MOUSE_MOVE,handleMouseMove);
+				Application.application.stage.removeEventListener(MouseEvent.MOUSE_UP,removeLine);
+				Application.application.hideDrawingLayer();
+			}						
+			private function handleMultipleSelect(event:Event):void
+			{
+				var value:String = '';
+				for each(var checkBox:CheckBox in FlowContainer(event.target.parent).getChildren())
+				{
+					if(checkBox.selected)
+						value += checkBox.data.value+',';
+				}
+				vo[field.fieldname] = value.substr(0,value.length-1);
+				modified = true;
+			}
+			private function handleItemClick(event:Event):void
+			{
+				var summary:String = '';
+				var ordereredItems:String = '';
+				for each(var item:Object in List(child).dataProvider)
+				{
+					if(item.selected)
+					{	
+						ordereredItems += item.index + ',';
+						summary += item.value+', ';
+					}
+				}	
+				ordereredItems = ordereredItems.substr(0,ordereredItems.length-1);
+				vo[field.fieldname] = ordereredItems;
+				summary = summary.substring(0,summary.length-2);
+				this.summaryText = summary;				
+				modified = true;
+			}
+			private function dataChangeProxy(event:Event):void
+			{
+				modified = true;
+				switch(field.fieldtype)
+				{
+					case "binary":
+						vo[field.fieldname] = CheckBox(event.target).selected;
+					break;
+					case "select":
+						vo[field.fieldname] = ComboBox(event.target).selectedItem.index;
+					break;
+					case "string":
+						vo[field.fieldname] = MiGTextInput(event.target).text;
+					break;
+					case "html-text":
+						vo[field.fieldname] = MiGTLFTextArea(event.target).htmlText;
+					break;
+					case "text":
+						vo[field.fieldname] = TextArea(event.target).text;
+					break;					
+					case "image":
+					break;
+					case "color":
+						vo[field.fieldname] =  colorPicker(event.target).selectedColor.toString(16);
+					break;
+					case "integer":
+						vo[field.fieldname] = MiGTextInput(event.target).text;
+					break;		
+					case "date":
+						if(DateTimePicker(event.target).selectedDate)
+							vo[field.fieldname] = DateTimePicker(event.target).selectedDate.time;			
+						else
+							vo[field.fieldname] = ' ';
+					case "multiple-select":
+					break;	
+					case "file-link":
+					 	vo[field.fieldname] = MiGTextInput(event.target).text;
+					break;	
+					case "multiple-select-with-order":					
+					break;						
+				}				
+			}
+			
+			private function handleTray(event:Event):void
+			{
+				var tools:Tools = Tools(Application.application.mainView.editorsView);
+				if(event.type == "open")
+					tools.instantiateToolSet(["Browse","Preview","Metadata","Upload","Text"]);	
+				else
+					tools.instantiateToolSet(["Browse","Preview","Metadata","Upload"]);	
+			}
+			
+		]]>
+	</mx:Script>
+	<mx:DateFormatter id="dateFormatter"  formatString="MM/DD/YY"/>
+	<containers:MinMaxTray />
+</mx:Canvas>

@@ -23,7 +23,7 @@ package org.mig.controller
 			service.retrieve(event.content);
 			service.addHandlers(processChildren);
 		}
-		public function processChildren(data:Object	):void {
+		public function processChildren(data:Object):void {
 			var results:Array = data.result as Array;
 			var nesting:Boolean;
 			var fixed:Boolean;

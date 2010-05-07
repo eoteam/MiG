@@ -18,14 +18,14 @@
 			[Bindable] public var _data:ContentData;
 			private var _content:ContentNode;
 			
-			public function set content(contentNode:ContentNode):void {
-				
+			public function set content(value:ContentNode):void {
+				_content = value;
+				_data = value.data as ContentData;
 			}
 			public function get content():ContentNode {
 				return _content;
 			}
-			public function showFunction():void
-			{
+			public function showFunction():void {
 				//this.initiateTools();
 			}
 			public function hideFunction():void
@@ -40,6 +40,7 @@
 	<mx:Canvas id="scrollingContainer" top="15"  bottom="30" width="98%" horizontalScrollPolicy="off">
 		<mx:VBox width="100%" height="100%" id="mainContainer" paddingTop="20" paddingLeft="10"  
 		paddingRight="10" paddingBottom="20" verticalGap="12">
+		
 <!--		 	<mx:HBox width="90%">
 		 		<mx:Label text="Title" styleName="inputFieldTitle" width="97" />
 		 		<controls:MiGTextInputSpell height="25" id="sectionTitle" width="100%" styleName="inputFieldBlack" text="{_data.migtitle}" /> 

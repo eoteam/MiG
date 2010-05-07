@@ -8,6 +8,8 @@ package org.mig.services.interfaces
 		
 		function loadCustomFields():void;
 		
+		function loadCustomFieldGroups():void ;
+		
 		function loadTemplates():void;
 	}
 }

@@ -1,4 +1,4 @@
-package org.mig.services
+	package org.mig.services
 {
 	
 	import flash.net.URLRequest;
@@ -32,8 +32,7 @@ package org.mig.services
 			params.username = value.username;
 			params.password = value.password;
 			params.action = "validateUser";	
-			this.createService(params,ResponseType.DATA,User);
-			this.addHandlers(handleLogin,fault);
+			this.createService(params,ResponseType.DATA,User,handleLogin);
 		}
 		public function loadUsers():void {
 			
@@ -42,14 +41,13 @@ package org.mig.services
 			var params:Object = new Object();
 			params.action = "sendUserInformation";
 			params.email =  email;
-			this.createService(params,ResponseType.STATUS);
+			this.createService(params,ResponseType.STATUS,Object,handleRequestSent);
 		}
 		public function loadUserGroups():void {
 			var params:Object = new Object();
 			params.action = "getData";
 			params.tablename = "usergroups";
-			this.createService(params,ResponseType.DATA,UserGroup)
-			this.addHandlers(handleUserGroups,fault);
+			this.createService(params,ResponseType.DATA,UserGroup,handleUserGroups)
 		}	
 		public function saveUserInfo(token:UserToken):void {
 			
@@ -94,6 +92,9 @@ package org.mig.services
 		}
 		private function handleUserGroups(data:ResultEvent):void {
 			
-		}	
+		}
+		private function handleRequestSent(data:ResultEvent):void {
+			
+		}
 	}
 }
