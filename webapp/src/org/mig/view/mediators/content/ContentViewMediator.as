@@ -5,10 +5,12 @@ package org.mig.view.mediators.content
 	
 	import mx.core.UIComponent;
 	
-	import org.mig.model.vo.content.ContentStatus;
+	import org.mig.events.ContentEvent;
 	import org.mig.model.vo.content.ContentData;
+	import org.mig.model.vo.content.ContentStatus;
 	import org.mig.model.vo.content.SubContainerNode;
 	import org.mig.utils.ClassUtils;
+	import org.mig.view.components.content.ContentTabItem;
 	import org.mig.view.components.content.ContentView;
 	import org.mig.view.interfaces.IEditableContentView;
 	import org.robotlegs.mvcs.Mediator;
@@ -35,28 +37,29 @@ package org.mig.view.mediators.content
 			for each (var container:XML in containers)
 			{
 
-				var newData:Object = new Object();
-				var queryVars:Array = String(container.@vars).split(",");
+				var queryVars:Object = new Object();
+				var vars:Array = String(container.@vars).split(",");
 				
-				for each(var queryVar:String in queryVars)
+				for each(var queryVar:String in vars)
 				{
 					if(queryVar == "contentid" || queryVar == "parentid")
-						newData[queryVar] = view.content.data.id.toString();
+						queryVars[queryVar] = view.content.data.id.toString();
 					else
-						newData[queryVar] = view.content.data[queryVar].toString();
+						queryVars[queryVar] = view.content.data[queryVar].toString();
 				}
 				var data:ContentData = new ContentData();
 				data.id = view.content.data.id;
 				
 				var subNode:SubContainerNode = new SubContainerNode(container.@name, container, data, view.content,view.content.privileges,queryVars);
-				var tabView:IEditableContentView = IEditableContentView(ClassUtils.instantiateClass(subNode.config.@contentView));
-				tabView.content = subNode;
-				UIComponent(tabView).percentHeight = 100;
-				UIComponent(tabView).percentWidth = 100;
-				UIComponent(tabView).y = 0;
-				UIComponent(tabView).styleName = "contentTabItem";
-				view.contentTabs.addChild(UIComponent(tabView));
-				editableViewsList.push(tabView);
+				eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.RETRIEVE_CHILDREN,subNode));
+				var tabItem:ContentTabItem = new ContentTabItem();
+				view.contentTabs.addChild(tabItem);
+				tabItem.content = subNode;
+				tabItem.percentHeight = 100;
+				tabItem.percentWidth = 100;
+				tabItem.y = 0;
+				tabItem.styleName = "contentTabItem";
+				editableViewsList.push(tabItem);
 				
 				view.draftBtn.addEventListener(MouseEvent.CLICK,handleDraft);
 				view.publishBtn.addEventListener(MouseEvent.CLICK,handlePublish)

@@ -23,8 +23,7 @@ package org.mig.events
 			this.updateData = updateData;
 			super(type,true,true);
 		}
-		override public function clone() : Event
-		{
+		override public function clone() : Event {
 			return new ContentEvent(this.type,this.content,this.updateData);
 		}
 	}

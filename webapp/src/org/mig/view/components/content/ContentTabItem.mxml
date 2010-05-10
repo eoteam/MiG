@@ -2,27 +2,39 @@
 <mx:Canvas 
 	xmlns:mx="http://www.adobe.com/2006/mxml"
 	xmlns:view.content="com.map.view.content.*"
-	
-	height="100%" width="100%" horizontalScrollPolicy="off">
+	 implements="org.mig.view.interfaces.IEditableContentView"
+	height="100%" width="100%" horizontalScrollPolicy="off"
+	creationComplete="handleCreationComplete()">
 
 	<mx:Script>
 		<![CDATA[
-			public function configureContentTab():void
-			{
-				if (_content != null && _content.config.@contentView.length() > 0)
-				{
-					tabView = IEditableContentView(ClassUtils.instantiateClass(_content.config.@contentView));
-					tabView.content = _content;
-					//removeAllChildren(); GOOD FOR regenerating
-					addChild(DisplayObject(tabView));
-					_configured = true;
-					
-					//** Event Bus
-					EventBus.getInstance().dispatchEvent(new ContentViewEvent(ContentViewEvent.ADD,tabView));
-					EventBus.getInstance().addEventListener(ContentDataEvent.SUBMIT,handleSubmitEvent,'',false,0,true);
-					//EventBus.getInstance().addEventListener(ContentDataEvent.COMPARE_COMMAND,handleSubmitEvent);
-				}
+			import mx.core.UIComponent;
+			
+			import org.mig.model.vo.ContentNode;
+			import org.mig.model.vo.content.SubContainerNode;
+			import org.mig.utils.ClassUtils;
+			import org.mig.view.interfaces.IEditableContentView;
+			
+			[Bindable] private var _content:SubContainerNode;
+			private var view:IEditableContentView;
+			
+			public function set content(value:ContentNode):void {
+				_content = value as SubContainerNode;
 			}
+			public function get content():ContentNode {
+				return _content;
+			}
+			public function submit(statusid:int=0):void {
+				
+			}
+			public function handleCreationComplete():void {
+				view = IEditableContentView(ClassUtils.instantiateClass(_content.config.@contentView));
+				view.content = _content;
+				UIComponent(view).percentHeight = 100;
+				UIComponent(view).percentWidth = 100;
+				UIComponent(view).y = 0;
+			}
+			
 		]]>
 	</mx:Script>
 	<mx:Binding source="_content.label" destination="this.label" />

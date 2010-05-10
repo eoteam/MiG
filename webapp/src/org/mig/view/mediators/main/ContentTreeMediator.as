@@ -47,7 +47,8 @@ package org.mig.view.mediators.main
 		}
 		
 		private function handleContent(event:Event):void {
-			view.dataProvider = contentModel.contentModel;
+			if(event is ContentEvent && ContentEvent(event).content is ContainerNode)
+				view.dataProvider = contentModel.contentModel;
 		}
 		
 		private function handleDragStart(event:DragEvent):void {

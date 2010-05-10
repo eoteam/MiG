@@ -17,5 +17,4 @@
 			}
 		]]>
 	</mx:Script>
-	<mx:Binding source="_content.label" destination="this.label" />
 </mx:Canvas>

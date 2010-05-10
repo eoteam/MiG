@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configDocument>
+
+	<controller id="mediaManagerController" 
+			mediapath="http://ndd.themig.org/mig/files/"
+			thumbpath="http://ndd.themig.org/mig/files/migThumbs/"
+			directoryMapping="files" 
+			filedir="files" 
+			thumbdir="files/migThumbs"
+			action="getMedia" 
+			labelField="name"
+			insertContent="insertRecord" 
+			updateContent="updateRecord"
+			deleteContent="deleteMedia" 
+			tablename="media" 
+			addDirectoryView="com.map.view.mediaManager.AddDirectoryView"
+			directoryContentView="com.mapx.view.mediaManager.DirectoryView"
+			parentDirectoryContentView="com.mapx.view.mediaManager.ParentDirectoryView">
+			<child></child>
+			</controller>
+
+	<controller id="contentController" 	
+			rootURL="http://ndd.themig.org/"
+			pendingURL="http://ndd.themig.org/" 
+			publishedURL="http://ndd.themig.org/"
+			textEditorColor="0xCCCCCC" 
+			renderer="flash"
+			textFormat="textFieldHTMLFormat">
+			
+		<child
+			name="Containers" 
+			action="getContent" 
+			labelField="migtitle" 
+			orderby="displayorder"
+			timeout="100"
+			icon="containerIcon"
+			contentView="com.mapx.view.content.MainMiddleView">
+
+			<child name="Help" 
+				contentView="org.mig.view.components.content.ContentView"
+				generalEditorView="org.mig.view.components.content.ContentGeneralEditor"
+				labelField="migtitle" 
+				nesting="0" 
+				orderby="displayorder" 
+				templateid="2" 
+				is_fixed="1" 
+				id="2"
+				parentid="2" 
+				verbosity="2" 
+				tablename="content" 
+				action="getContent"
+				deleteContent="deleteContent" 
+				insertContent="insertRecord"
+				updateContent="updateRecord">
+				
+				<child name="Help Item" contentView="org.mig.view.components.content.ContentView"
+					generalEditorView="org.mig.view.components.content.ContentGeneralEditor"
+					 labelField="migtitle"
+					action="getContent" verbosity="2" nesting="1" insertContent="insertRecord"
+					orderby="displayorder" deleteContent="deleteContent" templateid="0"
+					is_fixed="0" tablename="content" updateContent="updateRecord" />
+			</child>
+			<child  name="Projects"
+				contentView="org.mig.view.components.content.ContentView" generalEditorView="org.mig.view.components.content.ContentGeneralEditor"
+				 labelField="migtitle"
+				updateContent="updateRecord" insertContent="insertRecord" action="getContent"
+				tablename="content" id="3" is_fixed="1" templateid="1">
+
+				<child  name="Project"
+					contentView="org.mig.view.components.content.ContentView" generalEditorView="org.mig.view.components.content.ContentGeneralEditor"
+					 labelField="migtitle"
+					action="getContent" orderby="displayorder" templateid="1" is_fixed="0"
+					acceptDrop="true" dropTemplates="2" tablename="content"
+					insertContent="insertRecord" updateContent="updateRecord"
+					deleteContent="updateRecord">
+					<tray name="Related Projects" labelField="migtitle"
+						contentView="com.mapx.view.content.trays.LinkingTray" getContent="getContentContent"
+						templateids="2" tablename="content_content" vars="contentid,templateid">
+						<object  tablename="content_content"
+							contentView="com.mapx.view.content.trays.LinkView" updateContent="updateRecord"
+							deleteContent="deleteRecord">
+						</object>
+					</tray>
+					<tray name="Related Posts" labelField="migtitle"
+						contentView="com.mapx.view.content.trays.LinkingTray" getContent="getContentContent"
+						templateids="4" tablename="content_content" vars="contentid,templateid">
+						<object  tablename="content_content"
+							contentView="com.mapx.view.content.trays.LinkView" updateContent="updateRecord"
+							deleteContent="deleteRecord">
+						</object>
+					</tray>
+					<tray name="Related Awards" labelField="migtitle"
+						contentView="com.mapx.view.content.trays.LinkingTray" getContent="getContentContent"
+						templateids="3" tablename="content_content" vars="contentid,templateid">
+						<object  tablename="content_content"
+							contentView="com.mapx.view.content.trays.LinkView" updateContent="updateRecord"
+							deleteContent="deleteRecord">
+						</object>
+					</tray>
+					<tab name="Media" labelField="name"
+						contentView="org.mig.view.components.content.tabs.MediaTab"
+						predefined="true" getContent="getContentMedia" vars="contentid"
+						tablename="content_media" formats="videos,images,audio,files"
+						usages="Thumb,General" deleteContent="updateRecord" insertContent="insertRecord">
+						<object contentView="com.mapx.view.content.tabs.media.FileResourceView"
+							updateContent="updateRecord" deleteContent="deleteRecord"
+							tablename="content_media">
+						</object>
+					</tab>
+					<tab name="Tags &amp; Categories" labelField="name"
+						contentView="org.mig.view.components.content.tabs.TagsCategoriesTab"
+						predefined="true" getContent="getContentTags" vars="contentid"
+						tablename="content_terms" deleteContent="deleteRecord"
+						insertContent="insertRecord">
+						<object name="Tag" contentView="com.mapx.view.content.trays.TagView"
+							tablename="content_terms" deleteContent="deleteRecord" />
+					</tab>
+				</child>
+			</child>
+
+			<child  name="Posts"
+				contentView="org.mig.view.components.content.ContentView" generalEditorView="org.mig.view.components.content.ContentGeneralEditor"
+				 labelField="migtitle"
+				updateContent="updateRecord" insertContent="insertRecord" action="getContent"
+				tablename="content" id="4" is_fixed="1" templateid="1">
+
+				<child name="Post"  contentView="org.mig.view.components.content.ContentView"
+					generalEditorView="org.mig.view.components.content.ContentGeneralEditor"
+					 labelField="migtitle"
+					action="getContent" orderby="displayorder" templateid="1" is_fixed="0"
+					acceptDrop="true" dropTemplates="4" tablename="content"
+					insertContent="insertRecord" updateContent="updateRecord"
+					deleteContent="updateRecord">
+					<tray name="Related Posts" labelField="migtitle"
+						contentView="com.mapx.view.content.trays.LinkingTray" getContent="getContentContent"
+						templateids="4" tablename="content_content" vars="contentid,templateid">
+						<object  tablename="content_content"
+							contentView="com.mapx.view.content.trays.LinkView" updateContent="updateRecord"
+							deleteContent="deleteRecord">
+						</object>
+					</tray>
+					<tab name="Media" labelField="name"
+						contentView="org.mig.view.components.content.tabs.MediaTab"
+						predefined="true" getContent="getContentMedia" vars="contentid"
+						tablename="content_media" formats="videos,images,audio,files"
+						usages="General" deleteContent="updateRecord" insertContent="insertRecord">
+						<object contentView="com.mapx.view.content.tabs.media.FileResourceView"
+							updateContent="updateRecord" deleteContent="deleteRecord"
+							tablename="content_media">
+						</object>
+					</tab>
+					<tab name="Tags &amp; Categories" labelField="name"
+						contentView="org.mig.view.components.content.tabs.TagsCategoriesTab"
+						predefined="true" getContent="getContentTags" vars="contentid"
+						tablename="content_terms" deleteContent="deleteRecord"
+						insertContent="insertRecord">
+						<object name="Tag" contentView="com.mapx.view.content.trays.TagView"
+							tablename="content_terms" deleteContent="deleteRecord" />
+					</tab>
+				</child>
+			</child>
+
+			<child name="Awards"  contentView="org.mig.view.components.content.ContentView"
+				generalEditorView="org.mig.view.components.content.ContentGeneralEditor"
+				 labelField="migtitle"
+				updateContent="updateRecord" insertContent="insertRecord" action="getContent"
+				tablename="content" id="5" is_fixed="1" templateid="1">
+
+				<child name="Award"  contentView="org.mig.view.components.content.ContentView"
+					generalEditorView="org.mig.view.components.content.ContentGeneralEditor"
+					 labelField="migtitle"
+					action="getContent" orderby="displayorder" templateid="1" is_fixed="0"
+					acceptDrop="true" dropTemplates="3" tablename="content"
+					insertContent="insertRecord" updateContent="updateRecord"
+					deleteContent="updateRecord">
+					<tab name="Media" labelField="name"
+						contentView="org.mig.view.components.content.tabs.MediaTab"
+						predefined="true" getContent="getContentMedia" vars="contentid"
+						tablename="content_media" formats="videos,images,audio,files"
+						usages="General" deleteContent="updateRecord" insertContent="insertRecord">
+						<object contentView="com.mapx.view.content.tabs.media.FileResourceView"
+							updateContent="updateRecord" deleteContent="deleteRecord"
+							tablename="content_media">
+						</object>
+					</tab>
+				</child>
+			</child>
+			<child name="Images"  contentView="org.mig.view.components.content.ContentView"
+				generalEditorView="org.mig.view.components.content.ContentGeneralEditor"
+				 labelField="migtitle"
+				updateContent="updateRecord" insertContent="insertRecord" action="getContent"
+				tablename="content" id="6" is_fixed="1" templateid="1" />
+			<child name="Stream"  contentView="org.mig.view.components.content.ContentView"
+				generalEditorView="org.mig.view.components.content.ContentGeneralEditor"
+				 labelField="migtitle"
+				updateContent="updateRecord" insertContent="insertRecord" action="getContent"
+				tablename="content" id="7" is_fixed="1" templateid="1" />
+
+			<child name="Contact"  contentView="org.mig.view.components.content.ContentView"
+				generalEditorView="org.mig.view.components.content.ContentGeneralEditor"
+				 labelField="migtitle"
+				updateContent="updateRecord" insertContent="insertRecord" action="getContent"
+				tablename="content" id="9" is_fixed="1" templateid="1">
+				<tab name="Media" labelField="name"
+					contentView="org.mig.view.components.content.tabs.MediaTab" predefined="true"
+					getContent="getContentMedia" vars="contentid" tablename="content_media"
+					formats="videos,images,audio,files" usages="General" deleteContent="updateRecord"
+					insertContent="insertRecord">
+					<object contentView="com.mapx.view.content.tabs.media.FileResourceView"
+						updateContent="updateRecord" deleteContent="deleteRecord"
+						tablename="content_media">
+					</object>
+				</tab>
+			</child>
+
+			<child name="About Us"  contentView="org.mig.view.components.content.ContentView"
+				generalEditorView="org.mig.view.components.content.ContentGeneralEditor"
+				 labelField="migtitle"
+				updateContent="updateRecord" insertContent="insertRecord" action="getContent"
+				tablename="content" id="8" is_fixed="1" templateid="1">
+				<tab name="Media" labelField="name"
+					contentView="org.mig.view.components.content.tabs.MediaTab" predefined="true"
+					getContent="getContentMedia" vars="contentid" tablename="content_media"
+					formats="videos,images,audio,files" usages="General" deleteContent="updateRecord"
+					insertContent="insertRecord">
+					<object contentView="com.mapx.view.content.tabs.media.FileResourceView"
+						updateContent="updateRecord" deleteContent="deleteRecord"
+						tablename="content_media">
+					</object>
+				</tab>
+			</child>
+		</child>
+	</controller>
+</configDocument>

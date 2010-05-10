@@ -10,6 +10,7 @@ package org.mig.services
 	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.content.ContainerNode;
 	import org.mig.model.vo.content.ContentData;
+	import org.mig.model.vo.content.SubContainerNode;
 	import org.mig.model.vo.user.UserPrivileges;
 	import org.mig.services.interfaces.IContentService;
 
@@ -20,8 +21,8 @@ package org.mig.services
 		}
 		public function retrieveChildren(content:ContentNode):void {
 			//this is fine here, params are a map object. Im guessing REST will form a URL, but awareness of these vars is tricky
+			var params:Object = new Object();
 			if(content is ContainerNode) {
-				var params:Object = new Object();
 				var execute:Boolean = false;			
 				if(ContainerNode(content).isRoot) { //Containers
 					if(content.privileges ==  UserPrivileges.MiGAdmin)
@@ -48,10 +49,34 @@ package org.mig.services
 					params.verbosity = content.config.@verbosity.toString();
 				else
 					params.verbosity = 0;
-				
-				this.createService(params,ResponseType.DATA,ContentData);
-				token.content = content;
 			}
+			else if(content is SubContainerNode) {
+				if(SubContainerNode(content).queryVars != null) {
+					params.action = content.config.@getContent.toString();
+					if(content.config.attribute("tablename").length() > 0) 
+						params.tablename = content.config.@tablename.toString();
+					if(content.config.attribute("verbosity").length() > 0) 	
+						params.verbosity = content.config.@verbosity.toString();
+					if(content.config.attribute("orderby").length() > 0) 
+						params.orderby = content.config.@orderby.toString();
+					if(content.config.attribute("orderdirection").length() > 0)
+						params.orderdirection = content.config.@orderdirection.toString();					
+					if(content.config.attribute("include_children").length() > 0)
+						params.include_children = 1;
+					if(content.config.attribute("children_depth").length() > 0)
+						params.children_depth = content.config.@children_depth.toString();	
+					if(content.config.attribute("deleted").length() > 0)
+						params.deleted = content.config.@deleted.toString();							
+					for (var item:String in SubContainerNode(content).queryVars) {
+						if(SubContainerNode(content).queryVars[item] == "")
+							params[item] = 0;
+						else
+							params[item] = SubContainerNode(content).queryVars[item];
+					}
+				}
+			}
+			this.createService(params,ResponseType.DATA,ContentData);
+			token.content = content;
 		}
 		public function retrieveVerbose(content:ContentNode):void {
 			if(content is ContainerNode) {
