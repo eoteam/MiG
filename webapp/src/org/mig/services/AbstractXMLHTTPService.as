@@ -12,6 +12,7 @@ package org.mig.services
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.HTTPService;
+	import mx.rpc.mxml.Concurrency;
 	import mx.rpc.xml.SimpleXMLDecoder;
 	
 	import org.mig.controller.Constants;
@@ -31,6 +32,7 @@ package org.mig.services
 			service.method = URLRequestMethod.POST;
 			service.url = Constants.EXECUTE;
 			service.resultFormat = HTTPService.RESULT_FORMAT_OBJECT;
+			service.concurrency = Concurrency.MULTIPLE;
 		}
 		protected function decodeData(xml:XMLDocument):Array {
 			var children:Array = [];
@@ -62,8 +64,10 @@ package org.mig.services
 			return result;
 		}
 		protected function result(event:ResultEvent):void {
-			if(event.token.resultCallBack)
+			if(event.token.resultCallBack) {
+				trace("RESULT handler now!");
 				event.token.resultCallBack(event);
+			}
 		}
 		protected function fault(info:Object):void {
 			eventDispatcher.dispatchEvent(new AlertEvent( AlertEvent.SHOW_ALERT, "crap","Crap"));
@@ -84,6 +88,8 @@ package org.mig.services
 			var faultHandler:Function = faultFunction==null?this.fault:faultFunction;
 			var resultHandler:Function = resultFunction==null?this.result:resultFunction;
 			token.addResponder(new Responder(resultHandler,faultHandler));
+			if(resultFunction != null)
+				token.addResponder(new Responder(result,fault));
 			return token;
 		}
 		public function addHandlers(resultHandler:Function,faultHandler:Function=null):void {

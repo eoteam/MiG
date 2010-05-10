@@ -29,7 +29,9 @@ package org.mig.services
 		[Inject]
 		public var appModel:AppModel;
 		
-
+		[Inject]
+		public var contentModel:ContentModel;
+		
 		public function AppService() {
 		
 		}
@@ -47,13 +49,13 @@ package org.mig.services
 			var token:AsyncToken = service.send();
 			token.addResponder( new Responder(configfileHandler, fault));
 		}
-		public function loadCustomFields():void {
+		public function loadCustomFieldGroups():void {
 			var params:Object = new  Object();
 			params.action = "getData";
-			params.tablename = "customfieldgroups";
+			params.tablename = "customfieldgroups"; 
 			this.createService(params,ResponseType.DATA,Object,handleCustomFieldGroups);
-		}
-		public function loadCustomFieldGroups():void {
+		}		
+		public function loadCustomFields():void {
 			var params:Object = new  Object();
 			params.action = "getData";
 			params.tablename = "customfields";
@@ -80,12 +82,12 @@ package org.mig.services
 					break
 				}
 			}
-			loadConfigFile(appModel.configfile);
+			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.CONFIG_LOADED));
 		}
 		private function configfileHandler(event:ResultEvent):void {
 			var config:XML = event.result as XML;
-			appModel.config = config;
-			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.CONFIG_LOADED));
+			appModel.config = config;			
+			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.CONFIG_FILE_LOADED));
 		}
 		private function handleCustomFieldGroups(event:ResultEvent):void {
 			var results:Array = event.result as Array;
@@ -97,6 +99,7 @@ package org.mig.services
 		private function handleCustomfields(event:ResultEvent):void {
 			var results:Array = event.result as Array;
 			for each(var item:CustomField in results) {
+				appModel.customfieldsFlat.push(item);
 				for each(var group:Object in appModel.customfields) {
 					if(item.groupid == group.id) {
 						group.children.push(item);
@@ -111,7 +114,7 @@ package org.mig.services
 				var template:Template = new Template();
 				template.name = item.name;
 				template.id = Number(item.id);
-				
+				contentModel.templates.addItem(template);
 				if(item.rowids != null) {
 					var cfs1:Array = item.rowids.split(',');
 					var cfs2:Array = item.customfieldids.split(',');
@@ -127,7 +130,7 @@ package org.mig.services
 						templateCustomField.visible = cfs5[i] == '1'?true:false;
 
 						var cfid:int = cfs2[i];
-						for each(var field:CustomField in appModel.customfields) {
+						for each(var field:CustomField in appModel.customfieldsFlat) {
 							if(field.id == cfid) {
 								templateCustomField.customfield = field;
 								break;

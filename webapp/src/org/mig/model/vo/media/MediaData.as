@@ -8,7 +8,6 @@ package org.mig.model.media
 	public class MediaData extends BaseContentData
 	{
 		public var id3:XML;
-		public var loaded:Boolean = false;
 		public var name:String;
 		public var path:String;
 		public var mimetype:String;

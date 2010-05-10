@@ -1,11 +1,9 @@
-package org.mig.model.content
+package org.mig.model.vo.content
 {
-	import org.mig.command.content.RetrieveContentCommand;
-	import org.mig.controller.Constants;
-	import org.mig.model.content.ContentData;
-	import org.mig.model.ContentNode;
-	import org.mig.model.UpdateData;
-	
+
+	import org.mig.model.vo.content.ContentData;
+	import org.mig.model.vo.ContentNode;
+
 	import flash.errors.IllegalOperationError;
 	import flash.events.Event;
 	
@@ -20,7 +18,7 @@ package org.mig.model.content
 			this.queryVars = queryVars;
 			super(baseLabel, config, data, parentContent,privileges);
 		}
-		override protected function retrieve():void {
+/*		override protected function retrieve():void {
 			if(queryVars != null) {
 				var params:Object = new Object();
 				params.action = _config.@getContent.toString();
@@ -73,7 +71,7 @@ package org.mig.model.content
 			}
 			//this.dispatchEvent(new ContentNodeEvent(ContentNodeEvent.DATA_LOADED,this));
 			// update the label
-		}	
+		}*/	
 		/*private var readyCount:int = 0;
 		private function handleNodeReady(event:ContentNodeEvent):void
 		{

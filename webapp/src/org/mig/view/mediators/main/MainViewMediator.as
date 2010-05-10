@@ -21,10 +21,11 @@ package org.mig.view.mediators.main
 		public var appModel:AppModel;
 		
 		public override function onRegister():void {
-			eventMap.mapListener(eventDispatcher,AppEvent.LOGGEDIN,handleLoggedIn,AppEvent);
+			eventMap.mapListener(eventDispatcher,AppEvent.CONFIG_LOADED,handleConfig,AppEvent);
+			eventMap.mapListener(eventDispatcher,AppEvent.CONFIG_FILE_LOADED,handleConfigFile,AppEvent);
 			eventMap.mapListener(eventDispatcher,ViewEvent.RESIZE_MANAGER_TREE,handleManagersTreeResize,ViewEvent);
 		}
-		private function handleLoggedIn(event:Event):void {
+		private function handleConfigFile(event:Event):void {
 			MovieClip(mainView.mainLogo.content).play();
 			mainView.logoFadeOut.play();
 			mainView.bgLogoHolder.visible = true;
@@ -32,10 +33,12 @@ package org.mig.view.mediators.main
 			mainView.topLogo.visible = true;
 			mainView.appOptionsCombo.enabled = true;
 			mainView.helpCombo.enabled = true;
-			
+			mainView.appOptionsCombo.dataProvider = [appModel.publishedURL,appModel.pendingURL];
+		}
+		private function handleConfig(event:Event):void {
 			//data wiring
 			mainView.appOptionsCombo.prompt = appModel.prompt;
-			mainView.appOptionsCombo.dataProvider = [appModel.publishedURL,appModel.pendingURL];
+			mainView.appOptionsCombo.selectedIndex = -1;
 		}
 		
 		private function handleManagersTreeResize(event:ViewEvent):void {

@@ -4,7 +4,7 @@ package org.mig.services.interfaces
 
 	public interface IContentService extends IService
 	{
-		function retrieve(content:ContentNode):void;
-		
+		function retrieveChildren(content:ContentNode):void;
+		function retrieveVerbose(content:ContentNode):void;
 	}
 }

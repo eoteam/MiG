@@ -6,6 +6,8 @@ package org.mig.view.mediators.content
 	
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
+	import org.mig.model.vo.content.ContentData;
+	import org.mig.model.vo.content.Template;
 	import org.mig.model.vo.content.TemplateCustomField;
 	import org.mig.view.components.content.ContentGeneralEditor;
 	import org.mig.view.components.content.CustomFieldElement;
@@ -19,7 +21,9 @@ package org.mig.view.mediators.content
 		[Inject]
 		public var contentModel:ContentModel;
 		
+		private var cfElements:Array;
 		override public function onRegister():void {
+			cfElements = [];
 			contentModel.templates.filterFunction = filterByTemplate;
 			contentModel.templates.refresh();
 			var template:Template = contentModel.templates.getItemAt(0) as Template;
@@ -34,18 +38,16 @@ package org.mig.view.mediators.content
 			{
 				var cfElement:CustomFieldElement = new CustomFieldElement();
 				cfElement.field = field;
-				cfElement.vo = _data;
-				mainContainer.addChild(cfElement);
-				customfields.push(cfElement);
+				cfElement.vo = view.content.data as ContentData;
+				view.mainContainer.addChild(cfElement);
+				cfElements.push(cfElement);
 			}
-			cf.filterFunction = null;
-			cf.refresh();
 		}
-import org.mig.model.vo.content.Template;
+
 
 		private function filterByTemplate(item:Template):Boolean
 		{
-			if(item.id == view.content.data.templateid)
+			if(item.id == ContentData(view.content.data).templateid)
 				return true;
 			else
 				return false;

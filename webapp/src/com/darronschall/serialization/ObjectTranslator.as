@@ -30,7 +30,7 @@ import flash.net.registerClassAlias;
 import flash.utils.ByteArray;
 import flash.utils.describeType;
 import flash.utils.getDefinitionByName;
-
+import flash.utils.getQualifiedClassName;
 /**
  * Utility class to convert vanilla objects to class instances.
  */
@@ -93,6 +93,14 @@ public final class ObjectTranslator
 		// classifies as a bug or not... but I wanted to explain why if you debug
 		// you might seem some TypeError or ReferenceError items appear.
 		var result:* = bytes.readObject();
+		//null strings into '' ?
+		for (var item:String in result) {
+			//trace(item,getQualifiedClassName(result[item]), result[item]);
+			if(getQualifiedClassName(result[item]) == 'null') {
+				result[item] = '';
+			}
+		}
+		
 		return result;
 	}
 	

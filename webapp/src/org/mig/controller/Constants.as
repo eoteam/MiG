@@ -3,7 +3,7 @@
 	public class Constants
 	{
 		
-    	public static var SERVER_URL:String = "http://migdev.themig.org/php/";
+    	public static var SERVER_URL:String = "http://localhost:80/MiG/robotlegs/services/php/";
     	
     	public static const GETMEDIACONTENT:String = SERVER_URL+"filesystem/readDir.php";
     	

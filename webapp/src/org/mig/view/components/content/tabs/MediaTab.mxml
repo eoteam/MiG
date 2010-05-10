@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+		    implements="org.mig.view.interfaces.IEditableContentView">
+	<mx:Script>
+		<![CDATA[
+			import org.mig.model.vo.ContentNode;
+			import org.mig.view.interfaces.IEditableContentView;
+			[Bindable] private var _content:ContentNode;
+			public function set content(value:ContentNode):void {
+				_content = value
+			}
+			public function get content():ContentNode {
+				return _content;
+			}
+			public function submit(statusid:int=0):void {
+				
+			}
+		]]>
+	</mx:Script>
+	<mx:Binding source="_content.label" destination="this.label" />
+</mx:Canvas>

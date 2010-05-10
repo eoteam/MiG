@@ -1,4 +1,4 @@
-package org.mig.model.content
+package org.mig.model.vo.content
 {
 	public final class ContentStatus
 	{

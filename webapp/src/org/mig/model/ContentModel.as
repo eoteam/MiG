@@ -8,7 +8,7 @@ package org.mig.model
 	public class ContentModel extends Actor
 	{
 		public var contentModel:ContainerNode;
-		public var templates:ArrayCollection;
+		public var templates:ArrayCollection = new ArrayCollection();
 		
 		//public var mediaModel:MediaCategoryNode;
 	}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:view.content="com.map.view.content.*"
+	
+	height="100%" width="100%" horizontalScrollPolicy="off">
+
+	<mx:Script>
+		<![CDATA[
+			public function configureContentTab():void
+			{
+				if (_content != null && _content.config.@contentView.length() > 0)
+				{
+					tabView = IEditableContentView(ClassUtils.instantiateClass(_content.config.@contentView));
+					tabView.content = _content;
+					//removeAllChildren(); GOOD FOR regenerating
+					addChild(DisplayObject(tabView));
+					_configured = true;
+					
+					//** Event Bus
+					EventBus.getInstance().dispatchEvent(new ContentViewEvent(ContentViewEvent.ADD,tabView));
+					EventBus.getInstance().addEventListener(ContentDataEvent.SUBMIT,handleSubmitEvent,'',false,0,true);
+					//EventBus.getInstance().addEventListener(ContentDataEvent.COMPARE_COMMAND,handleSubmitEvent);
+				}
+			}
+		]]>
+	</mx:Script>
+	<mx:Binding source="_content.label" destination="this.label" />
+</mx:Canvas>

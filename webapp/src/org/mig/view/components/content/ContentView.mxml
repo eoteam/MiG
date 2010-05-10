@@ -3,7 +3,7 @@
 	xmlns:mx="http://www.adobe.com/2006/mxml"
 	xmlns:view.content="com.map.view.content.*"
 	xmlns:content="com.mapx.view.content.*"
-	 implements="org.mig.view.interfaces.IEditableContentView" 	
+	 implements="org.mig.view.interfaces.IContentView" 	
 	height="100%" paddingLeft="0"
 	width="100%" verticalGap="2" >
 	
@@ -21,9 +21,7 @@
 			public function get content():ContentNode {
 				return _content;
 			}
-			public function submit(statusid:int=0):void {
-			
-			}	
+
 		]]>
 	</mx:Script>
     <mx:HBox  width="100%" id="topBar" horizontalGap="4">
@@ -31,8 +29,8 @@
     	<mx:Label text="{_data.title}"  styleName="boldCopy" fontSize="14" />-->
     	<mx:Spacer width="100%" />
     	<mx:Button label="Cancel" styleName="defaultButton" />
-    	<mx:Button label="Save as Draft" styleName="defaultButton" click="submit(1)" />
-    	<mx:Button label="Publish"  id="submitButton" styleName="defaultButton" click="submit(4)"/>
+    	<mx:Button label="Save as Draft" styleName="defaultButton" id="draftBtn" />
+    	<mx:Button label="Publish"  styleName="defaultButton" id="publishBtn" />
     </mx:HBox>
 	<mx:TabNavigator 
 		borderThickness="0" backgroundAlpha="0" 

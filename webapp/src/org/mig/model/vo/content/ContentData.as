@@ -6,6 +6,8 @@ package org.mig.model.vo.content
 	[Bindable] 
 	public dynamic class ContentData extends BaseContentData
 	{
+		
+		
 		public var statusid:int;
 		public var migtitle:String;
 		
@@ -13,6 +15,5 @@ package org.mig.model.vo.content
 		public var faulted:Boolean;
 		
 		// this used when a content is partially loaded, content table, maybe media when not all the file info is needed --xmp and id3
-		public var loaded:Boolean = false;
 	}
 }

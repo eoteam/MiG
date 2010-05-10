@@ -1,4 +1,4 @@
-package org.mig.model
+package org.mig.model.vo
 {
 
 	public final class CustomFieldTypes

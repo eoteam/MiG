@@ -31,6 +31,6 @@ package org.mig.model
 		
 		
 		public var customfields:Array = [];
-		
+		public var customfieldsFlat:Array = [];
 	}
 }

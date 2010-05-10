@@ -18,7 +18,7 @@ package org.mig.services
 		public function ContentService() {
 			
 		}
-		public function retrieve(content:ContentNode):void {
+		public function retrieveChildren(content:ContentNode):void {
 			//this is fine here, params are a map object. Im guessing REST will form a URL, but awareness of these vars is tricky
 			if(content is ContainerNode) {
 				var params:Object = new Object();
@@ -51,6 +51,15 @@ package org.mig.services
 				
 				this.createService(params,ResponseType.DATA,ContentData);
 				token.content = content;
+			}
+		}
+		public function retrieveVerbose(content:ContentNode):void {
+			if(content is ContainerNode) {
+				var params:Object = new Object();
+				params.action = "getContent";
+				params.contentid = content.data.id;
+				params.verbosity = 1;
+				this.createService(params,ResponseType.DATA,ContentData);
 			}
 		}
 	}

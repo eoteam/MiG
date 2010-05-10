@@ -7,5 +7,6 @@ package org.mig.model.vo
 		public var createdate:Number;
 		public var modifiedby:int;
 		public var modifieddate:Number;		
+		public var loaded:Boolean = false;
 	}
 }

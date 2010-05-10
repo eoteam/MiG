@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas
+<containers:MinMaxTray
 	xmlns:mx="http://www.adobe.com/2006/mxml"
 	 width="90%" maxHeight="{maxH}"
 	 creationComplete="init()" xmlns:containers="org.mig.view.containers.*">
@@ -7,19 +7,6 @@
 	
 	<mx:Script>
 		<![CDATA[
-			import com.map.controller.ControllerLocator;
-			import com.map.model.ContentDataVO;
-			import com.map.model.ContentNode;
-			import com.map.model.MediaContainerNode;
-			import com.map.view.Tools;
-			import com.mapx.model.ContentVO;
-			import com.map.model.CustomField;
-			import com.mapx.view.controls.DateTimePicker;
-			import com.mapx.view.controls.MiGDateField;
-			import com.mapx.view.controls.MiGTLFTextArea;
-			import com.mapx.view.controls.MiGTextInput;
-			import com.mapx.view.controls.colorPicker;
-			
 			import flexlib.containers.FlowContainer;
 			
 			import mx.controls.Button;
@@ -36,32 +23,53 @@
 			import mx.events.DragEvent;
 			import mx.events.ListEvent;
 			
-			public var field:CustomField;
-			public var vo:ContentDataVO;
+			import org.mig.model.AppModel;
+			import org.mig.model.vo.ContentNode;
+			import org.mig.model.vo.CustomField;
+			import org.mig.model.vo.CustomFieldTypes;
+			import org.mig.model.vo.content.ContainerNode;
+			import org.mig.model.vo.content.ContentData;
+			import org.mig.model.vo.content.TemplateCustomField;
+			import org.mig.model.vo.media.MediaContainerNode;
+			import org.mig.view.controls.DateTimePicker;
+			import org.mig.view.controls.MiGDateField;
+			import org.mig.view.controls.MiGTLFTextArea;
+			import org.mig.view.controls.MiGTextInput;
+			import org.mig.view.controls.colorPicker;
+			
+			public var field:TemplateCustomField;
+			public var vo:ContentData;
+			private var customfield:CustomField;
+			
 			public var modified:Boolean = false;
 			private var mouseXInit:Number;
 			private var mouseYInit:Number;	
 			private var linkButton:Button;		
 			private var child:UIComponent;	
 			[Bindable] private var maxH:Number = 30;
+			
+			[Inject]
+			public var appModel:AppModel;
+			
 			private function init():void
 			{
-				this.headerLabel = field.displayname;			
+				customfield = field.customfield;
+				this.headerLabel = 	customfield.displayname;			
 				var option:Object;
-				switch(field.fieldtype)
+				switch(customfield.typeid)
 				{
-					case "binary":
+					case CustomFieldTypes.BINARY:
 						child = new CheckBox();
-						CheckBox(child).selected = vo[field.fieldname] == "true"?true:false;
-						this.summaryText = vo[field.fieldname].toString();
+						CheckBox(child).selected = vo[customfield.name] == "true"?true:false;
+						this.summaryText = vo[customfield.name].toString();
 					break;
-					case "select":
+					case CustomFieldTypes.SELECT:
 						child = new ComboBox();
 						ComboBox(child).labelField = "value";
-						ComboBox(child).dataProvider = field.optionsArray;
-						for each(option in field.optionsArray)
+						ComboBox(child).dataProvider = customfield.optionsArray;
+						for each(option in customfield.optionsArray)
 						{
-							if(option.index.toString() == vo[field.fieldname])
+							if(option.index.toString() == vo[customfield.name])
 							{
 								ComboBox(child).selectedItem = option;
 									this.summaryText = option.value;
@@ -69,71 +77,69 @@
 							}
 						}
 					break;
-					case "string":
+					case CustomFieldTypes.STRING:
 						child = new MiGTextInput();
 						child.styleName = "inputFieldBlack";
 						child.percentWidth = 100;
-						MiGTextInput(child).text = vo[field.fieldname].toString(); 
-						this.summaryText = vo[field.fieldname].toString().slice(0,150)+'...';
+						MiGTextInput(child).text = vo[customfield.name].toString(); 
+						this.summaryText = vo[customfield.name].toString().slice(0,150)+'...';
 					break;
-					case "html-text":
+					case CustomFieldTypes.HTML_TEXT:
 						child = new MiGTLFTextArea();
-						MiGTLFTextArea(child).htmlText = vo[field.fieldname];
+						MiGTLFTextArea(child).htmlText = vo[customfield.name];
 						//child.styleName="sectionTextEditorTextArea";	
 						child.percentWidth =100;
 						maxH = child.height = 350;
 						this.addEventListener('open',handleTray);
 						this.addEventListener('closed',handleTray);		
-						this.summaryText = vo[field.fieldname].toString().slice(0,150)+'...';
+						this.summaryText = vo[customfield.name].toString().slice(0,150)+'...';
 					break;
-					case "text":
+					case CustomFieldTypes.TEXT:
 						child = new TextArea();
-						TextArea(child).text = vo[field.fieldname];
+						TextArea(child).text = vo[customfield.name];
 						child.percentWidth =100;
 						maxH = child.height = 200;
 						child.styleName = "bodyCopy";
 						child.setStyle("backgroundColor",0x0f0f0f);	
-						this.summaryText = vo[field.fieldname].toString().slice(0,150)+'...';
+						this.summaryText = vo[customfield.name].toString().slice(0,150)+'...';
 					break;					
-					case "image":
-					break;
-					case "color":
-						child = new com.mapx.view.controls.colorPicker();
+					case CustomFieldTypes.COLOR:
+						child = new org.mig.view.controls.colorPicker();
 						child.addEventListener("dataChange",dataChangeProxy);	
 						//colorPicker(child).dataProvider=Application.application.globalColors; 
-						colorPicker(child).selectedColor= Number(vo[field.fieldname]);		
-						this.summaryText = Number(vo[field.fieldname]).toString(16);		
+						colorPicker(child).selectedColor= Number(vo[customfield.name]);		
+						this.summaryText = Number(vo[customfield.name]).toString(16);		
 					break;
-					case "multiple-select":
+					case CustomFieldTypes.MULTIPLE_SELECT:
 						child = new FlowContainer();
 						child.percentHeight=100;
 						child.percentWidth=100;
-						this.summaryText = vo[field.fieldname].toString();
-						for each(option in field.optionsArray)
+						this.summaryText = vo[customfield.name].toString();
+						for each(option in customfield.optionsArray)
 						{
 							var checkBox:CheckBox = new CheckBox();
 							checkBox.label = option.value;
 							checkBox.data = option;
 							checkBox.addEventListener(Event.CHANGE,handleMultipleSelect);
 							child.addChild(checkBox);
-							if(vo[field.fieldname].toString().search(option.value) != -1)
+							if(vo[customfield.name].toString().search(option.value) != -1)
 								checkBox.selected = true;
 						}
 					break;
-					case "integer":
+					case CustomFieldTypes.INTEGER:
 						child = new MiGTextInput();
 						child.styleName = "inputFieldBlack";
 						child.percentWidth = 100;
 						MiGTextInput(child).restrict="0-9\\-";
-						MiGTextInput(child).text = vo[field.fieldname];
-						this.summaryText = vo[field.fieldname].toString().slice(0,150)+'...';								
+						MiGTextInput(child).text = vo[customfield.name];
+						this.summaryText = vo[customfield.name].toString().slice(0,150)+'...';								
 					break;				
-					case "date":
+					case CustomFieldTypes.DATE:
 						child = new DateTimePicker();
-						if(vo[field.fieldname].toString() != '0')
+						if(vo[customfield.name].toString() != '0')
 						{
 							var date:Date = new Date();
-							date.time = Number(vo[field.fieldname].toString());
+							date.time = Number(vo[customfield.name].toString());
 							DateTimePicker(child).selectedDate = date;
 							this.summaryText =  dateFormatter.format(date);	
 						}
@@ -141,22 +147,22 @@
 							DateTimePicker(child).selectedDate = null;
 						
 					break;
-					case "file-link":
+					case CustomFieldTypes.FILE_LINK:
 						child = new MiGTextInput();
 						child.styleName = "inputFieldBlack";
 						child.percentWidth = 100;			
-						MiGTextInput(child).text = vo[field.fieldname];						
-						this.summaryText = vo[field.fieldname].toString().slice(0,150)+'...';
+						MiGTextInput(child).text = vo[customfield.name];						
+						this.summaryText = vo[customfield.name].toString().slice(0,150)+'...';
 					break;	
-					case "multiple-select-with-order":
+					case CustomFieldTypes.MULTIPLE_SELECT_WITH_ORDER:
 						var dp:Array = [];
 						var summary:String = '';
-						if(vo[field.fieldname].toString() != '')
+						if(vo[customfield.name].toString() != '')
 						{
-							var selected:Array = vo[field.fieldname].toString().split(',');
+							var selected:Array = vo[customfield.name].toString().split(',');
 							for each(var index:String in selected)
 							{
-								var item:Object = field.optionsArray[Number(index)-1];
+								var item:Object = customfield.optionsArray[Number(index)-1];
 								item.selected = true;
 								dp.push(item);
 								summary += item.value+', ';
@@ -164,7 +170,7 @@
 						}
 						summary = summary.substring(0,summary.length-2);
 						this.summaryText = summary;
-						for each(item in field.optionsArray)
+						for each(item in customfield.optionsArray)
 						{
 							if(dp.indexOf(item) == -1)
 							{
@@ -192,7 +198,7 @@
 				}
 				container.addChild(child);
 				child.addEventListener(Event.CHANGE,dataChangeProxy);		
-				if(field.fieldtype == "file-link")
+				if(customfield.typeid == CustomFieldTypes.FILE_LINK)
 				{
 					linkButton = new Button();
 					linkButton.styleName = "linkButtonUp";
@@ -231,7 +237,7 @@
 				
 				if(treeObjects.length > 0)
 				{
-					var node:ContentNode = Application.application.mainView.contentTree.selectedItem;
+					var node:ContainerNode = Application.application.mainView.contentTree.selectedItem;
 					MiGTextInput(this.child).text = "event:content="+node.data.id.toString();
 					MiGTextInput(this.child).setFocus();
 					MiGTextInput(this.child).dispatchEvent(new Event(Event.CHANGE));					
@@ -241,12 +247,12 @@
 					
 					if(Application.application.mainView.editorsView.linkedResource != null)
 					{
-						var file:MediaContainerNode = Application.application.mainView.editorsView.linkedResource;
-						var mediaPath:String = ControllerLocator.mediaManagerController.mediaURL+file.data.path.toString()+file.data.name.toString();					
-						var baseLink:String = ControllerLocator.mediaManagerController.contentModel.config.@publishedLink;	
+/* 						var file:MediaContainerNode = Application.application.mainView.editorsView.linkedResource;
+						var mediaPath:String = appModel.mediaURL+file.data.path.toString()+file.data.name.toString();					
+						var baseLink:String = appModel.publishedURL;	
 						MiGTextInput(this.child).text = baseLink+mediaPath;
 						MiGTextInput(this.child).setFocus();
-						MiGTextInput(this.child).dispatchEvent(new Event(Event.CHANGE));	
+						MiGTextInput(this.child).dispatchEvent(new Event(Event.CHANGE));	 */
 					}
 				}
 				Application.application.stage.removeEventListener(MouseEvent.MOUSE_MOVE,handleMouseMove);
@@ -261,7 +267,7 @@
 					if(checkBox.selected)
 						value += checkBox.data.value+',';
 				}
-				vo[field.fieldname] = value.substr(0,value.length-1);
+				vo[customfield.name] = value.substr(0,value.length-1);
 				modified = true;
 			}
 			private function handleItemClick(event:Event):void
@@ -277,7 +283,7 @@
 					}
 				}	
 				ordereredItems = ordereredItems.substr(0,ordereredItems.length-1);
-				vo[field.fieldname] = ordereredItems;
+				vo[customfield.name] = ordereredItems;
 				summary = summary.substring(0,summary.length-2);
 				this.summaryText = summary;				
 				modified = true;
@@ -285,40 +291,40 @@
 			private function dataChangeProxy(event:Event):void
 			{
 				modified = true;
-				switch(field.fieldtype)
+				switch(customfield.typeid)
 				{
 					case "binary":
-						vo[field.fieldname] = CheckBox(event.target).selected;
+						vo[customfield.name] = CheckBox(event.target).selected;
 					break;
 					case "select":
-						vo[field.fieldname] = ComboBox(event.target).selectedItem.index;
+						vo[customfield.name] = ComboBox(event.target).selectedItem.index;
 					break;
 					case "string":
-						vo[field.fieldname] = MiGTextInput(event.target).text;
+						vo[customfield.name] = MiGTextInput(event.target).text;
 					break;
 					case "html-text":
-						vo[field.fieldname] = MiGTLFTextArea(event.target).htmlText;
+						vo[customfield.name] = MiGTLFTextArea(event.target).htmlText;
 					break;
 					case "text":
-						vo[field.fieldname] = TextArea(event.target).text;
+						vo[customfield.name] = TextArea(event.target).text;
 					break;					
 					case "image":
 					break;
 					case "color":
-						vo[field.fieldname] =  colorPicker(event.target).selectedColor.toString(16);
+						vo[customfield.name] =  colorPicker(event.target).selectedColor.toString(16);
 					break;
 					case "integer":
-						vo[field.fieldname] = MiGTextInput(event.target).text;
+						vo[customfield.name] = MiGTextInput(event.target).text;
 					break;		
 					case "date":
 						if(DateTimePicker(event.target).selectedDate)
-							vo[field.fieldname] = DateTimePicker(event.target).selectedDate.time;			
+							vo[customfield.name] = DateTimePicker(event.target).selectedDate.time;			
 						else
-							vo[field.fieldname] = ' ';
+							vo[customfield.name] = ' ';
 					case "multiple-select":
 					break;	
 					case "file-link":
-					 	vo[field.fieldname] = MiGTextInput(event.target).text;
+					 	vo[customfield.name] = MiGTextInput(event.target).text;
 					break;	
 					case "multiple-select-with-order":					
 					break;						
@@ -327,15 +333,14 @@
 			
 			private function handleTray(event:Event):void
 			{
-				var tools:Tools = Tools(Application.application.mainView.editorsView);
+				/* var tools:Tools = Tools(Application.application.mainView.editorsView);
 				if(event.type == "open")
 					tools.instantiateToolSet(["Browse","Preview","Metadata","Upload","Text"]);	
 				else
-					tools.instantiateToolSet(["Browse","Preview","Metadata","Upload"]);	
+					tools.instantiateToolSet(["Browse","Preview","Metadata","Upload"]);	 */
 			}
 			
 		]]>
 	</mx:Script>
 	<mx:DateFormatter id="dateFormatter"  formatString="MM/DD/YY"/>
-	<containers:MinMaxTray />
-</mx:Canvas>
+</containers:MinMaxTray>

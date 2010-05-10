@@ -1,10 +1,12 @@
 package 
 {
 	import flash.display.DisplayObjectContainer;
+	import flash.events.Event;
 	
-	import org.mig.controller.InitCommand;
+	import org.mig.controller.RetrieveContentChildrenCommand;
 	import org.mig.controller.RetrieveContentCommand;
 	import org.mig.controller.ShowAlertCommand;
+	import org.mig.controller.StartupCommand;
 	import org.mig.events.AlertEvent;
 	import org.mig.events.AppEvent;
 	import org.mig.events.ContentEvent;
@@ -18,6 +20,8 @@ package
 	import org.mig.services.interfaces.IUserService;
 	import org.mig.view.components.content.ContentGeneralEditor;
 	import org.mig.view.components.content.ContentView;
+	import org.mig.view.components.content.tabs.MediaTab;
+	import org.mig.view.components.content.tabs.TagsCategoriesTab;
 	import org.mig.view.components.main.ContentTree;
 	import org.mig.view.components.main.ContentViewer;
 	import org.mig.view.components.main.LoginView;
@@ -32,6 +36,7 @@ package
 	import org.mig.view.mediators.main.MainViewMediator;
 	import org.mig.view.mediators.main.ManagersTreeMediator;
 	import org.mig.view.mediators.main.StatusModuleMediator;
+	import org.robotlegs.base.ContextEvent;
 	import org.robotlegs.mvcs.Context;
 	
 	public class MiGContext extends Context
@@ -43,12 +48,17 @@ package
 		override public function startup():void {
 			
 			//top level
-			commandMap.mapEvent(AlertEvent.SHOW_ALERT, ShowAlertCommand, AlertEvent );
-			commandMap.mapEvent(AppEvent.LOGGEDIN,InitCommand,AppEvent);
-			commandMap.mapEvent(AppEvent.CONFIG_LOADED,InitCommand,AppEvent);
+			commandMap.mapEvent(AppEvent.STARTUP,StartupCommand,AppEvent);
+			commandMap.mapEvent(AppEvent.LOGGEDIN,StartupCommand,AppEvent);
+			commandMap.mapEvent(AppEvent.CONFIG_LOADED,StartupCommand,AppEvent);
+			commandMap.mapEvent(AppEvent.CONFIG_FILE_LOADED,StartupCommand,AppEvent);
 
 			//content commands
-			commandMap.mapEvent(ContentEvent.RETRIEVE,RetrieveContentCommand,ContentEvent);
+			commandMap.mapEvent(ContentEvent.RETRIEVE_CHILDREN,RetrieveContentChildrenCommand,ContentEvent);
+			commandMap.mapEvent(ContentEvent.RETRIEVE_VERBOSE,RetrieveContentCommand,ContentEvent);
+			
+			//errors
+			commandMap.mapEvent(AlertEvent.SHOW_ALERT, ShowAlertCommand, AlertEvent);
 			
 			//services
 			injector.mapSingletonOf(IUserService,UserService ); 
@@ -69,7 +79,10 @@ package
 			mediatorMap.mapView(ContentView,ContentViewMediator);
 			mediatorMap.mapView(ContentGeneralEditor,ContentGeneralEditorMediator);
 			
+			injector.mapClass(MediaTab,MediaTab);
+			injector.mapClass(TagsCategoriesTab,TagsCategoriesTab);
 			
+			dispatchEvent(new AppEvent(AppEvent.STARTUP));
 		}
 	}
 }

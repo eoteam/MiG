@@ -52,18 +52,12 @@ $allowed_filetypes = array("jpg","jpeg","png","flv","mp3","pdf");
 
 
 //search result
-$arrVerbosity[0] = array("content.id","content.parentid","content.migtitle","content.statusid",
-"content.modifieddate","content.is_fixed","content.templateid");
+$arrVerbosity[0] = array("content.id","content.parentid","content.migtitle","content.statusid","content.is_fixed","content.templateid");
 
 
-$arrVerbosity[1] = array("content.id","content.parentid","content.templateid","content.title","content.color","content.url",
-"content.permalink","content.shortdescription","content.description","content.date","content.statusid","content.containerpath",
-"content.createdby","content.createdate","content.modifiedby","content.modifieddate","content.deleted","content.is_fixed",
-"content.search_exclude","content.can_have_children","content.displayorder",
-"templates.title AS templatetitle","content.containerpath",
-"content_mediaids.mediaids","content_thumbids.thumbids",
-"GROUP_CONCAT(DISTINCT terms.name) AS tags", "GROUP_CONCAT(DISTINCT terms.id) AS tagids",
-"content1.contentids  AS related_content1","content2.contentids AS related_content2");
+$arrVerbosity[1] = array("content.id","content.parentid","content.templateid","content.migtitle","content.statusid","content.containerpath",
+"content.createdby","content.createdate","content.modifiedby",
+"content.modifieddate","content.deleted","content.is_fixed","content.can_have_children","content.displayorder");
 
 $arrVerbosity[2] = array("content.id","content.color","content.parentid","content.templateid","content.url","content.title",
 "content.url","content.description2 as description","content.shortdescription","content.date","content.displayorder",

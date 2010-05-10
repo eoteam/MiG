@@ -11,6 +11,8 @@ package org.mig.view.mediators.main
 	import org.mig.model.ContentModel;
 	import org.mig.model.vo.BaseContentData;
 	import org.mig.model.vo.ContentNode;
+	import org.mig.model.vo.content.ContainerNode;
+	import org.mig.model.vo.content.ContentData;
 	import org.mig.utils.GlobalUtils;
 	import org.mig.view.components.main.ContentTree;
 	import org.robotlegs.mvcs.Mediator;
@@ -24,8 +26,8 @@ package org.mig.view.mediators.main
 		public var contentModel:ContentModel;
 		
 		override public function onRegister():void {
-			eventMap.mapListener(eventDispatcher,AppEvent.CONFIG_LOADED,handleContent);
-			eventMap.mapListener(eventDispatcher,ContentEvent.RETRIEVE,handleContent);
+			eventMap.mapListener(eventDispatcher,AppEvent.CONFIG_FILE_LOADED,handleContent);
+			eventMap.mapListener(eventDispatcher,ContentEvent.RETRIEVE_CHILDREN,handleContent);
 			
 			
 			view.addEventListener(DragEvent.DRAG_START,handleDragStart);
@@ -72,9 +74,11 @@ package org.mig.view.mediators.main
 			
 		}
 		private function handleItemDoubleClick(event:ListEvent):void {
-			var selectedNode:ContentNode = view.selectedItem as ContentNode;
-			eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.SELECT,selectedNode));
-			
+			var selectedNode:ContainerNode = view.selectedItem as ContainerNode;
+			if(ContentData(selectedNode.data).loaded)
+				eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.SELECT,selectedNode));
+			else 
+				eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.RETRIEVE_VERBOSE,selectedNode));
 		}
 		
 		private function addContextMenu():void {

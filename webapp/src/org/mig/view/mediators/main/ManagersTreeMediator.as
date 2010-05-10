@@ -23,7 +23,7 @@ package org.mig.view.mediators.main
 		
 		override public function onRegister():void {
 			
-			eventMap.mapListener(eventDispatcher,AppEvent.CONFIG_LOADED,handleConfig,AppEvent);
+			eventMap.mapListener(eventDispatcher,AppEvent.CONFIG_FILE_LOADED,handleConfig,AppEvent);
 		}
 		
 		private function handleConfig(event:AppEvent):void {

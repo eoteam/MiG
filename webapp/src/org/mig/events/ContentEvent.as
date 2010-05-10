@@ -7,7 +7,8 @@ package org.mig.events
 
 	public class ContentEvent extends Event
 	{
-		public static const RETRIEVE:String = "retrieve";
+		public static const RETRIEVE_CHILDREN:String = "retrieveChildren";
+		public static const RETRIEVE_VERBOSE:String = "retrieveVerbose";
 		public static const DELETE:String = "delete"; //
 		public static const CREATE:String = "create"; //some data, config and parent ref
 		public static const UPDATE:String = "update";
