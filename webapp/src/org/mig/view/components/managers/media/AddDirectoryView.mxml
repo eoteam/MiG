@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
+	horizontalScrollPolicy="off" paddingRight="10" paddingLeft="10" paddingBottom="10"
+	height="200" width="300" 
+	title="Add New Directory" styleName="bodyCopy"
+	xmlns:content="com.mapx.view.content.*" creationComplete="handleCreationComplete();" xmlns:controls="com.mapx.view.controls.*">
+<mx:Script>
+	<![CDATA[
+		import com.mapx.view.content.SystemPopup;
+		import mx.collections.ArrayCollection;
+		import com.map.model.ContainerNode;
+		import com.map.services.XmlHttpOperation;
+		import mx.events.ListEvent;
+		import com.map.view.Tools;
+		import mx.events.FlexEvent;
+		import com.map.model.ContentNode;
+		import mx.core.Application;
+		import mx.managers.PopUpManager;
+		import com.map.controller.Constants;
+		import mx.binding.utils.BindingUtils;
+		import mx.controls.Alert;
+		import com.map.model.MediaCategoryNode;
+		import mx.managers.PopUpManagerChildList;
+		private var _operation:XmlHttpOperation;
+		
+		[Bindable]
+		private var _content:ContentNode;
+		
+		[Embed(source='/migAssets/library.swf#folderIcon')]
+		[Bindable] private var folderIcon:Class;
+		
+		public function set content(contentNode:ContentNode):void
+		{
+			_content = contentNode;
+		}
+		
+		[Bindable]
+		private var _data:Object;
+		
+		private function handleCreationComplete():void
+		{
+			
+		}
+		
+		private function cancel():void
+		{
+			PopUpManager.removePopUp(this);
+		}
+		
+		private function submitData():void
+		{
+			var newData:Object = _data;
+			var config:XML = this._content.config;
+			
+			trace("ROOT: " + config.@directoryMapping);
+			trace("DIRECTORY: " + MediaCategoryNode(_content).directoryMapping);
+			// create a new xml http operation
+			 _operation = new XmlHttpOperation(Constants.CREATEDIR_PHP);
+			
+			// get the parameters out of the config xml
+			var params:Object = new Object();
+			params.directory = MediaCategoryNode(_content).directoryMapping;
+			if(params.directory == null || params.directory == "")
+			{
+				params.directory = " ";
+			}
+			params.rootDir = config.@directoryMapping;
+			//params.fileType = config.@type;
+			params.folderName = folderName_input.text;
+			
+			trace("ROOT: " + params.rootDir);
+			trace("DIRECTORY: " + params.directory);
+			trace("FILE TYPE: " + params.fileType);
+			trace("FOLDER: " + params.folderName);
+			
+			_operation.params = params;
+			_operation.addEventListener(Event.COMPLETE, handleComplete);
+			_operation.execute(); 
+		}
+		
+		public function initializeContent():void
+		{
+			_data = new Object();
+		}		
+		private function checkData():void
+		{
+			if(folderName_input.text.length > 0)
+				submitData();
+		}
+		
+		/**
+		 * Complete handler for the operation.
+		 */
+		private function handleComplete(event:Event):void
+		{
+			var _data:XMLList = _operation.xml.children();
+			var popup:SystemPopup;
+			trace("DATA RETURNED: " + _data);
+            	if(_data != null)
+            	{
+            		if(_data.errorName != null && _data.errorName != "" && _data.errorName != undefined)
+            		{
+            			//Alert.show(("Server-side Error:<br></br>Error:" + _data.errorName + "   Error Msg: " + _data.errorMsg));
+            			popup = new SystemPopup();
+						popup.type = 1;
+						popup.message = "Server-side Error:<br></br>Error:" + _data.errorName + "   Error Msg: " + _data.errorMsg;
+						PopUpManager.addPopUp(popup,Application.application.mainView,true,PopUpManagerChildList.POPUP);	
+						
+            		}else if(_data.success != null && _data.success != "" && _data.success != undefined)
+            		{
+        				Application.application.mainView.statusMod.updateStatus("Update Successful.");
+    					addNodeToParent(XML(_data));
+        				PopUpManager.removePopUp(this);
+            		}else
+            		{
+	            		//Alert.show("Error Connecting To The Database. Try Again Later.");
+	            		popup = new SystemPopup();
+						popup.type = 1;
+						popup.message = "Error Connecting To The Database. Try Again Later.";
+						PopUpManager.addPopUp(popup,Application.application.mainView,true,PopUpManagerChildList.POPUP);	
+	            	}
+            	}
+		}
+		
+		
+		private function addNodeToParent(newData:XML):void
+		{
+			var newDirectoryMapping:String;
+					
+			if(MediaCategoryNode(_content).directoryMapping != "" && MediaCategoryNode(_content).directoryMapping != null)
+			{
+				newDirectoryMapping = MediaCategoryNode(_content).directoryMapping + "/" + folderName_input.text;
+			}else
+			{
+				newDirectoryMapping = folderName_input.text;
+			}
+			
+			var data:XML = XML("<item>" + folderName_input.text + "</item>");
+			
+			var newNode:MediaCategoryNode = new MediaCategoryNode(folderName_input.text, _content.config, data, _content, newDirectoryMapping,_content.privileges);
+			_content.addNode(newNode);
+/* 			if(MediaCategoryNode(_content).addMediaCategoryNode(newNode))
+			{
+				var mediaManagerViewArray:ArrayCollection = Application.application.mediaManagerViewArray;
+				
+				for(var i:int = 0; i < mediaManagerViewArray.length; i++)
+				{
+					MediaManagerView(mediaManagerViewArray[i]).addNewFolderContentView(newNode);
+				}
+			} */
+		}
+		
+		public function handleErrors(errorMsg:String):void
+		{
+			Alert.show(errorMsg);
+		}
+	]]>
+</mx:Script>
+
+<mx:Form maxWidth="750" paddingLeft="0" indicatorGap="2" verticalGap="15" styleName="removeButton" horizontalScrollPolicy="off">
+	
+	<mx:HBox paddingLeft="5">
+		<mx:VBox verticalGap="1" paddingLeft="0">
+			<mx:HBox width="100%" horizontalGap="0">
+				<mx:SWFLoader source="{folderIcon}" width="23" height="17" />
+				<mx:Text text="Folder Name" color="0xffffff" fontAntiAliasType="advanced" paddingLeft="0"/>
+			</mx:HBox>
+			<controls:MiGTextInput styleName="inputFieldGray"  text="" width="200" id="folderName_input" restrict="a-z\A-Z\0-9\_"/>						
+		</mx:VBox>
+	</mx:HBox>
+		
+</mx:Form>
+<mx:HBox horizontalGap="3" paddingTop="10" paddingLeft="5">
+		<mx:Button  styleName="defaultButton" label="Submit" click="checkData()"/>
+		<mx:Button styleName="defaultButton" label="Cancel" click="cancel()"/>
+</mx:HBox>
+
+<mx:StringValidator source="{folderName_input}" property="text" minLength="1" maxLength="60"/>
+
+	
+</mx:TitleWindow>

@@ -1,4 +1,4 @@
-package com.mapx.view.controls
+package org.mig.view.controls
 {
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Cubic;

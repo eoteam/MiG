@@ -1,30 +1,18 @@
-
-/**
- * Derrick Grigg
- * dgrigg@rogers.com
- * http://www.dgrigg.com
- * created on Nov 3, 2006
- * 
- * Custom drag proxy that displays an image and a label
- * 
- * For use with the com.dgrigg.controls.DataGrid
- */
-
-package com.mapx.view.controls{
+package org.mig.view.controls
+{
     
-    import com.map.model.MediaContainerNode;
     import com.thanksmister.controls.ImageCache;
     
     import flash.display.DisplayObject;
     import flash.events.Event;
-	import com.map.controller.ControllerLocator;
     import mx.controls.AdvancedDataGrid;
     import mx.controls.TileList;
     import mx.core.UIComponent;
     import mx.core.UITextField;
     
     public class TileListCustomDragProxy extends UIComponent
-    {      	
+    {   
+		public var thumbURL:String;
         public function TileListCustomDragProxy():void
         {
             super();
@@ -48,7 +36,7 @@ package com.mapx.view.controls{
                 var image:ImageCache = new ImageCache();
                 image.addEventListener(Event.COMPLETE,handleComplete);
       
-                image.source = ControllerLocator.mediaManagerController.thumbURL+item.data.path+item.data.name;
+                image.source = thumbURL+item.data.path+item.data.name;
 
 				container.addChild(image);
 				container.x = itemX;

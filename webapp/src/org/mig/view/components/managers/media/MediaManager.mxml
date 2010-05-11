@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:ViewStack width="100%" height="100%"
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:renderers="com.mapx.view.renderers.*"
+	xmlns:controls="com.mapx.view.controls.*" 
+	xmlns:mediaManager="com.mapx.view.mediaManager.*" 
+	xmlns:tabs="com.mapx.view.content.tabs.*"
+	creationComplete="addContextMenu()"
+	horizontalScrollPolicy="off" >
+	
+	<mx:Script source="MediaManagerScript.as"/>
+	<mx:Script>
+		<![CDATA[
+			import mx.core.Application;
+			import com.map.controller.ControllerLocator;
+			import mx.effects.easing.*;
+			
+		]]>
+	</mx:Script>
+	
+	<mx:VBox width="100%" height="100%" verticalScrollPolicy="off" >
+		<controls:MiGAdvancedDataGrid
+			creationComplete="initList()" 	
+			updateComplete="setLoaded()"
+			id="listView" styleName="mediaManagerGrid"
+			allowDragSelection="true"
+			dragEnabled="true"
+			dropEnabled="true"
+			dragMoveEnabled="false"
+			dragFormat="Media"   
+			allowMultipleSelection="true"
+			headerHeight="22" 
+			sortableColumns="true"				
+			width="100%" height="100%" 
+			folderClosedIcon="@Embed(source='/migAssets/library.swf#folderIcon')"
+			folderOpenIcon="@Embed(source='/migAssets/library.swf#folderIcon')"
+			defaultLeafIcon="{null}"
+			editable="true"
+			clearingLines="true" clearVLineIndices="[]" customProxy="true" 
+			dataProvider="{_dpList}"
+			doubleClick="handleDoubleClickList(event)" 
+			itemClick="handleItemClick(event)"
+			keyDown="handleKeyDown(event)"
+			mouseUp="handleListDragStart(event)"
+		    dragDrop="handleListDragDrop(event)"
+		 	dragOver="handleListDragEnter(event)"		 	 
+			doubleClickEnabled="true" 
+			treeColumn="{treeColumn}" draggableColumns="false"
+			itemRollOver="lastRollOverIndex = event.rowIndex"
+			headerSortSeparatorSkin="com.mapx.view.skins.SortSeparatorSkin">		
+			<controls:columns>
+				<mx:AdvancedDataGridColumn editable="false"  headerText="Name"  width="350" dataField="label"  id="treeColumn">
+<!--					<mx:itemRenderer>
+						<mx:Component>
+							<mx:Label  text="{this.data}" contextMenu="{outerDocument.rightClickMenu}" />
+						</mx:Component>
+					</mx:itemRenderer>-->
+				</mx:AdvancedDataGridColumn>
+				<mx:AdvancedDataGridColumn editable="false" color="0x666666"  headerText="File Size" dataField="size" width="100">
+					<mx:itemRenderer>
+						<mx:Component>	
+							<renderers:AdvancedDatagridCellEditor  horizontalScrollPolicy="off" colorEnabled="true" outerFunction="{this.outerDocument.handleSizeField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>
+						</mx:Component>
+					</mx:itemRenderer>
+				</mx:AdvancedDataGridColumn>
+				<mx:AdvancedDataGridColumn editable="false" color="0x666666" headerText="Extension" dataField="label" width="50">
+					<mx:itemRenderer>
+						<mx:Component>
+							<renderers:AdvancedDatagridCellEditor  horizontalScrollPolicy="off" colorEnabled="true" outerFunction="{this.outerDocument.handleExtensionField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>
+						</mx:Component>
+					</mx:itemRenderer>			
+				</mx:AdvancedDataGridColumn>
+				<mx:AdvancedDataGridColumn  editable="false" headerText="Created By" dataField="createdby">
+					<mx:itemRenderer>
+						<mx:Component>
+							<renderers:AdvancedDatagridCellEditor  horizontalScrollPolicy="off" colorEnabled="true" outerFunction="{this.outerDocument.handleUserField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>
+						</mx:Component>
+					</mx:itemRenderer>
+				</mx:AdvancedDataGridColumn>
+				<mx:AdvancedDataGridColumn editable="false" headerText="Creation Date" dataField="createdate">
+					<mx:itemRenderer>
+						<mx:Component>
+							<renderers:AdvancedDatagridCellEditor  horizontalScrollPolicy="off" colorEnabled="true" outerFunction="{this.outerDocument.handleDateField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>
+						</mx:Component>
+					</mx:itemRenderer>
+				</mx:AdvancedDataGridColumn>
+			</controls:columns>
+		</controls:MiGAdvancedDataGrid>
+		<mx:Label styleName="bodyCopy" text="{_dpTile.length + ' items'}" textAlign="center" width="100%"/>
+	</mx:VBox>
+	
+	<mx:VBox width="100%" height="100%" horizontalScrollPolicy="off">
+		<mx:Canvas width="100%" height="100%" horizontalScrollPolicy="off">
+		<controls:MiGTileList
+			creationComplete="initThumb()" 	
+			updateComplete="setLoaded()"	
+			id="thumbView" 
+			width="100%"
+			allowDragSelection="true"
+			dragEnabled="true" dragFormat="Media"
+			allowMultipleSelection="true" 
+			doubleClickEnabled="true"
+			columnWidth="{260*_scalePercent}"  
+			rowHeight="{300*_scalePercent}" 
+		    scalePercent="{_scalePercent}"
+			dataProvider="{_dpTile}" 
+			doubleClick="handleDoubleClickThumb(event)"
+		    itemClick="handleItemClick(event)" 		  
+		    keyDown="handleKeyDown(event)"
+			borderThickness="0"
+			backgroundAlpha="0" 	
+			rollOverColor="0xed1c58" 
+			selectionColor="0xed1c58" 
+			itemRollOver="lastRollOverIndex = event.rowIndex"
+			selectionEasingFunction="Exponential.easeIn">
+			<controls:itemRenderer>
+				<mx:Component>
+					<mediaManager:FileView scalePercent="{outerDocument.scalePercent}" >
+					</mediaManager:FileView>
+				</mx:Component>
+			</controls:itemRenderer>
+		</controls:MiGTileList>
+		</mx:Canvas>
+		<mx:Label styleName="bodyCopy" text="{_dpTile.length + ' items'}" textAlign="center" width="100%" bottom="5"/>
+	</mx:VBox>
+	<mx:Sequence repeatCount="4" effectEnd="handleEffectEnd()" id="blink">
+		<mx:Fade id="fadeOut" alphaFrom="1" alphaTo=".5" duration="200" />
+		<mx:Fade id="fadeIn" alphaFrom="0.5" alphaTo="1" duration="200" />
+	</mx:Sequence>
+	<mx:Number id="lastRollOverIndex" />		
+
+
+<mx:Binding source="this.linkedResource" destination="Application.application.mainView.editorsView.linkedResource" />	
+<mx:Binding source="Application.application.linkingMode"  destination="this.linkingMode" />
+</mx:ViewStack>

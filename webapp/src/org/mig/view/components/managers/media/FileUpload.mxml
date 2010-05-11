@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:model="com.map.model.*"
+	xmlns:controller="com.map.controller.*" 
+	xmlns:tools="com.map.view.editor.tools.*"
+	xmlns:editor="com.map.view.editor.*"	
+	clipContent="true" bottom="4" right="4" left="4" 
+	width="100%"  height="100%" creationComplete="this.setCurrentState('uploadComplete', true)"
+	 xmlns:mediaManager="com.mapx.view.mediaManager.*">
+	<!-- 	direction="vertical" barFillColors="[0xFFFFFF,0xFFFFFF]" 
+		dividerThickness="1" dividerSkin="com.fxcomponents.skins.MainDividerSkin" -->
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			import mx.core.Application;
+			import com.map.controller.ControllerLocator;
+			import mx.managers.PopUpManagerChildList;
+			private var uploadProgress:Number=0;
+			private var created:Boolean = false;
+			override public function set enabled(value:Boolean):void
+			{
+				super.enabled = value;
+				if(value && created)
+					this.initializePanel();
+			}
+			public function initializePanel():void
+			{				
+				this.setCurrentState("browse", true);
+			}
+		
+			private function browseFiles():void{
+				ControllerLocator.fileUploadController.browseFiles();
+				this.setCurrentState("upload", true);
+				ControllerLocator.fileUploadController.addEventListener("uploadedListChanged", handleCurrentlyUploadingChanged);
+				ControllerLocator.fileUploadController.addEventListener("resetUploadMod", handleClearUploadMod);
+			}
+			
+			private function uploadFiles():void{
+				ControllerLocator.fileUploadController.addEventListener("bytesLoadedChanged", handleBytesLoadedChanged);
+				uploadBtn.enabled=false;
+				browseBtn.enabled=false;
+				ControllerLocator.fileUploadController.uploadFiles();
+				progressBar.visible=true;
+				
+			}
+			
+		////HANDLER FUNCTIONS////
+			private function handleBytesLoadedChanged(event:Event):void{
+				var loaded:Number = ControllerLocator.fileUploadController.bytesLoaded;
+				var total:Number = ControllerLocator.fileUploadController.bytesTotal;
+				var uploadProgress:Number = loaded/total;
+			}
+			
+			private function handleCurrentlyUploadingChanged(event:Event):void{
+				//Application.application.mainView.contentViewer.mainMediaManager.mediaManager.addNewMediaContent(ControllerLocator.fileUploadController.prevUploaded);
+			}
+		
+			private function handleClearUploadMod(event:Event):void{
+				this.setCurrentState("uploadComplete", true);
+				ControllerLocator.fileUploadController.removeEventListener("resetUploadMod", handleClearUploadMod);
+				uploadBtn.enabled = true;
+				browseBtn.enabled = true;
+			
+			}
+			private function addYoutubeVideo():void
+			{
+				var ui:AddYoutubeView = PopUpManager.createPopUp(this,AddYoutubeView,false,PopUpManagerChildList.POPUP) as AddYoutubeView;
+				PopUpManager.centerPopUp(ui);
+			}
+			private function stopUploads():void
+			{
+				
+			}
+		]]>
+	</mx:Script>
+	<mx:states>
+		<mx:State name="browse">
+			<mx:SetProperty target="{uploadBtn}" name="alpha" value="0"/>
+			<mx:SetProperty target="{progressBar}" name="alpha" value="0"/>
+			<mx:SetProperty target="{progressText}" name="alpha" value="0"/>
+			<mx:SetProperty target="{completedFilesList}" name="alpha" value="0"/>
+		</mx:State>
+		<mx:State name="upload">
+		</mx:State>
+		<mx:State name="uploadComplete">
+		</mx:State>
+	</mx:states>
+	
+	<mx:transitions>
+		<mx:Transition fromState="upload" toState="uploadComplete">
+			<mx:Sequence>
+				<mx:Parallel duration="1000">
+					<mx:Fade target="{uploadBtn}" alphaFrom="1" alphaTo="0"/>
+					<mx:Fade target="{progressBar}" alphaFrom="1" alphaTo="0"/>
+					<mx:Fade target="{progressText}" alphaTo="0" alphaFrom="1"/>
+					<mx:Fade target="{completedFilesList}" alphaTo="0" alphaFrom="1"/>
+				</mx:Parallel>
+				 <mx:SetPropertyAction target="{uploadBtn}" name="visible" value="false"/>
+				<mx:SetPropertyAction target="{completedFilesList}" value="false" name="visible"/>
+			</mx:Sequence>
+		</mx:Transition>
+		<mx:Transition fromState="*" toState="upload">
+			<mx:Sequence>
+				<mx:SetPropertyAction target="{completedFilesList}" value="true" name="visible"/>
+				<mx:SetPropertyAction target="{uploadBtn}" name="visible" value="true"/>
+				<mx:Parallel duration="1000">
+					<mx:Fade target="{uploadBtn}" alphaTo="1"/>			
+					<mx:Fade target="{progressBar}" alphaTo="1"/>
+					<mx:Fade target="{progressText}" alphaTo="1"/>
+					<mx:Fade target="{completedFilesList}" alphaTo="1"/>
+				</mx:Parallel>
+			</mx:Sequence>
+		</mx:Transition>
+	</mx:transitions>
+	
+	<mx:VBox width="100%" height="100%" paddingBottom="10">
+		<mx:HBox width="100%">
+			<mx:Button styleName="defaultButton" label="Youtube" id="uploadBtn2" click="addYoutubeVideo()"/>				
+			<mx:Button styleName="defaultButton" label="Choose File(s)" id="browseBtn" click="{browseFiles();}"/>
+			<mx:Button styleName="defaultButton" visible="false" alpha="0" label="Upload File(s)" id="uploadBtn" click="uploadFiles()"/>				
+			<mx:Button styleName="defaultButton" visible="false" alpha="0" label="Stop" id="stopBtn" click="stopUploads()"/>				
+		</mx:HBox>
+		<mx:Canvas id="progressBar" width="100%" height="2" alpha="0">
+			<mx:Canvas width="100%" height="1" backgroundColor="#000000" backgroundAlpha="1.0" id="bg"/>
+			<mx:Canvas id="progress" backgroundColor="#ffffff" width="{ControllerLocator.fileUploadController.uploadProgress*bg.width}" height="{bg.height}"/>
+		</mx:Canvas>
+		<mx:Text width="100%" styleName="bodyCopy" id="progressText" height="20" alpha="0"
+			htmlText="{'File: '+(ControllerLocator.fileUploadController.currentFileIndex)+'/' + ControllerLocator.fileUploadController.selectedFiles.length+'    '+(ControllerLocator.fileUploadController.uploadProgress*100)+'% Complete'}" />		
+		<mx:TextArea alpha="0" width="100%" height="100%"  backgroundColor="#222222" color="0xffffff"  borderStyle="none"
+			styleName="bodyCopy" id="completedFilesList" htmlText="{'Completed Files: '+(ControllerLocator.fileUploadController.uploadedList)}"/>
+	</mx:VBox>
+</mx:Canvas>

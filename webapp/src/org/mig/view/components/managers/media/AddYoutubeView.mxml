@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
+				horizontalScrollPolicy="off" paddingRight="10" paddingLeft="10" paddingBottom="10"
+				height="300" width="300" 
+				title="Add Youtube Video" styleName="bodyCopy"
+				xmlns:content="com.mapx.view.content.*" 
+				creationComplete="handleCreationComplete()" 
+				xmlns:controls="com.mapx.view.controls.*">
+	<mx:Script>
+		<![CDATA[
+			import com.mapx.view.content.SystemPopup;
+			import mx.collections.ArrayCollection;
+			import com.map.model.ContainerNode;
+			import com.map.services.XmlHttpOperation;
+			import mx.events.FlexEvent;
+			import com.map.model.ContentNode;
+			import com.map.model.MediaContainerNode;
+			import mx.core.Application;
+			import mx.managers.PopUpManager;
+			import com.map.controller.Constants;
+			import mx.controls.Alert;
+			import com.map.controller.ControllerLocator;
+			import mx.managers.PopUpManagerChildList;
+			private function handleCreationComplete():void
+			{
+				
+			}
+			private function cancel():void
+			{
+				PopUpManager.removePopUp(this);
+			}	
+			private function submitData():void
+			{
+				if(nameInput.text != '' && urlInput.text != '')
+				{
+					var operation:XmlHttpOperation = new XmlHttpOperation(Constants.EXECUTE);
+					operation.addEventListener(Event.COMPLETE, handleDatabaseComplete);		      
+					var params:Object = new Object();
+					params.action = "insertRecord";
+					params.tablename = "media";
+					params.name = nameInput.text;
+					params.path = "/" + ControllerLocator.fileUploadController.uploadPath + '/';		
+					params.url = urlInput.text;
+					params.mimetype = "youtube";
+					params.createdby = Application.application.user.id;
+					params.modifiedby = Application.application.user.id;
+					params.verbose = true;
+					var date:Date = new Date();
+					params.createdate = date.time;
+					params.modifieddate = date.time;	   
+					operation.params = params;
+					operation.execute();   
+				}
+			}
+				
+			/**
+			 * Complete handler for the operation.
+			 */
+			private function handleDatabaseComplete(event:Event):void
+			{
+				var _data:XMLList = event.target.xml.children();
+				var popup:SystemPopup;
+				if(_data.children().length() > 1)
+				{
+					Application.application.mainView.statusMod.updateStatus("Update Successful.");
+					var newNode:MediaContainerNode = ControllerLocator.fileUploadController.currentMediaCategoryNode.addMediaContainerNode(event.target.xml.children()[0],nameInput.text); 
+					PopUpManager.removePopUp(this);
+				}
+				else
+				{
+					//Alert.show("Error Connecting To The Database. Try Again Later.");
+					popup = new SystemPopup();
+					popup.type = 1;
+					popup.message = "Error Connecting To The Database. Try Again Later.";
+					PopUpManager.addPopUp(popup,Application.application.mainView,true,PopUpManagerChildList.POPUP);		
+				}
+			}
+			
+			private function handleErrors(errorMsg:String):void
+			{
+				Alert.show(errorMsg);
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Form maxWidth="750" paddingLeft="0" indicatorGap="2" verticalGap="15" styleName="removeButton" horizontalScrollPolicy="off">
+		
+		<mx:HBox paddingLeft="5">
+			<mx:VBox verticalGap="1" paddingLeft="0">
+				<mx:HBox width="100%" horizontalGap="0">
+					<!--<mx:SWFLoader source="{folderIcon}" width="23" height="17" />-->
+					<mx:Text text="Name" color="0xffffff" fontAntiAliasType="advanced" paddingLeft="0"/>
+				</mx:HBox>
+				<controls:MiGTextInput styleName="inputFieldGray"  text="" width="200" id="nameInput" />
+				<mx:Spacer height="10" />
+				<mx:Text text="Youtube Video URL" color="0xffffff" fontAntiAliasType="advanced" paddingLeft="0"/>
+				<controls:MiGTextInput styleName="inputFieldGray"  text="" width="200" id="urlInput" />
+			</mx:VBox>
+		</mx:HBox>
+	</mx:Form>
+	<mx:HBox horizontalGap="3" paddingTop="10" paddingLeft="5">
+		<mx:Button  styleName="defaultButton" label="Submit" click="submitData()"/>
+		<mx:Button styleName="defaultButton" label="Cancel" click="cancel()"/>
+	</mx:HBox>
+	
+</mx:TitleWindow>

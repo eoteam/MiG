@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
-		    implements="org.mig.view.interfaces.IEditableContentView">
+		   implements="org.mig.view.interfaces.IEditableContentView" 
+		   xmlns:controls="org.mig.view.controls.*" xmlns:containers="org.mig.view.containers.*" xmlns:tabs="org.mig.view.components.content.tabs.*">
 	<mx:Script>
 		<![CDATA[
+			import flash.events.DataEvent;
+			
+			import mx.effects.easing.Exponential;
+			
 			import org.mig.model.vo.ContentNode;
 			import org.mig.view.interfaces.IEditableContentView;
+			
 			[Bindable] private var _content:ContentNode;
+			[Bindable] public var scalePercent:Number;
+			
 			public function set content(value:ContentNode):void {
 				_content = value
 			}
@@ -15,8 +23,146 @@
 			public function submit(statusid:int=0):void {
 				
 			}
+			private function handleViewBtn(index:int):void {
+				this.dispatchEvent(new DataEvent("viewBtn",false,false,index.toString()));
+			}
+			private function parentDirIcon_clickHandler(event:MouseEvent):void {
+				scaleSlider.value = 1;
+				stack.selectedIndex = 0;
+				this.currentState = "usage"; 
+			}
 		]]>
 	</mx:Script>
 	
-	<mx:Label styleName="boldCopy" text="drag files and/or folders" color="0x191919" fontSize="20" id="instruction" textAlign="center" verticalCenter="0" horizontalCenter="0"/>  
+	<mx:Label styleName="boldCopy" text="drag files and/or folders" color="0x191919" fontSize="20" id="instruction" textAlign="center" verticalCenter="0" horizontalCenter="0"/>
+	
+	<mx:states>
+		<mx:State name="usage">
+			<mx:AddChild relativeTo="{controlBox}">
+				<mx:HBox width="100%" horizontalGap="8" height="100%" verticalAlign="middle" paddingBottom="3" paddingTop="6">
+					<mx:Spacer width="100%" />
+					<controls:MiGHSlider value="1"  id="scaleSlider" minimum="0.5" maximum="2" change="scalePercent=scaleSlider.value" />	
+				</mx:HBox>
+			</mx:AddChild>
+		</mx:State>
+		<mx:State name="view1">
+			<mx:AddChild relativeTo="{controlBox}">
+				<mx:HBox height="100%" creationComplete="handleViewBtn(1)" width="100%" id="subControlBox" horizontalGap="0" verticalAlign="middle" paddingBottom="3" paddingTop="6">
+					<mx:Label id="typeLabel"  styleName="boldCopy" text="{usageList.selectedItem.name}" />
+					<mx:SWFLoader  source="@Embed(source='/migAssets/library.swf#mediaParentFolder')"  mouseChildren="false" id="parentDirIcon" 
+					click="parentDirIcon_clickHandler(event)" 
+					toolTip="Up 1 Folder" buttonMode="true" useHandCursor="true"  />
+					<mx:Spacer width="100%" />
+		
+					<mx:Button toggle="true" id="view1Btn" paddingLeft="9" paddingTop="4"  width="30" textAlign="center" toolTip="Small"  icon="@Embed(source='/migAssets/library.swf#mediaTabSmallThumb')" click="handleViewBtn(1)" />
+					<mx:Button toggle="true" id="view2Btn" paddingLeft="9" paddingTop="2"  width="30" textAlign="center"  toolTip="Medium"  icon="@Embed(source='/migAssets/library.swf#mediaTabMediumThumb')" click="handleViewBtn(2)" />
+					<mx:Button toggle="true" id="view3Btn" paddingLeft="9" paddingTop="2"  width="30" textAlign="center"  toolTip="Preview"   icon="@Embed(source='/migAssets/library.swf#mediaTabSlideShowIcon')" click="handleViewBtn(3)" />					
+					
+					<mx:Spacer width="5" />
+					<mx:Button icon="@Embed(source='/migAssets/library.swf#deleteIconSmall')" 
+							   width="30" paddingLeft="9" paddingTop="2" id="trashButton" toolTip="Delete" enabled="false" mouseEnabled="false"
+							   mouseChildren="false" buttonMode="true" /><!--  dragDrop="handleTrashDrop(event)" click="handleTrashClick()" dragEnter="handleTrashEnter(event)" -->						
+					<mx:Spacer width="5" />
+					
+					<mx:Button icon="@Embed(source='/migAssets/library.swf#fileActions')" 
+							   width="34"  id="actionButton" 
+							   mouseChildren="false"  paddingTop="2" buttonMode="true"  enabled="false" mouseEnabled="false"/>	
+					<mx:Spacer width="5" /><!-- click="actionButton_clickHandler(event)" -->
+					
+					<controls:MiGHSlider id="scaleSlider2" value="1"  minimum="0.25" maximum="2" change="scalePercent=scaleSlider2.value"    alpha="0.5" mouseEnabled="false"/>
+				</mx:HBox>
+			</mx:AddChild>
+		</mx:State>
+		<mx:State name="view2" basedOn="view1">
+			<mx:SetProperty target="{trashButton}" name="enabled" value="true" />
+			<mx:SetProperty target="{trashButton}" name="mouseEnabled" value="true" />
+			<mx:SetProperty target="{actionButton}" name="enabled" value="true" />
+			<mx:SetProperty target="{actionButton}" name="mouseEnabled" value="true" />
+		</mx:State>		
+		<mx:State name="view3" basedOn="view2">
+			<mx:SetProperty target="{scaleSlider2}" name="alpha" value="1" />
+			<mx:SetProperty target="{scaleSlider2}" name="mouseEnabled" value="true" />
+		</mx:State>
+	</mx:states>
+	
+	<mx:VBox width="100%" height="100%" paddingLeft="10" paddingRight="10" paddingBottom="10" verticalGap="2">
+		<mx:Canvas width="100%" id="controlBox" height="40"/>	
+		<mx:ViewStack width="100%" height="100%" id="stack" creationPolicy="all">
+			<mx:Canvas width="100%" height="100%" id="usageHolder">
+				<controls:MiGTileList  horizontalScrollPolicy="off"  id="usageList"
+			   	width="100%" height="100%"
+			   	backgroundAlpha="0" 
+			   	backgroundColor="0xffffff"
+			   	columnWidth="{210*scalePercent}"  
+			   	rowHeight="{210*scalePercent}" 
+			   	borderThickness="0"				
+			   	dropEnabled="true" 
+			   	doubleClickEnabled="true">
+					<controls:itemRenderer>
+						<mx:Component>
+							<mx:VBox
+							scaleY="{outerDocument.scalePercent}" scaleX="{outerDocument.scalePercent}"
+							paddingLeft="5" paddingTop="5" paddingRight="5" paddingBottom="5" 
+							doubleClickEnabled="true"
+							mouseChildren="false" buttonMode="true"
+							verticalScrollPolicy="off" horizontalScrollPolicy="off">
+								<mx:SWFLoader maintainAspectRatio="true" width="200" height="150"
+								source="@Embed(source='/migAssets/library.swf#mediaFolder')" />
+								<mx:Label text="{data.name}" styleName="boldCopy" fontSize="25" maxWidth="200" bottom="0"
+								selectable="false"  truncateToFit="true" color="0xffffff"/>
+							</mx:VBox>		
+						</mx:Component>
+					</controls:itemRenderer>
+				</controls:MiGTileList>			
+			</mx:Canvas>
+			
+			<mx:Canvas width="100%" id="animatedTileHolder" height="100%" horizontalScrollPolicy="off">
+				<containers:DragTile
+					horizontalScrollPolicy="off"
+					dataField="content"
+					backgroundColor="#ffffff" backgroundAlpha="0" 
+					scalePercent="{scalePercent}" 
+					dragOver='event.target.showDragFeedback(event,"move")'
+					dragEnter="event.target.allowDrag(event,'move')"
+					id="animatedList" left="0" right="0" horizontalAlign="left"
+					width="100%" height="100%" >
+				</containers:DragTile>		
+			</mx:Canvas>
+		
+			<mx:Canvas width="100%" height="100%" id="tileHolder" 			
+					   backgroundColor="0xffffff"
+					   backgroundAlpha="0"> 
+			<!--dragEnter="handleDragEnter(event)" 
+				dragComplete="animListDirty=true" -->
+				<controls:MiGTileList
+					id="fixedList" 
+					width="100%" height="100%"
+					dragFormat="TabFiles"
+					itemsChangeEffect="{myTileListEffect}"
+					doubleClickEnabled="true" 
+					borderThickness="0" backgroundColor="0xffffff" backgroundAlpha="0" focusAlpha="0"	
+					rollOverColor="0xed1c58" color="0xed1c58" newSelectionColor="0xF491A9" selectionColor="0xed1c58" 
+					scalePercent="1" rowHeight="240" columnWidth="200" 
+					allowMultipleSelection="true" allowDragSelection="true" dropEnabled="true" dragMoveEnabled="true" dragEnabled="true"
+					variableRowHeight="false" customProxy="true" keyboardLookUp="false"	    	    
+					useSelectionColor="false" liveScrolling="true"   
+					selectionEasingFunction="Exponential.easeIn">
+<!--					<controls:itemRenderer>
+						<mx:Component>
+							<tabs:FixedFileView />
+						</mx:Component>
+					</controls:itemRenderer>-->
+				</controls:MiGTileList>
+			</mx:Canvas>
+			
+			<mx:Canvas width="100%" height="100%">
+			<!--	<mediaManager:MediaPlayer id="slideShowContainer" />-->
+			</mx:Canvas>
+		</mx:ViewStack>
+	</mx:VBox>
+	<mx:DefaultTileListEffect id="myTileListEffect" fadeOutDuration="150" suspendBackgroundProcessing="true" fadeInDuration="150" moveDuration="500" />
+	<mx:Fade id="fadeIn"   alphaFrom="0" alphaTo="1" duration="500"/>
+	<mx:Fade id="fadeOut" alphaTo="0" duration="500"/>
+
+	
 </mx:Canvas>
