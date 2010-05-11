@@ -19,25 +19,24 @@ package org.mig.model.vo
 	
 	public class ContentNode
 	{
-		
 		public var children:ArrayCollection;
 		public var parentNode:ContentNode;
 		public var subContainers:Dictionary;
-		
 		public var data:ValueObject;
-		public var privileges:int;
+		public var privileges:int;		
 		
 		protected var _config:XML;
-
-		
+		protected var _baseLabel:String;
 		
 		public function ContentNode(baseLabel:String, config:XML, data:ValueObject, parentNode:ContentNode,privileges:int) {
 			this.parentNode = parentNode;	
 			this.baseLabel = baseLabel.replace(/<.*?>/g, "");
+			this.baseLabel = baseLabel.replace(/]]>/g, "");
 			this.data = data;
 			_config = config;
 			this.privileges = privileges;
 			children = new ArrayCollection();
+			subContainers = new Dictionary();
 			children.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleCollection);								
 		}		
 	
@@ -51,71 +50,78 @@ package org.mig.model.vo
 			}
 			//this.updateLabel();
 		}	
-		
-		//removes a child node from the children list
-/*		public function removeNode(node:ContentNode):void {
-			var fc:Function
-			if(children.filterFunction != null)
-			{
-				children.filterFunction = null;
-				children.refresh();
-			}
-			var nodeIndex:int = this.children.getItemIndex(node);
-			this.children.removeItemAt(nodeIndex);
-			if(fc != null)
-			{
-				children.filterFunction = fc;
-				children.refresh();
-			}
-			//dispatchEvent(new ContentNodeEvent(ContentNodeEvent.NODE_DELETED,node));
-			//updateLabel();  	
-		}	*/		
-/*		public function addNode(node:ContentNode,index:int=-1,update:Boolean=true,swap:Boolean=false):void {
-			var fc:Function;
-			if(!children)
-				children = new ArrayCollection();
-			else if(children.filterFunction != null)
-			{
-				children.filterFunction = null;
-				children.refresh();
-			}	
-			if(index == -1)
-				this.children.addItemAt(node,0);
-			else if(swap)
-				this.children.setItemAt(node,index);
-			else
-				this.children.addItemAt(node,index);
-			if(fc != null)
-			{
-				children.filterFunction = fc;
-				children.refresh();
-			}			
-			//dispatchEvent(new ContentNodeEvent(ContentNodeEvent.NODE_ADDED,node));
-			//updateLabel();
-			//			if(update)
-			u//pdateChildrenOrder();
-		}	*/
 		public function get config():XML {
 			return _config;
 		}		
 		public function get label():String {
-			if(children != null && children.length > 0)
+			if(children.length > 0)
 				return _baseLabel + " (" + children.source.length + ")";
 			else
 				return _baseLabel;	
 		}
-		protected var _baseLabel:String;
+		public function get debugLabel():String {
+			if(children.length > 0)
+				return  "id=" + data.id+"\t"+_baseLabel + " (" + children.source.length + ")";
+			else
+				return "id=" + data.id+"\t"+_baseLabel;			
+		}	
 		public function set baseLabel(value:String):void {
 			_baseLabel = value;
 			if(data)
 				data[_config.@labelField] = value;
 		}
-		[Bindable] public function get baseLabel():String {
+		[Bindable] 
+		public function get baseLabel():String {
 			return _baseLabel;
 		}
 		public function toString():String {
 			return this.label;
 		}	
+		
+		
+		//removes a child node from the children list
+		/*		public function removeNode(node:ContentNode):void {
+		var fc:Function
+		if(children.filterFunction != null)
+		{
+		children.filterFunction = null;
+		children.refresh();
+		}
+		var nodeIndex:int = this.children.getItemIndex(node);
+		this.children.removeItemAt(nodeIndex);
+		if(fc != null)
+		{
+		children.filterFunction = fc;
+		children.refresh();
+		}
+		//dispatchEvent(new ContentNodeEvent(ContentNodeEvent.NODE_DELETED,node));
+		//updateLabel();  	
+		}	*/		
+		/*		public function addNode(node:ContentNode,index:int=-1,update:Boolean=true,swap:Boolean=false):void {
+		var fc:Function;
+		if(!children)
+		children = new ArrayCollection();
+		else if(children.filterFunction != null)
+		{
+		children.filterFunction = null;
+		children.refresh();
+		}	
+		if(index == -1)
+		this.children.addItemAt(node,0);
+		else if(swap)
+		this.children.setItemAt(node,index);
+		else
+		this.children.addItemAt(node,index);
+		if(fc != null)
+		{
+		children.filterFunction = fc;
+		children.refresh();
+		}			
+		//dispatchEvent(new ContentNodeEvent(ContentNodeEvent.NODE_ADDED,node));
+		//updateLabel();
+		//			if(update)
+		u//pdateChildrenOrder();
+		}	*/		
 		// base label to use when constructing a label
 		
 		/*		protected function remove():void {

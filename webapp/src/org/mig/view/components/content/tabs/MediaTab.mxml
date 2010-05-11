@@ -17,4 +17,6 @@
 			}
 		]]>
 	</mx:Script>
+	
+	<mx:Label styleName="boldCopy" text="drag files and/or folders" color="0x191919" fontSize="20" id="instruction" textAlign="center" verticalCenter="0" horizontalCenter="0"/>  
 </mx:Canvas>

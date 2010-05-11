@@ -3,7 +3,7 @@ package org.mig.view.renderers
 	import com.greensock.TweenMax;
 	import com.greensock.easing.Expo;
 	
-	
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
@@ -18,20 +18,21 @@ package org.mig.view.renderers
 	public class ContentTreeRenderer extends TreeItemRenderer
 	{		
 		
-		[Embed(source="/migAssets/flex_skins.swf#Tree_folderOpenIconGray")]
+/*		[Embed(source="/migAssets/flex_skins.swf#Tree_folderOpenIconGray")]
 		[Bindable] private var openIcon:Class;
 		
 		[Embed(source="/migAssets/flex_skins.swf#Tree_folderClosedIconGray")]
 		[Bindable] private var closedIcon:Class;
 		
 		[Embed(source="/migAssets/library.swf#collapsePanelIconRight")]
-		[Bindable] private var zeroChild:Class;
+		[Bindable] private var zeroChild:Class;*/
 		
 		
-		public var bg:Canvas;
-		public var overBg:Canvas;		
-		public var selected:Boolean = false;
-		private var swfLoader:SWFLoader;
+		private var bg:Canvas;
+		private var overBg:Canvas;	
+		
+		private var selected:Boolean = false;
+		//private var swfLoader:SWFLoader;
 		
 		[Bindable] private var _overAlpha:Number = 1;
 		private var _isCreated:Boolean = false;
@@ -116,28 +117,28 @@ package org.mig.view.renderers
 				}         
 			}
 		}
-		public function selectedColorOff():void
+		private function selectedColorOff():void
 		{
 			selected = false;
 			TweenMax.to(overBg,1, {alpha:0,ease:Expo.easeOut});
 			TweenMax.to(this.getChildAt(3),1, {tint:null,  ease:Expo.easeOut});
 			addEventListener(MouseEvent.ROLL_OVER, handleMouseOver);
 		}
-		public function setColorHalfOn():void
+		private function setColorHalfOn():void
 		{
 			TweenMax.to(overBg,1, {alpha:0.5,  ease:Expo.easeOut});
 			TweenMax.to(this.getChildAt(3),1, {tint:0xBD1E53,  ease:Expo.easeOut});
 			removeEventListener(MouseEvent.ROLL_OVER, handleMouseOver);
 			removeEventListener(MouseEvent.ROLL_OUT, handleMouseOut);
 		}		
-		public function setColorHalfOff():void
+		private function setColorHalfOff():void
 		{
 			TweenMax.to(overBg,1, {alpha:0, ease:Expo.easeOut});
 			TweenMax.to(this.getChildAt(3),1, {tint:null,  ease:Expo.easeOut});
 			addEventListener(MouseEvent.ROLL_OVER, handleMouseOver);
 		}				
 		
-		public function selectedColorOn():void
+		private function selectedColorOn():void
 		{
 			removeEventListener(MouseEvent.ROLL_OVER, handleMouseOver);
 			selected = true;
@@ -166,11 +167,12 @@ package org.mig.view.renderers
 			if(!selected)
 			{
 				TweenMax.to(overBg, 1,{alpha:0,  ease:Expo.easeOut});
+				var c:DisplayObject = this.getChildAt(3);
 				TweenMax.to(this.getChildAt(3),1, {tint:null,  ease:Expo.easeOut});
 				removeEventListener(MouseEvent.ROLL_OUT, handleMouseOut);
 			}
 		}
-		public function toggle(state:Boolean):void
+		private function toggle(state:Boolean):void
 		{
 			var bgAlpha:int = state ? 1:0;
 			bg.visible = state;

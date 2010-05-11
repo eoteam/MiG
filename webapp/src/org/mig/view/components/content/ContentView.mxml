@@ -33,9 +33,9 @@
     	<mx:Button label="Publish"  styleName="defaultButton" id="publishBtn" />
     </mx:HBox>
 	<mx:TabNavigator 
-		borderThickness="0" backgroundAlpha="0" 
+		borderThickness="0" backgroundAlpha="0"  creationPolicy="queued"
 		width="100%" verticalGap="0" height="100%" styleName="contentTabNavigator" 
 		selectedTabTextStyleName=""   historyManagementEnabled="false"
-		 id="contentTabs" /><!-- change="handleChange(event)">-->
+		 id="contentTabs" />
 </mx:VBox>
 

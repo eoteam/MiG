@@ -1,9 +1,11 @@
 package org.mig.view.mediators.content
 {
 	import flash.display.DisplayObject;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	import mx.core.UIComponent;
+	import mx.events.IndexChangedEvent;
 	
 	import org.mig.events.ContentEvent;
 	import org.mig.model.vo.content.ContentData;
@@ -50,8 +52,14 @@ package org.mig.view.mediators.content
 				var data:ContentData = new ContentData();
 				data.id = view.content.data.id;
 				
-				var subNode:SubContainerNode = new SubContainerNode(container.@name, container, data, view.content,view.content.privileges,queryVars);
-				eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.RETRIEVE_CHILDREN,subNode));
+				var subNode:SubContainerNode;
+				if(!view.content.subContainers[container.@name.toString()]) {
+					subNode = new SubContainerNode(container.@name, container, data, view.content,view.content.privileges,queryVars);
+					view.content.subContainers[container.@name.toString()] = subNode;
+					eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.RETRIEVE_CHILDREN,subNode));
+				}
+				else
+					subNode = view.content.subContainers[container.@name];
 				var tabItem:ContentTabItem = new ContentTabItem();
 				view.contentTabs.addChild(tabItem);
 				tabItem.content = subNode;
@@ -62,7 +70,15 @@ package org.mig.view.mediators.content
 				editableViewsList.push(tabItem);
 				
 				view.draftBtn.addEventListener(MouseEvent.CLICK,handleDraft);
-				view.publishBtn.addEventListener(MouseEvent.CLICK,handlePublish)
+				view.publishBtn.addEventListener(MouseEvent.CLICK,handlePublish);
+				view.contentTabs.addEventListener(Event.CHANGE,handleTabChange);
+			}
+		}
+		private function handleTabChange(event:IndexChangedEvent):void
+		{
+			if(event.newIndex > 0 ) {
+				var selectedTabItem:ContentTabItem = view.contentTabs.getChildAt(event.newIndex) as ContentTabItem;	
+				selectedTabItem.configure();
 			}
 		}
 		private function handleDraft(event:MouseEvent):void {

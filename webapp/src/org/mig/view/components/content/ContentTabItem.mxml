@@ -3,8 +3,7 @@
 	xmlns:mx="http://www.adobe.com/2006/mxml"
 	xmlns:view.content="com.map.view.content.*"
 	 implements="org.mig.view.interfaces.IEditableContentView"
-	height="100%" width="100%" horizontalScrollPolicy="off"
-	creationComplete="handleCreationComplete()">
+	height="100%" width="100%" horizontalScrollPolicy="off">
 
 	<mx:Script>
 		<![CDATA[
@@ -17,7 +16,7 @@
 			
 			[Bindable] private var _content:SubContainerNode;
 			private var view:IEditableContentView;
-			
+			public var configured:Boolean = false;
 			public function set content(value:ContentNode):void {
 				_content = value as SubContainerNode;
 			}
@@ -25,16 +24,20 @@
 				return _content;
 			}
 			public function submit(statusid:int=0):void {
-				
+				view.submit(statusid);
 			}
-			public function handleCreationComplete():void {
-				view = IEditableContentView(ClassUtils.instantiateClass(_content.config.@contentView));
-				view.content = _content;
-				UIComponent(view).percentHeight = 100;
-				UIComponent(view).percentWidth = 100;
-				UIComponent(view).y = 0;
+			//this accomodates lazy instantiation of the actual view
+			public function configure():void {
+				if(!configured) {
+					view = IEditableContentView(ClassUtils.instantiateClass(_content.config.@contentView));
+					view.content = _content;
+					UIComponent(view).percentHeight = 100;
+					UIComponent(view).percentWidth = 100;
+					UIComponent(view).y = 0;
+					this.addChild(UIComponent(view));
+					configured = true;
+				}
 			}
-			
 		]]>
 	</mx:Script>
 	<mx:Binding source="_content.label" destination="this.label" />

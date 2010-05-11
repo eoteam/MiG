@@ -18,6 +18,12 @@ package org.mig.model.vo.content
 			this.queryVars = queryVars;
 			super(baseLabel, config, data, parentContent,privileges);
 		}
+		override public function get label():String {
+			if(children != null && children.length > 0)
+				return _baseLabel + " (" + children.source.length + ")";
+			else
+				return _baseLabel + " (0)";	
+		}
 /*		override protected function retrieve():void {
 			if(queryVars != null) {
 				var params:Object = new Object();
