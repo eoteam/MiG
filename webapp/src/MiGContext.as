@@ -31,6 +31,7 @@ package
 	import org.mig.view.components.main.MainView;
 	import org.mig.view.components.main.ManagersTree;
 	import org.mig.view.components.main.StatusModule;
+	import org.mig.view.components.managers.media.MediaManager;
 	import org.mig.view.mediators.content.ContentGeneralEditorMediator;
 	import org.mig.view.mediators.content.ContentViewMediator;
 	import org.mig.view.mediators.content.tabs.MediaTabMediator;
@@ -40,6 +41,7 @@ package
 	import org.mig.view.mediators.main.MainViewMediator;
 	import org.mig.view.mediators.main.ManagersTreeMediator;
 	import org.mig.view.mediators.main.StatusModuleMediator;
+	import org.mig.view.mediators.managers.media.MediaManagerMediator;
 	import org.mig.view.renderers.MediaTile;
 	import org.robotlegs.base.ContextEvent;
 	import org.robotlegs.mvcs.Context;
@@ -85,8 +87,9 @@ package
 			mediatorMap.mapView(ContentViewer,ContentViewerMediator); 
 			mediatorMap.mapView(ContentView,ContentViewMediator);
 			mediatorMap.mapView(ContentGeneralEditor,ContentGeneralEditorMediator);
-	
 			mediatorMap.mapView(MediaTab,MediaTabMediator);
+			mediatorMap.mapView(MediaManager,MediaManagerMediator);
+			
 			injector.mapClass(TagsCategoriesTab,TagsCategoriesTab);
 			injector.mapClass(MediaTile,MediaTile);
 			

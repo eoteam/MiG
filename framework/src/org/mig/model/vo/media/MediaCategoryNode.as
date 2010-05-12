@@ -26,6 +26,8 @@ package  org.mig.model.vo.media
 			this.directory = directory;
 			numItems = 0;
 			numFolders = 0;
+			diskFiles = [];
+			newFiles = [];
 			super(baseLabel, config, data, parentContent,privileges);	
 		}	
 		/*
@@ -50,70 +52,7 @@ package  org.mig.model.vo.media
 			
 		}
 
-		
-		private var thumbCount:int
-		private var thumbTotal:int;
-		private function handleDBComplete(results:Array,token:AsyncToken=null):void {
-			var item:MediaData;
-			var result:MediaData;
-			newFiles = [];
-			thumbCount = 0;
-			thumbTotal = 0;
-			var file:Object;
-			if(results.length > 0) {// some files are stored, correlate disk with DB
-				for each(item in diskFiles) {
-					var found:Boolean = false;
-					for each(result in results) {
-						if(item.name == result.name) {
-							found = true;
-							var node:MediaContainerNode = new MediaContainerNode(result.name, _config, result, this,this.privileges);
-							children.addItem(node);
-							numItems += 1;	
-							break;
-						}
-						else
-							found = false;
-					}
-					if(!found) {
-						addNewFile(item);
-					}	
-				}
-			}
-			else { //none in DB and all on disk
-				for each(item in diskFiles)
-				addNewFile(item);
-			}
-			for each(result in results) { // not on disk but in DB: virtual asset, namely youtube, remote asset, etc..
-				if(result.mimetype == MimeTypes.YOUTUBE)
-				{
-					node = new MediaContainerNode(result.name, _config, result, this,this.privileges);
-					children.addItem(node);
-					numItems += 1;	
-				}
-			}
-			//updateLabel();
-		}	*/
-	/*	private function addNewFile(item:MediaData):void {
-			var d:Date = new Date();
-			item.modifieddate = d.time;
-			//item.parent = '';
-			item.createthumb = item.createthumb.toString();							
-			newFiles.push(item);	*/		
-			/*if(file.createthumb == "1") {
-			thumbTotal++;
-			trace("thumb total",thumbTotal);
-			var op:XmlHttpOperation = new XmlHttpOperation(Constants.CREATE_THUMB);
-			op.addEventListener(Event.COMPLETE,handleThumbComplete);			
-			var params:Object = new Object();
-			params.name = file.name;
-			params.path = '/'+this.directory+'/';
-			var tokens:Object = new Object();
-			tokens.file = file;
-			op.tokens = tokens;
-			op.params = params;
-			op.execute();
-			}*/
-		//}
+
 		/*override public function addNode(node:ContentNode,index:int=-1,update:Boolean=true,swap:Boolean=false):void {
 			if(node is MediaCategoryNode) {
 				var index:int = 0;

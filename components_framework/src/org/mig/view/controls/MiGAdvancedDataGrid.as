@@ -1,4 +1,4 @@
-package com.mapx.view.controls
+package org.mig.view.controls
 {
 	
 	import com.greensock.TweenMax;
@@ -23,7 +23,7 @@ package com.mapx.view.controls
 		private var prevIndex:int;
 		private var prevSelectedItem:Object;
 		public var customProxy:Boolean = false;	
-		
+		public var thumbURL:String;
 		override protected function childrenCreated():void
 		{
 			super.childrenCreated();
@@ -106,6 +106,7 @@ package com.mapx.view.controls
 			else
 			{
 				var custom:AdvancedDataGridCustomDragProxy = new AdvancedDataGridCustomDragProxy();
+				custom.thumbURL = thumbURL;
 				custom.owner = this;
 				return custom;
 			}

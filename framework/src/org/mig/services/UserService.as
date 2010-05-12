@@ -22,7 +22,7 @@
 	import org.robotlegs.mvcs.Actor;
 
 	//XMLHTTP
-	public class UserService extends AbstractXMLHTTPService implements IUserService
+	public class UserService extends AbstractService implements IUserService
 	{
 		[Inject]
 		public var appModel:AppModel;

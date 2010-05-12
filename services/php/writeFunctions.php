@@ -482,7 +482,7 @@ function deleteRelatedRecords($params)
 		{
 			$sql .= " WHERE tagid = '" . $params['tagid'] . "'";
 		}
-		else if($params["tablename"] == "media_tags")
+		else if($params["tablename"] == "media_terms")
 		{
 			$sql .= " WHERE mediaid = '" . $params['mediaid'] . "'";
 		}		

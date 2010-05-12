@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/migbase/!svn/ver/604/trunk/services/php/filesystem
+END
+thumbnail_generator.php
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/migbase/!svn/ver/604/trunk/services/php/filesystem/thumbnail_generator.php
+END
+downloadZip.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/migbase/!svn/ver/604/trunk/services/php/filesystem/downloadZip.php
+END
+removeDir.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/migbase/!svn/ver/604/trunk/services/php/filesystem/removeDir.php
+END
+parseFontFolder.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/migbase/!svn/ver/604/trunk/services/php/filesystem/parseFontFolder.php
+END
+removeFile.php
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/migbase/!svn/ver/604/trunk/services/php/filesystem/removeFile.php
+END
+classTTFInfo.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/migbase/!svn/ver/604/trunk/services/php/filesystem/classTTFInfo.php
+END
+parseXMP.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/migbase/!svn/ver/616/trunk/services/php/filesystem/parseXMP.php
+END
+uploadTest.html
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/migbase/!svn/ver/604/trunk/services/php/filesystem/uploadTest.html
+END
+parseFont.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/migbase/!svn/ver/604/trunk/services/php/filesystem/parseFont.php
+END
+createDir.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/migbase/!svn/ver/604/trunk/services/php/filesystem/createDir.php
+END
+createThumb.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/migbase/!svn/ver/604/trunk/services/php/filesystem/createThumb.php
+END
+moveFile.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/migbase/!svn/ver/604/trunk/services/php/filesystem/moveFile.php
+END
+rename.php
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/migbase/!svn/ver/617/trunk/services/php/filesystem/rename.php
+END
+fileFunctions.php
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/migbase/!svn/ver/617/trunk/services/php/filesystem/fileFunctions.php
+END
+upload_advanced.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/migbase/!svn/ver/604/trunk/services/php/filesystem/upload_advanced.php
+END
+parseID3.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/migbase/!svn/ver/604/trunk/services/php/filesystem/parseID3.php
+END
+readDir.php
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/migbase/!svn/ver/616/trunk/services/php/filesystem/readDir.php
+END
+exportContacts.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/migbase/!svn/ver/604/trunk/services/php/filesystem/exportContacts.php
+END
+upload.php
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/migbase/!svn/ver/616/trunk/services/php/filesystem/upload.php
+END
+getPlayTimeID3.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/migbase/!svn/ver/616/trunk/services/php/filesystem/getPlayTimeID3.php
+END

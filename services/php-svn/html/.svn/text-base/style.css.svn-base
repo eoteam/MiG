@@ -1,0 +1,19 @@
+
+
+body {
+color:#333333;
+font-family:"Lucida Grande","Lucida Sans Unicode",Arial,Verdana,sans-serif;
+font-size:12px;
+font-size-adjust:none;
+font-style:normal;
+font-variant:normal;
+font-weight:normal;
+line-height:18px;
+}
+
+textarea {
+
+	width:300px;
+	height:100px;
+
+}

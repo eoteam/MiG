@@ -1,4 +1,4 @@
-package com.mapx.view.skins
+package org.mig.view.skins
 {
 	import mx.skins.halo.AdvancedDataGridHeaderHorizontalSeparator;
 	

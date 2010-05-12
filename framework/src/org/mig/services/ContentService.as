@@ -14,7 +14,7 @@ package org.mig.services
 	import org.mig.model.vo.user.UserPrivileges;
 	import org.mig.services.interfaces.IContentService;
 
-	public class ContentService extends AbstractXMLHTTPService implements IContentService
+	public class ContentService extends AbstractService implements IContentService
 	{
 		public function ContentService() {
 			
@@ -75,8 +75,8 @@ package org.mig.services
 					}
 				}
 			}
-			this.createService(params,ResponseType.DATA,ContentData);
-			token.content = content;
+			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,ContentData);
+			service.token.content = content;
 		}
 		public function retrieveVerbose(content:ContentNode):void {
 			if(content is ContainerNode) {

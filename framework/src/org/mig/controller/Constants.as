@@ -1,9 +1,9 @@
  package org.mig.controller
 {
-	public class Constants
+	public final class Constants
 	{
 		
-    	public static var SERVER_URL:String = "http://localhost/MiG/robotlegs/webapp/bin-debug/php/";
+    	public static const SERVER_URL:String = "http://localhost/MiG/robotlegs/webapp/bin-debug/php/";
     	
     	public static const GETMEDIACONTENT:String = SERVER_URL+"filesystem/readDir.php";
     	

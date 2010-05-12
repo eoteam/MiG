@@ -1,8 +1,16 @@
 package org.mig.view
 {
+	
+
 	internal class MiGComponents
 	{
 		import org.mig.view.controls.MiGTileList; MiGTileList;
+		import org.mig.view.controls.MiGAdvancedDataGrid; MiGAdvancedDataGrid;
+		import org.mig.view.renderers.AdvancedDatagridCellEditor; AdvancedDatagridCellEditor; 
+		
+		
+		import org.mig.view.skins.SortSeparatorSkin; SortSeparatorSkin;
+		
 		//import org.mig.view.containers.DragTile; DragTile;
 		
 		//import org.mig.view.controls.DateTimePicker; DateTimePicker;
@@ -13,11 +21,11 @@ package org.mig.view
 		import com.mapx.view.controls.MiGAdvancedDataGrid; MiGAdvancedDataGrid;
 		
 		
-		import com.mapx.view.skins.SortSeparatorSkin; SortSeparatorSkin;
+		
 		import com.mapx.view.controls.DragTileMultiProxy; DragTileMultiProxy;
 		import com.mapx.view.controls.WindowShadeHeader;WindowShadeHeader;
 		
-		import com.mapx.view.renderers.AdvancedDatagridCellEditor; AdvancedDatagridCellEditor; 
+		
 		import com.mapx.view.renderers.AdvancedDatagridCheckEditor; AdvancedDatagridCheckEditor;
 		import com.mapx.view.renderers.AdvancedDatagridColorEditor; AdvancedDatagridColorEditor;
 		import com.mapx.view.renderers.AdvancedDatagridComboEditor; AdvancedDatagridComboEditor;

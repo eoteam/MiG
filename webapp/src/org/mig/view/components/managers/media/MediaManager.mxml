@@ -1,27 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:ViewStack width="100%" height="100%"
+<mx:ViewStack 
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
-	xmlns:renderers="com.mapx.view.renderers.*"
-	xmlns:controls="com.mapx.view.controls.*" 
-	xmlns:mediaManager="com.mapx.view.mediaManager.*" 
-	xmlns:tabs="com.mapx.view.content.tabs.*"
-	creationComplete="addContextMenu()"
-	horizontalScrollPolicy="off" >
+	xmlns:controls="org.mig.view.controls.*" 
+	width="100%" height="100%"
+	horizontalScrollPolicy="off" xmlns:renderers="org.mig.view.renderers.*">
 	
-	<mx:Script source="MediaManagerScript.as"/>
+	<!-- 	creationComplete="addContextMenu()" -->
+
 	<mx:Script>
 		<![CDATA[
+			import mx.collections.HierarchicalData;
 			import mx.core.Application;
-			import com.map.controller.ControllerLocator;
 			import mx.effects.easing.*;
 			
+			import org.mig.model.vo.media.MediaContainerNode;
+			
+			[Bindable] public var scalePercent:Number;
+			
+			public function handleSizeField(data:Object):String {
+				var label:String = '';
+/* 				if(data)
+				{
+					if (data.size < 1024)
+						label = data.size + " B";
+					else if ((data.size > 1024) && (data.size < 1048576))
+						label = Math.round(data.size / 1024).toString() + " KB";
+					else if (data.size > 1048576)
+						label = Math.round(data.size / 1048576).toString() + " MB";
+					
+				} */
+				return label;	
+			}
+			public function handleDateField(data:Object):String {
+				var label:String ="";
+				/* if(data)
+				{
+					if(data is MediaContainerNode)
+					{
+						var d:Date = new Date();
+						d.time=data.createdate;
+						label=d.toDateString()	
+					}
+				} */
+				return label;
+			}
+			public function handleExtensionField(data:Object):String {
+				var label:String='';
+				/* if(data)
+				{
+					if(data is MediaContainerNode)
+					{
+						var arr:Array = data.label.split('.');
+						if(arr.length>1)
+							label = '.'+arr[arr.length-1];
+					} 
+				} */
+				return label;
+			}	
+			public function handleUserField(data:Object):String {
+				var label:String ='';
+				/* if(data)
+				{
+					if(data.createdby != undefined && data.createdby != 0)
+					{
+						//var userName:String =  UserManager(ManagerBase.getInstance(UserManager)).findUserById(Number(data.createdby));
+						//label = userName;
+					}
+				} */
+				return label;
+			}			
 		]]>
 	</mx:Script>
+	<!-- 			
+	creationComplete="initList()" 	
+	updateComplete="setLoaded()"
+	doubleClick="handleDoubleClickList(event)" 
+	itemClick="handleItemClick(event)"
+	keyDown="handleKeyDown(event)"
+	mouseUp="handleListDragStart(event)"
+	dragDrop="handleListDragDrop(event)"
+	dragOver="handleListDragEnter(event)"	
+	itemRollOver="lastRollOverIndex = event.rowIndex" -->
 	
 	<mx:VBox width="100%" height="100%" verticalScrollPolicy="off" >
 		<controls:MiGAdvancedDataGrid
-			creationComplete="initList()" 	
-			updateComplete="setLoaded()"
 			id="listView" styleName="mediaManagerGrid"
 			allowDragSelection="true"
 			dragEnabled="true"
@@ -36,18 +98,10 @@
 			folderOpenIcon="@Embed(source='/migAssets/library.swf#folderIcon')"
 			defaultLeafIcon="{null}"
 			editable="true"
-			clearingLines="true" clearVLineIndices="[]" customProxy="true" 
-			dataProvider="{_dpList}"
-			doubleClick="handleDoubleClickList(event)" 
-			itemClick="handleItemClick(event)"
-			keyDown="handleKeyDown(event)"
-			mouseUp="handleListDragStart(event)"
-		    dragDrop="handleListDragDrop(event)"
-		 	dragOver="handleListDragEnter(event)"		 	 
+			clearingLines="true" clearVLineIndices="[]" customProxy="true" 	 	 
 			doubleClickEnabled="true" 
 			treeColumn="{treeColumn}" draggableColumns="false"
-			itemRollOver="lastRollOverIndex = event.rowIndex"
-			headerSortSeparatorSkin="com.mapx.view.skins.SortSeparatorSkin">		
+			headerSortSeparatorSkin="org.mig.view.skins.SortSeparatorSkin">		
 			<controls:columns>
 				<mx:AdvancedDataGridColumn editable="false"  headerText="Name"  width="350" dataField="label"  id="treeColumn">
 <!--					<mx:itemRenderer>
@@ -86,50 +140,52 @@
 				</mx:AdvancedDataGridColumn>
 			</controls:columns>
 		</controls:MiGAdvancedDataGrid>
-		<mx:Label styleName="bodyCopy" text="{_dpTile.length + ' items'}" textAlign="center" width="100%"/>
+		<!--<mx:Label styleName="bodyCopy" text="{_dpTile.length + ' items'}" textAlign="center" width="100%"/>-->
 	</mx:VBox>
+
 	
+	<!-- 
+	creationComplete="initThumb()" 	
+	updateComplete="setLoaded()" 
+	doubleClick="handleDoubleClickThumb(event)"
+	itemClick="handleItemClick(event)" 		  
+	keyDown="handleKeyDown(event)"	
+	itemRollOver="lastRollOverIndex = event.rowIndex
+	-->
 	<mx:VBox width="100%" height="100%" horizontalScrollPolicy="off">
 		<mx:Canvas width="100%" height="100%" horizontalScrollPolicy="off">
 		<controls:MiGTileList
-			creationComplete="initThumb()" 	
-			updateComplete="setLoaded()"	
 			id="thumbView" 
 			width="100%"
 			allowDragSelection="true"
 			dragEnabled="true" dragFormat="Media"
 			allowMultipleSelection="true" 
 			doubleClickEnabled="true"
-			columnWidth="{260*_scalePercent}"  
-			rowHeight="{300*_scalePercent}" 
-		    scalePercent="{_scalePercent}"
-			dataProvider="{_dpTile}" 
-			doubleClick="handleDoubleClickThumb(event)"
-		    itemClick="handleItemClick(event)" 		  
-		    keyDown="handleKeyDown(event)"
+			columnWidth="{260*scalePercent}"  
+			rowHeight="{300*scalePercent}" 
+		    scalePercent="{scalePercent}"
 			borderThickness="0"
 			backgroundAlpha="0" 	
 			rollOverColor="0xed1c58" 
 			selectionColor="0xed1c58" 
-			itemRollOver="lastRollOverIndex = event.rowIndex"
 			selectionEasingFunction="Exponential.easeIn">
-			<controls:itemRenderer>
+<!--			<controls:itemRenderer>
 				<mx:Component>
 					<mediaManager:FileView scalePercent="{outerDocument.scalePercent}" >
 					</mediaManager:FileView>
 				</mx:Component>
-			</controls:itemRenderer>
+			</controls:itemRenderer>-->
 		</controls:MiGTileList>
 		</mx:Canvas>
-		<mx:Label styleName="bodyCopy" text="{_dpTile.length + ' items'}" textAlign="center" width="100%" bottom="5"/>
+		<!--<mx:Label styleName="bodyCopy" text="{_dpTile.length + ' items'}" textAlign="center" width="100%" bottom="5"/>-->
 	</mx:VBox>
-	<mx:Sequence repeatCount="4" effectEnd="handleEffectEnd()" id="blink">
-		<mx:Fade id="fadeOut" alphaFrom="1" alphaTo=".5" duration="200" />
+	<mx:Sequence repeatCount="4"  id="blink">
+		<mx:Fade id="fadeOut" alphaFrom="1" alphaTo=".5" duration="200" /><!-- effectEnd="handleEffectEnd()" -->
 		<mx:Fade id="fadeIn" alphaFrom="0.5" alphaTo="1" duration="200" />
 	</mx:Sequence>
 	<mx:Number id="lastRollOverIndex" />		
 
 
-<mx:Binding source="this.linkedResource" destination="Application.application.mainView.editorsView.linkedResource" />	
-<mx:Binding source="Application.application.linkingMode"  destination="this.linkingMode" />
+<!--<mx:Binding source="this.linkedResource" destination="Application.application.mainView.editorsView.linkedResource" />	
+<mx:Binding source="Application.application.linkingMode"  destination="this.linkingMode" />-->
 </mx:ViewStack>

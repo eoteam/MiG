@@ -2,6 +2,7 @@ package org.mig.view.mediators.main
 {
 	import flash.events.Event;
 	
+	import mx.events.ListEvent;
 	import mx.events.TreeEvent;
 	
 	import org.mig.events.AppEvent;
@@ -9,6 +10,7 @@ package org.mig.view.mediators.main
 	import org.mig.model.AppModel;
 	import org.mig.view.components.main.MainView;
 	import org.mig.view.components.main.ManagersTree;
+	import org.mig.view.renderers.ManagerTreeRenderer;
 	import org.robotlegs.mvcs.Mediator;
 
 	public class ManagersTreeMediator extends Mediator
@@ -17,13 +19,13 @@ package org.mig.view.mediators.main
 		public var appModel:AppModel;
 		
 		[Inject]
-		public var treeView:ManagersTree;
+		public var view:ManagersTree;
 		
 
-		
 		override public function onRegister():void {
 			
 			eventMap.mapListener(eventDispatcher,AppEvent.CONFIG_FILE_LOADED,handleConfig,AppEvent);
+			view.addEventListener(ListEvent.ITEM_CLICK,handleTreeChange);
 		}
 		
 		private function handleConfig(event:AppEvent):void {
@@ -34,12 +36,16 @@ package org.mig.view.mediators.main
 				if(item.value == "ON")
 					root.children.push(item);
 			}
-			treeView.dataProvider = root;	
-			treeView.addEventListener(TreeEvent.ITEM_OPEN,handleResize);
-			treeView.addEventListener(TreeEvent.ITEM_CLOSE,handleResize);
+			view.dataProvider = root;	
+			view.addEventListener(TreeEvent.ITEM_OPEN,handleResize);
+			view.addEventListener(TreeEvent.ITEM_CLOSE,handleResize);
+			//view.privileges = appModel.user.privileges;
 		}
 		private function handleResize(event:Event):void {
-			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.RESIZE_MANAGER_TREE,[treeView.measureHeightOfItems()]));
+			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.RESIZE_MANAGER_TREE,[view.measureHeightOfItems()]));
 		}
+		private function handleTreeChange(event:ListEvent):void {
+			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.MANAGER_SELECTED,[view.selectedItem]));
+		}	
 	}
 }

@@ -24,7 +24,7 @@ package org.mig.services
 	import org.mig.services.interfaces.IAppService;
 	import org.robotlegs.mvcs.Actor;
 
-	public class AppService extends AbstractXMLHTTPService implements IAppService
+	public class AppService extends AbstractService implements IAppService
 	{
 		[Inject]
 		public var appModel:AppModel;

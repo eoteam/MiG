@@ -9,4 +9,5 @@ framework/.flexLibProperties
 airapp/bin-debug/
 webapp/bin-debug/
 testing/TextLayoutEditor/bin/
+services/files/
 .DS_Store

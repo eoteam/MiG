@@ -780,8 +780,8 @@ function getMedia($params) {
 	$sql = substr($sql,0,strlen($sql)-1);
 	$sql .= " FROM media
 			  LEFT JOIN mimetypes ON mimetypes.id = media.mimetypeid
-			  LEFT JOIN media_tags ON media_tags.mediaid = media.id
-			  LEFT JOIN terms ON terms.id = media_tags.tagid
+			  LEFT JOIN media_terms ON media_terms.mediaid = media.id
+			  LEFT JOIN terms ON terms.id = media_terms.termid
 			  LEFT JOIN content_media AS content_media ON  content_media.mediaid = media.id
 			  LEFT JOIN content ON (content.id = content_media.contentid AND content.deleted='0') ";
 						  
@@ -1100,8 +1100,8 @@ function migSearch($params)
 		$sql .= "( SELECT 'media' as type, content.id as contentid, media.id as mediaid, 0 as templateid, content.title as contenttitle, media.name as mediatitle, media.createdby, media.createdate, media.modifiedby, media.modifieddate, '' as templatetitle, '' as templateclassname, content.containerpath AS path, media.path AS diskpath";
 		
 		$sql .= " FROM media
-				  LEFT JOIN media_tags ON media_tags.mediaid = media.id
-				  LEFT JOIN terms ON terms.id = media_tags.tagid
+				  LEFT JOIN media_terms ON media_terms.mediaid = media.id
+				  LEFT JOIN terms ON terms.id = media_terms.termid
 				  LEFT JOIN content_media ON content_media.mediaid = media.id
 				  LEFT JOIN content ON content.id = content_media.contentid";
 		
@@ -1139,9 +1139,9 @@ function migSearch($params)
 			( SELECT 'media' as type, 0 AS contentid, media.id as mediaid, 0 as templateid, '' as contenttitle, media.name as mediatitle, media.createdby, media.createdate, media.modifiedby, media.modifieddate, '' as templatetitle, '' as templateclassname, '' AS path, media.path AS diskpath";
 		
 		$sql .= " FROM media
-				  LEFT JOIN media_tags ON media_tags.mediaid = media.id
+				  LEFT JOIN media_terms ON media_terms.mediaid = media.id
 				  LEFT JOIN content_media ON content_media.mediaid = media.id
-				  LEFT JOIN terms ON terms.id = media_tags.tagid";
+				  LEFT JOIN terms ON terms.id = media_terms.termid";
 		
 		$sql .= " WHERE media.id <> 0 ";
 		
@@ -1333,8 +1333,8 @@ function getTags($params) {
 			  LEFT JOIN terms ON terms.id = term_taxonomy.termid
 			  LEFT JOIN content_terms ON content_terms.termid = term_taxonomy.id
 			  LEFT JOIN content ON (content.id = content_terms.contentid  AND content.deleted = 0)
-			  LEFT JOIN media_tags ON media_tags.tagid = terms.id
-			  LEFT JOIN media ON media.id = media_tags.mediaid";
+			  LEFT JOIN media_terms ON media_terms.termid = terms.id
+			  LEFT JOIN media ON media.id = media_terms.mediaid";
 	 // WHERE CLAUSE INFO
 	
 	$sql .= " WHERE term_taxonomy.id <> 0 ";

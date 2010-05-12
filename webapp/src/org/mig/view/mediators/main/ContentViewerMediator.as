@@ -6,6 +6,7 @@ package org.mig.view.mediators.main
 	import mx.core.UIComponent;
 	
 	import org.mig.events.ContentEvent;
+	import org.mig.events.ViewEvent;
 	import org.mig.model.vo.content.ContainerNode;
 	import org.mig.utils.ClassUtils;
 	import org.mig.view.components.main.ContentViewer;
@@ -22,13 +23,14 @@ package org.mig.view.mediators.main
 		
 		override public function onRegister():void {
 			eventMap.mapListener(eventDispatcher,ContentEvent.SELECT,handleNodeSelected,ContentEvent);
+			eventMap.mapListener(eventDispatcher,ViewEvent.MANAGER_SELECTED,handleManager,ViewEvent);
 		}	
 		
 		private function handleNodeSelected(event:ContentEvent):void
 		{
 			var node:ContainerNode = event.content as ContainerNode
 			//if(!BaseContentData(selectedNode.data).modified)
-			
+			view.mediaManager.visible = false;
 			if(node != content && node != null)
 			{
 				content = node;
@@ -48,6 +50,15 @@ package org.mig.view.mediators.main
 					//Application.application.mainView.newContentSelector.selectedContent = content;
 				}
 			} 
+		}
+		private function handleManager(event:ViewEvent):void {
+			var item:Object = event.args[0];
+			switch (item.name) {
+				
+				case "Media":
+					view.mediaManager.visible = true;
+				break;
+			}
 		}
 	}
 }

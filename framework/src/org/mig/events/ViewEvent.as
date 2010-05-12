@@ -5,6 +5,7 @@ package org.mig.events
 	public class ViewEvent extends Event
 	{
 		public static const RESIZE_MANAGER_TREE:String = "resizeManagerTree";
+		public static const MANAGER_SELECTED:String = "managerSelected";
 		
 		public var args:Array;
 		

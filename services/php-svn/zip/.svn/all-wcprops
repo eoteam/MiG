@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/migbase/!svn/ver/604/trunk/services/php/zip
+END
+archive.php
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/migbase/!svn/ver/604/trunk/services/php/zip/archive.php
+END
+pclzip.lib.php
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/migbase/!svn/ver/604/trunk/services/php/zip/pclzip.lib.php
+END
