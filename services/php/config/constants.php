@@ -71,7 +71,7 @@ $mediaVerbosity[0] = array("media.*", "mimetypes.name as mimetype","content_medi
 			"GROUP_CONCAT(DISTINCT content_media.contentid) AS contentids", 
 			"GROUP_CONCAT(DISTINCT content.migtitle) AS contenttitles");
 
-$mediaVerbosity[1] = array("media.id","media.name","media.path","media.thumb","media.video_proxy","media.playtime","mimetypes.name as mimetype","media.url");			
+$mediaVerbosity[1] = array("media.id","media.name","media.path","media.thumb","media.video_proxy","media.playtime","media.mimetypeid","mimetypes.name as mimetype","media.url");			
 
 //search
 $mediaVerbosity[2] = array("media.id","media.name","media.path","media.playtime","mimetypes.name as mimetype","media.url","media.thumb",

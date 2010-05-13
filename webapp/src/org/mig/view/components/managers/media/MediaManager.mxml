@@ -1,22 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:ViewStack 
+<mx:VBox
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
 	xmlns:controls="org.mig.view.controls.*" 
+	xmlns:renderers="org.mig.view.renderers.*"
 	width="100%" height="100%"
-	horizontalScrollPolicy="off" xmlns:renderers="org.mig.view.renderers.*">
-	
-	<!-- 	creationComplete="addContextMenu()" -->
+	backgroundColor="0x111111" backgroundAlpha=".95" 
+	horizontalScrollPolicy="off" xmlns:assets="org.mig.view.components.assets.*">
 
 	<mx:Script>
 		<![CDATA[
+			import mx.collections.ArrayCollection;
 			import mx.collections.HierarchicalData;
 			import mx.core.Application;
 			import mx.effects.easing.*;
 			
 			import org.mig.model.vo.media.MediaContainerNode;
 			
-			[Bindable] public var scalePercent:Number;
+			[Bindable] public var scalePercent:Number = 0.5;
+			[Bindable] public var currentLocation:String='';
+			[Bindable] public var listDP:HierarchicalData;
+			[Bindable] public var tileDP:ArrayCollection;
+			[Bindable] public var thumbURL:String;
 			
+			private function handleSliderChange(event:Event):void
+			{
+				scalePercent = scaleSlider.value;
+			}
 			public function handleSizeField(data:Object):String {
 				var label:String = '';
 /* 				if(data)
@@ -69,116 +78,171 @@
 				} */
 				return label;
 			}			
+			private function searchInput_changeHandler(event:Event):void {
+				if(searchInput.text == '')
+					clearSearch.visible = false;
+				else
+					clearSearch.visible = true;
+			}
+
 		]]>
-	</mx:Script>
-	<!-- 			
-	creationComplete="initList()" 	
-	updateComplete="setLoaded()"
-	doubleClick="handleDoubleClickList(event)" 
-	itemClick="handleItemClick(event)"
-	keyDown="handleKeyDown(event)"
+	</mx:Script>	
+	<!--Title Bar-->
+	<mx:HBox width="100%" id="header" clipContent="false" verticalAlign="middle" horizontalGap="2">
+		<mx:Text styleName="boldCopy" left="-3" bottom="-5" width="100%" text="Media Manager"/>
+		<mx:Spacer width="100%"/>
+		<mx:Button id="closeButton" styleName="defaultButton" label="Close"/>
+	</mx:HBox>
+	<mx:Spacer height="4" />
+	<mx:HRule width="100%" strokeWidth="1" strokeColor="#999999" />
+	
+	<!--Control Bar-->
+	<mx:HBox  width="100%" horizontalGap="8" verticalAlign="middle" paddingBottom="3" paddingTop="6" paddingLeft="6">
+		<mx:SWFLoader source="@Embed(source='/migAssets/library.swf#folderIcon')" mouseChildren="false"  buttonMode="true" useHandCursor="true" /><!--   width="18" height="16" -->
+		<mx:Text htmlText="{currentLocation}" id="locationText" styleName="boldCopy" />
+		<mx:Spacer width="100%"/>
+		
+		<!--Search -->
+		<mx:Button styleName="searchButton" mouseChildren="false" buttonMode="true" toggle="true" toolTip="Search" selected="false" />
+		<controls:MiGTextInput styleName="inputFieldBlack" id="searchInput" change="searchInput_changeHandler(event)"/>
+		<mx:Spacer width="-25"/>
+		<mx:Button id="clearSearch"  styleName="plusButton" rotation="45" toolTip="Clear Search" mouseChildren="false" buttonMode="true" visible="false"   />
+		
+		<!--Views-->
+		<mx:SWFLoader source="@Embed(source='/migAssets/library.swf#thumbViewIcon')" id="thumbButton"
+		buttonMode="true" useHandCursor="true" mouseChildren="false" toolTip="Image View"   />
+		<mx:SWFLoader source="@Embed(source='/migAssets/library.swf#listViewIcon')"  id="listButton"
+		buttonMode="true" useHandCursor="true" mouseChildren="false" toolTip="List View" />
+		<mx:Spacer width="5" />
+		<controls:MiGHSlider id="scaleSlider" minimum="0.25" maximum="2" change="handleSliderChange(event)" mouseChildren="false" />
+		
+		<!-- Directory -->
+		<mx:SWFLoader y="-5"  source="@Embed(source='/migAssets/library.swf#parentFolderIcon')"  
+		mouseChildren="false" id="parentdirButton" alpha="1" toolTip="Up 1 Folder" buttonMode="true" useHandCursor="true" />
+		<mx:SWFLoader  mouseChildren="false" id="addDirectoryIcon" alpha="1" toolTip="New Folder"
+		source="@Embed(source='/migAssets/library.swf#addFolderIcon')" buttonMode="true" useHandCursor="true"/><!-- width="40"  height="10" -->
+		<mx:Button styleName="trashButton"  toolTip="Delete"  id="trashButton" mouseChildren="false"  buttonMode="true" />			
+	</mx:HBox>
+	
+	<!-- 					
 	mouseUp="handleListDragStart(event)"
 	dragDrop="handleListDragDrop(event)"
-	dragOver="handleListDragEnter(event)"	
-	itemRollOver="lastRollOverIndex = event.rowIndex" -->
-	
-	<mx:VBox width="100%" height="100%" verticalScrollPolicy="off" >
-		<controls:MiGAdvancedDataGrid
-			id="listView" styleName="mediaManagerGrid"
-			allowDragSelection="true"
-			dragEnabled="true"
-			dropEnabled="true"
-			dragMoveEnabled="false"
-			dragFormat="Media"   
-			allowMultipleSelection="true"
-			headerHeight="22" 
-			sortableColumns="true"				
-			width="100%" height="100%" 
-			folderClosedIcon="@Embed(source='/migAssets/library.swf#folderIcon')"
-			folderOpenIcon="@Embed(source='/migAssets/library.swf#folderIcon')"
-			defaultLeafIcon="{null}"
-			editable="true"
-			clearingLines="true" clearVLineIndices="[]" customProxy="true" 	 	 
-			doubleClickEnabled="true" 
-			treeColumn="{treeColumn}" draggableColumns="false"
-			headerSortSeparatorSkin="org.mig.view.skins.SortSeparatorSkin">		
-			<controls:columns>
-				<mx:AdvancedDataGridColumn editable="false"  headerText="Name"  width="350" dataField="label"  id="treeColumn">
-<!--					<mx:itemRenderer>
-						<mx:Component>
+	dragOver="handleListDragEnter(event)"	-->
+	<mx:Canvas width="100%" height="100%">
+		<mx:ViewStack width="100%" height="100%" id="stack">
+			<mx:VBox width="100%" height="100%" verticalScrollPolicy="off" >
+				<controls:MiGAdvancedDataGrid				
+					itemRollOver="lastRollOverIndex = event.rowIndex"
+					id="listView" 
+					thumbURL="{thumbURL}"
+					styleName="mediaManagerGrid"
+					allowDragSelection="true"
+					dragEnabled="true"
+					dropEnabled="true"
+					dragMoveEnabled="false"
+					dragFormat="Media"   
+					allowMultipleSelection="true"
+					headerHeight="22" 
+					sortableColumns="true"				
+					width="100%" height="100%" 
+					folderClosedIcon="@Embed(source='/migAssets/library.swf#folderIcon')"
+					folderOpenIcon="@Embed(source='/migAssets/library.swf#folderIcon')"
+					defaultLeafIcon="{null}"
+					editable="true"
+					clearingLines="true" clearVLineIndices="[]" customProxy="true" 	 	 
+					doubleClickEnabled="true" 
+					treeColumn="{treeColumn}" draggableColumns="false"
+					headerSortSeparatorSkin="org.mig.view.skins.SortSeparatorSkin"
+					dataProvider="{listDP}">		
+					<controls:columns>
+						<mx:AdvancedDataGridColumn editable="false"  headerText="Name"  width="350" dataField="label"  id="treeColumn">
+							<!--					<mx:itemRenderer>
+							<mx:Component>
 							<mx:Label  text="{this.data}" contextMenu="{outerDocument.rightClickMenu}" />
-						</mx:Component>
-					</mx:itemRenderer>-->
-				</mx:AdvancedDataGridColumn>
-				<mx:AdvancedDataGridColumn editable="false" color="0x666666"  headerText="File Size" dataField="size" width="100">
-					<mx:itemRenderer>
-						<mx:Component>	
-							<renderers:AdvancedDatagridCellEditor  horizontalScrollPolicy="off" colorEnabled="true" outerFunction="{this.outerDocument.handleSizeField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>
-						</mx:Component>
-					</mx:itemRenderer>
-				</mx:AdvancedDataGridColumn>
-				<mx:AdvancedDataGridColumn editable="false" color="0x666666" headerText="Extension" dataField="label" width="50">
-					<mx:itemRenderer>
-						<mx:Component>
-							<renderers:AdvancedDatagridCellEditor  horizontalScrollPolicy="off" colorEnabled="true" outerFunction="{this.outerDocument.handleExtensionField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>
-						</mx:Component>
-					</mx:itemRenderer>			
-				</mx:AdvancedDataGridColumn>
-				<mx:AdvancedDataGridColumn  editable="false" headerText="Created By" dataField="createdby">
-					<mx:itemRenderer>
-						<mx:Component>
-							<renderers:AdvancedDatagridCellEditor  horizontalScrollPolicy="off" colorEnabled="true" outerFunction="{this.outerDocument.handleUserField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>
-						</mx:Component>
-					</mx:itemRenderer>
-				</mx:AdvancedDataGridColumn>
-				<mx:AdvancedDataGridColumn editable="false" headerText="Creation Date" dataField="createdate">
-					<mx:itemRenderer>
-						<mx:Component>
-							<renderers:AdvancedDatagridCellEditor  horizontalScrollPolicy="off" colorEnabled="true" outerFunction="{this.outerDocument.handleDateField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>
-						</mx:Component>
-					</mx:itemRenderer>
-				</mx:AdvancedDataGridColumn>
-			</controls:columns>
-		</controls:MiGAdvancedDataGrid>
-		<!--<mx:Label styleName="bodyCopy" text="{_dpTile.length + ' items'}" textAlign="center" width="100%"/>-->
-	</mx:VBox>
+							</mx:Component>
+							</mx:itemRenderer>-->
+						</mx:AdvancedDataGridColumn>
+						<mx:AdvancedDataGridColumn editable="false" color="0x666666"  headerText="File Size" dataField="size" width="100">
+							<mx:itemRenderer>
+								<mx:Component>	
+									<renderers:AdvancedDatagridCellEditor  horizontalScrollPolicy="off" colorEnabled="true" outerFunction="{this.outerDocument.handleSizeField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:AdvancedDataGridColumn>
+						<mx:AdvancedDataGridColumn editable="false" color="0x666666" headerText="Extension" dataField="label" width="50">
+							<mx:itemRenderer>
+								<mx:Component>
+									<renderers:AdvancedDatagridCellEditor  horizontalScrollPolicy="off" colorEnabled="true" outerFunction="{this.outerDocument.handleExtensionField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>
+								</mx:Component>
+							</mx:itemRenderer>			
+						</mx:AdvancedDataGridColumn>
+						<mx:AdvancedDataGridColumn  editable="false" headerText="Created By" dataField="createdby">
+							<mx:itemRenderer>
+								<mx:Component>
+									<renderers:AdvancedDatagridCellEditor  horizontalScrollPolicy="off" colorEnabled="true" outerFunction="{this.outerDocument.handleUserField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:AdvancedDataGridColumn>
+						<mx:AdvancedDataGridColumn editable="false" headerText="Creation Date" dataField="createdate">
+							<mx:itemRenderer>
+								<mx:Component>
+									<renderers:AdvancedDatagridCellEditor  horizontalScrollPolicy="off" colorEnabled="true" outerFunction="{this.outerDocument.handleDateField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:AdvancedDataGridColumn>
+					</controls:columns>
+				</controls:MiGAdvancedDataGrid>
+				<mx:Label styleName="bodyCopy" text="{tileDP.length + ' items'}" textAlign="center" width="100%"/>
+			</mx:VBox>	
+			<!-- 
 
-	
-	<!-- 
-	creationComplete="initThumb()" 	
-	updateComplete="setLoaded()" 
-	doubleClick="handleDoubleClickThumb(event)"
-	itemClick="handleItemClick(event)" 		  
-	keyDown="handleKeyDown(event)"	
-	itemRollOver="lastRollOverIndex = event.rowIndex
-	-->
-	<mx:VBox width="100%" height="100%" horizontalScrollPolicy="off">
-		<mx:Canvas width="100%" height="100%" horizontalScrollPolicy="off">
-		<controls:MiGTileList
-			id="thumbView" 
-			width="100%"
-			allowDragSelection="true"
-			dragEnabled="true" dragFormat="Media"
-			allowMultipleSelection="true" 
-			doubleClickEnabled="true"
-			columnWidth="{260*scalePercent}"  
-			rowHeight="{300*scalePercent}" 
-		    scalePercent="{scalePercent}"
-			borderThickness="0"
-			backgroundAlpha="0" 	
-			rollOverColor="0xed1c58" 
-			selectionColor="0xed1c58" 
-			selectionEasingFunction="Exponential.easeIn">
-<!--			<controls:itemRenderer>
-				<mx:Component>
-					<mediaManager:FileView scalePercent="{outerDocument.scalePercent}" >
-					</mediaManager:FileView>
-				</mx:Component>
-			</controls:itemRenderer>-->
-		</controls:MiGTileList>
-		</mx:Canvas>
-		<!--<mx:Label styleName="bodyCopy" text="{_dpTile.length + ' items'}" textAlign="center" width="100%" bottom="5"/>-->
-	</mx:VBox>
+			doubleClick="handleDoubleClickThumb(event)"
+			itemClick="handleItemClick(event)" 		  
+			keyDown="handleKeyDown(event)"	
+			
+			-->
+			<mx:VBox width="100%" height="100%" horizontalScrollPolicy="off">
+				<mx:Canvas width="100%" height="100%" horizontalScrollPolicy="off">
+					<controls:MiGTileList
+						creationComplete="this.dispatchEvent(new Event('thumbViewCreated'))"
+						itemRollOver="lastRollOverIndex = event.rowIndex"
+						id="thumbView" 
+						width="100%"
+						thumbURL="{thumbURL}"
+						allowDragSelection="true"
+						dragEnabled="true" dragFormat="Media"
+						allowMultipleSelection="true" 
+						doubleClickEnabled="true"
+						columnWidth="{260*scalePercent}"  
+						rowHeight="{300*scalePercent}" 
+						scalePercent="{scalePercent}"
+						borderThickness="0"
+						backgroundAlpha="0" 	
+						rollOverColor="0xed1c58" 
+						selectionColor="0xed1c58" 
+						selectionEasingFunction="Exponential.easeIn"
+						dataProvider="{tileDP}">
+						<controls:itemRenderer>
+							<mx:Component>
+								<renderers:MediaManagerTileRenderer scalePercent="{outerDocument.scalePercent}" thumbURL="{outerDocument.thumbURL}" />
+							</mx:Component>
+						</controls:itemRenderer>
+					</controls:MiGTileList>
+				</mx:Canvas>
+				<mx:Label styleName="bodyCopy" text="{tileDP.length + ' items'}" textAlign="center" width="100%" bottom="5"/>
+			</mx:VBox>
+		</mx:ViewStack>			
+		<mx:VBox id="loadingScreen" backgroundColor="0x000000" backgroundAlpha="0" width="100%" height="100%" visible="false" alpha="0">
+			<mx:Spacer height="35%" width="100%"/>
+			<mx:HBox width="100%">
+				<mx:Spacer  height="100%" width="55%"/>
+				<assets:MigLoaderSmall percentLoaded="1" scaleX=".75" scaleY=".75" rotation="45"/>
+				<mx:Spacer height="100%" width="45%"/>
+			</mx:HBox>	
+			<mx:Spacer height="65%" width="100%"/>
+		</mx:VBox>
+	</mx:Canvas>
+
 	<mx:Sequence repeatCount="4"  id="blink">
 		<mx:Fade id="fadeOut" alphaFrom="1" alphaTo=".5" duration="200" /><!-- effectEnd="handleEffectEnd()" -->
 		<mx:Fade id="fadeIn" alphaFrom="0.5" alphaTo="1" duration="200" />
@@ -186,6 +250,29 @@
 	<mx:Number id="lastRollOverIndex" />		
 
 
+	<mx:states>
+		<mx:State id="loading" name="loading"/>
+		<mx:State id="loaded" name="loaded"/>
+	</mx:states>
+	
+	<mx:transitions>
+		<mx:Transition toState="loading">
+			<mx:Sequence>
+				<mx:SetPropertyAction target="{stack}" name="visible" value="false"/>
+				<mx:SetPropertyAction target="{loadingScreen}" name="visible" value="true"/>
+				<mx:Fade target="{loadingScreen}" alphaTo="1" duration="1000" />
+			</mx:Sequence>
+		</mx:Transition>
+		<mx:Transition toState="loaded">
+			<mx:Sequence>
+				<mx:Fade target="{loadingScreen}" alphaTo="0" duration="500"/>
+				<mx:SetPropertyAction target="{loadingScreen}" name="visible" value="false"/>
+				<mx:SetPropertyAction target="{stack}" name="visible" value="true"/>
+				<mx:Fade target="{stack}" alphaFrom="0" alphaTo="1" duration="1000" />
+			</mx:Sequence>
+		</mx:Transition>
+	</mx:transitions>
+
 <!--<mx:Binding source="this.linkedResource" destination="Application.application.mainView.editorsView.linkedResource" />	
 <mx:Binding source="Application.application.linkingMode"  destination="this.linkingMode" />-->
-</mx:ViewStack>
+</mx:VBox>

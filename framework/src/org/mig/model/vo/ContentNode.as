@@ -17,6 +17,7 @@ package org.mig.model.vo
 	import mx.events.CollectionEvent;
 	import mx.events.CollectionEventKind;
 	
+	
 	public class ContentNode
 	{
 		public var children:ArrayCollection;
@@ -54,7 +55,7 @@ package org.mig.model.vo
 			return _config;
 		}		
 		public function get label():String {
-			if(children.length > 0)
+			if(children && children.length > 0)
 				return _baseLabel + " (" + children.source.length + ")";
 			else
 				return _baseLabel;	

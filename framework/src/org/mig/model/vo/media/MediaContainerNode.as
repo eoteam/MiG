@@ -17,6 +17,7 @@ package org.mig.model.vo.media
 		
 		public function MediaContainerNode(baseLabel:String, config:XML, data:MediaData, parentContent:ContentNode,privileges:int) {
 			super(baseLabel, config, data, parentContent,privileges);	
+			children = null;
 		}
 /*		override protected function retrieve():void {
 			children = null;

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:assets="org.mig.view.assets.*">
+<mx:Script>
+	<![CDATA[
+		
+		[Bindable]
+		private var _percentLoaded:Number = 0;
+
+		[Bindable]
+		public function get percentLoaded():Number
+		{
+			return _percentLoaded;
+		}
+		
+		public function set percentLoaded(newVal:Number):void
+		{
+			_percentLoaded = newVal;
+		}
+		
+		
+	]]>
+</mx:Script>
+
+	<mx:Canvas id="progressBar" height="2">
+		<mx:Canvas id="totalBar" width="200" height="100%" backgroundColor="0x000000" backgroundAlpha=".4" right="0"/>
+		<mx:Canvas id="loaderBar" width="{totalBar.width * _percentLoaded}" height="100%" backgroundColor="0xffffff" right="0"/>
+	</mx:Canvas>
+	<assets:MigLogoLoader id="migLogo" y="15" x="{progressBar.x + progressBar.width - 125}"/>
+</mx:Canvas>

@@ -62,7 +62,7 @@ package org.mig.controller
 					eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.RETRIEVE_CHILDREN,contentModel.contentModel));
 					
 					//populate media model
-					contentModel.mediaModel = new MediaCategoryNode("files", mediaConfig.child[0], null, null,appModel.fileDir,appModel.user.privileges);
+					contentModel.mediaModel = new MediaCategoryNode("files", mediaConfig.child[0], null, null,'',appModel.user.privileges);
 					eventDispatcher.dispatchEvent(new MediaEvent(ContentEvent.RETRIEVE_CHILDREN,contentModel.mediaModel));
 					//populating customfields
 					service.loadCustomFieldGroups()

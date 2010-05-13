@@ -21,6 +21,7 @@ package org.mig.view.controls
 		public var customProxy:Boolean = false;
 		public var useSelectionColor:Boolean = true;
 		public var keyboardLookUp:Boolean = true;
+		public var thumbURL:String;
 		[Bindable] public var scalePercent:Number;
 		private var firstUpdate:Boolean = true;
 		public function MiGTileList()
@@ -120,6 +121,7 @@ package org.mig.view.controls
 			else
 			{
 				var custom:TileListCustomDragProxy = new TileListCustomDragProxy();
+				custom.thumbURL = thumbURL;
 				custom.owner = this;
 				return custom;
 			}

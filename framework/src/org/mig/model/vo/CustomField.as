@@ -6,7 +6,7 @@ package org.mig.model.vo
 	{	
 		public var typeid:int;
 		public var groupid:int;
-		
+		public var visible:Boolean;
 		public var name:String;
 		public var displayname:String;
 		public var optionsArray:Array;
@@ -21,5 +21,6 @@ package org.mig.model.vo
 			}
 		}
 		
+
 	}
 }

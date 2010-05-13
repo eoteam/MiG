@@ -17,7 +17,7 @@ package org.mig.services
 		}	
 		public function retrieveChildrenFromDisk(content:MediaCategoryNode):void {
 			var params:Object = new Object();
-			params.mapping = content.directory;
+			params.mapping = appModel.fileDir+content.directory;
 			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,MediaData,null,null,Constants.GETMEDIACONTENT);
 			service.token.content = content;
 		}

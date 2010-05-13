@@ -15,10 +15,8 @@ package  org.mig.model.vo.media
 	public class MediaCategoryNode extends ContentNode {
 		
 		public var directory:String;
-		
 		public var numFolders:int = 0;
 		public var numItems:int = 0;
-		
 		public var diskFiles:Array;
 		public var newFiles:Array;
 		

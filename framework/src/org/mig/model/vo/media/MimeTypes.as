@@ -2,13 +2,13 @@ package org.mig.model.vo.media
 {
 	public final class MimeTypes
 	{
-		public static const IMAGE:String = "image";
-		public static const VIDEO:String = "video";
-		public static const SWF:String = "swf";
-		public static const AUDIO:String = "audio"; 
-		public static const YOUTUBE:String = "youtube";
-		public static const FILE:String = "file";
-		public static const FONT:String = "font";
+		public static const IMAGE:int = 1;
+		public static const VIDEO:int = 2;
+		public static const AUDIO:int = 3; 
+		public static const SWF:int = 4;
+		public static const FILE:int = 5;
+		public static const YOUTUBE:int = 6;	
+		public static const FONT:int = 7;
 		
 /*		public var imageExtensions:Array= [".jpg", ".jpeg", ".gif", ".png"];
 		public var videoExtensions:Array= [".flv", ".mov", ".mp4", ".m4v", ".f4v"];

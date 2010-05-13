@@ -1,4 +1,4 @@
-package org.mig.assets {
+package org.mig.view.assets {
 
 	import flash.display.Sprite;
 	

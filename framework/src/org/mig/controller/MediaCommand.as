@@ -33,11 +33,7 @@ package org.mig.controller
 			var content:MediaCategoryNode = data.token.content;	
 			for each (var item:MediaData in results) {
 				if(item.type.toString() == "folder") {
-					var newdirectory:String;
-					if(content.directory != "" && content.directory != null)
-						newdirectory = content.directory + "/" + item.name.toString();
-					else
-						newdirectory = item.name.toString();
+					var newdirectory:String = content.directory + "/" + item.name.toString();
 					var categoryNode:MediaCategoryNode = new MediaCategoryNode(item.name, content.config, item,content, newdirectory,content.privileges);
 					content.children.addItem(categoryNode);
 					content.numFolders += 1;	
@@ -101,7 +97,7 @@ package org.mig.controller
 				}
 			}
 			for each(result in results) { // not on disk but in DB: virtual asset, namely youtube, remote asset, etc..
-				if(result.mimetype == MimeTypes.YOUTUBE)
+				if(result.mimetypeid == MimeTypes.YOUTUBE)
 				{
 					node = new MediaContainerNode(result.name, content.config, result, content,content.privileges);
 					content.children.addItem(node);

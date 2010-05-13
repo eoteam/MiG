@@ -42,7 +42,6 @@ package
 	import org.mig.view.mediators.main.ManagersTreeMediator;
 	import org.mig.view.mediators.main.StatusModuleMediator;
 	import org.mig.view.mediators.managers.media.MediaManagerMediator;
-	import org.mig.view.renderers.MediaTile;
 	import org.robotlegs.base.ContextEvent;
 	import org.robotlegs.mvcs.Context;
 	
@@ -91,8 +90,7 @@ package
 			mediatorMap.mapView(MediaManager,MediaManagerMediator);
 			
 			injector.mapClass(TagsCategoriesTab,TagsCategoriesTab);
-			injector.mapClass(MediaTile,MediaTile);
-			
+
 			dispatchEvent(new AppEvent(AppEvent.STARTUP));
 		}
 	}

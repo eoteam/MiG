@@ -10,6 +10,7 @@ package org.mig.model.vo.media
 		public var id3:XML;
 		public var name:String;
 		public var path:String;
+		public var mimetypeid:int;
 		public var mimetype:String;
 		public var thumb:String;
 		public var video_proxy:String;
@@ -18,5 +19,6 @@ package org.mig.model.vo.media
 		public var url:String;
 		public var type:String;
 		public var createthumb:String;
+		public var extension:String = '';
 	}
 }

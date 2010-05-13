@@ -14,6 +14,7 @@ package org.mig.events
 		public static const UPDATE:String = "update";
 		
 		public static const SELECT:String = "selected";
+		public static const MULTIPLE_SELECT:String = "multipleSelect";
 		
 		public var content:ContentNode; //content, media or subcontainers
 		public var updateData:UpdateData;

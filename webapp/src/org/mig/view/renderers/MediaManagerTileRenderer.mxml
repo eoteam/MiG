@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox 
+	xmlns:mx="http://www.adobe.com/2006/mxml"  
+	xmlns:assets="org.mig.assets.*"
+	xmlns:content="org.mig.view.content.*"
+	xmlns:controls="com.thanksmister.controls.*"	
+	implements="org.mig.view.interfaces.IContentView, 
+	mx.controls.listClasses.IDropInListItemRenderer" 
+	creationComplete="handleCreatonComplete()"
+	scaleX="{scalePercent}" scaleY="{scalePercent}"
+	paddingLeft="5" paddingTop="5" paddingRight="5" paddingBottom="5"
+	backgroundColor="0x333333" mouseChildren="false"
+	verticalScrollPolicy="off" horizontalScrollPolicy="off">
+	<mx:Script>
+		<![CDATA[
+			import com.greensock.TweenMax;
+			import com.greensock.easing.Cubic;
+			
+			import mx.controls.listClasses.BaseListData;
+			
+			import org.mig.model.vo.ContentNode;
+			import org.mig.model.vo.media.MediaCategoryNode;
+			import org.mig.model.vo.media.MediaContainerNode;
+			import org.mig.model.vo.media.MediaData;
+			import org.mig.model.vo.media.MimeTypes;			
+
+			[Embed(source='/migAssets/library.swf#parentFolderIcon')]
+			private var parentIcon:Class;
+			[Embed(source='/migAssets/library.swf#folderIcon')]
+			private var dirIcon:Class;
+			[Embed(source='/migAssets/library.swf#youtubeIcon')]
+			private var youtubeIcon:Class;	
+			
+			private var _listData:BaseListData;
+			private var created:Boolean = false;
+			private var loadTimer:Timer = new Timer(200);
+			
+			public var thumbURL:String;
+			[Bindable] private var _content:ContentNode;
+			[Bindable] public var directory:String;
+			[Bindable] public var scalePercent:Number = 0.5;
+			[Bindable] public var fileSrc:String;
+			[Bindable] public var percentLoaded:Number = 0;
+			[Bindable] public var fileExtension:String;
+			
+			public function get listData():BaseListData {
+				return _listData;
+			}
+			public function set listData(value:BaseListData):void {
+				_listData = value;
+			}	
+			override public function get data():Object {
+				return super.data;
+			}            
+			override public function set data(value:Object):void {
+				super.data = value;
+				content = value as ContentNode;  
+			}								
+			public function get content():ContentNode {
+				return _content;
+			}
+			public function set content(contentNode:ContentNode):void {
+				_content = contentNode;
+				fileSrc  = toolTip = _content.label;
+				fileExtension = MediaData(_content.data).extension;
+				if(created)
+					handleDataChange();
+			}
+			public function handleCreatonComplete():void {
+				created = true;
+				handleDataChange();			
+			}
+			private function handleDataChange():void
+			{
+				var fileData:MediaData = _content.data as MediaData;
+				if(_content is MediaCategoryNode) {
+					thumbLabel.visible = false;
+					thumbHolder.source = dirIcon;
+					loader.visible = false;
+					thumbHolder.alpha = 1;
+				}	
+				else if(fileData.mimetypeid ==  MimeTypes.IMAGE) {
+					thumbLabel.visible = false;
+					thumbHolder.source = thumbURL+fileData.path.toString()+fileData.name.toString();	
+				}			
+				else if(fileData.mimetypeid == MimeTypes.VIDEO && fileData.thumb.toString() != "") {
+					thumbLabel.visible = false;
+					thumbHolder.source = thumbURL+fileData.path.toString()+fileData.thumb.toString();				
+				}
+				else if(fileData.mimetypeid == MimeTypes.YOUTUBE) {
+					thumbLabel.visible = false;
+					thumbHolder.source = youtubeIcon;					
+				}	
+				else {
+					thumbLabel.visible = true;
+					thumbHolder.source = "migAssets/images/docIcon.png";
+				}
+			}
+			private function handleError(event:*):void {
+				TweenMax.to(loader, 1, {alpha:0, ease:Cubic.easeOut});
+				TweenMax.to(thumbHolder, 1, {alpha:1, ease:Cubic.easeOut});
+			}
+			private function handleImageProgress(event:ProgressEvent):void {
+				var loaded:Number = thumbHolder.bytesLoaded;
+				var total:Number = thumbHolder.bytesTotal;
+				percentLoaded = loaded/total;
+				loader.width = 250 * percentLoaded;
+			}
+			private function handleImageComplete(event:Event):void {
+				TweenMax.to(loader, 3, {alpha:0, ease:Cubic.easeOut});
+				TweenMax.to(thumbHolder, 1, {alpha:1, ease:Cubic.easeOut});
+			}
+			public function get viewname():String
+			{
+				return "FileView";
+			}
+		]]>
+	</mx:Script>
+	<mx:Canvas width="250" height="250"  id="thumbCanvas" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+		<mx:Canvas height="100%"  id="loader" backgroundColor="0x727376"/>
+		<controls:ImageCache verticalCenter="0" alpha="0" horizontalCenter="0" 
+		 width="250" height="250" 
+		 id="thumbHolder" progress="handleImageProgress(event)" complete="handleImageComplete(event)"  
+		 brokenImageSkin="org.mig.view.assets.NoImageIcon" />
+		<mx:Label maxWidth="200" truncateToFit="true" visible="false"  id="thumbLabel" styleName="bodyMedium" 
+		color="0xffffff" text="{fileExtension}" textAlign="center" fontSize="50"  verticalCenter="0"  />
+	</mx:Canvas>
+	
+	<mx:HBox width="100%" id="bottomContainer">
+		<mx:Label fontSize="20" maxWidth="200" id="textHolder" selectable="false"  text="{_content.label}" truncateToFit="true"  
+		styleName="bodyMedium" color="0xffffff"/>	
+	</mx:HBox>
+</mx:VBox>

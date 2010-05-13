@@ -3,7 +3,7 @@
 		   xmlns:view="org.mig.view.*" 
 		   xmlns:components="org.mig.view.components.*"
 		   xmlns:fe="com.fxcomponents.controls.fe.*"
-		   xmlns:assets="org.mig.assets.*"
+		   xmlns:assets="org.mig.view.assets.*"
 		   clipContent="false" height="100%"
 		   creationComplete="handleCreationComplete()" xmlns:main="org.mig.view.components.main.*">
 	

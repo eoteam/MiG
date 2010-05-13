@@ -12,7 +12,6 @@
 
 package org.mig.view.controls {
     
-    import org.mig.model.vo.media.MediaContainerNode;
     import com.thanksmister.controls.ImageCache;
     
     import flash.display.DisplayObject;
@@ -21,6 +20,9 @@ package org.mig.view.controls {
     import mx.controls.AdvancedDataGrid;
     import mx.core.UIComponent;
     import mx.core.UITextField;
+    
+    import org.mig.model.vo.media.MediaContainerNode;
+    import org.mig.model.vo.media.MimeTypes;
 
 	
     public class AdvancedDataGridCustomDragProxy extends UIComponent {
@@ -46,8 +48,7 @@ package org.mig.view.controls {
             
             var itemX:int = 0; //y position to place items at
             var itemY:int = 0; //y position to place items at
-            for  (var i :int=dg.selectedItems.length-1; i>=0;i--)
-            {
+            for  (var i :int=dg.selectedItems.length-1; i>=0;i--) {
                 var item:Object = dg.selectedItems[i];
                 var container: UIComponent = new UIComponent();
                 addChild(DisplayObject(container));    
@@ -62,19 +63,11 @@ package org.mig.view.controls {
                
                 var image:ImageCache = new ImageCache();
                 image.addEventListener(Event.COMPLETE,handleComplete);
-                if(item is MediaContainerNode)
-				{
-					if(item.data.mimetype.toString() == "images")
-             		   	image.source = thumbURL+item.path+item.name;
-					else if(item.data.mimetype.toString() == "videos" && item.data.thumb.toString() == "1")
-					{
-						var n:String = item.data.name.toString();	
-						var arr:Array = n.split(".");
-						n = '';
-						for(var j:int=0;j<arr.length-1;j++)
-							n += arr[j];
-						image.source = thumbURL+item.data.path.toString()+n+'.jpg';						
-					}
+                if(item is MediaContainerNode) {
+					if(item.data.mimetypeid == MimeTypes.IMAGE)
+             		   	image.source = thumbURL+item.data.path+item.data.thumb;
+					else if(item.data.mimetypeid == MimeTypes.VIDEO && item.data.thumb == "")
+						image.source = thumbURL+item.data.path+item.data.thumb;					
 					else
 						image.source =  "migAssets/images/docIcon.png";		
 				}
