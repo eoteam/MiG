@@ -2,8 +2,9 @@ package org.mig.services
 {
 	import org.mig.controller.Constants;
 	import org.mig.model.AppModel;
+	import org.mig.model.ContentModel;
 	import org.mig.model.vo.ContentNode;
-	import org.mig.model.vo.media.MediaCategoryNode;
+	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.model.vo.media.MediaData;
 	import org.mig.services.interfaces.IMediaService;
 
@@ -12,23 +13,36 @@ package org.mig.services
 		[Inject]
 		public var appModel:AppModel;
 		
+		[Inject]
+		public var contentModel:ContentModel;
+		
 		public function MediaService() {
 			super();
 		}	
-		public function retrieveChildrenFromDisk(content:MediaCategoryNode):void {
+		public function retrieveChildrenFromDisk(content:DirectoryNode):void {
 			var params:Object = new Object();
 			params.mapping = appModel.fileDir+content.directory;
 			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,MediaData,null,null,Constants.GETMEDIACONTENT);
 			service.token.content = content;
 		}
-		public function retrieveChildrenFromDatabase(content:MediaCategoryNode):void {
+		public function retrieveChildrenFromDatabase(content:DirectoryNode):void {
 			var params:Object = new Object();
 			params.action = content.config.@action.toString();
-			params.verbosity = 1;
-			params.include_unused=1;
+			params.tablename = content.config.@tablename;
 			params.path = content.directory+'/';
 			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,MediaData);
 			service.token.content = content;
+		}
+		public function addFolder(name:String):void {
+			var content:DirectoryNode = contentModel.currentDirectory;
+			var params:Object = new Object();
+			params.directory = content.directory;
+			params.rootDir = appModel.fileDir;
+			params.folderName = name;
+			if(params.directory == null || params.directory == "")
+				params.directory = " ";	
+			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,MediaData,null,null,Constants.CREATE_DIR);
+		
 		}
 	}
 }

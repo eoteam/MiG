@@ -1,8 +1,9 @@
 package org.mig.controller
 {
 	import org.mig.events.MediaEvent;
-	import org.mig.model.vo.media.MediaCategoryNode;
-	import org.mig.model.vo.media.MediaContainerNode;
+	import org.mig.model.vo.ContentNode;
+	import org.mig.model.vo.media.DirectoryNode;
+	import org.mig.model.vo.media.FileNode;
 	import org.mig.model.vo.media.MediaData;
 	import org.mig.model.vo.media.MimeTypes;
 	import org.mig.services.interfaces.IMediaService;
@@ -19,22 +20,44 @@ package org.mig.controller
 		override public function execute():void {
 			switch(event.type) {
 				case MediaEvent.RETRIEVE_CHILDREN:
-					service.retrieveChildrenFromDisk(event.content as MediaCategoryNode);
+					service.retrieveChildrenFromDisk(event.content as DirectoryNode);
 					service.addHandlers(handleDiskResults);
 				break;
 				
 				case MediaEvent.RETRIEVE_VERBOSE:
 					
 				break;
+				
+				case MediaEvent.ADD_CHILD_NODE:
+					/*override public function addNode(node:ContentNode,index:int=-1,update:Boolean=true,swap:Boolean=false):void */
+					var child:ContentNode = event.child;
+					var node:DirectoryNode = event.content as DirectoryNode;
+					if(node is DirectoryNode) {
+						var index:int = 0;
+						for each(var item:ContentNode in node.children) {
+							index++;
+							if(item is DirectoryNode) {
+								index = node.children.getItemIndex(item);
+								break;
+							}
+						}
+						node.children.addItemAt(child,index);			
+					}	
+					else {
+						node.children.addItem(child);
+					}
+					child.parentNode = node;
+					
+				break;
 			}
 		}	
 		private function handleDiskResults(data:Object):void {
 			var results:Array = data.result as Array;
-			var content:MediaCategoryNode = data.token.content;	
+			var content:DirectoryNode = data.token.content;	
 			for each (var item:MediaData in results) {
 				if(item.type.toString() == "folder") {
 					var newdirectory:String = content.directory + "/" + item.name.toString();
-					var categoryNode:MediaCategoryNode = new MediaCategoryNode(item.name, content.config, item,content, newdirectory,content.privileges);
+					var categoryNode:DirectoryNode = new DirectoryNode(item.name, content.config, item,content, newdirectory,content.privileges);
 					content.children.addItem(categoryNode);
 					content.numFolders += 1;	
 					eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.RETRIEVE_CHILDREN,categoryNode));
@@ -47,7 +70,7 @@ package org.mig.controller
 		}
 		private function handleDatabaseResults(data:Object):void {
 			var results:Array = data.result as Array;
-			var content:MediaCategoryNode = data.token.content;
+			var content:DirectoryNode = data.token.content;
 			var item:MediaData;
 			var result:MediaData;
 			var file:Object;
@@ -58,7 +81,7 @@ package org.mig.controller
 					for each(result in results) {
 						if(item.name == result.name) {
 							found = true;
-							var node:MediaContainerNode = new MediaContainerNode(result.name, content.config, result, content,content.privileges);
+							var node:FileNode = new FileNode(result.name, content.config, result, content,content.privileges);
 							content.children.addItem(node);
 							content.numItems += 1;	
 							break;
@@ -91,7 +114,6 @@ package org.mig.controller
 			else { //none in DB and all on disk
 				for each(item in content.diskFiles) {
 					item.modifieddate = d.time;
-					//item.parent = '';
 					item.createthumb = item.createthumb.toString();							
 					content.newFiles.push(item);
 				}
@@ -99,7 +121,7 @@ package org.mig.controller
 			for each(result in results) { // not on disk but in DB: virtual asset, namely youtube, remote asset, etc..
 				if(result.mimetypeid == MimeTypes.YOUTUBE)
 				{
-					node = new MediaContainerNode(result.name, content.config, result, content,content.privileges);
+					node = new FileNode(result.name, content.config, result, content,content.privileges);
 					content.children.addItem(node);
 					content.numItems += 1;	
 				}

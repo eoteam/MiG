@@ -3,7 +3,9 @@ package org.mig.model
 	import mx.collections.ArrayCollection;
 	
 	import org.mig.model.vo.content.ContainerNode;
-	import org.mig.model.vo.media.MediaCategoryNode;
+	import org.mig.model.vo.media.DirectoryNode;
+	import org.mig.model.vo.media.MimeType;
+	import org.mig.model.vo.media.MimeTypes;
 	import org.robotlegs.mvcs.Actor;
 
 	public class ContentModel extends Actor
@@ -11,7 +13,21 @@ package org.mig.model
 		public var contentModel:ContainerNode;
 		public var templates:ArrayCollection = new ArrayCollection();
 		
-		public var mediaModel:MediaCategoryNode;
+		public var mediaModel:DirectoryNode;
+		public var currentDirectory:DirectoryNode;
+		public var mimetypes:Array;
+		
 		//public var mediaModel:MediaCategoryNode;
+		
+		public function getMimetypeByExtension(extension:String):String {
+			for each(var mimetype:MimeType in mimetypes) {
+				for each(var ext:String  in mimetype.extensionsArray) {
+					if(ext.toLowerCase() == extension.toLowerCase()) {
+						return mimetype.name;
+					}
+				}
+			}
+			return "file";
+		}
 	}
 }

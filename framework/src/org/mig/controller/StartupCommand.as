@@ -8,7 +8,7 @@ package org.mig.controller
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
 	import org.mig.model.vo.content.ContainerNode;
-	import org.mig.model.vo.media.MediaCategoryNode;
+	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.services.interfaces.IAppService;
 	import org.robotlegs.mvcs.Command;
 	
@@ -41,39 +41,64 @@ package org.mig.controller
 				case AppEvent.CONFIG_FILE_LOADED:
 					
 					//parse config
-					var config:XML = appModel.config;			
-					var mediaConfig:XML 		= config.controller[0]; //XML(config.controller.(@id == "mediaController"));
-					appModel.fileDir			= mediaConfig.@fileDir;
-					appModel.thumbDir			= mediaConfig.@thumbDir;
-					appModel.mediaURL			= mediaConfig.@mediaURL;
-					appModel.thumbURL			= mediaConfig.@thumbURL;
-					
-					var contentConfig:XML 		= config.controller[1]; //XML(config.controller.(@id == "contentController"));
-					appModel.rootURL 			= contentConfig.@rootURL;
-					appModel.pendingURL			= contentConfig.@pendingURL;
-					appModel.publishedURL		= contentConfig.@publishedURL;
-					appModel.textEditorColor 	= contentConfig.@textEditorColor;
-					appModel.htmlRendering		= contentConfig.@renderer == "html" ? true:false;
-					appModel.textFormat			= contentConfig.@textformat;
+					parseConfig();
 										
 					//populating content model
-					var root:XML = XML(contentConfig.child[0].toString());
-					contentModel.contentModel = new ContainerNode (root.@name, root,null,null,appModel.user.privileges,true,true,false);
-					eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.RETRIEVE_CHILDREN,contentModel.contentModel));
+					loadContentModel();
 					
 					//populate media model
-					contentModel.mediaModel = new MediaCategoryNode("files", mediaConfig.child[0], null, null,'',appModel.user.privileges);
-					eventDispatcher.dispatchEvent(new MediaEvent(ContentEvent.RETRIEVE_CHILDREN,contentModel.mediaModel));
+					loadMediaModel();
+					
+					//get mime types
+					loadMimeTypes();
+					
 					//populating customfields
-					service.loadCustomFieldGroups()
-					service.addHandlers(handleCustomFieldGroups);
+					loadCustomFieldGroups();
 					
 				break;
 			}
 			
 		}
+		private function parseConfig():void {
+			var config:XML = appModel.config;			
+			var mediaConfig:XML 		= config.controller[0]; //XML(config.controller.(@id == "mediaController"));
+			appModel.fileDir			= mediaConfig.@fileDir;
+			appModel.thumbDir			= mediaConfig.@thumbDir;
+			appModel.mediaURL			= mediaConfig.@mediaURL;
+			appModel.thumbURL			= mediaConfig.@thumbURL;
+			
+			var contentConfig:XML 		= config.controller[1]; //XML(config.controller.(@id == "contentController"));
+			appModel.rootURL 			= contentConfig.@rootURL;
+			appModel.pendingURL			= contentConfig.@pendingURL;
+			appModel.publishedURL		= contentConfig.@publishedURL;
+			appModel.textEditorColor 	= contentConfig.@textEditorColor;
+			appModel.htmlRendering		= contentConfig.@renderer == "html" ? true:false;
+			appModel.textFormat			= contentConfig.@textformat;
+		}
+		private function loadContentModel():void {
+			var contentConfig:XML 		= appModel.config.controller[1]; //XML(config.controller.(@id == "contentController"));
+			var root:XML = XML(contentConfig.child[0].toString());
+			contentModel.contentModel = new ContainerNode (root.@name, root,null,null,appModel.user.privileges,true,true,false);
+			eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.RETRIEVE_CHILDREN,contentModel.contentModel));
+		}
+		private function loadMediaModel():void {
+			var mediaConfig:XML 		= appModel.config.controller[0]; //XML(config.controller.(@id == "mediaController"));
+			contentModel.mediaModel = new DirectoryNode("files", mediaConfig.child[0], null, null,'',appModel.user.privileges);
+			eventDispatcher.dispatchEvent(new MediaEvent(ContentEvent.RETRIEVE_CHILDREN,contentModel.mediaModel));
+		}
 		private function handleConfigLoaded(data:Object):void {
 			service.loadConfigFile(appModel.configfile);
+		}
+		private function loadMimeTypes():void {
+			service.loadMimeTypes();
+			service.addHandlers(handleMimeTypes);
+		}
+		private function handleMimeTypes(data:Object):void {
+			contentModel.mimetypes = data.result as Array;	
+		}
+		private function loadCustomFieldGroups():void {
+			service.loadCustomFieldGroups()
+			service.addHandlers(handleCustomFieldGroups);
 		}
 		private function handleCustomFieldGroups(data:Object):void {
 			service.loadCustomFields();

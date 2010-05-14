@@ -142,10 +142,10 @@
 	<!-- Main Content Area -->
 	<main:ContentViewer  width="55%" height="100%"  id="contentViewer" horizontalScrollPolicy="off" top="3"/>			
 	
-	<!-- Media Tools -->
+	<!-- Tools -->
 	<mx:Canvas id="rightMain" width="{RIGHT_SIDEBAR_OPEN_WIDTH}" height="100%">
-		<!--<view:Tools id="editorsView"  width="100%" height="{rightMain.height - 38}" clipContent="true" horizontalScrollPolicy="off"   />
-		-->
+		<main:Tools id="editorsView"  width="100%" height="{rightMain.height - 38}" clipContent="true" horizontalScrollPolicy="off"   />
+	
 		<mx:Canvas width="30" borderSides="top" borderColor="#999999" bottom="3">
 			<mx:Button id="toolsPanelCollapseButton" styleName="rightPanelCollapseButton" mouseChildren="false" buttonMode="true"  
 			click="toolsPanelVisible=!toolsPanelVisible; if(toolsPanelVisible==true){openToolsTray.play();}else{closeToolsTray.play();}" left="4" />

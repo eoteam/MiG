@@ -11,22 +11,24 @@ package org.mig.view.mediators.managers.media
 	import mx.collections.HierarchicalData;
 	import mx.events.FlexEvent;
 	import mx.events.ListEvent;
+	import mx.managers.PopUpManager;
 	
 	import org.mig.events.AppEvent;
 	import org.mig.events.MediaEvent;
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
 	import org.mig.model.vo.ContentNode;
-	import org.mig.model.vo.media.MediaCategoryNode;
-	import org.mig.model.vo.media.MediaContainerNode;
+	import org.mig.model.vo.media.DirectoryNode;
+	import org.mig.model.vo.media.FileNode;
 	import org.mig.utils.GlobalUtils;
-	import org.mig.view.components.managers.media.MediaManager;
+	import org.mig.view.components.managers.media.AddDirectoryView;
+	import org.mig.view.components.managers.media.MediaManagerView;
 	import org.robotlegs.mvcs.Mediator;
 	
 	public class MediaManagerMediator extends Mediator
 	{
 		[Inject]
-		public var view:MediaManager;
+		public var view:MediaManagerView;
 		
 		[Inject]
 		public var contentModel:ContentModel;
@@ -34,10 +36,10 @@ package org.mig.view.mediators.managers.media
 		[Inject]
 		public var appModel:AppModel;
 		
-		private var _selectedNode:MediaCategoryNode;
+		private var _selectedNode:DirectoryNode;
 		
 		override public function onRegister():void {
-			eventMap.mapListener(eventDispatcher,MediaEvent.RETRIEVE_CHILDREN,handleContent,MediaEvent); 
+			//eventMap.mapListener(eventDispatcher,MediaEvent.RETRIEVE_CHILDREN,handleContent,MediaEvent); 
 			eventMap.mapListener(eventDispatcher,AppEvent.CONFIG_FILE_LOADED,handleConfigLoaded,AppEvent);
 			addListeners();
 			addContextMenu();
@@ -47,14 +49,14 @@ package org.mig.view.mediators.managers.media
 			view.thumbURL =  appModel.thumbURL;
 		}
 		private function addListeners():void {
-			view.closeButton.addEventListener(MouseEvent.CLICK,handleCloseClicked);
-			view.addDirectoryIcon.addEventListener(MouseEvent.CLICK,addFolder);
+			view.addDirectoryButton.addEventListener(MouseEvent.CLICK,addFolder);
 			view.thumbButton.addEventListener(MouseEvent.CLICK,handleThumbButton);
 			view.listButton.addEventListener(MouseEvent.CLICK,handleListButton);
 			view.searchInput.addEventListener(FlexEvent.ENTER,handleSearchInput);
 			view.clearSearch.addEventListener(MouseEvent.CLICK,handleClearSearch);
 			view.trashButton.addEventListener(MouseEvent.CLICK,deleteItems);
 			view.parentdirButton.addEventListener(MouseEvent.CLICK,handleParentdirButton);
+			view.addEventListener(FlexEvent.SHOW,handleContent);
 			
 			view.scaleSlider.alpha = 0.2;
 			view.scaleSlider.mouseEnabled = false;
@@ -74,8 +76,8 @@ package org.mig.view.mediators.managers.media
 			view.parentdirButton.alpha = 0.5;
 			view.currentState = "loading";
 		}
-		private function handleContent(event:MediaEvent):void {
-			this.selectedContent = contentModel.mediaModel as MediaCategoryNode;
+		private function handleContent(event:FlexEvent):void {
+			this.selectedContent = contentModel.mediaModel as DirectoryNode;
 		}
 		private function handleThumbView(event:Event):void {
 			view.currentState = "loading";
@@ -103,10 +105,6 @@ package org.mig.view.mediators.managers.media
 					break;
 			}	
 		}
-		//control bar functions
-		private function handleCloseClicked(event:Event):void {
-			
-		}
 		private function handleListButton(event:Event):void {
 			toggleView(0);
 		}
@@ -122,23 +120,23 @@ package org.mig.view.mediators.managers.media
 			search('');
 		}
 		private function handleParentdirButton(event:Event):void {
-			this.selectedContent = _selectedNode.parentNode as MediaCategoryNode;
+			this.selectedContent = _selectedNode.parentNode as DirectoryNode;
 		}	
 		//list functions
 		private function handleListUpdate(event:Event):void {
 			view.currentState = "loaded";
 		}
 		private function handleListItemDoubleClick(event:Event):void {
-			if(view.listView.selectedItem is MediaCategoryNode)
-				this.selectedContent = view.listView.selectedItem as MediaCategoryNode;	
+			if(view.listView.selectedItem is DirectoryNode)
+				this.selectedContent = view.listView.selectedItem as DirectoryNode;	
 		}
 		private function handleListItem(event:Event):void {
 			handleSelection(view.listView.selectedItems);
 		}
 		//thumb view functions
 		private function handleThumbItemDoubleClick(event:Event):void {
-			if(view.thumbView.selectedItem is MediaCategoryNode)
-				this.selectedContent = view.thumbView.selectedItem as MediaCategoryNode;
+			if(view.thumbView.selectedItem is DirectoryNode)
+				this.selectedContent = view.thumbView.selectedItem as DirectoryNode;
 		}
 		private function handleThumbItem(event:Event):void {
 			handleSelection(view.thumbView.selectedItems);
@@ -168,7 +166,7 @@ package org.mig.view.mediators.managers.media
 			}
 		}			
 		private function handleSelection(items:Array):void {
-			if(items.length == 1 && items[0] is MediaCategoryNode)				
+			if(items.length == 1 && items[0] is DirectoryNode)				
 				eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.SELECT,items[0]));
 			else if(items.length > 1)
 				eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.MULTIPLE_SELECT,null));
@@ -218,21 +216,15 @@ package org.mig.view.mediators.managers.media
 			}*/			
 		}
 		private function addFolder(event:Event=null):void {
-			/*					var newContentNode:ContentNode = this.selectedContent;
-			if (newContentNode != null && newContentNode.config.@addDirectoryView.length() > 0)
-			{
-			var addView:AddDirectoryView = PopUpManager.createPopUp(DisplayObject(Application.application), 
-			Class(getDefinitionByName(newContentNode.config.@addDirectoryView)), 
-			false,PopUpManagerChildList.POPUP) as AddDirectoryView;
-			addView.content = newContentNode;
-			PopUpManager.centerPopUp(addView);
-			}	*/				
+				var popup:AddDirectoryView = new AddDirectoryView();
+				PopUpManager.addPopUp( popup, view );
+				mediatorMap.createMediator( popup );
+				PopUpManager.centerPopUp(popup);
 		}
-		
-		
+
 		//set current node
-		private function set selectedContent(value:MediaCategoryNode):void {
-			_selectedNode = value;
+		private function set selectedContent(value:DirectoryNode):void {
+			_selectedNode = contentModel.currentDirectory = value;
 			view.currentState = "loading";
 			view.listDP = new HierarchicalData(value.children);
 			view.tileDP = value.children;

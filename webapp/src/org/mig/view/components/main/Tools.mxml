@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="org.mig.view.containers.*" xmlns:media="org.mig.view.components.managers.media.*">
+
+	<mx:VDividedBox horizontalScrollPolicy="off"  direction="vertical" liveDragging="false" clipContent="false" width="100%" height="100%"
+	id="toolContainer" dividerSkin="com.fxcomponents.skins.MainDividerSkin">
+		
+		<containers:MiGCollapsibleTabNavigator id="toolSet1" width="100%" height="100%">
+			<media:MediaManagerView  width="100%" height="100%" label="Browse Files"/>
+			<media:FileUploadView width="100%" height="100%" label="Upload Files"/>
+		</containers:MiGCollapsibleTabNavigator>
+		
+		<containers:MiGCollapsibleTabNavigator id="toolSet2" width="100%" height="100%" opened="false">
+			
+		</containers:MiGCollapsibleTabNavigator>
+		
+		<containers:MiGCollapsibleTabNavigator id="toolSet3" width="100%" height="100%" opened="false">
+			
+		</containers:MiGCollapsibleTabNavigator>
+		
+		<containers:MiGCollapsibleTabNavigator id="toolSet4" width="100%" height="100%" opened="false">
+			
+		</containers:MiGCollapsibleTabNavigator>
+	</mx:VDividedBox>
+</mx:Canvas>

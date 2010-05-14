@@ -7,6 +7,7 @@
 
 package org.swiftsuspenders
 {
+	import flash.system.ApplicationDomain;
 	import flash.utils.Dictionary;
 	import flash.utils.Proxy;
 	import flash.utils.describeType;
@@ -30,6 +31,7 @@ package org.swiftsuspenders
 		*								private properties										   *
 		*******************************************************************************************/
 		private var m_parentInjector : Injector;
+        private var m_applicationDomain:ApplicationDomain;
 		private var m_mappings : Dictionary;
 		private var m_injectionPointLists : Dictionary;
 		private var m_constructorInjectionPoints : Dictionary;
@@ -52,7 +54,7 @@ package org.swiftsuspenders
 		public function mapValue(whenAskedFor : Class, useValue : Object, named : String = "") : *
 		{
 			var config : InjectionConfig = getMapping(whenAskedFor, named);
-			config.setResult(new InjectValueResult(useValue, this));
+			config.setResult(new InjectValueResult(useValue));
 			return config;
 		}
 		
@@ -60,7 +62,7 @@ package org.swiftsuspenders
 				whenAskedFor : Class, instantiateClass : Class, named : String = "") : *
 		{
 			var config : InjectionConfig = getMapping(whenAskedFor, named);
-			config.setResult(new InjectClassResult(instantiateClass, this));
+			config.setResult(new InjectClassResult(instantiateClass));
 			return config;
 		}
 		
@@ -73,7 +75,7 @@ package org.swiftsuspenders
 			whenAskedFor : Class, useSingletonOf : Class, named : String = "") : *
 		{
 			var config : InjectionConfig = getMapping(whenAskedFor, named);
-			config.setResult(new InjectSingletonResult(useSingletonOf, this));
+			config.setResult(new InjectSingletonResult(useSingletonOf));
 			return config;
 		}
 		
@@ -91,7 +93,7 @@ package org.swiftsuspenders
 			if (!config)
 			{
 				config = m_mappings[requestName + '#' + named] =
-					new InjectionConfig(whenAskedFor, named, this);
+					new InjectionConfig(whenAskedFor, named);
 			}
 			return config;
 		}
@@ -115,7 +117,7 @@ package org.swiftsuspenders
 			for (var i : int = 0; i < length; i++)
 			{
 				var injectionPoint : InjectionPoint = injectionPoints[i];
-				injectionPoint.applyInjection(target);
+				injectionPoint.applyInjection(target, this);
 			}
 			
 		}
@@ -128,7 +130,7 @@ package org.swiftsuspenders
 				getInjectionPoints(clazz);
 				injectionPoint = m_constructorInjectionPoints[clazz];
 			}
-			var instance : * = injectionPoint.applyInjection(clazz);
+			var instance : * = injectionPoint.applyInjection(clazz, this);
 			injectInto(instance);
 			return instance;
 		}
@@ -152,27 +154,38 @@ package org.swiftsuspenders
 			{
 				return false;
 			}
-			return mapping.hasResponse();
+			return mapping.hasResponse(this);
 		}
 
 		public function getInstance(clazz : Class, named : String = '') : *
 		{
 			var mapping : InjectionConfig = getConfigurationForRequest(clazz, named);
-			if (!mapping || !mapping.hasResponse())
+			if (!mapping || !mapping.hasResponse(this))
 			{
 				throw new InjectorError('Error while getting mapping response: ' +
 					'No mapping defined for class ' + getQualifiedClassName(clazz) +
 					', named "' + named + '"');
 			}
-			return mapping.getResponse();
+			return mapping.getResponse(this);
 		}
 		
-		public function createChildInjector() : Injector
+		public function createChildInjector(applicationDomain:ApplicationDomain=null) : Injector
 		{
 			var injector : Injector = new Injector();
+            injector.setApplicationDomain(applicationDomain);
 			injector.setParentInjector(this);
 			return injector;
 		}
+        
+        public function setApplicationDomain(applicationDomain:ApplicationDomain):void
+        {
+            m_applicationDomain = applicationDomain;
+        }
+        
+        public function getApplicationDomain():ApplicationDomain
+        {
+            return m_applicationDomain ? m_applicationDomain : ApplicationDomain.currentDomain;
+        }
 
 		public function setParentInjector(parentInjector : Injector) : void
 		{
@@ -189,14 +202,30 @@ package org.swiftsuspenders
 			}
 		}
 		
+		public function getParentInjector() : Injector
+		{
+			return m_parentInjector;
+		}
+		
 		
 		/*******************************************************************************************
 		*								internal methods										   *
 		*******************************************************************************************/
-		internal function getParentMapping(
+		internal function getAncestorMapping(
 				whenAskedFor : Class, named : String = null) : InjectionConfig
 		{
-			return m_parentInjector ? m_parentInjector.getMapping(whenAskedFor, named) : null;
+			var parent : Injector = m_parentInjector;
+			while (parent)
+			{
+				var parentConfig : InjectionConfig =
+					parent.getConfigurationForRequest(whenAskedFor, named, false);
+				if (parentConfig)
+				{
+					return parentConfig;
+				}
+				parent = parent.getParentInjector();
+			}
+			return null;
 		}
 
 		internal function get attendedToInjectees() : Dictionary
@@ -266,10 +295,17 @@ package org.swiftsuspenders
 			return injectionPoints;
 		}
 
-		private function getConfigurationForRequest(clazz : Class, named : String) : InjectionConfig
+		private function getConfigurationForRequest(
+			clazz : Class, named : String, traverseAncestors : Boolean = true) : InjectionConfig
 		{
 			var requestName : String = getQualifiedClassName(clazz);
-			return m_mappings[requestName + '#' + named];
+			var config:InjectionConfig = m_mappings[requestName + '#' + named];
+			if(!config && traverseAncestors &&
+				m_parentInjector && m_parentInjector.hasMapping(clazz, named))
+			{
+				config = getAncestorMapping(clazz, named);
+			}
+			return config;
 		}
 		
 		private function createInjectionPointsFromConfigXML(description : XML) : void

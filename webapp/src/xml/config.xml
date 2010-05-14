@@ -8,12 +8,12 @@
 	thumbDir="files/migThumbs">
 			<child 
 			labelField="name"
-			action="getMedia" 
+			action="getData"
+			tablename="media" 
 			insertContent="insertRecord" 
 			updateContent="updateRecord"
-			deleteContent="deleteMedia" 
-			tablename="media" 
-			addDirectoryView="com.map.view.mediaManager.AddDirectoryView"
+			deleteContent="deleteMedia"
+			addDirectoryView="org.mig.view.components.AddDirectoryView"
 			directoryContentView="com.mapx.view.mediaManager.DirectoryView"
 			parentDirectoryContentView="com.mapx.view.mediaManager.ParentDirectoryView" />
 	</controller>

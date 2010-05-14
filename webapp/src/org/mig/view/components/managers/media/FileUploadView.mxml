@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	clipContent="true" bottom="4" right="4" left="4" 
+	width="100%"  height="100%"
+	creationComplete="currentState = 'browse'">
+
+	<mx:Script>
+		<![CDATA[
+	
+			import mx.core.Application;
+			import mx.managers.PopUpManager;
+			import mx.managers.PopUpManagerChildList;
+
+			private var fileBrowser:FileReferenceList;
+			public var selectedFiles:Array;
+			
+			[Bindable] public var uploadProgress:Number;
+			[Bindable] public var uploadedList:String;
+			[Bindable] public var progress:String; 
+			//htmlText="{'File: '+(ControllerLocator.fileUploadController.currentFileIndex)+'/' + ControllerLocator.fileUploadController.selectedFiles.length+'    '+
+			//(ControllerLocator.fileUploadController.uploadProgress*100)+'% Complete'}" 
+			
+
+			private function browseFiles():void {			
+				fileBrowser = new FileReferenceList();
+				fileBrowser.addEventListener(Event.CANCEL, cancelHandler);
+				fileBrowser.addEventListener(Event.SELECT, selectHandler);	
+				fileBrowser.browse([new FileFilter("Files (*.*)", "*.*")]);	
+			}
+			private function cancelHandler(event:Event):void  {
+				currentState = "browse";
+				uploadBtn.enabled = false;
+				browseBtn.enabled = true;
+			} 
+			private function selectHandler(event:Event):void {
+				selectedFiles = fileBrowser.fileList;
+				currentState = "upload";
+			}
+			private function addYoutubeVideo():void {
+				//var ui:AddYoutubeView = PopUpManager.createPopUp(this,AddYoutubeView,false,PopUpManagerChildList.POPUP) as AddYoutubeView;
+				//PopUpManager.centerPopUp(ui);
+			}
+			private function stopUploads():void {
+				switch(currentState) {
+					case "upload":
+						
+					break;
+					case "uploading":
+
+					break;
+				}
+				currentState = "browse";
+				selectedFiles = null;
+			}
+		]]>
+	</mx:Script>
+	<mx:states>
+		<mx:State name="browse">
+			<mx:SetProperty target="{browseBtn}" name="enabled" value="true"/>
+			<mx:SetProperty target="{youtubeBtn}" name="enabled" value="true"/>
+			<mx:SetProperty target="{uploadBtn}" name="enabled" value="false" id="uploadProp"/>
+			<mx:SetProperty target="{stopBtn}" name="visible" value="false" id="stopProp"/>
+			<mx:SetProperty target="{progressBar}" name="visible" value="false"/>
+			<mx:SetProperty target="{progressText}" name="visible" value="false"/>
+			<mx:SetProperty target="{completedFilesList}" name="visible" value="false"/>
+		</mx:State>
+		<mx:State name="upload" basedOn="browse">
+			<mx:SetProperty target="{uploadBtn}" name="enabled" value="true" />
+			<mx:SetProperty target="{stopBtn}" name="visible" value="true" />					
+		</mx:State>
+		<mx:State name="uploading">
+			<mx:SetProperty target="{browseBtn}" name="enabled" value="false"/>
+			<mx:SetProperty target="{uploadBtn}" name="enabled" value="false"/>
+			<mx:SetProperty target="{youtubeBtn}" name="enabled" value="false"/>
+			<mx:SetProperty target="{progressBar}" name="visible" value="false"/>
+			<mx:SetProperty target="{progressText}" name="visible" value="false"/>
+			<mx:SetProperty target="{completedFilesList}" name="visible" value="false"/>
+		</mx:State>
+	</mx:states>
+	
+
+	
+	<mx:VBox width="100%" height="100%" paddingBottom="10">
+		<mx:HBox width="100%">
+			<mx:Button styleName="defaultButton" label="Youtube" id="youtubeBtn" click="addYoutubeVideo()"/>				
+			<mx:Button styleName="defaultButton" label="Choose File(s)" id="browseBtn" click="browseFiles()"/>
+			<mx:Button styleName="defaultButton" label="Upload File(s)" id="uploadBtn"/>				
+			<mx:Button styleName="defaultButton" label="Cancel" id="stopBtn" click="stopUploads()"/>				
+		</mx:HBox>
+		<mx:Canvas id="progressBar" width="100%" height="2" alpha="0" hideEffect="fadeOut" showEffect="fadeIn">
+			<mx:Canvas width="100%" height="1" backgroundColor="#000000" backgroundAlpha="1.0" id="bg"/>
+			<mx:Canvas id="progressCanvas" backgroundColor="#ffffff" width="{uploadProgress*bg.width}" height="{bg.height}"/>
+		</mx:Canvas>
+		<mx:Text width="100%" styleName="bodyCopy" id="progressText" height="20" alpha="0" hideEffect="fadeOut" showEffect="fadeIn" htmlText="{progress}" />		
+		<mx:TextArea alpha="0" width="100%" height="100%"  backgroundColor="#222222" color="0xffffff"  borderStyle="none" hideEffect="fadeOut" showEffect="fadeIn"
+			styleName="bodyCopy" id="completedFilesList" htmlText="{uploadedList}"/>
+	</mx:VBox>
+	
+	<mx:Fade alphaFrom="0" alphaTo="1" id="fadeIn"/>			
+	<mx:Fade alphaFrom="1" alphaTo="0" id="fadeOut"/>
+</mx:Canvas>

@@ -30,7 +30,7 @@
 			import org.mig.model.vo.content.ContainerNode;
 			import org.mig.model.vo.content.ContentData;
 			import org.mig.model.vo.content.TemplateCustomField;
-			import org.mig.model.vo.media.MediaContainerNode;
+			import org.mig.model.vo.media.FileNode;
 			import org.mig.view.controls.DateTimePicker;
 			import org.mig.view.controls.MiGDateField;
 			import org.mig.view.controls.MiGTLFTextArea;

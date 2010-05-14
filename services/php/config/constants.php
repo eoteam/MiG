@@ -69,14 +69,14 @@ $arrVerbosity[2] = array("content.id","content.color","content.parentid","conten
 $mediaVerbosity[0] = array("media.*", "mimetypes.name as mimetype","content_media.displayorder","content_media.caption","content_media.credits", 
 			"GROUP_CONCAT(DISTINCT terms.id) AS tagids", "GROUP_CONCAT(DISTINCT terms.name) AS tags",
 			"GROUP_CONCAT(DISTINCT content_media.contentid) AS contentids", 
-			"GROUP_CONCAT(DISTINCT content.migtitle) AS contenttitles");
+			"GROUP_CONCAT(DISTINCT content.migtitle) AS containers");
 
 $mediaVerbosity[1] = array("media.id","media.name","media.path","media.thumb","media.video_proxy","media.playtime","media.mimetypeid","mimetypes.name as mimetype","media.url");			
 
 //search
 $mediaVerbosity[2] = array("media.id","media.name","media.path","media.playtime","mimetypes.name as mimetype","media.url","media.thumb",
 			"GROUP_CONCAT(content_media.contentid) AS contentids", 
-			"GROUP_CONCAT(content.title) AS contenttitles",
+			"GROUP_CONCAT(content.migtitle) AS containers",
 			"GROUP_CONCAT(content.date) AS contentdates",
 			"GROUP_CONCAT(content.templateid) AS contenttemplateids",
 			"GROUP_CONCAT(content_media.usage_type) AS usage_types");			

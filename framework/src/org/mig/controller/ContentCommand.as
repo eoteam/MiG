@@ -8,7 +8,7 @@ package org.mig.controller
 	import org.mig.model.vo.content.ContainerNode;
 	import org.mig.model.vo.content.ContentData;
 	import org.mig.model.vo.content.SubContainerNode;
-	import org.mig.model.vo.media.MediaCategoryNode;
+	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.services.ContentService;
 	import org.mig.services.interfaces.IContentService;
 	import org.robotlegs.mvcs.Command;

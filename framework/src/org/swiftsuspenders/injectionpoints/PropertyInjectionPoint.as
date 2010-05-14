@@ -31,9 +31,9 @@ package org.swiftsuspenders.injectionpoints
 			super(node, injector);
 		}
 		
-		override public function applyInjection(target : Object) : Object
+		override public function applyInjection(target : Object, injector : Injector) : Object
 		{
-			var injection : Object = m_injectionConfig.getResponse();
+			var injection : Object = m_injectionConfig.getResponse(injector);
 			if (injection == null)
 			{
 				throw(
@@ -55,7 +55,7 @@ package org.swiftsuspenders.injectionpoints
 		{
 			propertyType = node.parent().@type.toString();
 			propertyName = node.parent().@name.toString();
-			m_injectionConfig = injector.getMapping(Class(getDefinitionByName(propertyType)), 
+			m_injectionConfig = injector.getMapping(Class(injector.getApplicationDomain().getDefinition(propertyType)), 
 				node.arg.attribute('value').toString());
 		}
 	}

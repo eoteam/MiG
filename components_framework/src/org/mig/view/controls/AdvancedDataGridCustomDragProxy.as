@@ -21,7 +21,7 @@ package org.mig.view.controls {
     import mx.core.UIComponent;
     import mx.core.UITextField;
     
-    import org.mig.model.vo.media.MediaContainerNode;
+    import org.mig.model.vo.media.FileNode;
     import org.mig.model.vo.media.MimeTypes;
 
 	
@@ -63,7 +63,7 @@ package org.mig.view.controls {
                
                 var image:ImageCache = new ImageCache();
                 image.addEventListener(Event.COMPLETE,handleComplete);
-                if(item is MediaContainerNode) {
+                if(item is FileNode) {
 					if(item.data.mimetypeid == MimeTypes.IMAGE)
              		   	image.source = thumbURL+item.data.path+item.data.thumb;
 					else if(item.data.mimetypeid == MimeTypes.VIDEO && item.data.thumb == "")

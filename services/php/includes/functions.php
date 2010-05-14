@@ -190,38 +190,7 @@ function outputDirectoryListing($newdir, $allowed_filetypes){
 				
 			}
 		}
-		$options = array(
-	        XML_SERIALIZER_OPTION_XML_DECL_ENABLED => false,
-	        XML_SERIALIZER_OPTION_DOCTYPE_ENABLED => false,
-	        XML_SERIALIZER_OPTION_INDENT => "",
-	        XML_SERIALIZER_OPTION_LINEBREAKS => "\n",
-	        XML_SERIALIZER_OPTION_TYPEHINTS => false,
-	        XML_SERIALIZER_OPTION_XML_ENCODING => "UTF-8?",
-	        XML_SERIALIZER_OPTION_ROOT_NAME => "results",
-	        XML_SERIALIZER_OPTION_DEFAULT_TAG => "result",
-            XML_SERIALIZER_OPTION_CDATA_SECTIONS => true
-	    );
-
-	    // instatiate the serializer object
-	    $serializer = new XML_Serializer($options);
-	    $serializer->setErrorHandling(PEAR_ERROR_DIE);
-
-	    // serialze the data
-	    $status = $serializer->serialize($resultList);
-
-	    // check whether serialization worked
-	    if (PEAR::isError($status)) {
-	        die($status->getMessage());
-	    }
-
-	    // get the serialized data
-	    $xml = $serializer->getSerializedData();
-
-	    header("Content-type: text/xml");
-
-	    // return the xml
-	    $xml = trim($xml);
-	    echo($xml);
+		serializeArray($resultList);
 	}
 }
 /**

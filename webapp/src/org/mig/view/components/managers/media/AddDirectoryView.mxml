@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	horizontalScrollPolicy="off" 
+	paddingRight="10" paddingLeft="10" paddingBottom="10"
+	height="200" width="300" 
+	title="Add New Directory" styleName="bodyCopy"
+	creationComplete="handleCreationComplete()" xmlns:controls="org.mig.view.controls.*">
+	
+<mx:Script>
+	<![CDATA[
+		import mx.controls.Alert;
+		import mx.core.Application;
+		import mx.managers.PopUpManager;
+		import mx.managers.PopUpManagerChildList;
+				
+		[Embed(source='/migAssets/library.swf#folderIcon')]
+		[Bindable] private var folderIcon:Class;
+		
+
+		private function handleCreationComplete():void {
+			
+		}
+		public function close():void {
+			PopUpManager.removePopUp(this);
+		}
+		private function handleComplete(event:Event):void {
+			/* var _data:XMLList = _operation.xml.children();
+			var popup:SystemPopup;
+			trace("DATA RETURNED: " + _data);
+            	if(_data != null)
+            	{
+            		if(_data.errorName != null && _data.errorName != "" && _data.errorName != undefined)
+            		{
+            			//Alert.show(("Server-side Error:<br></br>Error:" + _data.errorName + "   Error Msg: " + _data.errorMsg));
+            			popup = new SystemPopup();
+						popup.type = 1;
+						popup.message = "Server-side Error:<br></br>Error:" + _data.errorName + "   Error Msg: " + _data.errorMsg;
+						PopUpManager.addPopUp(popup,Application.application.mainView,true,PopUpManagerChildList.POPUP);	
+						
+            		}else if(_data.success != null && _data.success != "" && _data.success != undefined)
+            		{
+        				Application.application.mainView.statusMod.updateStatus("Update Successful.");
+    					addNodeToParent(XML(_data));
+        				PopUpManager.removePopUp(this);
+            		}else
+            		{
+	            		//Alert.show("Error Connecting To The Database. Try Again Later.");
+	            		popup = new SystemPopup();
+						popup.type = 1;
+						popup.message = "Error Connecting To The Database. Try Again Later.";
+						PopUpManager.addPopUp(popup,Application.application.mainView,true,PopUpManagerChildList.POPUP);	
+	            	}
+            	} */
+		}	
+/* 		private function addNodeToParent(newData:XML):void {
+			
+		} */
+	]]>
+</mx:Script>
+
+	<mx:Form maxWidth="750" paddingLeft="0" indicatorGap="2" verticalGap="15" styleName="removeButton" horizontalScrollPolicy="off">
+		<mx:HBox paddingLeft="5">
+			<mx:VBox verticalGap="1" paddingLeft="0">
+				<mx:HBox width="100%" horizontalGap="0">
+					<mx:SWFLoader source="{folderIcon}" width="23" height="17" />
+					<mx:Text text="Folder Name" color="0xffffff" fontAntiAliasType="advanced" paddingLeft="0"/>
+				</mx:HBox>
+				<controls:MiGTextInput styleName="inputFieldGray"  text="" width="200" id="nameInput" restrict="a-z\A-Z\0-9\_"/>						
+			</mx:VBox>
+		</mx:HBox>
+	</mx:Form>
+	<mx:HBox horizontalGap="3" paddingTop="10" paddingLeft="5">
+		<mx:Button  styleName="defaultButton" label="Submit" id="submitButton"/>
+		<mx:Button styleName="defaultButton" label="Cancel" id="cancelButton" click="close()"/>
+	</mx:HBox>
+	
+	<mx:StringValidator source="{nameInput}" property="text" minLength="1" maxLength="60"/>	
+</mx:TitleWindow>

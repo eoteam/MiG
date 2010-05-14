@@ -12,10 +12,10 @@ package org.mig.model.vo.media
 	
 	import org.mig.model.vo.ContentNode;
 	
-	public class MediaContainerNode extends ContentNode
+	public class FileNode extends ContentNode
 	{
 		
-		public function MediaContainerNode(baseLabel:String, config:XML, data:MediaData, parentContent:ContentNode,privileges:int) {
+		public function FileNode(baseLabel:String, config:XML, data:MediaData, parentContent:ContentNode,privileges:int) {
 			super(baseLabel, config, data, parentContent,privileges);	
 			children = null;
 		}

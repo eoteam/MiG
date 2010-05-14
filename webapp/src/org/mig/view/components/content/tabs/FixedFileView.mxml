@@ -13,7 +13,7 @@
 			import org.mig.model.vo.BaseContentData;
 			import org.mig.model.vo.ContentNode;
 			import org.mig.model.vo.content.ContentData;
-			import org.mig.model.vo.media.MediaContainerNode;
+			import org.mig.model.vo.media.FileNode;
 	
 		
 		[Bindable] private var imageSource:Object;
@@ -64,7 +64,7 @@
 				imageSource = "migAssets/images/docIcon.png";	
 				isImage = false;	
 			}	
-			if(_content is MediaContainerNode)
+			if(_content is FileNode)
 				_themeColor = getStyle('newSelectionColor')		
 			else
 				_themeColor = getStyle('selectionColor');	
@@ -95,7 +95,7 @@
 	 	 	//figure out if this itemRenderer is selected
 	 		if(ListBase(owner).isItemSelected(data))
 		 	{
-		 		if(_content is MediaContainerNode)
+		 		if(_content is FileNode)
 		 		{
 		 			box.setStyle("backgroundColor", ListBase(owner).getStyle('newSelectionColor'));
 		 		}
@@ -106,7 +106,7 @@
 		 	}
 		 	else
 		 	{
-		 		if(_content is MediaContainerNode)
+		 		if(_content is FileNode)
 		 			box.setStyle('backgroundColor', 0x666666);
 		 		else
 		 			box.setStyle('backgroundColor', 0x111111);		 			

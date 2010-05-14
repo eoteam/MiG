@@ -28,40 +28,36 @@ package org.swiftsuspenders
 		/*******************************************************************************************
 		 *								public methods											   *
 		 *******************************************************************************************/
-		public function InjectionConfig(
-			request : Class, injectionName : String, injector : Injector)
+		public function InjectionConfig(request : Class, injectionName : String)
 		{
 			this.request = request;
 			this.injectionName = injectionName;
-			m_injector = injector;
 		}
 		
-		public function getResponse() : Object
+		public function getResponse(injector : Injector) : Object
 		{
 			if (m_result)
 			{
-				return m_result.getResponse();
+				return m_result.getResponse(m_injector || injector);
 			}
-			var parentConfig : InjectionConfig = m_injector.getParentMapping(request, injectionName);
+			var parentConfig : InjectionConfig =
+				(m_injector || injector).getAncestorMapping(request, injectionName);
 			if (parentConfig)
 			{
-				return parentConfig.getResponse();
+				return parentConfig.getResponse(injector);
 			}
 			return null;
 		}
 
-		public function hasResponse() : Boolean
+		public function hasResponse(injector : Injector) : Boolean
 		{
 			if (m_result)
 			{
 				return true;
 			}
-			var parentConfig : InjectionConfig = m_injector.getParentMapping(request, injectionName);
-			if (parentConfig)
-			{
-				return true;
-			}
-			return false;
+			var parentConfig : InjectionConfig =
+				(m_injector || injector).getAncestorMapping(request, injectionName);
+			return parentConfig != null;
 		}
 		
 		public function setResult(result : InjectionResult) : void
@@ -72,7 +68,6 @@ package org.swiftsuspenders
 		public function setInjector(injector : Injector) : void
 		{
 			m_injector = injector;
-			m_result.setInjector(injector);
 		}
 	}
 }

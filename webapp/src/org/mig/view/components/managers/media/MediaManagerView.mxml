@@ -4,8 +4,7 @@
 	xmlns:controls="org.mig.view.controls.*" 
 	xmlns:renderers="org.mig.view.renderers.*"
 	width="100%" height="100%"
-	backgroundColor="0x111111" backgroundAlpha=".95" 
-	horizontalScrollPolicy="off" xmlns:assets="org.mig.view.components.assets.*">
+	horizontalScrollPolicy="off" xmlns:assets="org.mig.view.components.assets.*" xmlns:container="com.appdivision.view.container.*">
 
 	<mx:Script>
 		<![CDATA[
@@ -14,7 +13,7 @@
 			import mx.core.Application;
 			import mx.effects.easing.*;
 			
-			import org.mig.model.vo.media.MediaContainerNode;
+			import org.mig.model.vo.media.FileNode;
 			
 			[Bindable] public var scalePercent:Number = 0.5;
 			[Bindable] public var currentLocation:String='';
@@ -28,42 +27,32 @@
 			}
 			public function handleSizeField(data:Object):String {
 				var label:String = '';
-/* 				if(data)
-				{
-					if (data.size < 1024)
-						label = data.size + " B";
-					else if ((data.size > 1024) && (data.size < 1048576))
-						label = Math.round(data.size / 1024).toString() + " KB";
-					else if (data.size > 1048576)
-						label = Math.round(data.size / 1048576).toString() + " MB";
-					
-				} */
+				if(data.data) {
+					if (data.data.size < 1024)
+						label = data.data.size + " B";
+					else if ((data.data.size > 1024) && (data.data.size < 1048576))
+						label = Math.round(data.data.size / 1024).toString() + " KB";
+					else if (data.data.size > 1048576)
+						label = Math.round(data.data.size / 1048576).toString() + " MB";	
+				} 
 				return label;	
 			}
 			public function handleDateField(data:Object):String {
 				var label:String ="";
-				/* if(data)
-				{
-					if(data is MediaContainerNode)
-					{
+				if(data.data) {
+					if(data.data is FileNode) {
 						var d:Date = new Date();
-						d.time=data.createdate;
+						d.time = data.data.createdate;
 						label=d.toDateString()	
 					}
-				} */
+				}
 				return label;
 			}
 			public function handleExtensionField(data:Object):String {
 				var label:String='';
-				/* if(data)
-				{
-					if(data is MediaContainerNode)
-					{
-						var arr:Array = data.label.split('.');
-						if(arr.length>1)
-							label = '.'+arr[arr.length-1];
-					} 
-				} */
+				if(data.data) {
+					label = data.data.extension;
+				}
 				return label;
 			}	
 			public function handleUserField(data:Object):String {
@@ -87,20 +76,10 @@
 
 		]]>
 	</mx:Script>	
-	<!--Title Bar-->
-	<mx:HBox width="100%" id="header" clipContent="false" verticalAlign="middle" horizontalGap="2">
-		<mx:Text styleName="boldCopy" left="-3" bottom="-5" width="100%" text="Media Manager"/>
-		<mx:Spacer width="100%"/>
-		<mx:Button id="closeButton" styleName="defaultButton" label="Close"/>
-	</mx:HBox>
-	<mx:Spacer height="4" />
-	<mx:HRule width="100%" strokeWidth="1" strokeColor="#999999" />
-	
 	<!--Control Bar-->
-	<mx:HBox  width="100%" horizontalGap="8" verticalAlign="middle" paddingBottom="3" paddingTop="6" paddingLeft="6">
+	<container:FlowContainer direction="horizontal"  width="100%" horizontalGap="8" verticalAlign="middle" paddingBottom="3" paddingTop="6" paddingLeft="6">
 		<mx:SWFLoader source="@Embed(source='/migAssets/library.swf#folderIcon')" mouseChildren="false"  buttonMode="true" useHandCursor="true" /><!--   width="18" height="16" -->
 		<mx:Text htmlText="{currentLocation}" id="locationText" styleName="boldCopy" />
-		<mx:Spacer width="100%"/>
 		
 		<!--Search -->
 		<mx:Button styleName="searchButton" mouseChildren="false" buttonMode="true" toggle="true" toolTip="Search" selected="false" />
@@ -119,15 +98,11 @@
 		<!-- Directory -->
 		<mx:SWFLoader y="-5"  source="@Embed(source='/migAssets/library.swf#parentFolderIcon')"  
 		mouseChildren="false" id="parentdirButton" alpha="1" toolTip="Up 1 Folder" buttonMode="true" useHandCursor="true" />
-		<mx:SWFLoader  mouseChildren="false" id="addDirectoryIcon" alpha="1" toolTip="New Folder"
+		<mx:SWFLoader  mouseChildren="false" id="addDirectoryButton" alpha="1" toolTip="New Folder"
 		source="@Embed(source='/migAssets/library.swf#addFolderIcon')" buttonMode="true" useHandCursor="true"/><!-- width="40"  height="10" -->
 		<mx:Button styleName="trashButton"  toolTip="Delete"  id="trashButton" mouseChildren="false"  buttonMode="true" />			
-	</mx:HBox>
+	</container:FlowContainer>
 	
-	<!-- 					
-	mouseUp="handleListDragStart(event)"
-	dragDrop="handleListDragDrop(event)"
-	dragOver="handleListDragEnter(event)"	-->
 	<mx:Canvas width="100%" height="100%">
 		<mx:ViewStack width="100%" height="100%" id="stack">
 			<mx:VBox width="100%" height="100%" verticalScrollPolicy="off" >
@@ -194,13 +169,7 @@
 				</controls:MiGAdvancedDataGrid>
 				<mx:Label styleName="bodyCopy" text="{tileDP.length + ' items'}" textAlign="center" width="100%"/>
 			</mx:VBox>	
-			<!-- 
 
-			doubleClick="handleDoubleClickThumb(event)"
-			itemClick="handleItemClick(event)" 		  
-			keyDown="handleKeyDown(event)"	
-			
-			-->
 			<mx:VBox width="100%" height="100%" horizontalScrollPolicy="off">
 				<mx:Canvas width="100%" height="100%" horizontalScrollPolicy="off">
 					<controls:MiGTileList

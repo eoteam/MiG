@@ -32,7 +32,7 @@ package org.mig.view.containers
 	import mx.events.FlexEvent;
 	import mx.managers.DragManager;
 	
-	import org.mig.model.vo.media.MediaContainerNode;
+	import org.mig.model.vo.media.FileNode;
 	import org.mig.view.controls.AssociativeInstanceCache;
 	import org.mig.view.controls.CachedLabel;
 	import org.mig.view.controls.DragTileMultiProxy;
@@ -269,7 +269,7 @@ package org.mig.view.containers
 			var result:Array = [];
 			for each (var item:UIComponent in renderers)
 			{
-				if(item[dataField] is MediaContainerNode)
+				if(item[dataField] is FileNode)
 				{
 					result.push(item);
 				}
@@ -355,7 +355,7 @@ package org.mig.view.containers
 						BindingUtils.bindProperty(Object(renderer), "scalePercent", this, "scalePercent");	
 						renderer.addEventListener("selected", handleItemSelected,false,0,true);
 						var newIndex:int
-						if(_items.getItemAt(i) is MediaContainerNode)
+						if(_items.getItemAt(i) is FileNode)
 						{
 							IContentListRenderer(renderer).added = false;
 							if(_selectedItems && selectedItems.indexOf(_items.getItemAt(i)) != -1)

@@ -7,10 +7,12 @@ package
 	import org.mig.controller.MediaCommand;
 	import org.mig.controller.ShowAlertCommand;
 	import org.mig.controller.StartupCommand;
+	import org.mig.controller.UploadCommand;
 	import org.mig.events.AlertEvent;
 	import org.mig.events.AppEvent;
 	import org.mig.events.ContentEvent;
 	import org.mig.events.MediaEvent;
+	import org.mig.events.UploadEvent;
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
 	import org.mig.services.AppService;
@@ -31,7 +33,9 @@ package
 	import org.mig.view.components.main.MainView;
 	import org.mig.view.components.main.ManagersTree;
 	import org.mig.view.components.main.StatusModule;
-	import org.mig.view.components.managers.media.MediaManager;
+	import org.mig.view.components.managers.media.AddDirectoryView;
+	import org.mig.view.components.managers.media.FileUploadView;
+	import org.mig.view.components.managers.media.MediaManagerView;
 	import org.mig.view.mediators.content.ContentGeneralEditorMediator;
 	import org.mig.view.mediators.content.ContentViewMediator;
 	import org.mig.view.mediators.content.tabs.MediaTabMediator;
@@ -41,6 +45,8 @@ package
 	import org.mig.view.mediators.main.MainViewMediator;
 	import org.mig.view.mediators.main.ManagersTreeMediator;
 	import org.mig.view.mediators.main.StatusModuleMediator;
+	import org.mig.view.mediators.managers.media.AddDirectoryMediator;
+	import org.mig.view.mediators.managers.media.FileUploadMediator;
 	import org.mig.view.mediators.managers.media.MediaManagerMediator;
 	import org.robotlegs.base.ContextEvent;
 	import org.robotlegs.mvcs.Context;
@@ -58,21 +64,23 @@ package
 			commandMap.mapEvent(AppEvent.LOGGEDIN,StartupCommand,AppEvent);
 			commandMap.mapEvent(AppEvent.CONFIG_LOADED,StartupCommand,AppEvent);
 			commandMap.mapEvent(AppEvent.CONFIG_FILE_LOADED,StartupCommand,AppEvent);
-
 			//content commands
 			commandMap.mapEvent(ContentEvent.RETRIEVE_CHILDREN,ContentCommand,ContentEvent);
 			commandMap.mapEvent(ContentEvent.RETRIEVE_VERBOSE,ContentCommand,ContentEvent);	
 			//media commands
 			commandMap.mapEvent(MediaEvent.RETRIEVE_CHILDREN,MediaCommand,MediaEvent);
+			commandMap.mapEvent(MediaEvent.ADD_CHILD_NODE,MediaCommand,MediaEvent);
+			//upload
+			commandMap.mapEvent(UploadEvent.UPLOAD,UploadCommand,UploadEvent);
 			//errors
 			commandMap.mapEvent(AlertEvent.SHOW_ALERT, ShowAlertCommand, AlertEvent);
-			
-			
+						
 			//services
 			injector.mapSingletonOf(IUserService,UserService ); 
 			injector.mapSingletonOf(IAppService, AppService);
 			injector.mapSingletonOf(IContentService,ContentService);
 			injector.mapSingletonOf(IMediaService,MediaService);
+			
 			//model
 			injector.mapSingleton(AppModel);
 			injector.mapSingleton(ContentModel);
@@ -87,8 +95,11 @@ package
 			mediatorMap.mapView(ContentView,ContentViewMediator);
 			mediatorMap.mapView(ContentGeneralEditor,ContentGeneralEditorMediator);
 			mediatorMap.mapView(MediaTab,MediaTabMediator);
-			mediatorMap.mapView(MediaManager,MediaManagerMediator);
-			
+			mediatorMap.mapView(MediaManagerView,MediaManagerMediator);
+			mediatorMap.mapView(FileUploadView,FileUploadMediator);
+			//popup mediations
+			mediatorMap.mapView(AddDirectoryView,AddDirectoryMediator, null, false, false ); //disable auto mediation
+
 			injector.mapClass(TagsCategoriesTab,TagsCategoriesTab);
 
 			dispatchEvent(new AppEvent(AppEvent.STARTUP));

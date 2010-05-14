@@ -14,5 +14,5 @@
 	<userManager:UserManagerView id="userManager" width="100%" height="100%" visible="false"  backgroundAlpha=".95" left="-2" right="2"/>
 -->
 
-	<media:MediaManager id="mediaManager" width="100%" height="100%" visible="false" left="-2" right="2"/>
+	<media:MediaManagerMainView id="mediaManager" width="100%" height="100%" visible="false" left="-2" right="2"/>
 </mx:Canvas>

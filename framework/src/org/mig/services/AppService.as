@@ -21,6 +21,7 @@ package org.mig.services
 	import org.mig.model.vo.content.ContainerNode;
 	import org.mig.model.vo.content.Template;
 	import org.mig.model.vo.content.TemplateCustomField;
+	import org.mig.model.vo.media.MimeType;
 	import org.mig.services.interfaces.IAppService;
 	import org.robotlegs.mvcs.Actor;
 
@@ -66,7 +67,12 @@ package org.mig.services
 			params.action = "getTemplates";
 			this.createService(params,ResponseType.DATA,Object,handleTemplates);		
 		}
-		
+		public function loadMimeTypes():void {
+			var params:Object = new Object();
+			params.action = "getData";
+			params.tablename = "mimetypes";
+			this.createService(params,ResponseType.DATA,MimeType)
+		}
 		private function configHandler(data:ResultEvent):void {
 			var results:Array = data.result as Array;
 			for each(var item:Object in results) {

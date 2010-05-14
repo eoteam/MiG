@@ -19,8 +19,8 @@
 			import mx.controls.listClasses.BaseListData;
 			
 			import org.mig.model.vo.ContentNode;
-			import org.mig.model.vo.media.MediaCategoryNode;
-			import org.mig.model.vo.media.MediaContainerNode;
+			import org.mig.model.vo.media.DirectoryNode;
+			import org.mig.model.vo.media.FileNode;
 			import org.mig.model.vo.media.MediaData;
 			import org.mig.model.vo.media.MimeTypes;			
 
@@ -73,7 +73,7 @@
 			private function handleDataChange():void
 			{
 				var fileData:MediaData = _content.data as MediaData;
-				if(_content is MediaCategoryNode) {
+				if(_content is DirectoryNode) {
 					thumbLabel.visible = false;
 					thumbHolder.source = dirIcon;
 					loader.visible = false;

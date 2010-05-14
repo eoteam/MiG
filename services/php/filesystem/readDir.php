@@ -15,9 +15,8 @@ if (isset($_GET['mode']) && $_GET['mode'] == 'test') { // this is a test mode fo
 $mapping = $params["mapping"];
 
 if($mapping){
-	$newdir = "../../".$mapping."/";
+	$dir = "../../".$mapping."/";
 }
-$result = $newdir;
-$newData = outputDirectoryListing($result, $allowed_filetypes);
+outputDirectoryListing($dir, $allowed_filetypes);
 
 ?>

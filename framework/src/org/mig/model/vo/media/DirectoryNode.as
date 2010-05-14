@@ -12,7 +12,7 @@ package  org.mig.model.vo.media
 	
 	import org.mig.model.vo.ContentNode;
 	
-	public class MediaCategoryNode extends ContentNode {
+	public class DirectoryNode extends ContentNode {
 		
 		public var directory:String;
 		public var numFolders:int = 0;
@@ -20,7 +20,7 @@ package  org.mig.model.vo.media
 		public var diskFiles:Array;
 		public var newFiles:Array;
 		
-		public function MediaCategoryNode(baseLabel:String, config:XML, data:MediaData, parentContent:ContentNode, directory:String,privileges:int) {
+		public function DirectoryNode(baseLabel:String, config:XML, data:MediaData, parentContent:ContentNode, directory:String,privileges:int) {
 			this.directory = directory;
 			numItems = 0;
 			numFolders = 0;
@@ -50,26 +50,6 @@ package  org.mig.model.vo.media
 			
 		}
 
-
-		/*override public function addNode(node:ContentNode,index:int=-1,update:Boolean=true,swap:Boolean=false):void {
-			if(node is MediaCategoryNode) {
-				var index:int = 0;
-				for each(var child:ContentNode in this.children) {
-					index++;
-					if(child is MediaContainerNode) {
-						index = children.getItemIndex(child);
-						break;
-					}
-				}
-				this.children.addItemAt(node,index);
-				//dispatchEvent(new ContentNodeEvent(ContentNodeEvent.NODE_ADDED,node));
-				//updateLabel();				
-			}	
-			else    {
-				super.addNode(node);
-			}
-			node.parentNode = this;
-		}*/
 		/*	
 		
 		*/
