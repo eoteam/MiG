@@ -2,7 +2,66 @@
 require_once('../getid3/getid3.php');
 
 
-
+function createThumbFromCenter($file,$thumbDirectory,$base,$extension,$new_w,$new_h)
+{
+	if (preg_match("/jpg|jpeg/",$extension))
+		$src_img=imagecreatefromjpeg($file);
+	if (preg_match("/png/",$extension)) {
+		$src_img=imagecreatefrompng($file);
+		imagealphablending($src_img, true); // setting alpha blending on
+		imagesavealpha($src_img, true); // save alphablending setting (important)
+	}
+		
+	if (preg_match("/gif/",$extension))
+		$src_img=imagecreatefromgif($file);
+		
+	// assuming that $img holds the image with which you are working
+	$img_width  = imagesx($src_img);
+	$img_height = imagesy($src_img);
+	
+	// New image size
+	$width  = $new_w;
+	$height = $new_h;
+	
+	// Starting point of crop
+	$tlx = floor($img_width / 2) - floor ($width / 2);
+	$tly = floor($img_height / 2) - floor($height / 2);
+	
+	// Adjust crop size if the image is too small
+	if ($tlx < 0)
+	{
+	  $tlx = 0;
+	}
+	if ($tly < 0)
+	{
+	  $tly = 0;
+	}
+	
+	if (($img_width - $tlx) < $width)
+	{
+	  $width = $img_width - $tlx;
+	}
+	if (($img_height - $tly) < $height)
+	{
+	  $height = $img_height - $tly;
+	}
+	
+	$dst_img = imagecreatetruecolor($width, $height);
+	imagecopy($dst_img, $src_img, 0, 0, $tlx, $tly, $width, $height);
+	if (preg_match("/png/",$extension)) {
+	
+		imagepng($dst_img,$thumbDirectory.$base.'.'.$extension,9); 
+		//imagealphablending($dst_img, true); // setting alpha blending on
+		//imagesavealpha($dst_img, true); // save alphablending setting (important)
+	}
+		
+	else if (preg_match("/jpg|jpeg/",$extension))
+		imagejpeg($dst_img,$thumbDirectory.$base.'.'.$extension,100); 
+	else
+		imagegif($dst_img,$thumbDirectory.$base.'.'.$extension);
+	imagedestroy($dst_img); 
+	imagedestroy($src_img); 
+}
 function createthumb($file,$thumbDirectory,$base,$extension,$new_w,$new_h)
 {
 	if (preg_match("/jpg|jpeg/",$extension))

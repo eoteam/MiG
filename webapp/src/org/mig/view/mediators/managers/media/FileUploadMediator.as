@@ -15,12 +15,16 @@ package org.mig.view.mediators.managers.media
 		private var files:Array;
 		override public function onRegister():void {
 			view.uploadBtn.addEventListener(MouseEvent.CLICK,handleUploadButton);
-			eventMap.mapListener(eventDisptacher,UploadEvent.FILE_PROGRESS,handleFileProgress,UploadEvent);
+			eventMap.mapListener(eventDispatcher,UploadEvent.FILE_PROGRESS,handleFileProgress,UploadEvent);
 		}
 		private function handleUploadButton(event:Event):void {
 			files = view.selectedFiles;
+			view.currentState = "uploading";
 			eventDispatcher.dispatchEvent(new UploadEvent(UploadEvent.UPLOAD,files));	
 		}
-		private function handleD
+		private function handleFileProgress(event:UploadEvent):void {
+			view.progress = event.status;
+			view.uploadProgress = event.progress;
+		}
 	}
 }

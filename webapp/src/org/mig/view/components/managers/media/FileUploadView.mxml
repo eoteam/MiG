@@ -73,9 +73,9 @@
 			<mx:SetProperty target="{browseBtn}" name="enabled" value="false"/>
 			<mx:SetProperty target="{uploadBtn}" name="enabled" value="false"/>
 			<mx:SetProperty target="{youtubeBtn}" name="enabled" value="false"/>
-			<mx:SetProperty target="{progressBar}" name="visible" value="false"/>
-			<mx:SetProperty target="{progressText}" name="visible" value="false"/>
-			<mx:SetProperty target="{completedFilesList}" name="visible" value="false"/>
+			<mx:SetProperty target="{progressBar}" name="visible" value="true"/>
+			<mx:SetProperty target="{progressText}" name="visible" value="true"/>
+			<mx:SetProperty target="{completedFilesList}" name="visible" value="true"/>
 		</mx:State>
 	</mx:states>
 	

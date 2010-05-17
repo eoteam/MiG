@@ -7,6 +7,7 @@ package org.mig.controller
 	import org.mig.model.vo.media.MediaData;
 	import org.mig.model.vo.media.MimeTypes;
 	import org.mig.services.FileService;
+	import org.mig.services.interfaces.IFileService;
 	import org.mig.services.interfaces.IMediaService;
 	import org.robotlegs.mvcs.Command;
 
@@ -16,7 +17,7 @@ package org.mig.controller
 		public var mediaService:IMediaService;
 		
 		[Inject]
-		public var fileService:FileService;
+		public var fileService:IFileService;
 		
 		[Inject]
 		public var event:MediaEvent;

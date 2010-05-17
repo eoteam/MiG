@@ -4,7 +4,7 @@ package org.mig.services.interfaces
 	
 	import org.mig.model.vo.media.DirectoryNode;
 
-	public interface IFileService
+	public interface IFileService extends IService
 	{
 		function uploadFile(file:FileReference):void;
 		

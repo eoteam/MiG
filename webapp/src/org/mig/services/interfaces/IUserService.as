@@ -13,6 +13,7 @@ package org.mig.services.interfaces
 		function saveUserInfo(token:UserToken):void;
 		
 		function loadUserGroups():void;
+		
 		function loadUsers():void;
 	}
 }

@@ -2,13 +2,13 @@ package org.mig.controller
 {
 	import flash.events.DataEvent;
 	import flash.events.Event;
-
 	import flash.net.FileReference;
 	import flash.net.URLRequest;
 	
 	import org.mig.events.UploadEvent;
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
+	import org.mig.services.interfaces.IFileService;
 	import org.robotlegs.mvcs.Command;
 	
 	public class UploadCommand extends Command
@@ -21,6 +21,9 @@ package org.mig.controller
 		
 		[Inject]
 		public var contentModel:ContentModel;
+		
+		[Inject]
+		public var fileService:IFileService;
 		
 		private var files:Array;
 		private var index:int;
@@ -36,7 +39,7 @@ package org.mig.controller
 		}
 		
 		private function uploadFile(index:int):void {
-
+			fileService.uploadFile(files[index] as FileReference);
 		}
 	
 		private function populateDatabase(filename:String,thumb:String,video_proxy:String,file:Object,tags:Array=null,playTime:Number=NaN):void

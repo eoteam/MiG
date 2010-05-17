@@ -1,7 +1,6 @@
 package 
 {
 	import flash.display.DisplayObjectContainer;
-	import flash.events.Event;
 	
 	import org.mig.controller.ContentCommand;
 	import org.mig.controller.MediaCommand;
@@ -50,7 +49,6 @@ package
 	import org.mig.view.mediators.managers.media.AddDirectoryMediator;
 	import org.mig.view.mediators.managers.media.FileUploadMediator;
 	import org.mig.view.mediators.managers.media.MediaManagerMediator;
-	import org.robotlegs.base.ContextEvent;
 	import org.robotlegs.mvcs.Context;
 	
 	public class MiGContext extends Context

@@ -84,7 +84,7 @@ package org.mig.controller
 		private function loadMediaModel():void {
 			var mediaConfig:XML 		= appModel.config.controller[0]; //XML(config.controller.(@id == "mediaController"));
 			contentModel.currentDirectory = contentModel.mediaModel = new DirectoryNode("files", mediaConfig.child[0], null, null,'',appModel.user.privileges);
-			eventDispatcher.dispatchEvent(new MediaEvent(ContentEvent.RETRIEVE_CHILDREN,contentModel.mediaModel));
+			eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.RETRIEVE_CHILDREN,contentModel.mediaModel));
 		}
 		private function handleConfigLoaded(data:Object):void {
 			service.loadConfigFile(appModel.configfile);

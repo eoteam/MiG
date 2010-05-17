@@ -29,8 +29,8 @@ package org.mig.services
 		
 		public function uploadFile(file:FileReference):void {
 
-			var fileDir:String = appModel.fileDir + "/" + contentModel.currentDirectory.directory;
-			var thumbDir:String = appModel.thumbDir+ "/" + contentModel.currentDirectory.directory;
+			var fileDir:String = appModel.fileDir + contentModel.currentDirectory.directory;
+			var thumbDir:String = appModel.thumbDir+ contentModel.currentDirectory.directory;
 			
 			var extArr:Array = file.name.split('.');
 			var fileExtension:String = String(extArr[extArr.length-1]).toLowerCase();
@@ -81,7 +81,7 @@ package org.mig.services
 			
 		}
 		private function handleHttpStatus(event:HTTPStatusEvent):void {
-			//trace("HTTP STATUS EVENT");
+			trace("Upload HTTPStatus\n",event.status,"\n=====================");
 		}				
 		private function ioErrorHandler(event:IOErrorEvent):void {
 			/*var newError:String = "ioErrorHandler: " + event
@@ -106,12 +106,13 @@ package org.mig.services
 			var d:XML = XML(event.data);
 			
 			resumeFileUploadComplete(d.filename.toString(),d.thumb.toString(),d.video_proxy.toString());*/
-			
+			var result:XML = XML(event.data);
+			trace("Upload Complete\t",result,"\n=====================");
 		}
 		private function progressHandler(event:ProgressEvent):void {
-	
 			var progress:Number = event.bytesLoaded/event.bytesTotal;
 			var progressString:String = progress.toString()+'%';
+			trace("Upload Progress\t",progress,"\n=====================");
 			eventDispatcher.dispatchEvent(new UploadEvent(UploadEvent.FILE_PROGRESS,null,progress,progressString));
 			/*			var newError:String = Number(event.bytesLoaded/event.bytesTotal).toString();
 			generateErrorOutput(newError);
