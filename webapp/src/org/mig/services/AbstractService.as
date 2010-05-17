@@ -43,7 +43,7 @@
 		protected function createService(params:Object,responseType:String,decodeClass:Class,
 										 resultFunction:Function=null,faultFunction:Function=null,url:String=null):XMLHTTPService {
 		
-			var id:String = GUID.create();
+			//var id:String = GUID.create();
 			if(!url)
 				url = Constants.EXECUTE;
 			var service:XMLHTTPService = new XMLHTTPService(url,params,responseType,decodeClass);

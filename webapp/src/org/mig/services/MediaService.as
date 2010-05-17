@@ -19,13 +19,7 @@ package org.mig.services
 		public function MediaService() {
 			super();
 		}	
-		public function retrieveChildrenFromDisk(content:DirectoryNode):void {
-			var params:Object = new Object();
-			params.mapping = appModel.fileDir+content.directory;
-			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,MediaData,null,null,Constants.GETMEDIACONTENT);
-			service.token.content = content;
-		}
-		public function retrieveChildrenFromDatabase(content:DirectoryNode):void {
+		public function retrieveChildren(content:DirectoryNode):void {
 			var params:Object = new Object();
 			params.action = content.config.@action.toString();
 			params.tablename = content.config.@tablename;

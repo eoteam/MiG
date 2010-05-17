@@ -229,7 +229,7 @@ package org.mig.view.mediators.managers.media
 			view.listDP = new HierarchicalData(value.children);
 			view.tileDP = value.children;
 			var arr:Array = String(value.directory).split("/");
-			var currentLocation:String = '';
+			var currentLocation:String = "<font color='#999999'>"+appModel.fileDir+"/";
 			if(arr)
 			{
 				arr.reverse();

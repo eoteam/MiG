@@ -6,13 +6,17 @@ package org.mig.controller
 	import org.mig.model.vo.media.FileNode;
 	import org.mig.model.vo.media.MediaData;
 	import org.mig.model.vo.media.MimeTypes;
+	import org.mig.services.FileService;
 	import org.mig.services.interfaces.IMediaService;
 	import org.robotlegs.mvcs.Command;
 
 	public class MediaCommand extends Command
 	{
 		[Inject]
-		public var service:IMediaService;
+		public var mediaService:IMediaService;
+		
+		[Inject]
+		public var fileService:FileService;
 		
 		[Inject]
 		public var event:MediaEvent;
@@ -20,8 +24,8 @@ package org.mig.controller
 		override public function execute():void {
 			switch(event.type) {
 				case MediaEvent.RETRIEVE_CHILDREN:
-					service.retrieveChildrenFromDisk(event.content as DirectoryNode);
-					service.addHandlers(handleDiskResults);
+					fileService.readDirectory(event.content as DirectoryNode);
+					fileService.addHandlers(handleDiskResults);
 				break;
 				
 				case MediaEvent.RETRIEVE_VERBOSE:
@@ -65,8 +69,8 @@ package org.mig.controller
 				else
 					content.diskFiles.push(item);
 			}
-			service.retrieveChildrenFromDatabase(content);
-			service.addHandlers(handleDatabaseResults);
+			mediaService.retrieveChildren(content);
+			mediaService.addHandlers(handleDatabaseResults);
 		}
 		private function handleDatabaseResults(data:Object):void {
 			var results:Array = data.result as Array;

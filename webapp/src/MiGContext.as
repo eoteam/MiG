@@ -17,10 +17,12 @@ package
 	import org.mig.model.ContentModel;
 	import org.mig.services.AppService;
 	import org.mig.services.ContentService;
+	import org.mig.services.FileService;
 	import org.mig.services.MediaService;
 	import org.mig.services.UserService;
 	import org.mig.services.interfaces.IAppService;
 	import org.mig.services.interfaces.IContentService;
+	import org.mig.services.interfaces.IFileService;
 	import org.mig.services.interfaces.IMediaService;
 	import org.mig.services.interfaces.IUserService;
 	import org.mig.view.components.content.ContentGeneralEditor;
@@ -76,14 +78,16 @@ package
 			commandMap.mapEvent(AlertEvent.SHOW_ALERT, ShowAlertCommand, AlertEvent);
 						
 			//services
-			injector.mapSingletonOf(IUserService,UserService ); 
+			injector.mapSingletonOf(IUserService,UserService); 
 			injector.mapSingletonOf(IAppService, AppService);
 			injector.mapSingletonOf(IContentService,ContentService);
 			injector.mapSingletonOf(IMediaService,MediaService);
-			
+			injector.mapSingletonOf(IFileService,FileService);
+				
 			//model
 			injector.mapSingleton(AppModel);
 			injector.mapSingleton(ContentModel);
+
 			
 			//views
 			mediatorMap.mapView(LoginView, LoginViewMediator);			
