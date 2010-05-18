@@ -39,7 +39,6 @@ package org.mig.services
 			file.addEventListener(ProgressEvent.PROGRESS, progressHandler);
 			file.addEventListener(HTTPStatusEvent.HTTP_STATUS, handleHttpStatus);
 			file.addEventListener(Event.COMPLETE, fileUploadComplete);
-			file.addEventListener(DataEvent.UPLOAD_COMPLETE_DATA, uploadCompleteDataHandler);
 			file.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
 			file.addEventListener(SecurityErrorEvent.SECURITY_ERROR, securityErrorHandler);
 			try  
@@ -52,11 +51,17 @@ package org.mig.services
 				
 			} 
 		}	
-		
-		public function addFile(file:Object):void {
+		public function addDirectory(name:String):void {
+			var content:DirectoryNode = contentModel.currentDirectory;
+			var params:Object = new Object();
+			params.directory = content.directory;
+			params.rootDir = appModel.fileDir;
+			params.folderName = name;
+			if(params.directory == null || params.directory == "")
+				params.directory = " ";	
+			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,MediaData,null,null,Constants.CREATE_DIR);
 			
 		}
-		
 		public function getXMP(file:String):void {
 			
 		}
@@ -100,18 +105,9 @@ package org.mig.services
 			if(this.currentFileIndex<this.selectedFiles.length)
 			uploadNextFile(this.currentFileIndex);*/
 		}
-		private function uploadCompleteDataHandler(event:DataEvent):void {
-			/*			this.uploadProgress = 1; 		
-			var file:FileReference = event.target as FileReference;
-			var d:XML = XML(event.data);
-			
-			resumeFileUploadComplete(d.filename.toString(),d.thumb.toString(),d.video_proxy.toString());*/
-			var result:XML = XML(event.data);
-			trace("Upload Complete\t",result,"\n=====================");
-		}
 		private function progressHandler(event:ProgressEvent):void {
 			var progress:Number = event.bytesLoaded/event.bytesTotal;
-			var progressString:String = progress.toString()+'%';
+			var progressString:String = (progress*100).toString()+'% Complete';
 			trace("Upload Progress\t",progress,"\n=====================");
 			eventDispatcher.dispatchEvent(new UploadEvent(UploadEvent.FILE_PROGRESS,null,progress,progressString));
 			/*			var newError:String = Number(event.bytesLoaded/event.bytesTotal).toString();

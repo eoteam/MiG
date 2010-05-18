@@ -27,16 +27,28 @@ package org.mig.services
 			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,MediaData);
 			service.token.content = content;
 		}
-		public function addFolder(name:String):void {
-			var content:DirectoryNode = contentModel.currentDirectory;
+		public function addFile(file:Object):void {
+			var date:Date = new Date();
+			var time:Number = Math.round(date.time / 1000);
 			var params:Object = new Object();
-			params.directory = content.directory;
-			params.rootDir = appModel.fileDir;
-			params.folderName = name;
-			if(params.directory == null || params.directory == "")
-				params.directory = " ";	
-			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,MediaData,null,null,Constants.CREATE_DIR);
-		
+			params.action = "insertRecord";
+			params.tablename = "media";
+			params.name = file.name;
+			params.extension = file.extension;
+			params.size = file.size;
+			params.thumb = file.thumb;
+			params.video_proxy = file.video_proxy;
+			params.playtime = file.playtime;			
+			params.createdby = appModel.user.id;
+			params.createdate = time;
+			params.createdby = appModel.user.id;
+			params.modifieddate = time;
+			params.modifiedby = time;
+			params.mimetype = contentModel.getMimetypeByExtension(file.extension);
+			params.path = contentModel.currentDirectory.directory + '/';
+			params.verbose = true;
+			params.tags = file.tags;
+			this.createService(params,ResponseType.DATA,MediaData);
 		}
 	}
 }

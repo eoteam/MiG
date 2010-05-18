@@ -60,9 +60,11 @@ else
 	
 //try xmp	
 $tags = getTags($path.$base.'.'.$extension);
-		
+$size = shell_exec("ls -s " . $path.$base.'.'.$extension) *1024;		
 header("Content-type: text/xml");
-$out = "<result><filename>" . $base.'.'.$extension."</filename>";
+$out = "<result><name>" . $base.'.'.$extension."</name>";
+$out .= "<extension>".$extension."</extension>";
+$out .= "<size>".$size."</size>";
 if($thumbCreated)
 	$out .= "<thumb>". $thumbase.'.'.$thumbextension."</thumb>";
 else

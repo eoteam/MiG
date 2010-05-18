@@ -88,13 +88,15 @@
 			<mx:Button styleName="defaultButton" label="Upload File(s)" id="uploadBtn"/>				
 			<mx:Button styleName="defaultButton" label="Cancel" id="stopBtn" click="stopUploads()"/>				
 		</mx:HBox>
-		<mx:Canvas id="progressBar" width="100%" height="2" alpha="0" hideEffect="fadeOut" showEffect="fadeIn">
-			<mx:Canvas width="100%" height="1" backgroundColor="#000000" backgroundAlpha="1.0" id="bg"/>
-			<mx:Canvas id="progressCanvas" backgroundColor="#ffffff" width="{uploadProgress*bg.width}" height="{bg.height}"/>
-		</mx:Canvas>
-		<mx:Text width="100%" styleName="bodyCopy" id="progressText" height="20" alpha="0" hideEffect="fadeOut" showEffect="fadeIn" htmlText="{progress}" />		
+		<mx:HBox width="100%" verticalAlign="middle">
+			<mx:Canvas id="progressBar" width="100%" height="2" alpha="0" hideEffect="fadeOut" showEffect="fadeIn">
+				<mx:Canvas width="100%" height="1" backgroundColor="#000000" backgroundAlpha="1.0" id="bg"/>
+				<mx:Canvas id="progressCanvas" backgroundColor="#ffffff" width="{uploadProgress*bg.width}" height="{bg.height}"/>
+			</mx:Canvas>
+			<mx:Text  styleName="bodyCopy" id="progressText" height="20" alpha="0" hideEffect="fadeOut" showEffect="fadeIn" htmlText="{progress}" />		
+		</mx:HBox>
 		<mx:TextArea alpha="0" width="100%" height="100%"  backgroundColor="#222222" color="0xffffff"  borderStyle="none" hideEffect="fadeOut" showEffect="fadeIn"
-			styleName="bodyCopy" id="completedFilesList" htmlText="{uploadedList}"/>
+		styleName="bodyCopy" id="completedFilesList" htmlText="{uploadedList}"/>
 	</mx:VBox>
 	
 	<mx:Fade alphaFrom="0" alphaTo="1" id="fadeIn"/>			

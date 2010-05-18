@@ -8,17 +8,16 @@ package org.mig.services.interfaces
 	{
 		function uploadFile(file:FileReference):void;
 		
-		function addFile(file:Object):void;
+		function getXMP(name:String):void;
 		
-		function getXMP(file:String):void;
+		function getID3(name:String):void;
 		
-		function getID3(file:String):void;
-		
-		function deleteFile(file:String):void;
+		function deleteFile(name:String):void;
 		
 		function deleteDirectory(node:DirectoryNode):void;
 		
 		function readDirectory(node:DirectoryNode):void;
 		
+		function addDirectory(name:String):void;
 	}
 }

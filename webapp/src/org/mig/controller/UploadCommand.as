@@ -9,6 +9,7 @@ package org.mig.controller
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
 	import org.mig.services.interfaces.IFileService;
+	import org.mig.services.interfaces.IMediaService;
 	import org.robotlegs.mvcs.Command;
 	
 	public class UploadCommand extends Command
@@ -25,6 +26,9 @@ package org.mig.controller
 		[Inject]
 		public var fileService:IFileService;
 		
+		[Inject]
+		public var mediaService:IMediaService;
+		
 		private var files:Array;
 		private var index:int;
 		
@@ -40,8 +44,13 @@ package org.mig.controller
 		
 		private function uploadFile(index:int):void {
 			fileService.uploadFile(files[index] as FileReference);
+			FileReference(files[index]).addEventListener(DataEvent.UPLOAD_COMPLETE_DATA,uploadCompleteDataHandler);
 		}
-	
+		private function uploadCompleteDataHandler(event:DataEvent):void {
+			var result:XML = XML(event.data);
+			mediaService.addFile(result);
+			//mediaService.addHandlers(
+		}
 		private function populateDatabase(filename:String,thumb:String,video_proxy:String,file:Object,tags:Array=null,playTime:Number=NaN):void
 		{
 			/*var extArr:Array = filename.split('.');

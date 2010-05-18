@@ -6,7 +6,7 @@ package org.mig.services.interfaces
 	{
 		
 		function retrieveChildren(content:DirectoryNode):void;
-		
-		function addFolder(name:String):void;
+			
+		function addFile(file:Object):void;
 	}
 }

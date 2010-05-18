@@ -8,6 +8,7 @@ package org.mig.view.mediators.managers.media
 	import org.mig.model.vo.StatusResult;
 	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.model.vo.media.MediaData;
+	import org.mig.services.interfaces.IFileService;
 	import org.mig.services.interfaces.IMediaService;
 	import org.mig.view.components.managers.media.AddDirectoryView;
 	import org.robotlegs.mvcs.Mediator;
@@ -21,6 +22,9 @@ package org.mig.view.mediators.managers.media
 		public var mediaService:IMediaService;
 		
 		[Inject]
+		public var fileService:IFileService;
+		
+		[Inject]
 		public var contentModel:ContentModel;
 		
 		override public function onRegister():void {
@@ -29,8 +33,8 @@ package org.mig.view.mediators.managers.media
 		}
 		private function handleSubmitButton(event:MouseEvent):void {
 			if(view.nameInput.text.length > 0) {
-				mediaService.addFolder(view.nameInput.text);
-				mediaService.addHandlers(handleDirectoryAdded);
+				fileService.addDirectory(view.nameInput.text);
+				fileService.addHandlers(handleDirectoryAdded);
 			}
 		}
 		private function handleDirectoryAdded(data:Object):void {
