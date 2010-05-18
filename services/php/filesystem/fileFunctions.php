@@ -4,15 +4,15 @@ require_once('../getid3/getid3.php');
 
 function createThumbFromCenter($file,$thumbDirectory,$base,$extension,$new_w,$new_h)
 {
-	if (preg_match("/jpg|jpeg/",$extension))
+	if (preg_match("/jpg|jpeg/",strtolower($extension)))
 		$src_img=imagecreatefromjpeg($file);
-	if (preg_match("/png/",$extension)) {
+	if (preg_match("/png/",strtolower($extension))) {
 		$src_img=imagecreatefrompng($file);
 		imagealphablending($src_img, true); // setting alpha blending on
 		imagesavealpha($src_img, true); // save alphablending setting (important)
 	}
 		
-	if (preg_match("/gif/",$extension))
+	if (preg_match("/gif/",strtolower($extension)))
 		$src_img=imagecreatefromgif($file);
 		
 	// assuming that $img holds the image with which you are working
@@ -48,14 +48,14 @@ function createThumbFromCenter($file,$thumbDirectory,$base,$extension,$new_w,$ne
 	
 	$dst_img = imagecreatetruecolor($width, $height);
 	imagecopy($dst_img, $src_img, 0, 0, $tlx, $tly, $width, $height);
-	if (preg_match("/png/",$extension)) {
+	if (preg_match("/png/",strtolower($extension))) {
 	
 		imagepng($dst_img,$thumbDirectory.$base.'.'.$extension,9); 
 		//imagealphablending($dst_img, true); // setting alpha blending on
 		//imagesavealpha($dst_img, true); // save alphablending setting (important)
 	}
 		
-	else if (preg_match("/jpg|jpeg/",$extension))
+	else if (preg_match("/jpg|jpeg/",strtolower($extension)))
 		imagejpeg($dst_img,$thumbDirectory.$base.'.'.$extension,100); 
 	else
 		imagegif($dst_img,$thumbDirectory.$base.'.'.$extension);

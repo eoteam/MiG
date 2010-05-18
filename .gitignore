@@ -8,6 +8,7 @@ framework/.actionScriptProperties
 framework/.flexLibProperties
 airapp/bin-debug/
 webapp/bin-debug/
+webapp/release/
 testing/TextLayoutEditor/bin/
 services/files/
 .DS_Store

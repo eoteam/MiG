@@ -48,11 +48,8 @@ package  org.mig.model.vo.media
 			var command:FileCommand = new FileCommand(this,Constants.REMOVE_DIR,params,ResponseType.STATUS);
 			command.execute();
 			
-		}
-
-		/*	
+		} */
 		
-		*/
 		/*		
 		private function handleSelection(event:Event):void
 		{
@@ -78,7 +75,8 @@ package  org.mig.model.vo.media
 		MediaCategoryNode(file).removeItem();
 		}					
 		}
-		}				
+		}	
+		
 		public function addMediaContainerNode(newItem:XML,newLabel:String):MediaContainerNode {
 		function search(item:Object):Boolean {
 		if(item.label.toLowerCase() == newLabel.toLowerCase())
@@ -104,6 +102,8 @@ package  org.mig.model.vo.media
 		return null;
 		}
 		}*/		
+		
+		
 		/*		private function handleThumbComplete(event:Event):void {
 		var result:XML  = XML(event.target.xml);
 		if(result.success.toString() == "true") {

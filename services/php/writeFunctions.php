@@ -565,7 +565,7 @@ function associateTags($tablename,$id,$tags) {
 		if (mysql_num_rows($result) > 0) { // tag is in db, put id into arrTags
 		
 			$row = mysql_fetch_array($result);
-			$arrTags[$key]['tagid'] = $row['id'];
+			$arrTags[$key]['termid'] = $row['id'];
 		
 		} else { // tag is not in db, insert it!
 		
@@ -586,7 +586,7 @@ function associateTags($tablename,$id,$tags) {
 	
 	// now lets associate the tags with the record, first delete all associated tags!
 	
-	$tagsTableName = $tablename . "_tags";
+	$tagsTableName = $tablename . "_terms";
 	$idField = $tablename . "id";
 	
 	$sql = "DELETE FROM $tagsTableName WHERE $idField = '$id'";

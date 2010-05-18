@@ -42,10 +42,10 @@ package org.mig.view.mediators.main
 			//view.privileges = appModel.user.privileges;
 		}
 		private function handleResize(event:Event):void {
-			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.RESIZE_MANAGER_TREE,[view.measureHeightOfItems()]));
+			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.RESIZE_MANAGER_TREE,view.measureHeightOfItems()));
 		}
 		private function handleTreeChange(event:ListEvent):void {
-			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.MANAGER_SELECTED,[view.selectedItem]));
+			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.MANAGER_SELECTED,view.selectedItem));
 		}	
 	}
 }

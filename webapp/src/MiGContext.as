@@ -69,7 +69,8 @@ package
 			commandMap.mapEvent(ContentEvent.RETRIEVE_VERBOSE,ContentCommand,ContentEvent);	
 			//media commands
 			commandMap.mapEvent(MediaEvent.RETRIEVE_CHILDREN,MediaCommand,MediaEvent);
-			commandMap.mapEvent(MediaEvent.ADD_CHILD_NODE,MediaCommand,MediaEvent);
+			commandMap.mapEvent(MediaEvent.ADD_DIRECTORY,MediaCommand,MediaEvent);
+			commandMap.mapEvent(MediaEvent.ADD_FILE,MediaCommand,MediaEvent);
 			//upload
 			commandMap.mapEvent(UploadEvent.UPLOAD,UploadCommand,UploadEvent);
 			//errors

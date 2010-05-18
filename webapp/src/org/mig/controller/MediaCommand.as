@@ -1,6 +1,7 @@
 package org.mig.controller
 {
 	import org.mig.events.MediaEvent;
+	import org.mig.events.ViewEvent;
 	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.model.vo.media.FileNode;
@@ -23,6 +24,7 @@ package org.mig.controller
 		public var event:MediaEvent;
 		
 		override public function execute():void {
+			var node:DirectoryNode	
 			switch(event.type) {
 				case MediaEvent.RETRIEVE_CHILDREN:
 					fileService.readDirectory(event.content as DirectoryNode);
@@ -33,27 +35,32 @@ package org.mig.controller
 					
 				break;
 				
-				case MediaEvent.ADD_CHILD_NODE:
+				case MediaEvent.ADD_DIRECTORY:
 					/*override public function addNode(node:ContentNode,index:int=-1,update:Boolean=true,swap:Boolean=false):void */
-					var child:ContentNode = event.child;
-					var node:DirectoryNode = event.content as DirectoryNode;
-					if(node is DirectoryNode) {
-						var index:int = 0;
-						for each(var item:ContentNode in node.children) {
-							index++;
-							if(item is DirectoryNode) {
-								index = node.children.getItemIndex(item);
-								break;
-							}
+					node = event.content as DirectoryNode;
+					var name:String = event.args[0];
+					var dirData:MediaData = event.args[1];
+					var newDirectory:String = node.directory + "/" + name;
+					var child:DirectoryNode = new DirectoryNode(name,node.config, dirData, node, newDirectory, node.privileges);
+					var index:int = 0;
+					for each(var item:ContentNode in node.children) {
+						index++;
+						if(item is DirectoryNode) {
+							index = node.children.getItemIndex(item);
+							break;
 						}
-						node.children.addItemAt(child,index);			
-					}	
-					else {
-						node.children.addItem(child);
 					}
-					child.parentNode = node;
-					
+					node.children.addItemAt(child,index);			
+					eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_MEDIA));
 				break;
+				case MediaEvent.ADD_FILE:
+					node = event.content as DirectoryNode;
+					var fileData:MediaData = event.args[0];
+					var file:FileNode = new FileNode(fileData.name,node.config,fileData,node,node.privileges);
+					node.children.addItem(file);
+					eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_MEDIA));
+				break;
+				
 			}
 		}	
 		private function handleDiskResults(data:Object):void {
@@ -124,8 +131,7 @@ package org.mig.controller
 				}
 			}
 			for each(result in results) { // not on disk but in DB: virtual asset, namely youtube, remote asset, etc..
-				if(result.mimetypeid == MimeTypes.YOUTUBE)
-				{
+				if(result.mimetypeid == MimeTypes.YOUTUBE) {
 					node = new FileNode(result.name, content.config, result, content,content.privileges);
 					content.children.addItem(node);
 					content.numItems += 1;	

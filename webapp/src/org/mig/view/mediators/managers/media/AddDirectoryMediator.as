@@ -43,9 +43,7 @@ package org.mig.view.mediators.managers.media
 			var directory:DirectoryNode = contentModel.currentDirectory;
 			if(mediaData) {
 				eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Directory added successfully"));
-				var newDirectory:String = directory.directory + "/" + view.nameInput.text;
-				var newNode:DirectoryNode = new DirectoryNode(view.nameInput.text,directory.config,mediaData,directory,newDirectory,directory.privileges);
-				eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.ADD_CHILD_NODE,directory,null,newNode));
+				eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.ADD_DIRECTORY,directory,view.nameInput.text,mediaData));
 			}
 			else {
 				

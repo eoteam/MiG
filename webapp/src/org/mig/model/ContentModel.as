@@ -19,7 +19,7 @@ package org.mig.model
 		
 		//public var mediaModel:MediaCategoryNode;
 		
-		public function getMimetypeByExtension(extension:String):String {
+		public function getMimetypeString(extension:String):String {
 			for each(var mimetype:MimeType in mimetypes) {
 				for each(var ext:String  in mimetype.extensionsArray) {
 					if(ext.toLowerCase() == extension.toLowerCase()) {
@@ -29,5 +29,15 @@ package org.mig.model
 			}
 			return "file";
 		}
+		public function getMimetypeId(extension:String):int {
+			for each(var mimetype:MimeType in mimetypes) {
+				for each(var ext:String  in mimetype.extensionsArray) {
+					if(ext.toLowerCase() == extension.toLowerCase()) {
+						return mimetype.id;
+					}
+				}
+			}
+			return MimeTypes.FILE;
+		}		
 	}
 }

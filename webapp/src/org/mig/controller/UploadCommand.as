@@ -1,13 +1,18 @@
 package org.mig.controller
 {
+	import com.darronschall.serialization.ObjectTranslator;
+	
 	import flash.events.DataEvent;
 	import flash.events.Event;
 	import flash.net.FileReference;
 	import flash.net.URLRequest;
 	
+	import org.mig.events.MediaEvent;
+	import org.mig.events.NotificationEvent;
 	import org.mig.events.UploadEvent;
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
+	import org.mig.model.vo.media.MediaData;
 	import org.mig.services.interfaces.IFileService;
 	import org.mig.services.interfaces.IMediaService;
 	import org.robotlegs.mvcs.Command;
@@ -30,10 +35,12 @@ package org.mig.controller
 		public var mediaService:IMediaService;
 		
 		private var files:Array;
+		private var runningStatus:String;
 		private var index:int;
 		
 		override public function execute():void {
-			files = event.files;
+			files = event.args[0] as Array;
+			runningStatus = '<p>Completed Files:</p>';
 			index = 0;
 			switch(event.type) {
 				case UploadEvent.UPLOAD:
@@ -43,75 +50,32 @@ package org.mig.controller
 		}
 		
 		private function uploadFile(index:int):void {
+			eventDispatcher.dispatchEvent(new UploadEvent(UploadEvent.FILE_START,"File "+(index+1).toString() + "/"+files.length.toString()));
 			fileService.uploadFile(files[index] as FileReference);
 			FileReference(files[index]).addEventListener(DataEvent.UPLOAD_COMPLETE_DATA,uploadCompleteDataHandler);
 		}
 		private function uploadCompleteDataHandler(event:DataEvent):void {
+			trace("UPLOAD_COMPLETE_DATA\n",event.data	,"\n=====================");
 			var result:XML = XML(event.data);
-			mediaService.addFile(result);
-			//mediaService.addHandlers(
-		}
-		private function populateDatabase(filename:String,thumb:String,video_proxy:String,file:Object,tags:Array=null,playTime:Number=NaN):void
-		{
-			/*var extArr:Array = filename.split('.');
-			var fileExtension:String = String('.'+extArr[extArr.length-1]).toLowerCase();
-			var fileType:String = getFileType(fileExtension);
-			
-			var parent:String = '';
-			if(this.fileUploadMove)
-				parent = file.parent;
-			var directory:String = _rootDirectory + "/" + uploadPath+parent;
-			var thumbsDir:String = _rootDirectory + "/migThumbs/" + uploadPath+parent;  	
-			
-			// var operation:XmlHttpOperation = new XmlHttpOperation(Constants.EXECUTE);
-			//operation.addEventListener(Event.COMPLETE, handleDatabaseComplete);
-			
-			var tokens:Object = new Object();
-			tokens.index= this.currentFileIndex;
-			tokens.directory = directory;
-			tokens.thumbsDir = thumbsDir;
-			tokens.fileType = fileType;	        
-			
-			var params:Object = new Object();
-			params.action = "insertRecord";
-			params.tablename = "media";
-			params.size = file.size;
-			params.name = filename;
-			if(uploadPath != "")
-				params.path = "/" + uploadPath + "/"+parent;
-			else
-				params.path = "/"+parent;
-			
-			params.thumb = thumb;
-			if(video_proxy != "false")
-				params.video_proxy = video_proxy;
-			params.mimetype = fileType;
-			if(fileType == "font")
-			{
-				params.customfield1 = false; //not compiled 
+			var file:Object = new Object();
+			for each(var prop:XML in result.children()) {
+				file[prop.name()] = prop.toString();
 			}
-			params.createdby = Application.application.user.id;
-			params.modifiedby = Application.application.user.id;
-			params.verbose = false;
-			trace(params.name,"\t\t\t",this.currentFileIndex,"\t",this.selectedFiles.length);
-			var date:Date = new Date();
-			params.createdate = date.time;
-			params.modifieddate = date.time;
-			if(!isNaN(playTime))
-				params.playtime = playTime;
-			var tagString:String="";
-			if(tags)
-			{
-				for each(var keyword:String in tags)
-				{
-					tagString += keyword+",";
-				}
-				tagString = tagString.substring(0,tagString.length-1);
-				params.tags = tagString; 
-			}	       
-			operation.params = params;
-			operation.tokens = tokens;
-			operation.execute();     		*/	
+			mediaService.addFile(file);
+			mediaService.addHandlers(handleDatabaseAdd);
+		}
+		private function handleDatabaseAdd(data:Object):void {
+			var item:MediaData = data.result[0] as MediaData;
+			eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.ADD_FILE,contentModel.currentDirectory,item));
+			eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"File uploaded successfully"));
+			runningStatus += item.name + "<br />";
+			eventDispatcher.dispatchEvent(new UploadEvent(UploadEvent.FILE_END,runningStatus));
+			index++;
+			if(index == files.length) {
+				eventDispatcher.dispatchEvent(new UploadEvent(UploadEvent.COMPLETE));
+			}
+			else
+				uploadFile(index);
 		}
 		
 	}

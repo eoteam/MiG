@@ -16,11 +16,6 @@
 			public var selectedFiles:Array;
 			
 			[Bindable] public var uploadProgress:Number;
-			[Bindable] public var uploadedList:String;
-			[Bindable] public var progress:String; 
-			//htmlText="{'File: '+(ControllerLocator.fileUploadController.currentFileIndex)+'/' + ControllerLocator.fileUploadController.selectedFiles.length+'    '+
-			//(ControllerLocator.fileUploadController.uploadProgress*100)+'% Complete'}" 
-			
 
 			private function browseFiles():void {			
 				fileBrowser = new FileReferenceList();
@@ -59,27 +54,32 @@
 		<mx:State name="browse">
 			<mx:SetProperty target="{browseBtn}" name="enabled" value="true"/>
 			<mx:SetProperty target="{youtubeBtn}" name="enabled" value="true"/>
-			<mx:SetProperty target="{uploadBtn}" name="enabled" value="false" id="uploadProp"/>
-			<mx:SetProperty target="{stopBtn}" name="visible" value="false" id="stopProp"/>
+			
+			<mx:SetProperty target="{uploadBtn}" name="visible" value="false"/>
+			<mx:SetProperty target="{stopBtn}" name="visible" value="false"/>
+			<mx:SetProperty target="{uploadBtn}" name="enabled" value="true"/>
+			<mx:SetProperty target="{stopBtn}" name="enabled" value="true"/>
+			
 			<mx:SetProperty target="{progressBar}" name="visible" value="false"/>
-			<mx:SetProperty target="{progressText}" name="visible" value="false"/>
+			<mx:SetProperty target="{progressText1}" name="visible" value="false"/>
+			<mx:SetProperty target="{progressText2}" name="visible" value="false"/>
 			<mx:SetProperty target="{completedFilesList}" name="visible" value="false"/>
 		</mx:State>
 		<mx:State name="upload" basedOn="browse">
-			<mx:SetProperty target="{uploadBtn}" name="enabled" value="true" />
+			<mx:SetProperty target="{uploadBtn}" name="visible" value="true" />
 			<mx:SetProperty target="{stopBtn}" name="visible" value="true" />					
 		</mx:State>
 		<mx:State name="uploading">
 			<mx:SetProperty target="{browseBtn}" name="enabled" value="false"/>
 			<mx:SetProperty target="{uploadBtn}" name="enabled" value="false"/>
 			<mx:SetProperty target="{youtubeBtn}" name="enabled" value="false"/>
+			
 			<mx:SetProperty target="{progressBar}" name="visible" value="true"/>
-			<mx:SetProperty target="{progressText}" name="visible" value="true"/>
+			<mx:SetProperty target="{progressText1}" name="visible" value="true"/>
+			<mx:SetProperty target="{progressText2}" name="visible" value="true"/>
 			<mx:SetProperty target="{completedFilesList}" name="visible" value="true"/>
 		</mx:State>
 	</mx:states>
-	
-
 	
 	<mx:VBox width="100%" height="100%" paddingBottom="10">
 		<mx:HBox width="100%">
@@ -88,15 +88,16 @@
 			<mx:Button styleName="defaultButton" label="Upload File(s)" id="uploadBtn"/>				
 			<mx:Button styleName="defaultButton" label="Cancel" id="stopBtn" click="stopUploads()"/>				
 		</mx:HBox>
-		<mx:HBox width="100%" verticalAlign="middle">
-			<mx:Canvas id="progressBar" width="100%" height="2" alpha="0" hideEffect="fadeOut" showEffect="fadeIn">
-				<mx:Canvas width="100%" height="1" backgroundColor="#000000" backgroundAlpha="1.0" id="bg"/>
-				<mx:Canvas id="progressCanvas" backgroundColor="#ffffff" width="{uploadProgress*bg.width}" height="{bg.height}"/>
-			</mx:Canvas>
-			<mx:Text  styleName="bodyCopy" id="progressText" height="20" alpha="0" hideEffect="fadeOut" showEffect="fadeIn" htmlText="{progress}" />		
+		<mx:Canvas id="progressBar" width="100%" height="2" alpha="0" hideEffect="fadeOut" showEffect="fadeIn">
+			<mx:Canvas width="100%" height="1" backgroundColor="#000000" backgroundAlpha="1.0" id="bg"/>
+			<mx:Canvas id="progressCanvas" backgroundColor="#ffffff" width="{uploadProgress*bg.width}" height="{bg.height}"/>
+		</mx:Canvas>
+		<mx:HBox verticalAlign="middle">
+			<mx:Text styleName="bodyCopy" id="progressText1" height="20" alpha="0" hideEffect="fadeOut" showEffect="fadeIn"/>	
+			<mx:Text styleName="bodyCopy" id="progressText2" height="20" alpha="0" hideEffect="fadeOut" showEffect="fadeIn"  />			
 		</mx:HBox>
 		<mx:TextArea alpha="0" width="100%" height="100%"  backgroundColor="#222222" color="0xffffff"  borderStyle="none" hideEffect="fadeOut" showEffect="fadeIn"
-		styleName="bodyCopy" id="completedFilesList" htmlText="{uploadedList}"/>
+		styleName="bodyCopy" id="completedFilesList" />
 	</mx:VBox>
 	
 	<mx:Fade alphaFrom="0" alphaTo="1" id="fadeIn"/>			

@@ -27,12 +27,15 @@ if(file_exists($thumbpath.$thumbase.'.'.$thumbextension))
 	$counter = checkName($thumbpath,$thumbase,$thumbextension,1);
 	$thumbase .= '_'.$counter;
 }
-
+$width = 0;
+$height = 0;
 if($fileType == "images")
 {
 	$thumbCreated = true;
-	createThumbFromCenter($path.$base.'.'.$extension,$thumbpath,$thumbase,$thumbextension,266,160);
+	createThumbFromCenter($path.$base.'.'.$extension,$thumbpath,$thumbase,$thumbextension,250,250);
 	createsquarethumb($path.$base.'.'.$extension,$thumbpath,$thumbase,$thumbextension,300);
+	$temp = getimagesize($path.$base.'.'.$extension);
+	$width = $temp[0]; $height = $temp[1];
 }
 else if($fileType == "videos" && extension_loaded("ffmpeg"))
 {
@@ -65,6 +68,8 @@ header("Content-type: text/xml");
 $out = "<result><name>" . $base.'.'.$extension."</name>";
 $out .= "<extension>".$extension."</extension>";
 $out .= "<size>".$size."</size>";
+$out .= "<width>".$width."</width>";
+$out .= "<height>".$height."</height>";
 if($thumbCreated)
 	$out .= "<thumb>". $thumbase.'.'.$thumbextension."</thumb>";
 else

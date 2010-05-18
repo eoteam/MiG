@@ -43,11 +43,13 @@ package org.mig.services
 			params.createdate = time;
 			params.createdby = appModel.user.id;
 			params.modifieddate = time;
-			params.modifiedby = time;
-			params.mimetype = contentModel.getMimetypeByExtension(file.extension);
+			params.modifiedby = appModel.user.id;
+			params.mimetypeid = contentModel.getMimetypeId(file.extension);
 			params.path = contentModel.currentDirectory.directory + '/';
+			params.width = file.width;
+			params.height = file.height;
 			params.verbose = true;
-			params.tags = file.tags;
+			//params.tags = file.tags;
 			this.createService(params,ResponseType.DATA,MediaData);
 		}
 	}

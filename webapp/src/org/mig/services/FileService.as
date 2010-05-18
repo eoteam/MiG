@@ -34,13 +34,14 @@ package org.mig.services
 			
 			var extArr:Array = file.name.split('.');
 			var fileExtension:String = String(extArr[extArr.length-1]).toLowerCase();
-			var fileType:String = contentModel.getMimetypeByExtension(fileExtension);
+			var fileType:String = contentModel.getMimetypeString(fileExtension);
 			
 			file.addEventListener(ProgressEvent.PROGRESS, progressHandler);
-			file.addEventListener(HTTPStatusEvent.HTTP_STATUS, handleHttpStatus);
-			file.addEventListener(Event.COMPLETE, fileUploadComplete);
 			file.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
 			file.addEventListener(SecurityErrorEvent.SECURITY_ERROR, securityErrorHandler);
+			
+/*			file.addEventListener(HTTPStatusEvent.HTTP_STATUS, handleHttpStatus);
+			file.addEventListener(Event.COMPLETE, fileUploadComplete);*/
 			try  
 			{       	        	
 				var newURL:String = Constants.UPLOAD_FILE + "?directory=" + fileDir + "/&thumbsDir=" + thumbDir + "/&fileType=" + fileType;
@@ -78,19 +79,11 @@ package org.mig.services
 		public function deleteFile(file:String):void {
 			
 		}
-		
 		public function deleteDirectory(directory:DirectoryNode):void {
 			
-		}
-		private function fileUploadComplete(event:Event):void {	
-			
-		}
-		private function handleHttpStatus(event:HTTPStatusEvent):void {
-			trace("Upload HTTPStatus\n",event.status,"\n=====================");
 		}				
-		private function ioErrorHandler(event:IOErrorEvent):void {
-			/*var newError:String = "ioErrorHandler: " + event
-			
+		private function ioErrorHandler(event:IOErrorEvent):void {		
+			/*var newError:String = "ioErrorHandler: " + event	
 			var percentLoaded:Number = 0;
 			this.uploadProgress = 0;
 			this.currentFileIndex++;
@@ -98,7 +91,7 @@ package org.mig.services
 			uploadNextFile(this.currentFileIndex);*/
 		}        
 		private function securityErrorHandler(event:SecurityErrorEvent):void  {
-			/*			var newError:String = "securityErrorHandler: " + event
+			/*var newError:String = "securityErrorHandler: " + event
 			var percentLoaded:Number = 0;
 			this.uploadProgress = 0;
 			this.currentFileIndex++;
@@ -109,12 +102,13 @@ package org.mig.services
 			var progress:Number = event.bytesLoaded/event.bytesTotal;
 			var progressString:String = (progress*100).toString()+'% Complete';
 			trace("Upload Progress\t",progress,"\n=====================");
-			eventDispatcher.dispatchEvent(new UploadEvent(UploadEvent.FILE_PROGRESS,null,progress,progressString));
-			/*			var newError:String = Number(event.bytesLoaded/event.bytesTotal).toString();
-			generateErrorOutput(newError);
-
-			var percentLoaded:Number = event.bytesLoaded/event.bytesTotal;
-			this.uploadProgress = percentLoaded;*/
-		}		
+			eventDispatcher.dispatchEvent(new UploadEvent(UploadEvent.PROGRESS,progress,progressString));
+		}
+		/*private function fileUploadComplete(event:Event):void {	
+		trace("Upload Complete");
+		}
+		private function handleHttpStatus(event:HTTPStatusEvent):void {
+		trace("Upload HTTPStatus\n",event.status,"\n=====================");
+		}*/		
 	}
 }

@@ -9,7 +9,8 @@ package org.mig.events
 	{
 		public static const RETRIEVE_CHILDREN:String = "retrieveChildren";
 		public static const RETRIEVE_VERBOSE:String = "retrieveVerbose";
-		public static const ADD_CHILD_NODE:String = "addChildNode";
+		public static const ADD_DIRECTORY:String = "addDirectory"; //add folders, move files around?
+		public static const ADD_FILE:String = "addFile";
 		
 		public static const DELETE:String = "delete"; //
 		public static const CREATE:String = "create"; //some data, config and parent ref
@@ -17,19 +18,17 @@ package org.mig.events
 		
 		public static const SELECT:String = "selected";
 		public static const MULTIPLE_SELECT:String = "multipleSelect";
-		
+	
 		public var content:ContentNode; //content, media or subcontainers
-		public var updateData:UpdateData;
-		public var child:ContentNode;
+		public var args:Array;
 		
-		public function MediaEvent(type:String,content:ContentNode,updateData:UpdateData=null,child:ContentNode=null) {
+		public function MediaEvent(type:String,content:ContentNode,...args) {
 			this.content = content;
-			this.updateData = updateData;
-			this.child = child;
+			this.args = args;
 			super(type,true,true);
 		}
 		override public function clone() : Event {
-			return new MediaEvent(this.type,this.content,this.updateData,this.child);
+			return new MediaEvent(this.type,this.content,args);
 		}
 	}
 }

@@ -33,8 +33,8 @@
 
 		protected function result(event:ResultEvent):void {
 			if(event.token.resultCallBack) {
-				//trace(event.token.resultCallBack);
 				event.token.resultCallBack(event);
+				delete services[event.token.index];
 			}
 		}
 		protected function fault(info:Object):void {
@@ -43,12 +43,13 @@
 		protected function createService(params:Object,responseType:String,decodeClass:Class,
 										 resultFunction:Function=null,faultFunction:Function=null,url:String=null):XMLHTTPService {
 		
-			//var id:String = GUID.create();
+			var id:String = GUID.create();
 			if(!url)
 				url = Constants.EXECUTE;
 			var service:XMLHTTPService = new XMLHTTPService(url,params,responseType,decodeClass);
 			services.push(service);
 			service.execute();
+			service.token.id = services.indexOf(service);
 			var faultHandler:Function = faultFunction==null?this.fault:faultFunction;
 			var resultHandler:Function = resultFunction==null?this.result:resultFunction;
 			service.token.addResponder(new Responder(resultHandler,faultHandler));

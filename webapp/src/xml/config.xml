@@ -2,8 +2,8 @@
 <configDocument>
 
 	<controller id="mediaController" 
-	mediaURL="http://ndd.themig.org/mig/files/"
-	thumbURL="http://ndd.themig.org/mig/files/migThumbs/"
+	mediaURL="http://dev.themig.org/files/"
+	thumbURL="http://dev.themig.org/files/migThumbs/"
 	fileDir="files" 
 	thumbDir="files/migThumbs">
 			<child 
@@ -19,9 +19,9 @@
 	</controller>
 
 	<controller id="contentController" 	
-	rootURL="http://ndd.themig.org/"
-	pendingURL="http://ndd.themig.org/" 
-	publishedURL="http://ndd.themig.org/"
+	rootURL="http://dev.themig.org/"
+	pendingURL="http://dev.themig.org/" 
+	publishedURL="http://dev.themig.org/"
 	textEditorColor="0xCCCCCC" 
 	renderer="flash"
 	textFormat="textFieldHTMLFormat">

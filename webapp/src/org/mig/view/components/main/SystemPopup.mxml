@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:view="com.map.view.*"
+	width="100%" height="100%"
+	backgroundColor="#0000000" backgroundAlpha="0.8"
+	creationComplete="if(currentState==null){currentState='default'}" >
+		
+	<mx:Script>
+		<![CDATA[
+
+			import mx.managers.PopUpManager;
+			import mx.core.Application;
+			
+			[Embed(source='/migAssets/library.swf#whiteKaboom')]
+        	[Bindable] private var alertIcon:Class;
+			
+			[Bindable] private var boxPadding:Number;
+			
+			//[Bindable] private var _isAlert:Boolean;
+			
+			
+/* 			public function get isAlert():Boolean
+			{
+				return _isAlert;
+			} */
+			private var _type:int = 0;
+			public function get type():int {
+				return _type;
+			}
+			public function set type(t:int):void {
+				_type = t;
+				switch(t) {
+					case 0:
+						currentState = "default";
+					case 1:
+						cancelLabelText = "OK";
+						currentState = "alert";
+					break;
+					case 2:
+						currentState = "alertPlusOption";
+					break;
+				}
+			}
+			private function handleClick(type:String):void {
+				this.dispatchEvent(new Event(type));	
+				PopUpManager.removePopUp(this);			
+			}
+		]]>
+	</mx:Script>
+	<mx:Binding source="Application.application.width" destination="this.width" />
+	<mx:Binding  source="Application.application.height" destination="this.height" />
+
+	<mx:String id="message"></mx:String>
+	<mx:String id="optionMessage"></mx:String>
+		
+	
+	<mx:Boolean id="includeCancel">true</mx:Boolean>
+	<mx:Boolean id="includeNo">true</mx:Boolean>
+	<mx:Boolean id="includeYes">true</mx:Boolean>
+	<mx:String id="cancelLabelText">Cancel</mx:String>
+	<mx:String id="noLabelText">No</mx:String>
+	<mx:String id="yesLabelText">Yes</mx:String>
+	
+	<mx:HBox width="465"  verticalCenter="0" horizontalCenter="0">
+		<mx:SWFLoader source="{alertIcon}" width="86" />
+		<mx:VBox width="100%"  maxHeight="450" id="textBox">
+			<mx:TextArea width="100%" condenseWhite="false" htmlText="{message}" backgroundAlpha="0" focusAlpha="0"
+			 borderStyle="none" styleName="bodyCopy"/>		
+		</mx:VBox>
+	</mx:HBox>
+	
+	<mx:SWFLoader id="logo" source="@Embed(source='/migAssets/library.swf#migLogoLine')" width="250" height="300" top="0" right="100" />
+	
+	<mx:states>
+		<mx:State name="default">
+			<mx:AddChild relativeTo="{textBox}">
+				<mx:HBox>
+					<mx:Button styleName="defaultButton" visible="{includeCancel}" includeInLayout="{includeCancel}" label="{cancelLabelText}" click="handleClick('cancelSelected')" />
+					<mx:Button styleName="defaultButton" visible="{includeNo}" label="{noLabelText}" click="handleClick('noSelected')" />
+					<mx:Button styleName="defaultButton" visible="{includeYes}" label="{yesLabelText}" click="handleClick('yesSelected')"/>
+				</mx:HBox>
+			</mx:AddChild>
+		</mx:State>
+		<mx:State name="alert">
+			<mx:AddChild relativeTo="{textBox}">
+					<mx:Button styleName="defaultButton" visible="{includeCancel}" includeInLayout="{includeCancel}" label="{cancelLabelText}" click="PopUpManager.removePopUp(this)" />
+			</mx:AddChild>
+		</mx:State>
+		<mx:State name="alertPlusOption">
+			<mx:AddChild relativeTo="{textBox}">
+				<mx:HBox>
+					<mx:CheckBox label="{optionMessage}" id="option"/>
+				</mx:HBox>
+			</mx:AddChild>			
+			<mx:AddChild relativeTo="{textBox}">
+				<mx:HBox>
+					<mx:Button styleName="defaultButton" visible="{includeCancel}" includeInLayout="{includeCancel}" label="{cancelLabelText}" click="handleClick('cancelSelected')" />
+					<mx:Button styleName="defaultButton" visible="{includeNo}" label="No" click="handleClick('noSelected')" />
+					<mx:Button styleName="defaultButton" visible="{includeYes}" label="Yes" click="handleClick('yesSelected')"/>
+				</mx:HBox>
+			</mx:AddChild>		
+		</mx:State>
+	</mx:states>
+</mx:Canvas>	

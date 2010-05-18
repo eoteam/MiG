@@ -6,10 +6,10 @@ package org.mig.events
 	{
 		public static const RESIZE_MANAGER_TREE:String = "resizeManagerTree";
 		public static const MANAGER_SELECTED:String = "managerSelected";
-		
+		public static const REFRESH_MEDIA:String = "refreshMedia";
 		public var args:Array;
 		
-		public function ViewEvent(type:String, args:Array)
+		public function ViewEvent(type:String,...args)
 		{
 			this.args = args;
 			super(type, true, true);

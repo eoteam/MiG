@@ -20,5 +20,7 @@ package org.mig.model.vo.media
 		public var type:String;
 		public var createthumb:String;
 		public var extension:String = '';
+		public var width:int;
+		public var height:int;
 	}
 }
