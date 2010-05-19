@@ -1,4 +1,4 @@
-<?
+<?php
 
 // ADD CUSTOM FUNCTIONS TO THIS FILE!
 

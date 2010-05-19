@@ -25,7 +25,7 @@ if (isset($_GET['mode']) && $_GET['mode'] == 'test') { // this is a test mode fo
 	$postData = fgets(STDIN);
 }
 $postData = trim($postData);
-$postData = split("&",$postData);
+$postData = explode("&",$postData);
 // iterate through the array, cleaning data as we go!
 
 $params = array();
@@ -50,7 +50,7 @@ exit();
 
 // append custom functions to vaildActions array!
 
-$validActions = array_merge($validActions,$customFunctions);
+//$validActions = array_merge($validActions,$customFunctions);
 
 // if we don't have a valid function, quit
 if (!isset($params['action']) || !in_array($params['action'],$validActions))

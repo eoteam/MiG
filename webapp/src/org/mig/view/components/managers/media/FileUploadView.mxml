@@ -36,18 +36,6 @@
 				//var ui:AddYoutubeView = PopUpManager.createPopUp(this,AddYoutubeView,false,PopUpManagerChildList.POPUP) as AddYoutubeView;
 				//PopUpManager.centerPopUp(ui);
 			}
-			private function stopUploads():void {
-				switch(currentState) {
-					case "upload":
-						
-					break;
-					case "uploading":
-
-					break;
-				}
-				currentState = "browse";
-				selectedFiles = null;
-			}
 		]]>
 	</mx:Script>
 	<mx:states>
@@ -86,7 +74,7 @@
 			<mx:Button styleName="defaultButton" label="Youtube" id="youtubeBtn" click="addYoutubeVideo()"/>				
 			<mx:Button styleName="defaultButton" label="Choose File(s)" id="browseBtn" click="browseFiles()"/>
 			<mx:Button styleName="defaultButton" label="Upload File(s)" id="uploadBtn"/>				
-			<mx:Button styleName="defaultButton" label="Cancel" id="stopBtn" click="stopUploads()"/>				
+			<mx:Button styleName="defaultButton" label="Cancel" id="stopBtn"/>				
 		</mx:HBox>
 		<mx:Canvas id="progressBar" width="100%" height="2" alpha="0" hideEffect="fadeOut" showEffect="fadeIn">
 			<mx:Canvas width="100%" height="1" backgroundColor="#000000" backgroundAlpha="1.0" id="bg"/>

@@ -178,7 +178,7 @@ package org.mig.view.mediators.managers.media
 			if(items.length == 1 && items[0] is DirectoryNode)				
 				eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.SELECT,items[0]));
 			else if(items.length > 1)
-				eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.MULTIPLE_SELECT,null));
+				eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.MULTIPLE_SELECT));
 		}		
 		private function search(input:String):void {
 			
@@ -274,7 +274,8 @@ package org.mig.view.mediators.managers.media
 			return result;		
 		}
 		private function handleDelete(event:Event):void {
-			
+			var items:Array = view.stack.selectedIndex == 0 ? view.listView.selectedItems : view.thumbView.selectedItems;
+			eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.DELETE,items));
 		}
 		private function renameItem():void {
 			/*if(listView.selectedItems.length == 1)

@@ -27,10 +27,10 @@ package org.mig.services
 		[Inject]
 		public var contentModel:ContentModel;
 		
-		public function uploadFile(file:FileReference):void {
+		public function uploadFile(file:FileReference,directory:DirectoryNode):void {
 
-			var fileDir:String = appModel.fileDir + contentModel.currentDirectory.directory;
-			var thumbDir:String = appModel.thumbDir+ contentModel.currentDirectory.directory;
+			var fileDir:String = appModel.fileDir + directory.directory;
+			var thumbDir:String = appModel.thumbDir + directory.directory;
 			
 			var extArr:Array = file.name.split('.');
 			var fileExtension:String = String(extArr[extArr.length-1]).toLowerCase();
@@ -74,13 +74,17 @@ package org.mig.services
 			var params:Object = new Object();
 			params.mapping = appModel.fileDir+directory.directory;
 			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,MediaData,null,null,Constants.GETMEDIACONTENT);
-			service.token.content = directory;
+			service.token.directory = directory;
 		}
 		public function deleteFile(file:String):void {
 			
 		}
 		public function deleteDirectory(directory:DirectoryNode):void {
-			
+			var params:Object = new Object();
+			params.directory = directory.directory;
+			params.rootDir = appModel.fileDir;
+			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS,Object,null,null,Constants.REMOVE_DIR);
+			service.token.directory = directory;
 		}				
 		private function ioErrorHandler(event:IOErrorEvent):void {		
 			/*var newError:String = "ioErrorHandler: " + event	

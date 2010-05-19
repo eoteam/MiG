@@ -71,8 +71,11 @@ package
 			commandMap.mapEvent(MediaEvent.RETRIEVE_CHILDREN,MediaCommand,MediaEvent);
 			commandMap.mapEvent(MediaEvent.ADD_DIRECTORY,MediaCommand,MediaEvent);
 			commandMap.mapEvent(MediaEvent.ADD_FILE,MediaCommand,MediaEvent);
+			commandMap.mapEvent(MediaEvent.DELETE,MediaCommand,MediaEvent);
+			
 			//upload
 			commandMap.mapEvent(UploadEvent.UPLOAD,UploadCommand,UploadEvent);
+			commandMap.mapEvent(UploadEvent.CANCEL,UploadCommand,UploadEvent);
 			//errors
 			commandMap.mapEvent(AlertEvent.SHOW_ALERT, ShowAlertCommand, AlertEvent);
 						

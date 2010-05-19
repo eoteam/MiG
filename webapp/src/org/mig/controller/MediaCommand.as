@@ -1,8 +1,10 @@
 package org.mig.controller
 {
 	import org.mig.events.MediaEvent;
+	import org.mig.events.NotificationEvent;
 	import org.mig.events.ViewEvent;
 	import org.mig.model.vo.ContentNode;
+	import org.mig.model.vo.StatusResult;
 	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.model.vo.media.FileNode;
 	import org.mig.model.vo.media.MediaData;
@@ -23,11 +25,16 @@ package org.mig.controller
 		[Inject]
 		public var event:MediaEvent;
 		
+		private var deleteCount:int = 0;
 		override public function execute():void {
-			var node:DirectoryNode	
+			var node:DirectoryNode;
+			var file:FileNode;
+			var item:ContentNode;
+			var directory:DirectoryNode
 			switch(event.type) {
 				case MediaEvent.RETRIEVE_CHILDREN:
-					fileService.readDirectory(event.content as DirectoryNode);
+					node = event.args[0] as DirectoryNode;
+					fileService.readDirectory(node as DirectoryNode);
 					fileService.addHandlers(handleDiskResults);
 				break;
 				
@@ -37,35 +44,69 @@ package org.mig.controller
 				
 				case MediaEvent.ADD_DIRECTORY:
 					/*override public function addNode(node:ContentNode,index:int=-1,update:Boolean=true,swap:Boolean=false):void */
-					node = event.content as DirectoryNode;
-					var name:String = event.args[0];
-					var dirData:MediaData = event.args[1];
+					node = event.args[0] as DirectoryNode;
+					var name:String = event.args[1];
+					var dirData:MediaData = event.args[2];
 					var newDirectory:String = node.directory + "/" + name;
-					var child:DirectoryNode = new DirectoryNode(name,node.config, dirData, node, newDirectory, node.privileges);
+					directory = new DirectoryNode(name,node.config, dirData, node, newDirectory, node.privileges);
 					var index:int = 0;
-					for each(var item:ContentNode in node.children) {
+					for each(item in node.children) {
 						index++;
 						if(item is DirectoryNode) {
 							index = node.children.getItemIndex(item);
 							break;
 						}
 					}
-					node.children.addItemAt(child,index);			
+					node.children.addItemAt(directory,index);			
 					eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_MEDIA));
 				break;
 				case MediaEvent.ADD_FILE:
-					node = event.content as DirectoryNode;
-					var fileData:MediaData = event.args[0];
-					var file:FileNode = new FileNode(fileData.name,node.config,fileData,node,node.privileges);
+					node = event.args[0] as DirectoryNode;
+					var fileData:MediaData = event.args[1];
+					file = new FileNode(fileData.name,node.config,fileData,node,node.privileges);
 					node.children.addItem(file);
 					eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_MEDIA));
 				break;
 				
+				case MediaEvent.DELETE:
+					var items:Array = event.args[0] as Array;
+					var files:Array = []; 
+					var dirs:Array  = [];
+					deleteCount=0;	
+					for each(item in items) {
+						if(item is FileNode)
+							files.push(item);
+						else 
+							dirs.push(item);
+					}
+/*					for each(file in files) {
+						if(checkDir(file.parentNode,dirs)) {
+							//db delete only
+						}
+					}*/
+					for each(directory in dirs) {
+						if(!checkDir(directory.parentNode,dirs)) {
+							fileService.deleteDirectory(directory);
+							fileService.addHandlers(handleDirectoryDelete);
+						}
+					}
+				break;
+				
 			}
 		}	
+		private function checkDir(dir:ContentNode,dirs:Array):Boolean {
+			if(dir) {
+				if(dirs.indexOf(dir) == -1)
+					return checkDir(dir.parentNode,dirs);
+				else
+					return true;
+			}
+			else
+				return false;
+		}
 		private function handleDiskResults(data:Object):void {
 			var results:Array = data.result as Array;
-			var content:DirectoryNode = data.token.content;	
+			var content:DirectoryNode = data.token.directory;	
 			for each (var item:MediaData in results) {
 				if(item.type.toString() == "folder") {
 					var newdirectory:String = content.directory + "/" + item.name.toString();
@@ -137,6 +178,22 @@ package org.mig.controller
 					content.numItems += 1;	
 				}
 			}
+		}
+		private function handleDirectoryDelete(data:Object):void {
+			var result:StatusResult = data.result as StatusResult;
+			if(result.success) {
+				mediaService.deleteDirectory(data.token.directory as DirectoryNode);
+				mediaService.addHandlers(handleDatabaseDelete);
+			}
+		}
+		private function handleDatabaseDelete(data:Object):void {
+			var result:StatusResult = data.result as StatusResult;
+			var node:DirectoryNode = data.token.directory as DirectoryNode
+			if(result.success) {
+				eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Directory deleted successfully"));
+				node.parentNode.children.removeItemAt(node.parentNode.children.getItemIndex(node));
+				eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_MEDIA));
+			}			
 		}
 	}
 }

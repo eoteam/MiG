@@ -6,7 +6,7 @@ package org.mig.services.interfaces
 
 	public interface IFileService extends IService
 	{
-		function uploadFile(file:FileReference):void;
+		function uploadFile(file:FileReference,directory:DirectoryNode):void;
 		
 		function getXMP(name:String):void;
 		

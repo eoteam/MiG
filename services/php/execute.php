@@ -35,9 +35,9 @@ $params = array();
 foreach ($postData as $key=>$value) {
 	
 	if (($postData[$key] || $postData[$key] == '0') && $key != 'submit')
-	 	$params[$key] = addslashes($value);
-	
+		 	$params[$key] = addslashes($value);
 }
+
 // append custom functions to vaildActions array!
 
 $validActions = array_merge($validMiGActions,$validFrontEndActions);
@@ -52,7 +52,7 @@ if (!isset($params['action']) || !in_array($params['action'],$validActions))
 // get the result from the query_function
 $action = $params['action'];
 $result = $action($params);
-//$result = stripslashes($result);
+
 // output the serialized xml
 ouputMySQLResults($result);
 ?>

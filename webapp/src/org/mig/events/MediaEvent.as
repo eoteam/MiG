@@ -19,16 +19,15 @@ package org.mig.events
 		public static const SELECT:String = "selected";
 		public static const MULTIPLE_SELECT:String = "multipleSelect";
 	
-		public var content:ContentNode; //content, media or subcontainers
+		
 		public var args:Array;
 		
-		public function MediaEvent(type:String,content:ContentNode,...args) {
-			this.content = content;
+		public function MediaEvent(type:String,...args) {
 			this.args = args;
 			super(type,true,true);
 		}
 		override public function clone() : Event {
-			return new MediaEvent(this.type,this.content,args);
+			return new MediaEvent(this.type,this.args);
 		}
 	}
 }

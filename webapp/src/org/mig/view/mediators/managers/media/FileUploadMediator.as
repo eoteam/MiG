@@ -15,6 +15,8 @@ package org.mig.view.mediators.managers.media
 		private var files:Array;
 		override public function onRegister():void {
 			view.uploadBtn.addEventListener(MouseEvent.CLICK,handleUploadButton);
+			view.stopBtn.addEventListener(MouseEvent.CLICK,handleStopButton);
+			
 			eventMap.mapListener(eventDispatcher,UploadEvent.PROGRESS,handleFileProgress,UploadEvent);
 			eventMap.mapListener(eventDispatcher,UploadEvent.FILE_START,handleFileStart,UploadEvent);
 			eventMap.mapListener(eventDispatcher,UploadEvent.FILE_END,handleFileEnd,UploadEvent);
@@ -24,6 +26,12 @@ package org.mig.view.mediators.managers.media
 			files = view.selectedFiles;
 			view.currentState = "uploading";
 			eventDispatcher.dispatchEvent(new UploadEvent(UploadEvent.UPLOAD,files));	
+		}
+		private function handleStopButton(event:Event):void {
+			if(view.currentState == "uploading")
+				eventDispatcher.dispatchEvent(new UploadEvent(UploadEvent.CANCEL));
+			view.currentState = "browse";
+			view.selectedFiles = null;
 		}
 		private function handleFileProgress(event:UploadEvent):void {
 			view.progressText2.text = event.args[1];
@@ -39,6 +47,8 @@ package org.mig.view.mediators.managers.media
 			view.progressText2.text = view.progressText1.text = view.completedFilesList.htmlText = '';
 			view.uploadProgress = 0;
 			view.currentState = "browse";
+			view.selectedFiles = null;
 		}
+
 	}
 }

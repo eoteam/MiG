@@ -64,9 +64,8 @@
 	
 	<mx:HBox width="465"  verticalCenter="0" horizontalCenter="0">
 		<mx:SWFLoader source="{alertIcon}" width="86" />
-		<mx:VBox width="100%"  maxHeight="450" id="textBox">
-			<mx:TextArea width="100%" condenseWhite="false" htmlText="{message}" backgroundAlpha="0" focusAlpha="0"
-			 borderStyle="none" styleName="bodyCopy"/>		
+		<mx:VBox width="100%"  id="textBox" paddingLeft="5" height="{messageText.height}">
+			<mx:Text maxHeight="450" id="messageText" condenseWhite="false" htmlText="{message}" width="100%" />
 		</mx:VBox>
 	</mx:HBox>
 	
@@ -82,7 +81,7 @@
 				</mx:HBox>
 			</mx:AddChild>
 		</mx:State>
-		<mx:State name="alert">
+		<mx:State name="alert">	
 			<mx:AddChild relativeTo="{textBox}">
 					<mx:Button styleName="defaultButton" visible="{includeCancel}" includeInLayout="{includeCancel}" label="{cancelLabelText}" click="PopUpManager.removePopUp(this)" />
 			</mx:AddChild>

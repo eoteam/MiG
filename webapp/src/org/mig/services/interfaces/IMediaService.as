@@ -5,8 +5,10 @@ package org.mig.services.interfaces
 	public interface IMediaService extends IService
 	{
 		
-		function retrieveChildren(content:DirectoryNode):void;
+		function retrieveChildren(directory:DirectoryNode):void;
 			
-		function addFile(file:Object):void;
+		function addFile(file:Object,directory:DirectoryNode):void;
+		
+		function deleteDirectory(directory:DirectoryNode):void;
 	}
 }

@@ -27,7 +27,7 @@ package org.mig.services
 			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,MediaData);
 			service.token.content = content;
 		}
-		public function addFile(file:Object):void {
+		public function addFile(file:Object,directory:DirectoryNode):void {
 			var date:Date = new Date();
 			var time:Number = Math.round(date.time / 1000);
 			var params:Object = new Object();
@@ -45,12 +45,19 @@ package org.mig.services
 			params.modifieddate = time;
 			params.modifiedby = appModel.user.id;
 			params.mimetypeid = contentModel.getMimetypeId(file.extension);
-			params.path = contentModel.currentDirectory.directory + '/';
+			params.path = directory.directory + '/';
 			params.width = file.width;
 			params.height = file.height;
 			params.verbose = true;
 			//params.tags = file.tags;
 			this.createService(params,ResponseType.DATA,MediaData);
+		}
+		public function deleteDirectory(directory:DirectoryNode):void {
+			var params:Object = new Object();
+			params.action = "deleteMediaByPath";
+			params.path = '/'+MediaData(directory.data).name + '/';
+			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
+			service.token.directory = directory;
 		}
 	}
 }

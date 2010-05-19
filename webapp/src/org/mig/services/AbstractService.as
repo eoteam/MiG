@@ -40,7 +40,7 @@
 		protected function fault(info:Object):void {
 			eventDispatcher.dispatchEvent(new AlertEvent( AlertEvent.SHOW_ALERT, "crap","Crap"));
 		}
-		protected function createService(params:Object,responseType:String,decodeClass:Class,
+		protected function createService(params:Object,responseType:String,decodeClass:Class=null,
 										 resultFunction:Function=null,faultFunction:Function=null,url:String=null):XMLHTTPService {
 		
 			var id:String = GUID.create();

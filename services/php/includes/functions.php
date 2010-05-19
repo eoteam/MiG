@@ -1,6 +1,5 @@
 <?php
 
-
 require_once "database.php";
 
 // PEAR error management and XML_Serializer
@@ -89,9 +88,6 @@ function userErrorHandler($errno, $errmsg, $filename, $linenum, $vars)
 	}
     
 }
-
-//$old_error_handler = set_error_handler("userErrorHandler");
-
 function sendSuccess($message = null) // this function returns an xml success message, along with an insertid (if applicable)
 {
 	header("Content-type: text/xml");
@@ -114,6 +110,7 @@ function sendFailed($message=null)
     echo($output);
 	exit;
 }
+
 /**
  * Quote variables to make safe.
  */
@@ -131,26 +128,71 @@ function quote_smart($value)
 }
 
 /**
+ * returns array of fields for the table
+ */
+function getTableColumns($tablename)
+{
+	$sql = "SHOW COLUMNS FROM ".$tablename;
+	$result = queryDatabase($sql);
+	$columnsArray = array();
+	
+    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+		$columnsArray[] = $row['Field'];
+    }
+    
+    return $columnsArray;
+}
+
+/**
  * Generic database query function. Returns the results
  * from the database query.
  */
-function queryDatabase($query)
+function queryDatabase($query, $params=null, &$outparams=null)
 {
 	// connects to the database
-	$mysql = mysql_connect(DB_SERVER, DB_USER, DB_PASS);
+	try {
+		$hostname = DB_SERVER;
+		$dbname = DB_NAME;
+		$username = DB_USER;
+		$pw = DB_PASS;
+
+		$mysql = new PDO("mysql:host=$hostname;dbname=$dbname","$username","$pw");
+
+/* // sets an attribute: error reporting (just sets error code)	
+ * $mysql->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT );*/
+	}
+	catch (PDOException $e) {
+		echo "Failed to connect:".$e->getMessage()."\n";
+		exit;
+	}
 	
-	// select the database
-	mysql_select_db(DB_NAME);
+	// prepares a statement for execution and returns a statement object 
+	$sth = $mysql->prepare($query);
+	if (!$sth){
+		$arrayError = $mysql->errorInfo();
+		die("PDO::errorInfo(): ".$arrayError[2].".");
+	} 
+
+	// binds a value to a parameter
+	if ($params!=null){
+		foreach ($params as $key=>$value) {
+			$sth->bindValue(":".$key, $value);
+		}
+	}
+
+	// executes a prepared statement
+	$result = $sth->execute();
+	if (!$result){
+		$arrayError = $sth->errorInfo();
+		die("PDOStatement::errorInfo(): ".$arrayError[2].".");
+	    $sth=null;
+	} 
 	
-	// query the database
-	$result = mysql_query($query) or die("Error: ".mysql_error()." in query: ".$query);;
-	
-	// free up the result
-	// figure out a diff approach to releasing the
-	// results, releasing them here clears them and
-	// then they can't be displayed
-	// mysql_free_result($result);
-	return $result;
+	// returns the ID of the last inserted row or sequence value 
+	$outparams = $mysql->lastInsertId();
+
+	// returns the PDOStatement Object
+	return $sth; 
 }
 
 /**
@@ -192,6 +234,43 @@ function outputDirectoryListing($newdir, $allowed_filetypes){
 		}
 		serializeArray($resultList);
 	}
+}
+function serializeArray($resultList)
+{
+    $options = array(
+        XML_SERIALIZER_OPTION_XML_DECL_ENABLED => false,
+        XML_SERIALIZER_OPTION_DOCTYPE_ENABLED => false,
+        XML_SERIALIZER_OPTION_INDENT => "    ",
+        XML_SERIALIZER_OPTION_LINEBREAKS => "\n",
+        XML_SERIALIZER_OPTION_TYPEHINTS => false,
+        XML_SERIALIZER_OPTION_XML_ENCODING => "UTF-8?",
+        XML_SERIALIZER_OPTION_ROOT_NAME => "results",
+        XML_SERIALIZER_OPTION_DEFAULT_TAG => "result",
+        XML_SERIALIZER_OPTION_CDATA_SECTIONS => true
+    );
+    
+    // instatiate the serializer object
+    $serializer = new XML_Serializer($options);
+    $serializer->setErrorHandling(PEAR_ERROR_DIE);
+    
+    // serialze the data
+    $status = $serializer->serialize($resultList);
+    
+    // check whether serialization worked
+    if (PEAR::isError($status)) {
+        die($status->getMessage());
+    }
+    
+    // get the serialized data
+    $xml = $serializer->getSerializedData();
+    
+    header("Content-type: text/xml; charset=UTF-8");
+    //header("Content-Transfer-Encoding: binary\n");
+    // return the xml
+    $xml = html_entity_decode($xml,ENT_QUOTES, 'UTF-8');
+    $xml = stripslashes($xml);
+    $xml = trim($xml);
+    echo($xml); 
 }
 /**
  * Calculate the size of a directory by iterating its contents
@@ -260,36 +339,43 @@ function dirsize($path)
 
     return $size;
 }
+
 function byteSize($bytes)  
-{ 
-	$size = $bytes; 
-	if($size < 1024) { 
+    { 
+    $size = $bytes; 
+    if($size < 1024) 
+        { 
         $size = number_format($size, 2); 
         $size .= ' KB'; 
-    }  
-    else { 
-		if($size / 1024 < 1024) { 
-			$size = number_format($size / 1024, 2); 
-            $size .= ' MB'; 
         }  
-        else if ($size / 1024 / 1024 < 1024) { 
-        	$size = number_format($size / 1024 / 1024, 2); 
+    else  
+        { 
+        if($size / 1024 < 1024)  
+            { 
+            $size = number_format($size / 1024, 2); 
+            $size .= ' MB'; 
+            }  
+        else if ($size / 1024 / 1024 < 1024)   
+            { 
+            $size = number_format($size / 1024 / 1024, 2); 
             $size .= ' GB'; 
-		}  
-	} 
+            }  
+        } 
     return $size; 
-} 
+    } 
+
 function ouputMySQLResults($result)
 {
-    // create an array to hold the query result
+    if (is_null($result)){
+    	return false;
+    }
+	// create an array to hold the query result
     $resultList = array();
 
     if ($result)
     {
-        while ($row = mysql_fetch_object($result))
+    	while ($row = $result->fetch(PDO::FETCH_OBJ))
         {
-        	//if(isset($row->shortdescription) && $row->shortdescription == '')
-        	//	$row->shortdescription = processContentText($row->description,1400,"...",false);
         	if(isset($row->password))
         	{
         		$row->password = text_decrypt($row->password);
@@ -297,53 +383,17 @@ function ouputMySQLResults($result)
             array_push($resultList, $row);
         }
     }
-    serializeArray($resultList);
+	serializeArray($resultList);
 }
-function serializeArray($resultList)
-{
-    $options = array(
-        XML_SERIALIZER_OPTION_XML_DECL_ENABLED => false,
-        XML_SERIALIZER_OPTION_DOCTYPE_ENABLED => false,
-        XML_SERIALIZER_OPTION_INDENT => "    ",
-        XML_SERIALIZER_OPTION_LINEBREAKS => "\n",
-        XML_SERIALIZER_OPTION_TYPEHINTS => false,
-        XML_SERIALIZER_OPTION_XML_ENCODING => "UTF-8?",
-        XML_SERIALIZER_OPTION_ROOT_NAME => "results",
-        XML_SERIALIZER_OPTION_DEFAULT_TAG => "result",
-        XML_SERIALIZER_OPTION_CDATA_SECTIONS => true
-    );
-    
-    // instatiate the serializer object
-    $serializer = new XML_Serializer($options);
-    $serializer->setErrorHandling(PEAR_ERROR_DIE);
-    
-    // serialze the data
-    $status = $serializer->serialize($resultList);
-    
-    // check whether serialization worked
-    if (PEAR::isError($status)) {
-        die($status->getMessage());
-    }
-    
-    // get the serialized data
-    $xml = $serializer->getSerializedData();
-    
-    header("Content-type: text/xml; charset=UTF-8");
-    //header("Content-Transfer-Encoding: binary\n");
-    // return the xml
-    $xml = html_entity_decode($xml,ENT_QUOTES, 'UTF-8');
-    $xml = stripslashes($xml);
-    $xml = trim($xml);
-    echo($xml); 
-}
+
 function text_decrypt_symbol($s, $i) {
 	
 	# $s is a text-encoded string, $i is index of 2-char code. function returns number in range 0-255
 		global $START_CHAR_CODE, $CRYPT_SALT;
 			return (ord(substr($s, $i, 1)) - $START_CHAR_CODE )*16 + ord(substr($s, $i+1, 1)) - $START_CHAR_CODE;
-	}
+}
 	
-	function text_decrypt($s) {
+function text_decrypt($s) {
 
 		global $START_CHAR_CODE, $CRYPT_SALT;
 		$result = '';
@@ -357,16 +407,16 @@ function text_decrypt_symbol($s, $i) {
 				$enc = 0;
 		}
 		return $result;
-	}
+}
 	
-	function text_crypt_symbol($c) {
+function text_crypt_symbol($c) {
 
 	# $c is ASCII code of symbol. returns 2-letter text-encoded version of symbol
 		global $START_CHAR_CODE, $CRYPT_SALT;
 			return chr($START_CHAR_CODE + ($c & 240) / 16).chr($START_CHAR_CODE + ($c & 15));
-	}
+}
 	
-	function text_crypt($s) {
+function text_crypt($s) {
 		global $START_CHAR_CODE, $CRYPT_SALT;
 	
 		if ($s == "")
@@ -381,7 +431,8 @@ function text_decrypt_symbol($s, $i) {
 			$result .= text_crypt_symbol($r);
 		}
 		return $result;
-	}
+}
+
 function processContentText($text, $limitTo = null, $limitAppend = "...", $stripParaTags = false) 
 {
 
@@ -465,6 +516,7 @@ function closetags($html) {
 	return $html;
 
 }
+
 class array2xml {
 
    var $output = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
@@ -490,6 +542,5 @@ class array2xml {
       $xml .= "</{$root}>\n";      
       return $xml;
    }
-
 }
 ?>
