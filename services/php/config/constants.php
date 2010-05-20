@@ -30,6 +30,7 @@ $validMiGActions = array(
 "updateRecord",
 "updateRecords",
 "insertRecord",
+"insertRecordWithRelatedTag",
 "deleteRecord",
 "getData",
 "getUsers",

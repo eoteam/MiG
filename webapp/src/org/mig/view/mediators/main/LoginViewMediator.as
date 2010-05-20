@@ -40,7 +40,7 @@ package org.mig.view.mediators.main
 			eventMap.mapListener(loginView, "forgotInfo",onForgotInfo,Event);
 			
 			eventMap.mapListener(eventDispatcher,AppEvent.LOGGEDIN,handleUserLoggedin);
-
+			eventMap.mapListener(eventDispatcher,AppEvent.LOGIN_ERROR,handleLoginError);
 			
 			//seems that the view is already created
 			loginHandler = new LSOHandler("login");
@@ -52,6 +52,9 @@ package org.mig.view.mediators.main
 					loginView.passwordField.text = loginObject.password;
 				}
 			}
+		}
+		private function handleLoginError(event:Event):void {
+			loginView.statusText.text = loginView
 		}
 		private function onLogin(event:Event):void {
 			userService.login(new UserToken(loginView.usernameField.text,loginView.passwordField.text));

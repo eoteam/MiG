@@ -6,12 +6,12 @@ require_once "readFunctions.php";
 function updateTag($params)
 {
 	/*
-		* Script will attempt to update tags multiple fields (name/value ($key=>$value) pairs) of one record by id.
+		* Script will attempt to update ...
 		* You will get an error if you provided invalid field names.
 
 		** REQUIRED PARAMS
-		tablename - name of the table to update
 		id - primary key of the record to update
+		termid - 
 
 		** OTHER PARAMS
 		* name/value pairs to update
@@ -122,9 +122,10 @@ function updateRecord($params)
 	$result = queryDatabase($sql, $sendParams);
 
 	if (isset($params['tags']))
-	associateTags($params['tablename'],$params['id'],$params['tags']);
+		associateTags($params['tablename'],$params['id'],$params['tags']);
+	
 	if ($params['tablename'] == "content")
-	updateContainerPaths(null);
+		updateContainerPaths(null);
 
 	if (isset($params['verbosity']))
 	{
@@ -286,17 +287,17 @@ function updateContainerPaths($params, $insertid) {
 function insertTag($params)
 {
 	/*
-		* Script will attempt to insert tag to 'terms'
+		* Script will attempt to insert tag to 'terms' and then to 'term_taxonomy'
 		* You will get an error if you provided invalid field names.
 
 		** REQUIRED PARAMS
-		taxonomy - 
-		name - tag naem
+		name - tag name
 		slug - slug of the tag
+		taxonomy - 'tag' or 'category'
 		 
 		** OTHER PARAMS
 		* name/value pairs to set parameters for the tag:
-			* parentid
+			* parentid /optional/ - if doesn't exist then parentid=id
 			* description
 			* color
 			* date1
@@ -305,7 +306,7 @@ function insertTag($params)
 	
 		*/
 	
-	$validParams = array("taxonomy");
+	//$validParams = array("taxonomy");
 	
 	// gets array of fields name for 'tablename'
 	$columnsArray = getTableColumns('term_taxonomy');
@@ -313,14 +314,13 @@ function insertTag($params)
 	if (isset($params['taxonomy'])) {
 
 		$sendParams = array();
-
 		$sql = "INSERT INTO `terms` (name,slug) VALUES (:name,:slug)";
 		$sendParams['name'] = processText($params['name']);
 		$sendParams['slug'] = processText($params['slug']);
 		if ($result = queryDatabase($sql,$sendParams,$insertid))
 		{
 			$sendParams = array();
-			$sql = "INSERT into term_taxonomy (parentid,termid,";
+			$sql = "INSERT into `term_taxonomy` (id,parentid,termid,";
 			foreach ($params as $key=>$value) {
 				if ($key != 'action' && $key != 'name' && $key != 'slug' && $key != 'parentid') {
 					if (in_array($key, $columnsArray)) // checks for misspelling of field name
@@ -336,22 +336,24 @@ function insertTag($params)
 			// put values into SQL
 			$sql .= " VALUES (";
 			
-			// parentid is set 
-			if (isset($params['parentid'])) 
-				$sql .= "'".$params['parentid']."',";
-			else {
-				//parent id is not set then parentid = id
-				/*
-				$sql2 = "SHOW TABLE STATUS LIKE `term_taxonomy`";
-				*/
+			// get next auto increment in 'term_taxonomy'
+			$sql2 = "SELECT Auto_increment FROM information_schema.tables WHERE table_name='term_taxonomy' AND table_schema='".DB_NAME."'";
+			$result2 = queryDatabase($sql2);
+			$row2 = $result2->fetch(PDO::FETCH_ASSOC);
+			
+			$sql .= "'".$row2['Auto_increment']."',"; //id
+			
+			$autoIncrement = $row2['Auto_increment'];
 				
-				$sql2 = "SELECT Auto_increment FROM information_schema.tables WHERE table_name=`term_taxonomy` AND table_schema=`".DB_NAME."`";
-				$result2 = queryDatabase($sql2);
-				$row2 = $result2->fetch(PDO::FETCH_ASSOC);
-				$sql .= "'".$row2['Auto_increment']."',";
+			if (isset($params['parentid'])) 
+				// parentid is set
+				$sql .= "'".$params['parentid']."',"; // parentid
+			else {
+				// if parent id is not set then parentid = id
+				$sql .= "'".$row2['Auto_increment']."',"; // set the same parent_id as the auto_incremented id
 			}
 			
-			$sql .=  "'".$insertid."',";
+			$sql .=  "'".$insertid."',"; // termid
 				
 			foreach ($params as $key=>$value) {
 				if ($key != 'action' && $key !='name' && $key != 'slug') {
@@ -364,11 +366,11 @@ function insertTag($params)
 			$sql = substr($sql,0,strlen($sql)-1);
 			$sql .=")";
 
-//print_r($sql);
+			// $autoIncrement should be equal to $insertid2
 			if($result = queryDatabase($sql,$sendParams,$insertid2))
 			{
 				$sql = "SELECT term_taxonomy.*,terms.slug,terms.name FROM `term_taxonomy` " .
-				   "LEFT JOIN terms ON terms.id = term_taxonomy.termid  WHERE term_taxonomy.id = '".$insertid2."'";
+				   "LEFT JOIN terms ON terms.id = term_taxonomy.termid WHERE term_taxonomy.id = '".$insertid2."'";
 				$result = queryDatabase($sql);
 				return $result;
 			}
@@ -386,17 +388,14 @@ function insertRecord($params)
 
 		** REQUIRED PARAMS
 		tablename - name of the table to insert the record in
-
+		name/value pairs to set parameters for the record
+		
 		** OTHER PARAMS
-		* name/value pairs to set parameters for the record
-		* tags - if found, this will attempt to add tags if they don't already exist in the system, otherwise it will tie tags to the content or media being inserted.
-		* if a param is sent called 'password' it will automatically be encrypted.
-
-		*/
+		if a param is sent called 'password' it will automatically be encrypted.
+	*/
 	
 	// gets array of fields name for 'tablename'
 	$columnsArray = getTableColumns($params['tablename']);
-	
 	$sendParams = array();
 
 	// make sure we have a tablename
@@ -443,8 +442,10 @@ function insertRecord($params)
 	// get the results
 	if ($result = queryDatabase($sql,$sendParams,$insertid)) {
 
+		/*
 		if (isset($params['tags']))
 			associateTags($params['tablename'],$insertid,$params['tags']);
+*/
 
 		if($params['tablename'] == 'content')
 		{
@@ -475,9 +476,50 @@ function insertRecord($params)
 		
 		if ($result = queryDatabase($sql))
 			return $result;
-		else die("Query Failed:" . $result->errorInfo());
+		else die("Query Failed: " . $result->errorInfo());
 	}
-	else die("Query Failed:" . $result->errorInfo());
+	else die("Query Failed: " . $result->errorInfo());
+
+	return $result;
+}
+
+function insertRecordWithRelatedTag($params)
+{
+	/*
+		* Script will attempt to insert a record with related tags 
+		* You will get an error if you provided invalid field names.
+
+		** REQUIRED PARAMS
+		tablename - name of the table /'content' or 'media'/
+		name/value pairs to set parameters for the record
+		tags - comma-delimited list of related tags -> if found, this will attempt to add tags if they don't already exist in the system, otherwise it will tie tags to the content or media being inserted.
+
+		** OTHER PARAMS
+	*/
+		
+	if (isset($params['tablename']) && isset($params['tags'])) {
+
+		// get auto increment in 'tablename'
+		$sql = "SELECT Auto_increment FROM information_schema.tables WHERE table_name='".$params['tablename']."' AND table_schema='".DB_NAME."'";
+
+//print_r($sql);
+		
+		$result = queryDatabase($sql);
+		$row = $result->fetch(PDO::FETCH_ASSOC);
+		$autoIncrement = $row['Auto_increment'];
+
+//print_r($row);
+
+		// insert record to 'tablename'
+		if($result = insertRecord($params)) {
+			// relate tags using auto increment
+			
+//print_r($result);
+
+			associateTags($params['tablename'],$autoIncrement,$params['tags']);
+		} else die ("Insert Record Failed: " . $result->errorInfo());
+	}
+	else die("No tablename or tags provided.");
 
 	return $result;
 }
@@ -653,7 +695,6 @@ function deleteContent($params)
 }
 
 function associateTags($tablename,$id,$tags) {
-
 	// put tags into an array!
 	$arrTags = explode(",",$tags);
 
@@ -670,40 +711,73 @@ function associateTags($tablename,$id,$tags) {
 		$sendParams['name'] = $arrTag['tag'];
 		$result = queryDatabase($sql, $sendParams);
 
-		if ($result->rowCount() > 0) { // tag is in db, put id into arrTags
+		if ($result->rowCount() > 0) { 
+			// tag does exist in 'terms'
 			$row = $result->fetch(PDO::FETCH_ASSOC);
-			$arrTags[$key]['tagid'] = $row['id'];
 
-		} else { // tag is not in db, insert it!
+			// find the term_taxonomy row that uses it with taxonomy = tag
+			$sql = "SELECT id FROM `term_taxonomy` WHERE termid = ".$row['id']." AND taxonomy = 'tag'";
+			$result = queryDatabase($sql);
+			if ($result->rowCount() > 0) {
+				$row = $result->fetch(PDO::FETCH_ASSOC);
+				// put term_taxonomy id into arrTags
+				//$arrTags[$key]['termid'] = $row['id'];
+				$addTags[$key]['termid'] = $row['id'];
+			} else {
+				// get auto increment in 'term_taxonomy'
+				$sql2 = "SELECT Auto_increment FROM information_schema.tables WHERE table_name='term_taxonomy' AND table_schema='".DB_NAME."'";
+				$result2 = queryDatabase($sql2);
+				$row2 = $result2->fetch(PDO::FETCH_ASSOC);
+				$autoIncrement = $row2['Auto_increment'];
 
+				// insert new record into term_taxonomy using insertid(auto increment) and taxonomy=tag
+				$sql = "INSERT into `term_taxonomy` (id,parentid,termid,taxonomy) VALUES ('". $autoIncrement. "','". $autoIncrement. "','".$row['id']. "','tag')";
+				queryDatabase($sql);
+
+				$addTags[$key]['termid'] = $autoIncrement;
+			}
+		} else { 
+			// tag does not exist in 'terms'
 			$sendParams = array();
 			$name = $arrTag['tag'];
 			$slug = strtolower(trim($name));
 			$slug = preg_replace('/[^a-z0-9-]/', '-', $slug);
 			$slug = preg_replace('/-+/', "-", $slug);
 			$slug = strtolower($slug);
+			
+			// insert tag into 'terms'
 			$sql = "INSERT INTO `terms` (name,slug) VALUES (:name, :slug)";
 			$sendParams['name'] = $arrTag['tag'];
 			$sendParams['slug'] = $slug;
-			queryDatabase($sql, $sendParams, $insertid);
-			$arrTags[$key]['tagid'] = $insertid;
-			$sql = "INSERT into `term_taxonomy` (termid,taxonomy) VALUES ('". $insertid. "','tag')";
+			queryDatabase($sql, $sendParams, $insertid); // get insertid
+			
+			// get auto increment in 'term_taxonomy'
+			$sql2 = "SELECT Auto_increment FROM information_schema.tables WHERE table_name='term_taxonomy' AND table_schema='".DB_NAME."'";
+			$result2 = queryDatabase($sql2);
+			$row2 = $result2->fetch(PDO::FETCH_ASSOC);
+			$autoIncrement = $row2['Auto_increment'];
+
+			// insert new record into term_taxonomy using insertid(auto increment) and taxonomy=tag
+			$sql = "INSERT into `term_taxonomy` (id,parentid,termid,taxonomy) VALUES ('". $autoIncrement. "','". $autoIncrement. "','". $insertid. "','tag')";
 			queryDatabase($sql);
+
+			//$arrTags[$key]['termid'] = $autoIncrement;
+			$addTags[$key]['termid'] = $autoIncrement;
 		}
 	}
 
 	// now lets associate the tags with the record, first delete all associated tags!
-	$tagsTableName = $tablename . "_tags";
-	$idField = $tablename . "id";
-
+	$tagsTableName = $tablename . "_terms"; 	//'content_terms' or 'media_terms'
+	$idField = $tablename . "id"; 				//'contentid' or 'mediaid'
+/*
 	$sql = "DELETE FROM $tagsTableName WHERE $idField = '$id'";
 	queryDatabase($sql);
-
-	foreach ($arrTags as $arrTag) {
-		$sql = "INSERT INTO $tagsTableName ($idField,tagid) VALUES ('".$id."','".$arrTag['tagid']."')";
+*/
+	// relate to $tagsTableName using last inserted term_taxonomy id
+	foreach ($addTags as $addTag) {
+		$sql = "INSERT INTO $tagsTableName ($idField,termid) VALUES ('".$id."','".$addTag['termid']."')";
 		queryDatabase($sql);
 	}
-
 	return true;
 }
 

@@ -13,3 +13,4 @@ testing/TextLayoutEditor/bin/
 services/files/
 .DS_Store
 .svn
+webapp/release/
