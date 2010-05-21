@@ -3,7 +3,7 @@
 	public final class Constants
 	{
 		
-    	public static const DB_URL:String = "http://localhost/MiG/robotlegs/services/php/";
+    	public static const DB_URL:String = "http://dev.themig.org/php/";
     	public static const MEDIA_URL:String = "http://dev.themig.org/php/";
 		
     	public static const GETMEDIACONTENT:String = MEDIA_URL+"filesystem/readDir.php";

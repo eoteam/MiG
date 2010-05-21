@@ -13,7 +13,7 @@ package org.mig.controller
 	import org.mig.services.interfaces.IFileService;
 	import org.mig.services.interfaces.IMediaService;
 	import org.robotlegs.mvcs.Command;
-
+	
 	public class MediaCommand extends Command
 	{
 		[Inject]
@@ -26,6 +26,7 @@ package org.mig.controller
 		public var event:MediaEvent;
 		
 		private var deleteCount:int = 0;
+		private var deleteTracker:int = 0;
 		override public function execute():void {
 			var node:DirectoryNode;
 			var file:FileNode;
@@ -38,8 +39,7 @@ package org.mig.controller
 					fileService.addHandlers(handleDiskResults);
 				break;
 				
-				case MediaEvent.RETRIEVE_VERBOSE:
-					
+				case MediaEvent.RETRIEVE_VERBOSE:				
 				break;
 				
 				case MediaEvent.ADD_DIRECTORY:
@@ -60,6 +60,7 @@ package org.mig.controller
 					node.children.addItemAt(directory,index);			
 					eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_MEDIA));
 				break;
+				
 				case MediaEvent.ADD_FILE:
 					node = event.args[0] as DirectoryNode;
 					var fileData:MediaData = event.args[1];
@@ -74,36 +75,43 @@ package org.mig.controller
 					var dirs:Array  = [];
 					deleteCount=0;	
 					for each(item in items) {
-						if(item is FileNode)
-							files.push(item);
-						else 
-							dirs.push(item);
+					if(item is FileNode)
+						files.push(item);
+					else 
+						dirs.push(item);
 					}
-/*					for each(file in files) {
-						if(checkDir(file.parentNode,dirs)) {
-							//db delete only
+						//if the file belongs to any of the directories selected, then skip, because the directory delete 
+					//will remove the file from disk, and then the DB delete will look for all the files that have that path
+					//otherwise, the file needs file and db delete
+					
+					for each(file in files) {
+						if(!checkDir(file.parentNode as DirectoryNode,dirs)) {
+							fileService.deleteFile(file);
+							fileService.addHandlers(handleFileDeleted);
+							deleteCount++;
 						}
-					}*/
+					}
 					for each(directory in dirs) {
-						if(!checkDir(directory.parentNode,dirs)) {
+						if(!checkDir(directory.parentNode as DirectoryNode,dirs)) {
 							fileService.deleteDirectory(directory);
-							fileService.addHandlers(handleDirectoryDelete);
+							fileService.addHandlers(handleDirectoryDeleted);
+							deleteCount++
 						}
 					}
 				break;
-				
 			}
 		}	
-		private function checkDir(dir:ContentNode,dirs:Array):Boolean {
+		private function checkDir(dir:DirectoryNode,dirs:Array):Boolean {
 			if(dir) {
 				if(dirs.indexOf(dir) == -1)
-					return checkDir(dir.parentNode,dirs);
+					return checkDir(dir.parentNode as DirectoryNode,dirs);
 				else
 					return true;
 			}
 			else
 				return false;
 		}
+		
 		private function handleDiskResults(data:Object):void {
 			var results:Array = data.result as Array;
 			var content:DirectoryNode = data.token.directory;	
@@ -179,21 +187,44 @@ package org.mig.controller
 				}
 			}
 		}
-		private function handleDirectoryDelete(data:Object):void {
+		private function handleDirectoryDeleted(data:Object):void {
 			var result:StatusResult = data.result as StatusResult;
 			if(result.success) {
 				mediaService.deleteDirectory(data.token.directory as DirectoryNode);
-				mediaService.addHandlers(handleDatabaseDelete);
+				mediaService.addHandlers(handleDirectoryDBDelete);
 			}
 		}
-		private function handleDatabaseDelete(data:Object):void {
+		private function handleDirectoryDBDelete(data:Object):void {
 			var result:StatusResult = data.result as StatusResult;
-			var node:DirectoryNode = data.token.directory as DirectoryNode
+			var node:DirectoryNode = data.token.directory as DirectoryNode;	
 			if(result.success) {
+				deleteTracker++;
 				eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Directory deleted successfully"));
 				node.parentNode.children.removeItemAt(node.parentNode.children.getItemIndex(node));
-				eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_MEDIA));
+				checkDeleteCount();
 			}			
+		}
+		private function handleFileDeleted(data:Object):void {
+			var result:StatusResult = data.result as StatusResult;
+			var file:FileNode = data.token.file as FileNode;		
+			if(result.success) {
+				mediaService.deleteFile(file);
+				mediaService.addHandlers(handleFileDBDelete);
+			}
+		}
+		private function handleFileDBDelete(data:Object):void {
+			var result:StatusResult = data.result as StatusResult;
+			var node:FileNode = data.token.file as FileNode;	
+			if(result.success) {
+				deleteTracker++;
+				eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"File deleted successfully"));
+				node.parentNode.children.removeItemAt(node.parentNode.children.getItemIndex(node));
+				checkDeleteCount();
+			}				
+		}
+		private function checkDeleteCount():void {
+			if(deleteTracker == deleteCount)
+				eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_MEDIA));
 		}
 	}
 }

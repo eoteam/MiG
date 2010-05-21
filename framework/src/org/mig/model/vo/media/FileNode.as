@@ -19,9 +19,8 @@ package org.mig.model.vo.media
 			super(baseLabel, config, data, parentContent,privileges);	
 			children = null;
 		}
-/*		override protected function retrieve():void {
-			children = null;
-		} 
+/*		
+
 		
 		override protected function update(value:UpdateData):void {
 			
@@ -56,6 +55,7 @@ package org.mig.model.vo.media
 				//sequence complete
 			}
 		}
+		
 		override protected function load():void {
 			if(MediaData(data).loaded);
 				//this.dispatchEvent(new ContentNodeEvent(ContentNodeEvent.DATA_LOADED,this));
@@ -69,44 +69,7 @@ package org.mig.model.vo.media
 				command.execute();
 			}		
 		}
-		override protected function remove(args:Array=null):void {
-			//remove from DB
-			var params:Object = new Object();
-			params.action = _config.@service.toString();
-			params.tablename= _config.@tablename.toString();
-			params.id = this.data.id;
-			
-			var command:DeleteContentCommand;
-			
-			if(args != null && args[0] == true) { //remove disk
-				sequenceTotal = 2;
-				sequenceCounter = 0;
-				
-				command = new DeleteContentCommand(this,params,checkSequence);
-				
-				var parentCategoryNode:MediaCategoryNode = MediaCategoryNode(this.parentNode);
-				params = new Object();
-				params.directory = _config.@directory.toString();
-				params.folderName = parentCategoryNode.directory.toString();
-				params.fileName = _baseLabel;
-				if(MediaData(data).mimetype.toString() == MimeTypes.IMAGE || MediaData(data).mimetype.toString() == MimeTypes.VIDEO)
-					params.removethumb = 1;
-				else
-					params.removethumb = 0;
-				
-				var fileCommand:FileCommand = new FileCommand(this,Constants.REMOVE_FILE,params,ResponseType.STATUS,checkSequence);
-				fileCommand.execute();
-			}
-			else
-				command = new DeleteContentCommand(this,params);
-			command.execute();
-		}
-		//private function handleDBRemove(event:Event):void {
-		
-	
-		private function handleDiskRemove(event:Event):void {
-			
-		}
+
 		private function handleLoad(results:Array):void {
 			MediaData(data).loaded = true;
 			data = results[0] as MediaData;

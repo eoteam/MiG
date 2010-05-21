@@ -36,20 +36,6 @@ package  org.mig.model.vo.media
 		}
 		*/
 		
-		/*
-		override protected function remove(args:Array=null):void {
-			for each(var file:ContentNode in children) {
-				file.removeData([true]); //recursive remove, these classes never have access to UI, so any alert will have to be handled by the UI before calling this
-			}	
-			var params:Object = new Object();
-			params.directory = directory;
-			if(params.directory == null || params.directory == "")	
-				params.directory = " ";
-			params.rootDir = config.@directory;
-			
-			var command:FileCommand = new FileCommand(this,Constants.REMOVE_DIR,params,ResponseType.STATUS);
-			command.execute();	
-		}*/
 		
 		/*		
 		private function handleSelection(event:Event):void

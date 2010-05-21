@@ -22,8 +22,9 @@ $file = $params["fileName"];
 if($file)
 {
 	unlink("../../".$directory."/".$folderName."/".$file);
-	if($params["removethumb"])
+	if($params["removethumb"]) {
 		unlink("../../".$directory."/migThumbs/".$folderName."/".$file);
+	}
 	sendSuccess();
 }
 

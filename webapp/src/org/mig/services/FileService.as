@@ -14,7 +14,9 @@ package org.mig.services
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
 	import org.mig.model.vo.media.DirectoryNode;
+	import org.mig.model.vo.media.FileNode;
 	import org.mig.model.vo.media.MediaData;
+	import org.mig.model.vo.media.MimeTypes;
 	import org.mig.services.interfaces.IFileService;
 	import org.robotlegs.mvcs.Actor;
 
@@ -76,8 +78,18 @@ package org.mig.services
 			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,MediaData,null,null,Constants.GETMEDIACONTENT);
 			service.token.directory = directory;
 		}
-		public function deleteFile(file:String):void {
-			
+		public function deleteFile(file:FileNode):void {
+			var parentNode:DirectoryNode = file.parentNode as DirectoryNode;
+			var params:Object = new Object();
+			params.directory = appModel.fileDir
+			params.folderName = parentNode.directory;
+			params.fileName = file.baseLabel;
+			if(MediaData(file.data).mimetypeid == MimeTypes.IMAGE || MediaData(file.data).mimetypeid == MimeTypes.VIDEO)
+				params.removethumb = 1;
+			else
+				params.removethumb = 0; 
+			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS,null,null,null,Constants.REMOVE_FILE);
+			service.token.file = file;
 		}
 		public function deleteDirectory(directory:DirectoryNode):void {
 			var params:Object = new Object();

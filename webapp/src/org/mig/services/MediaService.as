@@ -5,6 +5,7 @@ package org.mig.services
 	import org.mig.model.ContentModel;
 	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.media.DirectoryNode;
+	import org.mig.model.vo.media.FileNode;
 	import org.mig.model.vo.media.MediaData;
 	import org.mig.services.interfaces.IMediaService;
 
@@ -58,6 +59,14 @@ package org.mig.services
 			params.path = '/'+MediaData(directory.data).name + '/';
 			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
 			service.token.directory = directory;
+		}
+		public function deleteFile(file:FileNode):void {
+			var params:Object = new Object();
+			params.action = "deleteRecord";
+			params.tablename = "media";
+			params.id = file.data.id;
+			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
+			service.token.file = file;	
 		}
 	}
 }

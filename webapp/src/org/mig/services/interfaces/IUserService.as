@@ -1,5 +1,6 @@
 package org.mig.services.interfaces
 {
+	import org.mig.model.vo.UpdateData;
 	import org.mig.model.vo.user.User;
 	import org.mig.model.vo.user.UserToken;
 	
@@ -15,5 +16,7 @@ package org.mig.services.interfaces
 		function loadUserGroups():void;
 		
 		function loadUsers():void;
+		
+		//function updateUser(user:User,update:UpdateData):void;
 	}
 }

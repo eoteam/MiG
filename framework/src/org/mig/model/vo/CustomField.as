@@ -11,6 +11,11 @@ package org.mig.model.vo
 		public var displayname:String;
 		public var optionsArray:Array;
 		public var defaultvalue:String = "";
+		public var createdby:int;
+		public var createdate:Number;
+		public var modifiedby:int;
+		public var modifieddate:Number;		
+		
 		public function set options(ops:String):void
 		{
 			optionsArray = [];

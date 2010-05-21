@@ -33,7 +33,7 @@ if($fileType == "images")
 {
 	$thumbCreated = true;
 	createThumbFromCenter($path.$base.'.'.$extension,$thumbpath,$thumbase,$thumbextension,250,250);
-	createsquarethumb($path.$base.'.'.$extension,$thumbpath,$thumbase,$thumbextension,300);
+	//createsquarethumb($path.$base.'.'.$extension,$thumbpath,$thumbase,$thumbextension,300);
 	$temp = getimagesize($path.$base.'.'.$extension);
 	$width = $temp[0]; $height = $temp[1];
 }

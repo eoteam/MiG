@@ -3,6 +3,7 @@ package org.mig.services.interfaces
 	import flash.net.FileReference;
 	
 	import org.mig.model.vo.media.DirectoryNode;
+	import org.mig.model.vo.media.FileNode;
 
 	public interface IFileService extends IService
 	{
@@ -12,7 +13,7 @@ package org.mig.services.interfaces
 		
 		function getID3(name:String):void;
 		
-		function deleteFile(name:String):void;
+		function deleteFile(node:FileNode):void;
 		
 		function deleteDirectory(node:DirectoryNode):void;
 		

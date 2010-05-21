@@ -1,10 +1,10 @@
 package org.mig.model.vo.user
 {
+	import org.mig.model.vo.BaseContentData;
 
 	[Bindable]
-	public class User
+	public class User extends BaseContentData
 	{
-		public var id:Number;
 		public var email:String;
 		public var active:int;
 		public var username:String;
@@ -71,7 +71,7 @@ package org.mig.model.vo.user
 			newCategories = [];
 			delCategories = [];
 		}
-		public function toString():String {
+		override public function toString():String {
 			return firstname+" " +lastname;
 		}
 		public function get fullname():String {

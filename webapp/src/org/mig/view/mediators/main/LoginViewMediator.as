@@ -8,6 +8,7 @@ package org.mig.view.mediators.main
 	import org.mig.events.AppEvent;
 	import org.mig.model.AppModel;
 	import org.mig.model.vo.StatusResult;
+	import org.mig.model.vo.UpdateData;
 	import org.mig.model.vo.user.UserToken;
 	import org.mig.services.interfaces.IUserService;
 	import org.mig.utils.LSOHandler;
@@ -53,8 +54,10 @@ package org.mig.view.mediators.main
 				}
 			}
 		}
-		private function handleLoginError(event:Event):void {
-			loginView.statusText.text = loginView
+		private function handleLoginError(event:AppEvent):void {
+			loginView.statusText.text = "Incorrect Login. Please Try Again."
+			loginView.statusText.visible = true;
+			loginView.statusText.visible = false;
 		}
 		private function onLogin(event:Event):void {
 			userService.login(new UserToken(loginView.usernameField.text,loginView.passwordField.text));
@@ -80,7 +83,9 @@ package org.mig.view.mediators.main
 				loginView.statusText.visible = false;
 			}
 			else {
+				loginView.statusText.visible = true;
 				loginView.statusText.text = "An error occured. Please verify that you provided the correct email address";
+				loginView.statusText.visible = false;
 			}
 		}
 		private function handleUserLoggedin(event:AppEvent):void {
@@ -98,6 +103,20 @@ package org.mig.view.mediators.main
 			loginHandler.addObject(userLogin);
 			loginObject = loginHandler.getObject();
 			loginView.visible = false;
+			
+			/*
+			for each(var group:UserGroup in userGroups)
+			{
+			if(group.groupid.toString() == _data.usergroupid.toString())
+			{
+			_user.group = group.parentid;
+			_user.privileges = UserPrivileges.translateStringToInt(group.groupname);
+			break;
+			}
+			}   */
+			//Mediator stuff
+
+
 		}
 
 	}
