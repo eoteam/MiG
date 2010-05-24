@@ -8,7 +8,6 @@
 
 require_once "readFunctions.php";
 require_once "writeFunctions.php";
-require_once "loginFunctions.php";
 require_once "fileFunctions.php";
 require_once "customFunctions.php";
 require_once "includes/functions.php";
@@ -40,7 +39,8 @@ foreach ($postData as $key=>$value) {
 
 // append custom functions to vaildActions array!
 
-$validActions = array_merge($validMiGActions,$validFrontEndActions);
+$validActions = array_merge($validReadFunctions,$validWriteFunctions);
+$validActions = array_merge($validActions,$validFileFunctions);
 $validActions = array_merge($validActions,$customFunctions);
 
 // if we don't have a valid function, quit
@@ -53,6 +53,6 @@ if (!isset($params['action']) || !in_array($params['action'],$validActions))
 $action = $params['action'];
 $result = $action($params);
 
-// output the serialized xml
+//output the serialized xml
 ouputMySQLResults($result);
 ?>

@@ -36,6 +36,7 @@ package org.mig.services
 			else
 				this.decodeClass = Object;
 		}
+	
 		
 		public function execute():void {
 			if(params != null)

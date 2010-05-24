@@ -7,6 +7,10 @@ package org.mig.events
 		public static const RESIZE_MANAGER_TREE:String = "resizeManagerTree";
 		public static const MANAGER_SELECTED:String = "managerSelected";
 		public static const REFRESH_MEDIA:String = "refreshMedia";
+		
+		public static const FILE_DOWNLOAD_PROGRESS:String = "fileDownloadProgress";
+		public static const FILE_DOWNLOAD_CANCEL:String = "fileDownloadCancel";
+		
 		public var args:Array;
 		
 		public function ViewEvent(type:String,...args)

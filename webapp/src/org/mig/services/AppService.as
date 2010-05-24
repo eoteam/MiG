@@ -43,12 +43,16 @@ package org.mig.services
 			this.createService(params,ResponseType.DATA,Object,configHandler);
 		}
 		public function loadConfigFile(url:String):void {
-			var service:HTTPService = new HTTPService();
 			var suffix:String = (new Date()).getTime().toString();
-			service.url = url + "?" + suffix;
-			service.resultFormat = HTTPService.RESULT_FORMAT_E4X;
-			var token:AsyncToken = service.send();
-			token.addResponder( new Responder(configfileHandler, fault));
+
+			var service:XMLHTTPService = new XMLHTTPService(url + "?" + suffix,null,null,null);
+			services.push(service);
+			service.service.resultFormat = HTTPService.RESULT_FORMAT_E4X;
+			service.service.method = URLRequestMethod.GET;
+			service.execute();
+			service.token.id = services.indexOf(service);
+			service.token.addResponder(new Responder(configfileHandler,fault));
+			service.token.addResponder(new Responder(result,fault));
 		}
 		public function loadCustomFieldGroups():void {
 			var params:Object = new  Object();
@@ -93,7 +97,6 @@ package org.mig.services
 		private function configfileHandler(event:ResultEvent):void {
 			var config:XML = event.result as XML;
 			appModel.config = config;			
-			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.CONFIG_FILE_LOADED));
 		}
 		private function handleCustomFieldGroups(event:ResultEvent):void {
 			var results:Array = event.result as Array;

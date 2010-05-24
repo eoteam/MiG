@@ -117,7 +117,7 @@ package org.mig.controller
 			var content:DirectoryNode = data.token.directory;	
 			for each (var item:MediaData in results) {
 				if(item.type.toString() == "folder") {
-					var newdirectory:String = content.directory + "/" + item.name.toString();
+					var newdirectory:String = content.directory + item.name.toString() + '/';
 					var categoryNode:DirectoryNode = new DirectoryNode(item.name, content.config, item,content, newdirectory,content.privileges);
 					content.children.addItem(categoryNode);
 					content.numFolders += 1;	

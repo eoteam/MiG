@@ -8,11 +8,14 @@ package org.mig.services
 	import flash.events.SecurityErrorEvent;
 	import flash.net.FileReference;
 	import flash.net.URLRequest;
+	import flash.net.URLRequestMethod;
 	
 	import org.mig.controller.Constants;
 	import org.mig.events.UploadEvent;
+	import org.mig.events.ViewEvent;
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
+	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.model.vo.media.FileNode;
 	import org.mig.model.vo.media.MediaData;
@@ -29,11 +32,16 @@ package org.mig.services
 		[Inject]
 		public var contentModel:ContentModel;
 		
+		private var downloadRef:FileReference;
+		
+		public function FileService() {
+			super();
+			this.url = Constants.FILE_EXECUTE;
+		}
 		public function uploadFile(file:FileReference,directory:DirectoryNode):void {
 
-			var fileDir:String = appModel.fileDir + directory.directory;
-			var thumbDir:String = appModel.thumbDir + directory.directory;
-			
+			var fileDir:String = directory.directory;
+		
 			var extArr:Array = file.name.split('.');
 			var fileExtension:String = String(extArr[extArr.length-1]).toLowerCase();
 			var fileType:String = contentModel.getMimetypeString(fileExtension);
@@ -44,9 +52,8 @@ package org.mig.services
 			
 /*			file.addEventListener(HTTPStatusEvent.HTTP_STATUS, handleHttpStatus);
 			file.addEventListener(Event.COMPLETE, fileUploadComplete);*/
-			try  
-			{       	        	
-				var newURL:String = Constants.UPLOAD_FILE + "?directory=" + fileDir + "/&thumbsDir=" + thumbDir + "/&fileType=" + fileType;
+			try {       	        	
+				var newURL:String = Constants.UPLOAD_FILE + "?directory=" + directory.directory +  "&fileType=" + fileType;
 				var uploadURL:URLRequest = new URLRequest(newURL);
 				file.upload(uploadURL, "Filedata")
 			}  
@@ -58,46 +65,91 @@ package org.mig.services
 			var content:DirectoryNode = contentModel.currentDirectory;
 			var params:Object = new Object();
 			params.directory = content.directory;
-			params.rootDir = appModel.fileDir;
-			params.folderName = name;
+			params.name = name;
+			params.action = ValidFunctions.CREATE_DIRECTORY;
 			if(params.directory == null || params.directory == "")
 				params.directory = " ";	
-			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,MediaData,null,null,Constants.CREATE_DIR);
-			
+			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,MediaData);
 		}
 		public function getXMP(file:String):void {
 			
 		}
-		
 		public function getID3(file:String):void {
 			
 		}
 		public function readDirectory(directory:DirectoryNode):void {
 			var params:Object = new Object();
-			params.mapping = appModel.fileDir+directory.directory;
-			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,MediaData,null,null,Constants.GETMEDIACONTENT);
+			params.directory = directory.directory;
+			params.action = ValidFunctions.READ_DIRECTORY;
+			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,MediaData);
 			service.token.directory = directory;
 		}
 		public function deleteFile(file:FileNode):void {
 			var parentNode:DirectoryNode = file.parentNode as DirectoryNode;
 			var params:Object = new Object();
-			params.directory = appModel.fileDir
-			params.folderName = parentNode.directory;
-			params.fileName = file.baseLabel;
+			params.action = ValidFunctions.DELETE_FILE;
+			params.file = parentNode.directory+file.baseLabel;
 			if(MediaData(file.data).mimetypeid == MimeTypes.IMAGE || MediaData(file.data).mimetypeid == MimeTypes.VIDEO)
 				params.removethumb = 1;
 			else
 				params.removethumb = 0; 
-			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS,null,null,null,Constants.REMOVE_FILE);
+			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
 			service.token.file = file;
 		}
 		public function deleteDirectory(directory:DirectoryNode):void {
 			var params:Object = new Object();
 			params.directory = directory.directory;
-			params.rootDir = appModel.fileDir;
-			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS,Object,null,null,Constants.REMOVE_DIR);
+			params.action = ValidFunctions.DELETE_DIRECTORY;
+			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
 			service.token.directory = directory;
-		}				
+		}	
+		public function downloadFiles(files:Array):void {
+			var items:String = '';
+			for each(var item:ContentNode in files) {
+				if(item is FileNode)
+					items += MediaData(item.data).path+item.label + ',';
+				else
+					items += DirectoryNode(item).directory + ',';
+			}
+			items = items.substr(0,items.length-1);
+
+			var params:Object = new Object();
+			params.action = ValidFunctions.DOWNLOAD_ZIP;
+			params.files = items;
+			var request:URLRequest = new URLRequest();
+			request.method = URLRequestMethod.POST;
+			request.data = params;
+			request.url = Constants.FILE_EXECUTE;
+			downloadRef = new FileReference();
+			downloadRef.download(request,"archive.zip");
+			downloadRef.addEventListener(ProgressEvent.PROGRESS,handleProgress);
+			downloadRef.addEventListener(Event.CANCEL,handleDownloadCancel);
+		}
+		public function handleDownloadCancel(event:Event):void {
+			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.FILE_DOWNLOAD_CANCEL));
+		}
+		public function cancelDownload():void {
+			downloadRef.cancel();
+		}
+		public function renameFile(file:FileNode,name:String):void {
+			var params:Object = new Object();
+			params.action = ValidFunctions.RENAME_ITEM;
+			params.oldname = MediaData(file.data).path + MediaData(file.data).name;
+			params.newname = MediaData(file.data).path + name;
+			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
+			service.token.file = file;	
+		}
+		public function renameDirectory(directory:DirectoryNode,name:String):void {
+			var params:Object = new Object();
+			params.action = ValidFunctions.RENAME_ITEM;
+			params.oldname = directory.directory;
+			params.newname = DirectoryNode(directory.parentNode).directory + name + '/';
+			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
+			service.token.directory = directory;	
+		}
+		private function handleProgress(event:ProgressEvent):void {
+			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.FILE_DOWNLOAD_PROGRESS,event.bytesLoaded,event.bytesTotal));
+		}
 		private function ioErrorHandler(event:IOErrorEvent):void {		
 			/*var newError:String = "ioErrorHandler: " + event	
 			var percentLoaded:Number = 0;

@@ -14,7 +14,7 @@ package org.mig.controller.configuration
 			injector.mapSingleton(ContentModel);
 
 			//let the state machine know this step is complete 
-			trace("Configure Models Complete");
+			trace("Configure: Models Complete");
 			eventDispatcher.dispatchEvent( new StateEvent(StateEvent.ACTION, AppConfigStateConstants.CONFIGURE_MODELS_COMPLETE));
 		}
 	}

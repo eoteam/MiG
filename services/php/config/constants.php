@@ -5,56 +5,62 @@
 *	Defines the constants that will be used throught the site by the other php scripts
 */
 
-// VALID ACTION NAMES - FOR SECURITY!
 
-$validMiGActions = array(
-"getTemplates",
-"sendUserInformation",
-"ZipFolder",
-"updateRelatedRecords",
-"insertRelatedRecords",
-"insertTag",
-"updateTag",
+// VALID ACTION NAMES - FOR SECURITY!
+$validReadFunctions = array (
+"validateUser",
+"getCustomFields",
+"getData",
+"getContentTree",
+"getUsers",
 "getContent",
-"deleteContent",
-"getTags",
-"deleteRelatedRecords",
-"deleteRecords",
-"deleteTag",
-"migSearch",
-"getMedia",
 "getContentUsers",
 "getContentMedia",
 "getContentTags",
 "getContentContent",
-"updateRecord",
-"updateRecords",
-"insertRecord",
-"insertRecordWithRelatedTag",
-"deleteRecord",
-"getData",
-"getUsers",
-"validateUser",
-"updateContainerPaths",
-"getCustomFields",
-"getCustomFieldsList",
+"getMedia",
 "contentSearch",
-"duplicateContent");
-
-$validFrontEndActions = array(
-"getContentTree"
+"migSearch",
+"getTags",
+"sendUserInformation"
 );
 
-//	ALLOWED FILETYPES FOR UPLOAD
+$validWriteFunctions = array (
+"updateTag",
+"updateRecord",
+"updateRecords",
+"updateContainerPaths",
+"updateMediaByPath",
+"insertTag",
+"insertRecord",
+"insertRecordWithRelatedTag",
+"deleteTag",
+"deleteRecord",
+"deleteRecords",
+"deleteContent",
+"deleteMediaByPath",
+"duplicateContent"
+);
 
-$allowed_filetypes = array("jpg","jpeg","png","flv","mp3","pdf");
+$validFileFunctions = array (
+"readDirectory",
+"createDirectory",
+"removeDirectory",
+"removeFile",
+"renameItem",
+"moveFile",
+"getXMP",
+"getID3",
+"getKeywords",
+"getPlayTime",
+"downloadZip"
+);
+
+
 
 // VERBOSITY LEVELS FOR getContent() FUNCTION...
-
-
 //search result
 $arrVerbosity[0] = array("content.id","content.parentid","content.migtitle","content.statusid","content.is_fixed","content.templateid");
-
 
 $arrVerbosity[1] = array("content.id","content.parentid","content.templateid","content.migtitle","content.statusid","content.containerpath",
 "content.createdby","content.createdate","content.modifiedby",
@@ -66,6 +72,9 @@ $arrVerbosity[2] = array("content.id","content.color","content.parentid","conten
 
 // add verbosity levels for specific front end
 
+$fileDir = "../files/";
+$thumbDir = "../files/migThumbs/";
+$tempDir = "../temporary/";
 
 $mediaVerbosity[0] = array("media.*", "mimetypes.name as mimetype","content_media.displayorder","content_media.caption","content_media.credits", 
 			"GROUP_CONCAT(DISTINCT terms.id) AS tagids", "GROUP_CONCAT(DISTINCT terms.name) AS tags",
@@ -231,4 +240,5 @@ $htmlSymbols = array(
 			"⊥" => "&#8869;",
 			"⋅" => "&#8901;",								 
 			            );
+
 ?>

@@ -6,7 +6,7 @@ package org.mig.controller.configuration
 	import org.mig.controller.ContentCommand;
 	import org.mig.controller.MediaCommand;
 	import org.mig.controller.ShowAlertCommand;
-	import org.mig.controller.StartupCommand;
+	import org.mig.controller.startup.StartupCommand;
 	import org.mig.controller.UploadCommand;
 	import org.mig.controller.configuration.BootstrapApplicationCommand;
 	import org.mig.events.AlertEvent;
@@ -22,11 +22,8 @@ package org.mig.controller.configuration
 		override public function execute():void
 		{
 			//top level
-			commandMap.mapEvent(AppEvent.STARTUP,StartupCommand,AppEvent);
+			//commandMap.mapEvent(AppEvent.STARTUP,StartupCommand,AppEvent);
 			commandMap.mapEvent(AppEvent.LOGGEDIN,StartupCommand,AppEvent);
-			commandMap.mapEvent(AppEvent.CONFIG_LOADED,StartupCommand,AppEvent);
-			commandMap.mapEvent(AppEvent.CONFIG_FILE_LOADED,StartupCommand,AppEvent);
-			//content commands
 			commandMap.mapEvent(ContentEvent.RETRIEVE_CHILDREN,ContentCommand,ContentEvent);
 			commandMap.mapEvent(ContentEvent.RETRIEVE_VERBOSE,ContentCommand,ContentEvent);	
 			//media commands
@@ -41,7 +38,7 @@ package org.mig.controller.configuration
 			//errors
 			commandMap.mapEvent(AlertEvent.SHOW_ALERT, ShowAlertCommand, AlertEvent);
 			
-			trace("Configure Commands Complete");
+			trace("Configure: Commands Complete");
 			eventDispatcher.dispatchEvent( new StateEvent(StateEvent.ACTION, AppConfigStateConstants.CONFIGURE_COMMANDS_COMPLETE));
 		}
 	}

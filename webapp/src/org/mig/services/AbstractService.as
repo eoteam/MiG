@@ -26,7 +26,7 @@
 	{
 
 		protected var services:Array = [];
-		
+		protected var url:String = Constants.DB_EXECUTE;
 		public function AbstractService() {
 			super();
 		}
@@ -34,18 +34,16 @@
 		protected function result(event:ResultEvent):void {
 			if(event.token.resultCallBack) {
 				event.token.resultCallBack(event);
-				delete services[event.token.index];
+				//delete services[event.token.index];
 			}
 		}
 		protected function fault(info:Object):void {
 			eventDispatcher.dispatchEvent(new AlertEvent( AlertEvent.SHOW_ALERT, "crap","Crap"));
 		}
 		protected function createService(params:Object,responseType:String,decodeClass:Class=null,
-										 resultFunction:Function=null,faultFunction:Function=null,url:String=null):XMLHTTPService {
+										 resultFunction:Function=null,faultFunction:Function=null):XMLHTTPService {
 		
 			var id:String = GUID.create();
-			if(!url)
-				url = Constants.EXECUTE;
 			var service:XMLHTTPService = new XMLHTTPService(url,params,responseType,decodeClass);
 			services.push(service);
 			service.execute();

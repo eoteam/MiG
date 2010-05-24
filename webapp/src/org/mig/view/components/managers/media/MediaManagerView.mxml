@@ -78,7 +78,9 @@
 	</mx:Script>	
 	<!--Control Bar-->
 	<container:FlowContainer direction="horizontal"  width="100%" horizontalGap="8" verticalAlign="middle" paddingBottom="3" paddingTop="6" paddingLeft="6">
-		<mx:SWFLoader source="@Embed(source='/migAssets/library.swf#folderIcon')" mouseChildren="false"  buttonMode="true" useHandCursor="true" /><!--   width="18" height="16" -->
+		<mx:Canvas>
+			<mx:SWFLoader left="8" source="@Embed(source='/migAssets/library.swf#folderIcon')" mouseChildren="false"  buttonMode="true" useHandCursor="true" /><!--   width="18" height="16" -->	
+		</mx:Canvas>
 		<mx:Text htmlText="{currentLocation}" id="locationText" styleName="boldCopy" />
 		
 		<!--Search -->
@@ -96,10 +98,12 @@
 		<controls:MiGHSlider id="scaleSlider" minimum="0.25" maximum="2" change="handleSliderChange(event)" mouseChildren="false" />
 		
 		<!-- Directory -->
-		<mx:SWFLoader y="-5"  source="@Embed(source='/migAssets/library.swf#parentFolderIcon')"  
+		<mx:SWFLoader source="@Embed(source='/migAssets/library.swf#parentFolderIcon')"  
 		mouseChildren="false" id="parentdirButton" alpha="1" toolTip="Up 1 Folder" buttonMode="true" useHandCursor="true" />
-		<mx:SWFLoader  mouseChildren="false" id="addDirectoryButton" alpha="1" toolTip="New Folder"
-		source="@Embed(source='/migAssets/library.swf#addFolderIcon')" buttonMode="true" useHandCursor="true"/><!-- width="40"  height="10" -->
+		<mx:Canvas>
+			<mx:SWFLoader  mouseChildren="false" id="addDirectoryButton" alpha="1" toolTip="New Folder" top="6"
+			source="@Embed(source='/migAssets/library.swf#addFolderIcon')" buttonMode="true" useHandCursor="true"/>
+		</mx:Canvas>
 		<mx:Button styleName="trashButton"  toolTip="Delete"  id="trashButton" mouseChildren="false"  buttonMode="true" />			
 	</container:FlowContainer>
 	
@@ -130,11 +134,11 @@
 					headerSortSeparatorSkin="org.mig.view.skins.SortSeparatorSkin"
 					dataProvider="{listDP}">		
 					<controls:columns>
-						<mx:AdvancedDataGridColumn editable="false"  headerText="Name"  width="350" dataField="label"  id="treeColumn">
-							<!--					<mx:itemRenderer>
-							<mx:Component>
-							<mx:Label  text="{this.data}" contextMenu="{outerDocument.rightClickMenu}" />
-							</mx:Component>
+						<mx:AdvancedDataGridColumn  editable="false" headerText="Name"  width="350" dataField="label"  id="treeColumn">
+<!--							<mx:itemRenderer>
+								<mx:Component>
+									<mx:TextInput borderStyle="none" backgroundAlpha="0" editable="false" enter="this.editable=true"   mouseDownOutside="this.editable=false" text="{this.data}" styleName="inputFieldBlack" />
+								</mx:Component>
 							</mx:itemRenderer>-->
 						</mx:AdvancedDataGridColumn>
 						<mx:AdvancedDataGridColumn editable="false" color="0x666666"  headerText="File Size" dataField="size" width="100">

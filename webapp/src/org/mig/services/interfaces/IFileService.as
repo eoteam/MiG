@@ -20,5 +20,15 @@ package org.mig.services.interfaces
 		function readDirectory(node:DirectoryNode):void;
 		
 		function addDirectory(name:String):void;
+		
+		function downloadFiles(files:Array):void;
+		
+		function cancelDownload():void;
+		
+		function renameFile(file:FileNode,name:String):void;
+		
+		function renameDirectory(directory:DirectoryNode,name:String):void;
+		
+			
 	}
 }

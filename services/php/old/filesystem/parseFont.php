@@ -13,7 +13,7 @@ if (isset($_GET['mode']) && $_GET['mode'] == 'test') { // this is a test mode fo
 }
 if(isset($params['file']))
 {
-	$font = '../../'. $params['file'];
+	$font = $fileDir . $params['file'];
 	$ttf = new ttf;
 	$ttf_info=$ttf->get_friendly_ttf_name($font);
 	header("Content-type: text/xml; charset=UTF-8");

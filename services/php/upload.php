@@ -1,22 +1,23 @@
 <?php
 require_once "fileFunctions.php";
+require_once "config/constants.php";
 
-$path = "../../".$_REQUEST['directory'];
-$thumbpath = "../../".$_REQUEST["thumbsDir"];
+$path = $fileDir . $_REQUEST['directory'];
+$thumbpath = $thumbDir . $_REQUEST['directory'];
 $fileType = $_REQUEST["fileType"];
 $filename = sanitize_file_name($_FILES['Filedata']['name']);
 $arr = getExtension('.', $filename, -2);
 $extension = $arr[1];
 $base = $arr[0];
 
-move_uploaded_file($_FILES['Filedata']['tmp_name'], "./../../temporary/". $filename);
+move_uploaded_file($_FILES['Filedata']['tmp_name'], $tempDir. $filename);
  
 if(file_exists($path.$filename))   
 {
 	$counter = checkName($path,$base,$extension,1);
 	$base .= '_'.$counter;
 }
-rename("./../../temporary/".$filename, $path.$base.'.'.$extension);
+rename($tempDir.$filename, $path.$base.'.'.$extension);
 
 $thumbase = $base; 
 $thumbextension = $extension;
@@ -46,14 +47,14 @@ else if($fileType == "videos" && extension_loaded("ffmpeg"))
 	$gdi = $tFrame->toGDImage();
 	$thumbextension = "jpg"; 
 	imagejpeg($gdi, $thumbpath.$thumbase . ".jpg");      
-	$exportcmd = "ffmpeg -i " . $moviepath. "  -acodec libmp3lame -ab 48k -ac 2 -ar 22050 -f flv -b 1000k " . $thumbpath.$thumbase.".flv";
+	$exportcmd = "ffmpeg -i " . $moviepath. "  -acodec libmp3lame -ab 48k -ac 2 -ar 44100 -f flv -b 1000k " . $thumbpath.$thumbase.".flv";
 	exec($exportcmd,$output=array());
 	$videoProxy = true;
 }
 
 //get playtime if video or audio
 $playtime = 0;
-$playtimeArr = getPlaytime($path.$base.'.'.$extension);
+$playtimeArr = getPlaytimeID3($path.$base.'.'.$extension);
 
 if($playtimeArr[0] == true)
 	$playtime = $result[1];
@@ -62,7 +63,7 @@ else
 
 	
 //try xmp	
-$tags = getTags($path.$base.'.'.$extension);
+$tags = getKeywords($path.$base.'.'.$extension);
 $size = shell_exec("ls -s " . $path.$base.'.'.$extension) *1024;		
 header("Content-type: text/xml");
 $out = "<result><name>" . $base.'.'.$extension."</name>";

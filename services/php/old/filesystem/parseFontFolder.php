@@ -15,8 +15,8 @@ if(isset($params['file']))
 {
 	//
 	$xml =  '<fonts>';
-	$dir=opendir('../../'. $params['file']);
-	$path = '../../'. $params['file'];
+	$dir=opendir($fileDir . $params['file']);
+	$path = $fileDir . $params['file'];
 	$resultList = array();
 	if($dir)
 	{

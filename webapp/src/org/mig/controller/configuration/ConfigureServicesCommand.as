@@ -28,7 +28,7 @@ package org.mig.controller.configuration
 			injector.mapSingletonOf(IMediaService,MediaService);
 			injector.mapSingletonOf(IFileService,FileService);
 			
-			trace("Configure Services Complete");
+			trace("Configure: Services Complete");
 			eventDispatcher.dispatchEvent( new StateEvent(StateEvent.ACTION, AppConfigStateConstants.CONFIGURE_SERVICES_COMPLETE));
 		}
 	}

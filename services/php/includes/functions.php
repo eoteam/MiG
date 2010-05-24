@@ -198,7 +198,7 @@ function queryDatabase($query, $params=null, &$outparams=null)
 /**
  * Return xml version of result set.
  */
-function outputDirectoryListing($newdir, $allowed_filetypes){
+function outputDirectoryListing($newdir){
 	$dir=opendir($newdir);
 	$resultList = array();
 	

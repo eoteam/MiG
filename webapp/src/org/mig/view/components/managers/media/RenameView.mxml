@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:controls="org.mig.view.controls.*"
+	horizontalScrollPolicy="off" 
+	paddingRight="10" paddingLeft="10" paddingBottom="10"
+	height="200" width="300" 
+	implements="org.mig.view.interfaces.IContentView"
+	title="{'Rename '+_content.label}" styleName="bodyCopy">
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			
+			import org.mig.model.vo.ContentNode;
+			import org.mig.view.interfaces.IContentView;
+			[Bindable]
+			private var _content:ContentNode;
+		
+			public function set content(contentNode:ContentNode):void {
+				_content = contentNode;
+			}
+			public function get content():ContentNode {
+				return _content;
+			}
+			private function cancel():void {
+				PopUpManager.removePopUp(this);
+			}
+		]]>
+	</mx:Script>
+
+	<mx:Form maxWidth="750" paddingLeft="0" indicatorGap="2" verticalGap="15" styleName="removeButton" horizontalScrollPolicy="off">
+		<mx:HBox paddingLeft="5">
+			<controls:MiGTextInput styleName="inputFieldGray"  text="" width="200" id="input" restrict="a-z\A-Z\0-9\_\-\."/>						
+		</mx:HBox>
+	</mx:Form>
+	
+	<mx:HBox horizontalGap="3" paddingTop="10" paddingLeft="5">
+		<mx:Button  styleName="defaultButton" label="Submit" enabled="{validInput}" id="submitBtn"/>
+		<mx:Button styleName="defaultButton" label="Cancel" click="cancel()"/>
+	</mx:HBox>
+	
+	<mx:StringValidator id="inputValidator" invalid="validInput=false" valid="validInput=true" source="{input}" property="text" minLength="4" maxLength="60" required="true"/>
+	<mx:Boolean id="validInput">false</mx:Boolean>
+	
+</mx:TitleWindow>

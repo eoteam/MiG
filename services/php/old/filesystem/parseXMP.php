@@ -16,7 +16,7 @@ if (isset($_GET['mode']) && $_GET['mode'] == 'test') { // this is a test mode fo
 
 if(isset($params['file']))
 {
-	$file = '../../' . $params["file"];
+	$file = $fileDir . $params["file"];
 	$result = parseXMP($file);
 	if($result[0] == true) {
 		header("Content-Type: text/xml");

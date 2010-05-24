@@ -9,6 +9,7 @@ package org.mig.view.mediators.managers.media
 	import flash.events.MouseEvent;
 	
 	import mx.collections.HierarchicalData;
+	import mx.events.CloseEvent;
 	import mx.events.FlexEvent;
 	import mx.events.ListEvent;
 	import mx.managers.PopUpManager;
@@ -25,7 +26,9 @@ package org.mig.view.mediators.managers.media
 	import org.mig.utils.GlobalUtils;
 	import org.mig.view.components.main.SystemPopup;
 	import org.mig.view.components.managers.media.AddDirectoryView;
+	import org.mig.view.components.managers.media.DownloadView;
 	import org.mig.view.components.managers.media.MediaManagerView;
+	import org.mig.view.components.managers.media.RenameView;
 	import org.robotlegs.mvcs.Mediator;
 	
 	public class MediaManagerMediator extends Mediator
@@ -113,8 +116,8 @@ package org.mig.view.mediators.managers.media
 					downloadItems();	
 				break;
 				case "New Folder":
-						addFolder();
-					break;
+					addFolder();
+				break;
 			}	
 		}
 		private function handleListButton(event:Event):void {
@@ -184,33 +187,12 @@ package org.mig.view.mediators.managers.media
 			
 		}
 		private function downloadItems():void {
-			/* var operation:XmlHttpOperation = new XmlHttpOperation("php/execute.php");
-			operation.addEventListener(Event.COMPLETE,handleZipComplete);
-			var params:Object = new Object();
-			var prefix:String = this.parentApplication.parameters.prompt.toString().split(' ').join('-');
-			params.action= "ZipFolder";
-			params.prefix =  prefix; */
-			var files:String = '';
-/*			for each(var item:ContentNode in listView.selectedItems) {
-				if(item is MediaCategoryNode)
-					ControllerLocator.mediaManagerController.fileDir+'/'+MediaCategoryNode(item).directoryMapping+ ',';	
-				else
-					files +=  ControllerLocator.mediaManagerController.fileDir+MediaContainerNode(item).path+item.label + ',';
+			if(view.listView.selectedItems.length > 0 ) {
+				var downloadView:DownloadView = PopUpManager.createPopUp(view,DownloadView,false,PopUpManagerChildList.POPUP) as DownloadView; 
+				mediatorMap.createMediator( downloadView );
+				downloadView.files = view.listView.selectedItems;
+				PopUpManager.centerPopUp(downloadView);	
 			}
-			files = files.substr(0,files.length-1);*/
-			/* 			params.files = files;
-			operation.params = params;
-			operation.execute(); */
-			//this.setLoading();
-/*			var request:URLRequest = new URLRequest();
-			request.url = Constants.ZIP_DOWNLOAD+files;
-			downloadRef.download(request,"archive.zip");
-			downloadView = PopUpManager.createPopUp
-				(DisplayObject(Application.application),DownloadProgressView,false,PopUpManagerChildList.POPUP) as DownloadProgressView; 
-			downloadView.fileName = "archive";
-			downloadView.prompt = "Preparing archive ...";
-			this.downloadView.addEventListener(CloseEvent.CLOSE,handleDownloadViewClose);
-			PopUpManager.centerPopUp(downloadView);		*/
 		}
 		private function deleteItems(event:Event=null):void {
 			var popup:SystemPopup = new SystemPopup();
@@ -278,13 +260,12 @@ package org.mig.view.mediators.managers.media
 			eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.DELETE,items));
 		}
 		private function renameItem():void {
-			/*if(listView.selectedItems.length == 1)
-			{
-			var contentView:RenameItemView = PopUpManager.createPopUp
-			(DisplayObject(Application.application),RenameItemView,false,PopUpManagerChildList.POPUP) as RenameItemView; 
-			contentView.content = listView.selectedItem as ContentNode;
-			PopUpManager.centerPopUp(contentView);			
-			}*/			
+			var popup:RenameView = new RenameView();
+			var item:ContentNode = view.stack.selectedIndex == 0 ? view.listView.selectedItem as ContentNode : view.thumbView.selectedItem as ContentNode;
+			popup.content = item;
+			PopUpManager.addPopUp( popup, view );
+			mediatorMap.createMediator( popup );
+			PopUpManager.centerPopUp(popup);		
 		}
 		private function addFolder(event:Event=null):void {
 			var popup:AddDirectoryView = new AddDirectoryView();
@@ -292,7 +273,6 @@ package org.mig.view.mediators.managers.media
 			mediatorMap.createMediator( popup );
 			PopUpManager.centerPopUp(popup);
 		}
-
 		//set current node
 		private function set selectedContent(value:DirectoryNode):void {
 			if(_selectedNode != value) {
@@ -301,10 +281,10 @@ package org.mig.view.mediators.managers.media
 				view.listDP = new HierarchicalData(value.children);
 				view.tileDP = value.children;
 				var arr:Array = String(value.directory).split("/");
-				var currentLocation:String = "<font color='#999999'>"+appModel.fileDir+"/";
+				var currentLocation:String = "<font color='#999999'>"+appModel.fileDir;
 				if(arr) {
 					arr.reverse();
-					currentLocation = "<font color='#999999'>/ ";
+					currentLocation += "<font color='#999999'>";
 					var numItems:int = arr.length - 1;	
 					for(var i:int = 0; i < arr.length; i++) {
 						if(i < arr.length-1)

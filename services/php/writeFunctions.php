@@ -1,25 +1,32 @@
 <?php
 
-include_once("zip/pclzip.lib.php");
+
 require_once "readFunctions.php";
 
 function updateTag($params)
 {
 	/*
-		* Script will attempt to update ...
+		* Script will attempt to update tags at tables 'terms' and 'term_taxonomy'
 		* You will get an error if you provided invalid field names.
 
 		** REQUIRED PARAMS
-		id - primary key of the record to update
-		termid - 
+		id - primary key of the record to update at 'term_taxonomy'
+		termid -
 
 		** OTHER PARAMS
-		* name/value pairs to update
-		* tags - if found, this will attempt to add tags if they don't already exist in the system, otherwise it will tie tags to the content or media being inserted.
-		* if a param is sent called 'password' it will automatically be encrypted.
-		
+		* name/value pairs to update:
+		- parentid
+		- description
+		- color
+		- date1
+		- date2
+		- displyorder
 		*/
-	
+
+	// gets arrays of field names for tables 'terms' and 'term_taxonomy'
+	$columnsTermsArray = getTableColumns('terms');
+	$columnsTermTaxArray = getTableColumns('term_taxonomy');
+
 	if(isset($params['id']) && isset($params['termid']))
 	{
 		$sendParams = array();
@@ -28,49 +35,58 @@ function updateTag($params)
 		{
 			if ($key != 'action' && $key != 'id' && $key != 'name' && $key != 'slug')
 			{
-				$sql .= $key . " = :".$key.", ";
-				$sendParams[$key] = processText($value);
+				if (in_array($key, $columnsTermTaxArray)) // checks for misspelling of field name
+				{
+					$sql .= $key . " = :".$key.", ";
+					$sendParams[$key] = processText($value);
+				}
+				else die("Unknown field name '$key'.");
 			}
 		}
 		// remove last comma and space!
 		$sql = substr($sql,0,strlen($sql)-2);
 		$sql .= " WHERE id = :id";
 		$sendParams['id'] = $params['id'];
+
 		if($result = queryDatabase($sql, $sendParams))
 		{
-			$sendParams = array();
-			$sql  = " UPDATE `terms` SET";
-			$sql .= " name = :name ,";
-			$sql .= " slug = :slug";
-			$sql .= " WHERE id = :termid";
-			$sendParams['name'] = processText($params['name']);
-			$sendParams['slug'] = processSlug($params['slug']);
-			$sendParams['termid'] = $params['termid'];
-			if($result = queryDatabase($sql, $sendParams))
-			sendSuccess();
-			else
-			die("Query Failed:" . $result->errorInfo());
+			if (in_array('name', $columnsTermsArray) && in_array('slug', $columnsTermsArray)) // checks for misspelling of field name
+			{
+				$sendParams = array();
+				$sql  = " UPDATE `terms` SET";
+				$sql .= " name = :name ,";
+				$sql .= " slug = :slug";
+				$sql .= " WHERE id = :termid";
+				$sendParams['name'] = processText($params['name']);
+				$sendParams['slug'] = processSlug($params['slug']);
+				$sendParams['termid'] = $params['termid'];
+
+				if($result = queryDatabase($sql, $sendParams)) {
+					sendSuccess();
+				}
+				else die("Query Failed:" . $result->errorInfo());
+			} else die("Unknown field name.");
 		}
 		else die("Query Failed:" . $result->errorInfo());
 	}
-	else die("No tag is provided.");
+	else die("No tag id is provided.");
 }
 
 function updateRecord($params)
 {
 	/*
-		* Script will attempt to update multiple fields (name/value ($key=>$value) pairs) of one record by id.
+		* Script will attempt to update multiple fields (name/value pairs) of one record by id.
 		* You will get an error if you provided invalid field names.
 
 		** REQUIRED PARAMS
 		tablename - name of the table to update
 		id - primary key of the record to update
+		name/value pairs to update
 
 		** OTHER PARAMS
-		* name/value pairs to update
 		* tags - if found, this will attempt to add tags if they don't already exist in the system, otherwise it will tie tags to the content or media being inserted.
 		* if a param is sent called 'password' it will automatically be encrypted.
-		
+
 		*/
 
 	$numParamsToUpdate = 0; // counts num of params to update.
@@ -119,13 +135,15 @@ function updateRecord($params)
 
 	// get the results
 	if ($numParamsToUpdate > 0)
-	$result = queryDatabase($sql, $sendParams);
+		$result = queryDatabase($sql, $sendParams);
 
+/*	
 	if (isset($params['tags']))
-		associateTags($params['tablename'],$params['id'],$params['tags']);
-	
+	associateTags($params['tablename'],$params['id'],$params['tags']);
+*/
+		
 	if ($params['tablename'] == "content")
-		updateContainerPaths(null);
+	updateContainerPaths(null);
 
 	if (isset($params['verbosity']))
 	{
@@ -157,33 +175,32 @@ function updateRecords($params)
 
 		** OTHER PARAMS
 		* name/value pairs to specify records to update
-		* tags - if found, this will attempt to add tags if they don't already exist in the system, otherwise it will tie tags to the content or media being inserted.
-		* if a param is sent called 'password' it will automatically be encrypted.
-
 		*/
 
 	$validParams = array("action","idvalues","tablename","idfield","updatefield","updatevalue");
-	/* example:
+	/* examples:
 	 * action=updateRecords & tablename=comments & updatefield=statusid & updatevalue=4 & idfield=id & idvalues=1,2,3,4
+	 * action=updateRecords & tablename=media_terms & updatefield=termid & updatevalue=7 & idfield=contentid & idvalues=4,5 
 	 */
 
 	$sendParams = array();
 
 	// gets array of fields name for 'tablename'
 	$columnsArray = getTableColumns($params['tablename']);
-	
+
 	// make sure we have a content id and tablename
 	if (isset($params['tablename']) && isset($params['idfield']) && isset($params['idvalues']) && isset($params['updatefield']) && isset($params['updatevalue'])) {
 		$sql = "UPDATE `".$params['tablename']."` SET ";
 
 		if (in_array($params['updatefield'], $columnsArray)) // checks for misspelling of field name
-			$sql .= $params['updatefield']." = :updatevalue ";
+		$sql .= $params['updatefield']." = :updatevalue ";
 		else die("Unknown field name '".$params['updatefield']."'.");
-		
+
 		if (in_array($params['idfield'], $columnsArray)) // checks for misspelling of field name
-			$sql .= " WHERE ".$params['idfield']." IN ( ";
+		$sql .= " WHERE ".$params['idfield']." IN ( ";
 		else die("Unknown field name '".$params['idfield']."'.");
 			
+		// $params['idvalues'] can be comma-delimited
 		$manyvalues = explode(",",$params['idvalues']);
 		foreach($manyvalues as $value)
 		{
@@ -216,15 +233,23 @@ function updateRecords($params)
 	// return the results
 	return $result;
 }
-
 function updateContainerPaths($params, $insertid) {
 
 	$sql = "SELECT id FROM content";
 	$sendParams = array();
 
 	if (isset($params['id'])) {
-		$sql .= " WHERE id IN (:id)";
-		$sendParams['id'] = $params['id'];
+		$sql .= " WHERE id IN ( ";
+		
+		// $params['id'] can be comma-delimited
+		$manyvalues = explode(",",$params['id']);
+		foreach($manyvalues as $value)
+		{
+			$sql .= " :singlevalue".$value.", ";
+			$sendParams['singlevalue'.$value] = $value;
+		}
+		$sql = substr($sql,0,strlen($sql)-2); //remove last comma and space
+		$sql .= " )";
 	} else $sql .= " WHERE id IN ($insertid)";
 
 	$result = queryDatabase($sql, $sendParams);
@@ -270,7 +295,7 @@ function updateContainerPaths($params, $insertid) {
 					$strPath2 = $contName . "<>" . $strPath2;
 				}
 			}
-				
+
 			// remove last comma!
 			$strPath = substr($strPath,0,strlen($strPath)-1);
 			$strPath2 = substr($strPath2,0,strlen($strPath2)-2);
@@ -293,26 +318,23 @@ function insertTag($params)
 		** REQUIRED PARAMS
 		name - tag name
 		slug - slug of the tag
-		taxonomy - 'tag' or 'category'
-		 
+			
 		** OTHER PARAMS
-		* name/value pairs to set parameters for the tag:
-			* parentid /optional/ - if doesn't exist then parentid=id
-			* description
-			* color
-			* date1
-			* date2
-			* displyorder
-	
-		*/
-	
-	//$validParams = array("taxonomy");
-	
-	// gets array of fields name for 'tablename'
-	$columnsArray = getTableColumns('term_taxonomy');
-	
-	if (isset($params['taxonomy'])) {
+		taxonomy - 'tag' or 'category'; if taxonomy is not provided then it is 'tag ' 
+		name/value pairs to set parameters for the tag :
+		- parentid (optional) - if doesn't exist then parentid=id
+		- description
+		- color
+		- date1
+		- date2
+		- displyorder
 
+		*/
+
+	// gets array of field names for 'tablename'
+	$columnsArray = getTableColumns('term_taxonomy');
+
+	if (isset($params['taxonomy'])) {
 		$sendParams = array();
 		$sql = "INSERT INTO `terms` (name,slug) VALUES (:name,:slug)";
 		$sendParams['name'] = processText($params['name']);
@@ -323,38 +345,39 @@ function insertTag($params)
 			$sql = "INSERT into `term_taxonomy` (id,parentid,termid,";
 			foreach ($params as $key=>$value) {
 				if ($key != 'action' && $key != 'name' && $key != 'slug' && $key != 'parentid') {
-					if (in_array($key, $columnsArray)) // checks for misspelling of field name
+					if (in_array($key, $columnsArray)) { // checks for misspelling of field name
 						$sql .= $key.",";
+					}
 					else die ("Unknown field name '$key'.");
 				}
 			}
-			
+
 			// remove last comma
 			$sql = substr($sql,0,strlen($sql)-1);
 			$sql .= ")";
 
 			// put values into SQL
 			$sql .= " VALUES (";
-			
+
 			// get next auto increment in 'term_taxonomy'
 			$sql2 = "SELECT Auto_increment FROM information_schema.tables WHERE table_name='term_taxonomy' AND table_schema='".DB_NAME."'";
 			$result2 = queryDatabase($sql2);
 			$row2 = $result2->fetch(PDO::FETCH_ASSOC);
-			
+
 			$sql .= "'".$row2['Auto_increment']."',"; //id
-			
+
 			$autoIncrement = $row2['Auto_increment'];
-				
-			if (isset($params['parentid'])) 
-				// parentid is set
+
+			if (isset($params['parentid'])) { // parentid is set
 				$sql .= "'".$params['parentid']."',"; // parentid
+			}
 			else {
 				// if parent id is not set then parentid = id
 				$sql .= "'".$row2['Auto_increment']."',"; // set the same parent_id as the auto_incremented id
 			}
-			
+
 			$sql .=  "'".$insertid."',"; // termid
-				
+
 			foreach ($params as $key=>$value) {
 				if ($key != 'action' && $key !='name' && $key != 'slug') {
 					$sql .= ":".$key.",";
@@ -379,21 +402,39 @@ function insertTag($params)
 	}
 	else die("No taxonomy provided.");
 }
+function updateMediaByPath($params)
+{
+	if (isset($params['oldpath']) && isset($params['newpath'])) {
+	
+		$sql = "UPDATE `media` ";
+		$sql .= " WHERE `path` = REPLACE(`path`," . $params['oldpath'] . "," . $params['newpath'] . ")";
+	} 
+	else {
+		die("missing path parameters");
+	}	
+	//die($sql);
 
+	// get the results
+	if ($result = queryDatabase($sql)) 
+		sendSuccess();
+	else
+		die("Query Failed:" . mysql_error());
+
+}
 function insertRecord($params)
 {
 	/*
-		* Script will attempt to insert a record with all other name/value pairs provided 
+		* Script will attempt to insert a record with all other name/value pairs provided
 		* You will get an error if you provided invalid field names.
 
 		** REQUIRED PARAMS
 		tablename - name of the table to insert the record in
 		name/value pairs to set parameters for the record
-		
+
 		** OTHER PARAMS
 		if a param is sent called 'password' it will automatically be encrypted.
-	*/
-	
+		*/
+
 	// gets array of fields name for 'tablename'
 	$columnsArray = getTableColumns($params['tablename']);
 	$sendParams = array();
@@ -407,7 +448,7 @@ function insertRecord($params)
 			if ($key != 'action' && $key != 'tablename' && $key != 'tags' && $key != 'verbose') {
 
 				if (in_array($key, $columnsArray)) // checks for misspelling of field name
-					$sql .= $key . ",";
+				$sql .= $key . ",";
 				else die("Unknown field name '$key'.");
 			}
 		}
@@ -421,15 +462,15 @@ function insertRecord($params)
 
 		foreach ($params as $key=>$value) {
 			if ($key != 'action' && $key != 'tablename' && $key != 'tags' && $key != 'verbose') {
-				
-					if ($key == 'password') {
-						$sql .= ":".$key.",";
-						$sendParams[$key] = text_crypt($value);
-					}
-					else {
-						$sql .= ":".$key.",";
-						$sendParams[$key] = processText($value);
-					}
+
+				if ($key == 'password') {
+					$sql .= ":".$key.",";
+					$sendParams[$key] = text_crypt($value);
+				}
+				else {
+					$sql .= ":".$key.",";
+					$sendParams[$key] = processText($value);
+				}
 			}
 		}
 
@@ -443,9 +484,9 @@ function insertRecord($params)
 	if ($result = queryDatabase($sql,$sendParams,$insertid)) {
 
 		/*
-		if (isset($params['tags']))
+		 if (isset($params['tags']))
 			associateTags($params['tablename'],$insertid,$params['tags']);
-*/
+			*/
 
 		if($params['tablename'] == 'content')
 		{
@@ -456,7 +497,7 @@ function insertRecord($params)
 			{
 				$urlPath .= generateSlug($t) . '/';
 			}
-			
+
 			if(!isset($params['containerpath'])) {
 				$sendParams = array();
 				$urlPath .= generateSlug($params['migtitle']); //assuming insertinga content record always goes with the title being set. which is true
@@ -465,17 +506,17 @@ function insertRecord($params)
 				queryDatabase($sql,$sendParams);
 			}
 		}
-		
+
 		if (isset($params['verbose']))
 		{
 			if($params['verbose'] == 'true')
-				$sql = "SELECT * FROM `".$params['tablename']."`  WHERE id = '".$insertid."'";
+			$sql = "SELECT * FROM `".$params['tablename']."`  WHERE id = '".$insertid."'";
 			else $sql = "SELECT id FROM `".$params['tablename']."`  WHERE id = '".$insertid."'";
 		}
 		else $sql = "SELECT id FROM `".$params['tablename']."`  WHERE id = '".$insertid."'";
-		
+
 		if ($result = queryDatabase($sql))
-			return $result;
+		return $result;
 		else die("Query Failed: " . $result->errorInfo());
 	}
 	else die("Query Failed: " . $result->errorInfo());
@@ -483,10 +524,11 @@ function insertRecord($params)
 	return $result;
 }
 
+// 
 function insertRecordWithRelatedTag($params)
 {
 	/*
-		* Script will attempt to insert a record with related tags 
+		* Script will attempt to insert a record with related tags
 		* You will get an error if you provided invalid field names.
 
 		** REQUIRED PARAMS
@@ -495,27 +537,20 @@ function insertRecordWithRelatedTag($params)
 		tags - comma-delimited list of related tags -> if found, this will attempt to add tags if they don't already exist in the system, otherwise it will tie tags to the content or media being inserted.
 
 		** OTHER PARAMS
-	*/
-		
+		*/
+
 	if (isset($params['tablename']) && isset($params['tags'])) {
 
 		// get auto increment in 'tablename'
 		$sql = "SELECT Auto_increment FROM information_schema.tables WHERE table_name='".$params['tablename']."' AND table_schema='".DB_NAME."'";
 
-//print_r($sql);
-		
 		$result = queryDatabase($sql);
 		$row = $result->fetch(PDO::FETCH_ASSOC);
 		$autoIncrement = $row['Auto_increment'];
 
-//print_r($row);
-
 		// insert record to 'tablename'
 		if($result = insertRecord($params)) {
 			// relate tags using auto increment
-			
-//print_r($result);
-
 			associateTags($params['tablename'],$autoIncrement,$params['tags']);
 		} else die ("Insert Record Failed: " . $result->errorInfo());
 	}
@@ -524,16 +559,17 @@ function insertRecordWithRelatedTag($params)
 	return $result;
 }
 
+// +
 function deleteTag($params)
 {
 	/*
-		* Script will attempt to delete tag from 'term_taxonomy'
+		* Script will attempt to delete tag from 'term_taxonomy' and then from the tables 'content' and 'media'
 
 		** REQUIRED PARAMS
-		id - primary key of the record to delete
+		id - primary key of the record at table 'term_taxonomy' to delete 
 
 		*/
-	
+
 	if(isset($params['id']))
 	{
 		$sendParams = array();
@@ -542,20 +578,28 @@ function deleteTag($params)
 
 		if($result = queryDatabase($sql,$sendParams))
 		{
-			$sendParams = array();
+			// delete from 'content'
 			$sql = "DELETE FROM `content_terms` WHERE termid = :id ";
-			$sendParams['id'] = $params['id'];
-			if($result = queryDatabase($sql,$sendParams))
+			if($result = queryDatabase($sql,$sendParams)) {
 				sendSuccess();
+			}
+			else die("Query Failed:" . $result->errorInfo());
+			
+			// delete from 'media'
+			$sql = "DELETE FROM `media_terms` WHERE termid = :id ";
+			if($result = queryDatabase($sql,$sendParams)) {
+				sendSuccess();
+			}
 			else die("Query Failed:" . $result->errorInfo());
 		}
 		else die("Query Failed:" . $result->errorInfo());
 	}
 	else die ("No id provided.");
-	
+
 	return $result;
 }
 
+// +
 function deleteRecord($params)
 {
 	/*
@@ -574,24 +618,43 @@ function deleteRecord($params)
 		$sql .= " WHERE id = :id";
 		$sendParams['id'] = $params['id'];
 	}
-	else {
-		die("No tablename or id provided.");
-	}
+	else die("No tablename or id provided.");
 
 	// get the results
-	if ($result = queryDatabase($sql,$sendParams))
-	sendSuccess();
-	else
-	die("Query Failed:" . $result->errorInfo());
+	if ($result = queryDatabase($sql,$sendParams)) {
+		sendSuccess();	
+	}
+	else die("Query Failed:" . $result->errorInfo());
 
 	// return the results
 	return $result;
 }
+function deleteMediaByPath($params) // 
+{
+	if (isset($params['path'])) {
+	
+		$sql = "DELETE FROM `media` ";
+		$sql .= " WHERE path LIKE '%".$params['path']. "%'";
+	} 
+	else {
+		die("No id or tablename Provided.");
+	}	
+	//die($sql);
 
+	// get the results
+	if ($result = queryDatabase($sql)) 
+		sendSuccess();
+	else
+		die("Query Failed:" . mysql_error());
+
+	// return the results
+	return $result;
+}
+// +
 function deleteRecords($params)
 {
 	/*
-		* Script will attempt to delete multiple records by idfield/idvalues (comma-delimited) and other name/value ($key=>$value) parameters.
+		* Script will attempt to delete multiple records by idfield/idvalues (comma-delimited) and other name/value parameters.
 		* You will get an error if you provided invalid field names.
 
 		** REQUIRED PARAMS
@@ -606,18 +669,19 @@ function deleteRecords($params)
 
 	$validParams = array("action","idvalues","tablename","idfield");
 	$sendParams = array();
-	
+
 	// gets array of fields name for 'tablename'
 	$columnsArray = getTableColumns($params['tablename']);
-	
+
 	// make sure we have a content id and tablename
 	if (isset($params['idvalues']) && isset($params['tablename']) && isset($params['idfield'])) {
 		$sql = "DELETE FROM `".$params['tablename']."` ";
 
-		if (in_array($params['idfield'], $columnsArray)) // checks for misspelling of field name
+		if (in_array($params['idfield'], $columnsArray)) { // checks for misspelling of field name
 			$sql .= " WHERE ".$params['idfield']." IN ( ";
+		}
 		else die("Unknown field name '".$params['idfield']."'.");
-		
+
 		$manyvalues = explode(",",$params['idvalues']);
 		foreach($manyvalues as $value)
 		{
@@ -642,10 +706,10 @@ function deleteRecords($params)
 	}
 
 	// get the results
-	if ($result = queryDatabase($sql,$sendParams))
-	sendSuccess();
-	else
-	die("Query Failed:" . $result->errorInfo());
+	if ($result = queryDatabase($sql,$sendParams)) {
+		sendSuccess();
+	}
+	else die("Query Failed:" . $result->errorInfo());
 
 	// return the results
 	return $result;
@@ -686,8 +750,9 @@ function deleteContent($params)
 	}
 	else die("Content id is not set.");
 
-	if ($result = queryDatabase($sql,$sendParams))
-		sendSuccess();
+	if ($result = queryDatabase($sql,$sendParams)) {
+		sendSuccess();	
+	}
 	else die("Query Failed:" . $result->errorInfo());
 
 	// return the results
@@ -695,6 +760,7 @@ function deleteContent($params)
 }
 
 function associateTags($tablename,$id,$tags) {
+
 	// put tags into an array!
 	$arrTags = explode(",",$tags);
 
@@ -711,7 +777,7 @@ function associateTags($tablename,$id,$tags) {
 		$sendParams['name'] = $arrTag['tag'];
 		$result = queryDatabase($sql, $sendParams);
 
-		if ($result->rowCount() > 0) { 
+		if ($result->rowCount() > 0) {
 			// tag does exist in 'terms'
 			$row = $result->fetch(PDO::FETCH_ASSOC);
 
@@ -736,7 +802,7 @@ function associateTags($tablename,$id,$tags) {
 
 				$addTags[$key]['termid'] = $autoIncrement;
 			}
-		} else { 
+		} else {
 			// tag does not exist in 'terms'
 			$sendParams = array();
 			$name = $arrTag['tag'];
@@ -744,13 +810,13 @@ function associateTags($tablename,$id,$tags) {
 			$slug = preg_replace('/[^a-z0-9-]/', '-', $slug);
 			$slug = preg_replace('/-+/', "-", $slug);
 			$slug = strtolower($slug);
-			
+
 			// insert tag into 'terms'
 			$sql = "INSERT INTO `terms` (name,slug) VALUES (:name, :slug)";
 			$sendParams['name'] = $arrTag['tag'];
 			$sendParams['slug'] = $slug;
 			queryDatabase($sql, $sendParams, $insertid); // get insertid
-			
+
 			// get auto increment in 'term_taxonomy'
 			$sql2 = "SELECT Auto_increment FROM information_schema.tables WHERE table_name='term_taxonomy' AND table_schema='".DB_NAME."'";
 			$result2 = queryDatabase($sql2);
@@ -769,10 +835,10 @@ function associateTags($tablename,$id,$tags) {
 	// now lets associate the tags with the record, first delete all associated tags!
 	$tagsTableName = $tablename . "_terms"; 	//'content_terms' or 'media_terms'
 	$idField = $tablename . "id"; 				//'contentid' or 'mediaid'
-/*
+	/*
 	$sql = "DELETE FROM $tagsTableName WHERE $idField = '$id'";
 	queryDatabase($sql);
-*/
+	*/
 	// relate to $tagsTableName using last inserted term_taxonomy id
 	foreach ($addTags as $addTag) {
 		$sql = "INSERT INTO $tagsTableName ($idField,termid) VALUES ('".$id."','".$addTag['termid']."')";
@@ -867,9 +933,9 @@ function duplicateContent($params)
 
 		// valid content id
 		if ($row!=null) {
-				
+
 			$sendParams = array();
-				
+
 			$sql = "INSERT INTO `content` ";
 
 			// put field names into SQL
@@ -955,96 +1021,13 @@ function duplicateRows($tablename,$idField,$idValue,$insertId)
 					$sendParams[$key] = $value;
 				}
 			}
-				
+
 		}
 		$sql = substr($sql,0,strlen($sql)-1);
 		$sql .=")";
 		queryDatabase($sql,$sendParams);
 	}
 }
-
-function createFont($params) // A GENERAL-USE INSERT FUNCTION
-{
-	//./3.0.0.477/bin/mxmlc AkkuratRegular.as -output=fonts/Akkurat/AkkuratRegular.swf
-	if (!isset($params['classname']) || !isset($params['ttf']))
-	{
-		die("font name or file not specified .");
-	}
-	$class = $params['classname'];
-	$ttf = $params['ttf'];
-
-	$fh = fopen($class.'.as', 'w');
-	$stringData = '
-	package
-	{
-		import flash.display.Sprite;	
-		import flash.text.Font;
-		public class ' . $class . ' extends Sprite 
-		{
-			public static var FONTNAME_NORMAL:String = "' . $class . '";		
-			public function '.  $class . ' ()
-			{
-			    Font.registerFont(font);
-			}
-			public function get fontName_Normal():String
-			{
-				return FONTNAME_NORMAL;
-			}
-			[Embed(source="../'. $ttf . '", fontName=" '. $class .'")] public static var font:Class;
-		}
-	}';
-	fwrite($fh, $stringData);
-	fclose($fh);
-	///Compile the file!
-	$command = "../3.0.0.477/bin/mxmlc " . $class . ".as -output=../" . substr($ttf,0,-3) . "swf";
-	$output = shell_exec($command);
-	//remove AS file
-	unlink($class.".as");
-	sendSuccess();
-}
-//$old_error_handler = set_error_handler("userErrorHandler");
-
-
-function renameFile($params)
-{
-	if (isset($params['oldname']) && isset($params['newname']) && isset($params['thumb']) )
-	{
-		$oldName = '../files/' . $params["oldname"];
-		$newName = '../files/' . $params["newname"];
-		rename ($oldName,$newName);
-		if($params['thumb'] == '1')
-		{
-			$oldName = '../files/migThumbs/' . $params["oldname"];
-			$newName = '../files/migThumbs/' . $params["newname"];
-			rename ($oldName,$newName);
-		}
-	}
-	else
-	die("Missing arguments for file rename");
-	sendSuccess();
-}
-
-function ZipFolder($params) // this is what gets called from flash
-{
-	// include the library from http://www.phpconcept.net/pclzip/index.en.php
-	// create a unique file name.. this is prepended with manewc.com-
-	$uniqueFileName = uniqid($params["prefix"]);
-
-	// create the zip
-	$archive = new PclZip('../temporary/'.$uniqueFileName.'.zip');
-	$fileArr = explode(",",$params["files"]);
-	$v_list = $archive->create($fileArr);
-
-	if ($v_list == 0)
-	{
-		die("Error : ".$archive->errorInfo(true));
-	}
-	else
-	{
-		sendSuccess($uniqueFileName.'.zip');
-	}
-}
-
 /*
  function updateRelatedRecords($params)
  {

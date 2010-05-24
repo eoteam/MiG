@@ -1,5 +1,46 @@
 <?php
+function validateUser($params)
+{
+	/*
+		-- VALID PARAMS --
+		-- ALL ARE REQUIRED! --
+		
+		username (str)
+		password (str)
+	
+	*/
+	
+	
+	$validParams = array("action","username","password");
+	
+		if (isset($params['username']) && isset($params['password'])) {
+		
+		$sql = "SELECT * FROM user WHERE username = '".$params['username']."' AND active='1'";
+		$result = queryDatabase($sql);
+		
+		if ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+		
+			if ($params['password'] == text_decrypt($row['password'])) {
+				$sql = "SELECT * FROM user WHERE id = '".$row['id']."'";
+				$result = queryDatabase($sql);
+				return $result;
+			} else {
+				die("Invalid Password!!!");
+			}
+		
+		} else {
+		
+			die("user not found");
+		
+		}
+	
+	} else {
+	
+		die ("Username and Password and both required!");
+	
+	}
 
+}
 function getCustomFields($params) { // general read function
 
 	/*
@@ -107,36 +148,36 @@ function getData ($params) { // general read function
 		$validParams = array("action","tablename","id","orderby","orderdirection");
 
 		$sql = "SELECT `".$params['tablename']."`.*";
-
 		$sql .= " FROM `".$params['tablename']."`";
-
 		$sql .= " WHERE id <> 0 ";
 
 		$sendParams = array(); //params to replace placeholders at queryDatabase()
 
 		if (isset($params['id'])) { // return a specific content id, or a list thereof
 
-			$sql .= " AND id IN (:id)";
-			$sendParams['id'] = $params['id'];
+			$sql .= " AND id IN ( ";
+
+			// $params['id'] can be comma-delimited
+			$manyvalues = explode(",",$params['id']);
+			foreach($manyvalues as $value)
+			{
+				$sql .= " :singlevalue".$value.", ";
+				$sendParams['singlevalue'.$value] = $value;
+			}
+			$sql = substr($sql,0,strlen($sql)-2); //remove last comma and space
+			$sql .= " )";
 		}
 		foreach ($params as $key=>$value) {
-
 			if (!in_array($key,$validParams) &&  $key != 'orderdirection') { // this is a custom parameter
-
 				//			if ($key == 'password')
 				//				$sql .= " AND " . $key . " = '".text_crypt($value)	."'";
 				//			else
 				$sql .= " AND " . $key . " = :".$key;
 				$sendParams[$key] = $value;
-
 			}
-
 		}
-
 	} else {
-
-		die("tablename is required!");
-
+		die("Tablename is required.");
 	}
 
 	// ORDER BY
@@ -192,14 +233,31 @@ function getUsers($params) {
 
 	if (isset($params['userid'])) { // return a specific media id, or a list thereof
 
-		$sql .= " AND userid.id IN (:userid)";
-		$sendParams['userid'] = $params['userid'];
+		$sql .= " AND userid.id IN ( ";
+
+		// $params['userid'] can be comma-delimited
+		$manyvalues = explode(",",$params['userid']);
+		foreach($manyvalues as $value)
+		{
+			$sql .= " :singlevalue".$value.", ";
+			$sendParams['singlevalue'.$value] = $value;
+		}
+		$sql = substr($sql,0,strlen($sql)-2); //remove last comma and space
+		$sql .= " )";
 	}
 
 	if (isset($params['contentid'])) { // return media for a specific content id, or a list thereof
 
-		$sql .= " AND content_users.contentid IN (:contentid)";
-		$sendParams['contentid'] = $params['contentid'];
+		$sql .= " AND content_users.contentid IN ( ";
+		// $params['contentid'] can be comma-delimited
+		$manyvalues = explode(",",$params['contentid']);
+		foreach($manyvalues as $value)
+		{
+			$sql .= " :singlevalue".$value.", ";
+			$sendParams['singlevalue'.$value] = $value;
+		}
+		$sql = substr($sql,0,strlen($sql)-2); //remove last comma and space
+		$sql .= " )";
 	}
 
 	//if (!isset($params['include_unused']) || ($params['include_unused'] == 0) ) { // return media for a specific content id, or a list thereof
@@ -284,15 +342,23 @@ function getContent($params)
 		}
 	}
 
-
 	if (isset($params['parentid'])) {
 
 		// for this we need to get all contentids which have a particular parentid, and then get all their children!
 		$sendParams = array(); //params to replace placeholders at queryDatabase()
 
-		$sql = "SELECT id FROM content WHERE parentid IN (:parentid)";
-		$sendParams['parentid'] = $params['parentid'];
+		$sql = "SELECT id FROM content WHERE parentid IN ( ";
 
+		
+		// $params['parentid'] can be comma-delimited
+		$manyvalues = explode(",",$params['parentid']);
+		foreach($manyvalues as $contentvalue)
+		{
+			$sql .= " :singlevalue".$contentvalue.", ";
+			$sendParams['singlevalue'.$contentvalue] = $contentvalue;
+		}
+		$sql = substr($sql,0,strlen($sql)-2); //remove last comma and space
+		$sql .= " )";
 		$result = queryDatabase($sql,$sendParams);
 
 		$arrContentIDs = array();
@@ -431,17 +497,39 @@ function getContent($params)
 
 	// WHERE CLAUSE INFO
 
-	$sql .= " WHERE content.id <> 0 ";
+	$sql .= " WHERE content.id <> 1 ";
 
 	if (isset($params['contentid'])) { // return a specific content id, or a list thereof
-
 		if (isset($strChildIDs)) {
-			$sql .= " AND content.id IN (:contentid,".$strChildIDs.")";
-			$sendParams['contentid'] = $params['contentid'];
+			$sql .= " AND content.id IN ( ";
+			
+			// $params['contentid'] comma-delimited
+			$manyvalues = explode(",",$params['contentid']);
+			foreach($manyvalues as $contentvalue)
+			{
+				$sql .= " :singlevalue".$contentvalue.", ";
+				$sendParams['singlevalue'.$contentvalue] = $contentvalue;
+			}
+			// $childids comma-delimited			
+			foreach($childids as $childvalue)
+			{
+				$sql .= " :singlevalue".$childvalue.", ";
+				$sendParams['singlevalue'.$childvalue] = $childvalue;
+			}
+
+			$sql = substr($sql,0,strlen($sql)-2); //remove last comma and space
+			$sql .= " )";
 		}
 		else {
-			$sql .= " AND content.id IN (:contentid)";
-			$sendParams['contentid'] = $params['contentid'];
+			$sql .= " AND content.id IN ( ";
+			$manyvalues = explode(",",$params['contentid']);
+			foreach($manyvalues as $value)
+			{
+				$sql .= " :singlevalue".$value.", ";
+				$sendParams['singlevalue'.$value] = $value;
+			}
+			$sql = substr($sql,0,strlen($sql)-2); //remove last comma and space
+			$sql .= " )";
 		}
 	}
 
@@ -598,7 +686,9 @@ function getContent($params)
 	}
 	else
 	$sql .= " ORDER BY content.id ASC";
-
+	
+	//print_r($sendParams);
+	//print_r($sql);
 	// get the results
 	$result = queryDatabase($sql, $sendParams);
 
@@ -888,6 +978,8 @@ function getMedia($params) {
 
 		*/
 	global $mediaVerbosity;
+	
+	$columnsArray = getTableColumns('media'); // gets array of field names for table 'media'
 	$validParams = array("action","mediaid","contentid","include_unused","has_tag","search_caption","search_credits","orderby","name","include_thumb","verbosity");
 
 	$sendParams = array();
@@ -916,7 +1008,8 @@ function getMedia($params) {
 	$sql = substr($sql,0,strlen($sql)-1);
 	$sql .= " FROM media
 			  LEFT JOIN media_terms ON media_terms.mediaid = media.id
-			  LEFT JOIN terms ON terms.id = media_terms.termid
+			  LEFT JOIN term_taxonomy ON term_taxonomy.id = media_terms.termid
+			  LEFT JOIN terms ON term_taxonomy.termid = terms.id
 			  LEFT JOIN content_media AS content_media ON  content_media.mediaid = media.id
 			  LEFT JOIN content ON (content.id = content_media.contentid AND content.deleted='0') ";
 	$sql .= " LEFT JOIN mimetypes ON (media.mimetypeid = mimetypes.id)";
@@ -927,20 +1020,36 @@ function getMedia($params) {
 
 	if (isset($params['mediaid'])) { // return a specific media id, or a list thereof
 
-		$sql .= " AND media.id IN (:mediaid)";
-		$sendParams['mediaid'] = $params['mediaid'];
+		$sql .= " AND media.id IN ( ";
+
+		// $params['mediaid'] comma-delimited
+		$manyvalues = explode(",",$params['mediaid']);
+		foreach($manyvalues as $value)
+		{
+			$sql .= " :singlevalue".$value.", ";
+			$sendParams['singlevalue'.$value] = $value;
+		}
+		$sql = substr($sql,0,strlen($sql)-2); //remove last comma and space
+		$sql .= " )";
 	}
 
 	if (isset($params['contentid'])) { // return media for a specific content id, or a list thereof
 
-		$sql .= " AND content_media.contentid IN (:contentid)";
-		$sendParams['contentid'] = $params['contentid'];
+		$sql .= " AND content_media.contentid IN ( ";
+		
+		// $params['contentid'] comma-delimited
+		$manyvalues = explode(",",$params['contentid']);
+		foreach($manyvalues as $value)
+		{
+			$sql .= " :singlevalue".$value.", ";
+			$sendParams['singlevalue'.$value] = $value;
+		}
+		$sql = substr($sql,0,strlen($sql)-2); //remove last comma and space
+		$sql .= " )";
 	}
 
 	if (!isset($params['include_unused']) || ($params['include_unused'] == 0) ) { // return media for a specific content id, or a list thereof
-
 		$sql .= " AND content_media.id IS NOT NULL";
-
 	}
 
 	if (isset($params['has_tag'])) { // search for tags
@@ -1013,10 +1122,14 @@ function getMedia($params) {
 
 	foreach ($params as $key=>$value)
 	{
-		if (!in_array($key,$validParams))
-		{ // this is a custom parameter
-			$sql .= " AND " . $key . " = :".$key;
-			$sendParams[$key] = $value;
+		if (!in_array($key,$validParams)) // this is a custom parameter
+		{ 
+			if (in_array($key, $columnsArray)) // checks for misspelling of field name
+			{
+				$sql .= " AND " . $key . " = :".$key;
+				$sendParams[$key] = $value;
+			}
+			else die("Unknown field name '$key'.");
 		}
 	}
 
@@ -1039,9 +1152,12 @@ function getMedia($params) {
 	else
 	$sql .= " ORDER BY media.id ASC";
 
+//	print_r($sendParams);
+	//print_r($sql);
+	
 	// get the results
 	$result = queryDatabase($sql, $sendParams);
-
+	
 	// return the results
 	return $result;
 }

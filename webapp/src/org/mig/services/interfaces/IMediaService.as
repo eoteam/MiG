@@ -13,5 +13,9 @@ package org.mig.services.interfaces
 		function deleteDirectory(directory:DirectoryNode):void;
 		
 		function deleteFile(file:FileNode):void;
+		
+		function updateFile(file:FileNode,name:String):void;
+		
+		function updateDirectory(directory:DirectoryNode, name:String):void;
 	}
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
+	horizontalScrollPolicy="off" initialize="init()"
+	paddingRight="10" paddingLeft="10" paddingBottom="10"
+	height="100" width="400"  layout="vertical"
+	title="Downloading Archive" styleName="bodyCopy"
+	xmlns:content="com.mapx.view.content.*" showCloseButton="true"
+	xmlns:controls="com.mapx.view.controls.*">
+<mx:Script>
+	<![CDATA[
+		import mx.managers.PopUpManager;
+		import mx.events.CloseEvent;
+		[Bindable]	public var fileName:String;	
+		[Bindable]	public var prompt:String;	
+		[Bindable] public var uploadProgress:Number;
+		public var files:Array;
+		
+			private function init():void
+			{
+				this.addEventListener(CloseEvent.CLOSE, handleClose);
+			}
+			
+			private function handleClose(evt:CloseEvent):void
+			{
+				PopUpManager.removePopUp(this);
+			}		
+	]]>
+</mx:Script>
+	<mx:Text text="{prompt}" styleName="bodyCopy"/>
+	
+	<mx:HBox width="100%" verticalAlign="middle">
+		<mx:Canvas id="progressBar" width="100%" height="2">
+			<mx:Canvas width="100%" height="1" backgroundColor="#000000" backgroundAlpha="1.0" id="bg"/>
+			<mx:Canvas id="progress" backgroundColor="#ffffff" width="{uploadProgress*bg.width}" height="{bg.height}"/>
+		</mx:Canvas>
+		<mx:Text width="100%" styleName="bodyCopy" id="progressText" height="20"
+			text="{(uploadProgress*100)+'% Complete'}" />		
+							
+	</mx:HBox>	
+</mx:TitleWindow>

@@ -8,16 +8,16 @@ $params = $_POST;
 
 // get the mapping that was passed
 $directory = $params["directory"];
-$root = $params["rootDir"];
+
 
 if($directory){
 	//$newdir = "./../".$mapping."/";
-	$path = "../../".$root."/".$directory."/";
+	$path = $fileDir . $directory . "/";
 }
 
 $success = rm_recursive($path);
 
-$path2 = "../../".$root."/migThumbs/".$directory."/";
+$path2 = $thumbDir . $directory . "/";
 $success2 = rm_recursive($path2);
 
 function rm_recursive($filepath)
