@@ -2,12 +2,16 @@ package org.mig.view.mediators.main
 {
 	import flash.events.Event;
 	
+	import mx.core.DragSource;
 	import mx.events.DragEvent;
 	import mx.events.ListEvent;
 	import mx.events.TreeEvent;
+	import mx.managers.PopUpManager;
+	import mx.managers.PopUpManagerChildList;
 	
 	import org.mig.events.AppEvent;
 	import org.mig.events.ContentEvent;
+	import org.mig.events.ViewEvent;
 	import org.mig.model.ContentModel;
 	import org.mig.model.vo.BaseContentData;
 	import org.mig.model.vo.ContentNode;
@@ -15,6 +19,7 @@ package org.mig.view.mediators.main
 	import org.mig.model.vo.content.ContentData;
 	import org.mig.utils.GlobalUtils;
 	import org.mig.view.components.main.ContentTree;
+	import org.mig.view.components.main.SystemPopup;
 	import org.robotlegs.mvcs.Mediator;
 
 	public class ContentTreeMediator extends Mediator
@@ -28,8 +33,14 @@ package org.mig.view.mediators.main
 		override public function onRegister():void {
 			eventMap.mapListener(eventDispatcher,AppEvent.CONFIG_FILE_LOADED,handleContent);
 			eventMap.mapListener(eventDispatcher,ContentEvent.RETRIEVE_CHILDREN,handleContent);
+			eventMap.mapListener(eventDispatcher,ViewEvent.DELETE_CONTAINERS,deleteItems);
+			eventMap.mapListener(eventDispatcher,ViewEvent.ENABLE_CONTENT_TREE,enableTree);
 			
-			
+			addListeners();
+			addContextMenu();
+
+		}
+		private function addListeners():void {
 			view.addEventListener(DragEvent.DRAG_START,handleDragStart);
 			view.addEventListener(DragEvent.DRAG_DROP,handleDragDrop);
 			view.addEventListener(DragEvent.DRAG_ENTER,handleDragEnter);
@@ -41,16 +52,14 @@ package org.mig.view.mediators.main
 			
 			view.addEventListener(ListEvent.CHANGE,handleItemClick);
 			view.addEventListener(ListEvent.ITEM_DOUBLE_CLICK,handleItemDoubleClick);	
-			
-			addContextMenu();
-
 		}
-		
 		private function handleContent(event:Event):void {
-			if(event is ContentEvent && ContentEvent(event).content is ContainerNode)
+			if(event is ContentEvent && ContentEvent(event).args[0] is ContainerNode)
 				view.dataProvider = contentModel.contentModel;
 		}
-		
+		private function enableTree(event:Event):void {
+			view.enabled = true;
+		}
 		private function handleDragStart(event:DragEvent):void {
 			
 		}
@@ -89,12 +98,12 @@ package org.mig.view.mediators.main
 			switch(event.target.caption)
 			{
 				case "Delete Item(s)":
-					//if(this.selectedItems)
-						//startDelete();
-					break;	
+					deleteItems();
+				break;	
 				case "Rename":
 					break;	
 				case "Duplicate Item(s)":
+					eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.DUPLICATE,view.selectedItems));
 /*					dupCount = 0;
 					dupTracker = 0;
 					parentNodesToUpdate = [];
@@ -119,6 +128,53 @@ package org.mig.view.mediators.main
 					}*/
 					break;			
 			}
+		}
+		private var itemsToDelete:Array;
+		private function deleteItems(event:Event=null):void {
+			itemsToDelete = [];
+			var popup:SystemPopup; 
+			if(view.selectedItems.length > 0 ) {		
+				for each(var node:ContainerNode in view.selectedItems) {
+					if(!node.isFixed && !node.isRoot)
+						itemsToDelete.push(node)
+					else {
+						popup = createPopup("<p>You cant delete this container:</p>" +
+							"<font face='Transit-Bold'>"+node.label + "</font><br /><br />"+
+							"Please try again");
+						popup.includeCancel = popup.includeYes = false;
+						popup.noLabelText = "Continue";
+						return;
+					}
+				}
+				for each(node in itemsToDelete)
+					accumulateChildren(node,itemsToDelete);	
+				var itemsString:String = '';
+				for each(node in itemsToDelete) {
+					itemsString += "<font face='Transit-Bold'>"+node.label+"</font><br/>";
+					//node.addEventListener(ContentNodeEvent.NODE_DELETED,handleNodeDeleted);
+				}	
+				popup = createPopup("<p>You are about to delete the following containers:</p>"+ itemsString+
+					"<br/>Are you sure you want to continue?");
+				popup.addEventListener("yesSelected", handleDeleteSelection);
+				popup.includeCancel = false;
+			}
+		}
+		private function createPopup(message:String):SystemPopup {
+			var popup:SystemPopup = new SystemPopup();
+			popup.message = message;
+			PopUpManager.addPopUp(popup,this.contextView,true,PopUpManagerChildList.POPUP);
+			return popup;
+		}
+		private function accumulateChildren(node:ContainerNode,arr:Array):void {
+			if(node.children) {
+				for each(var item:ContainerNode in node.children) {
+					arr.push(item);
+					accumulateChildren(item,arr);
+				}
+			}
+		}
+		private function handleDeleteSelection(event:Event):void {
+			eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.DELETE,itemsToDelete));
 		}
 	}
 }

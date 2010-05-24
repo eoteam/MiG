@@ -263,13 +263,13 @@ package org.mig.view.mediators.managers.media
 			var popup:RenameView = new RenameView();
 			var item:ContentNode = view.stack.selectedIndex == 0 ? view.listView.selectedItem as ContentNode : view.thumbView.selectedItem as ContentNode;
 			popup.content = item;
-			PopUpManager.addPopUp( popup, view );
+			PopUpManager.addPopUp(popup, view , false , PopUpManagerChildList.POPUP);
 			mediatorMap.createMediator( popup );
 			PopUpManager.centerPopUp(popup);		
 		}
 		private function addFolder(event:Event=null):void {
 			var popup:AddDirectoryView = new AddDirectoryView();
-			PopUpManager.addPopUp( popup, view );
+			PopUpManager.addPopUp(popup, view , false , PopUpManagerChildList.POPUP);
 			mediatorMap.createMediator( popup );
 			PopUpManager.centerPopUp(popup);
 		}

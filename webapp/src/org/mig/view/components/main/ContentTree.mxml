@@ -24,6 +24,11 @@
 			[Bindable]
 			[Embed(source='/migAssets/library.swf#containerGrayUp')]
 			public var containerIcon:Class;
+			
+			override protected function addDragData(ds:Object):void {
+				ds.formats.push("ContentTree");
+				super.addDragData(ds);
+			}
 		]]>
 	</mx:Script>
 	<controls:itemRenderer>

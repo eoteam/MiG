@@ -2,7 +2,10 @@ package org.mig.view.mediators.main
 {
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	
+	import mx.events.DragEvent;
+	import mx.managers.DragManager;
 	import mx.utils.NameUtil;
 	
 	import org.mig.events.AppEvent;
@@ -15,7 +18,7 @@ package org.mig.view.mediators.main
 	public class MainViewMediator extends Mediator
 	{
 		[Inject]
-		public var mainView:MainView;
+		public var view:MainView;
 		
 		[Inject]
 		public var appModel:AppModel;
@@ -24,26 +27,45 @@ package org.mig.view.mediators.main
 			eventMap.mapListener(eventDispatcher,AppEvent.CONFIG_LOADED,handleConfig,AppEvent);
 			eventMap.mapListener(eventDispatcher,AppEvent.CONFIG_FILE_LOADED,handleConfigFile,AppEvent);
 			eventMap.mapListener(eventDispatcher,ViewEvent.RESIZE_MANAGER_TREE,handleManagersTreeResize,ViewEvent);
+			
+			addListeners();
+		}
+		private function addListeners():void {
+			view.trashButton.addEventListener(MouseEvent.CLICK,handleTrashClick);
+			view.trashButton.addEventListener(DragEvent.DRAG_ENTER,handleTrashDragOver);
+			view.trashButton.addEventListener(DragEvent.DRAG_DROP,handleTrashDragDrop);
 		}
 		private function handleConfigFile(event:Event):void {
-			MovieClip(mainView.mainLogo.content).play();
-			mainView.logoFadeOut.play();
-			mainView.bgLogoHolder.visible = true;
-			mainView.bodyContainer.visible = true;	
-			mainView.topLogo.visible = true;
-			mainView.appOptionsCombo.enabled = true;
-			mainView.helpCombo.enabled = true;
-			mainView.appOptionsCombo.dataProvider = [appModel.publishedURL,appModel.pendingURL];
+			MovieClip(view.mainLogo.content).play();
+			view.logoFadeOut.play();
+			view.bgLogoHolder.visible = true;
+			view.bodyContainer.visible = true;	
+			view.topLogo.visible = true;
+			view.appOptionsCombo.enabled = true;
+			view.helpCombo.enabled = true;
+			view.appOptionsCombo.dataProvider = [appModel.publishedURL,appModel.pendingURL];
 		}
 		private function handleConfig(event:Event):void {
 			//data wiring
-			mainView.appOptionsCombo.prompt = appModel.prompt;
-			mainView.appOptionsCombo.selectedIndex = -1;
+			view.appOptionsCombo.prompt = appModel.prompt;
+			view.appOptionsCombo.selectedIndex = -1;
 		}
 		
 		private function handleManagersTreeResize(event:ViewEvent):void {
-			mainView.openManagers.heightTo = event.args[0] as Number;
-			mainView.openManagers.play();
+			view.openManagers.heightTo = event.args[0] as Number;
+			view.openManagers.play();
+		}
+		private function handleTrashClick(event:Event):void {
+			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.DELETE_CONTAINERS));
+		}
+		private function handleTrashDragOver(event:DragEvent):void {
+			if(event.dragSource.hasFormat("ContentTree")) {
+				DragManager.acceptDragDrop(view.trashButton);
+				DragManager.showFeedback(DragManager.COPY);
+			}
+		}
+		private function handleTrashDragDrop(event:DragEvent):void {
+			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.DELETE_CONTAINERS));
 		}
 	}
 }

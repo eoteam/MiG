@@ -142,8 +142,8 @@ function updateRecord($params)
 	associateTags($params['tablename'],$params['id'],$params['tags']);
 */
 		
-	if ($params['tablename'] == "content")
-	updateContainerPaths(null);
+	//if ($params['tablename'] == "content")
+	//updateContainerPaths(null);
 
 	if (isset($params['verbosity']))
 	{
@@ -405,9 +405,11 @@ function insertTag($params)
 function updateMediaByPath($params)
 {
 	if (isset($params['oldpath']) && isset($params['newpath'])) {
-	
+		$sendParams = array();
 		$sql = "UPDATE `media` ";
-		$sql .= " WHERE `path` = REPLACE(`path`," . $params['oldpath'] . "," . $params['newpath'] . ")";
+		$sendParams['oldpath'] = $params['oldpath'];
+		$sendParams['newpath'] = $params['newpath'];
+		$sql .= " SET `path` = REPLACE(`path`, :oldpath, :newpath)";
 	} 
 	else {
 		die("missing path parameters");
@@ -415,7 +417,7 @@ function updateMediaByPath($params)
 	//die($sql);
 
 	// get the results
-	if ($result = queryDatabase($sql)) 
+	if ($result = queryDatabase($sql,$sendParams)) 
 		sendSuccess();
 	else
 		die("Query Failed:" . mysql_error());

@@ -3,6 +3,8 @@
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import mx.managers.PopUpManager;
+	
 	import org.mig.events.NotificationEvent;
 	import org.mig.events.ViewEvent;
 	import org.mig.model.vo.StatusResult;
@@ -54,6 +56,7 @@
 			MediaData(view.content.data).name = view.input.text;
 			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_MEDIA));
 			eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"File renamed successfully"));
+			PopUpManager.removePopUp(view);
 		}				
 		private function handleDiskDirectoryRename(data:Object):void {
 			var result:StatusResult = data.result as StatusResult;
@@ -67,7 +70,8 @@
 			DirectoryNode(view.content).directory = "/"+view.input.text+"/";
 			DirectoryNode(view.content).baseLabel = view.input.text;
 			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_MEDIA));
-			eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Directory renamed successfully"));
+			eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Directory renamed successfully")); 
+			PopUpManager.removePopUp(view);
 		}	
 	
 	}

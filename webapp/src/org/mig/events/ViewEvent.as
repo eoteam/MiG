@@ -6,10 +6,16 @@ package org.mig.events
 	{
 		public static const RESIZE_MANAGER_TREE:String = "resizeManagerTree";
 		public static const MANAGER_SELECTED:String = "managerSelected";
+		
 		public static const REFRESH_MEDIA:String = "refreshMedia";
+		public static const REFRESH_CONTENT:String = "refreshContent";
 		
 		public static const FILE_DOWNLOAD_PROGRESS:String = "fileDownloadProgress";
 		public static const FILE_DOWNLOAD_CANCEL:String = "fileDownloadCancel";
+		
+		public static const DELETE_CONTAINERS:String = "deleteContainers";
+		
+		public static const ENABLE_CONTENT_TREE:String = "enableContentTree";
 		
 		public var args:Array;
 		

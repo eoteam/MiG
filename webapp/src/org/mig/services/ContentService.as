@@ -81,11 +81,29 @@ package org.mig.services
 		public function retrieveVerbose(content:ContentNode):void {
 			if(content is ContainerNode) {
 				var params:Object = new Object();
-				params.action = "getContent";
+				params.action = ValidFunctions.GET_CONTENT;
 				params.contentid = content.data.id;
 				params.verbosity = 1;
 				this.createService(params,ResponseType.DATA,ContentData);
 			}
+		}
+		public function deleteContainer(content:ContainerNode):void {
+			var params:Object = new Object();
+			params.action = content.config.@deleteContent.toString();
+			params.tablename = "content";
+			params.id = content.data.id;
+			if(params.action == ValidFunctions.UPDATE_RECORD) {
+				params.deleted = 1;
+			}
+			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
+			service.token.content = content;
+		}
+		public function duplicateContainer(content:ContainerNode):void {
+	
+			var params:Object = new Object();
+			params.action = ValidFunctions.DUPLICATE_CONTENT;
+			params.id = content.data.id;
+			this.createService(params,ResponseType.DATA,ContentData).token.content = content;
 		}
 	}
 }

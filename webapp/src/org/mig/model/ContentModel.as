@@ -17,6 +17,12 @@ package org.mig.model
 		public var currentDirectory:DirectoryNode;
 		public var mimetypes:Array;
 		
+		public var containersToLoad:Number = 0;
+		public var containersLoaded:Number = 0;
+		
+		public var mediaToLoad:Number;
+		public var mediaLoaded:Number;
+		
 		//public var mediaModel:MediaCategoryNode;
 		
 		public function getMimetypeString(extension:String):String {

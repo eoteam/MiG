@@ -21,11 +21,14 @@ package org.mig.controller.configuration
 	{
 		override public function execute():void
 		{
-			//top level
-			//commandMap.mapEvent(AppEvent.STARTUP,StartupCommand,AppEvent);
+			//after login, start sequence FSM
 			commandMap.mapEvent(AppEvent.LOGGEDIN,StartupCommand,AppEvent);
+			
+			//content commands
 			commandMap.mapEvent(ContentEvent.RETRIEVE_CHILDREN,ContentCommand,ContentEvent);
 			commandMap.mapEvent(ContentEvent.RETRIEVE_VERBOSE,ContentCommand,ContentEvent);	
+			commandMap.mapEvent(ContentEvent.DELETE,ContentCommand,ContentEvent);
+			
 			//media commands
 			commandMap.mapEvent(MediaEvent.RETRIEVE_CHILDREN,MediaCommand,MediaEvent);
 			commandMap.mapEvent(MediaEvent.ADD_DIRECTORY,MediaCommand,MediaEvent);
@@ -35,6 +38,7 @@ package org.mig.controller.configuration
 			//upload
 			commandMap.mapEvent(UploadEvent.UPLOAD,UploadCommand,UploadEvent);
 			commandMap.mapEvent(UploadEvent.CANCEL,UploadCommand,UploadEvent);
+			
 			//errors
 			commandMap.mapEvent(AlertEvent.SHOW_ALERT, ShowAlertCommand, AlertEvent);
 			

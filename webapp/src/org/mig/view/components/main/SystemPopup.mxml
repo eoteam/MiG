@@ -64,7 +64,7 @@
 	
 	<mx:HBox width="465"  verticalCenter="0" horizontalCenter="0">
 		<mx:SWFLoader source="{alertIcon}" width="86" />
-		<mx:VBox width="100%"  id="textBox" paddingLeft="5" height="{messageText.height}">
+		<mx:VBox width="100%"  id="textBox" paddingLeft="5" height="{messageText.height+80}">
 			<mx:Text maxHeight="450" id="messageText" condenseWhite="false" htmlText="{message}" width="100%" />
 		</mx:VBox>
 	</mx:HBox>

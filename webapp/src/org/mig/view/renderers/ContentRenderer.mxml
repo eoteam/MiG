@@ -45,8 +45,7 @@
 				addChildAt(overBg, 1)
 				if(data) {
 					if(data.children.length == 0 && this.disclosureIcon != null)
-						this.disclosureIcon.visible = false;
-					this.toolTip = this.data.label;
+						this.disclosureIcon.visible = false;	
 				}
 				_isCreated = true;
 				this.label.truncateToFit('...');
@@ -111,7 +110,6 @@
 			private function checkData():void {
 				if(data!= null)
 				{
-					this.toolTip = ContainerNode(data).label;
 					if(ContainerNode(data).data != null)
 					{
 						if(ContentData(ContainerNode(data).data).statusid == ContentStatus.DRAFT)

@@ -1,10 +1,16 @@
 package org.mig.controller
 {
+	import flash.text.engine.ContentElement;
+	
 	import mx.rpc.events.ResultEvent;
 	import mx.utils.ObjectUtil;
 	
 	import org.mig.events.ContentEvent;
+	import org.mig.events.NotificationEvent;
+	import org.mig.events.ViewEvent;
+	import org.mig.model.ContentModel;
 	import org.mig.model.vo.ContentNode;
+	import org.mig.model.vo.StatusResult;
 	import org.mig.model.vo.content.ContainerNode;
 	import org.mig.model.vo.content.ContentData;
 	import org.mig.model.vo.content.SubContainerNode;
@@ -21,23 +27,58 @@ package org.mig.controller
 		[Inject]
 		public var event:ContentEvent;
 		
+		[Inject]
+		public var contentModel:ContentModel;
+		
+		private var deleteCount:int;
+		private var deleteTracker:int;
+		
 		override public function execute():void {
 			switch(event.type) {
 				case ContentEvent.RETRIEVE_CHILDREN:
-					service.retrieveChildren(event.content);
+					service.retrieveChildren(event.args[0] as ContainerNode);
 					service.addHandlers(processChildren);
+					contentModel.containersToLoad++;	
 				break;
 				
 				case ContentEvent.RETRIEVE_VERBOSE:
-					service.retrieveVerbose(event.content);
+					service.retrieveVerbose(event.args[0] as ContainerNode);
 					service.addHandlers(handleLoadComplete);
+				break;
+				case ContentEvent.DELETE:
+					deleteTracker = 0;
+					deleteCount = event.args[0].length;
+					for each(var node:ContainerNode in event.args[0]) {
+						service.deleteContainer(node);
+						service.addHandlers(handleContainerDelete);
+					}
+				break; 
+				case ContentEvent.DUPLICATE:
+					for each(var item:ContainerNode in event.args[0]) {
+					if(!item.isRoot && !item.isFixed) {
+						service.duplicateContainer(item);
+					}	
+				}
 				break;
 			}
 		}
 		private function handleLoadComplete(data:Object):void {
-			event.content.data = data.result[0]; 
-			ContentData(event.content.data).loaded = true;
-			eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.SELECT,event.content));
+			ContainerNode(event.args[0]).data = data.result[0]; 
+			ContentData(ContainerNode(event.args[0]).data).loaded = true;
+			eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.SELECT,event.args[0]));
+		}
+		private function handleContainerDelete(data:Object):void {
+			var result:StatusResult = data.result as StatusResult;
+			var node:ContainerNode = data.token.content as ContainerNode;
+			if(result.success) {
+				var index:int = node.parentNode.children.getItemIndex(node);
+				node.parentNode.children.removeItemAt(index);
+				eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Container delete successfully"));
+				deleteTracker++;
+				if(deleteTracker == deleteCount) {
+					eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_CONTENT));
+				}
+			}
 		}
 		private function processChildren(data:Object):void {
 			var results:Array = data.result as Array;
@@ -47,9 +88,14 @@ package org.mig.controller
 			var item:ContentData;
 			var resultLabel:String; 
 			var content:ContentNode = data.token.content;
-			if(results.length > 0) {
-				
-				if(content is ContainerNode) { 
+						
+			if(content is ContainerNode) {	
+/*				contentModel.containersLoaded++;
+				trace("Loading Content: " ,contentModel.containersLoaded,contentModel.containersToLoad);
+				if(contentModel.containersLoaded == contentModel.containersToLoad) {
+					eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.ENABLE_CONTENT_TREE));
+				}*/
+				if(results.length > 0) {
 					ContainerNode(content).isBranch = true;
 					for each (item in results) {
 						resultLabel = item[content.config.@labelField];
@@ -77,31 +123,31 @@ package org.mig.controller
 										break;
 									}
 								}
-							}	
-							
+							}				
 							if(containerConfig.attribute("nesting").length() > 0 && containerConfig.@nesting == "1") {
 								containerConfig = ObjectUtil.copy(containerConfig) as XML; //replicate the same config
 								nesting = true;
 							}
 						}
 						node = new ContainerNode(resultLabel, containerConfig, item,content,content.privileges,false,fixed,nesting);
-						//node.addEventListener(ContentNodeEvent.READY,handleNodeReady);
 						content.children.addItem(node);
 						eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.RETRIEVE_CHILDREN,node));
 					}
 				}
-				else if(content is SubContainerNode) {
-					ContentData(content.data).loaded = true;
-					for each (item in results) {
-						resultLabel = item[content.config.@labelField];				
-/*						resultLabel = resultLabel.replace(/<.*?>/g, "");
-						resultLabel = resultLabel.replace(/]]>/g, "");*/
-						node = new ContainerNode(resultLabel,content.config.object[0],item,content,content.privileges,false,false,false);
-						//node.addEventListener(ContentNodeEvent.READY,handleNodeReady);
-						content.children.addItem(node);
-					}
+			}
+			else if(content is SubContainerNode) {
+				ContentData(content.data).loaded = true;
+				for each (item in results) {
+					resultLabel = item[content.config.@labelField];				
+					/*resultLabel = resultLabel.replace(/<.*?>/g, "");
+					resultLabel = resultLabel.replace(/]]>/g, "");*/
+					node = new ContainerNode(resultLabel,content.config.object[0],item,content,content.privileges,false,false,false);
+					//node.addEventListener(ContentNodeEvent.READY,handleNodeReady);
+					content.children.addItem(node);
 				}
-			}			
+			}
+				
+					
 		}
 	}
 }

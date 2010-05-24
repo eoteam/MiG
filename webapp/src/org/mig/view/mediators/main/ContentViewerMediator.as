@@ -28,7 +28,7 @@ package org.mig.view.mediators.main
 		
 		private function handleNodeSelected(event:ContentEvent):void
 		{
-			var node:ContainerNode = event.content as ContainerNode
+			var node:ContainerNode = event.args[0] as ContainerNode;
 			//if(!BaseContentData(selectedNode.data).modified)
 			view.mediaManager.visible = false;
 			if(node != content && node != null)

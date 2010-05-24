@@ -3,9 +3,9 @@
 	public final class Constants
 	{
 		
-    	public static const DB_EXECUTE:String = "http://localhost/MiG/robotlegs/services/php/execute.php";
-    	public static const FILE_EXECUTE:String = "http://dev.themig.org/php/execute.php";
-		public static const UPLOAD_FILE:String = "http://dev.themig.org/php/upload.php";
+    	public static const DB_EXECUTE:String = "http://localhost/MiG/robotlegs/webapp/bin-debug/php/execute.php";
+    	public static const FILE_EXECUTE:String = "http://localhost/MiG/robotlegs/webapp/bin-debug/php/execute.php";
+		public static const UPLOAD_FILE:String = "http://localhost/MiG/robotlegs/webapp/bin-debug/php/upload.php";
 			
 /*    	
 		public static const REMOVE_FILE:String = MEDIA_URL+"filesystem/removeFile.php";

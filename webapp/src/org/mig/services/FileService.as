@@ -9,6 +9,7 @@ package org.mig.services
 	import flash.net.FileReference;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
+	import flash.net.URLVariables;
 	
 	import org.mig.controller.Constants;
 	import org.mig.events.UploadEvent;
@@ -113,7 +114,7 @@ package org.mig.services
 			}
 			items = items.substr(0,items.length-1);
 
-			var params:Object = new Object();
+			var params:URLVariables = new URLVariables();
 			params.action = ValidFunctions.DOWNLOAD_ZIP;
 			params.files = items;
 			var request:URLRequest = new URLRequest();
