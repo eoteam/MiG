@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	doubleClickEnabled="false"
+	implements="org.mig.view.interfaces.IContentView, org.mig.view.interfaces.IContentListRenderer"	
+	backgroundColor="0x111111" horizontalGap="0"  creationComplete="handleCreationComplete()"	
+	paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5"
+	verticalScrollPolicy="off" horizontalScrollPolicy="off" 
+	click="dispatchSelectedEvent()">
+	<mx:Script>
+		<![CDATA[
+			import org.mig.view.interfaces.IContentView;
+		]]>
+	</mx:Script>
+	
+	<mx:Script source="FileResourceViewScript.as" />
+	
+	<mx:Canvas id="dragHolder" height="150"  width="150" scaleX="{_scalePercent}" scaleY="{_scalePercent}" verticalScrollPolicy="off" horizontalScrollPolicy="off" >
+		<mx:Image doubleClickEnabled="false"  source="{imageSource}"  id="imageHolder"  scaleContent="false" width="100%" height="100%" />
+		<mx:Canvas  visible="false" id="dragCanvas"  width="100%" height="100%">
+			<mx:Image horizontalCenter="0" verticalCenter="0" width="100%" height="100%" id="fileImage"  source="{docIcon}" brokenImageSkin="com.map.assets.NoImageIcon" />
+			<mx:Label mouseEnabled="false"  width="{150*325/400}" styleName="boldCopy" color="0xffffff" text="{fileExtension}" textAlign="left" fontSize="40"  verticalCenter="0" />
+		</mx:Canvas>		
+	</mx:Canvas>	
+	<mx:HBox id="imageTitle" horizontalScrollPolicy="off">
+		<mx:Label width="{_scalePercent*102}"  buttonMode="true" mouseChildren="false" useHandCursor="true" 
+			click="dispatchInfoOpenedEvent()" truncateToFit="true" styleName="bodyCopy" id="imageName"
+			toolTip="{String(_data.name.toString())}" text="{String(_data.name.toString())}"  />
+		<mx:SWFLoader  click="dispatchInfoOpenedEvent()" source="@Embed(source='/migAssets/flex_skins.swf#Tree_folderOpenIcon')" width="20"  />
+	</mx:HBox>
+	<mx:Binding source="imageHolder.contentWidth" destination="imageTitle.width" />
+</mx:VBox>
+	

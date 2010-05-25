@@ -34,9 +34,11 @@ package org.mig.controller.startup
 			appModel.htmlRendering		= contentConfig.@renderer == "html" ? true:false;
 			appModel.textFormat			= contentConfig.@textformat;
 
-			trace("Startup: Config File Loaded");	
-			eventDispatcher.dispatchEvent(new StateEvent(StateEvent.ACTION, AppStartupStateConstants.LOAD_CONFIG_COMPLETE));
+			trace("Startup: Config File Loaded");
+			appModel.startupCount = 1;
+			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP_PROGRESS,"Configuration loaded ..."));
 			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.CONFIG_FILE_LOADED));
+			eventDispatcher.dispatchEvent(new StateEvent(StateEvent.ACTION, AppStartupStateConstants.LOAD_CONFIG_COMPLETE));
 		}
 	}
 }

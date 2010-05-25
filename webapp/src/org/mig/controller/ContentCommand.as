@@ -57,6 +57,7 @@ package org.mig.controller
 					for each(var item:ContainerNode in event.args[0]) {
 					if(!item.isRoot && !item.isFixed) {
 						service.duplicateContainer(item);
+						service.addHandlers(handleDuplicate);
 					}	
 				}
 				break;
@@ -80,6 +81,38 @@ package org.mig.controller
 				}
 			}
 		}
+		private function handleDuplicate(data:Object):void {
+			var node:ContainerNode = data.token.content as ContainerNode;
+			var contentData:ContentData = data.result[0] as ContentData;
+			
+			var newNode:ContainerNode = new ContainerNode(contentData.migtitle,node.config,contentData,node.parentNode,node.privileges,false,false,node.isNesting);
+			node.parentNode.children.addItemAt(newNode,0);
+			
+			eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Container duplicated successfully"));
+			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_CONTENT));
+			
+			/*			dupTracker++;
+			if(dupTracker == dupCount)
+			{
+				for each(var p:ContentNode in parentNodesToUpdate)
+				{
+					p.updateChildrenOrder(Application.application.user.id);
+				}
+				var rend:ContentTreeRenderer;
+				var item:Object;
+				for each(item in prevSelected)
+				{
+					if(this.selectedItems.indexOf(item) == -1)
+					{	
+						rend = ContentTreeRenderer(this.itemToItemRenderer(item));
+						if(rend)
+							rend.setColorHalfOff();
+					}
+				}
+				prevSelected = [];
+			}*/
+		}
+
 		private function processChildren(data:Object):void {
 			var results:Array = data.result as Array;
 			var nesting:Boolean;

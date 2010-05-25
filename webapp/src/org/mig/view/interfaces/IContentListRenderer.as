@@ -21,6 +21,5 @@ package org.mig.view.interfaces
 		
 		function get selectionColor():uint;
 
-		function get dataVO():BaseContentData;
 	}
 }

@@ -1,9 +1,9 @@
 <?php
 // Database
 
-define("DB_SERVER", "74.208.11.77");
-define("DB_USER", "mapadmin");
-define("DB_PASS", "mikoyan");
-define("DB_NAME", "themigorg_dev");
+define("DB_SERVER", "localhost");
+define("DB_USER", "root");
+define("DB_PASS", "root");
+define("DB_NAME", "mig");
 
 ?>

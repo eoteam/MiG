@@ -62,8 +62,8 @@ package org.mig.controller.startup
 		public static const LOAD_TEMPLATES_COMPLETE:String  	= "action/start/templates/complete";
 		public static const LOAD_TEMPLATES_FAILED:String    	= "action/start/templates/failed";
 		
-		public static const DISPLAYING_APPLICATION:String		="state/startingComplete";
-		public static const DISPLAY_APPLICATION:String			="event/startComplete";
+		public static const STARTINGUP_COMPLETE:String			= "state/startingComplete";
+		public static const STARTUP_COMPLETE:String				= "event/startComplete";
 		
 		public static const FAILING:String  	  		  	    = "state/start/failing";
 		public static const FAIL:String  	  		  	        = "event/start/fail";
@@ -114,13 +114,13 @@ package org.mig.controller.startup
 				</state>
 		
 				<state name={LOADING_TEMPLATES} changed={LOAD_TEMPLATES}>
-				   <transition action={LOAD_TEMPLATES_COMPLETE} target={DISPLAYING_APPLICATION}/>			       
+				   <transition action={LOAD_TEMPLATES_COMPLETE} target={STARTINGUP_COMPLETE}/>			       
 				   <transition action={LOAD_TEMPLATES_FAILED} target={FAILING}/>
 				</state>		
 		
 								
 				<!-- READY TO ACCEPT BROWSER OR USER NAVIGATION -->
-				<state name={DISPLAYING_APPLICATION} changed={DISPLAY_APPLICATION}/>
+				<state name={STARTINGUP_COMPLETE} changed={STARTUP_COMPLETE}/>
 				
 				<!-- REPORT FAILURE FROM ANY STATE -->
 				<state name={FAILING} changed={FAIL}/>

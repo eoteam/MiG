@@ -9,9 +9,12 @@ package org.mig.view.mediators.managers.media
 	import flash.events.MouseEvent;
 	
 	import mx.collections.HierarchicalData;
+	import mx.controls.AdvancedDataGrid;
 	import mx.events.CloseEvent;
+	import mx.events.DragEvent;
 	import mx.events.FlexEvent;
 	import mx.events.ListEvent;
+	import mx.managers.DragManager;
 	import mx.managers.PopUpManager;
 	import mx.managers.PopUpManagerChildList;
 	
@@ -80,7 +83,12 @@ package org.mig.view.mediators.managers.media
 			view.listView.addEventListener(FlexEvent.UPDATE_COMPLETE,handleListUpdate);
 			view.listView.addEventListener(ListEvent.ITEM_DOUBLE_CLICK,handleListItemDoubleClick);
 			view.listView.addEventListener(ListEvent.ITEM_CLICK,handleListItem);
-			view.listView.addEventListener(KeyboardEvent.KEY_DOWN,handleListItem);
+			view.listView.addEventListener(KeyboardEvent.KEY_DOWN,handleListItem);			
+			view.listView.addEventListener(DragEvent.DRAG_OVER,handleListDragOver);
+			view.listView.addEventListener(DragEvent.DRAG_DROP,handleListDragDrop);
+			view.listView.addEventListener(DragEvent.DRAG_ENTER, handleListDragEnter);
+			view.listView.addEventListener(DragEvent.DRAG_EXIT,handleListDragExit);
+			view.listView.addEventListener(DragEvent.DRAG_COMPLETE,handleListDragComplete);
 			
 			view.addEventListener('thumbViewCreated',handleThumbView);
 		}
@@ -260,12 +268,15 @@ package org.mig.view.mediators.managers.media
 			eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.DELETE,items));
 		}
 		private function renameItem():void {
-			var popup:RenameView = new RenameView();
+			
 			var item:ContentNode = view.stack.selectedIndex == 0 ? view.listView.selectedItem as ContentNode : view.thumbView.selectedItem as ContentNode;
-			popup.content = item;
-			PopUpManager.addPopUp(popup, view , false , PopUpManagerChildList.POPUP);
-			mediatorMap.createMediator( popup );
-			PopUpManager.centerPopUp(popup);		
+			if(item) {
+				var popup:RenameView = new RenameView();
+				popup.content = item;
+				PopUpManager.addPopUp(popup, view , false , PopUpManagerChildList.POPUP);
+				mediatorMap.createMediator( popup );
+				PopUpManager.centerPopUp(popup);		
+			}
 		}
 		private function addFolder(event:Event=null):void {
 			var popup:AddDirectoryView = new AddDirectoryView();
@@ -273,6 +284,70 @@ package org.mig.view.mediators.managers.media
 			mediatorMap.createMediator( popup );
 			PopUpManager.centerPopUp(popup);
 		}
+		private function handleListDragDrop(event:DragEvent):void {
+			
+			// cancel default
+			event.preventDefault();
+                
+			// get the drag format (its always items in our case
+			// when you are dragging FROM a Tree its treeItems
+			var draggedFormat:String = event.dragSource.formats[0];
+                
+			// Get the dragged items
+			var draggedItems:Array = event.dragSource.dataForFormat(draggedFormat) as Array;
+                
+			// Calculate the index in the Tree where the items were dropped 
+			var dropIndex:int = view.listView.calculateDropIndex(event);
+                
+			// Set the selected index of the Tree to the dropIndex
+			view.listView.selectedIndex = dropIndex;
+                
+			// Check if we are dropping on a node
+                
+			// Add each dragged item to the Tree by apppending it
+			// as a child of the selected node in the Tree.
+			for each( var node:ContentNode in view.listView.selectedItems ) {
+				// create item
+				// use appendChild to add the item. 
+				// (if selected item is an item then append to parent)
+				if( view.listView.selectedItem is FileNode) {
+					FileNode(view.listView.selectedItem).parentNode.children.addItem(node);
+					node.parentNode = FileNode(view.listView.selectedItem).parentNode;
+				}
+				else {
+					DirectoryNode(view.listView.selectedItem).children.addItem(node);  
+					node.parentNode =  DirectoryNode(view.listView.selectedItem);             
+            	}
+			}
+			view.listView.invalidateList();
+		}
+            
+		private function handleListDragEnter(event:DragEvent):void {
+			// Cancel default behaviour
+			event.preventDefault();
+			// Tell the DragManager that the Tree will accent the DragDrop
+			DragManager.acceptDragDrop(AdvancedDataGrid(event.target));
+			// hide the "drop line" that is shown in Tree control
+			// when dropping in a Tree
+			view.listView.showDropFeedback(event);
+		}    
+		private function handleListDragOver(event:DragEvent):void {
+			// Show the default "drop line" in the Tree control
+			view.listView.showDropFeedback(event);
+			// Cancel default behavious
+			event.preventDefault();
+		}    
+		private function handleListDragExit(event:DragEvent):void {
+			// hide the "drop line" that is shown in Tree control
+			// when dropping in a Tree
+			view.listView.hideDropFeedback(event);
+		}
+		private function handleListDragComplete(event:DragEvent):void {
+			// hide the "drop line" that is shown in Tree control
+			// when dropping in a Tree
+			view.listView.hideDropFeedback(event);
+		}
+	
 		//set current node
 		private function set selectedContent(value:DirectoryNode):void {
 			if(_selectedNode != value) {

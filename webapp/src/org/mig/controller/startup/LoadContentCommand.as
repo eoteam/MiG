@@ -1,5 +1,6 @@
 package org.mig.controller.startup
 {
+	import org.mig.events.AppEvent;
 	import org.mig.events.ContentEvent;
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
@@ -22,6 +23,8 @@ package org.mig.controller.startup
 			eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.RETRIEVE_CHILDREN,contentModel.contentModel));
 			
 			trace("Startup: Content Model Complete");
+			appModel.startupCount = 2;
+			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP_PROGRESS,"Content Model initiated"));
 			eventDispatcher.dispatchEvent(new StateEvent(StateEvent.ACTION, AppStartupStateConstants.LOAD_CONTENT_COMPLETE));
 		}
 	}

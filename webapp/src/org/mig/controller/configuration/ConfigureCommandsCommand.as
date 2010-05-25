@@ -6,7 +6,7 @@ package org.mig.controller.configuration
 	import org.mig.controller.ContentCommand;
 	import org.mig.controller.MediaCommand;
 	import org.mig.controller.ShowAlertCommand;
-	import org.mig.controller.startup.StartupCommand;
+	import org.mig.controller.startup.StartupFSMCommand;
 	import org.mig.controller.UploadCommand;
 	import org.mig.controller.configuration.BootstrapApplicationCommand;
 	import org.mig.events.AlertEvent;
@@ -22,12 +22,13 @@ package org.mig.controller.configuration
 		override public function execute():void
 		{
 			//after login, start sequence FSM
-			commandMap.mapEvent(AppEvent.LOGGEDIN,StartupCommand,AppEvent);
+			commandMap.mapEvent(AppEvent.LOGGEDIN,StartupFSMCommand,AppEvent);
 			
 			//content commands
 			commandMap.mapEvent(ContentEvent.RETRIEVE_CHILDREN,ContentCommand,ContentEvent);
 			commandMap.mapEvent(ContentEvent.RETRIEVE_VERBOSE,ContentCommand,ContentEvent);	
 			commandMap.mapEvent(ContentEvent.DELETE,ContentCommand,ContentEvent);
+			commandMap.mapEvent(ContentEvent.DUPLICATE,ContentCommand,ContentEvent);
 			
 			//media commands
 			commandMap.mapEvent(MediaEvent.RETRIEVE_CHILDREN,MediaCommand,MediaEvent);

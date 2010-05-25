@@ -14,6 +14,7 @@ package org.mig.services
 		public static const GET_CONTENT_TAGS:String 				= "getContentTags";
 		public static const GET_CONTENT_CONTENT:String 				= "getContentContent";
 		public static const GET_MEDIA:String 						= "getMedia";
+		public static const GET_TEMPLATES:String 					= "getTemplates";
 		public static const CONTENT_SEARCH:String 					= "contentSearch";
 		public static const SEND_USER_INFO:String 					= "sendUserInformation";
 		public static const MIG_SEARCH:String 						= "migSearch";

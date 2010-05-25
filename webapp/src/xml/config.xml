@@ -2,8 +2,8 @@
 <configDocument>
 
 	<controller id="mediaController" 
-	mediaURL="http://dev.themig.org/files/"
-	thumbURL="http://dev.themig.org/files/migThumbs/"
+	mediaURL="http://localhost:80/MiG/robotlegs/webapp/bin-debug/files"
+	thumbURL="http://localhost:80/MiG/robotlegs/webapp/bin-debug/files/migThumbs"
 	fileDir="files" 
 	thumbDir="files/migThumbs">
 			<child 
@@ -60,7 +60,8 @@
 					is_fixed="0" tablename="content" updateContent="updateRecord" />
 			</child>
 			<child  name="Projects"
-				contentView="org.mig.view.components.content.ContentView" generalEditorView="org.mig.view.components.content.ContentGeneralEditor"
+				contentView="org.mig.view.components.content.ContentView" 
+				generalEditorView="org.mig.view.components.content.ContentGeneralEditor"
 				 labelField="migtitle"
 				updateContent="updateRecord" insertContent="insertRecord" action="getContent"
 				tablename="content" id="3" is_fixed="1" templateid="1">

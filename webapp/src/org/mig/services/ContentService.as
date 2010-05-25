@@ -21,62 +21,10 @@ package org.mig.services
 		}
 		public function retrieveChildren(content:ContentNode):void {
 			//this is fine here, params are a map object. Im guessing REST will form a URL, but awareness of these vars is tricky
-			var params:Object = new Object();
-			if(content is ContainerNode) {
-				var execute:Boolean = false;			
-				if(ContainerNode(content).isRoot) { //Containers
-					if(content.privileges ==  UserPrivileges.MiGAdmin)
-						params.parentid = "1,2	";
-					else
-						params.parentid = 1;
-				}
-				else {//Anything else, even fixed ones, will onyl get their children
-					params.parentid = ContentData(content.data).id.toString();
-					if(ContainerNode(content).isNesting || content.config.children().length() > 0)
-						execute = true; //good for content leaves AND relational nodes in tabs and trays
-					else {
-						//this.dispatchEvent(new ContentNodeEvent(ContentNodeEvent.READY,this,true));
-						return;
-					}
-				}		
-				params.action = content.config.@action.toString();			
-				params.deleted = 0;
-				if(content.config.attribute("orderby").length() > 0) 
-					params.orderby = content.config.@orderby.toString();
-				if(content.config.attribute("orderdirection").length() > 0) 
-					params.orderdirection = content.config.@orderdirection.toString();
-				if(content.config.attribute("verbosity").length() > 0)
-					params.verbosity = content.config.@verbosity.toString();
-				else
-					params.verbosity = 0;
-			}
-			else if(content is SubContainerNode) {
-				if(SubContainerNode(content).queryVars != null) {
-					params.action = content.config.@getContent.toString();
-					if(content.config.attribute("tablename").length() > 0) 
-						params.tablename = content.config.@tablename.toString();
-					if(content.config.attribute("verbosity").length() > 0) 	
-						params.verbosity = content.config.@verbosity.toString();
-					if(content.config.attribute("orderby").length() > 0) 
-						params.orderby = content.config.@orderby.toString();
-					if(content.config.attribute("orderdirection").length() > 0)
-						params.orderdirection = content.config.@orderdirection.toString();					
-					if(content.config.attribute("include_children").length() > 0)
-						params.include_children = 1;
-					if(content.config.attribute("children_depth").length() > 0)
-						params.children_depth = content.config.@children_depth.toString();	
-					if(content.config.attribute("deleted").length() > 0)
-						params.deleted = content.config.@deleted.toString();							
-					for (var item:String in SubContainerNode(content).queryVars) {
-						if(SubContainerNode(content).queryVars[item] == "")
-							params[item] = 0;
-						else
-							params[item] = SubContainerNode(content).queryVars[item];
-					}
-				}
-			}
-			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,ContentData);
-			service.token.content = content;
+			if(content is ContainerNode)
+				loadContainer(content);
+			else if(content is SubContainerNode)
+				loadSubContainer(content);
 		}
 		public function retrieveVerbose(content:ContentNode):void {
 			if(content is ContainerNode) {
@@ -99,11 +47,69 @@ package org.mig.services
 			service.token.content = content;
 		}
 		public function duplicateContainer(content:ContainerNode):void {
-	
 			var params:Object = new Object();
 			params.action = ValidFunctions.DUPLICATE_CONTENT;
 			params.id = content.data.id;
 			this.createService(params,ResponseType.DATA,ContentData).token.content = content;
+		}
+		private function loadContainer(content:ContentNode):void {
+			var params:Object = new Object();
+			var execute:Boolean = false;			
+			if(ContainerNode(content).isRoot) { //Containers
+				if(content.privileges ==  UserPrivileges.MiGAdmin)
+					params.parentid = "1,2	";
+				else
+					params.parentid = 1;
+			}
+			else {//Anything else, even fixed ones, will onyl get their children
+				params.parentid = ContentData(content.data).id.toString();
+				if(ContainerNode(content).isNesting || content.config.children().length() > 0)
+					execute = true; //good for content leaves AND relational nodes in tabs and trays
+				else {
+					//this.dispatchEvent(new ContentNodeEvent(ContentNodeEvent.READY,this,true));
+					return;
+				}
+			}		
+			params.action = content.config.@action.toString();			
+			params.deleted = 0;
+			if(content.config.attribute("orderby").length() > 0) 
+				params.orderby = content.config.@orderby.toString();
+			if(content.config.attribute("orderdirection").length() > 0) 
+				params.orderdirection = content.config.@orderdirection.toString();
+			if(content.config.attribute("verbosity").length() > 0)
+				params.verbosity = content.config.@verbosity.toString();
+			else
+				params.verbosity = 0;
+			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,ContentData);
+			service.token.content = content;
+		}
+		private function loadSubContainer(content:ContentNode):void {
+			if(SubContainerNode(content).queryVars != null) {
+				var params:Object = new Object();
+				params.action = content.config.@getContent.toString();
+				if(content.config.attribute("tablename").length() > 0) 
+					params.tablename = content.config.@tablename.toString();
+				if(content.config.attribute("verbosity").length() > 0) 	
+					params.verbosity = content.config.@verbosity.toString();
+				if(content.config.attribute("orderby").length() > 0) 
+					params.orderby = content.config.@orderby.toString();
+				if(content.config.attribute("orderdirection").length() > 0)
+					params.orderdirection = content.config.@orderdirection.toString();					
+				if(content.config.attribute("include_children").length() > 0)
+					params.include_children = 1;
+				if(content.config.attribute("children_depth").length() > 0)
+					params.children_depth = content.config.@children_depth.toString();	
+				if(content.config.attribute("deleted").length() > 0)
+					params.deleted = content.config.@deleted.toString();							
+				for (var item:String in SubContainerNode(content).queryVars) {
+					if(SubContainerNode(content).queryVars[item] == "")
+						params[item] = 0;
+					else
+						params[item] = SubContainerNode(content).queryVars[item];
+				}
+				var service:XMLHTTPService = this.createService(params,ResponseType.DATA,ContentData);
+				service.token.content = content;				
+			}
 		}
 	}
 }

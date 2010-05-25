@@ -1,5 +1,6 @@
 package org.mig.controller.startup
 {
+	import org.mig.events.AppEvent;
 	import org.mig.events.MediaEvent;
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
@@ -21,7 +22,10 @@ package org.mig.controller.startup
 			eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.RETRIEVE_CHILDREN,contentModel.mediaModel));
 			
 			trace("Startup: Media Model Complete");
+			appModel.startupCount = 3;
+			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP_PROGRESS,"Media Model initiated"));
 			eventDispatcher.dispatchEvent(new StateEvent(StateEvent.ACTION, AppStartupStateConstants.LOAD_MEDIA_COMPLETE));
+			
 		}
 	}
 }

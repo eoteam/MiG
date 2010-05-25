@@ -24,45 +24,8 @@ package org.mig.model.vo.content
 			else
 				return _baseLabel + " (0)";	
 		}
-/*		override protected function retrieve():void {
-			if(queryVars != null) {
-				var params:Object = new Object();
-				params.action = _config.@getContent.toString();
-				if(_config.attribute("tablename").length() > 0) 
-					params.tablename = _config.@tablename.toString();
-				if(_config.attribute("verbosity").length() > 0) 	
-					params.verbosity = _config.@verbosity.toString();
-				if(_config.attribute("orderby").length() > 0) 
-					params.orderby = _config.@orderby.toString();
-				if(_config.attribute("orderdirection").length() > 0)
-					params.orderdirection = _config.@orderdirection.toString();					
-				if(_config.attribute("include_children").length() > 0)
-					params.include_children = 1;
-				if(_config.attribute("children_depth").length() > 0)
-					params.children_depth = _config.@children_depth.toString();	
-				if(_config.attribute("deleted").length() > 0)
-					params.deleted = _config.@deleted.toString();							
-				for (var item:String in queryVars) {
-					if(queryVars[item] == "")
-						params[item] = 0;
-					else
-						params[item] = queryVars[item];
-				}
-				var retrieve:RetrieveContentCommand = new RetrieveContentCommand(this,params,ContentData,handleChildren);
-				retrieve.execute();
-			}
-			else
-				;//this.dispatchEvent(new ContentNodeEvent(ContentNodeEvent.READY,this,true));	
-		}
-		override protected function load():void {
-			trace("Nothing to do here");
-		}
-		override protected function remove(args:Array=null):void {
-			throw new IllegalOperationError("Removing subcontainer is not allowed");
-		}
-		override protected function update(value:UpdateData):void {
-			throw new IllegalOperationError("Updating subcontainer is not allowed");
-		}
+/*		
+
 		private function handleChildren(results:Array):void {
 			
 			ContentData(data).loaded = true;

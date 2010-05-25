@@ -711,14 +711,13 @@ function getContentMedia($params)
 	$validParams = array("action","tablename","id","orderby");
 	$sendParams = array();
 
-	$sql = "SELECT content_media.id, content_media.contentid,content_media.mediaid,content_media.usage_type," .
-			"content_media.displayorder,content_media.caption,content_media.credits,media.name, mimetypes.name as mimetype," .
-			"media.path,media.playtime,media.url,media.thumb,media.video_proxy,media.createdby,media.createdate,media.modifiedby,media.modifieddate";
+	$sql = "SELECT content_media.*, media.name, " .
+			"media.path,media.playtime,media.url,media.thumb,media.video_proxy,media.mimetypeid, media.width, media.height";
 
 	$sql .= " FROM `". 'content_media' ."`";
 
-	$sql .= " LEFT JOIN media ON (content_media.mediaid = media.id)";
-	$sql .= " LEFT JOIN mimetypes ON (media.mimetypeid = mimetypes.id)";
+	$sql .= " LEFT JOIN media ON content_media.mediaid = media.id";
+	$sql .= " LEFT JOIN mimetypes ON media.mimetypeid = mimetypes.id";
 	
 	//contentid ** required!
 	if (isset($params['contentid']))
@@ -897,6 +896,22 @@ function getContentContent($params)
 	return $result;
 }
 
+function getTemplates($params) {
+	
+	$sql = "SELECT templates.*,
+			GROUP_CONCAT(template_customfields.id ORDER BY template_customfields.id ASC) as rowids ,
+ 			GROUP_CONCAT(template_customfields.customfieldid ORDER BY template_customfields.customfieldid ASC) as customfieldids , 
+ 			GROUP_CONCAT(template_customfields.fieldid  ORDER BY template_customfields.fieldid ASC) as fieldids, 
+ 			GROUP_CONCAT(template_customfields.displayorder  ORDER BY template_customfields.displayorder ASC) as displayorders 
+ 			FROM templates LEFT JOIN template_customfields ON template_customfields.templateid = templates.id 
+ 			GROUP BY templates.id ORDER BY templates.id";
+
+	$result = queryDatabase($sql);
+	
+	// return the results
+	return $result;
+	
+}
 function getContentTree($params)
 {
 	global $statusid;
@@ -1491,13 +1506,14 @@ function returnChildren($contentid)
 }
 
 function getChildren($contentid, $depth = null)
-{ // returns array of children for a given contentid
-global $arrChildIDs;
-$arrChildIDs = array();
-if ($contentid != 0) { // this gets rid of unintentional behavior when contentid is set to 0 (which means none, not parent of all!)
-	fetchChildren($contentid,$depth,0);
-	return $arrChildIDs;
-}
+{ 
+	// returns array of children for a given contentid
+	global $arrChildIDs;
+	$arrChildIDs = array();
+	if ($contentid != 0) { // this gets rid of unintentional behavior when contentid is set to 0 (which means none, not parent of all!)
+		fetchChildren($contentid,$depth,0);
+		return $arrChildIDs;
+	}
 }
 
 function fetchChildren($contentid,$depth,$level = 0){ // this function is used by get children recursively

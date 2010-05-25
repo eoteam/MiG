@@ -18,6 +18,7 @@ $validReadFunctions = array (
 "getContentMedia",
 "getContentTags",
 "getContentContent",
+"getTemplates",
 "getMedia",
 "contentSearch",
 "migSearch",

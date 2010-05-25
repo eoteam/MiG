@@ -35,5 +35,9 @@ package org.mig.model
 		public var managers:Array = [];
 		public var customfields:Array = [];
 		public var customfieldsFlat:Array = [];
+		
+		//startup count
+		public var startupItems:int;
+		public var startupCount:int;
 	}
 }
