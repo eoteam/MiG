@@ -4,6 +4,7 @@ package org.mig.view.mediators.main
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import mx.collections.ArrayList;
 	import mx.events.DragEvent;
 	import mx.managers.DragManager;
 	import mx.utils.NameUtil;
@@ -70,12 +71,11 @@ package org.mig.view.mediators.main
 			view.topLogo.visible = true;
 			view.appOptionsCombo.enabled = true;
 			view.helpCombo.enabled = true;
-			view.appOptionsCombo.dataProvider = [appModel.publishedURL,appModel.pendingURL];
+			view.appOptionsCombo.dataProvider = new ArrayList([appModel.publishedURL,appModel.pendingURL]);
 		}
 		private function handleConfig(event:Event):void {
 			//data wiring
 			view.appOptionsCombo.prompt = appModel.prompt;
-			view.appOptionsCombo.selectedIndex = -1;
 		}
 		
 		private function handleManagersTreeResize(event:ViewEvent):void {

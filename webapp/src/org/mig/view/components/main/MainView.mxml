@@ -10,11 +10,20 @@
 		xmlns:assets="org.mig.view.assets.*"
 		height="100%"
 		creationComplete="handleCreationComplete()"
-		resize="handleResize()">
+		resize="handleResize()" xmlns:easing="com.greensock.easing.*">
 	
 	<fx:Script>
 		<![CDATA[ 
 			import mx.effects.easing.Exponential;
+			
+			import org.mig.view.skins.buttons.AddContainerButton;
+			import org.mig.view.skins.buttons.FullScreenButton;
+			import org.mig.view.skins.buttons.LeftPanelCollapseButton;
+			import org.mig.view.skins.buttons.RightPanelCollapseButton;
+			import org.mig.view.skins.buttons.SearchButton;
+			import org.mig.view.skins.buttons.TrashButton;
+			import org.mig.view.skins.dropdowns.ComboBoxHeaderButton;
+			import org.mig.view.skins.dropdowns.DefaultComboBox;
 			[Embed(source='/migAssets/library.swf#Tree_folderClosedIcon')]
 			[Bindable] private var closeIcon:Class;
 			
@@ -32,6 +41,9 @@
 			private var _containerPanelVisible:Boolean = true;
 			private var _toolsPanelVisible:Boolean = true;
 			private var introLogo:MovieClip;
+			
+			public var optionsComboPrompt:String;
+			public var helpComboPrompt:String = "Help"; 
 			
 			private function handleCreationComplete():void
 			{
@@ -102,11 +114,12 @@
 					preloaderHolder.y = (this.height+a)/2;
 				}
 			}
+
 		]]>
 	</fx:Script>
 	<mx:SWFLoader id="bgLogoHolder" source="{bgLogo}" visible="false" horizontalCenter="0" top="200" width="211" height="290" showEffect="fadeIn" />
 
-	<mx:VBox id="bodyContainer"  top="85" width="100%" height="100%" visible="false" showEffect="fadeIn" verticalGap="0" >
+	<s:VGroup id="bodyContainer"  top="85" width="100%" height="100%" visible="false" showEffect="fadeIn" gap="0" >
 		
 		<s:Rect width="100%" height="1">
 			<s:fill>
@@ -114,93 +127,88 @@
 			</s:fill>
 		</s:Rect>
 		<mx:Spacer height="3" />
+		
 		<fe:ExtendedDividedBox direction="horizontal" width="100%" height="100%" 
 		   liveDragging="false" clipContent="false" id="mainBody"  
 		   barFillColors="[0xFFFFFF,0xFFFFFF]" 
 		   dividerThickness="1" dividerSkin="com.fxcomponents.skins.MainDividerSkin">
 
-		<mx:Canvas width="{LEFT_SIDEBAR_OPEN_WIDTH}" height="100%" id="leftMain" left="5">
-		
-		<fe:ExtendedDividedBox id="containerTray" direction="vertical" width="100%" height="{leftMain.height - 38}" liveDragging="false" clipContent="false"
-		barFillColors="[0xFFFFFF,0xFFFFFF]" dividerThickness="1" dividerSkin="com.fxcomponents.skins.MainDividerSkin" top="{controlBox.height+2}" right="3">
+			<s:Group width="{LEFT_SIDEBAR_OPEN_WIDTH}" height="100%" id="leftMain" left="5">
 			
-			<mx:VBox id="treesVBox" width="100%" height="100%" paddingLeft="0" paddingTop="0" paddingRight="0" paddingBottom="0" verticalGap="0">
-				<main:ManagersTree width="100%" id="managersTree" height="24" verticalScrollPolicy="off"  />
-				<main:ContentTree width="100%" height="100%" id="contentTree" />	
-			</mx:VBox>
+				<fe:ExtendedDividedBox id="containerTray" direction="vertical" width="100%" height="{leftMain.height - 38}" liveDragging="false" clipContent="false"
+				barFillColors="[0xFFFFFF,0xFFFFFF]" dividerThickness="1" dividerSkin="com.fxcomponents.skins.MainDividerSkin" top="{controlBox.height+2}" right="3">
+					
+					<s:VGroup id="treesVBox" width="100%" height="100%"  paddingLeft="0" paddingTop="0" paddingRight="0" paddingBottom="0" gap="0">
+						<main:ManagersTree width="100%" id="managersTree" height="24" verticalScrollPolicy="off"  />
+						<main:ContentTree width="100%" height="100%" id="contentTree" />	
+					</s:VGroup>
+					
+					<s:VGroup id="pendingTray" width="100%" height="25" gap="0">
+						<s:HGroup width="100%" gap="0" paddingTop="0" verticalAlign="middle">
+							<mx:SWFLoader source="{closeIcon}" id="pendingStateIcon" mouseChildren="false" useHandCursor="true" buttonMode="true" />
+							<mx:SWFLoader source="{draftIconWhite}" height="25" />
+							<s:Label id="pendingTrayTitle" text="Pending Containers" mouseChildren="false" useHandCursor="true" buttonMode="true"/>
+						</s:HGroup>		
+						<!--<content:PendingList width="100%"  height="100%" id="pendingTree"  />-->
+					</s:VGroup>
+				</fe:ExtendedDividedBox>
+	
+				<s:ToggleButton id="containerPanelCollapseButton"  mouseChildren="false" buttonMode="true" skinClass="org.mig.view.skins.buttons.LeftPanelCollapseButton"
+				click="containerPanelVisible=!containerPanelVisible; if(containerPanelVisible==true){openContainerTray.play();}else{closeContainerTray.play();}" bottom="3" right="4"/>
 			
-			<mx:VBox id="pendingTray" width="100%" height="25" verticalGap="0">
-				<mx:HBox width="100%" horizontalGap="0" paddingTop="0" >
-					<mx:SWFLoader source="{closeIcon}" id="pendingStateIcon" mouseChildren="false" useHandCursor="true" buttonMode="true" />
-					<mx:SWFLoader source="{draftIconWhite}" height="25" />
-					<mx:Text id="pendingTrayTitle" text="Pending Containers" mouseChildren="false" useHandCursor="true" buttonMode="true" 
-					color="0xFFFFFF" styleName="dataGridHeaderStyle" paddingTop="0" paddingBottom="7" />
-				</mx:HBox>		
-				<!--<content:PendingList width="100%"  height="100%" id="pendingTree"  />-->
-			</mx:VBox>
-		</fe:ExtendedDividedBox>
+				<!--<content:PublishDropBox width="100%" height="{contentTree.height-2}"  top="{managersTree.height+controlBox.height+2}" id="publishDropBox" 
+										visible="false" hideEffect="publishFadeOut" showEffect="publishFadeIn" right="3" />	
+				-->
+			
+				<!-- Content Control -->
+				<s:HGroup width="100%" id="controlBox" paddingTop="0" clipAndEnableScrolling="false" right="3" >
+					<s:ToggleButton styleName="searchButton" id="searchButton" mouseChildren="false" buttonMode="true"  toolTip="Search" selected="false" skinClass="org.mig.view.skins.buttons.SearchButton" />
+					<s:ToggleButton enabled="false" styleName="addContainerButton"  id="addButton" toolTip="New Container" mouseChildren="false" buttonMode="true" skinClass="org.mig.view.skins.buttons.AddContainerButton"/>
+					<mx:Spacer width="100%" />
+					<s:ToggleButton styleName="trashButton"  toolTip="Delete"  id="trashButton" mouseChildren="false"  buttonMode="true" skinClass="org.mig.view.skins.buttons.TrashButton" />
+				</s:HGroup>
+			
+			</s:Group>
 		
-		<s:Group width="100%"  bottom="3" right="3">
-			<s:ToggleButton id="containerPanelCollapseButton" styleName="leftPanelCollapseButton" mouseChildren="false" buttonMode="true" right="4" 
-			click="containerPanelVisible=!containerPanelVisible; if(containerPanelVisible==true){openContainerTray.play();}else{closeContainerTray.play();}" />
-		</s:Group>
-		
-		<!--<content:PublishDropBox width="100%" height="{contentTree.height-2}"  top="{managersTree.height+controlBox.height+2}" id="publishDropBox" 
-								visible="false" hideEffect="publishFadeOut" showEffect="publishFadeIn" right="3" />	
-		-->
-		<!-- Content Control -->
-		<mx:HBox width="100%" id="controlBox" paddingTop="0" horizontalScrollPolicy="off" right="3" >
-			<mx:Button styleName="searchButton" id="searchButton" mouseChildren="false" 
-			buttonMode="true" toggle="true" toolTip="Search" selected="false" />
-			<mx:Button enabled="false" styleName="addContainerButton" toggle="true" id="addButton"  toolTip="New Container" mouseChildren="false" buttonMode="true" />
-			<mx:Spacer width="100%" />
-			<mx:Button styleName="trashButton"  toolTip="Delete"  id="trashButton" mouseChildren="false"  buttonMode="true" />
-		</mx:HBox>
-		
-	</mx:Canvas>
-	
-	<!-- Main Content Area -->
-	<main:ContentViewer  width="55%" height="100%"  id="contentViewer" horizontalScrollPolicy="off" top="3"/>			
-	
-	<!-- Tools -->
-	<mx:Canvas id="rightMain" width="{RIGHT_SIDEBAR_OPEN_WIDTH}" height="100%">
-		<main:Tools id="editorsView"  width="100%" height="{rightMain.height - 38}" clipContent="true" horizontalScrollPolicy="off"   />
-	
-		<mx:Canvas width="30"  borderColor="#999999" bottom="3">
-			<mx:Button id="toolsPanelCollapseButton" styleName="rightPanelCollapseButton" mouseChildren="false" buttonMode="true"  
-			click="toolsPanelVisible=!toolsPanelVisible; if(toolsPanelVisible==true){openToolsTray.play();}else{closeToolsTray.play();}" left="4" />
-		</mx:Canvas>				
-	</mx:Canvas>			
+			<!-- Main Content Area -->
+			<main:ContentViewer  width="55%" height="100%"  id="contentViewer" horizontalScrollPolicy="off" top="3"/>			
+			
+			<!-- Tools -->
+			<s:Group id="rightMain" width="{RIGHT_SIDEBAR_OPEN_WIDTH}" height="100%">
+				<main:Tools id="editorsView"  width="100%" height="{rightMain.height - 38}" clipContent="true" horizontalScrollPolicy="off"   />
+				<s:ToggleButton id="toolsPanelCollapseButton"  mouseChildren="false" buttonMode="true"  skinClass="org.mig.view.skins.buttons.RightPanelCollapseButton" 
+				click="toolsPanelVisible=!toolsPanelVisible; if(toolsPanelVisible==true){openToolsTray.play();}else{closeToolsTray.play();}" bottom="3"  left="4"/>
+			</s:Group>			
 		</fe:ExtendedDividedBox>	
-	</mx:VBox>
+	</s:VGroup>
 	
 	<!-- Header -->
-	<mx:Canvas id="headerContainer" height="80"  width="100%" minHeight="75" clipContent="false">
+	<s:Group id="headerContainer" height="80"  width="100%" minHeight="75">
 		
-		<mx:Text bottom="0" styleName="locationHeader" />
+		<s:RichText bottom="0" styleName="locationHeader"  />
 		<assets:MigLogo right="60" x="-20" visible="false" showEffect="fadeIn" id="topLogo"/>		
 		<main:StatusModule top="{topControls.height+4}" id="statusMod" width="{topControls.width}"  />	
-		<mx:HBox clipContent="false" verticalAlign="middle" id="topControls" horizontalGap="3" paddingTop="3">
-			<mx:ComboBox styleName="migComboBox" width="160" id="appOptionsCombo" enabled="false"/>
-			<mx:Canvas width="160">
-				<mx:Button styleName="comboBoxHeaderButton" width="160" id="prompt" label="{loginView.prompt}" click="loginView.visible=!loginView.visible" top="2" />				
-			</mx:Canvas>
-			<mx:ComboBox styleName="migComboBox" width="160" prompt="Help" id="helpCombo"  enabled="false"/>
-			<mx:Button id="fullScreen"  styleName="fullScreenButton"  mouseChildren="false" buttonMode="true" toolTip="Toggle Fullscreen"/>				
-		</mx:HBox>		
-	</mx:Canvas>
+		<s:HGroup verticalAlign="middle" id="topControls" gap="3" paddingTop="3">
+			<s:DropDownList  styleName="migComboBox" width="160" id="appOptionsCombo" enabled="false"  skinClass="org.mig.view.skins.dropdowns.DefaultComboBox" />
+			<s:Button width="160" id="prompt" label="{loginView.prompt}" click="loginView.visible=!loginView.visible" top="2" 
+			skinClass="org.mig.view.skins.dropdowns.ComboBoxHeaderButton" />					
+			<s:DropDownList  styleName="migComboBox" width="160"  id="helpCombo"  prompt="Help" enabled="false"  skinClass="org.mig.view.skins.dropdowns.DefaultComboBox" />
+			<s:Button id="fullScreen"  mouseChildren="false" buttonMode="true" toolTip="Toggle Fullscreen" skinClass="org.mig.view.skins.buttons.FullScreenButton"/>				
+		</s:HGroup>
+	</s:Group>
 	
 	<!--view:MiGSearch width="1002" top="{headerContainer.height+30}" height="400" includeInLayout="false" backgroundAlpha="0.9" id="migSearch" 
 					hideEffect="wipeUp" showEffect="wipeDown"  visible="false" mouseDownOutside="migSearch.visible=false" />-->
 	<main:LoginView id="loginView" minWidth="160" hideEffect="wipeUp" showEffect="wipeDown" left="{160}" visible="false" />	
+	
 <!--	<view:NewContentSelector  top="{headerContainer.height+30}"  x="{addButton.x-4}"
 							  id="newContentSelector" name="newContentSelector" hideEffect="wipeUp" showEffect="wipeDown"/>	 -->
 	
 	
-	<mx:Canvas backgroundColor="0" backgroundAlpha="0.8" width="100%" height="100%" id="preloader" visible="false"  horizontalScrollPolicy="off"	>
+	<s:BorderContainer contentBackgroundColor="0" contentBackgroundAlpha="0.8"  width="100%" height="100%" id="preloader" visible="false" >
 		<mx:UIComponent  id="preloaderHolder"  width="80%" height="80%" rotation="-135"  />
-		<mx:Label id="startupStep" horizontalCenter="0" bottom="200"/> 
-	</mx:Canvas>
+		<s:Label id="startupStep" horizontalCenter="0" bottom="200"/> 
+	</s:BorderContainer>
 	
 	
 	<mx:SWFLoader id="mainLogo" source="migAssets/introLogoAnimation.swf" width="560" height="560" top="2" right="0" autoLoad="true"
@@ -209,8 +217,11 @@
 	<!--	<mx:Text styleName="bodyCopy" id="timestamp" fontSize="10" text="04/29/09" y="70" right="5" visible="false" />	--> 
 	
 	<fx:Declarations>
-		<mx:WipeDown id="wipeDown" duration="500" moveEasingFunction="Exponential.easeOut"  />
-		<mx:WipeUp id="wipeUp" duration="500" moveEasingFunction="Exponential.easeIn"   />
+		<s:Resize id="wipeDown" duration="500" easer="{wipeDownEaser}" heightTo="320" disableLayout="true" />
+		<s:Resize id="wipeUp" duration="500" easer="{wipeUpEaser}" heightTo="0" disableLayout="true"/>
+		
+		<s:Sine easeInFraction="1"  id="wipeUpEaser" />
+		<s:Sine easeInFraction="0" id="wipeDownEaser" />
 		
 		<mx:Fade alphaFrom="0" alphaTo="1" duration="400" id="fadeIn" easingFunction="Exponential.easeOut" />	
 		<mx:Fade alphaFrom="1" alphaTo="0" duration="400" id="fadeOut" easingFunction="Exponential.easeIn" />

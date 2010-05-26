@@ -1,0 +1,107 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+
+@font-face {
+	src: url("/fonts/Transit/TransNor.otf");
+	font-family: "Transit-Normal";
+	unicode-range:U+0000-U+21FF;
+	embedAsCFF: true;
+}
+@font-face {
+	src: url("/fonts/Transit/TransBol.otf");
+	font-family: "Transit-Bold";
+	unicode-range:U+0020-U+21FF;
+	embedAsCFF: true;
+}
+
+s|Label{
+	color: #FFFFFF;
+	font-family: Transit-Normal;
+	font-size: 12pt;
+	backgroundAlpha: 0;
+}
+s|RichText {
+	color: white;
+}
+/* Buttons */
+s|Button {
+	color: #ffffff;
+	embedFonts: true;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #000000;
+}
+.defaultBlackButton {
+	skinClass: ClassReference("org.mig.view.skins.buttons.DefaultBlackButton");
+}
+.defaultGrayButton {
+	skinClass: ClassReference("org.mig.view.skins.buttons.DefaultGrayButton");
+}
+.textOnlyButton {
+	skinClass: ClassReference("org.mig.view.skins.buttons.TextOnlyButton");
+}
+s|TextInput {
+	contentBackgroundColor: #333333;
+	color: #FFFFFF;
+	fontFamily: Transit-Normal;
+	fontWeight: normal;
+	fontSize: 14pt;
+	focusColor: #000000;
+	focusedTextSelectionColor: #ed1c58;
+	unfocusedTextSelectionColor: #333333;
+	chromeColor: #ed1c58;
+}
+
+.boldCopy {
+	color: white;
+	font-family: Transit-Bold;
+	font-weight: normal;
+	font-size: 14pt;
+	text-align: left;
+	text-decoration: none;
+	embedFonts: true;
+}
+
+.bodyCopy {
+	color: white;
+	font-family: Transit-Normal;
+	font-weight: normal;
+	font-size: 14pt;
+	text-align: left;
+	text-decoration: none;
+	embedFonts: true;
+}
+.inputFieldGray{
+	disabledColor: #FFFFFF;
+	contentBackgroundColor: #666666;
+	borderStyle: none;
+	paddingLeft: 3;
+	paddingRight: 3;
+	borderVisible: false;
+	focusColor: #ed1c58;
+
+}
+s|Label
+/*disabledColor: #333333;
+verticalGap: 2;
+paddingLeft: 2;
+paddingTop: 0; */
+
+.dataGridHeaderStyle {
+	paddingBottom: 0;
+	paddingTop: 0;
+	textAlign: left;
+}
+
+.locationHeader {
+	font-family: Transit-Bold;
+	font-size: 14pt;
+}
+.migComboxBox {
+	fontSize: 13;
+	color: #ffffff;
+	contentBackgroundAlpha: 1;
+	selectionColor: #ED1C58;
+	alternatingItemColors: #111111, #111111;
+	contentBackgroundColor: #111111;
+}

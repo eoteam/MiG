@@ -6,30 +6,12 @@
 	src: url("/fonts/Transit/TransNor.otf");
 	font-family: "Transit-Normal";
 	unicode-range:U+0000-U+21FF;
-	embedAsCFF: false;
 }
 @font-face {
 	src: url("/fonts/Transit/TransBol.otf");
 	font-family: "Transit-Bold";
 	unicode-range:U+0020-U+21FF;
-	embedAsCFF: false;
 }
-/*@font-face {
-src: url("/fonts/Transit/TransBla.otf");
-font-family: "Transit-Black";
-unicode-range:U+0000-U+21FF;
-}
-@font-face {
-src: url("/fonts/Transit/TransBolIta.otf");
-font-family: "Transit-BoldItalic";
-unicode-range:U+0020-U+21FF;
-}
-@font-face {
-src: url("/fonts/Transit/TransIta.otf");
-font-family: "Transit-Italic";
-unicode-range:U+0020-U+21FF;
-}*/
-
 mx|Label{
 	fontFamily: Transit-Normal;
 	color: white;
@@ -535,41 +517,14 @@ mx|Button{
 }
 
 
-.comboBoxHeaderButton{
-	skin: ClassReference("org.mig.view.skins.ComboBoxHeaderButtonSkin");
-	color: #ffffff;
-	embedFonts: true;
-	fontFamily: Transit-Bold;
-	font-weight: normal;
-	text-align: left;
-	fontSize: 13;
-	textRollOverColor: #FFFFFF;
-	textSelectedColor: #000000;
-	disabledColor: #333333;
-	verticalGap: 2;
-	paddingLeft: 2;
-	paddingTop: 0; 
-	
-}
-.defaultButtonBackground{
-	backgroundImage: ClassReference("org.mig.view.skins.GradientBackground");
-	backgroundSize: "100%";
-	fillColors: #808080, #595959;
-	fillAlphas: 1, 1;
-}
+
 .defaultButtonHighlight{
 	backgroundImage: ClassReference("org.mig.view.skins.GradientBackground");
 	backgroundSize: "100%";
 	fillColors: #FFFFFF, #FFFFFF;
 	fillAlphas: 0.1, 0.02;
 }
-.defaultButtonOverBackground{
-	backgroundImage: ClassReference("org.mig.view.skins.GradientBackground");
-	backgroundSize: "100%";
-	fillColors: #ED1C58, #BD1E53;
-	fillAlphas: 1, 1;
-	
-} 
+
 .fullScreenButton{
 	disabledSkin: Embed(source="migAssets/library.swf", symbol="fullScreen"); 
 	downSkin: Embed(source="migAssets/library.swf", symbol="fullScreen");
@@ -853,18 +808,7 @@ mx|TextInput{
 	paddingRight: 3;
 	textSelectionColor: #ff0011;
 }
-.inputFieldGray{
-	color: white;
-	disabledColor: #FFFFFF;
-	fontFamily: Transit-Normal;
-	fontWeight: normal;
-	fontSize: 14pt;
-	backgroundColor: #666666;
-	borderStyle: none;
-	paddingLeft: 3;
-	paddingRight: 3;
-	textSelectionColor: #ff2233;
-}
+
 .richInputField{
 	color: white;
 	backgroundColor: black;
@@ -887,24 +831,8 @@ mx|TextInput{
 	fillColors: #ED1C58, #BD1E53;
 	fillAlphas: 1, 1;
 }
-.searchButton{
-	disabledSkin: Embed(source="migAssets/library.swf", symbol="searchUp"); 
-	downSkin: Embed(source="migAssets/library.swf", symbol="searchUp");
-	overSkin: Embed(source="migAssets/library.swf", symbol="searchSelectedUp");
-	upSkin: Embed(source="migAssets/library.swf", symbol="searchUp"); 
-	selectedDownSkin: Embed(source="migAssets/library.swf", symbol="searchSelectedUp");
-	selectedOverSkin: Embed(source="migAssets/library.swf", symbol="searchSelectedUp");
-	selectedUpSkin: Embed(source="migAssets/library.swf", symbol="searchSelectedUp"); 	
-}
-.addContainerButton{
-	disabledSkin: Embed(source="migAssets/library.swf", symbol="addContainerDisabled"); 
-	downSkin: Embed(source="migAssets/library.swf", symbol="addContainerUp");
-	overSkin: Embed(source="migAssets/library.swf", symbol="addContainerOver");
-	upSkin: Embed(source="migAssets/library.swf", symbol="addContainerUp"); 
-	selectedDownSkin: Embed(source="migAssets/library.swf", symbol="addContainerOver");
-	selectedOverSkin: Embed(source="migAssets/library.swf", symbol="addContainerOver");
-	selectedUpSkin: Embed(source="migAssets/library.swf", symbol="addContainerOver"); 	
-}
+
+
 .addButton{
 	disabledSkin: ClassReference("org.mig.view.skins.EmptyButtonSkin");
 	downSkin: ClassReference("org.mig.view.skins.EmptyButtonSkin");
@@ -926,15 +854,7 @@ mx|TextInput{
 	paddingLeft: 2;
 	paddingTop: 0; 
 }
-.trashButton{
-	disabledSkin: Embed(source="migAssets/library.swf", symbol="trashUp"); 
-	downSkin: Embed(source="migAssets/library.swf", symbol="trashUp");
-	overSkin: Embed(source="migAssets/library.swf", symbol="trashUp");
-	upSkin: Embed(source="migAssets/library.swf", symbol="trashUp"); 
-	selectedDownSkin: Embed(source="migAssets/library.swf", symbol="trashSelectedUp");
-	selectedOverSkin: Embed(source="migAssets/library.swf", symbol="trashSelectedUp");
-	selectedUpSkin: Embed(source="migAssets/library.swf", symbol="trashSelectedUp"); 	
-}
+
 
 .addUserButton{
 	disabledSkin: Embed(source="migAssets/library.swf", symbol="addUserUp"); 
@@ -1057,24 +977,6 @@ mx|TextInput{
 	textSelectionColor: #ff0011;
 }
 
-.leftPanelCollapseButton{
-	disabledSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconRight"); 
-	downSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconLeft");
-	overSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconLeft");
-	upSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconLeft"); 
-	selectedDownSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconRight");
-	selectedOverSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconRight");
-	selectedUpSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconRight"); 	
-}
-.rightPanelCollapseButton{
-	disabledSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconRight"); 
-	downSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconRight");
-	overSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconRight");
-	upSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconRight"); 
-	selectedDownSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconLeft");
-	selectedOverSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconLeft");
-	selectedUpSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconLeft"); 	
-}
 
 
 /*
@@ -1234,47 +1136,3 @@ mx|TextInput{
 	borderThickness: 2;
 	cornerRadius: 0;
 }
-
-
-
-/* calendar */
-/*.calendarHeader {
-	text-align: right;
-	font-size: 12;
-	font-family: Transit-Bold;
-	font-weight: normal;
-	color: #000000;
-	backgroundColor: #666666;
-}
-CalendarEventRenderer {
-	font-size: 10;	
-	font-family: Transit-Normal;
-	font-weight: normal;	
-	color: #FFFFFF;	
-}
-CalendarHours {
-	text-align: right;
-	font-size: 12;	
-	color: #FFFFFF;
-	font-family: Transit-Normal;
-	font-weight: normal;	
-}
-CalendarDisplay {
-	hourDividerThickness: 2;
-	hourDividerColor: #666666;	
-	hourBackgroundColor: #666666;
-	allDayDividerThickness: 2;
-	allDayDividerColor: #FFFFFF;	
-	allDayBackgroundColor: #111111;
-	allDayColor: #111111;
-	hourThickness: 1;
-	hourColor: #FFFFFF;
-	dayStyleName: "calendarDay";
-	dayHeaderStyleName: "calendarHeader";	
-}
-.calendarDay
-{
-	backgroundColor: #111111;
-	disabledBackgroundColor: #333333;
-	borderColor: #FFFFFF;
-}*/
