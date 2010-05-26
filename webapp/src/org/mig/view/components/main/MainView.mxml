@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
-		   xmlns:view="org.mig.view.*" 
-		   xmlns:components="org.mig.view.components.*"
-		   xmlns:main="org.mig.view.components.main.*"
-		   xmlns:fe="com.fxcomponents.controls.fe.*"
-		   xmlns:assets="org.mig.view.assets.*"
-		   clipContent="false" height="100%"
-		   creationComplete="handleCreationComplete()"
-		   resize="handleResize()">
+<s:Group
+		xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		xmlns:mx="library://ns.adobe.com/flex/mx"
+		xmlns:view="org.mig.view.*" 
+		xmlns:components="org.mig.view.components.*"
+		xmlns:main="org.mig.view.components.main.*"
+		xmlns:fe="com.fxcomponents.controls.fe.*"
+		xmlns:assets="org.mig.view.assets.*"
+		height="100%"
+		creationComplete="handleCreationComplete()"
+		resize="handleResize()">
 	
-	<mx:Script>
+	<fx:Script>
 		<![CDATA[ 
 			import mx.effects.easing.Exponential;
 			[Embed(source='/migAssets/library.swf#Tree_folderClosedIcon')]
@@ -100,11 +103,16 @@
 				}
 			}
 		]]>
-	</mx:Script>
+	</fx:Script>
 	<mx:SWFLoader id="bgLogoHolder" source="{bgLogo}" visible="false" horizontalCenter="0" top="200" width="211" height="290" showEffect="fadeIn" />
 
 	<mx:VBox id="bodyContainer"  top="85" width="100%" height="100%" visible="false" showEffect="fadeIn" verticalGap="0" >
-		<mx:HRule width="100%" strokeWidth="1" strokeColor="0xffffff" />
+		
+		<s:Rect width="100%" height="1">
+			<s:fill>
+				<s:SolidColor color="0xffffff" />
+			</s:fill>
+		</s:Rect>
 		<mx:Spacer height="3" />
 		<fe:ExtendedDividedBox direction="horizontal" width="100%" height="100%" 
 		   liveDragging="false" clipContent="false" id="mainBody"  
@@ -132,11 +140,10 @@
 			</mx:VBox>
 		</fe:ExtendedDividedBox>
 		
-		<mx:Canvas width="100%"   borderColor="#999999" bottom="3" right="3">
-			
-			<mx:Button id="containerPanelCollapseButton" styleName="leftPanelCollapseButton" mouseChildren="false" buttonMode="true" right="4" 
+		<s:Group width="100%"  bottom="3" right="3">
+			<s:ToggleButton id="containerPanelCollapseButton" styleName="leftPanelCollapseButton" mouseChildren="false" buttonMode="true" right="4" 
 			click="containerPanelVisible=!containerPanelVisible; if(containerPanelVisible==true){openContainerTray.play();}else{closeContainerTray.play();}" />
-		</mx:Canvas>
+		</s:Group>
 		
 		<!--<content:PublishDropBox width="100%" height="{contentTree.height-2}"  top="{managersTree.height+controlBox.height+2}" id="publishDropBox" 
 								visible="false" hideEffect="publishFadeOut" showEffect="publishFadeIn" right="3" />	
@@ -201,27 +208,32 @@
 	
 	<!--	<mx:Text styleName="bodyCopy" id="timestamp" fontSize="10" text="04/29/09" y="70" right="5" visible="false" />	--> 
 	
-	<mx:WipeDown id="wipeDown" duration="500" moveEasingFunction="Exponential.easeOut"  />
-	<mx:WipeUp id="wipeUp" duration="500" moveEasingFunction="Exponential.easeIn"   />
+	<fx:Declarations>
+		<mx:WipeDown id="wipeDown" duration="500" moveEasingFunction="Exponential.easeOut"  />
+		<mx:WipeUp id="wipeUp" duration="500" moveEasingFunction="Exponential.easeIn"   />
+		
+		<mx:Fade alphaFrom="0" alphaTo="1" duration="400" id="fadeIn" easingFunction="Exponential.easeOut" />	
+		<mx:Fade alphaFrom="1" alphaTo="0" duration="400" id="fadeOut" easingFunction="Exponential.easeIn" />
+		
+		<mx:Fade alphaFrom="0" alphaTo="1" duration="800" id="logoFadeIn"  target="{mainLogo}" />	
+		<mx:Fade alphaFrom="1" alphaTo="0" duration="800" startDelay="600" id="logoFadeOut"  target="{mainLogo}" />
+		
+		<mx:Fade alphaFrom="0" alphaTo="1" duration="400" id="publishFadeIn" easingFunction="Exponential.easeOut" />	
+		<mx:Fade alphaFrom="1" alphaTo="0" duration="400" id="publishFadeOut" easingFunction="Exponential.easeIn" />	
+		
+		<mx:Resize id="closePendingTray" targets="{[pendingTray]}" duration="400" heightTo="10" />
+		<mx:Resize id="openPendingTray" targets="{[pendingTray]}" duration="400" heightTo="250"/>
+		
+		<mx:Resize id="closeContainerTray" targets="{[leftMain]}" duration="0" widthTo="{SIDEBAR_CLOSED_WIDTH}" />
+		<mx:Resize id="openContainerTray" targets="{[leftMain]}" duration="0" widthTo="300"/>
+		
+		<mx:Resize id="closeToolsTray" targets="{[rightMain]}" duration="0" widthTo="{SIDEBAR_CLOSED_WIDTH}" />
+		<mx:Resize id="openToolsTray" targets="{[rightMain]}" duration="0" widthTo="300"/>
+		
+		<mx:Resize id="openManagers" target="{managersTree}" duration="200" />
+	</fx:Declarations>
+		
 	
-	<mx:Fade alphaFrom="0" alphaTo="1" duration="400" id="fadeIn" easingFunction="Exponential.easeOut" />	
-	<mx:Fade alphaFrom="1" alphaTo="0" duration="400" id="fadeOut" easingFunction="Exponential.easeIn" />
 	
-	<mx:Fade alphaFrom="0" alphaTo="1" duration="800" id="logoFadeIn"  target="{mainLogo}" />	
-	<mx:Fade alphaFrom="1" alphaTo="0" duration="800" startDelay="600" id="logoFadeOut"  target="{mainLogo}" />
 	
-	<mx:Fade alphaFrom="0" alphaTo="1" duration="400" id="publishFadeIn" easingFunction="Exponential.easeOut" />	
-	<mx:Fade alphaFrom="1" alphaTo="0" duration="400" id="publishFadeOut" easingFunction="Exponential.easeIn" />	
-	
-	<mx:Resize id="closePendingTray" targets="{[pendingTray]}" duration="400" heightTo="10" />
-	<mx:Resize id="openPendingTray" targets="{[pendingTray]}" duration="400" heightTo="250"/>
-	
-	<mx:Resize id="closeContainerTray" targets="{[leftMain]}" duration="0" widthTo="{SIDEBAR_CLOSED_WIDTH}" />
-	<mx:Resize id="openContainerTray" targets="{[leftMain]}" duration="0" widthTo="300"/>
-	
-	<mx:Resize id="closeToolsTray" targets="{[rightMain]}" duration="0" widthTo="{SIDEBAR_CLOSED_WIDTH}" />
-	<mx:Resize id="openToolsTray" targets="{[rightMain]}" duration="0" widthTo="300"/>
-	
-	<mx:Resize id="openManagers" target="{managersTree}" duration="200" />
-	
-</mx:Canvas>
+</s:Group>

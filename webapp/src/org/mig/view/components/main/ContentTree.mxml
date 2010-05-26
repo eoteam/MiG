@@ -14,10 +14,11 @@
 	folderOpenIcon="{containerIcon}"
 	styleName="containerTree"
 	doubleClickEnabled="true"
-	labelField="debugLabel"
+	labelField="debugLabel" contentBackgroundAlpha="0"
 	iconField="{ContentNode(data).config.@icon}"
 	showRoot="true">
 
+	
 	<mx:Script>
 		<![CDATA[
 			import org.mig.model.vo.ContentNode;
