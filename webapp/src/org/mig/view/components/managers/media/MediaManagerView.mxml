@@ -76,7 +76,7 @@
 		]]>
 	</mx:Script>	
 	<!--Control Bar-->
-	<container:FlowContainer direction="horizontal"  width="100%" horizontalGap="8" verticalAlign="middle" paddingBottom="3" paddingTop="6" paddingLeft="6">
+	<container:FlowContainer  direction="horizontal"  width="100%" horizontalGap="8" verticalAlign="middle">
 		<mx:Canvas>
 			<mx:SWFLoader left="8" source="@Embed(source='/migAssets/library.swf#folderIcon')" mouseChildren="false"  buttonMode="true" useHandCursor="true" /><!--   width="18" height="16" -->	
 		</mx:Canvas>
@@ -188,8 +188,8 @@
 						columnWidth="{260*scalePercent}"  
 						rowHeight="{300*scalePercent}" 
 						scalePercent="{scalePercent}"
-						borderThickness="0"
-						backgroundAlpha="0" 	
+						borderVisible="false"
+						contentBackgroundAlpha="0" 	
 						rollOverColor="0xed1c58" 
 						selectionColor="0xed1c58" 
 						selectionEasingFunction="Exponential.easeIn"

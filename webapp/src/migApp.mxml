@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application 
-	xmlns:mx="http://www.adobe.com/2006/mxml"
+<s:Application 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx"
 	xmlns:main="org.mig.view.components.main.*"
 	xmlns:local="*"
-	creationPolicy="none" layout="absolute"
+	creationPolicy="none"
 	backgroundColor="0x000000"
-	backgroundGradientColors="[0x1A1A1A,0x111111]" 
-	backgroundGradientAlphas="[1,1]"
 	preinitialize="loadCSS(event)"
-	preloader="org.mig.view.skins.SitePreloader">
-	<mx:Script>
+	preloader="org.mig.view.skins.SitePreloader" >
+	<fx:Script>
 		<![CDATA[
 			import mx.events.FlexEvent;
 			import mx.events.StyleEvent;
@@ -18,17 +18,25 @@
 			
 			protected var context:MiGContext;
 			private function loadCSS(event:FlexEvent):void {
-				var myevent:IEventDispatcher = StyleManager.loadStyleDeclarations("mig.swf");
+				var myevent:IEventDispatcher = styleManager.loadStyleDeclarations("mig.swf");
 				myevent.addEventListener(StyleEvent.COMPLETE, createComponents);
 			}
 			private function createComponents(event:StyleEvent): void {
-				createComponentsFromDescriptors();
+				this.createDeferredContent();
 				context = new MiGContext();
 				context.contextView = this;				
 			}
 			
 		]]>
-	</mx:Script>
-	
+	</fx:Script>
+	<s:Rect width="100%" height="100%">
+		<s:fill>
+			<s:LinearGradient>
+				<s:GradientEntry color="0x1A1A1A" alpha="1" />
+				<s:GradientEntry color="0x111111" alpha="1" />
+			</s:LinearGradient>
+		</s:fill>
+	</s:Rect>
 	<main:MainView width="100%" height="100%"  top="0" right="8" left="8" bottom="8"/>
-</mx:Application>
+
+</s:Application>

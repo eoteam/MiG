@@ -107,13 +107,13 @@
 		<mx:HRule width="100%" strokeWidth="1" strokeColor="0xffffff" />
 		<mx:Spacer height="3" />
 		<fe:ExtendedDividedBox direction="horizontal" width="100%" height="100%" 
-		   liveDragging="false" clipContent="false" id="mainBody" barColor="0xFFFFFF" 
+		   liveDragging="false" clipContent="false" id="mainBody"  
 		   barFillColors="[0xFFFFFF,0xFFFFFF]" 
 		   dividerThickness="1" dividerSkin="com.fxcomponents.skins.MainDividerSkin">
 
 		<mx:Canvas width="{LEFT_SIDEBAR_OPEN_WIDTH}" height="100%" id="leftMain" left="5">
 		
-		<fe:ExtendedDividedBox id="containerTray" direction="vertical" width="100%" height="{leftMain.height - 38}" liveDragging="false" clipContent="false"  barColor="0xFFFFFF"
+		<fe:ExtendedDividedBox id="containerTray" direction="vertical" width="100%" height="{leftMain.height - 38}" liveDragging="false" clipContent="false"
 		barFillColors="[0xFFFFFF,0xFFFFFF]" dividerThickness="1" dividerSkin="com.fxcomponents.skins.MainDividerSkin" top="{controlBox.height+2}" right="3">
 			
 			<mx:VBox id="treesVBox" width="100%" height="100%" paddingLeft="0" paddingTop="0" paddingRight="0" paddingBottom="0" verticalGap="0">
@@ -132,7 +132,7 @@
 			</mx:VBox>
 		</fe:ExtendedDividedBox>
 		
-		<mx:Canvas width="100%" borderSides="top" borderColor="#999999" bottom="3" right="3">
+		<mx:Canvas width="100%"   borderColor="#999999" bottom="3" right="3">
 			
 			<mx:Button id="containerPanelCollapseButton" styleName="leftPanelCollapseButton" mouseChildren="false" buttonMode="true" right="4" 
 			click="containerPanelVisible=!containerPanelVisible; if(containerPanelVisible==true){openContainerTray.play();}else{closeContainerTray.play();}" />
@@ -159,7 +159,7 @@
 	<mx:Canvas id="rightMain" width="{RIGHT_SIDEBAR_OPEN_WIDTH}" height="100%">
 		<main:Tools id="editorsView"  width="100%" height="{rightMain.height - 38}" clipContent="true" horizontalScrollPolicy="off"   />
 	
-		<mx:Canvas width="30" borderSides="top" borderColor="#999999" bottom="3">
+		<mx:Canvas width="30"  borderColor="#999999" bottom="3">
 			<mx:Button id="toolsPanelCollapseButton" styleName="rightPanelCollapseButton" mouseChildren="false" buttonMode="true"  
 			click="toolsPanelVisible=!toolsPanelVisible; if(toolsPanelVisible==true){openToolsTray.play();}else{closeToolsTray.play();}" left="4" />
 		</mx:Canvas>				

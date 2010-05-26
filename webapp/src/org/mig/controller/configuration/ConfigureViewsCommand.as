@@ -32,7 +32,7 @@ package org.mig.controller.configuration
 	import org.mig.view.mediators.managers.media.FileUploadMediator;
 	import org.mig.view.mediators.managers.media.MediaManagerMediator;
 	import org.mig.view.mediators.managers.media.RenameMediator;
-	import org.mig.view.renderers.MediaTile;
+	//import org.mig.view.renderers.MediaTile;
 	import org.robotlegs.mvcs.Command;
 	import org.robotlegs.utilities.statemachine.StateEvent;
 		
@@ -59,7 +59,7 @@ package org.mig.controller.configuration
 			mediatorMap.mapView(RenameView, RenameMediator,null, false, false ); 
 			
 			injector.mapClass(TagsCategoriesTab,TagsCategoriesTab);
-			injector.mapClass(MediaTile, MediaTile);
+			//injector.mapClass(MediaTile, MediaTile);
 			
 			trace("Configure: Views Complete");
 			//notifiy the state machine that we are done with this step

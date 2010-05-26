@@ -91,11 +91,11 @@
 			<mx:Canvas width="100%" height="100%" id="usageHolder">
 				<controls:MiGTileList  horizontalScrollPolicy="off"  id="usageList"
 			   	width="100%" height="100%"
-			   	backgroundAlpha="0" 
-			   	backgroundColor="0xffffff"
+				contentBackgroundAlpha="0" 
+				contentBackgroundColor="0xffffff" 
 			   	columnWidth="{210*scalePercent}"  
 			   	rowHeight="{210*scalePercent}" 
-			   	borderThickness="0"				
+				borderVisible="false"				
 			   	dropEnabled="true" 
 			   	doubleClickEnabled="true">
 					<controls:itemRenderer>
@@ -140,7 +140,7 @@
 					dragFormat="TabFiles"
 					itemsChangeEffect="{myTileListEffect}"
 					doubleClickEnabled="true" 
-					borderThickness="0" backgroundColor="0xffffff" backgroundAlpha="0" focusAlpha="0"	
+					borderVisible="false" contentBackgroundColor="0xffffff" contentBackgroundAlpha="0" focusAlpha="0"	
 					rollOverColor="0xed1c58" color="0xed1c58" newSelectionColor="0xF491A9" selectionColor="0xed1c58" 
 					scalePercent="1" rowHeight="240" columnWidth="200" 
 					allowMultipleSelection="true" allowDragSelection="true" dropEnabled="true" dragMoveEnabled="true" dragEnabled="true"

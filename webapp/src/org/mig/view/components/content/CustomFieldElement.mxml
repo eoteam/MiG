@@ -19,6 +19,7 @@
 			import mx.controls.List;
 			import mx.controls.TextArea;
 			import mx.core.Application;
+			import mx.core.FlexGlobals;
 			import mx.core.UIComponent;
 			import mx.events.DragEvent;
 			import mx.events.ListEvent;
@@ -106,7 +107,7 @@
 					case CustomFieldTypes.COLOR:
 						child = new org.mig.view.controls.colorPicker();
 						child.addEventListener("dataChange",dataChangeProxy);	
-						//colorPicker(child).dataProvider=Application.application.globalColors; 
+						//colorPicker(child).dataProvider=FlexGlobals.topLevelApplication.globalColors; 
 						colorPicker(child).selectedColor= Number(vo[customfield.name]);		
 						this.summaryText = Number(vo[customfield.name]).toString(16);		
 					break;
@@ -212,16 +213,16 @@
 			}
 			private function handleLinkButton(event:Event):void
 			{
-				mouseXInit = Application.application.mouseX-linkButton.mouseX+linkButton.width/2;
-				mouseYInit = Application.application.mouseY-linkButton.mouseY+linkButton.height/2;					
-				Application.application.linkingMode = true;
-				Application.application.showDrawingLayer();
-				Application.application.stage.addEventListener(MouseEvent.MOUSE_MOVE,handleMouseMove);
-				Application.application.stage.addEventListener(MouseEvent.MOUSE_UP,removeLine);			
+				mouseXInit = FlexGlobals.topLevelApplication.mouseX-linkButton.mouseX+linkButton.width/2;
+				mouseYInit = FlexGlobals.topLevelApplication.mouseY-linkButton.mouseY+linkButton.height/2;					
+				FlexGlobals.topLevelApplication.linkingMode = true;
+				FlexGlobals.topLevelApplication.showDrawingLayer();
+				FlexGlobals.topLevelApplication.stage.addEventListener(MouseEvent.MOUSE_MOVE,handleMouseMove);
+				FlexGlobals.topLevelApplication.stage.addEventListener(MouseEvent.MOUSE_UP,removeLine);		
 			}
 			private function handleMouseMove(event:MouseEvent):void
 			{
-				var drawingLayer:UIComponent = Application.application.drawingLayer;
+				var drawingLayer:UIComponent = FlexGlobals.topLevelApplication.drawingLayer;
 		 		drawingLayer.graphics.clear(); 
 				drawingLayer.graphics.lineStyle(3, 0xFCEE21, 1); 
 				drawingLayer.graphics.moveTo(mouseXInit, mouseYInit); 
@@ -230,14 +231,14 @@
 			}
 			private function removeLine(event:Event):void
 			{
-				Application.application.linkingMode = false; 
-				var currPoint:Point = new Point(Application.application.mouseX,Application.application.mouseY);
-				var mediaObjects:Array = Application.application.mainView.rightMain.getObjectsUnderPoint(currPoint);
-				var treeObjects:Array = Application.application.mainView.contentTree.getObjectsUnderPoint(currPoint);
+				FlexGlobals.topLevelApplication.linkingMode = false; 
+				var currPoint:Point = new Point(FlexGlobals.topLevelApplication.mouseX,FlexGlobals.topLevelApplication.mouseY);
+				var mediaObjects:Array = FlexGlobals.topLevelApplication.mainView.rightMain.getObjectsUnderPoint(currPoint);
+				var treeObjects:Array = FlexGlobals.topLevelApplication.mainView.contentTree.getObjectsUnderPoint(currPoint);
 				
 				if(treeObjects.length > 0)
 				{
-					var node:ContainerNode = Application.application.mainView.contentTree.selectedItem;
+					var node:ContainerNode = FlexGlobals.topLevelApplication.mainView.contentTree.selectedItem;
 					MiGTextInput(this.child).text = "event:content="+node.data.id.toString();
 					MiGTextInput(this.child).setFocus();
 					MiGTextInput(this.child).dispatchEvent(new Event(Event.CHANGE));					
@@ -245,9 +246,9 @@
 				else if(mediaObjects.length > 0)
 				{
 					
-					if(Application.application.mainView.editorsView.linkedResource != null)
+					if(FlexGlobals.topLevelApplication.mainView.editorsView.linkedResource != null)
 					{
-/* 						var file:MediaContainerNode = Application.application.mainView.editorsView.linkedResource;
+/* 						var file:MediaContainerNode = FlexGlobals.topLevelApplication.mainView.editorsView.linkedResource;
 						var mediaPath:String = appModel.mediaURL+file.data.path.toString()+file.data.name.toString();					
 						var baseLink:String = appModel.publishedURL;	
 						MiGTextInput(this.child).text = baseLink+mediaPath;
@@ -255,9 +256,9 @@
 						MiGTextInput(this.child).dispatchEvent(new Event(Event.CHANGE));	 */
 					}
 				}
-				Application.application.stage.removeEventListener(MouseEvent.MOUSE_MOVE,handleMouseMove);
-				Application.application.stage.removeEventListener(MouseEvent.MOUSE_UP,removeLine);
-				Application.application.hideDrawingLayer();
+				FlexGlobals.topLevelApplication.stage.removeEventListener(MouseEvent.MOUSE_MOVE,handleMouseMove);
+				FlexGlobals.topLevelApplication.stage.removeEventListener(MouseEvent.MOUSE_UP,removeLine);
+				FlexGlobals.topLevelApplication.hideDrawingLayer();
 			}						
 			private function handleMultipleSelect(event:Event):void
 			{
@@ -333,7 +334,7 @@
 			
 			private function handleTray(event:Event):void
 			{
-				/* var tools:Tools = Tools(Application.application.mainView.editorsView);
+				/* var tools:Tools = Tools(FlexGlobals.topLevelApplication.mainView.editorsView);
 				if(event.type == "open")
 					tools.instantiateToolSet(["Browse","Preview","Metadata","Upload","Text"]);	
 				else

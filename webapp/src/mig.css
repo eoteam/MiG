@@ -1,12 +1,18 @@
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+
+
 @font-face {
 	src: url("/fonts/Transit/TransNor.otf");
 	font-family: "Transit-Normal";
 	unicode-range:U+0000-U+21FF;
+	embedAsCFF: false;
 }
 @font-face {
 	src: url("/fonts/Transit/TransBol.otf");
 	font-family: "Transit-Bold";
 	unicode-range:U+0020-U+21FF;
+	embedAsCFF: false;
 }
 /*@font-face {
 src: url("/fonts/Transit/TransBla.otf");
@@ -24,12 +30,12 @@ font-family: "Transit-Italic";
 unicode-range:U+0020-U+21FF;
 }*/
 
-Label{
+mx|Label{
 	fontFamily: Transit-Normal;
 	color: white;
 	fontSize: 14;
 }
-ScrollBar
+mx|ScrollBar
 {
 	trackSkin: ClassReference("org.mig.view.skins.CustomScrollTrackSkin"); 
 	thumbDownSkin: ClassReference("org.mig.view.skins.CustomScrollThumbSkin");	
@@ -38,7 +44,7 @@ ScrollBar
 	upArrowSkin: ClassReference( null );
 	downArrowSkin: ClassReference( null );
 } 
-HSlider{
+mx|HSlider{
 	trackSkin: ClassReference("org.mig.view.skins.migSliderTrackSkin"); 
 	thumbDisabledSkin: ClassReference("org.mig.view.skins.migSliderThumbSkin");
 	thumbDownSkin: ClassReference("org.mig.view.skins.migSliderThumbSkin");	
@@ -46,7 +52,7 @@ HSlider{
 	thumbUpSkin: ClassReference("org.mig.view.skins.migSliderThumbSkin");
 	
 }
-CheckBox{
+mx|CheckBox{
 	disabledIcon: Embed(source="migAssets/flex_skins.swf", symbol="CheckBox_disabledIcon"); 
 	upIcon: Embed(source="migAssets/flex_skins.swf", symbol="CheckBox_upIcon"); 
 	overIcon: Embed(source="migAssets/flex_skins.swf", symbol="CheckBox_overIcon"); 
@@ -56,7 +62,7 @@ CheckBox{
 	selectedDownIcon: Embed(source="migAssets/flex_skins.swf", symbol="CheckBox_selectedDownIcon"); 
 	selectedDisabledIcon: Embed(source="migAssets/flex_skins.swf", symbol="CheckBox_selectedDisabledIcon"); 
 }
-NumericStepper {
+mx|NumericStepper {
 	borderStyle: none;
 	highlightAlphas: 0, 0;
 	
@@ -105,7 +111,7 @@ NumericStepper {
 	overSkin: Embed(source="migAssets/library.swf", symbol="minus");
 	upSkin: Embed(source="migAssets/library.swf", symbol="minus");
 }
-Alert{
+mx|Alert{
 	fontWeight: normal;
 	backgroundColor: #111111;
 	backgroundAlpha: 0.98;
@@ -125,7 +131,7 @@ Alert{
 	borderThicknessTop: 0;
 	
 }
-TitleWindow{
+mx|TitleWindow{
 	closeButtonDisabledSkin:ClassReference("org.mig.view.skins.CloseButtonUp"); 
 	closeButtonDownSkin:ClassReference("org.mig.view.skins.CloseButtonUp"); 
 	closeButtonOverSkin: ClassReference("org.mig.view.skins.CloseButtonUp"); 
@@ -155,7 +161,7 @@ TitleWindow{
 	fontFamily: Transit-Normal;
 	
 }
-TextArea{
+mx|TextArea{
 	themeColor:#ED1C58;
 	
 }
@@ -177,7 +183,7 @@ global
 	modalTransparencyColor: #191919;
 	modalTransparencyDuration: 200;
 }
-ToolTip{
+mx|ToolTip{
 	fontFamily: Transit-Normal;
 	fontSize: 12pt;
 	color: black;
@@ -191,7 +197,7 @@ ToolTip{
 	fontWeight: normal;
 }
 
-ContainerButton {
+/*ContainerButton {
 	backgroundColor: #ffffff;
 	backgroundOverColor: #333333;
 	color: #333333;
@@ -204,11 +210,11 @@ ContainerButton {
 	paddingTop: 7;
 	paddingBottom: 7;
 	paddingLeft: 7;
-	paddingRight: 20;
+	paddingRight: 20;*/
 	/*upIcon: ClassReference("org.mig.view.skins.com.map.assets.FolderIcon");
 	overIcon: ClassReference("org.mig.view.skins.com.map.assets.FolderIcon");*/
-}
-Button{
+
+mx|Button{
 	
 	color: #ffffff;
 	embedFonts: true;
@@ -249,7 +255,7 @@ verticalGap: 1;
 //  HDividedBox
 //------------------------------
 */
-HDividedBox
+mx|HDividedBox
 {
 	
 	dividerThickness: 1;
@@ -263,7 +269,7 @@ HDividedBox
 	backgroundAlpha:0.5;
 	backgroundColor:#000000;
 }
-DataGrid {
+mx|DataGrid {
 	font-family: Transit-Normal;
 	font-size: 13pt;
 	alternatingItemColors: #191819, #111111;
@@ -283,7 +289,7 @@ DataGrid {
 	headerStyleName: "dataGridHeaderStyle";
 	sortArrowSkin: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderOpenIcon");
 }
-List {
+mx|List {
 	font-family: Transit-Normal;
 	font-size: 13pt;
 	letterSpacing: 0;
@@ -303,7 +309,7 @@ List {
 {
 	backgroundAlpha: 0;
 }
-AdvancedDataGrid {
+mx|AdvancedDataGrid {
 	font-family: Transit-Normal;
 	font-size: 13pt;
 	alternatingItemColors: #191819, #111111;
@@ -348,7 +354,7 @@ AdvancedDataGrid {
 //  ComboBox
 //------------------------------
 */
-ComboBox
+mx|ComboBox
 {
 	fontWeight: normal;
 	font-family: Transit-Bold;
@@ -413,12 +419,12 @@ ComboBox
 	borderColor: #111111;
 	borderThickness:0;
 }
-TileList
+mx|TileList
 {
 	dropIndicatorSkin: ClassReference("org.mig.view.skins.TreeDropIndicator");
 }
 
-Tree
+mx|Tree
 {
 	defaultLeafIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_noIcon");
 	/* disclosureClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderClosedIcon"); */
@@ -467,7 +473,7 @@ Tree
 	textSelectedColor: #ffffff;
 	selectionColor: #ED1C58;
 }
-Button{
+mx|Button{
 	fontWeight: normal;
 	color:#FFFFFF;
 	fontFamily: Transit-Bold;
@@ -818,7 +824,7 @@ Button{
 	selectedDisabledIcon: Embed(source="migAssets/library.swf", symbol="toolPanelClosedIcon");
 	
 }
-TextInput{
+mx|TextInput{
 	background-color: #333333;
 	color: white;
 	fontFamily: Transit-Normal;
@@ -1232,7 +1238,7 @@ TextInput{
 
 
 /* calendar */
-.calendarHeader {
+/*.calendarHeader {
 	text-align: right;
 	font-size: 12;
 	font-family: Transit-Bold;
@@ -1271,4 +1277,4 @@ CalendarDisplay {
 	backgroundColor: #111111;
 	disabledBackgroundColor: #333333;
 	borderColor: #FFFFFF;
-}
+}*/

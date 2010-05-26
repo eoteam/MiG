@@ -8,9 +8,9 @@
 		
 	<mx:Script>
 		<![CDATA[
-
-			import mx.managers.PopUpManager;
 			import mx.core.Application;
+			import mx.core.FlexGlobals;
+			import mx.managers.PopUpManager;
 			
 			[Embed(source='/migAssets/library.swf#whiteKaboom')]
         	[Bindable] private var alertIcon:Class;
@@ -45,11 +45,11 @@
 			private function handleClick(type:String):void {
 				this.dispatchEvent(new Event(type));	
 				PopUpManager.removePopUp(this);			
-			}
+			} 
 		]]>
 	</mx:Script>
-	<mx:Binding source="Application.application.width" destination="this.width" />
-	<mx:Binding  source="Application.application.height" destination="this.height" />
+	<mx:Binding source="FlexGlobals.topLevelApplication.width" destination="this.width" />
+	<mx:Binding  source="FlexGlobals.topLevelApplication.height" destination="this.height" />
 
 	<mx:String id="message"></mx:String>
 	<mx:String id="optionMessage"></mx:String>
