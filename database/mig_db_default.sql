@@ -1,4 +1,3 @@
-
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
@@ -507,7 +506,7 @@ CREATE TABLE `user_usercategories` (
   KEY `user_usercategories_createdby_fk` (`createdby`),
   CONSTRAINT `userusercategories_categoryid_fk` FOREIGN KEY (`categoryid`) REFERENCES `usercategories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `userusercategories_userid_fk` FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `user_usercategories_createdby_fk` FOREIGN KEY (`createdby`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `user_usercategories_createdby_fk` FOREIGN KEY (`createdby`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -542,8 +541,10 @@ CREATE TABLE `usergroup_perms` (
   KEY `usergroup_id` (`usergroupid`),
   KEY `usergroup_perms_usergroupid_fk` (`usergroupid`),
   KEY `usergroup_perms_permid_fk` (`permid`),
+  KEY `usergroup_perms_createdby_fk` (`createdby`),
   CONSTRAINT `usergroup_perms_permid_fk` FOREIGN KEY (`permid`) REFERENCES `perms` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `usergroup_perms_usergroupid_fk` FOREIGN KEY (`usergroupid`) REFERENCES `usergroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `usergroup_perms_usergroupid_fk` FOREIGN KEY (`usergroupid`) REFERENCES `usergroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `usergroup_perms_createdby_fk` FOREIGN KEY (`createdby`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -558,7 +559,11 @@ CREATE TABLE `usergroups` (
   PRIMARY KEY (`id`),
   KEY `parentid` (`parentid`),
   KEY `usergroups_parent_usergroups_fk` (`parentid`),
-  CONSTRAINT `usergroups_parent_usergroups_fk` FOREIGN KEY (`parentid`) REFERENCES `usergroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `usergroups_createdby_fk` (`createdby`),
+  KEY `usergroups_modifiedby_fk` (`modifiedby`),
+  CONSTRAINT `usergroups_parent_usergroups_fk` FOREIGN KEY (`parentid`) REFERENCES `usergroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `usergroups_createdby_fk` FOREIGN KEY (`createdby`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `usergroups_modifiedby_fk` FOREIGN KEY (`modifiedby`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 
@@ -969,5 +974,3 @@ UNLOCK TABLES;
 
 
 SET FOREIGN_KEY_CHECKS = 1;
-
-
