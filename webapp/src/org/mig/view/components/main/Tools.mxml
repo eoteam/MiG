@@ -4,21 +4,24 @@
 	<mx:VDividedBox horizontalScrollPolicy="off"  direction="vertical" liveDragging="false" clipContent="false" width="100%" height="100%"
 	id="toolContainer" dividerSkin="com.fxcomponents.skins.MainDividerSkin">
 		
-		<containers:MiGCollapsibleTabNavigator id="toolSet1" width="100%" height="100%">
-			<media:MediaManagerView  width="100%" height="100%" label="Browse Files"/>
+		<containers:CollapsibleTabNavigator id="toolSet1" width="100%" height="100%" contentBackgroundAlpha="1">
+			<mx:Canvas width="100%" height="100%" label="Browse Files">
+				<media:MediaManagerView  width="100%" height="100%" />	
+			</mx:Canvas>
+			
 			<media:FileUploadView width="100%" height="100%" label="Upload Files"/>
-		</containers:MiGCollapsibleTabNavigator>
+		</containers:CollapsibleTabNavigator>
 		
-		<containers:MiGCollapsibleTabNavigator id="toolSet2" width="100%" height="100%" opened="false">
+		<containers:CollapsibleTabNavigator id="toolSet2" width="100%" height="100%" opened="false">
 			
-		</containers:MiGCollapsibleTabNavigator>
+		</containers:CollapsibleTabNavigator>
 		
-		<containers:MiGCollapsibleTabNavigator id="toolSet3" width="100%" height="100%" opened="false">
+		<containers:CollapsibleTabNavigator id="toolSet3" width="100%" height="100%" opened="false">
 			
-		</containers:MiGCollapsibleTabNavigator>
+		</containers:CollapsibleTabNavigator>
 		
-		<containers:MiGCollapsibleTabNavigator id="toolSet4" width="100%" height="100%" opened="false">
+		<containers:CollapsibleTabNavigator id="toolSet4" width="100%" height="100%" opened="false">
 			
-		</containers:MiGCollapsibleTabNavigator>
+		</containers:CollapsibleTabNavigator>
 	</mx:VDividedBox>
 </mx:Canvas>

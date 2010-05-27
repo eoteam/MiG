@@ -2,23 +2,22 @@
 <controls:MigTree
 	xmlns:mx="http://www.adobe.com/2006/mxml"
 	xmlns:controls="org.mig.view.controls.*"
-	xmlns:renderers="org.mig.view.renderers.*"
 	width="100%" paddingLeft="0" paddingBottom="3" paddingTop="0" paddingRight="0"
 	allowMultipleSelection="true"
-	dragMoveEnabled="true"
+	dragMoveEnabled="true" 
 	dragEnabled="true" 
-	dropEnabled="true"
+	dropEnabled="true" 
 	selectable="true" 
 	autoCloseOnDrop="false"
+	styleName="containerTree"
+	doubleClickEnabled="true" 
+	labelField="debugLabel"
 	folderClosedIcon="{containerIcon}"
 	folderOpenIcon="{containerIcon}"
-	styleName="containerTree"
-	doubleClickEnabled="true"
-	labelField="debugLabel" contentBackgroundAlpha="0"
 	iconField="{ContentNode(data).config.@icon}"
+	itemRenderer="org.mig.view.renderers.ContentTreeRenderer"
 	showRoot="true">
 
-	
 	<mx:Script>
 		<![CDATA[
 			import org.mig.model.vo.ContentNode;
@@ -32,9 +31,4 @@
 			}
 		]]>
 	</mx:Script>
-	<controls:itemRenderer>
-		<mx:Component>
-			<renderers:ContentRenderer  />
-		</mx:Component>
-	</controls:itemRenderer>
 </controls:MigTree>

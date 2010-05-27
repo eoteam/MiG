@@ -71,14 +71,14 @@ package org.mig.model.vo
 			if(data)
 				data[_config.@labelField] = value;
 		}
-		[Bindable] 
 		public function get baseLabel():String {
-			return _baseLabel;
+			if(_baseLabel)
+				return _baseLabel;
+			else return '';
 		}
 		public function toString():String {
-			return this.label;
+			return label;
 		}	
-		
 		
 		//removes a child node from the children list
 		/*		public function removeNode(node:ContentNode):void {

@@ -84,7 +84,7 @@ package org.mig.view.mediators.main
 			
 		}
 		private function handleItemDoubleClick(event:ListEvent):void {
-			var selectedNode:ContainerNode = view.selectedItem as ContainerNode;
+			var selectedNode:ContainerNode = event.itemRenderer.data as ContainerNode
 			if(ContentData(selectedNode.data).loaded)
 				eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.SELECT,selectedNode));
 			else 

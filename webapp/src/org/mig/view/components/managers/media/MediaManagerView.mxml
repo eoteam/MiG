@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox
-	xmlns:mx="http://www.adobe.com/2006/mxml" 
+<s:VGroup
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx"
 	xmlns:controls="org.mig.view.controls.*" 
 	xmlns:renderers="org.mig.view.renderers.*"
 	width="100%" height="100%"
-	horizontalScrollPolicy="off" xmlns:assets="org.mig.view.components.assets.*" xmlns:container="com.appdivision.view.container.*">
+	contentBackgroundAlpha="0" 
+	xmlns:assets="org.mig.view.components.assets.*" 
+	xmlns:container="com.appdivision.view.container.*">
 
-	<mx:Script>
+	<fx:Script>
 		<![CDATA[
 			import mx.collections.ArrayCollection;
 			import mx.collections.HierarchicalData;
@@ -14,6 +18,7 @@
 			import mx.effects.easing.*;
 			
 			import org.mig.model.vo.media.FileNode;
+			import org.mig.view.skins.buttons.PlusButtonSkin;
 			
 			[Bindable] public var scalePercent:Number = 0.5;
 			[Bindable] public var currentLocation:String='';
@@ -74,19 +79,20 @@
 					clearSearch.visible = true;
 			}
 		]]>
-	</mx:Script>	
+	</fx:Script>
+	
 	<!--Control Bar-->
-	<container:FlowContainer  direction="horizontal"  width="100%" horizontalGap="8" verticalAlign="middle">
+	<container:FlowContainer  direction="horizontal"  width="100%" horizontalGap="8" verticalAlign="middle" accentColor="0" contentBackgroundAlpha="1">
 		<mx:Canvas>
 			<mx:SWFLoader left="8" source="@Embed(source='/migAssets/library.swf#folderIcon')" mouseChildren="false"  buttonMode="true" useHandCursor="true" /><!--   width="18" height="16" -->	
 		</mx:Canvas>
 		<mx:Text htmlText="{currentLocation}" id="locationText" styleName="boldCopy" />
 		
 		<!--Search -->
-		<mx:Button styleName="searchButton" mouseChildren="false" buttonMode="true" toggle="true" toolTip="Search" selected="false" />
-		<controls:MiGTextInput styleName="inputFieldBlack" id="searchInput" change="searchInput_changeHandler(event)"/>
+		<s:ToggleButton  skinClass="org.mig.view.skins.buttons.SearchButtonSkin" mouseChildren="false" buttonMode="true"  toolTip="Search" selected="false" />
+		<s:TextInput  styleName="inputFieldBlack" id="searchInput" change="searchInput_changeHandler(event)"/>
 		<mx:Spacer width="-25"/>
-		<mx:Button id="clearSearch"  styleName="plusButton" rotation="45" toolTip="Clear Search" mouseChildren="false" buttonMode="true" visible="false"   />
+		<s:Button id="clearSearch" skinClass="org.mig.view.skins.buttons.PlusButtonSkin" rotation="45" toolTip="Clear Search" mouseChildren="false" buttonMode="true" visible="false"   />
 		
 		<!--Views-->
 		<mx:SWFLoader source="@Embed(source='/migAssets/library.swf#thumbViewIcon')" id="thumbButton"
@@ -103,13 +109,13 @@
 			<mx:SWFLoader  mouseChildren="false" id="addDirectoryButton" alpha="1" toolTip="New Folder" top="6"
 			source="@Embed(source='/migAssets/library.swf#addFolderIcon')" buttonMode="true" useHandCursor="true"/>
 		</mx:Canvas>
-		<mx:Button styleName="trashButton"  toolTip="Delete"  id="trashButton" mouseChildren="false"  buttonMode="true" />			
+		<s:Button  skinClass="org.mig.view.skins.buttons.TrashButtonSkin"  toolTip="Delete"  id="trashButton" mouseChildren="false"  buttonMode="true" />			
 	</container:FlowContainer>
 	
-	<mx:Canvas width="100%" height="100%">
-		<mx:ViewStack width="100%" height="100%" id="stack">
+	<s:Group width="100%" height="100%">
+		<mx:ViewStack width="100%" height="100%" id="stack" visible.loading="false" visible.loaded="true">
 			<mx:VBox width="100%" height="100%" verticalScrollPolicy="off" >
-				<controls:MiGAdvancedDataGrid				
+				<controls:MiGAdvancedDataGrid		
 					itemRollOver="lastRollOverIndex = event.rowIndex"
 					id="listView" 
 					thumbURL="{thumbURL}"
@@ -126,7 +132,7 @@
 					folderClosedIcon="@Embed(source='/migAssets/library.swf#folderIcon')"
 					folderOpenIcon="@Embed(source='/migAssets/library.swf#folderIcon')"
 					defaultLeafIcon="{null}"
-					editable="true"
+					editable="true" borderVisible="false" 
 					clearingLines="true" clearVLineIndices="[]" customProxy="true" 	 	 
 					doubleClickEnabled="true" 
 					treeColumn="{treeColumn}" draggableColumns="false"
@@ -135,37 +141,37 @@
 					<controls:columns>
 						<mx:AdvancedDataGridColumn  editable="false" headerText="Name"  width="350" dataField="label"  id="treeColumn">
 <!--							<mx:itemRenderer>
-								<mx:Component>
+								<fx:Component>
 									<mx:TextInput borderStyle="none" backgroundAlpha="0" editable="false" enter="this.editable=true"   mouseDownOutside="this.editable=false" text="{this.data}" styleName="inputFieldBlack" />
-								</mx:Component>
+								</fx:Component>
 							</mx:itemRenderer>-->
 						</mx:AdvancedDataGridColumn>
 						<mx:AdvancedDataGridColumn editable="false" color="0x666666"  headerText="File Size" dataField="size" width="100">
 							<mx:itemRenderer>
-								<mx:Component>	
-									<renderers:AdvancedDatagridCellEditor  horizontalScrollPolicy="off" colorEnabled="true" outerFunction="{this.outerDocument.handleSizeField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>
-								</mx:Component>
+								<fx:Component>	
+									<renderers:ADGCell 	colorEnabled="true" outerFunction="{this.outerDocument.handleSizeField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>
+								</fx:Component>
 							</mx:itemRenderer>
 						</mx:AdvancedDataGridColumn>
-						<mx:AdvancedDataGridColumn editable="false" color="0x666666" headerText="Extension" dataField="label" width="50">
+						<mx:AdvancedDataGridColumn  editable="false" color="0x666666" headerText="Extension" dataField="label" width="50">
 							<mx:itemRenderer>
-								<mx:Component>
-									<renderers:AdvancedDatagridCellEditor  horizontalScrollPolicy="off" colorEnabled="true" outerFunction="{this.outerDocument.handleExtensionField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>
-								</mx:Component>
+								<fx:Component>
+									<renderers:ADGCell colorEnabled="true" outerFunction="{this.outerDocument.handleExtensionField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>
+								</fx:Component>
 							</mx:itemRenderer>			
 						</mx:AdvancedDataGridColumn>
 						<mx:AdvancedDataGridColumn  editable="false" headerText="Created By" dataField="createdby">
 							<mx:itemRenderer>
-								<mx:Component>
-									<renderers:AdvancedDatagridCellEditor  horizontalScrollPolicy="off" colorEnabled="true" outerFunction="{this.outerDocument.handleUserField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>
-								</mx:Component>
+								<fx:Component>
+									<renderers:ADGCell colorEnabled="true" outerFunction="{this.outerDocument.handleUserField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>
+								</fx:Component>
 							</mx:itemRenderer>
 						</mx:AdvancedDataGridColumn>
 						<mx:AdvancedDataGridColumn editable="false" headerText="Creation Date" dataField="createdate">
 							<mx:itemRenderer>
-								<mx:Component>
-									<renderers:AdvancedDatagridCellEditor  horizontalScrollPolicy="off" colorEnabled="true" outerFunction="{this.outerDocument.handleDateField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>
-								</mx:Component>
+								<fx:Component>
+									<renderers:ADGCell colorEnabled="true" outerFunction="{this.outerDocument.handleDateField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>
+								</fx:Component>
 							</mx:itemRenderer>
 						</mx:AdvancedDataGridColumn>
 					</controls:columns>
@@ -195,16 +201,19 @@
 						selectionEasingFunction="Exponential.easeIn"
 						dataProvider="{tileDP}">
 						<controls:itemRenderer>
-							<mx:Component>
+							<fx:Component>
 								<renderers:MediaManagerTileRenderer scalePercent="{outerDocument.scalePercent}" thumbURL="{outerDocument.thumbURL}" />
-							</mx:Component>
+							</fx:Component>
 						</controls:itemRenderer>
 					</controls:MiGTileList>
 				</mx:Canvas>
 				<mx:Label styleName="bodyCopy" text="{tileDP.length + ' items'}" textAlign="center" width="100%" bottom="5"/>
 			</mx:VBox>
-		</mx:ViewStack>			
-		<mx:VBox id="loadingScreen" backgroundColor="0x000000" backgroundAlpha="0" width="100%" height="100%" visible="false" alpha="0">
+		</mx:ViewStack>	
+		
+		
+		<mx:VBox id="loadingScreen" backgroundColor="0x000000" backgroundAlpha="0" 
+		width="100%" height="100%" visible.loading="true" visible.loaded="false" alpha="0">
 			<mx:Spacer height="35%" width="100%"/>
 			<mx:HBox width="100%">
 				<mx:Spacer  height="100%" width="55%"/>
@@ -213,38 +222,38 @@
 			</mx:HBox>	
 			<mx:Spacer height="65%" width="100%"/>
 		</mx:VBox>
-	</mx:Canvas>
-
-	<mx:Sequence repeatCount="4"  id="blink">
-		<mx:Fade id="fadeOut" alphaFrom="1" alphaTo=".5" duration="200" /><!-- effectEnd="handleEffectEnd()" -->
-		<mx:Fade id="fadeIn" alphaFrom="0.5" alphaTo="1" duration="200" />
-	</mx:Sequence>
-	<mx:Number id="lastRollOverIndex" />		
+	</s:Group>
 
 
-	<mx:states>
-		<mx:State id="loading" name="loading"/>
-		<mx:State id="loaded" name="loaded"/>
-	</mx:states>
 	
-	<mx:transitions>
-		<mx:Transition toState="loading">
-			<mx:Sequence>
-				<mx:SetPropertyAction target="{stack}" name="visible" value="false"/>
-				<mx:SetPropertyAction target="{loadingScreen}" name="visible" value="true"/>
-				<mx:Fade target="{loadingScreen}" alphaTo="1" duration="1000" />
-			</mx:Sequence>
-		</mx:Transition>
-		<mx:Transition toState="loaded">
-			<mx:Sequence>
-				<mx:Fade target="{loadingScreen}" alphaTo="0" duration="500"/>
-				<mx:SetPropertyAction target="{loadingScreen}" name="visible" value="false"/>
-				<mx:SetPropertyAction target="{stack}" name="visible" value="true"/>
-				<mx:Fade target="{stack}" alphaFrom="0" alphaTo="1" duration="1000" />
-			</mx:Sequence>
-		</mx:Transition>
-	</mx:transitions>
+	
+	<fx:Declarations>
+		<fx:Number id="lastRollOverIndex" />		
+		<mx:Sequence repeatCount="4"  id="blink">
+			<mx:Fade id="fadeOut" alphaFrom="1" alphaTo=".5" duration="200" /><!-- effectEnd="handleEffectEnd()" -->
+			<mx:Fade id="fadeIn" alphaFrom="0.5" alphaTo="1" duration="200" />
+		</mx:Sequence>
+	</fx:Declarations>
+
+	<s:states>
+		<s:State id="loading" name="loading"/>
+		<s:State id="loaded" name="loaded"/>
+	</s:states>
+	
+	<s:transitions>
+		<s:Transition toState="loading"> 
+			<s:Sequence>
+				<s:Fade target="{loadingScreen}" alphaTo="1" duration="1000" />
+			</s:Sequence>
+		</s:Transition>
+		<s:Transition toState="loaded">
+			<s:Sequence>
+				<s:Fade target="{loadingScreen}" alphaTo="0" duration="500"/>
+				<s:Fade target="{stack}" alphaFrom="0" alphaTo="1" duration="1000" />
+			</s:Sequence>
+		</s:Transition>
+	</s:transitions>
 
 <!--<mx:Binding source="this.linkedResource" destination="Application.application.mainView.editorsView.linkedResource" />	
 <mx:Binding source="Application.application.linkingMode"  destination="this.linkingMode" />-->
-</mx:VBox>
+</s:VGroup>

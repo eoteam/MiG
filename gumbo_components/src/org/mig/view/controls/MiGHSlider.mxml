@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:HGroup
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	gap="8" height="10" verticalAlign="middle">
+	<fx:Script>
+		<![CDATA[
+			
+			[Bindable] private var _value:Number;
+			[Bindable] private var _sliderWidth:Number = 125;
+			private static const CHANGE_INTERVAL:Number = 0.05;
+			[Bindable]
+			public function get value():Number
+			{
+				return _value;
+			}
+			public function set value(newVal:Number):void
+			{
+				_value = newVal;
+			}
+			[Bindable]
+			public function get sliderWidth():Number
+			{
+				return _sliderWidth;
+			}
+			public function set sliderWidth(newVal:Number):void
+			{
+				_sliderWidth = newVal;
+			}
+			
+			private function init():void
+			{
+				addEventListener("change",valueChangeListener);
+			}
+			private function valueChangeListener(evt:Event):void{}
+			
+			private function valueChangedHandler(evt:Event):void
+			{
+				_value = slider.value;
+				dispatchEvent(new Event("change"));
+			}
+			
+			private function butttonDownHandler(evt:Event):void
+			{
+				evt.target.addEventListener(Event.ENTER_FRAME,buttonHoldHandler);
+			}
+			
+			private function butttonUpHandler(evt:Event):void
+			{
+				evt.target.removeEventListener(Event.ENTER_FRAME,buttonHoldHandler);
+			}
+			
+			private function buttonHoldHandler(evt:Event):void
+			{
+				if(evt.target.name == "plus"){
+					slider.value += CHANGE_INTERVAL;
+					valueChangedHandler(evt);
+				}else{
+					slider.value -= CHANGE_INTERVAL;
+					valueChangedHandler(evt);
+				}
+				
+			}
+			public function set minimum(value:Number):void
+			{
+				_min = value;
+			}
+			public function set maximum(value:Number):void
+			{
+				_max = value;
+			}
+			
+			[Bindable] private var _max:Number = 1;
+			[Bindable] private var _min:Number = 0.1;
+		]]>
+	</fx:Script>
+	<fx:Metadata>
+		[Event(name="change", type="flash.events.Event")]
+	</fx:Metadata>
+	
+	<s:Button name="minus" skinClass="org.mig.view.skins.buttons.MinusButtonSkin"  scaleX="1.2" scaleY="1.2"  mouseDown="butttonDownHandler(event)" mouseOut="butttonUpHandler(event)" mouseUp="butttonUpHandler(event)" mouseChildren="false" buttonMode="true"  />
+	<s:HSlider id="slider" height="10"  width="{_sliderWidth}" minimum="{_min}" maximum="{_max}" liveDragging="true" value="{(_max-_min)/2}" snapInterval=".001" change="valueChangedHandler(event)" />	
+	<s:Rect width="6" />		
+	<s:Button name="plus" skinClass="org.mig.view.skins.buttons.PlusButtonSkin" scaleX="1.2" scaleY="1.2" mouseDown="butttonDownHandler(event)" mouseOut="butttonUpHandler(event)" mouseUp="butttonUpHandler(event)" mouseChildren="false" buttonMode="true"   />
+	
+</s:HGroup>

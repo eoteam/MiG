@@ -4,11 +4,11 @@ package org.mig.model.vo.content
 	import org.mig.model.vo.UpdateData;
 	import org.mig.model.vo.content.ContentData;
 	
-	
+	 
 	public class ContainerNode extends ContentNode
 	{		
 		
-		public var isRoot:Boolean;
+		[Bindable] public var isRoot:Boolean;
 		public var isFixed:Boolean; //fixed items in DB and config
 		public var isNesting:Boolean; //if turned on, this node and its children share the same template
 		public var isBranch:Boolean = false; //used for the spring loaded mechanism

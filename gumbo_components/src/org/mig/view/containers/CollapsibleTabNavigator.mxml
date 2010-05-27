@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx"	
+	width="100%"  styleName="toolsContainer"  
+	height.open="100%" height.closed="{MIN_HEIGHT}" minHeight.closed="{MIN_HEIGHT}" 
+	creationComplete="addComponents()" xmlns:containers="org.mig.view.containers.*">
+	
+	<fx:Metadata>
+		[DefaultProperty("contentChild")] 
+	</fx:Metadata>
+	
+	<fx:Script>
+		<![CDATA[				
+
+			private const MIN_HEIGHT:Number = 22;
+		
+			private var _components:Array = new Array();
+			[Bindable] private var _selectedIndex:int = 0;
+			[Bindable] private var _opened:Boolean = true;
+			
+            public function set contentChild(value:Array):void{
+                _components = value;
+            }
+            public function get contentChild():Array{
+              	return _components;
+            }
+            public function get selectedIndex():int{
+              	return _selectedIndex;
+            }
+            public function set selectedIndex(value:int):void{
+                _selectedIndex = value;
+            }
+            public function get opened():Boolean{
+              	return _opened;
+            }
+            public function set opened(value:Boolean):void{
+                _opened = value;
+                toggleState();
+            }
+           
+            public function addComponents():void{
+                container.removeAllChildren();
+                if(_components){
+                	for(var i:int=0; i < _components.length; i++){
+	                    container.addChild( _components[i] );
+	                }
+                }
+				toggleState();
+            }
+            private function toggleState():void
+			{
+				if(!_opened){
+					this.setCurrentState("closed",true);
+					
+				}else{
+					this.setCurrentState("open",true);
+					
+				}
+			} 
+		]]>
+	</fx:Script>
+	<s:Rect width="100%" height="100%">
+		<s:fill>
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry color="0x595959" />
+				<s:GradientEntry color="0x262626" />
+			</s:LinearGradient>
+		</s:fill>		
+	</s:Rect>
+	
+	<containers:ToolsHeader width="100%" height="22"  />
+		
+	<mx:TabNavigator width="100%" id="container" height="100%"  historyManagementEnabled="false" styleName="toolsTabNavigator" 
+		selectedIndex="{_selectedIndex}" tabIndexChange="_selectedIndex = container.selectedIndex"  
+		paddingLeft="4" paddingRight="4" paddingTop="10"   />
+	
+	<s:ToggleButton top="5" right="6" width="10"  selected="{_opened}" click="opened =! opened"  skinClass="org.mig.view.skins.buttons.ToolPanelToggleButtonSkin"
+	mouseChildren="false" buttonMode="true" />	
+	
+	<s:states>
+		<s:State name="closed"/>
+		<s:State name="open" />		
+	</s:states>
+
+</s:Group>

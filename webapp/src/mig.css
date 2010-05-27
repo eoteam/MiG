@@ -752,6 +752,26 @@ Button{
 	fillColors: #595959, #262626;
 	fillAlphas: 1, 1;
 }
+.toolsTab{
+	color: #B3B3B3;
+	embedFonts: true;
+	fontFamily: Transit-Normal;
+	fontSize: 13pt;	
+	textRollOverColor: #ffffff;
+	
+	highlightAlphas: 0.05, 0;
+	fillAlphas: 0, 0;
+	backgroundAlpha: 1;
+	backgroundColor: #595959; 
+	
+	borderColor: #666666;
+	themeColor: #666666;
+	cornerRadius: 0;
+	textAlign: center;
+	
+}
+
+
 .toolsHeaderBG{
 	backgroundImage: ClassReference("org.mig.view.skins.GradientBackground");
 	backgroundSize: "100%";

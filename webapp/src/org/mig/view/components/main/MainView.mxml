@@ -16,14 +16,14 @@
 		<![CDATA[ 
 			import mx.effects.easing.Exponential;
 			
-			import org.mig.view.skins.buttons.AddContainerButton;
-			import org.mig.view.skins.buttons.FullScreenButton;
-			import org.mig.view.skins.buttons.LeftPanelCollapseButton;
-			import org.mig.view.skins.buttons.RightPanelCollapseButton;
-			import org.mig.view.skins.buttons.SearchButton;
-			import org.mig.view.skins.buttons.TrashButton;
-			import org.mig.view.skins.dropdowns.ComboBoxHeaderButton;
-			import org.mig.view.skins.dropdowns.DefaultComboBox;
+			import org.mig.view.skins.buttons.AddContainerButtonSkin;
+			import org.mig.view.skins.buttons.FullScreenButtonSkin;
+			import org.mig.view.skins.buttons.LeftPanelCollapseButtonSkin;
+			import org.mig.view.skins.buttons.RightPanelCollapseButtonSkin;
+			import org.mig.view.skins.buttons.SearchButtonSkin;
+			import org.mig.view.skins.buttons.TrashButtonSkin;
+			import org.mig.view.skins.dropdowns.ComboBoxHeaderButtonSkin;
+			import org.mig.view.skins.dropdowns.DefaultComboBoxSkin;
 			[Embed(source='/migAssets/library.swf#Tree_folderClosedIcon')]
 			[Bindable] private var closeIcon:Class;
 			
@@ -153,7 +153,7 @@
 					</s:VGroup>
 				</fe:ExtendedDividedBox>
 	
-				<s:ToggleButton id="containerPanelCollapseButton"  mouseChildren="false" buttonMode="true" skinClass="org.mig.view.skins.buttons.LeftPanelCollapseButton"
+				<s:ToggleButton id="containerPanelCollapseButton"  mouseChildren="false" buttonMode="true" skinClass="org.mig.view.skins.buttons.LeftPanelCollapseButtonSkin"
 				click="containerPanelVisible=!containerPanelVisible; if(containerPanelVisible==true){openContainerTray.play();}else{closeContainerTray.play();}" bottom="3" right="4"/>
 			
 				<!--<content:PublishDropBox width="100%" height="{contentTree.height-2}"  top="{managersTree.height+controlBox.height+2}" id="publishDropBox" 
@@ -162,10 +162,10 @@
 			
 				<!-- Content Control -->
 				<s:HGroup width="100%" id="controlBox" paddingTop="0" clipAndEnableScrolling="false" right="3" >
-					<s:ToggleButton styleName="searchButton" id="searchButton" mouseChildren="false" buttonMode="true"  toolTip="Search" selected="false" skinClass="org.mig.view.skins.buttons.SearchButton" />
-					<s:ToggleButton enabled="false" styleName="addContainerButton"  id="addButton" toolTip="New Container" mouseChildren="false" buttonMode="true" skinClass="org.mig.view.skins.buttons.AddContainerButton"/>
+					<s:ToggleButton styleName="searchButton" id="searchButton" mouseChildren="false" buttonMode="true"  toolTip="Search" selected="false" skinClass="org.mig.view.skins.buttons.SearchButtonSkin" />
+					<s:ToggleButton enabled="false" styleName="addContainerButton"  id="addButton" toolTip="New Container" mouseChildren="false" buttonMode="true" skinClass="org.mig.view.skins.buttons.AddContainerButtonSkin"/>
 					<mx:Spacer width="100%" />
-					<s:ToggleButton styleName="trashButton"  toolTip="Delete"  id="trashButton" mouseChildren="false"  buttonMode="true" skinClass="org.mig.view.skins.buttons.TrashButton" />
+					<s:ToggleButton styleName="trashButton"  toolTip="Delete"  id="trashButton" mouseChildren="false"  buttonMode="true" skinClass="org.mig.view.skins.buttons.TrashButtonSkin" />
 				</s:HGroup>
 			
 			</s:Group>
@@ -176,7 +176,7 @@
 			<!-- Tools -->
 			<s:Group id="rightMain" width="{RIGHT_SIDEBAR_OPEN_WIDTH}" height="100%">
 				<main:Tools id="editorsView"  width="100%" height="{rightMain.height - 38}" clipContent="true" horizontalScrollPolicy="off"   />
-				<s:ToggleButton id="toolsPanelCollapseButton"  mouseChildren="false" buttonMode="true"  skinClass="org.mig.view.skins.buttons.RightPanelCollapseButton" 
+				<s:ToggleButton id="toolsPanelCollapseButton"  mouseChildren="false" buttonMode="true"  skinClass="org.mig.view.skins.buttons.RightPanelCollapseButtonSkin" 
 				click="toolsPanelVisible=!toolsPanelVisible; if(toolsPanelVisible==true){openToolsTray.play();}else{closeToolsTray.play();}" bottom="3"  left="4"/>
 			</s:Group>			
 		</fe:ExtendedDividedBox>	
@@ -191,9 +191,9 @@
 		<s:HGroup verticalAlign="middle" id="topControls" gap="3" paddingTop="3">
 			<s:DropDownList styleName="migComboBox" width="160" id="appOptionsCombo" enabled="false"   />
 			<s:Button width="160" id="prompt" label="{loginView.prompt}" click="loginView.visible=!loginView.visible" top="2" 
-			skinClass="org.mig.view.skins.dropdowns.ComboBoxHeaderButton" />					
-			<s:DropDownList  styleName="migComboBox" width="160"  id="helpCombo"  prompt="Help" enabled="false"  skinClass="org.mig.view.skins.dropdowns.DefaultComboBox" />
-			<s:Button id="fullScreen"  mouseChildren="false" buttonMode="true" toolTip="Toggle Fullscreen" skinClass="org.mig.view.skins.buttons.FullScreenButton"/>				
+			skinClass="org.mig.view.skins.dropdowns.ComboBoxHeaderButtonSkin" />					
+			<s:DropDownList  styleName="migComboBox" width="160"  id="helpCombo"  prompt="Help" enabled="false"  skinClass="org.mig.view.skins.dropdowns.DefaultComboBoxSkin" />
+			<s:Button id="fullScreen"  mouseChildren="false" buttonMode="true" toolTip="Toggle Fullscreen" skinClass="org.mig.view.skins.buttons.FullScreenButtonSkin"/>				
 		</s:HGroup>
 	</s:Group>
 	

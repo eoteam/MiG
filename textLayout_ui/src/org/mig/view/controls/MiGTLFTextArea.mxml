@@ -491,7 +491,7 @@
 		</mx:Canvas>	
 		
 		<mx:Canvas width="100%" height="100%" backgroundColor="0xCCCCCC"  >
-			<mx:TextArea backgroundAlpha="0"  id="markupTextArea" fontSize="14"  fontFamily="Transit-Normal"  width="100%"  color="0" minHeight="{this.height}" />	
+			<mx:TextArea contentBackgroundAlpha="0"  id="markupTextArea" fontSize="14"  fontFamily="Transit-Normal"  width="100%"  color="0" minHeight="{this.height}" />	
 		</mx:Canvas>	
 	</mx:ViewStack>
 	<mx:Canvas styleName="toolsContainer" height="{this.height}" includeInLayout="{includeTools}" visible="{includeTools}">

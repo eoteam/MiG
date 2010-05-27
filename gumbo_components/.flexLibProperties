@@ -1,20 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <flexLibProperties includeAllClasses="true" version="3">
-  <includeClasses>
-    <classEntry path="org.mig.view.controls.MiGList"/>
-    <classEntry path="org.mig.view.skins.buttons.SearchButton"/>
-    <classEntry path="org.mig.view.skins.buttons.AddContainerButton"/>
-    <classEntry path="org.mig.view.skins.buttons.TrashButton"/>
-    <classEntry path="org.mig.view.skins.buttons.LeftPanelCollapseButton"/>
-    <classEntry path="org.mig.view.skins.buttons.RightPanelCollapseButton"/>
-    <classEntry path="org.mig.view.skins.dropdowns.ComboBoxHeaderButton"/>
-    <classEntry path="org.mig.view.skins.dropdowns.DefaultComboBox"/>
-    <classEntry path="org.mig.view.skins.dropdowns.DropDownSymbol"/>
-    <classEntry path="org.mig.view.skins.buttons.FullScreenButton"/>
-    <classEntry path="org.mig.view.skins.buttons.DefaultBlackButton"/>
-    <classEntry path="org.mig.view.skins.buttons.DefaultGrayButton"/>
-    <classEntry path="org.mig.view.skins.buttons.TextOnlyButton"/>
-  </includeClasses>
+  <includeClasses/>
   <includeResources/>
   <namespaceManifests/>
 </flexLibProperties>

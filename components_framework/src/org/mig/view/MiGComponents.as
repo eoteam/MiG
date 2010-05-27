@@ -1,6 +1,5 @@
 package org.mig.view
 {
-	
 
 	internal class MiGComponents
 	{
@@ -10,7 +9,6 @@ package org.mig.view
 		
 		
 		import org.mig.view.skins.SortSeparatorSkin; SortSeparatorSkin;
-		
 		//import org.mig.view.containers.DragTile; DragTile;
 		
 		//import org.mig.view.controls.DateTimePicker; DateTimePicker;

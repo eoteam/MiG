@@ -2,11 +2,10 @@
 <mx:Tree 
 	xmlns:mx="http://www.adobe.com/2006/mxml"  
 	xmlns:content="com.mapx.view.content.*"
+	styleName="managerTree" labelField="name"
 	itemRenderer="org.mig.view.renderers.ManagerTreeRenderer"
-	styleName="managerTree"
 	paddingLeft="0" paddingBottom="3" paddingTop="0" paddingRight="0" 
-	showRoot="true" labelField="name" openDuration="0" width="100%" itemClick="handleTreeChange(event)">
-
+	showRoot="true" openDuration="0" width="100%" itemClick="handleTreeChange(event)">
 	<mx:Script>
 		<![CDATA[
 			import mx.collections.ICollectionView;
@@ -22,15 +21,15 @@
 				 	
 			private var managersXML:XML;
 			private var tempXML:XML;
-			private var prevItemRenderer:ManagerTreeRenderer;
+			//private var prevItemRenderer:ManagerTreeRenderer;
 			
 			private function handleTreeChange(event:ListEvent):void {
-				expandChildrenOf(this.dataProvider[0],true);
-				var currentItemRenderer:ManagerTreeRenderer = ManagerTreeRenderer(this.itemToItemRenderer(this.selectedItem));
+				//expandChildrenOf(this.dataProvider[0],true);
+/* 				var currentItemRenderer:ManagerTreeRenderer = ManagerTreeRenderer(this.itemToItemRenderer(this.selectedItem));
 				if(prevItemRenderer && prevItemRenderer != currentItemRenderer)
 					prevItemRenderer.selectedColorOff();
 				currentItemRenderer.selectedColorOn(_selectedColor);
-				prevItemRenderer = currentItemRenderer;
+				prevItemRenderer = currentItemRenderer; */
 			}
 /* 			public function set privileges(priv:int):void
 			{
