@@ -189,7 +189,7 @@
 		<assets:MigLogo right="60" x="-20" visible="false" showEffect="fadeIn" id="topLogo"/>		
 		<main:StatusModule top="{topControls.height+4}" id="statusMod" width="{topControls.width}"  />	
 		<s:HGroup verticalAlign="middle" id="topControls" gap="3" paddingTop="3">
-			<s:DropDownList  styleName="migComboBox" width="160" id="appOptionsCombo" enabled="false"  skinClass="org.mig.view.skins.dropdowns.DefaultComboBox" />
+			<s:DropDownList styleName="migComboBox" width="160" id="appOptionsCombo" enabled="false"   />
 			<s:Button width="160" id="prompt" label="{loginView.prompt}" click="loginView.visible=!loginView.visible" top="2" 
 			skinClass="org.mig.view.skins.dropdowns.ComboBoxHeaderButton" />					
 			<s:DropDownList  styleName="migComboBox" width="160"  id="helpCombo"  prompt="Help" enabled="false"  skinClass="org.mig.view.skins.dropdowns.DefaultComboBox" />
@@ -205,10 +205,15 @@
 							  id="newContentSelector" name="newContentSelector" hideEffect="wipeUp" showEffect="wipeDown"/>	 -->
 	
 	
-	<s:BorderContainer contentBackgroundColor="0" contentBackgroundAlpha="0.8"  width="100%" height="100%" id="preloader" visible="false" >
+	<s:Group width="100%" height="100%" id="preloader" visible="false" >
+		<s:Rect width="100%" height="100%">
+			<s:fill>
+				<s:SolidColor  alpha="0.8" color="0" />
+			</s:fill>
+		</s:Rect>
 		<mx:UIComponent  id="preloaderHolder"  width="80%" height="80%" rotation="-135"  />
 		<s:Label id="startupStep" horizontalCenter="0" bottom="200"/> 
-	</s:BorderContainer>
+	</s:Group>
 	
 	
 	<mx:SWFLoader id="mainLogo" source="migAssets/introLogoAnimation.swf" width="560" height="560" top="2" right="0" autoLoad="true"

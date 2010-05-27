@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <actionScriptProperties mainApplicationPath="migApp.mxml" projectUUID="f5cd39d1-6531-41d1-9304-90ddac4cf327" version="6">
   <compiler additionalCompilerArguments="-locale en_US -keep-as3-metadata+=&quot;Inject,PostConstruct&quot;" autoRSLOrdering="false" copyDependentFiles="true" flexSDK="Flex 4.0" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
     <compilerSourcePath/>
@@ -20,8 +20,5 @@
     <application path="migApp.mxml"/>
   </applications>
   <modules/>
-  <buildCSSFiles>
-    <buildCSSFileEntry destPath="bin-debug" sourcePath="src/mig_gumbo.css"/>
-    <buildCSSFileEntry destPath="bin-debug" sourcePath="src/mig.css"/>
-  </buildCSSFiles>
+  <buildCSSFiles/>
 </actionScriptProperties>

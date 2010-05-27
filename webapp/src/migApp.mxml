@@ -5,10 +5,12 @@
 	xmlns:mx="library://ns.adobe.com/flex/mx"
 	xmlns:main="org.mig.view.components.main.*"
 	xmlns:local="*"
-	creationPolicy="none"
-	backgroundColor="0x000000"
+	backgroundColor="0"
+	 creationComplete="handleCreationComplete()"
+	preloader="org.mig.view.skins.SitePreloader">
+	<!-- creationPolicy="none"
 	preinitialize="loadCSS(event)"
-	preloader="org.mig.view.skins.SitePreloader" >
+	 -->
 	<fx:Script>
 		<![CDATA[
 			import mx.events.FlexEvent;
@@ -17,11 +19,11 @@
 			import org.mig.MiGContext;
 			
 			protected var context:MiGContext;
-			private function loadCSS(event:FlexEvent):void {
+/* 			private function loadCSS(event:FlexEvent):void {
 				var myevent:IEventDispatcher = styleManager.loadStyleDeclarations("mig_gumbo.swf");
 				myevent.addEventListener(StyleEvent.COMPLETE, createComponents);
-			}
-			private function createComponents(event:StyleEvent): void {
+			} */
+			private function handleCreationComplete(): void {
 				this.createDeferredContent();
 				context = new MiGContext();
 				context.contextView = this;				
@@ -29,6 +31,7 @@
 			
 		]]>
 	</fx:Script>
+	<fx:Style source="mig_gumbo.css" />
 	<s:Rect width="100%" height="100%">
 		<s:fill>
 			<s:LinearGradient rotation="90">

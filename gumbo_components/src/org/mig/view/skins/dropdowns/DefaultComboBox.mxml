@@ -42,7 +42,7 @@ is defined by the ComboBoxTextInputSkin class.
             private var cornerRadius:Number = 0;            
             
             /* Define the content fill items that should be colored by the "contentBackgroundColor" style. */
-            static private const contentFill:Array = ["gradientEntry1","gradientEntry2"];
+            static private const contentFill:Array = ["bgFill"];
             
             /**
              * @private
@@ -146,11 +146,7 @@ is defined by the ComboBoxTextInputSkin class.
             <!--- Defines the appearance of drop-down list's background fill. -->
 			<s:Rect left="1" right="1" top="1" bottom="1" id="background">
 				<s:fill>
-					<s:LinearGradient rotation="90" interpolationMethod="rgb" spreadMethod="pad">
-						<s:GradientEntry color="0x808080"  alpha="1" id="gradientEntry1"/>
-						<s:GradientEntry color="0x595959"  alpha="1" id="gradientEntry2"/>
-					</s:LinearGradient>
-					
+					<s:SolidColor  id="bgFill" />					
 				</s:fill>		
 			</s:Rect>
             <!--- @private -->

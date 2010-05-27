@@ -1,7 +1,3 @@
-@namespace s "library://ns.adobe.com/flex/spark";
-@namespace mx "library://ns.adobe.com/flex/mx";
-
-
 @font-face {
 	src: url("/fonts/Transit/TransNor.otf");
 	font-family: "Transit-Normal";
@@ -12,12 +8,28 @@
 	font-family: "Transit-Bold";
 	unicode-range:U+0020-U+21FF;
 }
-mx|Label{
+/*@font-face {
+src: url("/fonts/Transit/TransBla.otf");
+font-family: "Transit-Black";
+unicode-range:U+0000-U+21FF;
+}
+@font-face {
+src: url("/fonts/Transit/TransBolIta.otf");
+font-family: "Transit-BoldItalic";
+unicode-range:U+0020-U+21FF;
+}
+@font-face {
+src: url("/fonts/Transit/TransIta.otf");
+font-family: "Transit-Italic";
+unicode-range:U+0020-U+21FF;
+}*/
+
+Label{
 	fontFamily: Transit-Normal;
 	color: white;
 	fontSize: 14;
 }
-mx|ScrollBar
+ScrollBar
 {
 	trackSkin: ClassReference("org.mig.view.skins.CustomScrollTrackSkin"); 
 	thumbDownSkin: ClassReference("org.mig.view.skins.CustomScrollThumbSkin");	
@@ -26,7 +38,7 @@ mx|ScrollBar
 	upArrowSkin: ClassReference( null );
 	downArrowSkin: ClassReference( null );
 } 
-mx|HSlider{
+HSlider{
 	trackSkin: ClassReference("org.mig.view.skins.migSliderTrackSkin"); 
 	thumbDisabledSkin: ClassReference("org.mig.view.skins.migSliderThumbSkin");
 	thumbDownSkin: ClassReference("org.mig.view.skins.migSliderThumbSkin");	
@@ -34,7 +46,7 @@ mx|HSlider{
 	thumbUpSkin: ClassReference("org.mig.view.skins.migSliderThumbSkin");
 	
 }
-mx|CheckBox{
+CheckBox{
 	disabledIcon: Embed(source="migAssets/flex_skins.swf", symbol="CheckBox_disabledIcon"); 
 	upIcon: Embed(source="migAssets/flex_skins.swf", symbol="CheckBox_upIcon"); 
 	overIcon: Embed(source="migAssets/flex_skins.swf", symbol="CheckBox_overIcon"); 
@@ -44,7 +56,7 @@ mx|CheckBox{
 	selectedDownIcon: Embed(source="migAssets/flex_skins.swf", symbol="CheckBox_selectedDownIcon"); 
 	selectedDisabledIcon: Embed(source="migAssets/flex_skins.swf", symbol="CheckBox_selectedDisabledIcon"); 
 }
-mx|NumericStepper {
+NumericStepper {
 	borderStyle: none;
 	highlightAlphas: 0, 0;
 	
@@ -93,7 +105,7 @@ mx|NumericStepper {
 	overSkin: Embed(source="migAssets/library.swf", symbol="minus");
 	upSkin: Embed(source="migAssets/library.swf", symbol="minus");
 }
-mx|Alert{
+Alert{
 	fontWeight: normal;
 	backgroundColor: #111111;
 	backgroundAlpha: 0.98;
@@ -113,7 +125,7 @@ mx|Alert{
 	borderThicknessTop: 0;
 	
 }
-mx|TitleWindow{
+TitleWindow{
 	closeButtonDisabledSkin:ClassReference("org.mig.view.skins.CloseButtonUp"); 
 	closeButtonDownSkin:ClassReference("org.mig.view.skins.CloseButtonUp"); 
 	closeButtonOverSkin: ClassReference("org.mig.view.skins.CloseButtonUp"); 
@@ -143,7 +155,7 @@ mx|TitleWindow{
 	fontFamily: Transit-Normal;
 	
 }
-mx|TextArea{
+TextArea{
 	themeColor:#ED1C58;
 	
 }
@@ -165,7 +177,7 @@ global
 	modalTransparencyColor: #191919;
 	modalTransparencyDuration: 200;
 }
-mx|ToolTip{
+ToolTip{
 	fontFamily: Transit-Normal;
 	fontSize: 12pt;
 	color: black;
@@ -179,7 +191,7 @@ mx|ToolTip{
 	fontWeight: normal;
 }
 
-/*ContainerButton {
+ContainerButton {
 	backgroundColor: #ffffff;
 	backgroundOverColor: #333333;
 	color: #333333;
@@ -192,11 +204,11 @@ mx|ToolTip{
 	paddingTop: 7;
 	paddingBottom: 7;
 	paddingLeft: 7;
-	paddingRight: 20;*/
+	paddingRight: 20;
 	/*upIcon: ClassReference("org.mig.view.skins.com.map.assets.FolderIcon");
 	overIcon: ClassReference("org.mig.view.skins.com.map.assets.FolderIcon");*/
-
-mx|Button{
+}
+Button{
 	
 	color: #ffffff;
 	embedFonts: true;
@@ -237,7 +249,7 @@ verticalGap: 1;
 //  HDividedBox
 //------------------------------
 */
-mx|HDividedBox
+HDividedBox
 {
 	
 	dividerThickness: 1;
@@ -251,7 +263,7 @@ mx|HDividedBox
 	backgroundAlpha:0.5;
 	backgroundColor:#000000;
 }
-mx|DataGrid {
+DataGrid {
 	font-family: Transit-Normal;
 	font-size: 13pt;
 	alternatingItemColors: #191819, #111111;
@@ -271,7 +283,7 @@ mx|DataGrid {
 	headerStyleName: "dataGridHeaderStyle";
 	sortArrowSkin: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderOpenIcon");
 }
-mx|List {
+List {
 	font-family: Transit-Normal;
 	font-size: 13pt;
 	letterSpacing: 0;
@@ -291,7 +303,7 @@ mx|List {
 {
 	backgroundAlpha: 0;
 }
-mx|AdvancedDataGrid {
+AdvancedDataGrid {
 	font-family: Transit-Normal;
 	font-size: 13pt;
 	alternatingItemColors: #191819, #111111;
@@ -336,7 +348,7 @@ mx|AdvancedDataGrid {
 //  ComboBox
 //------------------------------
 */
-mx|ComboBox
+ComboBox
 {
 	fontWeight: normal;
 	font-family: Transit-Bold;
@@ -401,12 +413,12 @@ mx|ComboBox
 	borderColor: #111111;
 	borderThickness:0;
 }
-mx|TileList
+TileList
 {
 	dropIndicatorSkin: ClassReference("org.mig.view.skins.TreeDropIndicator");
 }
 
-mx|Tree
+Tree
 {
 	defaultLeafIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_noIcon");
 	/* disclosureClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderClosedIcon"); */
@@ -455,7 +467,7 @@ mx|Tree
 	textSelectedColor: #ffffff;
 	selectionColor: #ED1C58;
 }
-mx|Button{
+Button{
 	fontWeight: normal;
 	color:#FFFFFF;
 	fontFamily: Transit-Bold;
@@ -517,14 +529,41 @@ mx|Button{
 }
 
 
-
+.comboBoxHeaderButton{
+	skin: ClassReference("org.mig.view.skins.ComboBoxHeaderButtonSkin");
+	color: #ffffff;
+	embedFonts: true;
+	fontFamily: Transit-Bold;
+	font-weight: normal;
+	text-align: left;
+	fontSize: 13;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #000000;
+	disabledColor: #333333;
+	verticalGap: 2;
+	paddingLeft: 2;
+	paddingTop: 0; 
+	
+}
+.defaultButtonBackground{
+	backgroundImage: ClassReference("org.mig.view.skins.GradientBackground");
+	backgroundSize: "100%";
+	fillColors: #808080, #595959;
+	fillAlphas: 1, 1;
+}
 .defaultButtonHighlight{
 	backgroundImage: ClassReference("org.mig.view.skins.GradientBackground");
 	backgroundSize: "100%";
 	fillColors: #FFFFFF, #FFFFFF;
 	fillAlphas: 0.1, 0.02;
 }
-
+.defaultButtonOverBackground{
+	backgroundImage: ClassReference("org.mig.view.skins.GradientBackground");
+	backgroundSize: "100%";
+	fillColors: #ED1C58, #BD1E53;
+	fillAlphas: 1, 1;
+	
+} 
 .fullScreenButton{
 	disabledSkin: Embed(source="migAssets/library.swf", symbol="fullScreen"); 
 	downSkin: Embed(source="migAssets/library.swf", symbol="fullScreen");
@@ -779,7 +818,7 @@ mx|Button{
 	selectedDisabledIcon: Embed(source="migAssets/library.swf", symbol="toolPanelClosedIcon");
 	
 }
-mx|TextInput{
+TextInput{
 	background-color: #333333;
 	color: white;
 	fontFamily: Transit-Normal;
@@ -808,7 +847,18 @@ mx|TextInput{
 	paddingRight: 3;
 	textSelectionColor: #ff0011;
 }
-
+.inputFieldGray{
+	color: white;
+	disabledColor: #FFFFFF;
+	fontFamily: Transit-Normal;
+	fontWeight: normal;
+	fontSize: 14pt;
+	backgroundColor: #666666;
+	borderStyle: none;
+	paddingLeft: 3;
+	paddingRight: 3;
+	textSelectionColor: #ff2233;
+}
 .richInputField{
 	color: white;
 	backgroundColor: black;
@@ -831,8 +881,24 @@ mx|TextInput{
 	fillColors: #ED1C58, #BD1E53;
 	fillAlphas: 1, 1;
 }
-
-
+.searchButton{
+	disabledSkin: Embed(source="migAssets/library.swf", symbol="searchUp"); 
+	downSkin: Embed(source="migAssets/library.swf", symbol="searchUp");
+	overSkin: Embed(source="migAssets/library.swf", symbol="searchSelectedUp");
+	upSkin: Embed(source="migAssets/library.swf", symbol="searchUp"); 
+	selectedDownSkin: Embed(source="migAssets/library.swf", symbol="searchSelectedUp");
+	selectedOverSkin: Embed(source="migAssets/library.swf", symbol="searchSelectedUp");
+	selectedUpSkin: Embed(source="migAssets/library.swf", symbol="searchSelectedUp"); 	
+}
+.addContainerButton{
+	disabledSkin: Embed(source="migAssets/library.swf", symbol="addContainerDisabled"); 
+	downSkin: Embed(source="migAssets/library.swf", symbol="addContainerUp");
+	overSkin: Embed(source="migAssets/library.swf", symbol="addContainerOver");
+	upSkin: Embed(source="migAssets/library.swf", symbol="addContainerUp"); 
+	selectedDownSkin: Embed(source="migAssets/library.swf", symbol="addContainerOver");
+	selectedOverSkin: Embed(source="migAssets/library.swf", symbol="addContainerOver");
+	selectedUpSkin: Embed(source="migAssets/library.swf", symbol="addContainerOver"); 	
+}
 .addButton{
 	disabledSkin: ClassReference("org.mig.view.skins.EmptyButtonSkin");
 	downSkin: ClassReference("org.mig.view.skins.EmptyButtonSkin");
@@ -854,7 +920,15 @@ mx|TextInput{
 	paddingLeft: 2;
 	paddingTop: 0; 
 }
-
+.trashButton{
+	disabledSkin: Embed(source="migAssets/library.swf", symbol="trashUp"); 
+	downSkin: Embed(source="migAssets/library.swf", symbol="trashUp");
+	overSkin: Embed(source="migAssets/library.swf", symbol="trashUp");
+	upSkin: Embed(source="migAssets/library.swf", symbol="trashUp"); 
+	selectedDownSkin: Embed(source="migAssets/library.swf", symbol="trashSelectedUp");
+	selectedOverSkin: Embed(source="migAssets/library.swf", symbol="trashSelectedUp");
+	selectedUpSkin: Embed(source="migAssets/library.swf", symbol="trashSelectedUp"); 	
+}
 
 .addUserButton{
 	disabledSkin: Embed(source="migAssets/library.swf", symbol="addUserUp"); 
@@ -977,6 +1051,24 @@ mx|TextInput{
 	textSelectionColor: #ff0011;
 }
 
+.leftPanelCollapseButton{
+	disabledSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconRight"); 
+	downSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconLeft");
+	overSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconLeft");
+	upSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconLeft"); 
+	selectedDownSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconRight");
+	selectedOverSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconRight");
+	selectedUpSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconRight"); 	
+}
+.rightPanelCollapseButton{
+	disabledSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconRight"); 
+	downSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconRight");
+	overSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconRight");
+	upSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconRight"); 
+	selectedDownSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconLeft");
+	selectedOverSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconLeft");
+	selectedUpSkin: Embed(source="migAssets/library.swf", symbol="collapsePanelIconLeft"); 	
+}
 
 
 /*
@@ -1135,4 +1227,48 @@ mx|TextInput{
 	borderStyle: inset;
 	borderThickness: 2;
 	cornerRadius: 0;
+}
+
+
+
+/* calendar */
+.calendarHeader {
+	text-align: right;
+	font-size: 12;
+	font-family: Transit-Bold;
+	font-weight: normal;
+	color: #000000;
+	backgroundColor: #666666;
+}
+CalendarEventRenderer {
+	font-size: 10;	
+	font-family: Transit-Normal;
+	font-weight: normal;	
+	color: #FFFFFF;	
+}
+CalendarHours {
+	text-align: right;
+	font-size: 12;	
+	color: #FFFFFF;
+	font-family: Transit-Normal;
+	font-weight: normal;	
+}
+CalendarDisplay {
+	hourDividerThickness: 2;
+	hourDividerColor: #666666;	
+	hourBackgroundColor: #666666;
+	allDayDividerThickness: 2;
+	allDayDividerColor: #FFFFFF;	
+	allDayBackgroundColor: #111111;
+	allDayColor: #111111;
+	hourThickness: 1;
+	hourColor: #FFFFFF;
+	dayStyleName: "calendarDay";
+	dayHeaderStyleName: "calendarHeader";	
+}
+.calendarDay
+{
+	backgroundColor: #111111;
+	disabledBackgroundColor: #333333;
+	borderColor: #FFFFFF;
 }

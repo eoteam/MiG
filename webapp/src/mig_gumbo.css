@@ -4,32 +4,37 @@
 
 @font-face {
 	src: url("/fonts/Transit/TransNor.otf");
-	font-family: "Transit-Normal";
-	unicode-range:U+0000-U+21FF;
+	fontFamily: "Transit-Normal";
 	embedAsCFF: true;
+	advancedAntiAliasing: true; 
 }
 @font-face {
 	src: url("/fonts/Transit/TransBol.otf");
-	font-family: "Transit-Bold";
-	unicode-range:U+0020-U+21FF;
+	fontFamily: "Transit-Bold";
 	embedAsCFF: true;
+	advancedAntiAliasing: true;
 }
 
 s|Label{
 	color: #FFFFFF;
-	font-family: Transit-Normal;
-	font-size: 12pt;
+	fontFamily: Transit-Normal;
+	fontSize: 12pt;
 	backgroundAlpha: 0;
+	fontLookup: embeddedCFF;
+	renderingMode:cff;
 }
 s|RichText {
 	color: white;
+	fontLookup: embeddedCFF;
+	renderingMode:cff;
 }
 /* Buttons */
 s|Button {
 	color: #ffffff;
-	embedFonts: true;
+	fontLookup: embeddedCFF;
 	textRollOverColor: #FFFFFF;
 	textSelectedColor: #000000;
+	renderingMode:cff;
 }
 .defaultBlackButton {
 	skinClass: ClassReference("org.mig.view.skins.buttons.DefaultBlackButton");
@@ -42,6 +47,7 @@ s|Button {
 }
 s|TextInput {
 	contentBackgroundColor: #333333;
+	fontLookup: embeddedCFF;
 	color: #FFFFFF;
 	fontFamily: Transit-Normal;
 	fontWeight: normal;
@@ -50,26 +56,29 @@ s|TextInput {
 	focusedTextSelectionColor: #ed1c58;
 	unfocusedTextSelectionColor: #333333;
 	chromeColor: #ed1c58;
+	renderingMode:cff;
 }
 
 .boldCopy {
 	color: white;
-	font-family: Transit-Bold;
-	font-weight: normal;
-	font-size: 14pt;
+	fontFamily: Transit-Bold;
+	fontWeight: normal;
+	fontSize: 14pt;
 	text-align: left;
 	text-decoration: none;
-	embedFonts: true;
+	fontLookup: embeddedCFF;
+	renderingMode:cff;
 }
 
 .bodyCopy {
 	color: white;
-	font-family: Transit-Normal;
-	font-weight: normal;
-	font-size: 14pt;
+	fontFamily: Transit-Normal;
+	fontWeight: normal;
+	fontSize: 14pt;
 	text-align: left;
 	text-decoration: none;
-	embedFonts: true;
+	fontLookup: embeddedCFF;
+	renderingMode:cff;
 }
 .inputFieldGray{
 	disabledColor: #FFFFFF;
@@ -79,9 +88,9 @@ s|TextInput {
 	paddingRight: 3;
 	borderVisible: false;
 	focusColor: #ed1c58;
-
+	renderingMode:cff;
 }
-s|Label
+
 /*disabledColor: #333333;
 verticalGap: 2;
 paddingLeft: 2;
@@ -94,14 +103,91 @@ paddingTop: 0; */
 }
 
 .locationHeader {
-	font-family: Transit-Bold;
-	font-size: 14pt;
+	fontFamily: Transit-Bold;
+	fontSize: 14pt;
+	fontLookup: embeddedCFF;
 }
-.migComboxBox {
-	fontSize: 13;
-	color: #ffffff;
+.migComboBox {
+	fontSize: 14;
+	color: #888888	;
 	contentBackgroundAlpha: 1;
 	selectionColor: #ED1C58;
+	rollOverColor: #ED1C58;
 	alternatingItemColors: #111111, #111111;
 	contentBackgroundColor: #111111;
+	renderingMode:cff;
+	skinClass: ClassReference("org.mig.view.skins.dropdowns.DefaultComboBox");
 }
+s|CheckBox {
+	skinClass: ClassReference("org.mig.view.skins.controls.CheckBox");
+	color: #888888	;
+}
+
+
+
+mx|Tree
+{
+	defaultLeafIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_noIcon");
+	/* disclosureClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderClosedIcon"); */
+	/* disclosureOpenIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderOpenIcon"); */
+	
+	folderClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_noIcon");
+	folderOpenIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_noIcon");
+	contentBackgroundAlpha: 0;
+	borderVisible: false;
+	color: #333333;
+	rollOverColor: #333333;
+	selectionColor: #333333;
+	font-family: Transit-Bold;
+	font-size: 13pt;
+	text-align: left;
+	text-decoration: none;
+	text-transform: none;
+	textRollOverColor: #ffffff;
+	textSelectedColor: #ffffff;
+	/* alternatingItemColors: #ff0000, #ffffff; */
+	/* useRollOver: false; */ 
+}
+.managerTree{
+	color: #FFFFFF;
+	disclosureClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderClosedIcon");
+	disclosureOpenIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderOpenIcon");
+	textRollOverColor: #ffffff;
+	textSelectedColor: #ffffff;
+}
+.containerTree{
+	color: #3F3F3F;
+	disclosureClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderClosedIconGray");
+	disclosureOpenIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderOpenIconGray");
+	/* folderClosedIcon: Embed(source="migAssets/library.swf",symbol="containerGrayUp");
+	folderOpenIcon: Embed(source="migAssets/library.swf",symbol="containerGrayUp"); */
+	textRollOverColor: #ffffff;
+	textSelectedColor: #ffffff;
+	dropIndicatorSkin: ClassReference("org.mig.view.skins.TreeDropIndicator");
+	
+}
+.treeManagerItem{
+	backgroundImage: ClassReference("org.mig.view.skins.GradientBackground");
+	backgroundSize: "100%";
+	fillColors: #808080, #595959;
+	fillAlphas: 1, 1;
+}
+.defaultButtonBackground{
+	backgroundImage: ClassReference("org.mig.view.skins.GradientBackground");
+	backgroundSize: "100%";
+	fillColors: #808080, #595959;
+	fillAlphas: 1, 1;
+}
+.defaultButtonHighlight{
+	backgroundImage: ClassReference("org.mig.view.skins.GradientBackground");
+	backgroundSize: "100%";
+	fillColors: #FFFFFF, #FFFFFF;
+	fillAlphas: 0.1, 0.02;
+}
+.defaultButtonOverBackground{
+	backgroundImage: ClassReference("org.mig.view.skins.GradientBackground");
+	backgroundSize: "100%";
+	fillColors: #ED1C58, #BD1E53;
+	fillAlphas: 1, 1;
+	
+} 

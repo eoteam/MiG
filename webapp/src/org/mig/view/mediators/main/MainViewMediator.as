@@ -75,7 +75,7 @@ package org.mig.view.mediators.main
 		}
 		private function handleConfig(event:Event):void {
 			//data wiring
-			view.appOptionsCombo.prompt = appModel.prompt;
+			view.appOptionsCombo.openButton.label = appModel.prompt;
 		}
 		
 		private function handleManagersTreeResize(event:ViewEvent):void {

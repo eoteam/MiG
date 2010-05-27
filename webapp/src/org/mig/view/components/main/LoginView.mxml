@@ -68,10 +68,10 @@
 		</s:fill>
 	</s:Rect>
 
-	<s:VGroup width="100%" height="100%" paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5"  gap="2" clipAndEnableScrolling="false">
+	<s:VGroup width="100%" height="100%" paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="10"  gap="2" clipAndEnableScrolling="false">
 		<mx:ViewStack width="100%" height="100%" selectedIndex="{viewIndex}" id="stack">			
 			<mx:Canvas width="100%" height="100%" id="loginView" horizontalScrollPolicy="off" verticalScrollPolicy="off">
-				<s:VGroup  width="100%" height="100%" gap="3">
+				<s:VGroup  width="100%" height="100%" gap="10">
 					<s:Label text="Username" styleName="bodyCopy" />
 					<s:TextInput   id="usernameField"   width="80%"  styleName="inputFieldGray"  />
 					<s:Rect height="3" />
@@ -86,7 +86,7 @@
 		    </mx:Canvas>
 		    
 		    <mx:Canvas width="100%" height="100%" id="requestView" horizontalScrollPolicy="off" verticalScrollPolicy="off">
-		    	<s:VGroup width="100%" height="100%" gap="3">
+		    	<s:VGroup width="100%" height="100%" gap="10">
 					<s:Label text="User Information Request" styleName="bodyCopy" />
 			    	<s:TextInput  width="80%"  id="emailField" text="Email Address" styleName="inputFieldGray" />
 			    	<s:Rect height="15" />
@@ -98,7 +98,7 @@
 		    </mx:Canvas>
 		    
 		    <mx:Canvas width="100%" height="100%" id="editView" horizontalScrollPolicy="off" verticalScrollPolicy="off">
-		    	<s:VGroup id="editFormVBox" width="100%" height="100%" gap="5" paddingTop="0" paddingRight="0" paddingLeft="0" paddingBottom="0" alpha="0.5">
+		    	<s:VGroup id="editFormVBox" width="100%" height="100%" gap="10" paddingTop="0" paddingRight="0" paddingLeft="0" paddingBottom="0" alpha="0.5">
 		    		<s:Label text="Username" styleName="bodyCopy" />
 					<s:TextInput  styleName="inputFieldGray" id="usernameField2" text="{user.username}"  width="80%" enabled="false" />
 					<s:Rect height="3" />
