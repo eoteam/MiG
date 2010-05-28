@@ -171,7 +171,7 @@
 			</s:Group>
 		
 			<!-- Main Content Area -->
-			<main:ContentViewer  width="55%" height="100%"  id="contentViewer" horizontalScrollPolicy="off" top="3"/>			
+			<main:ContentViewer  width="55%" height="100%"  id="contentViewer"  top="3"/>			
 			
 			<!-- Tools -->
 			<s:Group id="rightMain" width="{RIGHT_SIDEBAR_OPEN_WIDTH}" height="100%">
@@ -207,7 +207,7 @@
 	
 	<s:SkinnableContainer width="100%" height="100%" id="preloader" visible="false" backgroundColor="0x111111" backgroundAlpha="0.9" >
 		<mx:UIComponent  id="preloaderHolder"  width="80%" height="80%" rotation="-135"  />
-		<mx:Label id="startupStep" horizontalCenter="0" bottom="200"/> 
+		<s:Label id="startupStep" horizontalCenter="0" bottom="200"/> 
 	</s:SkinnableContainer>
 	
 	

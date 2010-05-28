@@ -144,6 +144,19 @@ function getTableColumns($tablename)
 }
 
 /**
+ * returns auto-increment for the table
+ */
+function getAutoIncrement($tablename)
+{
+	$sql = "SELECT Auto_increment FROM information_schema.tables WHERE table_name='".$tablename."' AND table_schema='".DB_NAME."'";
+	$result = queryDatabase($sql);
+	$row = $result->fetch(PDO::FETCH_ASSOC);
+	$autoIncrement = $row['Auto_increment'];
+    
+    return $autoIncrement;
+}
+
+/**
  * Generic database query function. Returns the results
  * from the database query.
  */

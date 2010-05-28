@@ -1,20 +1,20 @@
 <?php
-
-
 require_once "readFunctions.php";
 
 function updateTag($params)
 {
 	/*
-		* Script will attempt to update tags at tables 'terms' and 'term_taxonomy'
+		* Script will attempt to update tag at tables 'terms' and 'term_taxonomy'
 		* You will get an error if you provided invalid field names.
 
 		** REQUIRED PARAMS
-		id - primary key of the record to update at 'term_taxonomy'
-		termid -
+		id - primary key of the record to update from 'term_taxonomy' table
+		termid - primary key of the record to update from 'terms' table
 
 		** OTHER PARAMS
-		* name/value pairs to update:
+		name/value pairs to update:
+		- name
+		- slug
 		- parentid
 		- description
 		- color
@@ -24,7 +24,6 @@ function updateTag($params)
 		*/
 
 	// gets arrays of field names for tables 'terms' and 'term_taxonomy'
-	$columnsTermsArray = getTableColumns('terms');
 	$columnsTermTaxArray = getTableColumns('term_taxonomy');
 
 	if(isset($params['id']) && isset($params['termid']))
@@ -50,28 +49,29 @@ function updateTag($params)
 
 		if($result = queryDatabase($sql, $sendParams))
 		{
-			if (in_array('name', $columnsTermsArray) && in_array('slug', $columnsTermsArray)) // checks for misspelling of field name
+			if(isset($params['name']) || isset($params['slug']))
 			{
 				$sendParams = array();
-				$sql  = " UPDATE `terms` SET";
-				$sql .= " name = :name ,";
-				$sql .= " slug = :slug";
+				$sql  = " UPDATE `terms` SET ";
+				foreach ($params as $key=>$value)
+				{
+					if ($key == 'name' || $key == 'slug')
+					{
+						$sql .= $key . " = :".$key.", ";
+						$sendParams[$key] = processText($value);
+					}
+				}
+				$sql = substr($sql,0,strlen($sql)-2); // remove last comma and space
 				$sql .= " WHERE id = :termid";
-				$sendParams['name'] = processText($params['name']);
-				$sendParams['slug'] = processSlug($params['slug']);
 				$sendParams['termid'] = $params['termid'];
-
+					
 				if($result = queryDatabase($sql, $sendParams)) {
 					sendSuccess();
-				}
-				else die("Query Failed:" . $result->errorInfo());
-			} else die("Unknown field name.");
-		}
-		else die("Query Failed:" . $result->errorInfo());
-	}
-	else die("No tag id is provided.");
+				} else die("Query Failed:" . $result->errorInfo());
+			}
+		} else die("Query Failed:" . $result->errorInfo());
+	} else die("No id or termid is provided.");
 }
-
 function updateRecord($params)
 {
 	/*
@@ -81,12 +81,11 @@ function updateRecord($params)
 		** REQUIRED PARAMS
 		tablename - name of the table to update
 		id - primary key of the record to update
-		name/value pairs to update
 
 		** OTHER PARAMS
-		* tags - if found, this will attempt to add tags if they don't already exist in the system, otherwise it will tie tags to the content or media being inserted.
-		* if a param is sent called 'password' it will automatically be encrypted.
-
+		verbosity - (1 = ids + titles only, 2 - all fields + named custom fields, 3 - all fields)
+		name/value pairs to update - field names from 'tablename'
+		if a param is sent called 'password' it will automatically be encrypted.
 		*/
 
 	$numParamsToUpdate = 0; // counts num of params to update.
@@ -128,22 +127,16 @@ function updateRecord($params)
 			$sql .= " WHERE id = :id";
 			$sendParams['id'] = $params['id'];
 		}
-
-	} else {
-		die("No id or tablename provided.");
-	}
+	} else die("No id or tablename provided.");
 
 	// get the results
-	if ($numParamsToUpdate > 0)
+	if ($numParamsToUpdate > 0) {
 		$result = queryDatabase($sql, $sendParams);
+	}
 
-/*	
-	if (isset($params['tags']))
-	associateTags($params['tablename'],$params['id'],$params['tags']);
-*/
-		
-	//if ($params['tablename'] == "content")
-	//updateContainerPaths(null);
+	if ($params['tablename'] == "content") {
+		updateContainerPaths(null, null);
+	}
 
 	if (isset($params['verbosity']))
 	{
@@ -154,16 +147,12 @@ function updateRecord($params)
 		// output the serialized xml
 		return $result;
 	}
-	else
-	{
-		sendSuccess();
-	}
+	else sendSuccess();
 }
-
 function updateRecords($params)
 {
 	/*
-		* Script will attempt to update one field (updatefield/updatevalue) of multiple records by idfield/idvalues (comma-delimited) and other name/value ($key=>$value) parameters.
+		* Script will attempt to update one field (updatefield/updatevalue) of multiple records by idfield/idvalues (comma-delimited) and other name/value pair parameters.
 		* You will get an error if you provided invalid field names.
 
 		** REQUIRED PARAMS
@@ -174,15 +163,15 @@ function updateRecords($params)
 		idvalues - values of idfield; expects formatted id string (id,id,id)
 
 		** OTHER PARAMS
-		* name/value pairs to specify records to update
+		* name/value pairs to specify records to update; should be field names from 'tablename'
 		*/
 
-	$validParams = array("action","idvalues","tablename","idfield","updatefield","updatevalue");
 	/* examples:
 	 * action=updateRecords & tablename=comments & updatefield=statusid & updatevalue=4 & idfield=id & idvalues=1,2,3,4
-	 * action=updateRecords & tablename=media_terms & updatefield=termid & updatevalue=7 & idfield=contentid & idvalues=4,5 
+	 * action=updateRecords & tablename=media_terms & updatefield=termid & updatevalue=7 & idfield=contentid & idvalues=4,5
 	 */
 
+	$validParams = array("action","idvalues","tablename","idfield","updatefield","updatevalue");
 	$sendParams = array();
 
 	// gets array of fields name for 'tablename'
@@ -225,13 +214,32 @@ function updateRecords($params)
 	}
 
 	// get the results
-	if ($result = queryDatabase($sql, $sendParams))
-	sendSuccess();
-	else
-	die("Query Failed:" . $result->errorInfo());
+	if ($result = queryDatabase($sql, $sendParams)) {
+		sendSuccess();
+	} else die("Query Failed: " . $result->errorInfo());
+}
+function updateMediaByPath($params)
+{
+	/*
+		* Script will attempt to replace 'oldpath' parameter with 'newpath' parameter in table 'media'
 
-	// return the results
-	return $result;
+		** REQUIRED PARAMS
+		oldpath
+		newpath
+		*/
+
+	if (isset($params['oldpath']) && isset($params['newpath'])) {
+		$sendParams = array();
+		$sql = "UPDATE `media` ";
+		$sql .= " SET `path` = REPLACE(`path`, :oldpath, :newpath)";
+		$sendParams['oldpath'] = $params['oldpath'];
+		$sendParams['newpath'] = $params['newpath'];
+	} else die("Missing path parameters: oldpath and newpath are not provided.");
+
+	// get the results
+	if ($result = queryDatabase($sql, $sendParams)) {
+		sendSuccess();
+	} else die("Query Failed: " . $result->errorInfo());
 }
 function updateContainerPaths($params, $insertid) {
 
@@ -240,7 +248,7 @@ function updateContainerPaths($params, $insertid) {
 
 	if (isset($params['id'])) {
 		$sql .= " WHERE id IN ( ";
-		
+
 		// $params['id'] can be comma-delimited
 		$manyvalues = explode(",",$params['id']);
 		foreach($manyvalues as $value)
@@ -308,47 +316,96 @@ function updateContainerPaths($params, $insertid) {
 	}
 	return $strPath2;
 }
-
 function insertTag($params)
 {
 	/*
-		* Script will attempt to insert tag to 'terms' and then to 'term_taxonomy'
+		* Script will attempt to insert tag to 'terms' and 'term_taxonomy' tables
 		* You will get an error if you provided invalid field names.
 
 		** REQUIRED PARAMS
 		name - tag name
-		slug - slug of the tag
+		taxonomy - 'tag' or 'category' only
+
+		If taxonomy = 'tag' then :
+		1. check 'terms'
+		2. if tag does exist in 'terms' then get tag id from 'terms' and insert new record into 'term_taxonomy' with existent id and taxonomy = 'tag'
+		3. if tag doesn't exist in 'terms' then insert it into 'terms' and then into 'term_taxonomy' with new id
+
+		If taxonomy = 'category' then :
+		1. check 'terms'
+		2. if tag does exist in 'terms' then get tag id from 'terms' and insert new record into 'term_taxonomy' with existent id and taxonomy = 'category'
+		3. if tag doesn't exist in 'terms' then insert it into 'terms'
+		3a. then insert two records into 'term_taxonomy' - first one with taxonomy = 'category' and second one with taxonomy = 'tag'
 			
 		** OTHER PARAMS
-		taxonomy - 'tag' or 'category'; if taxonomy is not provided then it is 'tag ' 
+		verbose - for displaying results (true = display ids only, false - all fields from 'term_taxonomy')
 		name/value pairs to set parameters for the tag :
-		- parentid (optional) - if doesn't exist then parentid=id
+		- slug
+		- parentid (optional) - if doesn't exist then parentid = id = autoincrement
 		- description
 		- color
 		- date1
 		- date2
 		- displyorder
-
 		*/
 
-	// gets array of field names for 'tablename'
-	$columnsArray = getTableColumns('term_taxonomy');
+	if (isset($params['name']) && isset($params['taxonomy']) && ($params['taxonomy']=='tag' || $params['taxonomy']=='category'))
+	{
+		// gets array of field names for the table 'term_taxonomy'
+		$columnsArray = getTableColumns('term_taxonomy');
 
-	if (isset($params['taxonomy'])) {
+		// checks whether tag is already exist in the table 'terms'
 		$sendParams = array();
-		$sql = "INSERT INTO `terms` (name,slug) VALUES (:name,:slug)";
-		$sendParams['name'] = processText($params['name']);
-		$sendParams['slug'] = processText($params['slug']);
-		if ($result = queryDatabase($sql,$sendParams,$insertid))
+		$slug = generateSlug($params['name']); // generate the slug using Name parameter
+
+		$sql = "SELECT id FROM `terms` WHERE slug = :slug";
+		$sendParams['slug'] = $slug;
+
+		$result = queryDatabase($sql,$sendParams);
+		$isnewtag = false; // false if tag does exist in 'terms'
+
+		if ($result->rowCount() > 0) { 	// tag does exist in 'terms'
+			$row = $result->fetch(PDO::FETCH_ASSOC);
+			$idTerms = $row['id']; // get term id
+		}
+		else // tag doesn't exist in 'terms'
 		{
+			$sendParams = array();
+
+			// get auto-increment for the new record
+			$autoIncrementTerms = getAutoIncrement('terms');
+
+			// insert into 'terms'
+			$sql = "INSERT INTO `terms` (id,name,slug) VALUES (:id,:name,:slug)";
+			$sendParams['name'] = processText($params['name']);
+			$sendParams['id'] = $autoIncrementTerms;
+
+			if (isset($params['slug'])) {
+				$sendParams['slug'] = processText($params['slug']);
+			}
+			else {
+				$sendParams['slug'] = $slug;
+			}
+
+			if ($result = queryDatabase($sql,$sendParams))
+			{
+				$isnewtag = true; // changes to true if tag didn't exist before
+				$idTerms = $autoIncrementTerms; // set term id as auto-increment
+			} else die("Query Failed: " . $result->errorInfo());
+		}
+			
+		// if 'taxonomy' parameter is equal to 'tag'
+		if ($params['taxonomy']=="tag") {
+
+			// insert one record to 'term_taxonomy'
+
 			$sendParams = array();
 			$sql = "INSERT into `term_taxonomy` (id,parentid,termid,";
 			foreach ($params as $key=>$value) {
-				if ($key != 'action' && $key != 'name' && $key != 'slug' && $key != 'parentid') {
+				if ($key != 'action' && $key != 'parentid' && $key != 'name' && $key != 'slug' && $key != 'parentid' && $key != 'termid' && $key != 'verbose') {
 					if (in_array($key, $columnsArray)) { // checks for misspelling of field name
 						$sql .= $key.",";
-					}
-					else die ("Unknown field name '$key'.");
+					} else die ("Unknown field name '$key'.");
 				}
 			}
 
@@ -359,27 +416,22 @@ function insertTag($params)
 			// put values into SQL
 			$sql .= " VALUES (";
 
-			// get next auto increment in 'term_taxonomy'
-			$sql2 = "SELECT Auto_increment FROM information_schema.tables WHERE table_name='term_taxonomy' AND table_schema='".DB_NAME."'";
-			$result2 = queryDatabase($sql2);
-			$row2 = $result2->fetch(PDO::FETCH_ASSOC);
+			// get auto-increment for the new record
+			$autoIncrementTermTax = getAutoIncrement('term_taxonomy');
 
-			$sql .= "'".$row2['Auto_increment']."',"; //id
+			$sql .= "'".$autoIncrementTermTax."',"; // id
 
-			$autoIncrement = $row2['Auto_increment'];
-
-			if (isset($params['parentid'])) { // parentid is set
+			if (isset($params['parentid'])) { // if parentid is set
 				$sql .= "'".$params['parentid']."',"; // parentid
-			}
-			else {
-				// if parent id is not set then parentid = id
-				$sql .= "'".$row2['Auto_increment']."',"; // set the same parent_id as the auto_incremented id
+			} else {
+				// if parentid is not set then parentid = id
+				$sql .= "'".$autoIncrementTermTax."',";
 			}
 
-			$sql .=  "'".$insertid."',"; // termid
+			$sql .=  "'".$idTerms."',"; // termid
 
 			foreach ($params as $key=>$value) {
-				if ($key != 'action' && $key !='name' && $key != 'slug') {
+				if ($key != 'action' && $key != 'id' && $key !='name' && $key != 'slug' && $key != 'parentid' && $key != 'termid' && $key != 'verbose') {
 					$sql .= ":".$key.",";
 					$sendParams[$key] = processText($value);
 				}
@@ -389,51 +441,132 @@ function insertTag($params)
 			$sql = substr($sql,0,strlen($sql)-1);
 			$sql .=")";
 
-			// $autoIncrement should be equal to $insertid2
-			if($result = queryDatabase($sql,$sendParams,$insertid2))
-			{
-				$sql = "SELECT term_taxonomy.*,terms.slug,terms.name FROM `term_taxonomy` " .
-				   "LEFT JOIN terms ON terms.id = term_taxonomy.termid WHERE term_taxonomy.id = '".$insertid2."'";
-				$result = queryDatabase($sql);
-				return $result;
+		} // if 'taxonomy' parameter is equal to 'category'
+		else if ($params['taxonomy']=="category") {
+
+			// insert records to 'term_taxonomy':
+			// first with taxonomy = 'category', ALWAYS
+			// second with taxonomy = 'tag', ONLY IF tag doesn't exist in 'terms'
+
+			$sendParams = array();
+			$sql = "INSERT into `term_taxonomy` (id,parentid,termid,taxonomy,";
+			foreach ($params as $key=>$value) {
+				if ($key != 'action' && $key != 'parentid' && $key != 'name' && $key != 'slug' && $key != 'parentid' && $key != 'termid' && $key != 'taxonomy' && $key != 'verbose') {
+					if (in_array($key, $columnsArray)) { // checks for misspelling of field name
+						$sql .= $key.",";
+					} else die ("Unknown field name '$key'.");
+				}
 			}
-			else die("Query Failed:" . $result->errorInfo());
-		}
-	}
-	else die("No taxonomy provided.");
-}
-function updateMediaByPath($params)
-{
-	if (isset($params['oldpath']) && isset($params['newpath'])) {
-		$sendParams = array();
-		$sql = "UPDATE `media` ";
-		$sendParams['oldpath'] = $params['oldpath'];
-		$sendParams['newpath'] = $params['newpath'];
-		$sql .= " SET `path` = REPLACE(`path`, :oldpath, :newpath)";
-	} 
-	else {
-		die("missing path parameters");
-	}	
-	//die($sql);
 
-	// get the results
-	if ($result = queryDatabase($sql,$sendParams)) 
-		sendSuccess();
-	else
-		die("Query Failed:" . mysql_error());
+			// remove last comma
+			$sql = substr($sql,0,strlen($sql)-1);
+			$sql .= ")";
 
+			// put values into SQL
+			$sql .= " VALUES ";
+
+			// first with taxonomy = 'category'
+			///////////////////////////////////////////////////////////////
+			$sql .= "(";
+
+			// get auto-increment for the new record
+			$autoIncrementTermTax = getAutoIncrement('term_taxonomy');
+
+			$sql .= "'".$autoIncrementTermTax."',"; // id
+
+			if (isset($params['parentid'])) { // if parentid is set
+				$sql .= "'".$params['parentid']."',"; // parentid
+			} else {
+				// if parentid is not set then parentid = id
+				$sql .= "'".$autoIncrementTermTax."',";
+			}
+
+			$sql .=  "'".$idTerms."',"; // termid
+			$sql .=  "'category',"; // taxonomy
+
+			foreach ($params as $key=>$value) {
+				if ($key != 'action' && $key != 'id' && $key !='name' && $key != 'slug' && $key != 'parentid' && $key != 'termid' && $key != 'taxonomy' && $key != 'verbose') {
+					$sql .= ":".$key.",";
+					$sendParams[$key] = processText($value);
+				}
+			}
+
+			// remove last comma
+			$sql = substr($sql,0,strlen($sql)-1);
+			$sql .=")";
+			///////////////////////////////////////////////////////////////
+
+			if ($isnewtag) { // tag was inserted to 'terms'
+				// so insert second record with taxonomy = 'tag'
+				///////////////////////////////////////////////////////////////
+				$sql .= ", (";
+
+				$nextTermTax = $autoIncrementTermTax + 1;
+
+				$sql .= "'".$nextTermTax."',"; // id
+
+				if (isset($params['parentid'])) { // if parentid is set
+					$sql .= "'".$params['parentid']."',"; // parentid
+				} else {
+					// if parentid is not set then parentid = id
+					$sql .= "'".$nextTermTax."',";
+				}
+
+				$sql .=  "'".$idTerms."',"; // termid
+				$sql .= "'tag',"; // taxonomy
+					
+				foreach ($params as $key=>$value) {
+					if ($key != 'action' && $key != 'id' && $key !='name' && $key != 'slug' && $key != 'parentid' && $key != 'termid' && $key != 'taxonomy' && $key != 'verbose') {
+						$sql .= ":".$key.",";
+						//$sendParams[$key] = processText($value);
+					}
+				}
+
+				// remove last comma
+				$sql = substr($sql,0,strlen($sql)-1);
+				$sql .=")";
+				///////////////////////////////////////////////////////////////
+			}
+
+		} else die("Invalid Taxonomy parameter.");
+
+
+		// insert to 'term_taxonomy' and get the results
+		if ($result = queryDatabase($sql,$sendParams,$insertid)) {
+
+			// SELECT fields according to Verbose parameter
+
+			if (isset($params['verbose']) && $params['verbose'] == 'true' && $isnewtag && $params['taxonomy'] == 'category') {
+				$sql = "SELECT id, parentid, termid FROM `term_taxonomy` WHERE id = '".$autoIncrementTermTax."'";
+			} else if (isset($params['verbose']) && $params['verbose'] == 'true') {
+				$sql = "SELECT id, parentid, termid FROM `term_taxonomy` WHERE id = '".$insertid."'";
+			} else if ((!isset($params['verbose']) || (isset($params['verbose']) && $params['verbose'] == 'true')) && $isnewtag && $params['taxonomy'] == 'category') {
+				$sql = "SELECT * FROM `term_taxonomy` WHERE id = '".$autoIncrementTermTax."'";
+			} else if (!isset($params['verbose']) || (isset($params['verbose']) && $params['verbose'] == 'true')) {
+				$sql = "SELECT * FROM `term_taxonomy` WHERE id = '".$insertid."'";
+			} else $sql = "SELECT * FROM `term_taxonomy` WHERE id = '".$insertid."'"; // verbose = false
+
+			if ($result = queryDatabase($sql)) {
+				return $result;
+			} else die("Query Failed: " . $result->errorInfo());
+
+		} else die("Query Failed: " . $result->errorInfo());
+
+	} else die("No tag name or taxonomy provided; or invalid taxonomy parameter.");
 }
 function insertRecord($params)
 {
 	/*
-		* Script will attempt to insert a record with all other name/value pairs provided
+		* Script will attempt to insert a record with all other name/value pair parameters provided
 		* You will get an error if you provided invalid field names.
 
 		** REQUIRED PARAMS
 		tablename - name of the table to insert the record in
-		name/value pairs to set parameters for the record
+		name/value pairs to set fields for the inserting record; should be field names from the 'tablename'
 
 		** OTHER PARAMS
+		verbose
+		containerpath
 		if a param is sent called 'password' it will automatically be encrypted.
 		*/
 
@@ -485,11 +618,6 @@ function insertRecord($params)
 	// get the results
 	if ($result = queryDatabase($sql,$sendParams,$insertid)) {
 
-		/*
-		 if (isset($params['tags']))
-			associateTags($params['tablename'],$insertid,$params['tags']);
-			*/
-
 		if($params['tablename'] == 'content')
 		{
 			$tokens = updateContainerPaths($params, $insertid);
@@ -502,31 +630,24 @@ function insertRecord($params)
 
 			if(!isset($params['containerpath'])) {
 				$sendParams = array();
-				$urlPath .= generateSlug($params['migtitle']); //assuming insertinga content record always goes with the title being set. which is true
+				$urlPath .= generateSlug($params['migtitle']);
 				$sql = "UPDATE content SET containerpath=:containerpath WHERE id='" . $insertid . "'";
 				$sendParams['containerpath'] = $urlPath;
 				queryDatabase($sql,$sendParams);
 			}
 		}
 
-		if (isset($params['verbose']))
-		{
+		if (isset($params['verbose'])) {
 			if($params['verbose'] == 'true')
 			$sql = "SELECT * FROM `".$params['tablename']."`  WHERE id = '".$insertid."'";
 			else $sql = "SELECT id FROM `".$params['tablename']."`  WHERE id = '".$insertid."'";
-		}
-		else $sql = "SELECT id FROM `".$params['tablename']."`  WHERE id = '".$insertid."'";
+		} else $sql = "SELECT id FROM `".$params['tablename']."`  WHERE id = '".$insertid."'";
 
-		if ($result = queryDatabase($sql))
-		return $result;
-		else die("Query Failed: " . $result->errorInfo());
-	}
-	else die("Query Failed: " . $result->errorInfo());
-
-	return $result;
+		if ($result = queryDatabase($sql)) {
+			return $result;
+		} else die("Query Failed: " . $result->errorInfo());
+	} else die("Query Failed: " . $result->errorInfo());
 }
-
-// 
 function insertRecordWithRelatedTag($params)
 {
 	/*
@@ -534,42 +655,31 @@ function insertRecordWithRelatedTag($params)
 		* You will get an error if you provided invalid field names.
 
 		** REQUIRED PARAMS
-		tablename - name of the table /'content' or 'media'/
-		name/value pairs to set parameters for the record
+		tablename - name of the table (should be 'content' or 'media')
 		tags - comma-delimited list of related tags -> if found, this will attempt to add tags if they don't already exist in the system, otherwise it will tie tags to the content or media being inserted.
-
-		** OTHER PARAMS
+		name/value pairs to set fields for the record; should be field names from 'tablename'
 		*/
 
 	if (isset($params['tablename']) && isset($params['tags'])) {
 
-		// get auto increment in 'tablename'
-		$sql = "SELECT Auto_increment FROM information_schema.tables WHERE table_name='".$params['tablename']."' AND table_schema='".DB_NAME."'";
-
-		$result = queryDatabase($sql);
-		$row = $result->fetch(PDO::FETCH_ASSOC);
-		$autoIncrement = $row['Auto_increment'];
+		// get auto increment of the 'tablename'
+		$autoIncrement = getAutoIncrement($params['tablename']);
 
 		// insert record to 'tablename'
 		if($result = insertRecord($params)) {
 			// relate tags using auto increment
-			associateTags($params['tablename'],$autoIncrement,$params['tags']);
+			associateTags($params['tablename'], $autoIncrement, $params['tags']);
+			return $result;
 		} else die ("Insert Record Failed: " . $result->errorInfo());
-	}
-	else die("No tablename or tags provided.");
-
-	return $result;
+	} else die("No tablename or tags provided.");
 }
-
-// +
 function deleteTag($params)
 {
 	/*
 		* Script will attempt to delete tag from 'term_taxonomy' and then from the tables 'content' and 'media'
 
 		** REQUIRED PARAMS
-		id - primary key of the record at table 'term_taxonomy' to delete 
-
+		id - primary key of the record at table 'term_taxonomy' to delete
 		*/
 
 	if(isset($params['id']))
@@ -584,33 +694,25 @@ function deleteTag($params)
 			$sql = "DELETE FROM `content_terms` WHERE termid = :id ";
 			if($result = queryDatabase($sql,$sendParams)) {
 				sendSuccess();
-			}
-			else die("Query Failed:" . $result->errorInfo());
-			
+			} else die("Query Failed:" . $result->errorInfo());
+
 			// delete from 'media'
 			$sql = "DELETE FROM `media_terms` WHERE termid = :id ";
 			if($result = queryDatabase($sql,$sendParams)) {
 				sendSuccess();
-			}
-			else die("Query Failed:" . $result->errorInfo());
+			} else die("Query Failed:" . $result->errorInfo());
 		}
 		else die("Query Failed:" . $result->errorInfo());
-	}
-	else die ("No id provided.");
-
-	return $result;
+	} else die ("No id provided.");
 }
-
-// +
 function deleteRecord($params)
 {
 	/*
-		* Script will attempt to delete one record by id.
+		* Script will attempt to delete one record by id
 
 		** REQUIRED PARAMS
 		tablename - name of the table to delete
 		id - primary key of the record to delete
-
 		*/
 
 	// make sure we have a content id and tablename
@@ -624,49 +726,42 @@ function deleteRecord($params)
 
 	// get the results
 	if ($result = queryDatabase($sql,$sendParams)) {
-		sendSuccess();	
+		sendSuccess();
 	}
 	else die("Query Failed:" . $result->errorInfo());
-
-	// return the results
-	return $result;
 }
-function deleteMediaByPath($params) // 
+function deleteMediaByPath($params)
 {
+	/*
+		* Script will attempt to delete records where by 'path' parameter from table 'media'
+
+		** REQUIRED PARAMS
+		path - could be part of the 'path' field
+		*/
+
 	if (isset($params['path'])) {
-	
 		$sql = "DELETE FROM `media` ";
 		$sql .= " WHERE path LIKE '%".$params['path']. "%'";
-	} 
-	else {
-		die("No id or tablename Provided.");
-	}	
-	//die($sql);
+	} else die("No id or tablename provided.");
 
 	// get the results
-	if ($result = queryDatabase($sql)) 
+	if ($result = queryDatabase($sql)) {
 		sendSuccess();
-	else
-		die("Query Failed:" . mysql_error());
-
-	// return the results
-	return $result;
+	} else die("Query Failed:" . $result->errorInfo());
 }
-// +
 function deleteRecords($params)
 {
 	/*
-		* Script will attempt to delete multiple records by idfield/idvalues (comma-delimited) and other name/value parameters.
+		* Script will attempt to delete multiple records by idfield/idvalues (comma-delimited) and other name/value pair parameters provided
 		* You will get an error if you provided invalid field names.
 
 		** REQUIRED PARAMS
 		tablename - name of the table to delete
 		idfield - name of the parameter to specify records to delete
-		idvalues - values of idfield; expects formatted id string (id,id,id).
+		idvalues - values of idfield; could be comma-delimited list (formatted id string (id,id,id))
 
 		** OTHER PARAMS
 		* name/value pairs to specify records to delete
-
 		*/
 
 	$validParams = array("action","idvalues","tablename","idfield");
@@ -694,37 +789,29 @@ function deleteRecords($params)
 		$sql = substr($sql,0,strlen($sql)-2); //remove last comma and space
 		$sql .= " )";
 
-	} else {
-		die("No tablename or id provided.");
-	}
-
-	foreach ($params as $key=>$value)
-	{
-		if (!in_array($key,$validParams) && (in_array($key,$columnsArray)))
+		foreach ($params as $key=>$value)
 		{
-			$sql .= " AND " . $key . " = :".$key;
-			$sendParams[$key] = $value;
-		} else die("Unknown field name '$key'.");
-	}
+			if (!in_array($key,$validParams) && (in_array($key,$columnsArray)))
+			{
+				$sql .= " AND " . $key . " = :".$key;
+				$sendParams[$key] = $value;
+			} else die("Unknown field name '$key'.");
+		}
+
+	} else die("No tablename or id provided.");
 
 	// get the results
 	if ($result = queryDatabase($sql,$sendParams)) {
 		sendSuccess();
-	}
-	else die("Query Failed:" . $result->errorInfo());
-
-	// return the results
-	return $result;
+	} else die("Query Failed:" . $result->errorInfo());
 }
-
 function deleteContent($params)
 {
 	/*
-		* Script will attempt to delete a record (by content id) from a table 'content'
+		* Script will attempt to delete a record (by content id) from a table 'content' and all related tables (content_*)
 
 		** REQUIRED PARAMS
 		id - primary key of the record to delete
-
 		*/
 
 	// make sure we have a content id
@@ -739,7 +826,7 @@ function deleteContent($params)
 		$row = $result->fetch(PDO::FETCH_ASSOC);
 
 		// valid content id
-		if ($row!=null) {
+		if ($row != null) {
 			$sql = "DELETE content, content_media, content_users, content_content, content_terms, content_customfields
 			FROM content 
 			LEFT JOIN content_media   		ON content_media.contentid = content.id
@@ -749,18 +836,12 @@ function deleteContent($params)
 			LEFT JOIN content_customfields	ON content_customfields.contentid = content.id
 			WHERE content.id = :id";
 		} else die("Invalid id.");
-	}
-	else die("Content id is not set.");
+	} else die("Content id is not provided.");
 
 	if ($result = queryDatabase($sql,$sendParams)) {
-		sendSuccess();	
-	}
-	else die("Query Failed:" . $result->errorInfo());
-
-	// return the results
-	return $result;
+		sendSuccess();
+	} else die("Query Failed:" . $result->errorInfo());
 }
-
 function associateTags($tablename,$id,$tags) {
 
 	// put tags into an array!
@@ -793,10 +874,7 @@ function associateTags($tablename,$id,$tags) {
 				$addTags[$key]['termid'] = $row['id'];
 			} else {
 				// get auto increment in 'term_taxonomy'
-				$sql2 = "SELECT Auto_increment FROM information_schema.tables WHERE table_name='term_taxonomy' AND table_schema='".DB_NAME."'";
-				$result2 = queryDatabase($sql2);
-				$row2 = $result2->fetch(PDO::FETCH_ASSOC);
-				$autoIncrement = $row2['Auto_increment'];
+				$autoIncrement = getAutoIncrement('term_taxonomy');
 
 				// insert new record into term_taxonomy using insertid(auto increment) and taxonomy=tag
 				$sql = "INSERT into `term_taxonomy` (id,parentid,termid,taxonomy) VALUES ('". $autoIncrement. "','". $autoIncrement. "','".$row['id']. "','tag')";
@@ -820,10 +898,7 @@ function associateTags($tablename,$id,$tags) {
 			queryDatabase($sql, $sendParams, $insertid); // get insertid
 
 			// get auto increment in 'term_taxonomy'
-			$sql2 = "SELECT Auto_increment FROM information_schema.tables WHERE table_name='term_taxonomy' AND table_schema='".DB_NAME."'";
-			$result2 = queryDatabase($sql2);
-			$row2 = $result2->fetch(PDO::FETCH_ASSOC);
-			$autoIncrement = $row2['Auto_increment'];
+			$autoIncrement = getAutoIncrement('term_taxonomy');
 
 			// insert new record into term_taxonomy using insertid(auto increment) and taxonomy=tag
 			$sql = "INSERT into `term_taxonomy` (id,parentid,termid,taxonomy) VALUES ('". $autoIncrement. "','". $autoIncrement. "','". $insertid. "','tag')";
@@ -848,7 +923,6 @@ function associateTags($tablename,$id,$tags) {
 	}
 	return true;
 }
-
 function slug($str)
 {
 	$str = strtolower(trim($str));
@@ -856,7 +930,6 @@ function slug($str)
 	$str = preg_replace('/-+/', "-", $str);
 	return $str;
 }
-
 function generateSlug($phrase)
 {
 	$result = strtolower($phrase);
@@ -866,7 +939,6 @@ function generateSlug($phrase)
 	$result = preg_replace("/\s/", "-", $result);
 	return $result;
 }
-
 function processText($text)
 {
 	global $htmlSymbols;
@@ -891,10 +963,8 @@ function processText($text)
 		//var_dump($text, $html);
 		return $html;
 	}
-	else
-	return '';
+	else return '';
 }
-
 function processSlug($text)
 {
 	$chars = array('Š','Œ','Ž','š','œ','ž','Ÿ','¥','µ','À','Á','Â','Ã','Ä','Å','Æ','Ç','È','É','Ê','Ë','Ì','Í','Î','Ï',
@@ -914,11 +984,10 @@ function processSlug($text)
 	}
 	return strtr(processText($text),$accents);
 }
-
 function duplicateContent($params)
 {
 	/*
-		* Script will attempt to duplicate a record (by content id) at table 'content'
+		* Script will attempt to duplicate a record (by content id) into table 'content'
 
 		** REQUIRED PARAMS
 		id - primary key of the record to duplicate
@@ -981,9 +1050,8 @@ function duplicateContent($params)
 		}
 		else die("Invalid id.");
 	}
-	else die("Content id is not set.");
+	else die("Content id is not provided.");
 }
-
 function duplicateRows($tablename,$idField,$idValue,$insertId)
 {
 	$sendParams = array();
@@ -1030,166 +1098,4 @@ function duplicateRows($tablename,$idField,$idValue,$insertId)
 		queryDatabase($sql,$sendParams);
 	}
 }
-/*
- function updateRelatedRecords($params)
- {
- * Script will attempt to update one field (setfield/setvalue) of multiple records by paramfield/paramvalue parameter. (????)
-
- ** REQUIRED PARAMS
- tablename - name of the table to update
- setfield - name of the field to update
- setvalue - value of the field to update
- paramfield - name of the parameter to specify records
- paramvalue - value of the paramfield
-
- $sendParams = array();
-
- // make sure we have a tablename and parameters
- if ( isset($params['tablename']) && isset($params['setfield']) && isset($params['setvalue']) && isset($params['paramfield']) && isset($params['paramvalue'])) {
- $sql = "UPDATE  `".$params['tablename']."` ";
- $sql .= "SET ".$params['setfield']." = :setvalue ";
- $sql .= " WHERE ".$params['paramfield']." = :paramvalue ";
- $sendParams['setvalue'] = processText($params['setvalue']);
- $sendParams['paramvalue'] = $params['paramvalue'];
- }
- else
- {
- die("No tablename or setfield/setvalue or paramfield/paramvalue parameters provided.");
- }
-
- // get the results
- if ($result = queryDatabase($sql,$sendParams))
- sendSuccess();
- else
- die("Query Failed:" . $result->errorInfo());
-
- // return the results
- return $result;
- }
-
- function insertRelatedRecords($params) // A GENERAL-USE INSERT FUNCTION
- {
-
- ** REQUIRED PARAMS
- tablename - name of the table to update.
- singlefield
- singlevalue
- manyfield
- manyvalue
-
- if (isset($params['tablename']))
- { // make sure we have a content id and tablename.
-
- $sendParams = array();
- $sql = "INSERT INTO `".$params['tablename']."` ";
-
- // put field names into SQL
-
- $sql .= "(";
- //		foreach ($params as $key=>$value)
- //		{
- //			if ($key != 'action' && $key != 'tablename' && $key != 'tags' && $key != 'verbose' &&
- //				$key != "singlevalue" && $key != "manyvalue")
- //			{
- //
- //				$sql .= $value . ",";
- //			}
- //		}
- // remove last comma
- //$sql = substr($sql,0,strlen($sql)-1);
-
- $sql .= $params['singlefield'] . ",";
- $sql .= $params['manyfield'];
- $sql .= ")";
-
-
- // put values into SQL
-
- $sql .= " VALUES ";
- $manyvalues = explode(',',$params['manyvalue']);
- foreach($manyvalues as $value )
- {
- $sql .= " (:singlevalue, :".$value."), ";
- $sendParams['singlevalue'] = $params['singlevalue'];
- $sendParams[$value] = $value;
- }
- $sql = substr($sql,0,strlen($sql)-2);
- if ($result = queryDatabase($sql,$sendParams)) {
- sendSuccess();
- }
- else
- die("Query Failed:" . $result->errorInfo());
- }
- }
-
- function deleteRelatedRecords($params)
- {
- * Script will attempt to delete  ..
-
- ** REQUIRED PARAMS
- tablename - name of the table to
- 'content_media':
- mediaid -
- 'content_terms':
- termid -
- 'media_terms':
- mediaid -
- 'user_usercategories':
- fieldname -
- fieldvalue -
-
- ** OTHER PARAMS
-
- $sendParams = array();
- $sendParams2 = array();
-
- // make sure we have a tablename
- if (isset($params['tablename'])) {
-
- $sql = "DELETE FROM `".$params['tablename']."` ";
- $sql2 = "UPDATE `".$params['tablename']."` ";
- if($params['tablename'] == "content_media")
- {
- $sql .= " WHERE usage_type!='thumb' AND mediaid = :mediaid ";
- $sql2 .= " SET mediaid='0' WHERE usage_type='thumb' AND mediaid = :mediaid ";
- $sendParams['mediaid'] = $params['mediaid'];
- $sendParams2['mediaid'] = $params['mediaid'];
- }
- else if($params["tablename"] == "content_terms")
- {
- $sql .= " WHERE termid = :termid ";
- $sendParams['termid'] = $params['termid'];
- }
- else if($params["tablename"] == "media_terms")
- {
- $sql .= " WHERE mediaid = :mediaid ";
- $sendParams['mediaid'] = $params['mediaid'];
- }
- else if($params['tablename'] == "user_usercategories")
- {
- $sql .= " WHERE ".$params['fieldname']." = :fieldvalue ";
- $sendParams['fieldvalue'] = $params['fieldvalue'];
- }
- else
- die("error?!");
- }
- else
- die("No tablename provided.");
-
- // get the results
- if ($result = queryDatabase($sql,$sendParams))
- {
- if($result2 =  queryDatabase($sql2,$sendParams2))
- sendSuccess();
- else
- die("Query Failed:" . $result2->errorInfo());
- }
- else
- die("Query Failed:" . $result->errorInfo());
-
- // return the results
- return $result;
- }
- */
-
 ?>

@@ -63,7 +63,9 @@ else
 
 	
 //try xmp	
-$tags = getKeywords($path.$base.'.'.$extension);
+$tmp = array();
+$tmp['file'] = $path.$base.'.'.$extension;
+$tags = getKeywords($tmp);
 $size = shell_exec("ls -s " . $path.$base.'.'.$extension) *1024;		
 header("Content-type: text/xml");
 $out = "<result><name>" . $base.'.'.$extension."</name>";

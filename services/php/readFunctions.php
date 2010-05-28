@@ -2,57 +2,45 @@
 function validateUser($params)
 {
 	/*
-		-- VALID PARAMS --
-		-- ALL ARE REQUIRED! --
-		
-		username (str)
-		password (str)
-	
-	*/
-	
-	
+	 -- REQUIRED --
+
+	 username (str)
+	 password (str)
+
+	 -- OPTIONAL --
+
+	 */
+
 	$validParams = array("action","username","password");
-	
-		if (isset($params['username']) && isset($params['password'])) {
-		
+	if (isset($params['username']) && isset($params['password'])) {
 		$sql = "SELECT * FROM user WHERE username = '".$params['username']."' AND active='1'";
 		$result = queryDatabase($sql);
-		
+
 		if ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-		
 			if ($params['password'] == text_decrypt($row['password'])) {
 				$sql = "SELECT * FROM user WHERE id = '".$row['id']."'";
 				$result = queryDatabase($sql);
 				return $result;
-			} else {
-				die("Invalid Password!!!");
-			}
-		
-		} else {
-		
-			die("user not found");
-		
-		}
-	
-	} else {
-	
-		die ("Username and Password and both required!");
-	
-	}
-
+			} else die("Invalid Password!");
+		} else die("User not found.");
+	} else die ("Username and Password and both required!");
 }
-function getCustomFields($params) { // general read function
 
+function getCustomFields($params) {
 	/*
-		-- VALID PARAMS --
 		-- REQUIRED --
 
 		contentid (int) - what contentid are we getting fields for? - CANNOT BE COMMA-DELIMITED!
+
+		-- OPTIONAL --
+
+		include_all
+
 		*/
 
 	if (isset($params['contentid'])) {
 
-		$sendParams = array(); //params to replace placeholders at queryDatabase()
+		$sendParams = array();
 
 		$arrCF = array();
 
@@ -104,11 +92,8 @@ function getCustomFields($params) { // general read function
 				$arrCF[$key]['data'] = $row['customfield'.$CF['customfieldid']];
 			}
 		}
-
 	} else {
-
 		die("contentid is required!");
-
 	}
 
 	// put the array into xml
@@ -116,32 +101,33 @@ function getCustomFields($params) { // general read function
 	$xml = "<customfields>";
 
 	foreach ($arrCF as $CF) {
-
 		$xml .= "<customfield id=\"".$CF['customfieldid']."\" cftype=\"".$CF['cftype']."\" name=\"".$CF['name']."\" type=\"".$CF['type']."\" displayorder=\"".$CF['displayorder']."\">".stripslashes($CF['data'])."</customfield>";
-
 	}
 
 	$xml .= "</customfields>";
 
-	//header('Content-type: text/xml; charset="utf-8"',true);
 	serializeArray($xml);
-	//echo $xml;
 	die();
 }
 
-function getData ($params) { // general read function
-
+function getData ($params) {
 	/*
-		-- VALID PARAMS --
-		-- REQUIRED --
 
-		tablename (str) - what table should we read?
+	Genearal read function.
 
-		-- OPTIONAL --
+	-- VALID PARAMS --
+	-- REQUIRED --
 
-		id - return a specific id or comma-delimited list
-		orderby - field name to order results by, should be expressed as table.field (e.g. content.migtitle). Can also be comma-delimited list.
-		*/
+	tablename (str) - what table should we read?
+
+	-- OPTIONAL --
+
+	id - if provided, then return a specific id or comma-delimited list
+	orderby - field name to order results by, should be expressed as table.field (e.g. content.migtitle). Can also be comma-delimited list.
+	orderdirection - ASC or DESC
+	other name/value pair parameters to specify results
+
+	*/
 
 	if (isset($params['tablename'])) {
 
@@ -168,10 +154,7 @@ function getData ($params) { // general read function
 			$sql .= " )";
 		}
 		foreach ($params as $key=>$value) {
-			if (!in_array($key,$validParams) &&  $key != 'orderdirection') { // this is a custom parameter
-				//			if ($key == 'password')
-				//				$sql .= " AND " . $key . " = '".text_crypt($value)	."'";
-				//			else
+			if (!in_array($key,$validParams)) {
 				$sql .= " AND " . $key . " = :".$key;
 				$sendParams[$key] = $value;
 			}
@@ -200,21 +183,20 @@ function getData ($params) { // general read function
 
 	// return the results
 	return $result;
-
 }
 
 function getUsers($params) {
-
 	/*
-	 -- VALID PARAMS --
-	 -- ALL ARE OPTIONAL --
 
-	 userid (int) - specifies a specific user id to return (can be comma-delimited)
-	 contentid (int) - specifies a specific content id to return media results for (can be comma-delimited)
+	Return user info from 'user' table and all related tables
 
-	 //tagid (int) - specifies a specific media id to return (can be comma-delimited)
-	 //include_unused (1,0) - include media that is not tied to content - defaults to 0 (NO).
-	 */
+	-- ALL ARE OPTIONAL --
+
+	userid (int) - specifies a specific user id to return (can be comma-delimited)
+	contentid (int) - specifies a specific content id to return media results for (can be comma-delimited)
+
+	*/
+
 	$sendParams = array();
 
 	$validParams = array("action","userid","contentid","include_unused");
@@ -227,7 +209,6 @@ function getUsers($params) {
 			  LEFT JOIN content ON (content.id = content_users.contentid  AND content.deleted = 0)
 			  LEFT JOIN user_usercategories ON user_usercategories.userid = user.id
 			  LEFT JOIN usercategories ON usercategories.id = user_usercategories.categoryid";
-	// WHERE CLAUSE INFO
 
 	$sql .= " WHERE user.id <> 0 ";
 
@@ -260,17 +241,12 @@ function getUsers($params) {
 		$sql .= " )";
 	}
 
-	//if (!isset($params['include_unused']) || ($params['include_unused'] == 0) ) { // return media for a specific content id, or a list thereof
-
-	//	$sql .= " AND content_users.id IS NOT NULL";
-
-	//}
 	// GET ANY EXTRA PARAMS AND APPLY THOSE TO THE WHERE CLAUSE
 
 	foreach ($params as $key=>$value)
 	{
 		if (!in_array($key,$validParams))
-		{ // this is a custom parameter
+		{
 			$sql .= " AND " . $key . " = :".$key;
 			$sendParams[$key] = $value;
 		}
@@ -291,22 +267,24 @@ function getUsers($params) {
 function getContent($params)
 {
 	/*
-		-- VALID PARAMS --
-		-- ALL ARE OPTIONAL --
 
-		contentid (int) - specifies a specific content id to return (can be comma-delimited)
-		parentid (int) - only return content under this parent id (can be comma-delimited) - This also overrrides contentid!!!
-		includechildren (0,1) - only applies when a contentid or parentid is specified, do we return children as well?
-		has_tag - comma-delimited list of tags to search for.
-		search_terms - search words to search for (comma-delimited). this searches title, description + custom fields.
-		search_description - search words to search for in description (comma-delimited).
-		search_customfields - words to search for in the custom fields (comma-delimited).
-		verbosity - (1 = ids + titles only, 2 - all fields + named custom fields, 3 - all fields).
-		orderby - field name to order results by, should be expressed as table.field (e.g. content.migtitle). Can also be comma-delimited list.
+	Return specified rows from the table 'content'.
 
-		customfield* OR customfieldname (as it appears in DB) will both work for returning content based on custom field data.
+	-- ALL ARE OPTIONAL --
 
-		*/
+	contentid (int) - specifies a specific content id to return (can be comma-delimited)
+	parentid (int) - only return content under this parent id (can be comma-delimited) - This also overrrides contentid!!!
+	includechildren (0,1) - only applies when a contentid or parentid is specified, do we return children as well?
+	has_tag - comma-delimited list of tags to search for.
+	search_terms - search words to search for (comma-delimited). this searches title, description + custom fields.
+	search_description - search words to search for in description (comma-delimited).
+	search_customfields - words to search for in the custom fields (comma-delimited).
+	verbosity - (1 = ids + titles only, 2 - all fields + named custom fields, 3 - all fields).
+	orderby - field name to order results by, should be expressed as table.field (e.g. content.migtitle). Can also be comma-delimited list.
+
+	customfield* OR customfieldname (as it appears in DB) will both work for returning content based on custom field data.
+
+	*/
 
 	global $arrVerbosity,$arrCFFlag;
 
@@ -349,7 +327,7 @@ function getContent($params)
 
 		$sql = "SELECT id FROM content WHERE parentid IN ( ";
 
-		
+
 		// $params['parentid'] can be comma-delimited
 		$manyvalues = explode(",",$params['parentid']);
 		foreach($manyvalues as $contentvalue)
@@ -390,7 +368,7 @@ function getContent($params)
 
 	$sendParams = array(); //params to replace placeholders at queryDatabase()
 	$i = 0;
-	
+
 	if (isset($params['include_children']) && isset($params['contentid']) && ($params['include_children'] == 1)) { // include_children
 
 		// get childids for all contentids specified
@@ -411,21 +389,13 @@ function getContent($params)
 	if (!isset($params['verbosity'])) // set default verbosity
 	$params['verbosity'] = 0;
 
-
 	// BUILD SELECT STATEMENT FROM INFO IN VERBOSITY ARRAY!
 
 	$sql = "SELECT ";
-
 	if (@is_array($arrVerbosity[$params['verbosity']])) {
-
 		foreach ($arrVerbosity[$params['verbosity']] as $field)
 		$sql .= $field . ",";
-
-	} else {
-
-		die("Invalid verbosity level.");
-
-	}
+	} else die("Invalid verbosity level.");
 
 	// give us back the custom fields with appropriate names!
 
@@ -502,7 +472,7 @@ function getContent($params)
 	if (isset($params['contentid'])) { // return a specific content id, or a list thereof
 		if (isset($strChildIDs)) {
 			$sql .= " AND content.id IN ( ";
-			
+
 			// $params['contentid'] comma-delimited
 			$manyvalues = explode(",",$params['contentid']);
 			foreach($manyvalues as $contentvalue)
@@ -510,7 +480,7 @@ function getContent($params)
 				$sql .= " :singlevalue".$contentvalue.", ";
 				$sendParams['singlevalue'.$contentvalue] = $contentvalue;
 			}
-			// $childids comma-delimited			
+			// $childids comma-delimited
 			foreach($childids as $childvalue)
 			{
 				$sql .= " :singlevalue".$childvalue.", ";
@@ -573,7 +543,7 @@ function getContent($params)
 				$sql .= " content.customfield7 LIKE :term".$i." OR";
 				$sql .= " content.customfield8 LIKE :term".$i." OR";
 				$sql .= " terms.name LIKE :term".$i." OR";
-				
+
 				$sendParams['term'.$i] = "%".$term."%";
 			}
 			// remove last "OR"
@@ -623,7 +593,7 @@ function getContent($params)
 				$sql .= " content2.desc LIKE :term".$i." OR";
 				$sendParams['term'.$i] = "%".$term."%";
 			}
-						
+
 			// remove last "OR"
 
 			$sql = substr($sql,0,strlen($sql)-2);
@@ -646,7 +616,7 @@ function getContent($params)
 				$sql .= " content.migtitle LIKE :term".$i." OR";
 				$sendParams['term'.$i] = "%".$term."%";
 			}
-			
+
 			// remove last "OR"
 
 			$sql = substr($sql,0,strlen($sql)-2);
@@ -686,7 +656,7 @@ function getContent($params)
 	}
 	else
 	$sql .= " ORDER BY content.id ASC";
-	
+
 	//print_r($sendParams);
 	//print_r($sql);
 	// get the results
@@ -718,7 +688,7 @@ function getContentMedia($params)
 
 	$sql .= " LEFT JOIN media ON content_media.mediaid = media.id";
 	$sql .= " LEFT JOIN mimetypes ON media.mimetypeid = mimetypes.id";
-	
+
 	//contentid ** required!
 	if (isset($params['contentid']))
 	{
@@ -993,13 +963,13 @@ function getMedia($params) {
 
 		*/
 	global $mediaVerbosity;
-	
+
 	$columnsArray = getTableColumns('media'); // gets array of field names for table 'media'
 	$validParams = array("action","mediaid","contentid","include_unused","has_tag","search_caption","search_credits","orderby","name","include_thumb","verbosity");
 
 	$sendParams = array();
 	$i = 0;
-	
+
 	// SELECT fields according to verbosity
 
 	if (!isset($params['verbosity'])) // set default verbosity
@@ -1028,7 +998,7 @@ function getMedia($params) {
 			  LEFT JOIN content_media AS content_media ON  content_media.mediaid = media.id
 			  LEFT JOIN content ON (content.id = content_media.contentid AND content.deleted='0') ";
 	$sql .= " LEFT JOIN mimetypes ON (media.mimetypeid = mimetypes.id)";
-	
+
 	// WHERE CLAUSE INFO
 
 	$sql .= " WHERE media.id <> 0 ";
@@ -1051,7 +1021,7 @@ function getMedia($params) {
 	if (isset($params['contentid'])) { // return media for a specific content id, or a list thereof
 
 		$sql .= " AND content_media.contentid IN ( ";
-		
+
 		// $params['contentid'] comma-delimited
 		$manyvalues = explode(",",$params['contentid']);
 		foreach($manyvalues as $value)
@@ -1123,7 +1093,7 @@ function getMedia($params) {
 				$sql .= " media.credits LIKE :term".$i." OR";
 				$sendParams['term'.$i] = "%".$term."%";
 			}
-			
+
 			// remove last "OR"
 
 			$sql = substr($sql,0,strlen($sql)-2);
@@ -1138,7 +1108,7 @@ function getMedia($params) {
 	foreach ($params as $key=>$value)
 	{
 		if (!in_array($key,$validParams)) // this is a custom parameter
-		{ 
+		{
 			if (in_array($key, $columnsArray)) // checks for misspelling of field name
 			{
 				$sql .= " AND " . $key . " = :".$key;
@@ -1167,12 +1137,12 @@ function getMedia($params) {
 	else
 	$sql .= " ORDER BY media.id ASC";
 
-//	print_r($sendParams);
+	//	print_r($sendParams);
 	//print_r($sql);
-	
+
 	// get the results
 	$result = queryDatabase($sql, $sendParams);
-	
+
 	// return the results
 	return $result;
 }
@@ -1189,9 +1159,9 @@ function contentSearch($params)
 
 	$sendParams = array();
 	$i = 0;
-	
+
 	if (!$params['search_terms'])
-		die("search_terms is required");
+	die("search_terms is required");
 
 	$validParams = array("action","contentid","include_children","typeid","has_tag","search_terms","search_description","search_customfields","verbosity","parentid","orderby");
 
@@ -1230,7 +1200,7 @@ function contentSearch($params)
 					///!!!! crucial for tag search - use like ins
 					//$sql .= " tags.tag = :termtags".$i." OR";
 					//$sendParams['termtags'.$i] = $term;
-					
+
 					$sql .= " terms.name LIKE :term".$i." OR";
 					$sendParams['term'.$i] = "%".$term."%";
 				}
@@ -1353,7 +1323,7 @@ function migSearch($params)
 					///!!!! crucial for tag search
 					//$sql .= " tags.tag = :termtags".$i." OR";
 					//$sendParams['termtags'.$i] = $term;
-					
+
 					$sql .= " terms.name LIKE :term".$i." OR";
 					$sendParams['term'.$i] = "%".$term."%";
 				}
@@ -1397,11 +1367,11 @@ function migSearch($params)
 
 				foreach ($arrTerms as $term) {
 					$i++;
-					
+
 					///!!!! crucial for tag search
 					//$sql .= " AND ( tags.tag = :termtags".$i." OR";
 					//$sendParams['termtags'.$i] = $term;
-					
+
 					$sql .= " AND ( terms.name LIKE :term".$i." OR";
 					$sql .= " content_media.caption LIKE :term".$i." OR";
 					$sql .= " media.name LIKE :term".$i." OR";
@@ -1435,11 +1405,11 @@ function migSearch($params)
 
 				foreach ($arrTerms as $term) {
 					$i++;
-					
+
 					///!!!! crucial for tag search
 					//$sql .= " AND ( tags.tag = :termtags".$i." OR";
 					//$sendParams['termtags'.$i] = $term;
-					
+
 					$sql .= " AND ( terms.name LIKE :term".$i." OR";
 					$sql .= " content_media.caption LIKE :term".$i." OR";
 					$sql .= " media.name LIKE :term".$i." OR";
@@ -1635,74 +1605,4 @@ function sendUserInformation($params) {
 	else
 	die ("No email was provided");
 }
-
-/*
-function getUserInfo($params) {
-
-	
-		//-- VALID PARAMS --
-		//-- ALL ARE OPTIONAL --
-
-		//userid (int) - specifies a specific user id to return (can be comma-delimited)
-		//usergroupid
-		//orderby - field name to order results by, should be expressed as table.field (e.g. content.migtitle). Can also be comma-delimited list.
-		
-
-	$validParams = array("action","userid","orderby","usergroupid");
-
-	$sql = "SELECT user.*, usergroups.usergroup, GROUP_CONCAT(perms.id) AS permids, GROUP_CONCAT(perms.perm) AS permissions";
-
-	$sql .= " FROM user
-			  LEFT JOIN usergroups ON usergroups.id = user.usergroupid
-			  LEFT JOIN usergroup_perms ON usergroup_perms.usergroupid = user.usergroupid
-			  LEFT JOIN perms ON perms.id = usergroup_perms.permid";
-
-	$sql .= " WHERE user.id <> 0 ";
-
-	$sendParams = array(); //params to replace placeholders at queryDatabase()
-
-	if (isset($params['userid'])) { // return a specific content id, or a list thereof
-
-		$sql .= " AND user.id IN (:userid)";
-		$sendParams['userid'] = $params['userid'];
-
-	}
-
-	if (isset($params['usergroupid'])) { // return a specific content id, or a list thereof
-
-		$sql .= " AND user.usergroupid IN (:usergroupid)";
-		$sendParams['usergroupid'] = $params['usergroupid'];
-
-	}
-
-	foreach ($params as $key=>$value) {
-
-		if (!in_array($key,$validParams)) { // this is a custom parameter
-
-			$sql .= " AND " . $key . " = :".$key;
-			$sendParams[$key] = $value;
-		}
-
-	}
-
-	// GROUP BY CLAUSE
-
-	$sql .= " GROUP BY user.id";
-
-	// ORDER BY
-
-	if (isset($params['orderby'])) {
-		$sql .= " ORDER BY ".$params['orderby'];
-	}
-	else
-	$sql .= " ORDER BY user.id ASC";
-
-	// get the results
-	$result = queryDatabase($sql, $sendParams);
-
-	// return the results
-	return $result;
-}
-*/
-
 ?>

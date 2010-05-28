@@ -1,0 +1,45 @@
+Installation
+
+Simple HTML form
+Installation file php
+mig package (zip)
+
+1- Requirements
+check for php version, minimum required is 5.2 or 5.3 (to use PDO)
+check for GD extension
+	
+
+2 - files
+unzip package
+create files, files/migThumbs, temporary folder (permission is 777)
+create fonts folder
+create xml folder
+
+following folders are already packaged
+	migAssets 
+	js 
+	php
+	history
+
+the following files are already packaged
+	mig.swf
+	migApp.swf
+	framework files
+	index.html
+	usa.zwl
+	bg_image.jpg
+	
+
+3 - Database
+modifiy php/includes/database.php with the server information provided by the form
+retrieve SQL file and install database
+
+
+
+
+
+
+Provide feedback or message at each step of the installation process - (no need for ajax, you can print a single message at the end which is the concatenation of messages from each step)
+
+If a step fails, the installation should stop and attempt to revert back.
+If the user if installing in a directory where he has no privileges, then he needs to be notified

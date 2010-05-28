@@ -427,26 +427,35 @@ function parseXMP($file) {
 	}
 	return $result;
 }
-function getKeywords($file) {
-	$result = parseXMP($file);
-	if($result[0] == true) {
-		$xmp = $result[1];
-		$tempArr = explode("<dc:subject>",$xmp);
-		$tempArr = explode("</dc:subject>",$tempArr[1]);
-		$tempArr = explode("<rdf:Bag>",$tempArr[0]);
-		$tempArr = explode("</rdf:Bag>",trim($tempArr[1]));
-		$tempArr = explode("<rdf:li>",trim($tempArr[0]));
-		
-		$tags = '';
-		foreach($tempArr as $li) {
-			if(trim($li) != '')
-				$tags .= strip_tags(trim($li)) .',';
+function getKeywords($params) {
+	if(isset($params['file']))
+	{
+		$result = parseXMP($params['file']);
+		if($result[0] == true) {
+			$xmp = $result[1];
+			if(strstr("<dc:subject>",$xmp)) {
+				$tempArr = explode("<dc:subject>",$xmp);
+				$tempArr = explode("</dc:subject>",$tempArr[1]);
+				$tempArr = explode("<rdf:Bag>",$tempArr[0]);
+				$tempArr = explode("</rdf:Bag>",trim($tempArr[1]));
+				$tempArr = explode("<rdf:li>",trim($tempArr[0]));
+			
+				$tags = '';
+				foreach($tempArr as $li) {
+					if(trim($li) != '')
+						$tags .= strip_tags(trim($li)) .',';
+				}
+				$tags = substr($tags,0,strlen($tags)-1);
+				return $tags;
+			}
+			else
+				return '';
 		}
-		$tags = substr($tags,0,strlen($tags)-1);
-		return $tags;
+		else
+			return '';
 	}
 	else
-		return '';
+		die("File is not specified");
 }
 // Analyze file	
 function getPlaytimeID3($file) {

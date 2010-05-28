@@ -72,14 +72,14 @@
 	
 	<containers:ToolsHeader width="100%" height="22"  />
 
-
-		<s:TabBar  dataProvider="{container}" id="tabBar"  height="22"  cornerRadius="0"  />
-		<mx:ViewStack  width="100%" id="container" height="100%"  top="28"  
-	   childIndexChange="_selectedIndex = container.selectedIndex" selectedIndex="{_selectedIndex}"
-	   historyManagementEnabled="false" paddingLeft="4" paddingRight="4" paddingTop="10" backgroundAlpha="0" />		
+	<s:TabBar  dataProvider="{container}" id="tabBar"  height="22"  cornerRadius="0" styleName="toolTabBar"  />
+	
+	<mx:ViewStack  width="100%" id="container" height="100%"  top="28"  
+	childIndexChange="_selectedIndex = container.selectedIndex" selectedIndex="{_selectedIndex}"
+	historyManagementEnabled="false" paddingLeft="4" paddingRight="4" paddingTop="10" backgroundAlpha="0" />		
 	
 
-	<!--	<mx:TabNavigator width="100%" id="container" height="100%"  historyManagementEnabled="false" styleName="toolsTabNavigator" 
+	<!--<mx:TabNavigator width="100%" id="container" height="100%"  historyManagementEnabled="false" styleName="toolsTabNavigator" 
 		selectedIndex="{_selectedIndex}" tabIndexChange="_selectedIndex = container.selectedIndex"  backgroundAlpha="0" 
 		paddingLeft="4" paddingRight="4" paddingTop="10"     />
 	-->
