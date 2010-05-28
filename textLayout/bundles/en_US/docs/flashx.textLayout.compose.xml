@@ -15,7 +15,7 @@
 	<codeph>flowComposer</codeph> property of a TextFlow object. Call the <codeph>updateAllControllers()</codeph>
 	method to lay out and display the text in the containers attached to the flow composer.</p>
 	
-	<p><b>Note:</b> For simple, static text flows, you can also use the one of the text line factory classes.
+	<p><b>Note:</b> For simple, static text flows, you can also use one of the text line factory classes.
 	These factory classes will typically create lines with less overhead than a flow composer, but do not
 	support editing, dynamic changes, or user interaction.</p>
 	
@@ -323,7 +323,7 @@
 		 </apiDesc></apiParam></apiConstructorDef><apiDesc> Constructor - creates a new TextFlowLine instance. 
 		  <p><b>Note</b>: No client should call this. It's exposed for writing your own composer.</p>
 		 
-		 </apiDesc></apiConstructorDetail><related-links><link href="" invalidHref="flash.text.engine.TextLine.xml"><linktext>flash.text.engine.TextLine</linktext></link><link href="" invalidHref="flashx.textLayout.compose.ParagraphElement.xml"><linktext>ParagraphElement</linktext></link><link href="flashx.textLayout.compose.xml#TextFlowLine/absoluteStart"><linktext>absoluteStart</linktext></link><link href="flashx.textLayout.compose.xml#TextFlowLine/numChars"><linktext>numChars</linktext></link></related-links></apiConstructor><apiOperation id="flashx.textLayout.compose:TextFlowLine:tlf_internal:computePointSelectionRectangle"><apiName>computePointSelectionRectangle</apiName><shortdesc/><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="tlf_internal"/><apiReturn><apiType value="flash.geom:Rectangle"/></apiReturn><apiParam><apiItemName>idx</apiItemName><apiType value="int"/></apiParam><apiParam><apiItemName>container</apiItemName><apiType value="flash.display:DisplayObject"/></apiParam><apiParam><apiItemName>prevLine</apiItemName><apiOperationClassifier>flashx.textLayout.compose:TextFlowLine</apiOperationClassifier></apiParam><apiParam><apiItemName>nextLine</apiItemName><apiOperationClassifier>flashx.textLayout.compose:TextFlowLine</apiOperationClassifier></apiParam><apiParam><apiItemName>constrainSelRect</apiItemName><apiType value="Boolean"/></apiParam></apiOperationDef></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.compose:TextFlowLine:getBounds"><apiName>getBounds</apiName><shortdesc> 
+		 </apiDesc></apiConstructorDetail><related-links><link href="" invalidHref="flash.text.engine.TextLine.xml"><linktext>flash.text.engine.TextLine</linktext></link><link href="" invalidHref="flashx.textLayout.compose.ParagraphElement.xml"><linktext>ParagraphElement</linktext></link><link href="flashx.textLayout.compose.xml#TextFlowLine/absoluteStart"><linktext>absoluteStart</linktext></link><link href="flashx.textLayout.compose.xml#TextFlowLine/numChars"><linktext>numChars</linktext></link></related-links></apiConstructor><apiOperation id="flashx.textLayout.compose:TextFlowLine:getBounds"><apiName>getBounds</apiName><shortdesc> 
 		 Returns the bounds of the line as a rectangle.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>a rectangle that represents the boundaries of the line.
 		 
 		 </apiDesc><apiType value="flash.geom:Rectangle"/></apiReturn></apiOperationDef><apiDesc> 
@@ -341,7 +341,12 @@
 		 if it does not exist due to garbage collection. Set <codeph>forceValid</codeph> to <codeph>true</codeph>
 		 to cause the TextLine to be regenerated. Returns null if the TextLine cannot be recreated.
 		 
-		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.text.engine.TextLine.xml"><linktext>TextLine</linktext></link></related-links></apiOperation><apiValue id="flashx.textLayout.compose:TextFlowLine:absoluteStart:get"><apiName>absoluteStart</apiName><shortdesc> 
+		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.text.engine.TextLine.xml"><linktext>TextLine</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.compose:TextFlowLine:tlf_internal:isLineVisible"><apiName>isLineVisible</apiName><shortdesc>
+		 Check if the line is visible by comparing a set rectangle to the supplied
+		 rectangle (all values in Twips).</shortdesc><prolog/><apiOperationDetail><apiOperationDef><apiAccess value="tlf_internal"/><apiReturn><apiType value="Boolean"/></apiReturn><apiParam><apiItemName>wmode</apiItemName><apiType value="String"/></apiParam><apiParam><apiItemName>x</apiItemName><apiType value="int"/></apiParam><apiParam><apiItemName>y</apiItemName><apiType value="int"/></apiParam><apiParam><apiItemName>w</apiItemName><apiType value="int"/></apiParam><apiParam><apiItemName>h</apiItemName><apiType value="int"/></apiParam></apiOperationDef><apiDesc>
+		 Check if the line is visible by comparing a set rectangle to the supplied
+		 rectangle (all values in Twips).
+		 </apiDesc></apiOperationDetail></apiOperation><apiValue id="flashx.textLayout.compose:TextFlowLine:absoluteStart:get"><apiName>absoluteStart</apiName><shortdesc> 
 		 The location of the line as an absolute character position in the TextFlow object.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
 		 The location of the line as an absolute character position in the TextFlow object.
 		 

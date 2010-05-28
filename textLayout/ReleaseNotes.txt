@@ -1,4 +1,22 @@
-﻿Build 595
+﻿TLF 1.1 Build 604
+	* Fix 2609202 SDK-26277 RTE when trying to delete a LinkElement in a RichEditableText control
+TLF 1.1 Build 603
+	* Fix 2598300 Bad width calculations when doing incremental compose if RichEditableText has no width specified.
+TLF 1.1 Build 602
+	* Fix 2594609 Poor text delete performance when pasting large blocks of code, selecting all, and deleting
+TLF 1.1 Build 599
+	* Improve paste performance - fix for [SDK-25793]
+TLF 1.1 Build 598
+	* Fix SDK-25999 Specifying tabStops on a RichText component does not look correct after integration of TLF 1.1
+TLF 1.1 Build 597
+	* Performance work - major changes to improve performance in long documents
+	* Fix 2568628 assigned SWFContext not used on Argo in all scenarios
+	* Fix 2568438 [SDK-25693] TextLineRecycler change for Build543 increased size of Flex's Hello World app using FTE and TextLineRecycler by 250k
+	* Fix 2571205 [SDK-25734] TLF: src attribute in <img> tag converts to lower case when using TextConverter.importToFlow with TEXT_FIELD_HTML_FORMAT format
+	* Fix 2582917 Security sandbox violation in LinkElement.stageMouseMoveHandler
+	* Fix 2565658 Security sandbox violation in ContainerController.getContainerController
+	* Fix 2565639 Security sandbox violation in SelectionManager.checkForDisplayed()
+Build 595
 	* Fix 2537642 Bug, TLF Text: htmlText is not Rendered Correctly (importer issue with implied paragraphs)
 Build 594
 	* Fix 2537651 Vellum exporters can generate a RTE for InlineGraphicElement objects if the textFlow has not been composed.

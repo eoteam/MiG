@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="org.mig.view.containers.*" xmlns:media="org.mig.view.components.managers.media.*">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:containers="org.mig.view.containers.*" xmlns:media="org.mig.view.components.managers.media.*" xmlns:s="library://ns.adobe.com/flex/spark">
 
 	<mx:VDividedBox horizontalScrollPolicy="off"  direction="vertical" liveDragging="false" clipContent="false" width="100%" height="100%"
 	id="toolContainer" dividerSkin="com.fxcomponents.skins.MainDividerSkin">
 		
-		<containers:CollapsibleTabNavigator id="toolSet1" width="100%" height="100%" contentBackgroundAlpha="1">
-			<mx:Canvas width="100%" height="100%" label="Browse Files">
+		<containers:CollapsibleTabNavigator id="toolSet1" width="100%" height="100%">
+			<s:NavigatorContent width="100%" height="100%" label="Browse Files">
 				<media:MediaManagerView  width="100%" height="100%" />	
-			</mx:Canvas>
-			
-			<media:FileUploadView width="100%" height="100%" label="Upload Files"/>
+			</s:NavigatorContent>
+			<s:NavigatorContent width="100%" height="100%" label="Upload Files">
+				<media:FileUploadView width="100%" height="100%" />
+			</s:NavigatorContent>
 		</containers:CollapsibleTabNavigator>
 		
 		<containers:CollapsibleTabNavigator id="toolSet2" width="100%" height="100%" opened="false">

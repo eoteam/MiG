@@ -175,19 +175,19 @@
 		 if one exists, and that of the last child of <codeph>container</codeph> otherwise. 
 		 
 		 </apiDesc></apiOperationDetail><related-links><link href="" invalidHref="flash.text.engine.TextLine.xml"><linktext>flash.text.engine.TextLine</linktext></link><link href="flashx.textLayout.container.xml#ContainerController/container"><linktext>container</linktext></link></related-links></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:getScrollDelta"><apiName>getScrollDelta</apiName><shortdesc> 
-		Figure out the scroll distance required to scroll up or down by the specified number of lines.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>the delta amount of space to scroll
-		
-		</apiDesc><apiType value="Number"/></apiReturn><apiParam><apiItemName>numLines</apiItemName><apiType value="int"/><apiDesc>The number of lines to scroll.
-		
-		</apiDesc></apiParam></apiOperationDef><apiDesc> 
-		Figure out the scroll distance required to scroll up or down by the specified number of lines.
-		Negative numbers scroll upward, bringing more of the top of the TextFlow into view. Positive numbers 
-		scroll downward, bringing the next line from the bottom into full view.
-		
-		<p>When scrolling up, for example, the method makes the next line fully visible. If the next line is partially
-		obscured and the number of lines specified is 1, the partially obscured line becomes fully visible.</p>
-		
-		</apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:getStyle"><apiName>getStyle</apiName><shortdesc> Returns the value of the style specified by the styleProp parameter.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>The current value for the specified style.
+		 Figure out the scroll distance required to scroll up or down by the specified number of lines.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>the delta amount of space to scroll
+		 
+		 </apiDesc><apiType value="Number"/></apiReturn><apiParam><apiItemName>numLines</apiItemName><apiType value="int"/><apiDesc>The number of lines to scroll.
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Figure out the scroll distance required to scroll up or down by the specified number of lines.
+		 Negative numbers scroll upward, bringing more of the top of the TextFlow into view. Positive numbers 
+		 scroll downward, bringing the next line from the bottom into full view.
+		 
+		 <p>When scrolling up, for example, the method makes the next line fully visible. If the next line is partially
+		 obscured and the number of lines specified is 1, the partially obscured line becomes fully visible.</p>
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:getStyle"><apiName>getStyle</apiName><shortdesc> Returns the value of the style specified by the styleProp parameter.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>The current value for the specified style.
 		 
 		 </apiDesc><apiType value="any"/></apiReturn><apiParam><apiItemName>styleProp</apiItemName><apiType value="String"/><apiDesc>The name of the style property whose value you want.
 		 
@@ -308,15 +308,15 @@
 		 Sets the width and height allowed for text in the container. 
 		 
 		 </apiDesc><example conref="examples\ContainerController_setCompositionSizeExample.as"/></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:setStyle"><apiName>setStyle</apiName><shortdesc> 
-		Sets the value of the style specified by the styleProp parameter to the value
-		specified by the newValue parameter.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>styleProp</apiItemName><apiType value="String"/><apiDesc>The name of the style property whose value you want to set.
-		</apiDesc></apiParam><apiParam><apiItemName>newValue</apiItemName><apiType value="any"/><apiDesc>The value that you want to assign to the style.
-		
-		</apiDesc></apiParam></apiOperationDef><apiDesc> 
-		Sets the value of the style specified by the <codeph>styleProp</codeph> parameter to the value
-		specified by the <codeph>newValue</codeph> parameter.
-		
-		</apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:textInputHandler"><apiName>textInputHandler</apiName><shortdesc> Processes the TextEvent.TEXT_INPUT event when the client manages events.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:TextEvent"/><apiDesc> The TextEvent object.
+		 Sets the value of the style specified by the styleProp parameter to the value
+		 specified by the newValue parameter.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>styleProp</apiItemName><apiType value="String"/><apiDesc>The name of the style property whose value you want to set.
+		 </apiDesc></apiParam><apiParam><apiItemName>newValue</apiItemName><apiType value="any"/><apiDesc>The value that you want to assign to the style.
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc> 
+		 Sets the value of the style specified by the <codeph>styleProp</codeph> parameter to the value
+		 specified by the <codeph>newValue</codeph> parameter.
+		 
+		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:ContainerController:textInputHandler"><apiName>textInputHandler</apiName><shortdesc> Processes the TextEvent.TEXT_INPUT event when the client manages events.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="void"/></apiReturn><apiParam><apiItemName>event</apiItemName><apiType value="flash.events:TextEvent"/><apiDesc> The TextEvent object.
 		 
 		 </apiDesc></apiParam></apiOperationDef><apiDesc> Processes the <codeph>TextEvent.TEXT_INPUT</codeph> event when the client manages events.
 		 
@@ -331,9 +331,9 @@
 		 Returns the first character in the container.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="int"/></apiValueDef><apiDesc> 
 		 Returns the first character in the container. If this is not the first container in the flow,
 		 this value is updated when the text is composed, that is when the IFlowComposer's <codeph>compose()</codeph> or 
- 		 <codeph>updateAllControllers()</codeph> methods are called.
+		 <codeph>updateAllControllers()</codeph> methods are called.
 		 
-	 	 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#IFlowComposer"><linktext>flashx.textLayout.compose.IFlowComposer</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:alignmentBaseline:get"><apiName>alignmentBaseline</apiName><shortdesc>
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#IFlowComposer"><linktext>flashx.textLayout.compose.IFlowComposer</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:alignmentBaseline:get"><apiName>alignmentBaseline</apiName><shortdesc>
 		 TextLayoutFormat:
 		 Specifies the baseline to which the dominant baseline aligns.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>when set value is not within range for this property
 		 
@@ -475,9 +475,9 @@
 		 
 		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.container.xml#ContainerController/setCompositionSize()"><linktext>setCompositionSize()</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:computedFormat:get"><apiName>computedFormat</apiName><shortdesc> 
 		 Returns an ITextLayoutFormat instance with the attributes applied to this container, including the attributes inherited from its
-   		 root element.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
+		 root element.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiValueClassifier>flashx.textLayout.formats:ITextLayoutFormat</apiValueClassifier></apiValueDef><apiDesc> 
 		 Returns an ITextLayoutFormat instance with the attributes applied to this container, including the attributes inherited from its
-   		 root element.
+		 root element.
 		 
 		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.container.xml#ContainerController/rootElement"><linktext>rootElement</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:container:get"><apiName>container</apiName><shortdesc> 
 		 Returns the container display object that holds the text lines for this ContainerController instance.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="read"/><apiType value="flash.display:Sprite"/></apiValueDef><apiDesc> 
@@ -928,7 +928,7 @@
 		 if the container is scrollable. This value is updated when the text is composed (when the IFlowComposer's <codeph>compose()</codeph> 
 		 or <codeph>updateAllControllers()</codeph> methods are called).
 		 
-	 	 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#IFlowComposer"><linktext>flashx.textLayout.compose.IFlowComposer</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:textRotation:get"><apiName>textRotation</apiName><shortdesc>
+		 </apiDesc></apiValueDetail><related-links><link href="flashx.textLayout.compose.xml#IFlowComposer"><linktext>flashx.textLayout.compose.IFlowComposer</linktext></link></related-links></apiValue><apiValue id="flashx.textLayout.container:ContainerController:textRotation:get"><apiName>textRotation</apiName><shortdesc>
 		 TextLayoutFormat:
 		 Determines the number of degrees to rotate this text.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiValueDetail><apiValueDef><apiProperty/><apiAccess value="public"/><apiDynamic/><apiValueAccess value="readwrite"/><apiType value="any"/><apiException><apiDesc>when set value is not within range for this property
 		 
@@ -1142,10 +1142,10 @@
 		 
 		 </apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:getScrollDelta"><apiName>getScrollDelta</apiName><shortdesc conref="flashx.textLayout.container.ContainerController#getScrollDelta()"> 
 		</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiType value="Number"/><apiDesc>the delta amount of space to scroll
-		
-		</apiDesc></apiReturn><apiParam><apiItemName>numLines</apiItemName><apiType value="int"/><apiDesc>The number of lines to scroll.
-		
-		</apiDesc></apiParam></apiOperationDef><apiDesc conref="flashx.textLayout.container.ContainerController#getScrollDelta()"> 
+		 
+		 </apiDesc></apiReturn><apiParam><apiItemName>numLines</apiItemName><apiType value="int"/><apiDesc>The number of lines to scroll.
+		 
+		 </apiDesc></apiParam></apiOperationDef><apiDesc conref="flashx.textLayout.container.ContainerController#getScrollDelta()"> 
 		</apiDesc></apiOperationDetail></apiOperation><apiOperation id="flashx.textLayout.container:TextContainerManager:getTextFlow"><apiName>getTextFlow</apiName><shortdesc> The current TextFlow.</shortdesc><prolog><asMetadata><apiVersion><apiLanguage version="3.0"/><apiPlatform description="" name="Flash" version="10"/><apiPlatform description="" name="AIR" version="1.5"/></apiVersion></asMetadata></prolog><apiOperationDetail><apiOperationDef><apiAccess value="public"/><apiReturn><apiDesc>the current TextFlow object
 		 
 		 </apiDesc><apiOperationClassifier>flashx.textLayout.elements:TextFlow</apiOperationClassifier></apiReturn></apiOperationDef><apiDesc> The current TextFlow. Converts this to a full TextFlow representation if it 

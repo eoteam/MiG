@@ -8,7 +8,7 @@
 -->
 
 <project name="combined" default="main" basedir=".">
-	<property name="FLEX_HOME" location="/Applications/Adobe Flash Builder Plug-in Beta 2/sdks/3.5.0.12683"/>
+	<property name="FLEX_HOME" location="${basedir}/../../.."/>
 	<property file="${FLEX_HOME}/build.properties"/>
 	<property name="local.playerglobal.version" value="10.0"/>
 	<property name="output.file" value="${FLEX_HOME}/frameworks/libs/textLayout.swc"/>

@@ -71,11 +71,18 @@
 	</s:Rect>
 	
 	<containers:ToolsHeader width="100%" height="22"  />
-		
-	<mx:TabNavigator width="100%" id="container" height="100%"  historyManagementEnabled="false" styleName="toolsTabNavigator" 
-		selectedIndex="{_selectedIndex}" tabIndexChange="_selectedIndex = container.selectedIndex"  
-		paddingLeft="4" paddingRight="4" paddingTop="10"   />
+
+
+		<s:TabBar  dataProvider="{container}" id="tabBar"  height="22"  cornerRadius="0"  />
+		<mx:ViewStack  width="100%" id="container" height="100%"  top="28"  
+	   childIndexChange="_selectedIndex = container.selectedIndex" selectedIndex="{_selectedIndex}"
+	   historyManagementEnabled="false" paddingLeft="4" paddingRight="4" paddingTop="10" backgroundAlpha="0" />		
 	
+
+	<!--	<mx:TabNavigator width="100%" id="container" height="100%"  historyManagementEnabled="false" styleName="toolsTabNavigator" 
+		selectedIndex="{_selectedIndex}" tabIndexChange="_selectedIndex = container.selectedIndex"  backgroundAlpha="0" 
+		paddingLeft="4" paddingRight="4" paddingTop="10"     />
+	-->
 	<s:ToggleButton top="5" right="6" width="10"  selected="{_opened}" click="opened =! opened"  skinClass="org.mig.view.skins.buttons.ToolPanelToggleButtonSkin"
 	mouseChildren="false" buttonMode="true" />	
 	

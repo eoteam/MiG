@@ -8,7 +8,6 @@
 	dragEnabled="true" 
 	dropEnabled="true" 
 	selectable="true" 
-	autoCloseOnDrop="false"
 	styleName="containerTree"
 	doubleClickEnabled="true" 
 	labelField="debugLabel"

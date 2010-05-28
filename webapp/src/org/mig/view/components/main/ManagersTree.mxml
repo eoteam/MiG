@@ -3,12 +3,13 @@
 	xmlns:mx="http://www.adobe.com/2006/mxml"  
 	xmlns:content="com.mapx.view.content.*"
 	styleName="managerTree" labelField="name"
-	itemRenderer="org.mig.view.renderers.ManagerTreeRenderer"
+	itemRenderer="org.mig.view.renderers.ManagerTreeRenderer" 
 	paddingLeft="0" paddingBottom="3" paddingTop="0" paddingRight="0" 
 	showRoot="true" openDuration="0" width="100%" itemClick="handleTreeChange(event)">
 	<mx:Script>
 		<![CDATA[
 			import mx.collections.ICollectionView;
+			import mx.controls.listClasses.IListItemRenderer;
 			import mx.events.FlexEvent;
 			import mx.events.ListEvent;
 			import mx.events.TreeEvent;
@@ -22,6 +23,13 @@
 			private var managersXML:XML;
 			private var tempXML:XML;
 			//private var prevItemRenderer:ManagerTreeRenderer;
+			
+			override protected function drawHighlightIndicator(indicator:Sprite, x:Number, y:Number, width:Number, height:Number, color:uint, itemRenderer:IListItemRenderer):void {
+				indicator.graphics.clear();
+			}
+			override protected function drawSelectionIndicator(indicator:Sprite, x:Number, y:Number, width:Number, height:Number, color:uint, itemRenderer:IListItemRenderer):void {
+				indicator.graphics.clear();
+			}
 			
 			private function handleTreeChange(event:ListEvent):void {
 				//expandChildrenOf(this.dataProvider[0],true);

@@ -153,7 +153,7 @@
 								</fx:Component>
 							</mx:itemRenderer>
 						</mx:AdvancedDataGridColumn>
-						<mx:AdvancedDataGridColumn  editable="false" color="0x666666" headerText="Extension" dataField="label" width="50">
+						<mx:AdvancedDataGridColumn  editable="false" color="0x666666" headerText="Extension" dataField="extension" width="50">
 							<mx:itemRenderer>
 								<fx:Component>
 									<renderers:ADGCell colorEnabled="true" outerFunction="{this.outerDocument.handleExtensionField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>

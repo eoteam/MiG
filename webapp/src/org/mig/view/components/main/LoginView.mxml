@@ -70,36 +70,41 @@
 
 	<s:VGroup width="100%" height="100%" paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="10"  gap="2" clipAndEnableScrolling="false">
 		<mx:ViewStack width="100%" height="100%" selectedIndex="{viewIndex}" id="stack">			
-			<mx:Canvas width="100%" height="100%" id="loginView" horizontalScrollPolicy="off" verticalScrollPolicy="off">
-				<s:VGroup  width="100%" height="100%" gap="10">
-					<s:Label text="Username" styleName="bodyCopy" />
-					<s:TextInput   id="usernameField"   width="80%"  styleName="inputFieldGray"  />
-					<s:Rect height="3" />
-					<s:Label text="Password" styleName="bodyCopy" />
-					<s:TextInput  styleName="inputFieldGray"  id="passwordField" displayAsPassword="true" width="80%" enter="login()" />
-					<s:Rect height="3" />
-					<s:CheckBox id="rememberLogin"  color="#888888" label="Remember me on this computer"/>
-					<s:Button styleName="textOnlyButton" color="#888888" label="Forget your password?" click="viewIndex=1" mouseChildren="false" buttonMode="true" />
-					<s:Rect height="3" />
-					<s:Button id="loginButton"  styleName="defaultGrayButton" label="Login" click="login()"/>				
-				</s:VGroup>	
-		    </mx:Canvas>
+			<s:NavigatorContent width="100%" height="100%" id="loginView">
+				<s:layout>
+					<s:VerticalLayout gap="10" clipAndEnableScrolling="false"/>
+				</s:layout>				
+				<s:Label text="Username" styleName="bodyCopy" />
+				<s:TextInput   id="usernameField"   width="80%"  styleName="inputFieldGray"  />
+				<s:Rect height="3" />
+				<s:Label text="Password" styleName="bodyCopy" />
+				<s:TextInput  styleName="inputFieldGray"  id="passwordField" displayAsPassword="true" width="80%" enter="login()" />
+				<s:Rect height="3" />
+				<s:CheckBox id="rememberLogin"  color="#888888" label="Remember me on this computer"/>
+				<s:Button styleName="textOnlyButton" color="#888888" label="Forget your password?" click="viewIndex=1" mouseChildren="false" buttonMode="true" />
+				<s:Rect height="3" />
+				<s:Button id="loginButton"  styleName="defaultGrayButton" label="Login" click="login()"/>				
+		   </s:NavigatorContent>
 		    
-		    <mx:Canvas width="100%" height="100%" id="requestView" horizontalScrollPolicy="off" verticalScrollPolicy="off">
-		    	<s:VGroup width="100%" height="100%" gap="10">
-					<s:Label text="User Information Request" styleName="bodyCopy" />
-			    	<s:TextInput  width="80%"  id="emailField" text="Email Address" styleName="inputFieldGray" />
-			    	<s:Rect height="15" />
-					<s:HGroup gap="3">
-						<s:Button styleName="defaultGrayButton" label="Cancel" click="viewIndex=0"/>
-		        		<s:Button styleName="defaultGrayButton" label="Send Request" click="submitRequestData();"/>
-		    		</s:HGroup>
-				</s:VGroup>
-		    </mx:Canvas>
+			<s:NavigatorContent width="100%" height="100%" id="requestView">
+				<s:layout>
+					<s:VerticalLayout gap="10" clipAndEnableScrolling="false"/>
+				</s:layout>	
+				<s:Label text="User Information Request" styleName="bodyCopy" />
+		    	<s:TextInput  width="80%"  id="emailField" text="Email Address" styleName="inputFieldGray" />
+		    	<s:Rect height="15" />
+				<s:HGroup gap="3">
+					<s:Button styleName="defaultGrayButton" label="Cancel" click="viewIndex=0"/>
+	        		<s:Button styleName="defaultGrayButton" label="Send Request" click="submitRequestData();"/>
+	    		</s:HGroup>
+		    </s:NavigatorContent>
 		    
-		    <mx:Canvas width="100%" height="100%" id="editView" horizontalScrollPolicy="off" verticalScrollPolicy="off">
-		    	<s:VGroup id="editFormVBox" width="100%" height="100%" gap="10" paddingTop="0" paddingRight="0" paddingLeft="0" paddingBottom="0" alpha="0.5">
-		    		<s:Label text="Username" styleName="bodyCopy" />
+			<s:NavigatorContent width="100%" height="100%" >
+				<s:layout>
+					<s:VerticalLayout gap="10" clipAndEnableScrolling="false"  paddingTop="0" paddingRight="0" paddingLeft="0" paddingBottom="0"/>
+				</s:layout>
+				<s:VGroup  width="100%" height="100%" id="editFormVBox" alpha="0.5">
+		    	 	<s:Label text="Username" styleName="bodyCopy" />
 					<s:TextInput  styleName="inputFieldGray" id="usernameField2" text="{user.username}"  width="80%" enabled="false" />
 					<s:Rect height="3" />
 					<s:Label text="Password" styleName="bodyCopy" />	
@@ -120,7 +125,7 @@
 			   		 <!--<mx:Button  id="editButton" styleName="defaultGrayButton" label="Edit User" click="editButton.label='Save';editFormVBox.alpha=1" />-->
 			   		 <s:Button  id="editButton" styleName="defaultGrayButton" label="Edit User" click="handleEditButton()" />	 		 	
 			   </s:HGroup>
-		    </mx:Canvas>		    
+		  </s:NavigatorContent>		    
 		</mx:ViewStack>
 		<s:Rect height="3" />
 		<s:Label id="statusText" height="20" hideEffect="fadeStatus"/>    

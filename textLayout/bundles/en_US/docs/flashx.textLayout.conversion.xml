@@ -300,7 +300,11 @@
 		 <ul>
 		 
 		 <li>
-		 class: Specifies a class name that can be used for styling 
+		 class: Specifies a class name that can be used for styling. While span tags are often used to set a style defined in a style sheet,
+		 TLFTextField instances do not support style sheets. The span tag is available for TLFTextField instances to refer to a class with 
+		 style properties.</li>
+		 <li> You can also put properties directly in the span tag: 
+		 <codeph>&lt;span fontFamily="Arial"&gt;Hi there&lt;/span&gt;</codeph>. However, nested span tags are not supported.
 		 </li>
 		 
 		 </ul>

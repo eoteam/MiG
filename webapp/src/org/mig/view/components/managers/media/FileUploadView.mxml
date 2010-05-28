@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas
-	xmlns:mx="http://www.adobe.com/2006/mxml"
-	clipContent="true" bottom="4" right="4" left="4" 
-	width="100%"  height="100%"
+<s:VGroup
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	bottom="4" right="4" left="4" 
+	width="100%"  height="100%" paddingBottom="10"
 	creationComplete="currentState = 'browse'">
 
-	<mx:Script>
+	<fx:Script>
 		<![CDATA[
 	
 			import mx.core.Application;
@@ -37,45 +39,49 @@
 				//PopUpManager.centerPopUp(ui);
 			}
 		]]>
-	</mx:Script>
-	<mx:states>
-		<mx:State name="browse">
-			<mx:SetProperty target="{browseBtn}" name="enabled" value="true"/>
+	</fx:Script>
+	<s:states>
+		<s:State name="browse">
+<!--			<mx:SetProperty target="{browseBtn}" name="enabled" value="true"/>
 			<mx:SetProperty target="{youtubeBtn}" name="enabled" value="true"/>
 			
 			<mx:SetProperty target="{uploadBtn}" name="visible" value="false"/>
-			<mx:SetProperty target="{stopBtn}" name="visible" value="false"/>
 			<mx:SetProperty target="{uploadBtn}" name="enabled" value="true"/>
+			
+			<mx:SetProperty target="{stopBtn}" name="visible" value="false"/>
 			<mx:SetProperty target="{stopBtn}" name="enabled" value="true"/>
+			
+			
+			
 			
 			<mx:SetProperty target="{progressBar}" name="visible" value="false"/>
 			<mx:SetProperty target="{progressText1}" name="visible" value="false"/>
 			<mx:SetProperty target="{progressText2}" name="visible" value="false"/>
-			<mx:SetProperty target="{completedFilesList}" name="visible" value="false"/>
-		</mx:State>
-		<mx:State name="upload" basedOn="browse">
-			<mx:SetProperty target="{uploadBtn}" name="visible" value="true" />
-			<mx:SetProperty target="{stopBtn}" name="visible" value="true" />					
-		</mx:State>
-		<mx:State name="uploading">
-			<mx:SetProperty target="{browseBtn}" name="enabled" value="false"/>
+			<mx:SetProperty target="{completedFilesList}" name="visible" value="false"/>-->
+		</s:State>
+		<s:State name="upload" basedOn="browse">
+<!--			<mx:SetProperty target="{uploadBtn}" name="visible" value="true" />
+			<mx:SetProperty target="{stopBtn}" name="visible" value="true" />	-->				
+		</s:State>
+		<s:State name="uploading">
+<!--			<mx:SetProperty target="{browseBtn}" name="enabled" value="false"/>
 			<mx:SetProperty target="{uploadBtn}" name="enabled" value="false"/>
 			<mx:SetProperty target="{youtubeBtn}" name="enabled" value="false"/>
 			
 			<mx:SetProperty target="{progressBar}" name="visible" value="true"/>
 			<mx:SetProperty target="{progressText1}" name="visible" value="true"/>
 			<mx:SetProperty target="{progressText2}" name="visible" value="true"/>
-			<mx:SetProperty target="{completedFilesList}" name="visible" value="true"/>
-		</mx:State>
-	</mx:states>
+			<mx:SetProperty target="{completedFilesList}" name="visible" value="true"/>-->
+		</s:State>
+	</s:states>
 	
-	<mx:VBox width="100%" height="100%" paddingBottom="10">
-		<mx:HBox width="100%">
-			<mx:Button styleName="defaultButton" label="Youtube" id="youtubeBtn" click="addYoutubeVideo()"/>				
-			<mx:Button styleName="defaultButton" label="Choose File(s)" id="browseBtn" click="browseFiles()"/>
-			<mx:Button styleName="defaultButton" label="Upload File(s)" id="uploadBtn"/>				
-			<mx:Button styleName="defaultButton" label="Cancel" id="stopBtn"/>				
-		</mx:HBox>
+
+		<s:HGroup width="100%">
+			<s:Button styleName="defaultButton" label="Youtube" id="youtubeBtn" click="addYoutubeVideo()" enabled.browse="false" />				
+			<s:Button styleName="defaultButton" label="Choose File(s)" id="browseBtn" click="browseFiles()"/>
+			<s:Button styleName="defaultButton" label="Upload File(s)" id="uploadBtn"/>				
+			<s:Button styleName="defaultButton" label="Cancel" id="stopBtn"/>				
+		</s:HGroup>
 		<mx:Canvas id="progressBar" width="100%" height="2" alpha="0" hideEffect="fadeOut" showEffect="fadeIn">
 			<mx:Canvas width="100%" height="1" backgroundColor="#000000" backgroundAlpha="1.0" id="bg"/>
 			<mx:Canvas id="progressCanvas" backgroundColor="#ffffff" width="{uploadProgress*bg.width}" height="{bg.height}"/>
@@ -86,8 +92,10 @@
 		</mx:HBox>
 		<mx:TextArea alpha="0" width="100%" height="100%" contentBackgroundColor="#222222" color="0xffffff"  borderStyle="none" hideEffect="fadeOut" showEffect="fadeIn"
 		styleName="bodyCopy" id="completedFilesList" />
-	</mx:VBox>
 	
-	<mx:Fade alphaFrom="0" alphaTo="1" id="fadeIn"/>			
-	<mx:Fade alphaFrom="1" alphaTo="0" id="fadeOut"/>
-</mx:Canvas>
+	<fx:Declarations>
+		<s:Fade alphaFrom="0" alphaTo="1" id="fadeIn"/>			
+		<s:Fade alphaFrom="1" alphaTo="0" id="fadeOut"/>		
+	</fx:Declarations>
+
+</s:VGroup>
