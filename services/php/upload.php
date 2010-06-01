@@ -57,7 +57,7 @@ $playtime = 0;
 $playtimeArr = getPlaytimeID3($path.$base.'.'.$extension);
 
 if($playtimeArr[0] == true)
-	$playtime = $result[1];
+	$playtime = $playtimeArr[1];
 else
 	$playtime = 0;
 

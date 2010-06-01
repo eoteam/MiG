@@ -54,28 +54,29 @@ is defined by the ComboBoxTextInputSkin class.
              */
             override protected function commitProperties():void
             {
+
                 super.commitProperties();
                 
-                if (paddingChanged && textInput)
+                if (paddingChanged && labelDisplay)
                 {
                     // Push padding styles into the textDisplay
                     var padding:Number;
                     
                     padding = getStyle("paddingLeft");
-                    if (textInput.getStyle("paddingLeft") != padding)
-                        textInput.setStyle("paddingLeft", padding);
+                    if (labelDisplay.getStyle("paddingLeft") != padding)
+                        labelDisplay.setStyle("paddingLeft", padding);
                     
                     padding = getStyle("paddingTop");
-                    if (textInput.getStyle("paddingTop") != padding)
-                        textInput.setStyle("paddingTop", padding);
+                    if (labelDisplay.getStyle("paddingTop") != padding)
+                        labelDisplay.setStyle("paddingTop", padding);
                     
                     padding = getStyle("paddingRight");
-                    if (textInput.getStyle("paddingRight") != padding)
-                        textInput.setStyle("paddingRight", padding);
+                    if (labelDisplay.getStyle("paddingRight") != padding)
+                        labelDisplay.setStyle("paddingRight", padding);
                     
                     padding = getStyle("paddingBottom");
-                    if (textInput.getStyle("paddingBottom") != padding)
-                        textInput.setStyle("paddingBottom", padding);
+                    if (labelDisplay.getStyle("paddingBottom") != padding)
+                        labelDisplay.setStyle("paddingBottom", padding);
                     paddingChanged = false;
                 }
                 
@@ -87,8 +88,8 @@ is defined by the ComboBoxTextInputSkin class.
                     
                     if (openButton)
                     openButton.setStyle("cornerRadius", cr);
-                    if (textInput)
-                    textInput.setStyle("cornerRadius", cr); */
+                    if (labelDisplay)
+                    labelDisplay.setStyle("cornerRadius", cr); */
                 }
             }
             
@@ -164,8 +165,9 @@ is defined by the ComboBoxTextInputSkin class.
 
 
 	<s:Button label="{this.hostComponent.prompt}"  id="openButton" left="0" right="0" top="0" bottom="0" focusEnabled="false" skinClass="org.mig.view.skins.dropdowns.DropDownSymbolSkin" />  
-    <s:Label id="textInput" visible="false" left="0" right="18" top="0" bottom="0" /> 
+    <s:Label id="labelDisplay" visible="false" left="0" right="18" top="0" bottom="0" /> 
     
+	 
 
 </s:SparkSkin>
 

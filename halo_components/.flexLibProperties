@@ -11,6 +11,7 @@
     <classEntry path="org.mig.view.skins.SitePreloader"/>
     <classEntry path="org.mig.view.skins.TreeDropIndicator"/>
     <classEntry path="sjd.SJDClasses"/>
+    <classEntry path="org.mig.view.skins.SortSeparatorSkin"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

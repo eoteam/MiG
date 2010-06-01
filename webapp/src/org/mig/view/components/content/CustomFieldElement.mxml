@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <containers:MinMaxTray
 	xmlns:mx="http://www.adobe.com/2006/mxml"
-	 width="90%" maxHeight="{maxH}"
-	 creationComplete="init()" xmlns:containers="org.mig.view.containers.*">
+	 width="90%" maxHeight="{maxH}" contentBackgroundAlpha="1"
+	 creationComplete="init()" xmlns:containers="org.mig.view.containers.*" xmlns:s="library://ns.adobe.com/flex/spark">
 	
 	
 	<mx:Script>
 		<![CDATA[
 			import flexlib.containers.FlowContainer;
 			
-			import mx.controls.Button;
-			import mx.controls.CheckBox;
+			import mx.collections.ArrayList;
 			import mx.controls.ColorPicker;
-			import mx.controls.ComboBase;
-			import mx.controls.ComboBox;
 			import mx.controls.DateChooser;
 			import mx.controls.DateField;
 			import mx.controls.List;
@@ -32,11 +29,18 @@
 			import org.mig.model.vo.content.ContentData;
 			import org.mig.model.vo.content.TemplateCustomField;
 			import org.mig.model.vo.media.FileNode;
+			import org.mig.view.controls.DataCheckBox;
 			import org.mig.view.controls.DateTimePicker;
 			import org.mig.view.controls.MiGDateField;
 			import org.mig.view.controls.MiGTLFTextArea;
-			import org.mig.view.controls.MiGTextInput;
 			import org.mig.view.controls.colorPicker;
+			
+			import spark.components.Button;
+			import spark.components.CheckBox;
+			import spark.components.ComboBox;
+			import spark.components.DropDownList;
+			import spark.components.NumericStepper;
+			import spark.components.TextInput;
 			
 			public var field:TemplateCustomField;
 			public var vo:ContentData;
@@ -65,24 +69,26 @@
 						this.summaryText = vo[customfield.name].toString();
 					break;
 					case CustomFieldTypes.SELECT:
-						child = new ComboBox();
-						ComboBox(child).labelField = "value";
-						ComboBox(child).dataProvider = customfield.optionsArray;
+						child = new DropDownList();
+						child.width = 300;
+						DropDownList(child).labelField = "value";
+						DropDownList(child).styleName = "comboBoxBlack";
+						DropDownList(child).dataProvider = new ArrayList(customfield.optionsArray);
 						for each(option in customfield.optionsArray)
 						{
 							if(option.index.toString() == vo[customfield.name])
 							{
-								ComboBox(child).selectedItem = option;
+								DropDownList(child).selectedItem = option;
 									this.summaryText = option.value;
 								break;
 							}
 						}
 					break;
 					case CustomFieldTypes.STRING:
-						child = new MiGTextInput();
+						child = new TextInput();
 						child.styleName = "inputFieldBlack";
 						child.percentWidth = 100;
-						MiGTextInput(child).text = vo[customfield.name].toString(); 
+						TextInput(child).text = vo[customfield.name].toString(); 
 						this.summaryText = vo[customfield.name].toString().slice(0,150)+'...';
 					break;
 					case CustomFieldTypes.HTML_TEXT:
@@ -118,7 +124,7 @@
 						this.summaryText = vo[customfield.name].toString();
 						for each(option in customfield.optionsArray)
 						{
-							var checkBox:CheckBox = new CheckBox();
+							var checkBox:DataCheckBox = new DataCheckBox();
 							checkBox.label = option.value;
 							checkBox.data = option;
 							checkBox.addEventListener(Event.CHANGE,handleMultipleSelect);
@@ -128,11 +134,11 @@
 						}
 					break;
 					case CustomFieldTypes.INTEGER:
-						child = new MiGTextInput();
+						child = new TextInput();
 						child.styleName = "inputFieldBlack";
 						child.percentWidth = 100;
-						MiGTextInput(child).restrict="0-9\\-";
-						MiGTextInput(child).text = vo[customfield.name];
+						TextInput(child).restrict="0-9\\-";
+						TextInput(child).text = vo[customfield.name];
 						this.summaryText = vo[customfield.name].toString().slice(0,150)+'...';								
 					break;				
 					case CustomFieldTypes.DATE:
@@ -149,10 +155,10 @@
 						
 					break;
 					case CustomFieldTypes.FILE_LINK:
-						child = new MiGTextInput();
+						child = new TextInput();
 						child.styleName = "inputFieldBlack";
 						child.percentWidth = 100;			
-						MiGTextInput(child).text = vo[customfield.name];						
+						TextInput(child).text = vo[customfield.name];						
 						this.summaryText = vo[customfield.name].toString().slice(0,150)+'...';
 					break;	
 					case CustomFieldTypes.MULTIPLE_SELECT_WITH_ORDER:
@@ -202,7 +208,7 @@
 				if(customfield.typeid == CustomFieldTypes.FILE_LINK)
 				{
 					linkButton = new Button();
-					linkButton.styleName = "linkButtonUp";
+					linkButton.styleName = "linkButton";
 					linkButton.toolTip = "Drag to a container to link";
 					linkButton.addEventListener(MouseEvent.MOUSE_DOWN,handleLinkButton);
 					linkButton.setStyle("right",2);
@@ -239,9 +245,9 @@
 				if(treeObjects.length > 0)
 				{
 					var node:ContainerNode = FlexGlobals.topLevelApplication.mainView.contentTree.selectedItem;
-					MiGTextInput(this.child).text = "event:content="+node.data.id.toString();
-					MiGTextInput(this.child).setFocus();
-					MiGTextInput(this.child).dispatchEvent(new Event(Event.CHANGE));					
+					TextInput(this.child).text = "event:content="+node.data.id.toString();
+					TextInput(this.child).setFocus();
+					TextInput(this.child).dispatchEvent(new Event(Event.CHANGE));					
 				}
 				else if(mediaObjects.length > 0)
 				{
@@ -263,7 +269,7 @@
 			private function handleMultipleSelect(event:Event):void
 			{
 				var value:String = '';
-				for each(var checkBox:CheckBox in FlowContainer(event.target.parent).getChildren())
+				for each(var checkBox:DataCheckBox in FlowContainer(event.target.parent).getChildren())
 				{
 					if(checkBox.selected)
 						value += checkBox.data.value+',';
@@ -301,7 +307,7 @@
 						vo[customfield.name] = ComboBox(event.target).selectedItem.index;
 					break;
 					case "string":
-						vo[customfield.name] = MiGTextInput(event.target).text;
+						vo[customfield.name] = TextInput(event.target).text;
 					break;
 					case "html-text":
 						vo[customfield.name] = MiGTLFTextArea(event.target).htmlText;
@@ -315,7 +321,7 @@
 						vo[customfield.name] =  colorPicker(event.target).selectedColor.toString(16);
 					break;
 					case "integer":
-						vo[customfield.name] = MiGTextInput(event.target).text;
+						vo[customfield.name] = TextInput(event.target).text;
 					break;		
 					case "date":
 						if(DateTimePicker(event.target).selectedDate)
@@ -325,7 +331,7 @@
 					case "multiple-select":
 					break;	
 					case "file-link":
-					 	vo[customfield.name] = MiGTextInput(event.target).text;
+					 	vo[customfield.name] = TextInput(event.target).text;
 					break;	
 					case "multiple-select-with-order":					
 					break;						

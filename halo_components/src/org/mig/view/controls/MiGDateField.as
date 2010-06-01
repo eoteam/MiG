@@ -27,7 +27,7 @@ package org.mig.view.controls
 		private function handleCreationComplete(event:Event):void
 		{
 			textInput.styleName = inputStyleName;
-			SelectionColor.setFieldSelectionColor(this.textInput.mx_internal::getTextField() as TextField,0xffffff);
+			//SelectionColor.setFieldSelectionColor(this.textInput.mx_internal::getTextField() as TextField,0xffffff);
 		}
 
 	}

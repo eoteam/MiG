@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox 
-	xmlns:mx="http://www.adobe.com/2006/mxml"
-	xmlns:view.content="com.map.view.content.*"
-	xmlns:content="com.mapx.view.content.*"
-	 implements="org.mig.view.interfaces.IContentView" 	
-	height="100%" paddingLeft="0"
-	width="100%" verticalGap="2" >
+<s:VGroup
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	implements="org.mig.view.interfaces.IContentView" 	
+	height="100%" width="100%" gap="0" paddingLeft="0">
 	
-	<mx:Script>
+	<fx:Script>
 		<![CDATA[
 			import org.mig.model.vo.ContentNode;
 			import org.mig.model.vo.content.ContainerNode;
@@ -23,19 +22,23 @@
 			}
 
 		]]>
-	</mx:Script>
-    <mx:HBox  width="100%" id="topBar" horizontalGap="4">
-    	<!--<mx:Label text="editing:" styleName="contentHeaderSub" />
-    	<mx:Label text="{_data.title}"  styleName="boldCopy" fontSize="14" />-->
-    	<mx:Spacer width="100%" />
-    	<mx:Button label="Cancel" styleName="defaultButton" />
-    	<mx:Button label="Save as Draft" styleName="defaultButton" id="draftBtn" />
-    	<mx:Button label="Publish"  styleName="defaultButton" id="publishBtn" />
-    </mx:HBox>
-	<mx:TabNavigator 
+	</fx:Script>
+
+	
+    <s:HGroup  width="100%" id="topBar" gap="4">
+    	<s:Rect width="100%" />
+    	<s:Button label="Cancel" styleName="defaultGrayButton" />
+    	<s:Button label="Save as Draft" styleName="defaultGrayButton" id="draftBtn" />
+    	<s:Button label="Publish"  styleName="defaultGrayButton" id="publishBtn" />
+  	</s:HGroup>
+	<s:Rect height="0" />
+	
+	<s:TabBar  dataProvider="{contentTabs}" id="tabBar"  height="22"  cornerRadius="0" styleName="toolTabBar"  />
+	
+	<mx:ViewStack
 		borderVisible="false" contentBackgroundAlpha="0"  creationPolicy="queued" 
-		width="100%" verticalGap="0" height="100%" styleName="contentTabNavigator" 
-		selectedTabTextStyleName=""   historyManagementEnabled="false"
-		 id="contentTabs" />
-</mx:VBox>
+		width="100%" verticalGap="0" height="100%"
+		historyManagementEnabled="false"
+		id="contentTabs" />
+</s:VGroup>
 

@@ -35,7 +35,7 @@ package org.mig.view.mediators.main
 			eventMap.mapListener(eventDispatcher,ContentEvent.RETRIEVE_CHILDREN,handleContent);
 			eventMap.mapListener(eventDispatcher,ViewEvent.DELETE_CONTAINERS,deleteItems);
 			eventMap.mapListener(eventDispatcher,ViewEvent.ENABLE_CONTENT_TREE,enableTree);
-			
+			eventMap.mapListener(eventDispatcher,ContentEvent.SELECT,handleSelectedContent);
 			addListeners();
 			addContextMenu();
 
@@ -75,11 +75,9 @@ package org.mig.view.mediators.main
 		private function handleDragComplete(event:DragEvent):void {
 			
 		}
-		
 		private function handleItemOpen(event:TreeEvent):void {
 			
 		}
-
 		private function handleItemClick(event:ListEvent):void {
 			
 		}
@@ -95,7 +93,6 @@ package org.mig.view.mediators.main
 				eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.SELECT,selectedNode));
 			}
 		}
-		
 		private function addContextMenu():void {
 			GlobalUtils.createContextMenu(["Delete Item(s)","Rename","Duplicate Item(s)"],menuItemSelectHandler,null,[view]);
 		}
@@ -180,6 +177,13 @@ package org.mig.view.mediators.main
 		}
 		private function handleDeleteSelection(event:Event):void {
 			eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.DELETE,itemsToDelete));
+		}
+		private function handleSelectedContent(event:ContentEvent):void {
+			var container:ContainerNode = event.args[0] as ContainerNode;
+			if(view.selectedItem != container) {
+				view.selectedItem = container;
+				view.expandItem(container,true,true);
+			}
 		}
 	}
 }

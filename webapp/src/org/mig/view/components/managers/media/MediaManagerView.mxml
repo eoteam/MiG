@@ -18,6 +18,7 @@
 			import mx.effects.easing.*;
 			
 			import org.mig.model.vo.media.FileNode;
+			import org.mig.model.vo.user.User;
 			import org.mig.view.skins.buttons.PlusButtonSkin;
 			
 			[Bindable] public var scalePercent:Number = 1;
@@ -26,6 +27,7 @@
 			[Bindable] public var tileDP:ArrayCollection;
 			[Bindable] public var thumbURL:String;
 			
+			public var user:User;
 			private function handleSliderChange(event:Event):void
 			{
 				scalePercent = scaleSlider.value;
@@ -48,7 +50,7 @@
 					if(data.data is FileNode) {
 						var d:Date = new Date();
 						d.time = data.data.createdate;
-						label=d.toDateString()	
+						label=d.toDateString()	;
 					}
 				}
 				return label;
@@ -62,14 +64,12 @@
 			}	
 			public function handleUserField(data:Object):String {
 				var label:String ='';
-				/* if(data)
-				{
-					if(data.createdby != undefined && data.createdby != 0)
-					{
+				if(data.data) {
+/* 					if(data.data.createdby != undefined && data.createdby != 0) {
 						//var userName:String =  UserManager(ManagerBase.getInstance(UserManager)).findUserById(Number(data.createdby));
 						//label = userName;
-					}
-				} */
+					} */
+				}
 				return label;
 			}			
 			private function searchInput_changeHandler(event:Event):void {
@@ -129,24 +129,21 @@
 					itemRollOver="lastRollOverIndex = event.rowIndex"
 					id="listView" 
 					thumbURL="{thumbURL}"
-					styleName="mediaManagerGrid"
 					allowDragSelection="true"
 					dragEnabled="true"
 					dropEnabled="true"
 					dragMoveEnabled="true"
 					dragFormat="Media"   
 					allowMultipleSelection="true"
-					headerHeight="22" 
-					sortableColumns="true"				
+					headerHeight="22"  
+					sortableColumns="true"
+					draggableColumns="false"
 					width="100%" height="100%" 
-					folderClosedIcon="@Embed(source='/migAssets/library.swf#folderIcon')"
-					folderOpenIcon="@Embed(source='/migAssets/library.swf#folderIcon')"
-					defaultLeafIcon="{null}"
+					styleName="mediaManagerGrid"
 					editable="true" borderVisible="false" 
 					clearingLines="true" clearVLineIndices="[]" customProxy="true" 	 	 
-					doubleClickEnabled="true" 
-					treeColumn="{treeColumn}" draggableColumns="false"
-					headerSortSeparatorSkin="org.mig.view.skins.SortSeparatorSkin"
+					doubleClickEnabled="true"
+					treeColumn="{treeColumn}"
 					dataProvider="{listDP}">		
 					<controls:columns>
 						<mx:AdvancedDataGridColumn  editable="false" headerText="Name"  width="350" dataField="label"  id="treeColumn">
@@ -206,7 +203,7 @@
 						</fx:Component>
 					</s:itemRenderer>
 					<s:layout>
-						<s:TileLayout clipAndEnableScrolling="true" useVirtualLayout="true" orientation="rows" rowHeight="{250*scalePercent}" columnWidth="{250*scalePercent}" />
+						<s:TileLayout  verticalGap="4" horizontalGap="4" clipAndEnableScrolling="true" useVirtualLayout="true" orientation="rows" rowHeight="{250*scalePercent}" columnWidth="{250*scalePercent}" />
 					</s:layout>
 				</s:List>
 				<!--<mx:Canvas width="100%" height="100%" horizontalScrollPolicy="off">

@@ -39,7 +39,7 @@ package org.mig.view.mediators.content
 				var cfElement:CustomFieldElement = new CustomFieldElement();
 				cfElement.field = field;
 				cfElement.vo = view.content.data as ContentData;
-				view.mainContainer.addChild(cfElement);
+				view.mainContainer.addElement(cfElement);
 				cfElements.push(cfElement);
 			}
 		}

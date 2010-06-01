@@ -7,7 +7,7 @@ package org.mig.view.events
 	public class ListItemEvent extends Event
 	{
 		public static const ITEM_CLICK:String = "itemClick";
-		public static const ITEM_DOUBLECLICK:String = "itemDoubleClick";
+		public static const ITEM_DOUBLE_CLICK:String = "itemDoubleClick";
 		
 		public var list:List;
 		public var itemIndex:int;

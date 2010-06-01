@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <flexLibProperties includeAllClasses="true" version="3">
   <includeClasses>
     <classEntry path="org.mig.view.skins.controls.ToolTabBarSkin"/>
@@ -6,6 +6,11 @@
     <classEntry path="org.mig.view.containers.ResizableTitleWindow"/>
     <classEntry path="org.mig.view.skins.containers.ResizableTitleWindowSkin"/>
     <classEntry path="org.mig.view.skins.controls.MiGScrollBarSkin"/>
+    <classEntry path="org.mig.view.controls.DataButton"/>
+    <classEntry path="org.mig.view.skins.datagrid.DataGridHeaderBackgroundSkin"/>
+    <classEntry path="org.mig.view.controls.DataCheckBox"/>
+    <classEntry path="org.mig.view.skins.buttons.LinkButtonSkin"/>
+    <classEntry path="org.mig.view.skins.dropdowns.Test"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

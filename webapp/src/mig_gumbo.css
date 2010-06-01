@@ -60,6 +60,9 @@ s|Button {
 .textOnlyButton {
 	skinClass: ClassReference("org.mig.view.skins.buttons.TextOnlyButtonSkin");
 }
+.linkButton {
+	skinClass: ClassReference("org.mig.view.skins.buttons.LinkButtonSkin");
+}
 s|TextInput {
 	contentBackgroundColor: #333333;
 	fontLookup: embeddedCFF;
@@ -145,6 +148,29 @@ paddingTop: 0; */
 	renderingMode: normal;
 	skinClass: ClassReference("org.mig.view.skins.dropdowns.DefaultComboBoxSkin");
 }
+.comboBoxBlack{
+	
+/*	color: #ffffff;
+	highlightAlphas: 0.1, 0.02;
+	fillAlphas: 1, 1, 1, 1;
+	fillColors: #111111, #111111, #111111, #111111;
+	
+	textSelectedColor: #ffffff;
+	
+	textRollOverColor: #ffffff;
+	dropdownStyleName: "comboBoxDropDowns";
+	disabledColor: #AAAAAA;*/
+	
+	cornerRadius: 0;
+	rollOverColor: #ED1C58;
+	selectionColor: #ED1C58;
+	alternatingItemColors: #111111, #111111;
+	contentBackgroundColor: #111111;
+	contentBackgroundAlpha: 1;
+	symbolColor: #FFFFFF;
+	borderVisible: false;
+	skinClass: ClassReference("org.mig.view.skins.dropdowns.DefaultComboBoxSkin");
+}
 s|CheckBox {
 	skinClass: ClassReference("org.mig.view.skins.controls.CheckBoxSkin");
 	color: #888888	;
@@ -168,24 +194,24 @@ mx|AdvancedDataGrid {
 	textSelectedColor: #ffffff;
 	textRollOverColor: #ffffff;
 	accentColor: #ed1c58;
-	headerStyleName: "dataGridHeaderStyle";
 	disclosureClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderClosedIcon");
 	disclosureOpenIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderOpenIcon");
 	dropIndicatorSkin: ClassReference("org.mig.view.skins.TreeDropIndicator");
-	openDuration:0;
+	openDuration:250;
+	headerStyleName: dataGridHeaderStyle;
 	headerSeparatorSkin: Embed(source="migAssets/flex_skins.swf",symbol="DataGrid_headerSeparatorSkin");
 }
-.mediaManagerGrid
-{
+.mediaManagerGrid {
 	dropIndicatorSkin: ClassReference("org.mig.view.skins.OffsetedDropIndicator");
+	folderClosedIcon: Embed(source='/migAssets/library.swf#folderIcon');
+	folderOpenIcon: Embed(source='/migAssets/library.swf#folderIcon');
+	defaultLeafIcon: ClassReference("null");
+	headerSortSeparatorSkin: ClassReference("org.mig.view.skins.SortSeparatorSkin");
 }
 .dataGridHeaderStyle{
-	color: #ffffff;
+	color: #FFFFFF;
 	fontFamily: Transit-Normal;
-	fontSize: 14pt;
-	paddingBottom: 0;
-	paddingTop: 0;
-	textAlign: left;
+	fontSize: 14;
 }
 mx|Tree
 {

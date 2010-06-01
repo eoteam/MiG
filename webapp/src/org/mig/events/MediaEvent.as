@@ -16,8 +16,8 @@ package org.mig.events
 		public static const CREATE:String = "create"; //some data, config and parent ref
 		public static const UPDATE:String = "update";
 		
-		public static const SELECT:String = "selected";
-		public static const MULTIPLE_SELECT:String = "multipleSelect";
+		public static const SELECT:String = "mediaSelected";
+		public static const MULTIPLE_SELECT:String = "mediaMultipleSelected";
 	
 		
 		public var args:Array;

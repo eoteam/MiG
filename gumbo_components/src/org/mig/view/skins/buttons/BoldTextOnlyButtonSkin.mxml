@@ -50,9 +50,15 @@
             override protected function initializationComplete():void
             {
                 useChromeColor = true;
+				textColor = this.hostComponent.getStyle("color");
                 super.initializationComplete();
-            }  
-
+				
+            }
+			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void {
+				super.updateDisplayList(unscaledWidth,unscaledHeight);
+				textColor = this.hostComponent.getStyle("color");
+			}
+			[Bindable] private var textColor:uint;
         ]]>        
     </fx:Script>
     
@@ -66,7 +72,7 @@
       
 
     <s:Label id="labelDisplay"
-             styleName="boldCopy" color="0x666666"	
+             styleName="boldCopy" color="{textColor}"	
              verticalAlign="middle" color.over="0xffffff"
              maxDisplayedLines="1"
              horizontalCenter="0" verticalCenter="1"  top="2" bottom="2">

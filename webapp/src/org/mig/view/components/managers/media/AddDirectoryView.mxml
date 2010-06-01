@@ -37,12 +37,12 @@
 		<s:VerticalLayout paddingTop="20" paddingRight="10" paddingLeft="10" paddingBottom="10" gap="20" clipAndEnableScrolling="false" />
 	</containers:layout>
 	
-	<s:VGroup gap="5"   maxWidth="750">
+	<s:VGroup gap="5" width="100%">
 		<s:HGroup width="100%" gap="0" verticalAlign="middle">
 			<mx:SWFLoader source="{folderIcon}" width="23" height="17" />
 			<s:Label text="Folder Name"  paddingLeft="0"/>
 		</s:HGroup>
-		<s:TextInput styleName="inputFieldGray"  text="" width="200" id="nameInput" restrict="a-z\A-Z\0-9\_"/>						
+		<s:TextInput styleName="inputFieldGray"  text="" width="80%" id="nameInput" restrict="a-z\A-Z\0-9\_"/>						
 	</s:VGroup>
 
 	<s:HGroup gap="3">

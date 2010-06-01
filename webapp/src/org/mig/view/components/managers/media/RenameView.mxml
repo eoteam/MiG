@@ -27,7 +27,7 @@
 			}
 			private function handleClose():void {
 				PopUpManager.removePopUp(this);
-			}
+			}		
 		]]>
 	</fx:Script>
 
@@ -36,7 +36,7 @@
 	</containers:layout>
 	
 
-	<s:TextInput styleName="inputFieldGray"  text="" width="200" id="input" restrict="a-z\A-Z\0-9\_\-\."/>						
+	<s:TextInput styleName="inputFieldGray"  text="" width="80%" id="input" restrict="a-z\A-Z\0-9\_\-\."/>						
 
 	
 	<s:HGroup gap="3">

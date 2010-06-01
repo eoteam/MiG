@@ -80,7 +80,7 @@
 					thumbLabel.visible = false;
 					thumbHolder.source = thumbURL+fileData.path.toString()+fileData.name.toString();	
 				}			
-				else if(fileData.mimetypeid == MimeTypes.VIDEO && fileData.thumb.toString() != "") {
+				else if(fileData.mimetypeid == MimeTypes.VIDEO && fileData.thumb != null) {
 					thumbLabel.visible = false;
 					thumbHolder.source = thumbURL+fileData.path.toString()+fileData.thumb.toString();				
 				}
@@ -113,7 +113,7 @@
 			}
 
 			protected function itemrenderer1_doubleClickHandler(event:MouseEvent):void {
-				var e:ListItemEvent = new ListItemEvent(ListItemEvent.ITEM_DOUBLECLICK);
+				var e:ListItemEvent = new ListItemEvent(ListItemEvent.ITEM_DOUBLE_CLICK);
 				e.list = this.owner as List;
 				e.itemIndex = this.itemIndex;
 				this.owner.dispatchEvent(e);

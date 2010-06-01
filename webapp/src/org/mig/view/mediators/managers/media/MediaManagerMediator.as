@@ -94,6 +94,7 @@ package org.mig.view.mediators.managers.media
 			view.addEventListener('thumbViewCreated',handleThumbView);
 		}
 		private function initView():void {
+			view.user = appModel.user;
 			TweenMax.to(view.thumbButton, 0.5, {colorTransform:{tint:0xffffff, tintAmount:1}, ease:Expo.easeOut});
 			TweenMax.to(view.listButton, 0.5, {colorTransform:{tint:0xed1c58, tintAmount:1}, ease:Expo.easeOut});
 			view.parentdirButton.enabled = false;
@@ -106,7 +107,7 @@ package org.mig.view.mediators.managers.media
 		private function handleThumbView(event:Event):void {
 			view.currentState = "loading";
 			view.thumbView.addEventListener(FlexEvent.UPDATE_COMPLETE,handleListUpdate); 
-			view.thumbView.addEventListener(ListItemEvent.ITEM_DOUBLECLICK, handleThumbItemDoubleClick);
+			view.thumbView.addEventListener(ListItemEvent.ITEM_DOUBLE_CLICK, handleThumbItemDoubleClick);
 
 			view.thumbView.addEventListener(ListEvent.ITEM_CLICK,handleThumbItem);
 			view.thumbView.addEventListener(KeyboardEvent.KEY_DOWN,handleThumbItem);
@@ -294,7 +295,18 @@ package org.mig.view.mediators.managers.media
 			return result;		
 		}
 		private function handleDelete(event:Event):void {
-			var items:Array// = view.stack.selectedIndex == 0 ? view.listView.selectedItems : view.thumbView.selectedItems;
+			var items:Array;
+			if(view.stack.selectedIndex == 0)
+				items = view.listView.selectedItems;
+			else {
+				items = new Array();
+				if(view.thumbView.selectedItems) {
+					for (var i:int=0; i<view.thumbView.selectedItems.length;i++) {
+						var item:ContentNode = view.thumbView.selectedItems[i] as ContentNode;
+						items.push(item);
+					}
+				}
+			}
 			eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.DELETE,items));
 		}
 		private function renameItem():void {

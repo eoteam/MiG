@@ -63,9 +63,9 @@ package org.mig.model.vo
 		}
 		public function get debugLabel():String {
 			if(children.length > 0)
-				return  "id=" + data.id + "  " + _baseLabel + " (" + children.source.length + ")";
+				return  "id=" + data.id + " " + _baseLabel + " (" + children.source.length + ")";
 			else
-				return "id=" + data.id + "  " + _baseLabel;			
+				return "id=" + data.id + " " + _baseLabel;			
 		}	
 		public function get baseLabel():String {
 			return _baseLabel;

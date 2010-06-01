@@ -6,10 +6,10 @@
 
 	<fx:Script>
 		<![CDATA[
-			
-			
 			import org.mig.model.vo.ContentNode;
 			import org.mig.model.vo.content.ContainerNode;
+			import org.mig.view.controls.DataButton;
+			import org.mig.view.events.ContainerPathEvent;
 			import org.mig.view.interfaces.IContentView;
 			
 			import spark.components.Button;
@@ -24,9 +24,11 @@
 				accumulateParents(_content);
 				items.reverse();
 				for each(var item:ContainerNode in items) {
-					var button:Button = new Button();
+					var button:DataButton = new DataButton();
 					button.styleName = "locationHeader";
 					button.label = item.baseLabel + " /";
+					button.data = item;
+					button.addEventListener(MouseEvent.CLICK,handleButtonClick);
 					buttonHolder.addElement(button);
 				}
 				Button(buttonHolder.getElementAt(items.length-1)).setStyle("color",0xFFFFFF);
@@ -39,6 +41,10 @@
 			}
 			public function get content():ContentNode {
 				return _content;
+			}
+			private function handleButtonClick(event:MouseEvent):void {
+				var node:ContainerNode = DataButton(event.target).data as ContainerNode;
+				this.dispatchEvent(new ContainerPathEvent(ContainerPathEvent.CONTAINER_SELECTED,node));
 			}
 			
 		]]>

@@ -64,7 +64,8 @@
         <s:State name="downAndSelected" stateGroups="downStates, selectedStates" />
         <s:State name="disabledAndSelected" stateGroups="selectedUpStates, disabledStates, selectedStates" />
     </s:states>
- 
+ 	
+
 	<mx:SWFLoader source.selectedStates="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#searchSelectedUp')" id="graphic"
 				  source.up="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#searchUp')"
 				  source.down="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#searchUp')"
