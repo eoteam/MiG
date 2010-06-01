@@ -17,7 +17,7 @@ package org.mig.model.vo
 	import mx.events.CollectionEvent;
 	import mx.events.CollectionEventKind;
 	
-	
+	[Bindable]
 	public class ContentNode
 	{
 		public var children:ArrayCollection;
@@ -34,8 +34,9 @@ package org.mig.model.vo
 			this.baseLabel = baseLabel.replace(/<.*?>/g, "");
 			this.baseLabel = baseLabel.replace(/]]>/g, "");
 			this.data = data;
-			_config = config;
 			this.privileges = privileges;
+			this._config = config;
+			
 			children = new ArrayCollection();
 			subContainers = new Dictionary();
 			children.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleCollection);								
@@ -62,24 +63,21 @@ package org.mig.model.vo
 		}
 		public function get debugLabel():String {
 			if(children.length > 0)
-				return  "id=" + data.id+"\t"+_baseLabel + " (" + children.source.length + ")";
+				return  "id=" + data.id + "  " + _baseLabel + " (" + children.source.length + ")";
 			else
-				return "id=" + data.id+"\t"+_baseLabel;			
+				return "id=" + data.id + "  " + _baseLabel;			
+		}	
+		public function get baseLabel():String {
+			return _baseLabel;
+		}
+		public function toString():String {
+			return label;
 		}	
 		public function set baseLabel(value:String):void {
 			_baseLabel = value;
 			if(data)
 				data[_config.@labelField] = value;
-		}
-		public function get baseLabel():String {
-			if(_baseLabel)
-				return _baseLabel;
-			else return '';
-		}
-		public function toString():String {
-			return label;
 		}	
-		
 		//removes a child node from the children list
 		/*		public function removeNode(node:ContentNode):void {
 		var fc:Function

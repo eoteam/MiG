@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow 
-	xmlns:mx="http://www.adobe.com/2006/mxml" 
+<containers:ResizableTitleWindow
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
 	xmlns:controls="org.mig.view.controls.*"
-	horizontalScrollPolicy="off" 
-	paddingRight="10" paddingLeft="10" paddingBottom="10"
-	height="200" width="300" 
+	xmlns:containers="org.mig.view.containers.*"
+	close="handleClose()"
+	backgroundColor="0x111111" backgroundAlpha="0.98"
+	height="180" width="300"  contentBackgroundAlpha="1" borderColor="0x666666"
 	implements="org.mig.view.interfaces.IContentView"
 	title="{'Rename '+_content.label}" styleName="bodyCopy">
-	<mx:Script>
+	<fx:Script>
 		<![CDATA[
 			import mx.managers.PopUpManager;
 			
@@ -22,24 +25,31 @@
 			public function get content():ContentNode {
 				return _content;
 			}
-			private function cancel():void {
+			private function handleClose():void {
 				PopUpManager.removePopUp(this);
 			}
 		]]>
-	</mx:Script>
+	</fx:Script>
 
-	<mx:Form maxWidth="750" paddingLeft="0" indicatorGap="2" verticalGap="15" styleName="removeButton" horizontalScrollPolicy="off">
-		<mx:HBox paddingLeft="5">
-			<controls:MiGTextInput styleName="inputFieldGray"  text="" width="200" id="input" restrict="a-z\A-Z\0-9\_\-\."/>						
-		</mx:HBox>
-	</mx:Form>
+	<containers:layout>
+		<s:VerticalLayout paddingTop="20" paddingRight="10" paddingLeft="10" paddingBottom="10" gap="20" clipAndEnableScrolling="false" />
+	</containers:layout>
 	
-	<mx:HBox horizontalGap="3" paddingTop="10" paddingLeft="5">
-		<mx:Button  styleName="defaultButton" label="Submit" enabled="{validInput}" id="submitBtn"/>
-		<mx:Button styleName="defaultButton" label="Cancel" click="cancel()"/>
-	</mx:HBox>
+
+	<s:TextInput styleName="inputFieldGray"  text="" width="200" id="input" restrict="a-z\A-Z\0-9\_\-\."/>						
+
 	
-	<mx:StringValidator id="inputValidator" invalid="validInput=false" valid="validInput=true" source="{input}" property="text" minLength="4" maxLength="60" required="true"/>
-	<mx:Boolean id="validInput">false</mx:Boolean>
+	<s:HGroup gap="3">
+		<s:Button  styleName="defaultGrayButton" label="Submit" id="submitButton" enabled="{validInput}"/>
+		<s:Button styleName="defaultGrayButton" label="Cancel" id="cancelButton" click="handleClose()"/>
+	</s:HGroup>
 	
-</mx:TitleWindow>
+	
+		
+	<fx:Declarations>
+		<mx:StringValidator id="inputValidator" invalid="validInput=false" valid="validInput=true" source="{input}" property="text" minLength="4" maxLength="60" required="true"/>
+		<fx:Boolean id="validInput">false</fx:Boolean>		
+	</fx:Declarations>
+
+	
+</containers:ResizableTitleWindow>

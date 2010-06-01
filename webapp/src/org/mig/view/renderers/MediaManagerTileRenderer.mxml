@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox 
-	xmlns:mx="http://www.adobe.com/2006/mxml"  
-	xmlns:assets="org.mig.assets.*"
-	xmlns:content="org.mig.view.content.*"
-	xmlns:controls="com.thanksmister.controls.*"	
-	implements="org.mig.view.interfaces.IContentView, 
-	mx.controls.listClasses.IDropInListItemRenderer" 
-	creationComplete="handleCreatonComplete()"
-	scaleX="{scalePercent}" scaleY="{scalePercent}"
-	paddingLeft="5" paddingTop="5" paddingRight="5" paddingBottom="5"
-	backgroundColor="0x333333" mouseChildren="false"
-	verticalScrollPolicy="off" horizontalScrollPolicy="off">
-	<mx:Script>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				scaleX="{scalePercent}" scaleY="{scalePercent}"
+				scaleX.dragging="1" scaleY.dragging="1"
+				creationComplete="handleCreatonComplete()"
+				 doubleClickEnabled="true" doubleClick="itemrenderer1_doubleClickHandler(event)"
+				implements="org.mig.view.interfaces.IContentView" mouseChildren="false"
+				autoDrawBackground="true" xmlns:controls="com.thanksmister.controls.*">
+	
+	<fx:Script>
 		<![CDATA[
 			import com.greensock.TweenMax;
 			import com.greensock.easing.Cubic;
 			
 			import mx.controls.listClasses.BaseListData;
+			import mx.events.FlexEvent;
 			
 			import org.mig.model.vo.ContentNode;
 			import org.mig.model.vo.media.DirectoryNode;
 			import org.mig.model.vo.media.FileNode;
 			import org.mig.model.vo.media.MediaData;
-			import org.mig.model.vo.media.MimeTypes;			
-
+			import org.mig.model.vo.media.MimeTypes;
+			import org.mig.view.events.ListItemEvent;
+			
+			import spark.components.List;			
+			
 			[Embed(source='/migAssets/library.swf#parentFolderIcon')]
 			private var parentIcon:Class;
 			[Embed(source='/migAssets/library.swf#folderIcon')]
@@ -31,24 +33,19 @@
 			[Embed(source='/migAssets/library.swf#youtubeIcon')]
 			private var youtubeIcon:Class;	
 			
-			private var _listData:BaseListData;
+
 			private var created:Boolean = false;
 			private var loadTimer:Timer = new Timer(200);
 			
 			public var thumbURL:String;
 			[Bindable] private var _content:ContentNode;
 			[Bindable] public var directory:String;
-			[Bindable] public var scalePercent:Number = 0.5;
+			[Bindable] public var scalePercent:Number = 1;
 			[Bindable] public var fileSrc:String;
 			[Bindable] public var percentLoaded:Number = 0;
 			[Bindable] public var fileExtension:String;
 			
-			public function get listData():BaseListData {
-				return _listData;
-			}
-			public function set listData(value:BaseListData):void {
-				_listData = value;
-			}	
+	
 			override public function get data():Object {
 				return super.data;
 			}            
@@ -62,7 +59,7 @@
 			public function set content(contentNode:ContentNode):void {
 				_content = contentNode;
 				fileSrc  = toolTip = _content.label;
-				fileExtension = MediaData(_content.data).extension;
+				fileExtension = '.'+MediaData(_content.data).extension;
 				if(created)
 					handleDataChange();
 			}
@@ -114,20 +111,41 @@
 			{
 				return "FileView";
 			}
+
+			protected function itemrenderer1_doubleClickHandler(event:MouseEvent):void {
+				var e:ListItemEvent = new ListItemEvent(ListItemEvent.ITEM_DOUBLECLICK);
+				e.list = this.owner as List;
+				e.itemIndex = this.itemIndex;
+				this.owner.dispatchEvent(e);
+			}
 		]]>
-	</mx:Script>
-	<mx:Canvas width="250" height="250"  id="thumbCanvas" verticalScrollPolicy="off" horizontalScrollPolicy="off">
-		<mx:Canvas height="100%"  id="loader" backgroundColor="0x727376"/>
+	</fx:Script>
+	<s:states>
+		<s:State name="normal" />            
+		<s:State name="hovered" />
+		<s:State name="selected" />
+		<s:State name="normalAndShowsCaret"/>
+		<s:State name="hoveredAndShowsCaret"/>
+		<s:State name="selectedAndShowsCaret"/>
+		<s:State name="dragging"/>
+	</s:states>
+	<s:layout>
+		<s:VerticalLayout paddingLeft="5" paddingTop="5" paddingRight="5" paddingBottom="5" clipAndEnableScrolling="false" />
+	</s:layout>
+	<s:Group  width="100%" height="100%" >
+		<s:Rect height="100%" id="loader" visible="false">
+			<s:fill>
+				<s:SolidColor color="0x727376" />
+			</s:fill>
+		</s:Rect>
 		<controls:ImageCache verticalCenter="0" alpha="0" horizontalCenter="0" 
-		 width="250" height="250" 
+		 width="100%" height="100%" 
 		 id="thumbHolder" progress="handleImageProgress(event)" complete="handleImageComplete(event)"  
 		 brokenImageSkin="org.mig.view.assets.NoImageIcon" />
-		<mx:Label maxWidth="200" truncateToFit="true" visible="false"  id="thumbLabel" styleName="bodyMedium" 
-		color="0xffffff" text="{fileExtension}" textAlign="center" fontSize="50"  verticalCenter="0"  />
-	</mx:Canvas>
-	
-	<mx:HBox width="100%" id="bottomContainer">
-		<mx:Label fontSize="20" maxWidth="200" id="textHolder" selectable="false"  text="{_content.label}" truncateToFit="true"  
-		styleName="bodyMedium" color="0xffffff"/>	
-	</mx:HBox>
-</mx:VBox>
+		<s:Label text="{fileExtension}" id="thumbLabel" left="5" verticalCenter="0" width="100%"/>		
+	</s:Group>
+
+
+	<s:Label fontSize="20" width="100%" id="textHolder"   text="{_content.label}" maxDisplayedLines="1"  
+	styleName="bodyMedium"  scaleX="{1/scalePercent}" scaleY="{1/scalePercent}"/>
+</s:ItemRenderer>

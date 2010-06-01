@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		  implements="org.mig.view.interfaces.IContentView"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:layouts="org.mig.view.layouts.*">
+
+	<fx:Script>
+		<![CDATA[
+			
+			
+			import org.mig.model.vo.ContentNode;
+			import org.mig.model.vo.content.ContainerNode;
+			import org.mig.view.interfaces.IContentView;
+			
+			import spark.components.Button;
+			import spark.components.Label;
+			private var _content:ContainerNode;
+			private var items:Array;
+			public function set content(value:ContentNode):void {
+				_content = value as ContainerNode;
+				buttonHolder.removeAllElements()
+				items = [];
+				items.push(_content);
+				accumulateParents(_content);
+				items.reverse();
+				for each(var item:ContainerNode in items) {
+					var button:Button = new Button();
+					button.styleName = "locationHeader";
+					button.label = item.baseLabel + " /";
+					buttonHolder.addElement(button);
+				}
+				Button(buttonHolder.getElementAt(items.length-1)).setStyle("color",0xFFFFFF);
+			}
+			private function accumulateParents(node:ContainerNode):void {
+				if(node.parentNode) {
+					items.push(node.parentNode);
+					accumulateParents(node.parentNode as ContainerNode);
+				}
+			}
+			public function get content():ContentNode {
+				return _content;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:Group width="100%" height="100%" id="buttonHolder">
+		<s:layout>
+			<layouts:FlowLayout gap="4" />
+		</s:layout>		
+	</s:Group>
+</s:Group>

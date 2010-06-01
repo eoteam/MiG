@@ -16,6 +16,9 @@
 containers|ResizableTitleWindow {
 	skinClass: ClassReference("org.mig.view.skins.containers.ResizableTitleWindowSkin");
 }
+s|VScrollBar {
+	skinClass: ClassReference("org.mig.view.skins.controls.MiGScrollBarSkin");
+}
 s|Label{
 	color: #FFFFFF;
 	fontFamily: Transit-Normal;
@@ -28,6 +31,14 @@ s|RichText {
 	color: white;
 	fontLookup: embeddedCFF;
 	renderingMode:normal;
+}
+s|TextArea {
+	color: white;
+	fontLookup: embeddedCFF;
+	renderingMode:normal;
+	fontSize: 14;
+	focusedTextSelectionColor: #ed1c58;
+	unfocusedTextSelectionColor: #333333;	
 }
 s|HSlider {
 	skinClass: ClassReference("org.mig.view.skins.controls.MiGHSliderSkin");
@@ -63,14 +74,17 @@ s|TextInput {
 	renderingMode: normal;
 	focusColor: #ed1c58;
 }
-
+.locationHeader {
+	skinClass: ClassReference("org.mig.view.skins.buttons.BoldTextOnlyButtonSkin");
+	color: #666666;
+}
 .boldCopy {
 	color: white;
 	fontFamily: Transit-Bold;
 	fontWeight: normal;
 	fontSize: 14pt;
-	text-align: left;
-	text-decoration: none;
+	textAlign: left;
+	textDecoration: none;
 	fontLookup: embeddedCFF;
 	renderingMode:cff;
 }
@@ -80,8 +94,8 @@ s|TextInput {
 	fontFamily: Transit-Normal;
 	fontWeight: normal;
 	fontSize: 14pt;
-	text-align: left;
-	text-decoration: none;
+	textAlign: left;
+	textDecoration: none;
 	fontLookup: embeddedCFF;
 	renderingMode: normal;
 }
@@ -185,8 +199,12 @@ mx|Tree
 	textRollOverColor: #333333;
 	textSelectedColor: #333333;
 }
+mx|Text {
+	color: #FFFFFF;
+	fontSize: 14;
+}
 .containerTree{
-	color: #3F3F3F;
+	color: #3F3F3F;	
 	disclosureClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderClosedIconGray");
 	disclosureOpenIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderOpenIconGray");
 	textRollOverColor: #ffffff;

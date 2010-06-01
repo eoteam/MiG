@@ -32,6 +32,7 @@ package org.mig.view.mediators.managers.media
 	import org.mig.view.components.managers.media.DownloadView;
 	import org.mig.view.components.managers.media.MediaManagerView;
 	import org.mig.view.components.managers.media.RenameView;
+	import org.mig.view.events.ListItemEvent;
 	import org.robotlegs.mvcs.Mediator;
 	
 	public class MediaManagerMediator extends Mediator
@@ -63,7 +64,7 @@ package org.mig.view.mediators.managers.media
 				view.listView.invalidateList();
 			}
 			else {
-				view.thumbView.invalidateList();
+				//view.thumbView.invalidateList();
 			}
 		}		
 		private function addListeners():void {
@@ -104,10 +105,13 @@ package org.mig.view.mediators.managers.media
 		}
 		private function handleThumbView(event:Event):void {
 			view.currentState = "loading";
-			view.thumbView.addEventListener(FlexEvent.UPDATE_COMPLETE,handleListUpdate);
-			view.thumbView.addEventListener(ListEvent.ITEM_DOUBLE_CLICK,handleThumbItemDoubleClick);
+			view.thumbView.addEventListener(FlexEvent.UPDATE_COMPLETE,handleListUpdate); 
+			view.thumbView.addEventListener(ListItemEvent.ITEM_DOUBLECLICK, handleThumbItemDoubleClick);
+
 			view.thumbView.addEventListener(ListEvent.ITEM_CLICK,handleThumbItem);
 			view.thumbView.addEventListener(KeyboardEvent.KEY_DOWN,handleThumbItem);
+			
+			GlobalUtils.createContextMenu(["Remove","Rename","Download","New Folder"],menuItemSelectHandler,null,[view.thumbView]);
 		}
 		private function addContextMenu():void {
 			GlobalUtils.createContextMenu(["Remove","Rename","Download","New Folder"],menuItemSelectHandler,null,[view.listView]);
@@ -162,7 +166,7 @@ package org.mig.view.mediators.managers.media
 				this.selectedContent = view.thumbView.selectedItem as DirectoryNode;
 		}
 		private function handleThumbItem(event:Event):void {
-			handleSelection(view.thumbView.selectedItems);
+			//handleSelection(view.thumbView.selectedItems);
 		}
 		//functions
 		private function toggleView(index:int):void {
@@ -195,47 +199,73 @@ package org.mig.view.mediators.managers.media
 			
 		}
 		private function downloadItems():void {
-			if(view.listView.selectedItems.length > 0 ) {
+			var items:Array;
+			if(view.stack.selectedIndex == 0)
+				items = view.listView.selectedItems;
+			else {
+				items = new Array();
+				if(view.thumbView.selectedItems) {
+					for (var i:int=0; i<view.thumbView.selectedItems.length;i++) {
+						var item:ContentNode = view.thumbView.selectedItems[i] as ContentNode;
+						items.push(item);
+					}
+				}
+			}
+			if(items.length > 0 ) {
 				var downloadView:DownloadView = PopUpManager.createPopUp(view,DownloadView,false,PopUpManagerChildList.POPUP) as DownloadView; 
 				mediatorMap.createMediator( downloadView );
-				downloadView.files = view.listView.selectedItems;
+				downloadView.files = items
 				PopUpManager.centerPopUp(downloadView);	
 			}
 		}
 		private function deleteItems(event:Event=null):void {
 			var popup:SystemPopup = new SystemPopup();
+			popup.percentHeight  = popup.percentWidth = 100;
 			popup.includeCancel = false;
 			var fileList:String="";	
 			var contents:Array = new Array();
-			var items:Array = view.stack.selectedIndex == 0 ? view.listView.selectedItems : view.thumbView.selectedItems;
-			for each(var item:ContentNode in items) {
-				if(item is FileNode) {
-					/*if(MediaContainerNode(item).contentTitles.length > 0)
-					{
-						for each(var title:String in MediaContainerNode(item).contentTitles)
-						{
-							if(contents.indexOf(title) == -1)
-							{
-								fileList += "<p><font face='Transit-Bold'>"+title+"</font></p>";
-								contents.push(title);
-							}
-						} 
-					}	*/
-					if(contents.indexOf(item) == -1) {
-						fileList += "<p><font face='Transit-Bold'>"+item.label+"</font></p>";
-						contents.push(item);
+			var items:Array;
+			if(view.stack.selectedIndex == 0)
+				items = view.listView.selectedItems;
+			else {
+				items = new Array();
+				if(view.thumbView.selectedItems) {
+					for (var i:int=0; i<view.thumbView.selectedItems.length;i++) {
+						var item:ContentNode = view.thumbView.selectedItems[i] as ContentNode;
+						items.push(item);
 					}
 				}
+			}
+			if(items.length > 0 ) {
+				for each(item in items) {
+					if(item is FileNode) {
+						/*if(MediaContainerNode(item).contentTitles.length > 0)
+						{
+							for each(var title:String in MediaContainerNode(item).contentTitles)
+							{
+								if(contents.indexOf(title) == -1)
+								{
+									fileList += "<p><font face='Transit-Bold'>"+title+"</font></p>";
+									contents.push(title);
+								}
+							} 
+						}	*/
+						if(contents.indexOf(item) == -1) {
+							fileList += "<p><font face='Transit-Bold'>"+item.label+"</font></p>";
+							contents.push(item);
+						}
+					}
+					else
+						fileList += getContentList(item as DirectoryNode,contents);
+				}	
+				if(fileList != '')
+					popup.message = "<p>You are about to delete asset(s) that are used by the following containers:</p>"+fileList + 
+						"<br />Are you sure you want to continue?";
 				else
-					fileList += getContentList(item as DirectoryNode,contents);
-			}	
-			if(fileList != '')
-				popup.message = "<p>You are about to delete asset(s) that are used by the following containers:</p>"+fileList + 
-					"<br />Are you sure you want to continue?";
-			else
-				popup.message = "<p>You are about to delete asset(s)</p>"+"<br />Are you sure you want to continue?";
-			popup.addEventListener('yesSelected',handleDelete);
-			PopUpManager.addPopUp(popup,this.contextView,true,PopUpManagerChildList.POPUP);
+					popup.message = "<p>You are about to delete asset(s)</p>"+"<br />Are you sure you want to continue?";
+				popup.addEventListener('yesSelected',handleDelete);
+				PopUpManager.addPopUp(popup,this.contextView,true,PopUpManagerChildList.POPUP);
+			}
 		}
 		private function getContentList(directory:DirectoryNode,contents:Array):String {
 			var result:String = "";
@@ -264,7 +294,7 @@ package org.mig.view.mediators.managers.media
 			return result;		
 		}
 		private function handleDelete(event:Event):void {
-			var items:Array = view.stack.selectedIndex == 0 ? view.listView.selectedItems : view.thumbView.selectedItems;
+			var items:Array// = view.stack.selectedIndex == 0 ? view.listView.selectedItems : view.thumbView.selectedItems;
 			eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.DELETE,items));
 		}
 		private function renameItem():void {

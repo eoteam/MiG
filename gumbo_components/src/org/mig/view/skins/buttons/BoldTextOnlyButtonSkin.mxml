@@ -21,7 +21,7 @@
       @productversion Flex 4
 -->
 <s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" 
-             xmlns:fb="http://ns.adobe.com/flashbuilder/2009" minWidth="21" minHeight="21" alpha.disabled="0.5" xmlns:mx="library://ns.adobe.com/flex/mx">
+             xmlns:fb="http://ns.adobe.com/flashbuilder/2009" minWidth="21" minHeight="21" alpha.disabled="0.5">
     
     <!-- host component -->
     <fx:Metadata>
@@ -29,7 +29,7 @@
         /** 
          * @copy spark.skins.spark.ApplicationSkin#hostComponent
          */
-        [HostComponent("spark.components.ToggleButton")]
+        [HostComponent("spark.components.Button")]
         ]]>
     </fx:Metadata>
     
@@ -37,7 +37,7 @@
         <![CDATA[         
             /* Define the skin elements that should not be colorized. 
             For button, the graphics are colorized but the label is not. */
-            static private const exclusions:Array = ["graphic"];
+            static private const exclusions:Array = [];
             
             /** 
              * @private
@@ -56,17 +56,20 @@
         ]]>        
     </fx:Script>
     
-	<!-- states -->
-	<s:states>
-		<s:State name="up" />
-		<s:State name="over" stateGroups="overStates" />
-		<s:State name="down" stateGroups="downStates" />
-		<s:State name="disabled" stateGroups="disabledStates" />
-		<s:State name="upAndSelected" stateGroups="selectedStates, selectedUpStates" />
-		<s:State name="overAndSelected" stateGroups="overStates, selectedStates" />
-		<s:State name="downAndSelected" stateGroups="downStates, selectedStates" />
-		<s:State name="disabledAndSelected" stateGroups="selectedUpStates, disabledStates, selectedStates" />
-	</s:states>
+    <!-- states -->
+    <s:states>
+        <s:State name="up" />
+        <s:State name="over" />
+        <s:State name="down" />
+        <s:State name="disabled" />
+    </s:states>
+      
+
+    <s:Label id="labelDisplay"
+             styleName="boldCopy" color="0x666666"	
+             verticalAlign="middle" color.over="0xffffff"
+             maxDisplayedLines="1"
+             horizontalCenter="0" verticalCenter="1"  top="2" bottom="2">
+    </s:Label>
     
-	<mx:SWFLoader source="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#fullScreen')" id="graphic"   />
 </s:SparkSkin>

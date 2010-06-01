@@ -12,6 +12,7 @@ package  org.mig.model.vo.media
 	
 	import org.mig.model.vo.ContentNode;
 	
+	[Bindable]
 	public class DirectoryNode extends ContentNode {
 		
 		public var directory:String;
@@ -21,12 +22,12 @@ package  org.mig.model.vo.media
 		public var newFiles:Array;
 		
 		public function DirectoryNode(baseLabel:String, config:XML, data:MediaData, parentContent:ContentNode, directory:String,privileges:int) {
+			super(baseLabel, config, data, parentContent,privileges);	
 			this.directory = directory;
 			numItems = 0;
 			numFolders = 0;
 			diskFiles = [];
 			newFiles = [];
-			super(baseLabel, config, data, parentContent,privileges);	
 		}	
 		/*		
 		override protected function update(value:UpdateData):void {

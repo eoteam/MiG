@@ -1,6 +1,7 @@
 package org.mig.view.mediators.main
 {
 	import flash.display.MovieClip;
+	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
@@ -41,6 +42,7 @@ package org.mig.view.mediators.main
 			view.trashButton.addEventListener(MouseEvent.CLICK,handleTrashClick);
 			view.trashButton.addEventListener(DragEvent.DRAG_ENTER,handleTrashDragOver);
 			view.trashButton.addEventListener(DragEvent.DRAG_DROP,handleTrashDragDrop);
+			view.fullScreenButton.addEventListener(MouseEvent.CLICK,handleFullScreen);
 		}
 		private function handleStartupProgress(event:AppEvent):void {
 			view.preloader.visible = true;
@@ -93,6 +95,18 @@ package org.mig.view.mediators.main
 		}
 		private function handleTrashDragDrop(event:DragEvent):void {
 			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.DELETE_CONTAINERS));
+		}
+		
+		private function handleFullScreen(evt:MouseEvent):void {
+			try {
+				if (view.fullScreenButton.selected)
+					this.contextView.stage.displayState = StageDisplayState.FULL_SCREEN;
+				else 
+					this.contextView.stage.displayState = StageDisplayState.NORMAL;	
+			}	
+			catch (any:*) {
+				// ignore
+			}
 		}
 	}
 }

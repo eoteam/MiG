@@ -91,6 +91,9 @@ package org.mig.view.mediators.main
 				else 
 					eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.RETRIEVE_VERBOSE,selectedNode));
 			}
+			else {
+				eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.SELECT,selectedNode));
+			}
 		}
 		
 		private function addContextMenu():void {

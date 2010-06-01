@@ -183,9 +183,8 @@
 	</s:VGroup>
 	
 	<!-- Header -->
-	<s:Group id="headerContainer" height="80"  width="100%" minHeight="75">
-		
-		<s:RichText bottom="0" styleName="locationHeader"  />
+	<s:Group id="headerContainer" height="80"  width="100%">
+		<main:ContainerPathView width="100%" bottom="0" height="30" />
 		<assets:MigLogo right="60" x="-20" visible="false" showEffect="fadeIn" id="topLogo"/>		
 		<main:StatusModule top="{topControls.height+4}" id="statusMod" width="{topControls.width}"  />	
 		<s:HGroup verticalAlign="middle" id="topControls" gap="3" paddingTop="3">
@@ -193,7 +192,7 @@
 			<s:Button width="160" id="prompt" label="{loginView.prompt}" click="loginView.visible=!loginView.visible" top="2" 
 			skinClass="org.mig.view.skins.dropdowns.ComboBoxHeaderButtonSkin" />					
 			<s:DropDownList  styleName="migComboBox" width="160"  id="helpCombo"  prompt="Help" enabled="false"  skinClass="org.mig.view.skins.dropdowns.DefaultComboBoxSkin" />
-			<s:Button id="fullScreen"  mouseChildren="false" buttonMode="true" toolTip="Toggle Fullscreen" skinClass="org.mig.view.skins.buttons.FullScreenButtonSkin"/>				
+			<s:ToggleButton id="fullScreenButton"  mouseChildren="false" buttonMode="true" toolTip="Toggle Fullscreen" skinClass="org.mig.view.skins.buttons.FullScreenButtonSkin"/>				
 		</s:HGroup>
 	</s:Group>
 	

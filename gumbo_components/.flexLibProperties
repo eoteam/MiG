@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <flexLibProperties includeAllClasses="true" version="3">
   <includeClasses>
     <classEntry path="org.mig.view.skins.controls.ToolTabBarSkin"/>
     <classEntry path="org.mig.view.skins.controls.CustomSparkTabBarButtonSkin"/>
     <classEntry path="org.mig.view.containers.ResizableTitleWindow"/>
     <classEntry path="org.mig.view.skins.containers.ResizableTitleWindowSkin"/>
+    <classEntry path="org.mig.view.skins.controls.MiGScrollBarSkin"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

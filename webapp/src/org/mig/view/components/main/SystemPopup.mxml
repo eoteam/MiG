@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas
-	xmlns:mx="http://www.adobe.com/2006/mxml"
-	xmlns:view="com.map.view.*"
-	width="100%" height="100%"
+<s:SkinnableContainer
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	height="100%" width="100%"
 	backgroundColor="#0000000" backgroundAlpha="0.8"
-	creationComplete="if(currentState==null){currentState='default'}" >
-		
-	<mx:Script>
+	creationComplete="handleCreationComplete(event)">
+	
+	<fx:Script>
 		<![CDATA[
+			import flashx.textLayout.conversion.TextConverter;
+			
 			import mx.core.Application;
 			import mx.core.FlexGlobals;
+			import mx.events.FlexEvent;
+			import mx.events.ResizeEvent;
 			import mx.managers.PopUpManager;
 			
 			[Embed(source='/migAssets/library.swf#whiteKaboom')]
-        	[Bindable] private var alertIcon:Class;
+			[Bindable] private var alertIcon:Class;
 			
 			[Bindable] private var boxPadding:Number;
 			
 			//[Bindable] private var _isAlert:Boolean;
 			
 			
-/* 			public function get isAlert():Boolean
+			/* 			public function get isAlert():Boolean
 			{
-				return _isAlert;
+			return _isAlert;
 			} */
 			private var _type:int = 0;
 			public function get type():int {
@@ -36,69 +41,67 @@
 					case 1:
 						cancelLabelText = "OK";
 						currentState = "alert";
-					break;
+						break;
 					case 2:
 						currentState = "alertPlusOption";
-					break;
+						break;
 				}
 			}
 			private function handleClick(type:String):void {
 				this.dispatchEvent(new Event(type));	
 				PopUpManager.removePopUp(this);			
 			} 
-		]]>
-	</mx:Script>
-	<mx:Binding source="FlexGlobals.topLevelApplication.width" destination="this.width" />
-	<mx:Binding  source="FlexGlobals.topLevelApplication.height" destination="this.height" />
 
-	<mx:String id="message"></mx:String>
-	<mx:String id="optionMessage"></mx:String>
+			private function handleCreationComplete(event:FlexEvent):void {
+				if(currentState==null)
+					currentState='default';
+				this.width = FlexGlobals.topLevelApplication.width;
+				this.height = FlexGlobals.topLevelApplication.height;
+				FlexGlobals.topLevelApplication.addEventListener(ResizeEvent.RESIZE,handleResize);
+				messageText.textFlow = TextConverter.importToFlow(message,TextConverter.TEXT_FIELD_HTML_FORMAT);
+			}
+			private function handleResize(event:ResizeEvent):void {
+				this.width = FlexGlobals.topLevelApplication.width;
+				this.height = FlexGlobals.topLevelApplication.height;
+			}
+
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<fx:String id="message"></fx:String>
+		<fx:String id="optionMessage"></fx:String>
 		
-	
-	<mx:Boolean id="includeCancel">true</mx:Boolean>
-	<mx:Boolean id="includeNo">true</mx:Boolean>
-	<mx:Boolean id="includeYes">true</mx:Boolean>
-	<mx:String id="cancelLabelText">Cancel</mx:String>
-	<mx:String id="noLabelText">No</mx:String>
-	<mx:String id="yesLabelText">Yes</mx:String>
-	
-	<mx:HBox width="465"  verticalCenter="0" horizontalCenter="0">
+		
+		<fx:Boolean id="includeCancel">true</fx:Boolean>
+		<fx:Boolean id="includeNo">true</fx:Boolean>
+		<fx:Boolean id="includeYes">true</fx:Boolean>
+		<fx:String id="cancelLabelText">Cancel</fx:String>
+		<fx:String id="noLabelText">No</fx:String>
+		<fx:String id="yesLabelText">Yes</fx:String>	
+		
+	</fx:Declarations>
+
+	<s:HGroup verticalCenter="0" horizontalCenter="0" height="100%" width="465" verticalAlign="middle">
 		<mx:SWFLoader source="{alertIcon}" width="86" />
-		<mx:VBox width="100%"  id="textBox" paddingLeft="5" height="{messageText.height+80}">
-			<mx:Text maxHeight="450" id="messageText" condenseWhite="false" htmlText="{message}" width="100%" />
-		</mx:VBox>
-	</mx:HBox>
+		<s:VGroup  width="100%"  id="textBox" paddingLeft="5">
+			<s:TextArea focusAlpha="0" minWidth="50"  heightInLines="{NaN}"  maxHeight="460" editable="false"  id="messageText" width="100%"  contentBackgroundAlpha="0" borderVisible="false" />
+			<s:HGroup includeIn="alertStates">	
+				<s:Button styleName="defaultGrayButton" visible="{includeCancel}" includeInLayout="{includeCancel}" label="{cancelLabelText}" click="handleClick('cancelSelected')" />
+				<s:Button styleName="defaultGrayButton" visible="{includeNo}" label="{noLabelText}" click="handleClick('noSelected')" />
+				<s:Button styleName="defaultGrayButton" visible="{includeYes}" label="{yesLabelText}" click="handleClick('yesSelected')"/>
+			</s:HGroup>
+			<s:Button includeIn="alert" styleName="defaultButton" visible="{includeCancel}" includeInLayout="{includeCancel}" label="{cancelLabelText}" click="PopUpManager.removePopUp(this)" />
+			<s:CheckBox includeIn="alertPlusOption" label="{optionMessage}" id="option"/>
+		</s:VGroup>
+	</s:HGroup> 
 	
 	<mx:SWFLoader id="logo" source="@Embed(source='/migAssets/library.swf#migLogoLine')" width="250" height="300" top="0" right="100" />
 	
-	<mx:states>
-		<mx:State name="default">
-			<mx:AddChild relativeTo="{textBox}">
-				<mx:HBox>
-					<mx:Button styleName="defaultButton" visible="{includeCancel}" includeInLayout="{includeCancel}" label="{cancelLabelText}" click="handleClick('cancelSelected')" />
-					<mx:Button styleName="defaultButton" visible="{includeNo}" label="{noLabelText}" click="handleClick('noSelected')" />
-					<mx:Button styleName="defaultButton" visible="{includeYes}" label="{yesLabelText}" click="handleClick('yesSelected')"/>
-				</mx:HBox>
-			</mx:AddChild>
-		</mx:State>
-		<mx:State name="alert">	
-			<mx:AddChild relativeTo="{textBox}">
-					<mx:Button styleName="defaultButton" visible="{includeCancel}" includeInLayout="{includeCancel}" label="{cancelLabelText}" click="PopUpManager.removePopUp(this)" />
-			</mx:AddChild>
-		</mx:State>
-		<mx:State name="alertPlusOption">
-			<mx:AddChild relativeTo="{textBox}">
-				<mx:HBox>
-					<mx:CheckBox label="{optionMessage}" id="option"/>
-				</mx:HBox>
-			</mx:AddChild>			
-			<mx:AddChild relativeTo="{textBox}">
-				<mx:HBox>
-					<mx:Button styleName="defaultButton" visible="{includeCancel}" includeInLayout="{includeCancel}" label="{cancelLabelText}" click="handleClick('cancelSelected')" />
-					<mx:Button styleName="defaultButton" visible="{includeNo}" label="No" click="handleClick('noSelected')" />
-					<mx:Button styleName="defaultButton" visible="{includeYes}" label="Yes" click="handleClick('yesSelected')"/>
-				</mx:HBox>
-			</mx:AddChild>		
-		</mx:State>
-	</mx:states>
-</mx:Canvas>	
+	<s:states>
+		<s:State name="default" stateGroups="alertStates"/>
+		<s:State name="alert" />	
+		<s:State name="alertPlusOption" stateGroups="alertStates"/>
+	</s:states>
+	
+</s:SkinnableContainer>

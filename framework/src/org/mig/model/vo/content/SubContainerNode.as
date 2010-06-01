@@ -11,12 +11,13 @@ package org.mig.model.vo.content
 	import mx.controls.Alert;
 	import mx.events.CollectionEvent;
 	
+	[Bindable]
 	public class SubContainerNode extends ContentNode
 	{
 		public var queryVars:Object;
 		public function SubContainerNode(baseLabel:String, config:XML, data:ContentData, parentContent:ContentNode,privileges:int,queryVars:Object) {
-			this.queryVars = queryVars;
 			super(baseLabel, config, data, parentContent,privileges);
+			this.queryVars = queryVars;
 		}
 		override public function get label():String {
 			if(children != null && children.length > 0)

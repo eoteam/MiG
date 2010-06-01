@@ -5,8 +5,10 @@ package org.mig.controller.configuration
 	import org.mig.model.ContentModel;
 	import org.mig.view.components.content.ContentGeneralEditor;
 	import org.mig.view.components.content.ContentView;
+	import org.mig.view.components.content.MainMiddleView;
 	import org.mig.view.components.content.tabs.MediaTab;
 	import org.mig.view.components.content.tabs.TagsCategoriesTab;
+	import org.mig.view.components.main.ContainerPathView;
 	import org.mig.view.components.main.ContentTree;
 	import org.mig.view.components.main.ContentViewer;
 	import org.mig.view.components.main.LoginView;
@@ -21,6 +23,7 @@ package org.mig.controller.configuration
 	import org.mig.view.mediators.content.ContentGeneralEditorMediator;
 	import org.mig.view.mediators.content.ContentViewMediator;
 	import org.mig.view.mediators.content.tabs.MediaTabMediator;
+	import org.mig.view.mediators.main.ContainerPathMediator;
 	import org.mig.view.mediators.main.ContentTreeMediator;
 	import org.mig.view.mediators.main.ContentViewerMediator;
 	import org.mig.view.mediators.main.LoginViewMediator;
@@ -32,7 +35,6 @@ package org.mig.controller.configuration
 	import org.mig.view.mediators.managers.media.FileUploadMediator;
 	import org.mig.view.mediators.managers.media.MediaManagerMediator;
 	import org.mig.view.mediators.managers.media.RenameMediator;
-	//import org.mig.view.renderers.MediaTile;
 	import org.robotlegs.mvcs.Command;
 	import org.robotlegs.utilities.statemachine.StateEvent;
 		
@@ -53,11 +55,15 @@ package org.mig.controller.configuration
 			mediatorMap.mapView(MediaTab,MediaTabMediator);
 			mediatorMap.mapView(MediaManagerView,MediaManagerMediator);
 			mediatorMap.mapView(FileUploadView,FileUploadMediator);
+			mediatorMap.mapView(ContainerPathView,ContainerPathMediator);
+			
 			//popup mediations
 			mediatorMap.mapView(AddDirectoryView,AddDirectoryMediator, null, false, false ); //disable auto mediation
 			mediatorMap.mapView(DownloadView,DownloadMediator, null, false, false ); 
 			mediatorMap.mapView(RenameView, RenameMediator,null, false, false ); 
 			
+			//non mediated views
+			injector.mapClass(MainMiddleView,MainMiddleView);
 			injector.mapClass(TagsCategoriesTab,TagsCategoriesTab);
 			//injector.mapClass(MediaTile, MediaTile);
 			

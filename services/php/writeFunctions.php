@@ -1,10 +1,10 @@
 <?php
 require_once "readFunctions.php";
 
-function updateTag($params)
+function updateTag($params) //!?
 {
 	/*
-		* Script will attempt to update tag at tables 'terms' and 'term_taxonomy'
+		* Script will attempt to update tag at table 'term_taxonomy' by id or at table 'terms' by termid
 		* You will get an error if you provided invalid field names.
 
 		** REQUIRED PARAMS
@@ -14,7 +14,6 @@ function updateTag($params)
 		** OTHER PARAMS
 		name/value pairs to update:
 		- name
-		- slug
 		- parentid
 		- description
 		- color
@@ -49,30 +48,26 @@ function updateTag($params)
 
 		if($result = queryDatabase($sql, $sendParams))
 		{
-			if(isset($params['name']) || isset($params['slug']))
+			if(isset($params['name']))
 			{
 				$sendParams = array();
 				$sql  = " UPDATE `terms` SET ";
-				foreach ($params as $key=>$value)
-				{
-					if ($key == 'name' || $key == 'slug')
-					{
-						$sql .= $key . " = :".$key.", ";
-						$sendParams[$key] = processText($value);
-					}
-				}
-				$sql = substr($sql,0,strlen($sql)-2); // remove last comma and space
+				$sql .= " name = :name, slug = :slug ";
 				$sql .= " WHERE id = :termid";
+
+				$sendParams['name'] = processText($params['name']);
+				$sendParams['slug'] = generateSlug($params['name']);
 				$sendParams['termid'] = $params['termid'];
 					
 				if($result = queryDatabase($sql, $sendParams)) {
 					sendSuccess();
-				} else die("Query Failed:" . $result->errorInfo());
-			}
-		} else die("Query Failed:" . $result->errorInfo());
+				} else die("Query Failed: " . $result->errorInfo());
+			} else sendSuccess();
+		} else die("Query Failed: " . $result->errorInfo());
 	} else die("No id or termid is provided.");
 }
-function updateRecord($params)
+
+function updateRecord($params) //+
 {
 	/*
 		* Script will attempt to update multiple fields (name/value pairs) of one record by id.
@@ -135,7 +130,7 @@ function updateRecord($params)
 	}
 
 	if ($params['tablename'] == "content") {
-		updateContainerPaths(null, null);
+		updateContainerPaths($params['id'],null); // updates 'containerpath' field
 	}
 
 	if (isset($params['verbosity']))
@@ -149,7 +144,8 @@ function updateRecord($params)
 	}
 	else sendSuccess();
 }
-function updateRecords($params)
+
+function updateRecords($params) //+
 {
 	/*
 		* Script will attempt to update one field (updatefield/updatevalue) of multiple records by idfield/idvalues (comma-delimited) and other name/value pair parameters.
@@ -164,6 +160,7 @@ function updateRecords($params)
 
 		** OTHER PARAMS
 		* name/value pairs to specify records to update; should be field names from 'tablename'
+		* verbosity - (1 = ids + titles only, 2 - all fields + named custom fields, 3 - all fields)
 		*/
 
 	/* examples:
@@ -171,7 +168,6 @@ function updateRecords($params)
 	 * action=updateRecords & tablename=media_terms & updatefield=termid & updatevalue=7 & idfield=contentid & idvalues=4,5
 	 */
 
-	$validParams = array("action","idvalues","tablename","idfield","updatefield","updatevalue");
 	$sendParams = array();
 
 	// gets array of fields name for 'tablename'
@@ -206,19 +202,33 @@ function updateRecords($params)
 
 	foreach ($params as $key=>$value)
 	{
-		if (!in_array($key,$validParams) && (in_array($key,$columnsArray)))
-		{
-			$sql .= " AND " . $key . " = :".$key;
-			$sendParams[$key] = $value;
-		} else die("Unknown field name '$key'.");
+		if ($key != 'action' && $key != 'tablename' && $key != 'updatefield' && $key != 'updatevalue' && $key != 'idfield' && $key != 'idvalues') {
+			if (in_array($key,$columnsArray)) {
+				$sql .= " AND " . $key . " = :".$key;
+				$sendParams[$key] = $value;
+			} else die("Unknown field name '$key'.");
+		}
 	}
 
 	// get the results
 	if ($result = queryDatabase($sql, $sendParams)) {
-		sendSuccess();
+		if ($params['tablename'] == "content") {
+			updateContainerPaths($params['id'],null); // updates 'containerpath' field
+		}
+
+		if (isset($params['verbosity'])) {
+			$params2['verbosity'] = $params['verbosity'];
+			$params2['contentid'] = $params['id'];
+			$result = getContent($params2);
+
+			// output the serialized xml
+			return $result;
+		}
+		else sendSuccess();
 	} else die("Query Failed: " . $result->errorInfo());
 }
-function updateMediaByPath($params)
+
+function updateMediaByPath($params) //+
 {
 	/*
 		* Script will attempt to replace 'oldpath' parameter with 'newpath' parameter in table 'media'
@@ -241,15 +251,25 @@ function updateMediaByPath($params)
 		sendSuccess();
 	} else die("Query Failed: " . $result->errorInfo());
 }
-function updateContainerPaths($params, $insertid) {
 
-	$sql = "SELECT id FROM content";
+function updateContainerPaths($params, $insertid) //+
+{
+	/*
+		* Helper for updateRecord and insertRecord (for 'content' table).
+		* Script will attempt to update field 'containerpath' at 'content' table
+
+		** REQUIRED PARAMS
+
+		** OTHER PARAMS
+		id - could be comma-delimited list
+		*/
+
 	$sendParams = array();
+	$sql = "SELECT id FROM content";
 
 	if (isset($params['id'])) {
 		$sql .= " WHERE id IN ( ";
 
-		// $params['id'] can be comma-delimited
 		$manyvalues = explode(",",$params['id']);
 		foreach($manyvalues as $value)
 		{
@@ -266,57 +286,34 @@ function updateContainerPaths($params, $insertid) {
 
 		// get the tree path to this piece of content!
 
-		$sql = "SELECT U2.migtitle AS parent1,U3.migtitle AS parent2,U4.migtitle AS parent3,U5.migtitle AS parent4,U6.migtitle AS parent5,U7.migtitle AS parent6,U8.migtitle AS parent7,U9.migtitle AS parent8,U10.migtitle AS parent9
-				FROM content AS U1
-				LEFT JOIN content AS U2
-					ON U2.id = U1.parentid
-				LEFT JOIN content AS U3
-					ON U3.id = U2.parentid
-				LEFT JOIN content AS U4
-					ON U4.id = U3.parentid
-				LEFT JOIN content AS U5
-					ON U5.id = U4.parentid
-				LEFT JOIN content AS U6
-					ON U6.id = U5.parentid
-				LEFT JOIN content AS U7
-					ON U7.id = U6.parentid
-				LEFT JOIN content AS U8
-					ON U8.id = U7.parentid
-				LEFT JOIN content AS U9
-					ON U9.id = U8.parentid
-				LEFT JOIN content AS U10
-					ON U10.id = U9.parentid
-				WHERE U1.id = '".$row['id']."'";
-			
-		$result2 = queryDatabase($sql);
-		$row2 = $result2->fetch(PDO::FETCH_ASSOC);
-
+		$row2['id'] = $row['id'];
 		$strPath = "";
-		$strPath2 = "";
-		if (is_array($row2)) {
+		do {
+			$sql = "SELECT U2.migtitle AS parent, U2.id AS id, U2.parentid AS parentid
+				FROM content AS U1
+				LEFT JOIN content AS U2 ON U2.id = U1.parentid
+				WHERE U1.id = '".$row2['id']."'";
 
-			foreach ($row2 as $contName) {
-					
-				if ($contName)
-				{
-					$strPath = $contName . "," . $strPath;
-					$strPath2 = $contName . "<>" . $strPath2;
-				}
-			}
+			$result2 = queryDatabase($sql);
+			$row2 = $result2->fetch(PDO::FETCH_ASSOC);
 
-			// remove last comma!
-			$strPath = substr($strPath,0,strlen($strPath)-1);
-			$strPath2 = substr($strPath2,0,strlen($strPath2)-2);
-			if ($strPath)
-			{
-				$sql = "UPDATE content SET containerpath = '" . $strPath2 . "' WHERE id = '".$row['id']."'";
-				queryDatabase($sql);
-			}
+			$strPath = $row2['parent'] . "<>" . $strPath;
+		}
+		while ($row2['id'] != '1');
+			
+		// remove last comma!
+		$strPath = substr($strPath,0,strlen($strPath)-2);
+
+		if ($strPath)
+		{
+			$sql = "UPDATE content SET containerpath = '" . $strPath . "' WHERE id = '".$row['id']."'";
+			queryDatabase($sql);
 		}
 	}
-	return $strPath2;
+	return $strPath;
 }
-function insertTag($params)
+
+function insertTag($params) //+
 {
 	/*
 		* Script will attempt to insert tag to 'terms' and 'term_taxonomy' tables
@@ -554,7 +551,8 @@ function insertTag($params)
 
 	} else die("No tag name or taxonomy provided; or invalid taxonomy parameter.");
 }
-function insertRecord($params)
+
+function insertRecord($params) //+
 {
 	/*
 		* Script will attempt to insert a record with all other name/value pair parameters provided
@@ -620,21 +618,7 @@ function insertRecord($params)
 
 		if($params['tablename'] == 'content')
 		{
-			$tokens = updateContainerPaths($params, $insertid);
-			$urlPath = '';
-			$arr = explode('<>',$tokens);
-			foreach($arr as $t)
-			{
-				$urlPath .= generateSlug($t) . '/';
-			}
-
-			if(!isset($params['containerpath'])) {
-				$sendParams = array();
-				$urlPath .= generateSlug($params['migtitle']);
-				$sql = "UPDATE content SET containerpath=:containerpath WHERE id='" . $insertid . "'";
-				$sendParams['containerpath'] = $urlPath;
-				queryDatabase($sql,$sendParams);
-			}
+			$tokens = updateContainerPaths(null, $insertid); // updates 'containerpath' field
 		}
 
 		if (isset($params['verbose'])) {
@@ -648,7 +632,8 @@ function insertRecord($params)
 		} else die("Query Failed: " . $result->errorInfo());
 	} else die("Query Failed: " . $result->errorInfo());
 }
-function insertRecordWithRelatedTag($params)
+
+function insertRecordWithRelatedTag($params) //+
 {
 	/*
 		* Script will attempt to insert a record with related tags
@@ -673,10 +658,11 @@ function insertRecordWithRelatedTag($params)
 		} else die ("Insert Record Failed: " . $result->errorInfo());
 	} else die("No tablename or tags provided.");
 }
-function deleteTag($params)
+
+function deleteTag($params) //+
 {
 	/*
-		* Script will attempt to delete tag from 'term_taxonomy' and then from the tables 'content' and 'media'
+		* Script will attempt to delete tag from 'term_taxonomy' and then from related tables 'content_terms' and 'media_terms'
 
 		** REQUIRED PARAMS
 		id - primary key of the record at table 'term_taxonomy' to delete
@@ -690,22 +676,22 @@ function deleteTag($params)
 
 		if($result = queryDatabase($sql,$sendParams))
 		{
-			// delete from 'content'
+			// delete from 'content_terms'
 			$sql = "DELETE FROM `content_terms` WHERE termid = :id ";
 			if($result = queryDatabase($sql,$sendParams)) {
 				sendSuccess();
-			} else die("Query Failed:" . $result->errorInfo());
+			} else die("Query Failed: " . $result->errorInfo());
 
-			// delete from 'media'
+			// delete from 'media_terms'
 			$sql = "DELETE FROM `media_terms` WHERE termid = :id ";
 			if($result = queryDatabase($sql,$sendParams)) {
 				sendSuccess();
-			} else die("Query Failed:" . $result->errorInfo());
-		}
-		else die("Query Failed:" . $result->errorInfo());
+			} else die("Query Failed: " . $result->errorInfo());
+		} else die("Query Failed: " . $result->errorInfo());
 	} else die ("No id provided.");
 }
-function deleteRecord($params)
+
+function deleteRecord($params) //+
 {
 	/*
 		* Script will attempt to delete one record by id
@@ -728,28 +714,10 @@ function deleteRecord($params)
 	if ($result = queryDatabase($sql,$sendParams)) {
 		sendSuccess();
 	}
-	else die("Query Failed:" . $result->errorInfo());
+	else die("Query Failed: " . $result->errorInfo());
 }
-function deleteMediaByPath($params)
-{
-	/*
-		* Script will attempt to delete records where by 'path' parameter from table 'media'
 
-		** REQUIRED PARAMS
-		path - could be part of the 'path' field
-		*/
-
-	if (isset($params['path'])) {
-		$sql = "DELETE FROM `media` ";
-		$sql .= " WHERE path LIKE '%".$params['path']. "%'";
-	} else die("No id or tablename provided.");
-
-	// get the results
-	if ($result = queryDatabase($sql)) {
-		sendSuccess();
-	} else die("Query Failed:" . $result->errorInfo());
-}
-function deleteRecords($params)
+function deleteRecords($params) //+
 {
 	/*
 		* Script will attempt to delete multiple records by idfield/idvalues (comma-delimited) and other name/value pair parameters provided
@@ -764,7 +732,6 @@ function deleteRecords($params)
 		* name/value pairs to specify records to delete
 		*/
 
-	$validParams = array("action","idvalues","tablename","idfield");
 	$sendParams = array();
 
 	// gets array of fields name for 'tablename'
@@ -791,11 +758,12 @@ function deleteRecords($params)
 
 		foreach ($params as $key=>$value)
 		{
-			if (!in_array($key,$validParams) && (in_array($key,$columnsArray)))
-			{
-				$sql .= " AND " . $key . " = :".$key;
-				$sendParams[$key] = $value;
-			} else die("Unknown field name '$key'.");
+			if ($key != 'action' && $key != 'tablename' && $key != 'idfield' && $key != 'idvalues') {
+				if (in_array($key,$columnsArray)) {
+					$sql .= " AND " . $key . " = :".$key;
+					$sendParams[$key] = $value;
+				} else die("Unknown field name '$key'.");
+			}
 		}
 
 	} else die("No tablename or id provided.");
@@ -805,7 +773,28 @@ function deleteRecords($params)
 		sendSuccess();
 	} else die("Query Failed:" . $result->errorInfo());
 }
-function deleteContent($params)
+
+function deleteMediaByPath($params) //+
+{
+	/*
+		* Script will attempt to delete records where by 'path' parameter from table 'media'
+
+		** REQUIRED PARAMS
+		path - could be part of the 'path' field
+		*/
+
+	if (isset($params['path'])) {
+		$sql = "DELETE FROM `media` ";
+		$sql .= " WHERE path LIKE '%".$params['path']. "%'";
+	} else die("No path provided.");
+
+	// get the results
+	if ($result = queryDatabase($sql)) {
+		sendSuccess();
+	} else die("Query Failed:" . $result->errorInfo());
+}
+
+function deleteContent($params) //+
 {
 	/*
 		* Script will attempt to delete a record (by content id) from a table 'content' and all related tables (content_*)
@@ -819,7 +808,7 @@ function deleteContent($params)
 	{
 		// checks whether id is valid or not
 		$sendParams = array();
-		$sql = "SELECT content.* from `content` WHERE id = :id";
+		$sql = "SELECT * from `content` WHERE id = :id";
 		$sendParams['id'] = $params['id'];
 
 		$result = queryDatabase($sql,$sendParams);
@@ -836,13 +825,15 @@ function deleteContent($params)
 			LEFT JOIN content_customfields	ON content_customfields.contentid = content.id
 			WHERE content.id = :id";
 		} else die("Invalid id.");
-	} else die("Content id is not provided.");
+	} else die("No content id provided.");
 
 	if ($result = queryDatabase($sql,$sendParams)) {
 		sendSuccess();
-	} else die("Query Failed:" . $result->errorInfo());
+	} else die("Query Failed: " . $result->errorInfo());
 }
-function associateTags($tablename,$id,$tags) {
+
+function associateTags($tablename,$id,$tags) //+
+{
 
 	// put tags into an array!
 	$arrTags = explode(",",$tags);
@@ -923,6 +914,7 @@ function associateTags($tablename,$id,$tags) {
 	}
 	return true;
 }
+
 function slug($str)
 {
 	$str = strtolower(trim($str));
@@ -930,6 +922,7 @@ function slug($str)
 	$str = preg_replace('/-+/', "-", $str);
 	return $str;
 }
+
 function generateSlug($phrase)
 {
 	$result = strtolower($phrase);
@@ -939,6 +932,7 @@ function generateSlug($phrase)
 	$result = preg_replace("/\s/", "-", $result);
 	return $result;
 }
+
 function processText($text)
 {
 	global $htmlSymbols;
@@ -965,6 +959,7 @@ function processText($text)
 	}
 	else return '';
 }
+
 function processSlug($text)
 {
 	$chars = array('Š','Œ','Ž','š','œ','ž','Ÿ','¥','µ','À','Á','Â','Ã','Ä','Å','Æ','Ç','È','É','Ê','Ë','Ì','Í','Î','Ï',
@@ -984,6 +979,7 @@ function processSlug($text)
 	}
 	return strtr(processText($text),$accents);
 }
+
 function duplicateContent($params)
 {
 	/*
@@ -1052,6 +1048,7 @@ function duplicateContent($params)
 	}
 	else die("Content id is not provided.");
 }
+
 function duplicateRows($tablename,$idField,$idValue,$insertId)
 {
 	$sendParams = array();

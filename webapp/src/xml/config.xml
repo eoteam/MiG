@@ -33,7 +33,7 @@
 			orderby="displayorder"
 			timeout="100"
 			icon="containerIcon"
-			contentView="com.mapx.view.content.MainMiddleView">
+			contentView="org.mig.view.components.content.MainMiddleView">
 
 			<child name="Help" 
 				contentView="org.mig.view.components.content.ContentView"
@@ -68,7 +68,7 @@
 
 				<child  name="Project"
 					contentView="org.mig.view.components.content.ContentView" generalEditorView="org.mig.view.components.content.ContentGeneralEditor"
-					 labelField="migtitle"
+					 labelField="migtitle" nesting="1"
 					action="getContent" orderby="displayorder" templateid="1" is_fixed="0"
 					acceptDrop="true" dropTemplates="2" tablename="content"
 					insertContent="insertRecord" updateContent="updateRecord"

@@ -23,7 +23,7 @@ function validateUser($params)
 				return $result;
 			} else die("Invalid Password!");
 		} else die("User not found.");
-	} else die ("Username and Password and both required!");
+	} else die ("Username and Password are both required!");
 }
 
 function getCustomFields($params) {
@@ -93,7 +93,7 @@ function getCustomFields($params) {
 			}
 		}
 	} else {
-		die("contentid is required!");
+		die("Contentid is required.");
 	}
 
 	// put the array into xml
@@ -113,7 +113,7 @@ function getCustomFields($params) {
 function getData ($params) {
 	/*
 
-	Genearal read function.
+	General read function.
 
 	-- VALID PARAMS --
 	-- REQUIRED --
@@ -692,8 +692,16 @@ function getContentMedia($params)
 	//contentid ** required!
 	if (isset($params['contentid']))
 	{
-		$sql .= " WHERE contentid = :contentid ";
-		$sendParams['contentid'] = $params['contentid'];
+		$sql .= " WHERE contentid IN ( ";
+
+		$manyvalues = explode(",",$params['contentid']);
+		foreach($manyvalues as $value)
+		{
+			$sql .= " :singlevalue".$value.", ";
+			$sendParams['singlevalue'.$value] = $value;
+		}
+		$sql = substr($sql,0,strlen($sql)-2); //remove last comma and space
+		$sql .= " )";
 	}
 	else
 	{
@@ -744,8 +752,16 @@ function getContentTags($params)
 
 	if (isset($params['contentid']))
 	{
-		$sql .= " WHERE contentid = :contentid ";
-		$sendParams['contentid'] = $params['contentid'];
+		$sql .= " WHERE contentid IN ( ";
+
+		$manyvalues = explode(",",$params['contentid']);
+		foreach($manyvalues as $value)
+		{
+			$sql .= " :singlevalue".$value.", ";
+			$sendParams['singlevalue'.$value] = $value;
+		}
+		$sql = substr($sql,0,strlen($sql)-2); //remove last comma and space
+		$sql .= " )";
 	}
 	else
 	{
@@ -789,11 +805,18 @@ function getContentUsers($params)
 
 	$sql .= " LEFT JOIN user  ON (content_users.userid = user.id)";
 
-	//contentid ** required!
 	if (isset($params['contentid']))
 	{
-		$sql .= " WHERE contentid = :contentid ";
-		$sendParams['contentid'] = $params['contentid'];
+		$sql .= " WHERE contentid IN ( ";
+
+		$manyvalues = explode(",",$params['contentid']);
+		foreach($manyvalues as $value)
+		{
+			$sql .= " :singlevalue".$value.", ";
+			$sendParams['singlevalue'.$value] = $value;
+		}
+		$sql = substr($sql,0,strlen($sql)-2); //remove last comma and space
+		$sql .= " )";
 	}
 	else
 	{
@@ -840,8 +863,16 @@ function getContentContent($params)
 	//contentid ** required!
 	if (isset($params['contentid']))
 	{
-		$sql .= " WHERE content_content.contentid = :contentid ";
-		$sendParams['contentid'] = $params['contentid'];
+		$sql .= " WHERE content_content.contentid IN ( ";
+
+		$manyvalues = explode(",",$params['contentid']);
+		foreach($manyvalues as $value)
+		{
+			$sql .= " :singlevalue".$value.", ";
+			$sendParams['singlevalue'.$value] = $value;
+		}
+		$sql = substr($sql,0,strlen($sql)-2); //remove last comma and space
+		$sql .= " )";
 	}
 	else
 	{
@@ -884,6 +915,15 @@ function getTemplates($params) {
 }
 function getContentTree($params)
 {
+		/*
+		-- VALID PARAMS --
+		-- REQUIRED --
+
+		id (int) - specifies a specific id to return
+		statusid (int)
+
+		*/
+	
 	global $statusid;
 
 	global $search; global $values;
@@ -954,7 +994,7 @@ function getMedia($params) {
 
 		mediaid (int) - specifies a specific media id to return (can be comma-delimited)
 		contentid (int) - specifies a specific content id to return media results for (can be comma-delimited)
-		include_unused (1,0) - include media that is not tied to content - defaults to 0 (NO).
+		include_unused (1,0) - include media that is not tied to content - defaults to 0 (NO)
 		has_tag - comma-delimited list of tags to search for.
 		search_caption - search words to search for in description (comma-delimited).
 		search_credits - words to search for in the custom fields (comma-delimited).
@@ -1140,6 +1180,7 @@ function getMedia($params) {
 	//	print_r($sendParams);
 	//print_r($sql);
 
+	print_r($sql);
 	// get the results
 	$result = queryDatabase($sql, $sendParams);
 

@@ -10,7 +10,7 @@
 	selectable="true" 
 	styleName="containerTree"
 	doubleClickEnabled="true" 
-	labelField="debugLabel"
+	labelField="debugLabel" openDuration="250"
 	folderClosedIcon="{containerIcon}"
 	folderOpenIcon="{containerIcon}"
 	iconField="{ContentNode(data).config.@icon}"

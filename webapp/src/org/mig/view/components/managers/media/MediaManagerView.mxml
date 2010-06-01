@@ -20,7 +20,7 @@
 			import org.mig.model.vo.media.FileNode;
 			import org.mig.view.skins.buttons.PlusButtonSkin;
 			
-			[Bindable] public var scalePercent:Number = 0.5;
+			[Bindable] public var scalePercent:Number = 1;
 			[Bindable] public var currentLocation:String='';
 			[Bindable] public var listDP:HierarchicalData;
 			[Bindable] public var tileDP:ArrayCollection;
@@ -121,7 +121,10 @@
 	
 	<s:Group width="100%" height="100%">
 		<mx:ViewStack width="100%" height="100%" id="stack" visible.loading="false" visible.loaded="true">
-			<mx:VBox width="100%" height="100%" verticalScrollPolicy="off" >
+			<s:NavigatorContent width="100%" height="100%">
+				<s:layout>
+					<s:VerticalLayout  clipAndEnableScrolling="false" />
+				</s:layout>
 				<controls:MiGAdvancedDataGrid		
 					itemRollOver="lastRollOverIndex = event.rowIndex"
 					id="listView" 
@@ -183,11 +186,30 @@
 						</mx:AdvancedDataGridColumn>
 					</controls:columns>
 				</controls:MiGAdvancedDataGrid>
-				<mx:Label styleName="bodyCopy" text="{tileDP.length + ' items'}" textAlign="center" width="100%"/>
-			</mx:VBox>	
+				<s:Label styleName="bodyCopy" text="{tileDP.length + ' items'}" textAlign="center" width="100%"/>
+			</s:NavigatorContent>	
 
-			<mx:VBox width="100%" height="100%" horizontalScrollPolicy="off">
-				<mx:Canvas width="100%" height="100%" horizontalScrollPolicy="off">
+			<s:NavigatorContent width="100%" height="100%">
+				<s:layout>
+					<s:VerticalLayout clipAndEnableScrolling="false" />
+				</s:layout>
+				<s:List width="100%" height="100%" id="thumbView" dataProvider="{tileDP}" 
+						rollOverColor="0xed1c58" 
+						creationComplete="this.dispatchEvent(new Event('thumbViewCreated'))"
+						selectionColor="0xed1c58"  
+						 doubleClickEnabled="true" requireSelection="false"
+						allowMultipleSelection="true" borderVisible="false"
+						dragEnabled="true">
+					<s:itemRenderer>
+						<fx:Component>
+							<renderers:MediaManagerTileRenderer doubleClickEnabled="true"  scalePercent="{outerDocument.scalePercent}" thumbURL="{outerDocument.thumbURL}"  />
+						</fx:Component>
+					</s:itemRenderer>
+					<s:layout>
+						<s:TileLayout clipAndEnableScrolling="true" useVirtualLayout="true" orientation="rows" rowHeight="{250*scalePercent}" columnWidth="{250*scalePercent}" />
+					</s:layout>
+				</s:List>
+				<!--<mx:Canvas width="100%" height="100%" horizontalScrollPolicy="off">
 					<controls:MiGTileList
 						creationComplete="this.dispatchEvent(new Event('thumbViewCreated'))"
 						itemRollOver="lastRollOverIndex = event.rowIndex"
@@ -213,22 +235,25 @@
 							</fx:Component>
 						</controls:itemRenderer>
 					</controls:MiGTileList>
-				</mx:Canvas>
-				<mx:Label styleName="bodyCopy" text="{tileDP.length + ' items'}" textAlign="center" width="100%" bottom="5"/>
-			</mx:VBox>
+				</mx:Canvas>-->
+				<s:Label styleName="bodyCopy" text="{tileDP.length + ' items'}" textAlign="center" width="100%" bottom="5"/>
+			</s:NavigatorContent>
 		</mx:ViewStack>	
 		
 		
-		<mx:VBox id="loadingScreen" backgroundColor="0x000000" backgroundAlpha="0" 
-		width="100%" height="100%" visible.loading="true" visible.loaded="false" alpha="0">
-			<mx:Spacer height="35%" width="100%"/>
-			<mx:HBox width="100%">
-				<mx:Spacer  height="100%" width="55%"/>
+		<s:SkinnableContainer id="loadingScreen" backgroundColor="0x000000" backgroundAlpha="0" 
+		width="100%" height="100%" visible.loading="true" visible.loaded="false">
+			<s:layout>
+				<s:VerticalLayout />
+			</s:layout>
+			<s:Rect height="35%" width="100%"/>
+			<s:HGroup width="100%">
+				<s:Rect  height="100%" width="55%"/>
 				<assets:MigLoaderSmall percentLoaded="1" scaleX=".75" scaleY=".75" rotation="45"/>
-				<mx:Spacer height="100%" width="45%"/>
-			</mx:HBox>	
-			<mx:Spacer height="65%" width="100%"/>
-		</mx:VBox>
+				<s:Rect height="100%" width="45%"/>
+			</s:HGroup>	
+			<s:Rect height="65%" width="100%"/>
+		</s:SkinnableContainer>
 	</s:Group>
 
 

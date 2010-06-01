@@ -12,6 +12,7 @@ package org.mig.model.vo.media
 	
 	import org.mig.model.vo.ContentNode;
 	
+	[Bindable]
 	public class FileNode extends ContentNode
 	{
 		

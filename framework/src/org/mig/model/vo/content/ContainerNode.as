@@ -4,23 +4,23 @@ package org.mig.model.vo.content
 	import org.mig.model.vo.UpdateData;
 	import org.mig.model.vo.content.ContentData;
 	
-	 
+	[Bindable] 
 	public class ContainerNode extends ContentNode
 	{		
 		
-		[Bindable] public var isRoot:Boolean;
-		public var isFixed:Boolean; //fixed items in DB and config
-		public var isNesting:Boolean; //if turned on, this node and its children share the same template
+		public var isRoot:Boolean = false;
+		public var isFixed:Boolean = false; //fixed items in DB and config
+		public var isNesting:Boolean = false; //if turned on, this node and its children share the same template
 		public var isBranch:Boolean = false; //used for the spring loaded mechanism
 		
 		public function ContainerNode(baseLabel:String, config:XML, data:ContentData, parentContent:ContentNode,
 		priveleges:int,root:Boolean=true,fixed:Boolean=false,nesting:Boolean=false) {
+			super(baseLabel, config, data, parentContent,priveleges);
 			isRoot = root;
 			isFixed = fixed;
 			isNesting = nesting;
 			if(isFixed || isRoot || isNesting)
 				isBranch = true;	
-			super(baseLabel, config, data, parentContent,priveleges);
 		}
 		/*public function updateChildrenOrder(userId:int = -1):void {
 			var modDate:Date = new Date();

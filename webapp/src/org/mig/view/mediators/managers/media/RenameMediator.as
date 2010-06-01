@@ -30,7 +30,7 @@
 		
 
 		override public function onRegister():void {
-			view.submitBtn.addEventListener(MouseEvent.CLICK,handleSubmitButton);
+			view.submitButton.addEventListener(MouseEvent.CLICK,handleSubmitButton);
 			view.input.text = view.content.baseLabel;
 		}
 		private function handleSubmitButton(event:Event):void {
