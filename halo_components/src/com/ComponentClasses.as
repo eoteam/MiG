@@ -3,11 +3,11 @@ package com
 	internal class ComponentClasses
 	{
 		import org.mig.view.controls.AssociativeInstanceCache; AssociativeInstanceCache;
-		import org.mig.view.controls.AdvancedColorPicker; AdvancedColorPicker;
+		
 		import org.mig.view.controls.AutoComplete; AutoComplete;
 		import org.mig.view.controls.AutoComplete2; AutoComplete2;
 		import org.mig.view.controls.CachedLabel; CachedLabel;
-		import org.mig.view.controls.colorPicker; colorPicker;
+
 		import org.mig.view.controls.LayoutAnimator; LayoutAnimator;
 		import org.mig.view.controls.LayoutTarget; LayoutTarget;
 		import org.mig.view.controls.MiGDateField; MiGDateField;
@@ -17,7 +17,6 @@ package com
 		
 		import org.mig.view.controls.MiGTextInput; MiGTextInput;
 		import org.mig.view.controls.MiGTextInputSpell; MiGTextInputSpell;
-		import org.mig.view.controls.PickerCursor; PickerCursor;
 		import org.mig.view.controls.PromptTextInput; PromptTextInput;
 		import org.mig.view.controls.SelectionColor; SelectionColor;
 		import org.mig.view.controls.UIBitmap; UIBitmap;	

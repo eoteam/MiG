@@ -41,6 +41,7 @@
         </excludedEntries>
       </libraryPathEntry>
       <libraryPathEntry kind="3" linkType="1" path="/halo_components/bin/halo_components.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="/gumbo_components/bin/gumbo_components.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
