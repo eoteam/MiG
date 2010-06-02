@@ -13,8 +13,6 @@
 			import mx.controls.ColorPicker;
 			import mx.controls.DateChooser;
 			import mx.controls.DateField;
-			import mx.controls.List;
-			import mx.controls.TextArea;
 			import mx.core.Application;
 			import mx.core.FlexGlobals;
 			import mx.core.UIComponent;
@@ -39,9 +37,12 @@
 			import spark.components.CheckBox;
 			import spark.components.ComboBox;
 			import spark.components.DropDownList;
+			import spark.components.List;
 			import spark.components.NumericStepper;
+			import spark.components.TextArea;
 			import spark.components.TextInput;
 			
+				
 			public var field:TemplateCustomField;
 			public var vo:ContentData;
 			private var customfield:CustomField;
@@ -111,7 +112,7 @@
 						this.summaryText = vo[customfield.name].toString().slice(0,150)+'...';
 					break;					
 					case CustomFieldTypes.COLOR:
-						child = new org.mig.view.controls.colorPicker();
+						child = new colorPicker();
 						child.addEventListener("dataChange",dataChangeProxy);	
 						//colorPicker(child).dataProvider=FlexGlobals.topLevelApplication.globalColors; 
 						colorPicker(child).selectedColor= Number(vo[customfield.name]);		
@@ -143,7 +144,7 @@
 					break;				
 					case CustomFieldTypes.DATE:
 						child = new DateTimePicker();
-						if(vo[customfield.name].toString() != '0')
+						if(vo[customfield.name].toString() != '')
 						{
 							var date:Date = new Date();
 							date.time = Number(vo[customfield.name].toString());
@@ -151,7 +152,7 @@
 							this.summaryText =  dateFormatter.format(date);	
 						}
 						else
-							DateTimePicker(child).selectedDate = null;
+							DateTimePicker(child).selectedDate = new Date();
 						
 					break;
 					case CustomFieldTypes.FILE_LINK:
@@ -162,7 +163,7 @@
 						this.summaryText = vo[customfield.name].toString().slice(0,150)+'...';
 					break;	
 					case CustomFieldTypes.MULTIPLE_SELECT_WITH_ORDER:
-						var dp:Array = [];
+						var dp:ArrayList = new ArrayList();;
 						var summary:String = '';
 						if(vo[customfield.name].toString() != '')
 						{
@@ -171,7 +172,7 @@
 							{
 								var item:Object = customfield.optionsArray[Number(index)-1];
 								item.selected = true;
-								dp.push(item);
+								dp.addItem(item);
 								summary += item.value+', ';
 							}
 						}
@@ -179,9 +180,9 @@
 						this.summaryText = summary;
 						for each(item in customfield.optionsArray)
 						{
-							if(dp.indexOf(item) == -1)
+							if(dp.getItemIndex(item) == -1)
 							{
-								dp.push(item);
+								dp.addItem(item);
 								item.selected = false;
 							}
 						}
@@ -191,11 +192,11 @@
 						List(child).styleName = 'customFieldsList';
 						List(child).dataProvider = dp;
 						List(child).labelField = "value";
-						List(child).allowDragSelection = true;
+						List(child).allowMultipleSelection = true;
 						List(child).dragMoveEnabled = true;
 						List(child).dragEnabled = true;
 						List(child).dropEnabled = true;	
-						var optionRenderer:ClassFactory = new ClassFactory(CFListCheckBox);						
+						var optionRenderer:ClassFactory = new ClassFactory(CustomFieldListCheckBox);						
 						List(child).itemRenderer = optionRenderer;
 						List(child).addEventListener(ListEvent.ITEM_CLICK,handleItemClick);
 						List(child).addEventListener(DragEvent.DRAG_COMPLETE,handleItemClick);

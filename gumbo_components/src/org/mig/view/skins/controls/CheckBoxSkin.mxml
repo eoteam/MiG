@@ -97,8 +97,8 @@
     <!-- Label -->
     <!--- @copy spark.components.supportClasses.ButtonBase#labelDisplay -->
     <s:Label id="labelDisplay"
-             textAlign="start"  color.overStates="0xFFFFFF"
-             verticalAlign="middle" color="0x888888"
+             textAlign="start"  color.overAndSelected="0x888888" color.upAndSelected="0xFFFFFF" color.downAndSelected="0xFFFFFF" color.disabledStates="0xff0000"
+             verticalAlign="middle" color="0x888888" color.over="0xFFFFFF"
              maxDisplayedLines="1"
              left="18" right="0" top="3" bottom="3" verticalCenter="0" />
 

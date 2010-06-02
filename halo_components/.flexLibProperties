@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <flexLibProperties includeAllClasses="false" version="3">
   <includeClasses>
     <classEntry path="com.ComponentClasses"/>
     <classEntry path="flexlib.FlexlibClasses"/>
     <classEntry path="org.mig.view.containers.GradientCanvas"/>
-    <classEntry path="org.mig.view.controls.DateTimePicker"/>
     <classEntry path="org.mig.view.controls.MultilineTextInput"/>
     <classEntry path="org.mig.view.skins.GradientBackground"/>
     <classEntry path="org.mig.view.skins.OffsetedDropIndicator"/>

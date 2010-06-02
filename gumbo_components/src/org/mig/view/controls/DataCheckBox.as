@@ -4,7 +4,7 @@ package org.mig.view.controls
 	
 	public class DataCheckBox extends CheckBox
 	{
-		public var data:*;
+		[Bindable] public var data:*;
 		public function DataCheckBox()
 		{
 			super();

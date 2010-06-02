@@ -6,11 +6,13 @@ package org.mig.view.mediators.content
 	
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
+	import org.mig.model.vo.UpdateData;
 	import org.mig.model.vo.content.ContentData;
 	import org.mig.model.vo.content.Template;
 	import org.mig.model.vo.content.TemplateCustomField;
 	import org.mig.view.components.content.ContentGeneralEditor;
 	import org.mig.view.components.content.CustomFieldElement;
+	import org.mig.view.events.ContentViewEvent;
 	import org.robotlegs.mvcs.Mediator;
 	
 	public class ContentGeneralEditorMediator extends Mediator
@@ -42,15 +44,23 @@ package org.mig.view.mediators.content
 				view.mainContainer.addElement(cfElement);
 				cfElements.push(cfElement);
 			}
+			
+			eventMap.mapListener(view,ContentViewEvent.PUBLISH,publishContent,ContentViewEvent);
 		}
-
-
-		private function filterByTemplate(item:Template):Boolean
-		{
+		private function filterByTemplate(item:Template):Boolean {
 			if(item.id == ContentData(view.content.data).templateid)
 				return true;
 			else
 				return false;
+		}
+		private function publishContent(event:ContentViewEvent):void {
+			var update:UpdateData = new UpdateData();
+			update.id = view.content.data.id;
+			for each(var element:CustomFieldElement in cfElements) {
+				if(element.modified) {
+					update["customfield"+element.field.fieldid] = view.content.data[element.field.customfield.name];
+				}
+			}
 		}
 	}
 }

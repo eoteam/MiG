@@ -74,8 +74,7 @@ package org.mig.view.mediators.content
 				view.contentTabs.addEventListener(Event.CHANGE,handleTabChange);
 			}
 		}
-		private function handleTabChange(event:IndexChangedEvent):void
-		{
+		private function handleTabChange(event:IndexChangedEvent):void {
 			if(event.newIndex > 0 ) {
 				var selectedTabItem:ContentTabItem = view.contentTabs.getChildAt(event.newIndex) as ContentTabItem;	
 				selectedTabItem.configure();

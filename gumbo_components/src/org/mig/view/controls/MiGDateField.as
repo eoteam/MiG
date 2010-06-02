@@ -6,7 +6,6 @@ package org.mig.view.controls
 	import mx.controls.DateField;
 	import mx.events.FlexEvent;
 	import mx.core.mx_internal;
-	use namespace mx_internal;
 	public class MiGDateField extends DateField
 	{
 		[Bindable] public var inputStyleName:String = "inputFieldBlack";
@@ -24,10 +23,9 @@ package org.mig.view.controls
 			this.graphics.drawRect(0,0,unscaledWidth,unscaledHeight);
 			this.graphics.endFill();	
 		}
-		private function handleCreationComplete(event:Event):void
-		{
+		private function handleCreationComplete(event:Event):void {
 			textInput.styleName = inputStyleName;
-			//SelectionColor.setFieldSelectionColor(this.textInput.mx_internal::getTextField() as TextField,0xffffff);
+
 		}
 
 	}

@@ -14,10 +14,11 @@
 		<![CDATA[
 			import org.mig.model.vo.ContentNode;
 			import org.mig.model.vo.content.ContentData;
+			import org.mig.view.events.ContentViewEvent;
 			import org.mig.view.interfaces.IEditableContentView;
 			
 			[Bindable] public var _data:ContentData;
-			[Bindable] private var gradientMatrix:Matrix = new Matrix();;
+			[Bindable] private var gradientMatrix:Matrix = new Matrix();
 			
 			private var _content:ContentNode;
 			
@@ -36,7 +37,7 @@
 				
 			}	
 			public function submit(statusid:int=0):void {
-				
+				this.dispatchEvent(new ContentViewEvent(ContentViewEvent.PUBLISH));
 			}
 			override protected function updateDisplayList(w:Number, h:Number):void {
 				super.updateDisplayList(w,h);

@@ -4,6 +4,9 @@ Simple HTML form
 Installation file php
 mig package (zip)
 
+All the files and folders contained in the zip will be extracted at the same level as the installer script. (The zip will contain the needed file structure)
+
+
 1- Requirements
 check for php version, minimum required is 5.2 or 5.3 (to use PDO)
 check for GD extension
@@ -11,7 +14,9 @@ check for GD extension
 
 2 - files
 unzip package
-create files, files/migThumbs, temporary folder (permission is 777)
+The "files" folder name can be a parameter passed by the installation form.
+If the user picks a different name for the "files" folder, the installation script will have to change the file path constants located in "php/config/constants.php"
+create files, files/migThumbs, temporary folder (permission is 777) 
 create fonts folder
 create xml folder
 
@@ -28,12 +33,12 @@ the following files are already packaged
 	index.html
 	usa.zwl
 	bg_image.jpg
-	
+	database SQL file
 
 3 - Database
 modifiy php/includes/database.php with the server information provided by the form
 retrieve SQL file and install database
-
+?? Open and read SQL file and run queries?
 
 
 

@@ -10,7 +10,6 @@ package com
 
 		import org.mig.view.controls.LayoutAnimator; LayoutAnimator;
 		import org.mig.view.controls.LayoutTarget; LayoutTarget;
-		import org.mig.view.controls.MiGDateField; MiGDateField;
 /*		import org.mig.view.controls.MiGHSlider; MiGHSlider;*/
 		import org.mig.view.controls.MiGList; MiGList;
 		import org.mig.view.controls.MiGNumericStepper; MiGNumericStepper;

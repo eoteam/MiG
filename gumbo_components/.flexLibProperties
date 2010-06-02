@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <flexLibProperties includeAllClasses="true" version="3">
   <includeClasses>
     <classEntry path="org.mig.view.skins.controls.ToolTabBarSkin"/>
@@ -14,6 +14,12 @@
     <classEntry path="org.mig.view.controls.colorPicker"/>
     <classEntry path="org.mig.view.controls.AdvancedColorPicker"/>
     <classEntry path="org.mig.view.controls.PickerCursor"/>
+    <classEntry path="org.mig.view.skins.containers.TitleWindowSkin"/>
+    <classEntry path="org.mig.view.controls.DateTimePicker"/>
+    <classEntry path="org.mig.view.controls.MiGDateField"/>
+    <classEntry path="org.mig.view.skins.controls.NumericStepperSkin"/>
+    <classEntry path="org.mig.view.skins.buttons.StepperDownArrowSkin"/>
+    <classEntry path="CustomFieldListCheckBox"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

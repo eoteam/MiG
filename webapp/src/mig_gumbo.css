@@ -16,6 +16,9 @@
 containers|ResizableTitleWindow {
 	skinClass: ClassReference("org.mig.view.skins.containers.ResizableTitleWindowSkin");
 }
+s|TitleWindow {
+	skinClass: ClassReference("org.mig.view.skins.containers.TitleWindowSkin");
+}
 s|VScrollBar {
 	skinClass: ClassReference("org.mig.view.skins.controls.MiGScrollBarSkin");
 }
@@ -38,11 +41,27 @@ s|TextArea {
 	renderingMode:normal;
 	fontSize: 14;
 	focusedTextSelectionColor: #ed1c58;
-	unfocusedTextSelectionColor: #333333;	
+	unfocusedTextSelectionColor: #333333;
+	contentBackgroundColor: #111111;
 }
 s|HSlider {
 	skinClass: ClassReference("org.mig.view.skins.controls.MiGHSliderSkin");
 }
+s|CheckBox {
+	skinClass: ClassReference("org.mig.view.skins.controls.CheckBoxSkin");
+	color: #888888	;
+}
+s|NumericStepper {
+	borderVisible: none;
+	textAlign:center;
+	symbolColor: #CCCCCC;
+	contentBackgroundColor: #111111;
+	contentBackgroundAlpha:1;
+	color: #ffffff;
+	fontSize: 14;
+	skinClass: ClassReference("org.mig.view.skins.controls.NumericStepperSkin");
+}
+
 /* Buttons */
 s|Button {
 	color: #ffffff;
@@ -120,18 +139,6 @@ s|TextInput {
 	paddingRight: 3;
 	renderingMode: normal;	
 }
-
-/*disabledColor: #333333;
-verticalGap: 2;
-paddingLeft: 2;
-paddingTop: 0; */
-
-.dataGridHeaderStyle {
-	paddingBottom: 0;
-	paddingTop: 0;
-	textAlign: left;
-}
-
 .locationHeader {
 	fontFamily: Transit-Bold;
 	fontSize: 14pt;
@@ -149,18 +156,6 @@ paddingTop: 0; */
 	skinClass: ClassReference("org.mig.view.skins.dropdowns.DefaultComboBoxSkin");
 }
 .comboBoxBlack{
-	
-/*	color: #ffffff;
-	highlightAlphas: 0.1, 0.02;
-	fillAlphas: 1, 1, 1, 1;
-	fillColors: #111111, #111111, #111111, #111111;
-	
-	textSelectedColor: #ffffff;
-	
-	textRollOverColor: #ffffff;
-	dropdownStyleName: "comboBoxDropDowns";
-	disabledColor: #AAAAAA;*/
-	
 	cornerRadius: 0;
 	rollOverColor: #ED1C58;
 	selectionColor: #ED1C58;
@@ -171,12 +166,59 @@ paddingTop: 0; */
 	borderVisible: false;
 	skinClass: ClassReference("org.mig.view.skins.dropdowns.DefaultComboBoxSkin");
 }
-s|CheckBox {
-	skinClass: ClassReference("org.mig.view.skins.controls.CheckBoxSkin");
-	color: #888888	;
+.customFieldsList {
+	contentBackgroundAlpha: 1;
+	contentBackgroundColor: #111111;
+	rollOverColor: #ED1C58;
+	selectionColor: #ED1C58;
+	borderVisible: false;
 }
 
+/****************** HALO *****************/
+mx|DateChooser {
+	cornerRadius: 0;
+	headerColors: #888888, #777777;
+	fillAlphas: 0.91, 0.4, 0.75, 0.65;
+	fillColors: #888888, #999999, #0033cc, #99ff00;
+	todayColor: #ed1c58;
+	rollOverColor: #ed1c58;
+	selectionColor: #ed1c58;
+	color: #ffffff;
+	borderColor: #aab3b3;
+	contentBackgroundColor: #111111;
+	contentVackgroundAlpha: 1;
+	chromeColor: #ed1c58;
+	dropShadowEnabled: false;
+	headerStyleName: "dateChooserHeaderStyle";
+	weekDayStyleName: "dateChooserWeekDayStyle";
+}
+.dateChooserHeaderStyle{
+	color: white;
+	font-family: Transit-Bold;
+	font-weight: normal;
+	
+}
+.dateChooserWeekDayStyle {
+	color: white;
+	font-family: Transit-Bold;
+	font-weight: normal;
+}
 
+.dateChooserTextInput {
+	color: white;
+	fontFamily: Transit-Normal;
+	fontWeight: normal;
+	fontSize: 14pt;
+	backgroundColor: #111111;
+	backgroundAlpha: 0;
+	disabledColor: #666666;
+	backgroundDisabledColor:#000000;	
+	borderStyle: none;
+	borderColor: #999999;
+	paddingLeft: 3;
+	paddingRight: 3;
+	textSelectionColor: #ff0011;
+}
 mx|AdvancedDataGrid {
 	fontFamily: Transit-Normal;
 	fontSize: 15pt;
@@ -212,9 +254,11 @@ mx|AdvancedDataGrid {
 	color: #FFFFFF;
 	fontFamily: Transit-Normal;
 	fontSize: 14;
+	paddingBottom: 0;
+	paddingTop: 0;
+	textAlign: left;
 }
-mx|Tree
-{
+mx|Tree {
 	defaultLeafIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_noIcon");
 	folderClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_noIcon");
 	folderOpenIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_noIcon");
@@ -244,21 +288,7 @@ mx|Text {
 	textRollOverColor: #ffffff;
 	textSelectedColor: #ffffff;
 }
-/*
-.managerTree{
-	color: #FFFFFF;
-	disclosureClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderClosedIcon");
-	disclosureOpenIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderOpenIcon");
-	textRollOverColor: #ffffff;
-	textSelectedColor: #ffffff;
-}
 
-.treeManagerItem{
-	backgroundImage: ClassReference("org.mig.view.skins.GradientBackground");
-	backgroundSize: "100%";
-	fillColors: #808080, #595959;
-	fillAlphas: 1, 1;
-}*/
 .defaultButtonBackground{
 	backgroundImage: ClassReference("org.mig.view.skins.GradientBackground");
 	backgroundSize: "100%";
@@ -282,36 +312,3 @@ mx|Text {
 	skinClass: ClassReference("org.mig.view.skins.controls.ToolTabBarSkin");
 	cornerRadius: 0;
 }
-/*.toolsTabNavigator{
-	color: #B3B3B3;
-	contentBackgroundAlpha: 1;
-	cornerRadius: 0;
-	highlightAlphas: 0, 0;
-	tabHeight: 22;
-	borderThickness: 1;
-	borderStyle: solid;
-	borderColor:#666666;
-	paddingTop: -1;
-	tabStyleName: "toolsTab";
-	selectedTabTextStyleName: "transparentSelectedTab";
-	firstTabStyleName: "toolsTab";
-	lastTabStyleName: "toolsTab";
-	borderSides: top;
-}
-.toolsTab{
-	color: #B3B3B3;
-	fontFamily: Transit-Normal;
-	fontSize: 13pt;	
-	textRollOverColor: #ffffff;
-	highlightAlphas: 0.05, 0;
-	fillAlphas: 0, 0;
-	contentBackgroundAlpha: 1;
-	contentBackgroundColor: #595959; 
-	borderColor: #666666;
-	chromeColor: #666666;
-	cornerRadius: 0;
-	textAlign: center;
-}
-.transparentSelectedTab{
-	color: #FFFFFF;
-}*/

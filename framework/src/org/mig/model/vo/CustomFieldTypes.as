@@ -7,8 +7,8 @@ package org.mig.model.vo
 		public static const SELECT:int							= 2;
 		public static const STRING:int							= 3;
 		public static const HTML_TEXT:int						= 4;
-		public static const COLOR:int 							= 5;
-		public static const MULTIPLE_SELECT:int 				= 6;
+		public static const MULTIPLE_SELECT:int 				= 5;
+		public static const COLOR:int 							= 6;
 		public static const TEXT:int 							= 7;
 		public static const INTEGER:int 						= 8;
 		public static const DATE:int 							= 9;

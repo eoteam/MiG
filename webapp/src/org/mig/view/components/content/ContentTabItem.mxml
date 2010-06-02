@@ -24,7 +24,7 @@
 				return _content;
 			}
 			public function submit(statusid:int=0):void {
-				view.submit(statusid);
+				//view.submit(statusid);
 			}
 			//this accomodates lazy instantiation of the actual view
 			public function configure():void {
