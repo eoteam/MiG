@@ -7,7 +7,8 @@
 	xmlns:containers="org.mig.view.containers.*"
 	close="handleClose()"
 	backgroundColor="0x111111" backgroundAlpha="0.98"
-	height="180" width="300"  contentBackgroundAlpha="1" borderColor="0x666666"
+	contentBackgroundAlpha="1" borderColor="0x666666"
+	height="180" width="300"
 	implements="org.mig.view.interfaces.IContentView"
 	title="{'Rename '+_content.label}" styleName="bodyCopy">
 	<fx:Script>
@@ -43,9 +44,7 @@
 		<s:Button  styleName="defaultGrayButton" label="Submit" id="submitButton" enabled="{validInput}"/>
 		<s:Button styleName="defaultGrayButton" label="Cancel" id="cancelButton" click="handleClose()"/>
 	</s:HGroup>
-	
-	
-		
+
 	<fx:Declarations>
 		<mx:StringValidator id="inputValidator" invalid="validInput=false" valid="validInput=true" source="{input}" property="text" minLength="4" maxLength="60" required="true"/>
 		<fx:Boolean id="validInput">false</fx:Boolean>		

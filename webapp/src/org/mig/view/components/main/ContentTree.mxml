@@ -9,12 +9,13 @@
 	dropEnabled="true" 
 	selectable="true" 
 	styleName="containerTree"
-	doubleClickEnabled="true" 
+	doubleClickEnabled="true" variableRowHeight="true" 
 	labelField="debugLabel" openDuration="250"
 	folderClosedIcon="{containerIcon}"
 	folderOpenIcon="{containerIcon}"
 	iconField="{ContentNode(data).config.@icon}"
 	itemRenderer="org.mig.view.renderers.ContentTreeRenderer"
+	rendererIsEditor="true" 
 	showRoot="true">
 
 	<mx:Script>

@@ -52,6 +52,9 @@ package org.mig.services
 			params.id = content.data.id;
 			this.createService(params,ResponseType.DATA,ContentData).token.content = content;
 		}
+		public function createContainer(config:XML):void {
+			
+		}
 		private function loadContainer(content:ContentNode):void {
 			var params:Object = new Object();
 			var execute:Boolean = false;			
@@ -87,8 +90,10 @@ package org.mig.services
 			if(SubContainerNode(content).queryVars != null) {
 				var params:Object = new Object();
 				params.action = content.config.@getContent.toString();
-				if(content.config.attribute("tablename").length() > 0) 
-					params.tablename = content.config.@tablename.toString();
+				if(params.action == "getData") {
+					if(content.config.attribute("tablename").length() > 0) 
+						params.tablename = content.config.@tablename.toString();
+				}
 				if(content.config.attribute("verbosity").length() > 0) 	
 					params.verbosity = content.config.@verbosity.toString();
 				if(content.config.attribute("orderby").length() > 0) 

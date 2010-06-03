@@ -6,16 +6,19 @@
 </head>
 <body>
 
-<h4>installFileTest.php</h4>
-		
 <form name="contentForm" method="POST" action="installFileTest.php">
 
-	<h5>MiG package /zip file/</h5>
-	<input type="file" size="32" name="Filedata" value="">
-	
-	<br /><br />
+	MiG package : <input type="file" size="32" name="Filedata" value=""> <br /><br />
 
-	<input type="submit" name="submit" value="Submit">
+	Server : <input type="text" name="db_server"/> <br />
+	User name : <input type="text" name="db_user"/> <br />
+	Password : <input type="text" name="db_pass"/> <br />
+	DB name : <input type="text" name="db_name"/> <br /><br />
+	
+	'Files' folder name: <input type="text" name="folder_name" value="files"/> <br /><br />
+
+	<input type="submit" name="submit" value="Install">
+
 </form>
 
 </body>

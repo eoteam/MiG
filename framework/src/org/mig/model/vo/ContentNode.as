@@ -43,14 +43,11 @@ package org.mig.model.vo
 		}		
 	
 		public function handleCollection(event:CollectionEvent):void {
-			if(event.kind == CollectionEventKind.ADD)
-			{
-				for each(var node:ContentNode in event.items)
-				{
+			if(event.kind == CollectionEventKind.ADD) {
+				for each(var node:ContentNode in event.items) {
 					node.parentNode = this;
 				}
-			}
-			//this.updateLabel();
+			}	
 		}	
 		public function get config():XML {
 			return _config;

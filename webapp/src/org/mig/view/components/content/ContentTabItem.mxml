@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas 
-	xmlns:mx="http://www.adobe.com/2006/mxml"
-	xmlns:view.content="com.map.view.content.*"
-	 implements="org.mig.view.interfaces.IEditableContentView"
-	height="100%" width="100%" horizontalScrollPolicy="off">
+<s:NavigatorContent
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx" label="{_content.label}"
+	implements="org.mig.view.interfaces.IEditableContentView"
+	height="100%" width="100%">
 
-	<mx:Script>
+	<fx:Script>
 		<![CDATA[
 			import mx.core.UIComponent;
 			
@@ -34,11 +35,13 @@
 					UIComponent(view).percentHeight = 100;
 					UIComponent(view).percentWidth = 100;
 					UIComponent(view).y = 0;
-					this.addChild(UIComponent(view));
+					this.addElement(UIComponent(view));
 					configured = true;
 				}
 			}
 		]]>
-	</mx:Script>
-	<mx:Binding source="_content.label" destination="this.label" />
-</mx:Canvas>
+	</fx:Script>
+	<s:layout>
+		<s:BasicLayout clipAndEnableScrolling="false" />
+	</s:layout>
+</s:NavigatorContent>

@@ -7,7 +7,7 @@
 	xmlns:containers="org.mig.view.containers.*"
 	backgroundColor="0x111111" backgroundAlpha="0.98"
 	contentBackgroundAlpha="1" borderColor="0x666666"
-	initialize="init()"	
+	close="handleClose(event)"	styleName="bodyCopy"
 	height="100" width="400" 
 	title="Downloading Archive">
 	
@@ -19,29 +19,33 @@
 			[Bindable]	public var prompt:String;	
 			[Bindable] public var uploadProgress:Number;
 			public var files:Array;
+
 			
-				private function init():void
-				{
-					this.addEventListener(CloseEvent.CLOSE, handleClose);
-				}
-				
-				private function handleClose(evt:CloseEvent):void
-				{
-					PopUpManager.removePopUp(this);
-				}		
+			private function handleClose(eventt:CloseEvent):void
+			{
+				PopUpManager.removePopUp(this);
+			}		
 		]]>
 	</fx:Script>
 	<containers:layout>
-		<s:VerticalLayout paddingRight="10" paddingLeft="10" paddingBottom="10" clipAndEnableScrolling="false" />
+		<s:VerticalLayout paddingTop="20" paddingRight="10" paddingLeft="10" paddingBottom="10" gap="20" clipAndEnableScrolling="false" />
 	</containers:layout>
+	
 	<s:Label text="{prompt}" styleName="bodyCopy"/>
 	
 	<s:HGroup width="100%" verticalAlign="middle">
-		<mx:Canvas id="progressBar" width="100%" height="2">
-			<mx:Canvas width="100%" height="1" backgroundColor="#000000" backgroundAlpha="1.0" id="bg"/>
-			<mx:Canvas id="progress" backgroundColor="#ffffff" width="{uploadProgress*bg.width}" height="{bg.height}"/>
-		</mx:Canvas>
-		<s:Label width="100%" styleName="bodyCopy" id="progressText" height="20" text="{(uploadProgress*100)+'% Complete'}" />		
-							
+		<s:Group id="progressBar" width="100%" height="2">
+			<s:Rect width="100%" height="1" id="bg"> 
+				<s:fill>
+					<s:SolidColor />
+				</s:fill>
+			</s:Rect>	
+			<s:Rect width="{uploadProgress*bg.width}" height="1"> 
+				<s:fill>
+					<s:SolidColor color="0xffffff" />
+				</s:fill>
+			</s:Rect>				
+		</s:Group>
+		<s:Label width="100%" styleName="bodyCopy" id="progressText" height="20" text="{(uploadProgress*100)+'% Complete'}" />								
 	</s:HGroup>	
 </containers:ResizableTitleWindow>

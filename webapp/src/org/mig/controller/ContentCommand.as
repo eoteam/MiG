@@ -36,13 +36,13 @@ package org.mig.controller
 		override public function execute():void {
 			switch(event.type) {
 				case ContentEvent.RETRIEVE_CHILDREN:
-					service.retrieveChildren(event.args[0] as ContainerNode);
+					service.retrieveChildren(event.args[0] as ContentNode);
 					service.addHandlers(processChildren);
 					contentModel.containersToLoad++;	
 				break;
 				
 				case ContentEvent.RETRIEVE_VERBOSE:
-					service.retrieveVerbose(event.args[0] as ContainerNode);
+					service.retrieveVerbose(event.args[0] as ContentNode);
 					service.addHandlers(handleLoadComplete);
 				break;
 				case ContentEvent.DELETE:
@@ -60,6 +60,10 @@ package org.mig.controller
 						service.addHandlers(handleDuplicate);
 					}	
 				}
+				break;
+				case ContentEvent.CREATE:
+					service.createContainer(event.args[0] as XML);
+					service.addHandlers(handleDuplicate);
 				break;
 			}
 		}

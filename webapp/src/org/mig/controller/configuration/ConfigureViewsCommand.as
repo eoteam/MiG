@@ -14,6 +14,7 @@ package org.mig.controller.configuration
 	import org.mig.view.components.main.LoginView;
 	import org.mig.view.components.main.MainView;
 	import org.mig.view.components.main.ManagersTree;
+	import org.mig.view.components.main.NewContentView;
 	import org.mig.view.components.main.StatusModule;
 	import org.mig.view.components.managers.media.AddDirectoryView;
 	import org.mig.view.components.managers.media.DownloadView;
@@ -29,6 +30,7 @@ package org.mig.controller.configuration
 	import org.mig.view.mediators.main.LoginViewMediator;
 	import org.mig.view.mediators.main.MainViewMediator;
 	import org.mig.view.mediators.main.ManagersTreeMediator;
+	import org.mig.view.mediators.main.NewContentMediator;
 	import org.mig.view.mediators.main.StatusModuleMediator;
 	import org.mig.view.mediators.managers.media.AddDirectoryMediator;
 	import org.mig.view.mediators.managers.media.DownloadMediator;
@@ -44,18 +46,25 @@ package org.mig.controller.configuration
 		{
 			
 			//views
-			mediatorMap.mapView(LoginView, LoginViewMediator);			
-			mediatorMap.mapView(ContentTree,ContentTreeMediator);	
-			mediatorMap.mapView(ManagersTree,ManagersTreeMediator);
-			mediatorMap.mapView(StatusModule,StatusModuleMediator);
-			mediatorMap.mapView(MainView,MainViewMediator);  
-			mediatorMap.mapView(ContentViewer,ContentViewerMediator); 
+				//main
+			mediatorMap.mapView( LoginView,			LoginViewMediator		);			
+			mediatorMap.mapView( ContentTree,		ContentTreeMediator		);	
+			mediatorMap.mapView( ManagersTree,		ManagersTreeMediator	);
+			mediatorMap.mapView( StatusModule,		StatusModuleMediator	);
+			mediatorMap.mapView( MainView,			MainViewMediator		);  
+			mediatorMap.mapView( ContentViewer,		ContentViewerMediator	); 
+			mediatorMap.mapView( ContainerPathView,	ContainerPathMediator	);
+			mediatorMap.mapView( NewContentView,	NewContentMediator		);
+				//tabs
 			mediatorMap.mapView(ContentView,ContentViewMediator);
 			mediatorMap.mapView(ContentGeneralEditor,ContentGeneralEditorMediator);
 			mediatorMap.mapView(MediaTab,MediaTabMediator);
+			
+				//media manager
 			mediatorMap.mapView(MediaManagerView,MediaManagerMediator);
 			mediatorMap.mapView(FileUploadView,FileUploadMediator);
-			mediatorMap.mapView(ContainerPathView,ContainerPathMediator);
+			
+			
 			
 			//popup mediations
 			mediatorMap.mapView(AddDirectoryView,AddDirectoryMediator, null, false, false ); //disable auto mediation

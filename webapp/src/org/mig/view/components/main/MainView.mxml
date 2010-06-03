@@ -163,8 +163,8 @@
 				<!-- Content Control -->
 				<s:HGroup width="100%" id="controlBox" paddingTop="0" clipAndEnableScrolling="false" right="3" >
 					<s:ToggleButton styleName="searchButton" id="searchButton" mouseChildren="false" buttonMode="true"  toolTip="Search" selected="false" skinClass="org.mig.view.skins.buttons.SearchButtonSkin" />
-					<s:ToggleButton enabled="false" styleName="addContainerButton"  id="addButton" toolTip="New Container" mouseChildren="false" buttonMode="true" skinClass="org.mig.view.skins.buttons.AddContainerButtonSkin"/>
-					<mx:Spacer width="100%" />
+					<s:ToggleButton  enabled="false" styleName="addContainerButton"  id="addButton" toolTip="New Container" mouseChildren="false" buttonMode="true" skinClass="org.mig.view.skins.buttons.AddContainerButtonSkin"/>
+					<s:Rect width="100%" />
 					<s:ToggleButton styleName="trashButton"  toolTip="Delete"  id="trashButton" mouseChildren="false"  buttonMode="true" skinClass="org.mig.view.skins.buttons.TrashButtonSkin" />
 				</s:HGroup>
 			
@@ -197,12 +197,11 @@
 	</s:Group>
 	
 	<!--view:MiGSearch width="1002" top="{headerContainer.height+30}" height="400" includeInLayout="false" backgroundAlpha="0.9" id="migSearch" 
-					hideEffect="wipeUp" showEffect="wipeDown"  visible="false" mouseDownOutside="migSearch.visible=false" />-->
+	hideEffect="wipeUp" showEffect="wipeDown"  visible="false" mouseDownOutside="migSearch.visible=false" />-->
+	
 	<main:LoginView id="loginView" minWidth="160" hideEffect="wipeUp" showEffect="wipeDown" left="{160}" visible="false" />	
 	
-<!--	<view:NewContentSelector  top="{headerContainer.height+30}"  x="{addButton.x-4}"
-							  id="newContentSelector" name="newContentSelector" hideEffect="wipeUp" showEffect="wipeDown"/>	 -->
-	
+	<main:NewContentView  y="110"  x="{addButton.x}" id="newContentView" name="newContentSelector" hideEffect="wipeUp" showEffect="wipeDown"/>	 
 	
 	<s:SkinnableContainer width="100%" height="100%" id="preloader" visible="false" backgroundColor="0x111111" backgroundAlpha="0.9" >
 		<mx:UIComponent  id="preloaderHolder"  width="80%" height="80%" rotation="-135"  />
@@ -218,7 +217,7 @@
 	<fx:Declarations>
 		<s:Resize id="wipeDown" duration="500" easer="{wipeDownEaser}" heightTo="320" disableLayout="true" />
 		<s:Resize id="wipeUp" duration="500" easer="{wipeUpEaser}" heightTo="0" disableLayout="true"/>
-		
+				
 		<s:Sine easeInFraction="1"  id="wipeUpEaser" />
 		<s:Sine easeInFraction="0" id="wipeDownEaser" />
 		

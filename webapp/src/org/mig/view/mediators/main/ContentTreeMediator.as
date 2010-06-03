@@ -20,6 +20,7 @@ package org.mig.view.mediators.main
 	import org.mig.utils.GlobalUtils;
 	import org.mig.view.components.main.ContentTree;
 	import org.mig.view.components.main.SystemPopup;
+	import org.mig.view.renderers.ContentTreeRenderer;
 	import org.robotlegs.mvcs.Mediator;
 
 	public class ContentTreeMediator extends Mediator
@@ -103,7 +104,10 @@ package org.mig.view.mediators.main
 					deleteItems();
 				break;	
 				case "Rename":
-					break;	
+					var f:ContentTreeRenderer = view.itemToItemRenderer(view.selectedItem) as ContentTreeRenderer;
+					if(f)
+						f.editable = true;
+				break;	
 				case "Duplicate Item(s)":
 					eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.DUPLICATE,view.selectedItems));
 /*					dupCount = 0;

@@ -12,5 +12,7 @@ package org.mig.services.interfaces
 		function deleteContainer(content:ContainerNode):void;
 		
 		function duplicateContainer(content:ContainerNode):void;
+		
+		function createContainer(config:XML):void;
 	}
 }

@@ -31,7 +31,7 @@
 			action="getContent" 
 			labelField="migtitle" 
 			orderby="displayorder"
-			timeout="100"
+			timeout="100" insertContent="insertRecord"
 			icon="containerIcon"
 			contentView="org.mig.view.components.content.MainMiddleView">
 
@@ -229,6 +229,21 @@
 					</object>
 				</tab>
 			</child>
+			<child  name="Temp1"
+			contentView="org.mig.view.components.content.ContentView" generalEditorView="org.mig.view.components.content.ContentGeneralEditor"
+			labelField="migtitle" nesting="1"
+			action="getContent" orderby="displayorder" templateid="3" is_fixed="0"
+			tablename="content"
+			insertContent="insertRecord" updateContent="updateRecord"
+			deleteContent="updateRecord" />
+			
+			<child  name="Temp2"
+			contentView="org.mig.view.components.content.ContentView" generalEditorView="org.mig.view.components.content.ContentGeneralEditor"
+			labelField="migtitle" nesting="1"
+			action="getContent" orderby="displayorder" templateid="4" is_fixed="0"
+			tablename="content"
+			insertContent="insertRecord" updateContent="updateRecord"
+			deleteContent="updateRecord" />
 		</child>
 	</controller>
 </configDocument>

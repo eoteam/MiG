@@ -319,7 +319,6 @@ function getContent($params)
 			}
 		}
 	}
-
 	if (isset($params['parentid'])) {
 
 		// for this we need to get all contentids which have a particular parentid, and then get all their children!
@@ -415,7 +414,8 @@ function getContent($params)
 		$includeThumb = false;
 	}
 	$thumb_usage = "thumb";
-
+	
+	
 
 	$sql .= " FROM content
 			  LEFT JOIN content_users ON content_users.contentid = content.id
@@ -424,8 +424,18 @@ function getContent($params)
 			  LEFT JOIN content_terms AS content_terms ON content_terms.contentid = content.id
 			  LEFT JOIN term_taxonomy AS term_taxonomy ON term_taxonomy.id = content_terms.termid 
 			  LEFT JOIN terms AS terms ON terms.id = term_taxonomy.termid
-			  LEFT JOIN templates ON templates.id = content.templateid 		  
-
+			  LEFT JOIN templates ON templates.id = content.templateid ";		  
+	
+			  if(isset($params["contentid"])) {
+				  $sql .= 
+				  " LEFT JOIN (
+				  	
+				  		SELECT COUNT(*) as count, `content`.`parentid` as parentid FROM `content` WHERE `content`.`parentid` = '". $params["contentid"] . "' 
+				  ) AS childrencount ON childrencount.parentid = content.id";
+			  
+			  }
+			  
+			  $sql .= "		
 			  LEFT JOIN (
 	
 				SELECT content_content.contentid,GROUP_CONCAT(content_content.contentid2 ORDER BY content_content.id) AS contentids, content_content.desc 
@@ -658,7 +668,7 @@ function getContent($params)
 	$sql .= " ORDER BY content.id ASC";
 
 	//print_r($sendParams);
-	//print_r($sql);
+	//echo $sql;
 	// get the results
 	$result = queryDatabase($sql, $sendParams);
 

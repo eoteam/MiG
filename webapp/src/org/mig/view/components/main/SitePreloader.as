@@ -1,5 +1,4 @@
-
-package org.mig.view.skins {
+package org.mig.view.components.main {
     //import com.mapx.manager.DragManagerImpl2;
     
     import flash.display.Shape;

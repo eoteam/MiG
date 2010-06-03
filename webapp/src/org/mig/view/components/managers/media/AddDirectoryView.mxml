@@ -7,7 +7,8 @@
 	xmlns:containers="org.mig.view.containers.*"
 	close="handleClose(event)"
 	backgroundColor="0x111111" backgroundAlpha="0.98"
-	height="180" width="300"  contentBackgroundAlpha="1" borderColor="0x666666"
+	contentBackgroundAlpha="1" borderColor="0x666666"
+	height="180" width="300"
 	title="Add New Directory" styleName="bodyCopy"
 	creationComplete="handleCreationComplete()" >
 	<fx:Script>

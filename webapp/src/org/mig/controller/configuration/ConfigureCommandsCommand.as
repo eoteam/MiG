@@ -29,6 +29,7 @@ package org.mig.controller.configuration
 			commandMap.mapEvent(ContentEvent.RETRIEVE_VERBOSE,ContentCommand,ContentEvent);	
 			commandMap.mapEvent(ContentEvent.DELETE,ContentCommand,ContentEvent);
 			commandMap.mapEvent(ContentEvent.DUPLICATE,ContentCommand,ContentEvent);
+			commandMap.mapEvent(ContentEvent.CREATE,ContentCommand,ContentEvent);
 			
 			//media commands
 			commandMap.mapEvent(MediaEvent.RETRIEVE_CHILDREN,MediaCommand,MediaEvent);

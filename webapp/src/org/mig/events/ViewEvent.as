@@ -17,6 +17,8 @@ package org.mig.events
 		
 		public static const ENABLE_CONTENT_TREE:String = "enableContentTree";
 		
+		public static const ENABLE_NEWCONTENT:String = "enableNewContent";
+		
 		public var args:Array;
 		
 		public function ViewEvent(type:String,...args)

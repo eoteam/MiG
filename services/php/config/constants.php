@@ -64,7 +64,7 @@ $validFileFunctions = array (
 $arrVerbosity[0] = array("content.id","content.parentid","content.migtitle","content.statusid","content.is_fixed","content.templateid");
 
 $arrVerbosity[1] = array("content.id","content.parentid","content.templateid","content.migtitle","content.statusid","content.containerpath",
-"content.createdby","content.createdate","content.modifiedby",
+"content.createdby","content.createdate","content.modifiedby","childrencount.count",
 "content.modifieddate","content.deleted","content.is_fixed","content.can_have_children","content.displayorder");
 
 $arrVerbosity[2] = array("content.id","content.color","content.parentid","content.templateid","content.url","content.title",

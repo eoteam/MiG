@@ -36,8 +36,7 @@ package org.mig.view.mediators.content
 			generalEditor.content = view.content;
 			view.contentTabs.addChildAt(generalEditor as UIComponent,0);
 			editableViewsList.push(generalEditor);
-			for each (var container:XML in containers)
-			{
+			for each (var container:XML in containers) {
 
 				var queryVars:Object = new Object();
 				var vars:Array = String(container.@vars).split(",");
@@ -59,7 +58,7 @@ package org.mig.view.mediators.content
 					eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.RETRIEVE_CHILDREN,subNode));
 				}
 				else
-					subNode = view.content.subContainers[container.@name];
+					subNode = view.content.subContainers[container.@name.toString()];
 				var tabItem:ContentTabItem = new ContentTabItem();
 				view.contentTabs.addChild(tabItem);
 				tabItem.content = subNode;
@@ -68,11 +67,10 @@ package org.mig.view.mediators.content
 				tabItem.y = 0;
 				tabItem.styleName = "contentTabItem";
 				editableViewsList.push(tabItem);
-				
-				view.draftBtn.addEventListener(MouseEvent.CLICK,handleDraft);
-				view.publishBtn.addEventListener(MouseEvent.CLICK,handlePublish);
-				view.contentTabs.addEventListener(Event.CHANGE,handleTabChange);
 			}
+			view.draftBtn.addEventListener(MouseEvent.CLICK,handleDraft);
+			view.publishBtn.addEventListener(MouseEvent.CLICK,handlePublish);
+			view.contentTabs.addEventListener(Event.CHANGE,handleTabChange);
 		}
 		private function handleTabChange(event:IndexChangedEvent):void {
 			if(event.newIndex > 0 ) {
