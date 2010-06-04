@@ -9,6 +9,7 @@ package org.mig.events
 		
 		public static const REFRESH_MEDIA:String = "refreshMedia";
 		public static const REFRESH_CONTENT:String = "refreshContent";
+		public static const VALIDATE_CONTENT:String = "validateContent";
 		
 		public static const FILE_DOWNLOAD_PROGRESS:String = "fileDownloadProgress";
 		public static const FILE_DOWNLOAD_CANCEL:String = "fileDownloadCancel";

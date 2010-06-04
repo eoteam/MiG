@@ -128,34 +128,6 @@ function quote_smart($value)
 }
 
 /**
- * checks minimum required version of PHP
- * @param String $v - PHP version (example: "5.2.*", "5.2")
- */
-function phpMinVersion($v) 
-{
-	$phpV = PHP_VERSION;
-	
-	// if we've got a system like ubuntu or something else, 
-	// we get something like '5.2.4-2ubuntu5.2',
-	// to fix this, use the following
-	if (strpos($phpV,'-') != null) {
-		$phpV = substr($phpV,0,strpos($phpV,'-'));
-	}
-	
-	if ($phpV[0] >= $v[0]) {
-        if (empty($v[2]) || $v[2] == '*') {
-            return true;
-        } else if ($phpV[2] >= $v[2]) {
-            if (empty($v[4]) || $v[4] == '*' || $phpV[4] >= $v[4]) {
-                return true;
-            }
-        }
-    }
-
-    return false;
-}
-
-/**
  * returns array of fields for the table
  */
 function getTableColumns($tablename)

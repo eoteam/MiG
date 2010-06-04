@@ -4,54 +4,6 @@ require_once "getid3/getid3.php";
 require_once "includes/functions.php";
 require_once "config/constants.php";
 
-function getFile($root_dir, $allData=array())
-{
-	// only include files with these extensions
-	$allow_extensions = array("sql");
-	$ignore_regex = '/^_/';
-
-	// run through content of root directory
-	$dir_content = scandir($root_dir);
-	foreach($dir_content as $key => $content)
-	{
-		$path = $root_dir.'/'.$content;
-		if(is_file($path) && is_readable($path))
-		{
-			// skip ignored files
-				if (preg_match($ignore_regex,$content) == 0)
-				{
-					$content_chunks = explode(".",$content);
-					$ext = $content_chunks[count($content_chunks) - 1];
-					// only include files with desired extensions
-					if (in_array($ext, $allow_extensions))
-					{
-						// save file name with path
-						$all_data[] = $content;
-					}
-				}
-		}
-	} // end foreach
-	return $all_data;
-}
-
-function scanDirectories($rootDir, $allowext, $allData=array()) {
-    $dirContent = scandir($rootDir);
-    foreach($dirContent as $key => $content) {
-        $path = $rootDir.'/'.$content;
-        $ext = substr($content, strrpos($content, '.') + 1);
-        
-        if(in_array($ext, $allowext)) {
-            if(is_file($path) && is_readable($path)) {
-                $allData[] = $content;
-            }elseif(is_dir($path) && is_readable($path)) {
-                // recursive callback to open new directory
-                $allData = scanDirectories($path, $allData);
-            }
-        }
-    }
-    return $allData;
-}
-
 function readDirectory($params)
 {
 	global $fileDir;

@@ -38,7 +38,8 @@ package org.mig.controller
 				case ContentEvent.RETRIEVE_CHILDREN:
 					service.retrieveChildren(event.args[0] as ContentNode);
 					service.addHandlers(processChildren);
-					contentModel.containersToLoad++;	
+					contentModel.containersToLoad++;
+					ContentNode(event.args[0]).state = ContentNode.LOADING;
 				break;
 				
 				case ContentEvent.RETRIEVE_VERBOSE:
@@ -62,8 +63,11 @@ package org.mig.controller
 				}
 				break;
 				case ContentEvent.CREATE:
-					service.createContainer(event.args[0] as XML);
-					service.addHandlers(handleDuplicate);
+					service.createContainer(event.args[0] as String, event.args[1] as XML);
+					service.addHandlers(handleNewContainer);
+				break;
+				case ContentEvent.SELECT:
+					contentModel.currentContainer = event.args[0] as ContainerNode;
 				break;
 			}
 		}
@@ -168,7 +172,8 @@ package org.mig.controller
 						}
 						node = new ContainerNode(resultLabel, containerConfig, item,content,content.privileges,false,fixed,nesting);
 						content.children.addItem(node);
-						eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.RETRIEVE_CHILDREN,node));
+						content.state = ContentNode.LOADED;
+						eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.VALIDATE_CONTENT));
 					}
 				}
 			}
@@ -182,9 +187,23 @@ package org.mig.controller
 					//node.addEventListener(ContentNodeEvent.READY,handleNodeReady);
 					content.children.addItem(node);
 				}
+			}	
+		}
+		private function handleNewContainer(data:Object):void {
+			var config:XML = data.token.config as XML;
+			var contentData:ContentData = data.result[0] as ContentData;
+			var is_fixed:Boolean = contentData.is_fixed == "0"?false:true;
+			var nesting:Boolean = false;
+			if(config.attribute("nesting").length() > 0) {
+				nesting = config.@nesting.toString() == "0" ? false : true;
 			}
-				
-					
+			var node:ContainerNode = new ContainerNode(contentData.migtitle,config,contentData,contentModel.currentContainer,
+									contentModel.currentContainer.privileges,false,is_fixed,nesting);
+			contentModel.currentContainer.children.addItemAt(node,0);
+			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.ENABLE_NEWCONTENT,false));
+			eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Container created successfully"));
 		}
 	}
 }
+
+

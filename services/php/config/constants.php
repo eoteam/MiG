@@ -5,6 +5,8 @@
 *	Defines the constants that will be used throught the site by the other php scripts
 */
 
+require_once "filepath.php";
+
 
 // VALID ACTION NAMES - FOR SECURITY!
 $validReadFunctions = array (
@@ -61,7 +63,7 @@ $validFileFunctions = array (
 
 // VERBOSITY LEVELS FOR getContent() FUNCTION...
 //search result
-$arrVerbosity[0] = array("content.id","content.parentid","content.migtitle","content.statusid","content.is_fixed","content.templateid");
+$arrVerbosity[0] = array("content.id","content.parentid","content.migtitle","content.statusid","content.is_fixed","content.templateid","childrencount.count");
 
 $arrVerbosity[1] = array("content.id","content.parentid","content.templateid","content.migtitle","content.statusid","content.containerpath",
 "content.createdby","content.createdate","content.modifiedby","childrencount.count",
@@ -73,9 +75,11 @@ $arrVerbosity[2] = array("content.id","content.color","content.parentid","conten
 
 // add verbosity levels for specific front end
 
+/*
 $fileDir = "../files/";
 $thumbDir = "../files/migThumbs/";
 $tempDir = "../temporary/";
+*/
 
 $mediaVerbosity[0] = array("media.*", "mimetypes.name as mimetype","content_media.displayorder","content_media.caption","content_media.credits", 
 			"GROUP_CONCAT(DISTINCT terms.id) AS tagids", "GROUP_CONCAT(DISTINCT terms.name) AS tags",

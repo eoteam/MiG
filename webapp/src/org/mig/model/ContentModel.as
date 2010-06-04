@@ -12,6 +12,7 @@ package org.mig.model
 	{
 		public var contentModel:ContainerNode;
 		public var templates:ArrayCollection = new ArrayCollection();
+		public var currentContainer:ContainerNode;
 		
 		public var mediaModel:DirectoryNode;
 		public var currentDirectory:DirectoryNode;

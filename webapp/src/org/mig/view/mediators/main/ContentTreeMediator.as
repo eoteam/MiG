@@ -20,6 +20,7 @@ package org.mig.view.mediators.main
 	import org.mig.utils.GlobalUtils;
 	import org.mig.view.components.main.ContentTree;
 	import org.mig.view.components.main.SystemPopup;
+	import org.mig.view.events.ContentViewEvent;
 	import org.mig.view.renderers.ContentTreeRenderer;
 	import org.robotlegs.mvcs.Mediator;
 
@@ -31,11 +32,14 @@ package org.mig.view.mediators.main
 		[Inject]
 		public var contentModel:ContentModel;
 		
+		private var dpSet:Boolean = false;
 		override public function onRegister():void {
 			eventMap.mapListener(eventDispatcher,AppEvent.CONFIG_FILE_LOADED,handleContent);
 			eventMap.mapListener(eventDispatcher,ContentEvent.RETRIEVE_CHILDREN,handleContent);
 			eventMap.mapListener(eventDispatcher,ViewEvent.DELETE_CONTAINERS,deleteItems);
 			eventMap.mapListener(eventDispatcher,ViewEvent.ENABLE_CONTENT_TREE,enableTree);
+			eventMap.mapListener(eventDispatcher,ViewEvent.VALIDATE_CONTENT,validateContent);
+			
 			eventMap.mapListener(eventDispatcher,ContentEvent.SELECT,handleSelectedContent);
 			addListeners();
 			addContextMenu();
@@ -53,14 +57,26 @@ package org.mig.view.mediators.main
 			
 			view.addEventListener(ListEvent.CHANGE,handleItemClick);
 			view.addEventListener(ListEvent.ITEM_DOUBLE_CLICK,handleItemDoubleClick);	
+			
+			view.addEventListener(ContentViewEvent.LOAD_CHILDREN,handleLoadChildren);
+		}
+		private function handleLoadChildren(event:ContentViewEvent):void {
+			var node:ContainerNode = event.args[0];
+			eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.RETRIEVE_CHILDREN,node));
 		}
 		private function handleContent(event:Event):void {
-			if(event is ContentEvent && ContentEvent(event).args[0] is ContainerNode)
+			if(!dpSet && event is ContentEvent && ContentEvent(event).args[0] is ContainerNode) {
+				dpSet = true;		
 				view.dataProvider = contentModel.contentModel;
+			}
 		}
 		private function enableTree(event:Event):void {
 			view.enabled = true;
 		}
+		private function validateContent(event:ViewEvent):void {
+			view.validateNow();
+		}
+		
 		private function handleDragStart(event:DragEvent):void {
 			
 		}

@@ -377,6 +377,12 @@ function getContent($params)
 		{
 			$currentChildIDs = getChildren($id,$params['children_depth']);
 			$childids = array_merge($childids,$currentChildIDs);
+				
+			$sql2 = "SELECT COUNT(*) as count FROM `content` WHERE parentid = " .$id_new;
+			$result2 = queryDatabase($sql2);
+			$row2 = $result2->fetch(PDO::FETCH_ASSOC);
+			$childrencount[$id] = $row['count'];
+
 		}
 		if ($childids) // make sure we actually got some results
 		$strChildIDs = implode(",",$childids);
@@ -403,6 +409,7 @@ function getContent($params)
 		foreach ($customfields AS $key=>$value)
 		$sql .= " customfield".$key." AS ".$value.",";
 	}
+
 	// remove last comma!
 	$sql = substr($sql,0,strlen($sql)-1);
 
@@ -414,8 +421,9 @@ function getContent($params)
 		$includeThumb = false;
 	}
 	$thumb_usage = "thumb";
-	
-	
+
+
+	//echo $params["contentid"];
 
 	$sql .= " FROM content
 			  LEFT JOIN content_users ON content_users.contentid = content.id
@@ -425,17 +433,15 @@ function getContent($params)
 			  LEFT JOIN term_taxonomy AS term_taxonomy ON term_taxonomy.id = content_terms.termid 
 			  LEFT JOIN terms AS terms ON terms.id = term_taxonomy.termid
 			  LEFT JOIN templates ON templates.id = content.templateid ";		  
+
+
 	
-			  if(isset($params["contentid"])) {
-				  $sql .= 
-				  " LEFT JOIN (
-				  	
-				  		SELECT COUNT(*) as count, `content`.`parentid` as parentid FROM `content` WHERE `content`.`parentid` = '". $params["contentid"] . "' 
+	$sql .= " LEFT JOIN ( SELECT parentid, COUNT(*) AS count FROM `content` WHERE parentid IN (". $params['contentid'] .") GROUP BY parentid
 				  ) AS childrencount ON childrencount.parentid = content.id";
-			  
-			  }
-			  
-			  $sql .= "		
+
+	
+	
+	$sql .= "
 			  LEFT JOIN (
 	
 				SELECT content_content.contentid,GROUP_CONCAT(content_content.contentid2 ORDER BY content_content.id) AS contentids, content_content.desc 
@@ -908,7 +914,7 @@ function getContentContent($params)
 }
 
 function getTemplates($params) {
-	
+
 	$sql = "SELECT templates.*,
 			GROUP_CONCAT(template_customfields.id ORDER BY template_customfields.id ASC) as rowids ,
  			GROUP_CONCAT(template_customfields.customfieldid ORDER BY template_customfields.customfieldid ASC) as customfieldids , 
@@ -918,14 +924,14 @@ function getTemplates($params) {
  			GROUP BY templates.id ORDER BY templates.id";
 
 	$result = queryDatabase($sql);
-	
+
 	// return the results
 	return $result;
-	
+
 }
 function getContentTree($params)
 {
-		/*
+	/*
 		-- VALID PARAMS --
 		-- REQUIRED --
 
@@ -933,7 +939,7 @@ function getContentTree($params)
 		statusid (int)
 
 		*/
-	
+
 	global $statusid;
 
 	global $search; global $values;
@@ -1527,7 +1533,7 @@ function returnChildren($contentid)
 }
 
 function getChildren($contentid, $depth = null)
-{ 
+{
 	// returns array of children for a given contentid
 	global $arrChildIDs;
 	$arrChildIDs = array();

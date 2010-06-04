@@ -31,7 +31,8 @@
 			action="getContent" 
 			labelField="migtitle" 
 			orderby="displayorder"
-			timeout="100" insertContent="insertRecord"
+			timeout="100" 
+			insertContent="insertRecord"
 			icon="containerIcon"
 			contentView="org.mig.view.components.content.MainMiddleView">
 
@@ -59,21 +60,37 @@
 					orderby="displayorder" deleteContent="deleteContent" templateid="0"
 					is_fixed="0" tablename="content" updateContent="updateRecord" />
 			</child>
-			<child  name="Projects"
+			<child
+				name="Projects"
 				contentView="org.mig.view.components.content.ContentView" 
 				generalEditorView="org.mig.view.components.content.ContentGeneralEditor"
-				 labelField="migtitle"
-				updateContent="updateRecord" insertContent="insertRecord" action="getContent"
-				tablename="content" id="3" is_fixed="1" templateid="1">
+				labelField="migtitle"
+				updateContent="updateRecord" 
+				insertContent="insertRecord" 
+				action="getContent"
+				tablename="content" 
+				id="3" 
+				is_fixed="1" 
+				templateid="1">
 
-				<child  name="Project"
-					contentView="org.mig.view.components.content.ContentView" generalEditorView="org.mig.view.components.content.ContentGeneralEditor"
-					 labelField="migtitle" nesting="1"
-					action="getContent" orderby="displayorder" templateid="1" is_fixed="0"
-					acceptDrop="true" dropTemplates="2" tablename="content"
-					insertContent="insertRecord" updateContent="updateRecord"
-					deleteContent="updateRecord">
-					<tray name="Related Projects" labelField="migtitle"
+				<child
+				name="Project"
+				contentView="org.mig.view.components.content.ContentView" 
+				generalEditorView="org.mig.view.components.content.ContentGeneralEditor"
+				labelField="migtitle"
+				nesting="1"
+				action="getContent"
+				orderby="displayorder"
+				templateid="1"
+				is_fixed="0"
+				acceptDrop="true"
+				dropTemplates="2"
+				tablename="content"
+				insertContent="insertRecord"
+				updateContent="updateRecord"
+				deleteContent="updateRecord">
+					<tray 
+						name="Related Projects" labelField="migtitle"
 						contentView="com.mapx.view.content.trays.LinkingTray" getContent="getContentContent"
 						templateids="2" tablename="content_content" vars="contentid,templateid">
 						<object  tablename="content_content"

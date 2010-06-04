@@ -20,7 +20,6 @@
     <classEntry path="org.mig.view.skins.controls.NumericStepperSkin"/>
     <classEntry path="org.mig.view.skins.buttons.StepperDownArrowSkin"/>
     <classEntry path="org.mig.view.renderers.CustomFieldListCheckBox"/>
-    <classEntry path="org.mig.view.renderers.ContentTreeItemEditor"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -3,7 +3,7 @@
 	autoDrawBackground="false"  width="100%"
 	xmlns:fx="http://ns.adobe.com/mxml/2009" 
 	xmlns:s="library://ns.adobe.com/flex/spark"
-	xmlns:mx="library://ns.adobe.com/flex/mx">
+	xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:controls="org.mig.view.controls.*">
 
 	<fx:Script>
 		<![CDATA[
@@ -49,15 +49,21 @@
 			</s:fill>
 		</s:Rect>
 		<s:Group id="disclosureGroup" >
-			<s:BitmapImage source="{treeListData.disclosureIcon}" visible="{data.children.length > 0 ?true:false}"  />
+			<s:BitmapImage source="{data.hasChildren?treeListData.disclosureIcon:null}" visible="{data.hasChildren}"  />
 		</s:Group>
-		<s:BitmapImage source="{treeListData.icon}" visible="{data.isRoot}" includeInLayout="{data.isRoot}" />
+		<s:BitmapImage source="{data.isRoot?treeListData.icon:null}" visible="{data.isRoot}" includeInLayout="{data.isRoot}" />
 		<s:Group width="100%">
 			<s:Label id="labelField"  verticalCenter="0"  text="{treeListData.label}"  maxDisplayedLines="1" width="100%" 
 			color="0x3F3F3F" color.selected="0xFFFFFF" color.hovered="0xFFFFFF" styleName="boldCopy"  />
 			<s:TextInput width="100%" styleName="inputFieldBlack" verticalCenter="0" visible="false" color="0xFFFFFF" 
 			id="input" text="{data.baseLabel}" focusOut="editable=false" enter="editable=false" change="data.baseLabel=input.text"  />			
 		</s:Group>
-
+		<controls:Spinner tickColor="0x333333" size="20" tickWidth="2" numTicks="10" visible="{data.state == 1?true:false}"   autoPlay="true" />
+<!--		<s:Ellipse width="15" height="15" id="stateIndicator">
+			<s:fill>
+				<s:SolidColor color="{data.state==0?0xE60B0B:(data.state==1?0xF8B207:0x1EE40D)}" />
+			</s:fill>
+		</s:Ellipse>-->
+		<s:Rect width="5" />
 	</s:HGroup>
 </s:MXTreeItemRenderer>

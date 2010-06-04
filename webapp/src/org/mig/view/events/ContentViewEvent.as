@@ -7,10 +7,13 @@ package org.mig.view.events
 		public static const PUBLISH:String = "submit";
 		public static const DRAFT:String = "draft";
 		public static const CANCEL:String = "cancel";
+		public static const LOAD_CHILDREN:String = "loadChildren";
 		
-		public function ContentViewEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
+		public var args:Array
+		public function ContentViewEvent(type:String,...args)
 		{
-			super(type, bubbles, cancelable);
+			this.args = args;
+			super(type, false, false);
 		}
 	}
 }

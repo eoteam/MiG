@@ -13,6 +13,6 @@ package org.mig.services.interfaces
 		
 		function duplicateContainer(content:ContainerNode):void;
 		
-		function createContainer(config:XML):void;
+		function createContainer(title:String,config:XML):void;
 	}
 }

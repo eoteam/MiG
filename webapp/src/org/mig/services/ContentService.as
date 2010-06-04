@@ -7,15 +7,27 @@ package org.mig.services
 	import mx.utils.ObjectUtil;
 	
 	import org.mig.controller.Constants;
+	import org.mig.model.AppModel;
+	import org.mig.model.ContentModel;
 	import org.mig.model.vo.ContentNode;
+	import org.mig.model.vo.CustomField;
 	import org.mig.model.vo.content.ContainerNode;
 	import org.mig.model.vo.content.ContentData;
+	import org.mig.model.vo.content.ContentStatus;
 	import org.mig.model.vo.content.SubContainerNode;
+	import org.mig.model.vo.content.Template;
+	import org.mig.model.vo.content.TemplateCustomField;
 	import org.mig.model.vo.user.UserPrivileges;
 	import org.mig.services.interfaces.IContentService;
 
 	public class ContentService extends AbstractService implements IContentService
 	{
+		[Inject]
+		public var contentModel:ContentModel;
+		
+		[Inject]
+		public var appModel:AppModel;
+		
 		public function ContentService() {
 			
 		}
@@ -52,8 +64,39 @@ package org.mig.services
 			params.id = content.data.id;
 			this.createService(params,ResponseType.DATA,ContentData).token.content = content;
 		}
-		public function createContainer(config:XML):void {
+		public function createContainer(title:String,config:XML):void {
+			var date:Date = new Date();
+			var time:Number = Math.round(date.time / 1000);
+			var params:Object = new Object();
+			params.action = ValidFunctions.INSERT_RECORD;
+			params.tablename = config.@tablename.toString();
 			
+			if(contentModel.currentContainer.config.attribute("templateid").length() > 0)
+			{
+				params.templateid = contentModel.currentContainer.config.@templateid.toString();
+				for each(var template:Template in contentModel.templates) {
+					if(params.templateid == template.id) {
+						for each(var field:TemplateCustomField in template.customfields) {
+							if(field.customfield.defaultvalue != null) {
+								params["customfield"+field.fieldid] = field.customfield.defaultvalue;
+							}
+						}
+					}
+				}
+			}
+			if(contentModel.currentContainer.isRoot)
+				params.parentid = 0;
+			else
+				params.parentid = contentModel.currentContainer.data.id;
+			params.migtitle = title;
+			params.is_fixed = config.@is_fixed.toString();
+			params.createdby = appModel.user.id;
+			params.modifiedby = appModel.user.id;
+			params.createdate = time;
+			params.modifieddate = time;
+			params.statusid = ContentStatus.DRAFT;
+			params.verbose = true;
+			this.createService(params,ResponseType.DATA,ContentData).token.config = config;	
 		}
 		private function loadContainer(content:ContentNode):void {
 			var params:Object = new Object();

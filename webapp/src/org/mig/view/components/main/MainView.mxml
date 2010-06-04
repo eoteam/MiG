@@ -201,7 +201,7 @@
 	
 	<main:LoginView id="loginView" minWidth="160" hideEffect="wipeUp" showEffect="wipeDown" left="{160}" visible="false" />	
 	
-	<main:NewContentView  y="110"  x="{addButton.x}" id="newContentView" name="newContentSelector" hideEffect="wipeUp" showEffect="wipeDown"/>	 
+	<main:NewContentView  y="110"  x="{addButton.x}" id="newContentView" visible="{addButton.selected}" name="newContentSelector" hideEffect="wipeUp" showEffect="wipeDown"/>	 
 	
 	<s:SkinnableContainer width="100%" height="100%" id="preloader" visible="false" backgroundColor="0x111111" backgroundAlpha="0.9" >
 		<mx:UIComponent  id="preloaderHolder"  width="80%" height="80%" rotation="-135"  />

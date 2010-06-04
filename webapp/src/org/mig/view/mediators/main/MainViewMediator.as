@@ -45,7 +45,7 @@ package org.mig.view.mediators.main
 			view.trashButton.addEventListener(DragEvent.DRAG_ENTER,handleTrashDragOver);
 			view.trashButton.addEventListener(DragEvent.DRAG_DROP,handleTrashDragDrop);
 			view.fullScreenButton.addEventListener(MouseEvent.CLICK,handleFullScreen);
-			view.addButton.addEventListener(MouseEvent.CLICK,handleAddClick);
+			//view.addButton.addEventListener(MouseEvent.CLICK,handleAddClick);
 		}
 		private function handleStartupProgress(event:AppEvent):void {
 			view.preloader.visible = true;
@@ -111,12 +111,11 @@ package org.mig.view.mediators.main
 				// ignore
 			}
 		}
-		private function handleAddClick(event:MouseEvent):void {
-			view.newContentView.visible = view.addButton.selected;
-		}
 		private function handleNewContent(event:ViewEvent):void {
 			var enable:Boolean = event.args[0] as Boolean;
 			view.addButton.enabled = enable;
+			if(!enable)
+				view.addButton.selected = enable;
 		}
 	}
 }

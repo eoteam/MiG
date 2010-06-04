@@ -5,6 +5,7 @@ package org.mig.controller.startup
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
 	import org.mig.model.vo.media.DirectoryNode;
+	import org.mig.model.vo.media.MediaData;
 	import org.robotlegs.mvcs.Command;
 	import org.robotlegs.utilities.statemachine.StateEvent;
 	
@@ -18,7 +19,10 @@ package org.mig.controller.startup
 		
 		override public function execute():void {
 			var mediaConfig:XML = appModel.config.controller[0]; //XML(config.controller.(@id == "mediaController"));
-			contentModel.currentDirectory = contentModel.mediaModel = new DirectoryNode("files", mediaConfig.child[0], null, null,'/',appModel.user.privileges);
+			var data:MediaData = new MediaData();
+			data.id = 0;
+			data.count = 1000;
+			contentModel.currentDirectory = contentModel.mediaModel = new DirectoryNode("files", mediaConfig.child[0], data, null,'/',appModel.user.privileges);
 			eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.RETRIEVE_CHILDREN,contentModel.mediaModel));
 			
 			trace("Startup: Media Model Complete");

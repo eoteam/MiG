@@ -57,7 +57,7 @@ package org.mig.view.mediators.main
 		}
 		private function handleCreate(event:MouseEvent):void {
 			if(view.valid) {
-				eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.CREATE,view.optionsContainer.selectedItem));
+				eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.CREATE,view.titleInput.text,view.optionsList.selectedItem));
 			}
 		}
 	}

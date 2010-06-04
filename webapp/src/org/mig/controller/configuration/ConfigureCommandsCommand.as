@@ -25,21 +25,22 @@ package org.mig.controller.configuration
 			commandMap.mapEvent(AppEvent.LOGGEDIN,StartupFSMCommand,AppEvent);
 			
 			//content commands
-			commandMap.mapEvent(ContentEvent.RETRIEVE_CHILDREN,ContentCommand,ContentEvent);
-			commandMap.mapEvent(ContentEvent.RETRIEVE_VERBOSE,ContentCommand,ContentEvent);	
-			commandMap.mapEvent(ContentEvent.DELETE,ContentCommand,ContentEvent);
-			commandMap.mapEvent(ContentEvent.DUPLICATE,ContentCommand,ContentEvent);
-			commandMap.mapEvent(ContentEvent.CREATE,ContentCommand,ContentEvent);
+			commandMap.mapEvent( ContentEvent.RETRIEVE_CHILDREN,	ContentCommand, ContentEvent );
+			commandMap.mapEvent( ContentEvent.RETRIEVE_VERBOSE,		ContentCommand, ContentEvent );	
+			commandMap.mapEvent( ContentEvent.DELETE,				ContentCommand, ContentEvent );
+			commandMap.mapEvent( ContentEvent.DUPLICATE,			ContentCommand, ContentEvent );
+			commandMap.mapEvent( ContentEvent.CREATE,				ContentCommand, ContentEvent );
+			commandMap.mapEvent( ContentEvent.SELECT, 				ContentCommand, ContentEvent );
 			
 			//media commands
-			commandMap.mapEvent(MediaEvent.RETRIEVE_CHILDREN,MediaCommand,MediaEvent);
-			commandMap.mapEvent(MediaEvent.ADD_DIRECTORY,MediaCommand,MediaEvent);
-			commandMap.mapEvent(MediaEvent.ADD_FILE,MediaCommand,MediaEvent);
-			commandMap.mapEvent(MediaEvent.DELETE,MediaCommand,MediaEvent);
+			commandMap.mapEvent( MediaEvent.RETRIEVE_CHILDREN,		MediaCommand, MediaEvent );
+			commandMap.mapEvent( MediaEvent.ADD_DIRECTORY,			MediaCommand, MediaEvent );
+			commandMap.mapEvent( MediaEvent.ADD_FILE,				MediaCommand, MediaEvent );
+			commandMap.mapEvent( MediaEvent.DELETE,					MediaCommand, MediaEvent );
 			
 			//upload
-			commandMap.mapEvent(UploadEvent.UPLOAD,UploadCommand,UploadEvent);
-			commandMap.mapEvent(UploadEvent.CANCEL,UploadCommand,UploadEvent);
+			commandMap.mapEvent(UploadEvent.UPLOAD,					UploadCommand, UploadEvent );
+			commandMap.mapEvent(UploadEvent.CANCEL,					UploadCommand, UploadEvent );
 			
 			//errors
 			commandMap.mapEvent(AlertEvent.SHOW_ALERT, ShowAlertCommand, AlertEvent);

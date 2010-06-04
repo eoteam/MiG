@@ -20,23 +20,32 @@ package org.mig.model.vo
 	[Bindable]
 	public class ContentNode
 	{
+		public static const NOT_LOADED:int = 0;
+		public static const LOADING:int = 1;
+		public static const LOADED:int  = 2;
+		
+			
 		public var children:ArrayCollection;
 		public var parentNode:ContentNode;
 		public var subContainers:Dictionary;
-		public var data:ValueObject;
+		public var data:BaseContentData;
 		public var privileges:int;		
+		
+		public var state:int;
+		public var hasChildren:Boolean = false;
 		
 		protected var _config:XML;
 		protected var _baseLabel:String;
 		
-		public function ContentNode(baseLabel:String, config:XML, data:ValueObject, parentNode:ContentNode,privileges:int) {
+		public function ContentNode(baseLabel:String, config:XML, data:BaseContentData, parentNode:ContentNode,privileges:int) {
 			this.parentNode = parentNode;	
 			this.baseLabel = baseLabel.replace(/<.*?>/g, "");
 			this.baseLabel = baseLabel.replace(/]]>/g, "");
 			this.data = data;
 			this.privileges = privileges;
 			this._config = config;
-			
+			this.state = 0;
+			this.hasChildren =  data.count > 0 ? true :  false;
 			children = new ArrayCollection();
 			subContainers = new Dictionary();
 			children.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleCollection);								
@@ -53,14 +62,14 @@ package org.mig.model.vo
 			return _config;
 		}		
 		public function get label():String {
-			if(children && children.length > 0)
-				return _baseLabel + " (" + children.source.length + ")";
+			if(data.count > 0)
+				return _baseLabel + " (" + data.count + ")";
 			else
 				return _baseLabel;	
 		}
 		public function get debugLabel():String {
-			if(children.length > 0)
-				return  "id=" + data.id + " " + _baseLabel + " (" + children.source.length + ")";
+			if(data.count > 0)
+				return  "id=" + data.id + " " + _baseLabel + " (" + data.count + ")";
 			else
 				return "id=" + data.id + " " + _baseLabel;			
 		}	
