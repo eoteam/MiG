@@ -48,6 +48,11 @@ package org.mig.view.controls {
 			addEventListener(FlexEvent.CREATION_COMPLETE, handleCreationComplete);
 		}
 		
+		override public function set visible(value:Boolean):void {
+			super.visible = value;
+			if(!value)
+				stop();
+		}
 		
 		private function handleCreationComplete(e:FlexEvent):void {
 			removeEventListener(FlexEvent.CREATION_COMPLETE, handleCreationComplete);

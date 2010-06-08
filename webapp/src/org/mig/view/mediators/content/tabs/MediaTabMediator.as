@@ -5,28 +5,36 @@ package org.mig.view.mediators.content.tabs
 	import flash.utils.getDefinitionByName;
 	
 	import mx.collections.ArrayCollection;
+	import mx.collections.ArrayList;
 	import mx.core.ClassFactory;
 	import mx.events.IndexChangedEvent;
 	import mx.events.ListEvent;
+	import mx.utils.ArrayUtil;
 	
+	import org.mig.events.ViewEvent;
+	import org.mig.model.AppModel;
 	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.content.ContainerNode;
 	import org.mig.model.vo.content.ContentData;
 	import org.mig.model.vo.content.SubContainerNode;
 	import org.mig.view.components.content.tabs.MediaTab;
+	import org.mig.view.events.ListItemEvent;
 	import org.robotlegs.mvcs.Mediator;
 	
 	public class MediaTabMediator extends Mediator
 	{
 		[Inject]
 		public var view:MediaTab;
+		
+		[Inject]
+		public var appModel:AppModel;
+		
 		private var fixedListDirty:Boolean = false;
 		private var animListDirty:Boolean = false;
 		
 		private var type:String;
 		private var dragFormats:Array;
 		override public function onRegister():void {
-			
 			
 			var content:SubContainerNode = view.content as SubContainerNode;
 			var types:Array = [];
@@ -48,19 +56,24 @@ package org.mig.view.mediators.content.tabs
 			imageRenderer = new ClassFactory(classRef);
 			dragFormats = String(content.config.@formats.toString()).split(",");			
 			
-			view.usageList.dataProvider = types;
-			
-
+			view.usageList.dataProvider = new ArrayList(types);
+			view.usageList.validateNow();			
 			view.animatedList.addEventListener("orderChange",handleAnimatedListOrderChange);
 			view.animatedList.itemRenderer = imageRenderer;
+			view.thumbURL = appModel.thumbURL;
+			
 			view.stack.addEventListener(Event.CHANGE, handleStackChange);
-			view.usageList.addEventListener(ListEvent.ITEM_DOUBLE_CLICK,handleUsageSelection);
+			view.usageList.addEventListener(ListItemEvent.ITEM_DOUBLE_CLICK,handleUsageSelection); 
+			view.addEventListener(ViewEvent.SHOW_CONTENT_MEDIA_DETAIL,handleDetailView);
 			view.currentState = "usage";
 			view.addEventListener("viewBtn",handleViewButtons);
 		}
 		private function handleViewButtons(event:DataEvent):void {
 			var index:int = Number(event.data);
 			handleView(index);
+		}
+		private function handleDetailView(event:ViewEvent):void {
+			view.detailView.visible = true;;
 		}
 		private function filterByUsage(item:ContainerNode):Boolean
 		{
@@ -77,19 +90,12 @@ package org.mig.view.mediators.content.tabs
 		}
 		
 		private function handleUsageSelection(event:Event):void {
-			//view.fixedList.dataProvider = view.usageList.selectedItem.dataProvider;
+			view.fixedList.dataProvider = view.usageList.selectedItem.dataProvider;
 			view.animatedList.dataProvider = view.usageList.selectedItem.dataProvider;
 			//slideShowContainer.dataProvider = usageList.selectedItem.dataProvider;
 			view.scaleSlider.value = 1;
-			if(view.typeLabel)
-				view.typeLabel.text = view.usageList.selectedItem.name;
-			if(view.subControlBox)
-				handleView(1);
-			else
-			{
-				view.stack.selectedIndex = 1;
-				view.currentState = "view3";
-			}
+			handleView(1);
+			
 		}
 		private function handleAnimatedListOrderChange(event:Event):void {
 			//fixedListDirty=true;
@@ -101,9 +107,9 @@ package org.mig.view.mediators.content.tabs
 			switch(index)
 			{
 				case 1:
-					view.view1Btn.selected = true;
-					view.view2Btn.selected = view.view3Btn.selected = false;
-					view.currentState = "view3";
+					view.view1Selected = true;
+					view.view2Selected = view.view3Selected = false;
+					view.currentState = "view1";
 					if(animListDirty)
 					{
 						animListDirty = false;
@@ -111,8 +117,8 @@ package org.mig.view.mediators.content.tabs
 					}
 					break;
 				case 2:
-					view.view2Btn.selected = true;
-					view.view1Btn.selected = view.view3Btn.selected = false;
+					view.view2Selected = true;
+					view.view1Selected = view.view3Selected = false
 					view.currentState = "view2";
 					if(fixedListDirty)
 					{
@@ -128,7 +134,7 @@ package org.mig.view.mediators.content.tabs
 					}
 					else if(view.stack.selectedIndex == 2)
 					{
-						items = view.fixedList.selectedItems;			
+						items = ArrayUtil.toArray(view.fixedList.selectedItems);			
 					}
 					if(items && items.length > 0 )
 					{
@@ -139,9 +145,9 @@ package org.mig.view.mediators.content.tabs
 					slideShowContainer.loadMedia();*/
 					/*if(animListDirty || fixedListDirty)
 						slideShowContainer.dataProvider = usageList.selectedItem.dataProvider;*/
-					view.view3Btn.selected = true;
-					view.view1Btn.selected = view.view2Btn.selected = false;
-					view.currentState = "view1";
+					view.view3Selected = true;
+					view.view2Selected = view.view1Selected = false
+					view.currentState = "view3";
 					break;
 			}
 		}		

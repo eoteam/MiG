@@ -16,6 +16,10 @@ package org.mig.view.controls
 		override protected function drawSelectionIndicator(indicator:Sprite, x:Number, y:Number, width:Number, height:Number, color:uint, itemRenderer:IListItemRenderer):void {
 			super.drawSelectionIndicator(indicator,x,y,width,height,color,itemRenderer);
 			indicator.graphics.clear();
-		}		
+		}	
+/*		override public function validateDisplayList():void {
+			this.runDataEffectNextUpdate = true;
+			super.validateDisplayList();
+		}*/
 	}
 }

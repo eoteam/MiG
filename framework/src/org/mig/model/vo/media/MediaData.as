@@ -22,5 +22,7 @@ package org.mig.model.vo.media
 		public var extension:String = '';
 		public var width:int;
 		public var height:int;
+		public var rating:int;
+		public var color:String;
 	}
 }

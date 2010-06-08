@@ -11,6 +11,7 @@ package org.mig.services
 	import org.mig.model.ContentModel;
 	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.CustomField;
+	import org.mig.model.vo.UpdateData;
 	import org.mig.model.vo.content.ContainerNode;
 	import org.mig.model.vo.content.ContentData;
 	import org.mig.model.vo.content.ContentStatus;
@@ -30,6 +31,11 @@ package org.mig.services
 		
 		public function ContentService() {
 			
+		}
+		public function retrieveContentRoot():void {
+			var params:Object = new Object();
+			params.action = "getRoot";
+			this.createService(params,ResponseType.DATA,ContentData);
 		}
 		public function retrieveChildren(content:ContentNode):void {
 			//this is fine here, params are a map object. Im guessing REST will form a URL, but awareness of these vars is tricky
@@ -63,6 +69,32 @@ package org.mig.services
 			params.action = ValidFunctions.DUPLICATE_CONTENT;
 			params.id = content.data.id;
 			this.createService(params,ResponseType.DATA,ContentData).token.content = content;
+		}
+		public function updateContainer(container:ContainerNode,update:UpdateData):void {
+			var params:Object = new Object();
+			for (var prop:String in update)
+				params[prop] = update[prop];
+			params.action = ValidFunctions.UPDATE_RECORD;
+			params.tablename = container.config.@tablename.toString();
+			params.id = update.id;
+			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
+			service.token.content = container;
+			service.token.update = update;
+		}
+		public function updateContainersStatus(containers:Array,statusid:int):void {
+			var params:Object = new Object();
+			params.action = ValidFunctions.UPDATE_RECORDS;
+			params.tablename = "content";
+			var ids:String = '';
+			for each(var container:ContainerNode in containers) {
+				ids += container.data.id + ',';
+			}
+			ids += ids.substr(0,ids.length-1);
+			params.updatefield = "statusid";
+			params.updatevalue = statusid;
+			params.idfield = "id";
+			params.idvalues = ids;
+			this.createService(params,ResponseType.STATUS).token.containers = containers;
 		}
 		public function createContainer(title:String,config:XML):void {
 			var date:Date = new Date();

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <controls:MigTree
-	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
 	xmlns:controls="org.mig.view.controls.*"
 	width="100%" paddingLeft="0" paddingBottom="3" paddingTop="0" paddingRight="0"
 	allowMultipleSelection="true"
@@ -9,30 +11,43 @@
 	dropEnabled="true" 
 	selectable="true" 
 	styleName="containerTree"
-	doubleClickEnabled="true" variableRowHeight="true" 
+	doubleClickEnabled="true"
 	labelField="debugLabel" openDuration="250"
 	folderClosedIcon="{containerIcon}"
 	folderOpenIcon="{containerIcon}"
 	iconField="{ContentNode(data).config.@icon}"
 	itemRenderer="org.mig.view.renderers.ContentTreeRenderer"
 	dataDescriptor="{new ContentTreeDataDescriptor(this)}"
-	rendererIsEditor="true" 
-	showRoot="true">
+	rendererIsEditor="true" variableRowHeight="true"
+	showRoot="true" xmlns:effects="org.mig.view.effects.*">
 	<!-- -->
-	<mx:Script>
+	<fx:Script>
 		<![CDATA[
 			import mx.controls.treeClasses.ITreeDataDescriptor;
+			import mx.core.DragSource;
+			import mx.events.EffectEvent;
 			
 			import org.mig.model.vo.ContentNode;
+			import org.mig.view.constants.DraggableViews;
+
 				
 			[Bindable]
 			[Embed(source='/migAssets/library.swf#containerGrayUp')]
 			public var containerIcon:Class;
 			
+			public var editMode:Boolean = false;
 			override protected function addDragData(ds:Object):void {
-				ds.formats.push("ContentTree");
+				DragSource(ds).addData(this.selectedItems, DraggableViews.CONTENT_TREE_CONTAINERS);
 				super.addDragData(ds);
 			}
+			override protected function keyDownHandler(event:KeyboardEvent):void {
+				if(!editMode)
+					super.keyDownHandler(event);
+			}
 		]]>
-	</mx:Script>
-</controls:MigTree>
+	</fx:Script>
+	<fx:Declarations>
+		<mx:DefaultListEffect  id="defaultListEffect" fadeInDuration="1000" fadeOutDuration="1000"/>
+	</fx:Declarations>
+</controls:MigTree>	
+	

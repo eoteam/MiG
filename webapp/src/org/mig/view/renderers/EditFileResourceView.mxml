@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>	
+<mx:VBox 
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:containers="flexlib.containers.*"
+	verticalGap="2"  backgroundAlpha="0.9" backgroundColor="{bgColor}"
+	paddingLeft="15" paddingRight="15" paddingBottom="15" paddingTop="15" 
+	width="350"   mouseDownOutside="PopUpManager.removePopUp(this)" xmlns:controls="com.mapx.view.controls.*">
+	
+		<mx:Script>
+			<![CDATA[
+
+				import mx.managers.PopUpManager;
+				
+				import org.mig.model.vo.ContentNode;
+				public function set content(value:org.mig.model.vo.ContentNode):void
+				{
+					_content = value;
+					trace(_content.data.caption,_content.data.credits);
+				}
+				public function get content():ContentNode
+				{
+					return _content;
+				}
+				[Bindable] private var _content:ContentNode;	
+				[Bindable] public var bgColor:uint;	
+				public var file:MediaTile;
+				private function handleCreditsChange():void
+				{
+					_content.data.credits = creditsInput.text;
+				}					
+				private function handleCaptionChange():void
+				{
+					_content.data.caption = captionInput.text;
+				}		
+				private function download():void
+				{	
+					var path:String = file.thumbURL + _content.data.path+_content.data.name;
+					navigateToURL(new URLRequest(path),'_blank');	
+				}					
+			]]>
+		</mx:Script>
+		<mx:Label text="Delete" styleName="bodyCopy" buttonMode="true" mouseChildren="false" useHandCursor="true" 
+		click="file.dispatchEvent(new Event('deleteItem',true))"/>
+		<mx:HRule width="80%" strokeColor="#ffffff" strokeWidth="1" />
+
+		<mx:Label text="Download" styleName="bodyCopy" buttonMode="true" mouseChildren="false" useHandCursor="true" 
+		click="download()"/>
+		<mx:HRule width="80%" strokeColor="#ffffff" strokeWidth="1" />
+				
+		<mx:Spacer height="4" />
+		<mx:Label text="Credits" />
+		<mx:TextInput height="24" styleName="inputFieldBlack" width="80%" id="creditsInput" 
+		change="handleCreditsChange()"  text="{_content.data.credits.toString()}"  />
+
+
+		<mx:Spacer height="4" />
+		<mx:Label text="Caption" />
+		<mx:TextInput height="24" styleName="inputFieldBlack" width="80%"  id="captionInput"
+		change="handleCaptionChange()" text="{_content.data.caption.toString()}" />
+	
+		<mx:Spacer height="4" />
+		<mx:Button styleName="defaultButton" label="Done" click="PopUpManager.removePopUp(this)" />
+					
+	</mx:VBox>

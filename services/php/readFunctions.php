@@ -263,7 +263,14 @@ function getUsers($params) {
 	// return the results
 	return $result;
 }
-
+function getRoot($params) {
+	
+	$sql = " SELECT `content`.*, childrencount.count FROM `content` 
+			  LEFT JOIN ( SELECT parentid, COUNT(*) AS count FROM `content` WHERE `content`.`parentid` ='1' GROUP BY parentid) 
+			  AS childrencount ON childrencount.parentid = content.id WHERE `content`.`id` = '1' ";
+	$result = queryDatabase($sql);	
+	return $result;
+}
 function getContent($params)
 {
 	/*
@@ -436,7 +443,7 @@ function getContent($params)
 
 
 	
-	$sql .= " LEFT JOIN ( SELECT parentid, COUNT(*) AS count FROM `content` WHERE parentid IN (". $params['contentid'] .") GROUP BY parentid
+	$sql .= " LEFT JOIN ( SELECT parentid, COUNT(*) AS count FROM `content` WHERE parentid IN (". $params['contentid'] .") AND `content`.`deleted` = '0' GROUP BY parentid
 				  ) AS childrencount ON childrencount.parentid = content.id";
 
 	
@@ -697,7 +704,7 @@ function getContentMedia($params)
 	$validParams = array("action","tablename","id","orderby");
 	$sendParams = array();
 
-	$sql = "SELECT content_media.*, media.name, " .
+	$sql = "SELECT content_media.*, media.name, media.color, " .
 			"media.path,media.playtime,media.url,media.thumb,media.video_proxy,media.mimetypeid, media.width, media.height";
 
 	$sql .= " FROM `". 'content_media' ."`";

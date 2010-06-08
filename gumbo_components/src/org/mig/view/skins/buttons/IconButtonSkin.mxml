@@ -29,7 +29,7 @@ in accordance with the terms of the license agreement accompanying it.
 		/** 
 		* @copy spark.skins.spark.ApplicationSkin#hostComponent
 		*/
-		[HostComponent("spark.components.Button")]
+		[HostComponent("org.mig.view.controls.IconButton")]
 		]]>
 	</fx:Metadata>
 	
@@ -63,6 +63,5 @@ in accordance with the terms of the license agreement accompanying it.
 		<s:State name="down" />
 		<s:State name="disabled" />
 	</s:states>
-	
-	<mx:SWFLoader source="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#minus')" id="graphic"   />
+	<mx:SWFLoader source="{this.hostComponent.icon}" id="graphic"   />
 </s:SparkSkin>

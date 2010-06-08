@@ -34,8 +34,9 @@
 		protected function result(event:ResultEvent):void {
 			if(event.token.resultCallBack) {
 				event.token.resultCallBack(event);
-				//delete services[event.token.index];
+				//
 			}
+			delete services[event.token.id];
 		}
 		protected function fault(info:Object):void {
 			eventDispatcher.dispatchEvent(new AlertEvent( AlertEvent.SHOW_ALERT, "crap","Crap"));

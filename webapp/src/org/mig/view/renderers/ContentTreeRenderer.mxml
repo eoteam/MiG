@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:MXTreeItemRenderer  contentBackgroundAlpha="1"
+	autoDrawBackground="false"  width="100%"
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark"  
+	xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:controls="org.mig.view.controls.*">
+
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			
+			import org.mig.model.vo.ContentNode;
+			import org.mig.model.vo.content.ContentStatus;
+			import org.mig.view.events.ContentViewEvent;
+			public function set editable(value:Boolean):void {
+				input.visible = value;
+/* 				overFill.visible = bgFill.visible = labelField.visible  = !value;
+				indentationSpacer.includeInLayout = disclosureGroup.includeInLayout = 
+				iconImage.includeInLayout = spinner.includeInLayout = !value;	 */
+				if(!value) {
+					this.setCurrentState("selected",true);
+					this.labelField.setStyle("color",0xffffff);
+					this.owner.dispatchEvent(new ContentViewEvent(ContentViewEvent.TITLE_CHANGED,this.data,input.text));
+				}
+			}
+			override protected  function getCurrentRendererState():String {
+				if(data.state == ContentNode.LOADING) {
+					
+					if (selected && hasState("selected"))
+						return "selectedAndLoading";
+					
+					if (hovered && hasState("hovered"))
+						return "hoveredAndLoading";
+					
+					if (hasState("normal"))    
+						return "normalAndLoading";
+					
+					// If none of the above states are defined in the item renderer,
+					// we return the empty string. This means the user-defined renderer
+					// will display but essentially be non-interactive visually. 
+					return null;
+				}
+				else 
+					return super.getCurrentRendererState();
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:Fade duration="500" alphaFrom="0" alphaTo="1" id="fadeIn"  />
+		<s:Fade duration="500" alphaFrom="1" alphaTo="0" id="fadeOut"  />
+	</fx:Declarations>
+	<s:states>
+		
+		<s:State name="normal" stateGroups="normalStates" />            
+		<s:State name="hovered" stateGroups="hoveredStates" />
+		<s:State name="selected" stateGroups="selectedStates" />
+		<s:State name="normalAndLoading"  stateGroups="normalStates,loadingStates"/>
+		<s:State name="hoveredAndLoading"  stateGroups="hoveredStates,loadingStates"/>
+		<s:State name="selectedAndLoading"  stateGroups="selectedStates,loadingStates"/>
+	</s:states>
+	<s:transitions>
+		<s:Transition toState="hovered">
+			<s:Fade target="{overFill}"  duration="300" />
+		</s:Transition>
+	</s:transitions>
+	
+	<s:Rect  left="0" right="0" top="0" bottom="0" id="bgFill">
+		<s:fill>
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry color="0xFFFFFF" alpha="{data.data.statusid == ContentStatus.PUBLISHED ? 1:0.5}"/>
+				<s:GradientEntry color="0xD9D9D9" alpha="{data.data.statusid == ContentStatus.PUBLISHED ? 1:0.5}"/>
+			</s:LinearGradient>
+		</s:fill>
+	</s:Rect>
+	<s:Rect  left="0" right="0" top="0" bottom="0" alpha="0" alpha.selectedStates="1" alpha.hoveredStates="0.5" id="overFill">
+		<s:fill>
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry color="0xED1C58" alpha="{data.data.statusid == ContentStatus.PUBLISHED ? 1:0.5}"  />		
+				<s:GradientEntry color="0xBD1E53" alpha="{data.data.statusid == ContentStatus.PUBLISHED ? 1:0.5}"/>
+			</s:LinearGradient>
+		</s:fill>
+	</s:Rect>
+	
+	<s:HGroup left="0" right="0" top="0" bottom="0" verticalAlign="middle" gap="3">	
+		<s:Rect id="indentationSpacer" width="{treeListData.indent}" percentHeight="100" alpha="0">
+			<s:fill>
+				<s:SolidColor color="0xFFFFFF" />
+			</s:fill>
+		</s:Rect>
+		<s:Group id="disclosureGroup" >
+			<s:BitmapImage source="{data.hasChildren?treeListData.disclosureIcon:null}" visible="{data.hasChildren}"  />
+		</s:Group>
+		<s:BitmapImage id="iconImage" source="{data.isRoot?treeListData.icon:null}" visible="{data.isRoot}" includeInLayout="{data.isRoot}" />
+		<s:Group width="100%">
+			<s:Label id="labelField"  verticalCenter="0"  text="{treeListData.label}"  maxDisplayedLines="1" width="100%" 
+			color="{data.data.statusid == ContentStatus.PUBLISHED ? 0x3F3F3F:0xffffff}"
+			color.selectedStates="0xFFFFFF" color.hoveredStates="0xFFFFFF" styleName="boldCopy"  />
+			<s:TextInput width="100%" styleName="inputFieldGray" verticalCenter="0" visible="false" color="0xFFFFFF" 
+			fontFamily="Transit-Bold" id="input" text="{data.baseLabel}"
+			focusOut="editable=false" enter="editable=false"  />			
+		</s:Group>
+		<controls:Spinner  includeIn="loadingStates"  id="spinner"  tickColor="0x333333" size="20" tickWidth="2" numTicks="10" visible="{data.state == ContentNode.LOADING?true:false}"   autoPlay="true" />
+	</s:HGroup>
+</s:MXTreeItemRenderer>

@@ -1,12 +1,13 @@
 package org.mig.view
 {
+	
 
 	internal class MiGComponents
 	{
 		import org.mig.view.controls.MiGTileList; MiGTileList;
 		import org.mig.view.controls.MiGAdvancedDataGrid; MiGAdvancedDataGrid;
 		import org.mig.view.renderers.AdvancedDatagridCellEditor; AdvancedDatagridCellEditor; 
-		
+		import org.mig.view.controls.MiGDataGrid; MiGDataGrid;
 		
 		//import org.mig.view.skins.SortSeparatorSkin; SortSeparatorSkin;
 		//import org.mig.view.containers.DragTile; DragTile;

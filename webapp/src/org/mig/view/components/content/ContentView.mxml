@@ -24,7 +24,6 @@
 		]]>
 	</fx:Script>
 
-	
     <s:HGroup  width="100%" id="topBar" gap="4">
     	<s:Rect width="100%" />
     	<s:Button label="Cancel" styleName="defaultGrayButton" />
@@ -33,7 +32,7 @@
   	</s:HGroup>
 	<s:Rect height="0" />
 	
-	<s:TabBar  dataProvider="{contentTabs}" id="tabBar"  height="22"  cornerRadius="0" styleName="toolTabBar"  />
+	<s:TabBar  dataProvider="{contentTabs}" id="tabBar"  height="23"  cornerRadius="0" styleName="toolTabBar"  />
 	
 	<mx:ViewStack
 		borderVisible="false" contentBackgroundAlpha="0"  creationPolicy="queued" 

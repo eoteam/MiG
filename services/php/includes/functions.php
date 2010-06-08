@@ -192,7 +192,6 @@ function queryDatabase($query, $params=null, &$outparams=null)
 			$sth->bindValue(":".$key, $value);
 		}
 	}
-
 	// executes a prepared statement
 	$result = $sth->execute();
 	if (!$result){

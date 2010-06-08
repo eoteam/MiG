@@ -209,12 +209,11 @@ function updateRecords($params) //+
 			} else die("Unknown field name '$key'.");
 		}
 	}
-
 	// get the results
 	if ($result = queryDatabase($sql, $sendParams)) {
-		if ($params['tablename'] == "content") {
-			updateContainerPaths($params['id'],null); // updates 'containerpath' field
-		}
+//		if ($params['tablename'] == "content") {
+//			updateContainerPaths($params['id'],null); // updates 'containerpath' field
+//		}
 
 		if (isset($params['verbosity'])) {
 			$params2['verbosity'] = $params['verbosity'];

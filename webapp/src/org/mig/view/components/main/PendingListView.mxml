@@ -1,8 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300">
+		 xmlns:controls="org.mig.view.controls.*"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:renderers="org.mig.view.renderers.*">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			
+			import org.mig.view.constants.DraggableViews;
+			[Bindable] public var dataProvider:ArrayCollection;
+		]]>
+	</fx:Script>
+	<controls:MiGDataGrid width="100%" dataProvider="{dataProvider}" headerHeight="21" dragFormat="{DraggableViews.PENDING_LIST_CONTAINERS}"
+	dragEnabled="true"  
+	allowMultipleSelection="true" allowDragSelection="true"
+	id="pendingList" height="100%"   editable="false" paddingTop="0">
+		<controls:columns>	
+			<mx:DataGridColumn width="120" headerText="Title" dataField="label" editable="false" >
+			<!--	<mx:itemRenderer>
+					<fx:Component>
+						<renderers:DGCell editable="false" />
+					</fx:Component>
+				</mx:itemRenderer>-->
+			</mx:DataGridColumn>	
+<!--			<mx:DataGridColumn width="120" headerText="Edited Date" dataField="modifieddate" editable="false">
+				<mx:itemRenderer>
+					<fx:Component>
+						<renderers:DGCell editable="false" />
+					</fx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>	-->										
+		</controls:columns>
+	</controls:MiGDataGrid>
+	
+	<s:SkinnableContainer  backgroundColor="0x000000" alpha="0.9" id="dropBox"
+	visible="false" width="100%" height="100%" hideEffect="fadeOut" showEffect="fadeIn">
+		<s:layout>
+			<s:VerticalLayout verticalAlign="middle" horizontalAlign="center" gap="8" />
+		</s:layout>
+		<s:Label text="Drop containers to save as draft" styleName="locationHeader" fontSize="16" color="0xffffff"/>
+		<controls:Spinner tickWidth="4" size="40" numTicks="10" tickColor="0xffffff" autoPlay="true" visible="false" id="pendingSpinner" />					
+	</s:SkinnableContainer>
+	<fx:Declarations>
+		<s:Sine easeInFraction="1"  id="easeOut" />
+		<s:Sine easeInFraction="0" id="easeIn" /> 
+		
+		<s:Fade alphaFrom="0" alphaTo="1" duration="400" id="fadeIn" easer="{easeOut}" />	
+		<s:Fade alphaFrom="1" alphaTo="0" duration="400" id="fadeOut" easer="{easeIn}"/>	
 	</fx:Declarations>
 </s:Group>

@@ -18,7 +18,7 @@ The "files" folder name can be a parameter passed by the installation form.
 If the user picks a different name for the "files" folder, the installation script will have to change the file path constants located in "php/config/constants.php"
 create files, files/migThumbs, temporary folder (permission is 777) 
 create fonts folder
-create xml folder
+create xml folder ( !! ALREADY IN A PACKAGE! )
 
 following folders are already packaged
 	migAssets 

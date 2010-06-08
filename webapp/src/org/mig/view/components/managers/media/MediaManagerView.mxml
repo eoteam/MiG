@@ -19,7 +19,7 @@
 			
 			import org.mig.model.vo.media.FileNode;
 			import org.mig.model.vo.user.User;
-			import org.mig.view.skins.buttons.PlusButtonSkin;
+
 			
 			[Bindable] public var scalePercent:Number = 1;
 			[Bindable] public var currentLocation:String='';
@@ -98,7 +98,8 @@
 		<s:ToggleButton  skinClass="org.mig.view.skins.buttons.SearchButtonSkin" mouseChildren="false" buttonMode="true"  toolTip="Search" selected="false" />
 		<s:TextInput  styleName="inputFieldBlack" id="searchInput" change="searchInput_changeHandler(event)"/>
 		<mx:Spacer width="-25"/>
-		<s:Button id="clearSearch" skinClass="org.mig.view.skins.buttons.PlusButtonSkin" rotation="45" toolTip="Clear Search" mouseChildren="false" buttonMode="true" visible="false"   />
+		<controls:IconButton id="clearSearch" icon="@Embed(source='/migAssets/library.swf#plus')"
+		rotation="45" toolTip="Clear Search" mouseChildren="false" buttonMode="true" visible="false"   />
 		
 		<!--Views-->
 		<mx:SWFLoader source="@Embed(source='/migAssets/library.swf#thumbViewIcon')" id="thumbButton"
@@ -115,7 +116,7 @@
 			<mx:SWFLoader  mouseChildren="false" id="addDirectoryButton" alpha="1" toolTip="New Folder" top="6"
 			source="@Embed(source='/migAssets/library.swf#addFolderIcon')" buttonMode="true" useHandCursor="true"/>
 		</mx:Canvas>
-		<s:Button  skinClass="org.mig.view.skins.buttons.TrashButtonSkin"  toolTip="Delete"  id="trashButton" mouseChildren="false"  buttonMode="true" />			
+		<controls:IconButton  icon="@Embed(source='/migAssets/library.swf#trashUp')"  toolTip="Delete"  id="trashButton" mouseChildren="false"  buttonMode="true" />			
 	</container:FlowContainer>
 	<!--</s:Group>-->
 	
@@ -137,12 +138,12 @@
 					allowMultipleSelection="true"
 					headerHeight="22"  
 					sortableColumns="true"
-					draggableColumns="false"
+					draggableColumns="false" 
 					width="100%" height="100%" 
 					styleName="mediaManagerGrid"
 					editable="true" borderVisible="false" 
 					clearingLines="true" clearVLineIndices="[]" customProxy="true" 	 	 
-					doubleClickEnabled="true"
+					doubleClickEnabled="true" 
 					treeColumn="{treeColumn}"
 					dataProvider="{listDP}">		
 					<controls:columns>

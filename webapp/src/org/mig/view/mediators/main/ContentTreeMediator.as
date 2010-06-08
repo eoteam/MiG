@@ -8,21 +8,28 @@ package org.mig.view.mediators.main
 	import mx.events.TreeEvent;
 	import mx.managers.PopUpManager;
 	import mx.managers.PopUpManagerChildList;
+	import mx.utils.ArrayUtil;
 	
+	import org.mig.controller.startup.AppStartupStateConstants;
 	import org.mig.events.AppEvent;
 	import org.mig.events.ContentEvent;
+	import org.mig.events.NotificationEvent;
 	import org.mig.events.ViewEvent;
 	import org.mig.model.ContentModel;
 	import org.mig.model.vo.BaseContentData;
 	import org.mig.model.vo.ContentNode;
+	import org.mig.model.vo.StatusResult;
+	import org.mig.model.vo.UpdateData;
 	import org.mig.model.vo.content.ContainerNode;
 	import org.mig.model.vo.content.ContentData;
+	import org.mig.services.interfaces.IContentService;
 	import org.mig.utils.GlobalUtils;
 	import org.mig.view.components.main.ContentTree;
 	import org.mig.view.components.main.SystemPopup;
 	import org.mig.view.events.ContentViewEvent;
 	import org.mig.view.renderers.ContentTreeRenderer;
 	import org.robotlegs.mvcs.Mediator;
+	import org.robotlegs.utilities.statemachine.StateEvent;
 
 	public class ContentTreeMediator extends Mediator
 	{
@@ -32,14 +39,16 @@ package org.mig.view.mediators.main
 		[Inject]
 		public var contentModel:ContentModel;
 		
-		private var dpSet:Boolean = false;
+		[Inject]
+		public var contentService:IContentService;
+
 		override public function onRegister():void {
-			eventMap.mapListener(eventDispatcher,AppEvent.CONFIG_FILE_LOADED,handleContent);
-			eventMap.mapListener(eventDispatcher,ContentEvent.RETRIEVE_CHILDREN,handleContent);
+			//eventMap.mapListener(eventDispatcher,AppEvent.CONFIG_FILE_LOADED,handleContent);
+			eventMap.mapListener(eventDispatcher,StateEvent.ACTION,handleContent); 
 			eventMap.mapListener(eventDispatcher,ViewEvent.DELETE_CONTAINERS,deleteItems);
 			eventMap.mapListener(eventDispatcher,ViewEvent.ENABLE_CONTENT_TREE,enableTree);
 			eventMap.mapListener(eventDispatcher,ViewEvent.VALIDATE_CONTENT,validateContent);
-			
+		
 			eventMap.mapListener(eventDispatcher,ContentEvent.SELECT,handleSelectedContent);
 			addListeners();
 			addContextMenu();
@@ -59,14 +68,14 @@ package org.mig.view.mediators.main
 			view.addEventListener(ListEvent.ITEM_DOUBLE_CLICK,handleItemDoubleClick);	
 			
 			view.addEventListener(ContentViewEvent.LOAD_CHILDREN,handleLoadChildren);
+			view.addEventListener(ContentViewEvent.TITLE_CHANGED,handleTitleChanged);
 		}
 		private function handleLoadChildren(event:ContentViewEvent):void {
 			var node:ContainerNode = event.args[0];
 			eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.RETRIEVE_CHILDREN,node));
 		}
-		private function handleContent(event:Event):void {
-			if(!dpSet && event is ContentEvent && ContentEvent(event).args[0] is ContainerNode) {
-				dpSet = true;		
+		private function handleContent(event:StateEvent):void {
+			if(event.action == AppStartupStateConstants.LOAD_CONTENT_COMPLETE) {	
 				view.dataProvider = contentModel.contentModel;
 			}
 		}
@@ -121,8 +130,11 @@ package org.mig.view.mediators.main
 				break;	
 				case "Rename":
 					var f:ContentTreeRenderer = view.itemToItemRenderer(view.selectedItem) as ContentTreeRenderer;
-					if(f)
+					if(f) {
 						f.editable = true;
+						view.dragEnabled = view.dropEnabled = false; 
+						view.editMode = true;
+					}
 				break;	
 				case "Duplicate Item(s)":
 					eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.DUPLICATE,view.selectedItems));
@@ -151,15 +163,13 @@ package org.mig.view.mediators.main
 					break;			
 			}
 		}
-		private var itemsToDelete:Array;
+		private var itemsToDelete:Array; 
 		private function deleteItems(event:Event=null):void {
 			itemsToDelete = [];
 			var popup:SystemPopup; 
 			if(view.selectedItems.length > 0 ) {		
 				for each(var node:ContainerNode in view.selectedItems) {
-					if(!node.isFixed && !node.isRoot)
-						itemsToDelete.push(node)
-					else {
+					if(node.isFixed || node.isRoot) {
 						popup = createPopup("<p>You cant delete this container:</p>" +
 							"<font face='Transit-Bold'>"+node.label + "</font><br /><br />"+
 							"Please try again");
@@ -167,9 +177,10 @@ package org.mig.view.mediators.main
 						popup.noLabelText = "Continue";
 						return;
 					}
+					var tmp:Array = GlobalUtils.accumulateChildren(node);
+					for each(var n:ContainerNode in tmp)
+						itemsToDelete.push(n);
 				}
-				for each(node in itemsToDelete)
-					accumulateChildren(node,itemsToDelete);	
 				var itemsString:String = '';
 				for each(node in itemsToDelete) {
 					itemsString += "<font face='Transit-Bold'>"+node.label+"</font><br/>";
@@ -187,14 +198,6 @@ package org.mig.view.mediators.main
 			PopUpManager.addPopUp(popup,this.contextView,true,PopUpManagerChildList.POPUP);
 			return popup;
 		}
-		private function accumulateChildren(node:ContainerNode,arr:Array):void {
-			if(node.children) {
-				for each(var item:ContainerNode in node.children) {
-					arr.push(item);
-					accumulateChildren(item,arr);
-				}
-			}
-		}
 		private function handleDeleteSelection(event:Event):void {
 			eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.DELETE,itemsToDelete));
 		}
@@ -203,6 +206,32 @@ package org.mig.view.mediators.main
 			if(view.selectedItem != container) {
 				view.selectedItem = container;
 				view.expandItem(container,true,true);
+			}
+		}
+		private function handleTitleChanged(event:ContentViewEvent):void {
+			
+			view.dragEnabled = view.dropEnabled = true; 
+			view.editMode = false;
+			var container:ContainerNode = event.args[0] as ContainerNode;
+			var newtitle:String = event.args[1] as String;
+			if(newtitle != container.baseLabel) {
+			
+				var update:UpdateData = new UpdateData();
+				update.id = container.data.id;
+				update.migtitle = newtitle;
+				contentService.updateContainer(container,update);
+				contentService.addHandlers(handleTitle);
+				container.state = ContentNode.LOADING;
+			}
+		}
+		private function handleTitle(data:Object):void {
+			var result:StatusResult = data.result as StatusResult;
+			if(result.success) {
+				eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Title changed successfully"));
+				var container:ContainerNode = data.token.content as ContainerNode;
+				var update:UpdateData = data.token.update as UpdateData;
+				container.baseLabel = update.migtitle;
+				container.state = ContentNode.LOADED;
 			}
 		}
 	}

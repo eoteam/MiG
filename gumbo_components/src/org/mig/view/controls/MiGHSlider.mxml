@@ -3,7 +3,7 @@
 	xmlns:fx="http://ns.adobe.com/mxml/2009" 
 	xmlns:s="library://ns.adobe.com/flex/spark" 
 	xmlns:mx="library://ns.adobe.com/flex/mx"
-	gap="3" height="10" verticalAlign="middle">
+	gap="3" height="10" verticalAlign="middle" xmlns:controls="org.mig.view.controls.*">
 	<fx:Script>
 		<![CDATA[
 			
@@ -79,9 +79,11 @@
 		[Event(name="change", type="flash.events.Event")]
 	</fx:Metadata>
 	
-	<s:Button height="10"  name="minus" skinClass="org.mig.view.skins.buttons.MinusButtonSkin"  scaleX="1.2" scaleY="1.2"  mouseDown="butttonDownHandler(event)" mouseOut="butttonUpHandler(event)" mouseUp="butttonUpHandler(event)" mouseChildren="false" buttonMode="true"  />
+	<controls:IconButton height="10"  name="minus" icon="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#minus')"  
+	scaleX="1.2" scaleY="1.2"  mouseDown="butttonDownHandler(event)" mouseOut="butttonUpHandler(event)" mouseUp="butttonUpHandler(event)" mouseChildren="false" buttonMode="true"  />
 	<s:HSlider id="slider" height="10"  width="{_sliderWidth}" minimum="{_min}" maximum="{_max}" liveDragging="true" value="{(_max-_min)/2}" snapInterval=".001" change="valueChangedHandler(event)" />	
 	<s:Rect width="6" />		
-	<s:Button  height="10" name="plus" skinClass="org.mig.view.skins.buttons.PlusButtonSkin" scaleX="1.2" scaleY="1.2" mouseDown="butttonDownHandler(event)" mouseOut="butttonUpHandler(event)" mouseUp="butttonUpHandler(event)" mouseChildren="false" buttonMode="true"   />
+	<controls:IconButton height="10" name="plus" icon="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#plus')" 
+	scaleX="1.2" scaleY="1.2" mouseDown="butttonDownHandler(event)" mouseOut="butttonUpHandler(event)" mouseUp="butttonUpHandler(event)" mouseChildren="false" buttonMode="true"   />
 	
 </s:HGroup>

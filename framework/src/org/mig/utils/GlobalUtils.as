@@ -9,6 +9,8 @@ package org.mig.utils
 	import flash.ui.ContextMenuItem;
 	
 	import mx.core.UIComponent;
+	
+	import org.mig.model.vo.ContentNode;
 
 	public class GlobalUtils //implements IGlobalUtils
 	{
@@ -34,6 +36,21 @@ package org.mig.utils
 		}
 		public function get fullScreenMode():String {
 			return StageDisplayState.FULL_SCREEN;
+		}
+		
+		public static function accumulateChildren(content:ContentNode):Array {
+			var arr:Array = new Array();
+			arr.push(content);
+			addChildren(content,arr);
+			return arr;
+		}
+		private static function addChildren(node:ContentNode,arr:Array):void {
+			if(node.children) {
+				for each(var item:ContentNode in node.children) {
+					arr.push(item);
+					addChildren(item,arr);
+				}
+			}
 		}
 	}
 }

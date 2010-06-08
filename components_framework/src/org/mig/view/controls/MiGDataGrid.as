@@ -1,4 +1,4 @@
-package com.mapx.view.controls
+package org.mig.view.controls
 {
 	
 	import com.greensock.TweenMax;
@@ -8,7 +8,8 @@ package com.mapx.view.controls
 	import flash.display.Sprite;
 	
 	import mx.controls.DataGrid;
-	import mx.controls.listClasses.IListItemRenderer; 
+	import mx.controls.listClasses.IListItemRenderer;
+	import mx.core.DragSource;
  	
 
 	public class MiGDataGrid extends DataGrid
@@ -70,7 +71,7 @@ package com.mapx.view.controls
 		override protected function addDragData(ds:Object):void
 		{
 			if(dragFormat != null && dragFormat != "")
-				ds.formats.push(dragFormat);
+				DragSource(ds).addData(this.selectedItems,dragFormat);
 			super.addDragData(ds);
 		}
  	}  

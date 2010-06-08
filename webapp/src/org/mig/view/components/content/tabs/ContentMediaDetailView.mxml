@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" contentBackgroundAlpha="1" 
+		 xmlns:controls="org.mig.view.controls.*"  paddingRight="0" paddingLeft="0" 
+		 width="480" height="560" gap="0">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:SkinnableContainer width="100%" height="75" backgroundAlpha="0.95" backgroundColor="0x333333">
+		
+	</s:SkinnableContainer>
+	
+	<s:Rect height="0.5" width="100%">
+		<s:fill>
+			<s:SolidColor />
+		</s:fill>
+	</s:Rect>
+	
+	
+	<s:SkinnableContainer width="100%"  backgroundAlpha="0.85" backgroundColor="0x666666">	
+	<s:layout>
+		<s:VerticalLayout gap="8" paddingLeft="10" paddingRight="10" paddingTop="10" paddingBottom="5"/>
+	</s:layout>
+	<s:HGroup width="100%">
+		<s:Label width="97" text="Published" />
+		<s:CheckBox id="publishedCheck" />
+	</s:HGroup>
+
+	<s:HGroup width="100%">
+		<s:Label width="97" text="Rating" />
+	</s:HGroup>
+	
+	<s:HGroup width="100%">
+		<s:Label width="97" text="Color" />
+		<controls:colorPicker id="colorPicker" />
+	</s:HGroup>	
+	
+	</s:SkinnableContainer>
+	
+	<s:Rect height="0.5" width="100%">
+		<s:fill>
+			<s:SolidColor />
+		</s:fill>
+	</s:Rect>
+	<s:SkinnableContainer width="100%" backgroundAlpha="0.85" backgroundColor="0x666666">	
+		<s:layout>
+			<s:VerticalLayout gap="8" paddingLeft="10" paddingRight="10" paddingTop="10" paddingBottom="5"/>
+		</s:layout>
+	<s:HGroup width="100%">
+		<s:Label width="97" text="Title	" />
+		<s:TextInput styleName="inputFieldGray" width="100%" />
+	</s:HGroup>	
+
+	<s:HGroup width="100%">
+		<s:Label width="97" text="Credits" />
+		<s:TextInput styleName="inputFieldGray" width="100%" />
+	</s:HGroup>	
+	
+	<s:HGroup width="100%">
+		<s:Label width="97" text="Tags" />
+		<s:TextInput styleName="inputFieldGray" width="100%" height="40" />
+	</s:HGroup>	
+
+	<s:HGroup width="100%">
+		<s:Label width="97" text="Caption" />
+		<s:TextInput styleName="inputFieldGray" width="100%" />
+	</s:HGroup>	
+	
+	<s:HGroup width="100%">
+		<s:Label width="97" text="Description" />
+		<s:TextInput styleName="inputFieldGray" width="100%" height="70"  />
+	</s:HGroup>	
+	<s:Rect height="20" />
+	<s:HGroup width="100%">
+		<s:Button label="Save Changes" />
+		<s:Button label="Cancel" click="this.visible=false" />
+	</s:HGroup>	
+		
+	</s:SkinnableContainer>
+	<s:filters>
+		<s:DropShadowFilter angle="45" />
+	</s:filters>
+</s:VGroup>

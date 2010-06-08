@@ -2,6 +2,8 @@ package org.mig.view.containers
 {
 
 	
+	import be.vip.marchingantsdemo.view.MarchingAntsSelectionRectangle;
+	
 	import flash.display.DisplayObject;
 	import flash.display.Graphics;
 	import flash.display.Sprite;
@@ -39,6 +41,10 @@ package org.mig.view.containers
 	import org.mig.view.controls.LayoutAnimator;
 	import org.mig.view.controls.LayoutTarget;
 	import org.mig.view.interfaces.IContentListRenderer;
+	
+	import spark.components.Group;
+	import spark.components.NavigatorContent;
+	import spark.components.SkinnableContainer;
 
 	/** the amount of space, in pixels, between invidual items */
 	[Style(name="spacing", type="Number", inherit="no")]
@@ -83,8 +89,8 @@ package org.mig.view.containers
 		private var animator:LayoutAnimator;
 		public var dataField:String = "data";
 		public var dragEnabled:Boolean = true;
-		
-		private var selectionRectangle:Canvas;
+		public var thumbURL:String;
+		private var selectionRectangle:MarchingAntsSelectionRectangle;
 		private var r:Rectangle;
 		private var dragItems:Array;
 		private var isDragging:Boolean = false;
@@ -123,16 +129,37 @@ package org.mig.view.containers
 			}
 			addEventListener(MouseEvent.MOUSE_UP,onSelection);
 			addEventListener(Event.REMOVED_FROM_STAGE,handleRemovedFromStage);	
-			addEventListener(FlexEvent.CREATION_COMPLETE,init);			
+			addEventListener(FlexEvent.CREATION_COMPLETE,init);		
 		}	
 		private function init(event:FlexEvent):void
 		{
 			/* Set the event listeners */			
 			this.stage.addEventListener(KeyboardEvent.KEY_DOWN,handleKeyDown);
-			//this.parent.addEventListener(MouseEvent.MOUSE_DOWN,setUpMarquis);
 		}		
 		private function onSelection(event:Event):void
 		{
+			removeEventListener(Event.ENTER_FRAME,updateSelection_handler);
+			selectionRectangle.clear();		
+			_selectedItems = new Array();	
+			if(r!=null){
+				if(r.width<0){
+					r.x=r.x+r.width;
+					r.width=r.width*-1;	
+				}
+				if(r.height<0){
+					r.y=r.y+r.height;
+					r.height=r.height*-1;	
+				}
+				for (var i:Number=0;i<numChildren;i++){
+					if(r.intersects(getChildAt(i).getRect(this))){
+						_selectedItems.push(getChildAt(i));
+						IContentListRenderer(getChildAt(i)).selected = true;
+					}
+				}
+			}
+			r=null;
+			if(this.contains(selectionRectangle))
+				this.removeChild(this.selectionRectangle);
 			if(_selectedItems)
 				dispatchEvent(new Event('selectionChange'));
 		}		
@@ -346,6 +373,7 @@ package org.mig.view.containers
 				{
 					var renderer:IUIComponent = _renderCache.associate(_items.getItemAt(i));
 					IDataRenderer(renderer).data = _items.getItemAt(i);
+					IContentListRenderer(renderer).url = thumbURL;
 					renderer[dataField] = _items.getItemAt(i);						
 					renderers[i] = renderer;
 					addChild(DisplayObject(renderer));
@@ -358,6 +386,7 @@ package org.mig.view.containers
 						if(_items.getItemAt(i) is FileNode)
 						{
 							IContentListRenderer(renderer).added = false;
+							
 							if(_selectedItems && selectedItems.indexOf(_items.getItemAt(i)) != -1)
 							{
 								newIndex = selectedItems.indexOf(_items.getItemAt(i));
@@ -584,18 +613,24 @@ package org.mig.view.containers
 			if( (!(e.target is Label) && !(e.target is ScrollThumb) && !(e.target is ScrollBar) && !(e.target.parent is SWFLoader)) 
 				|| e.target == this.parent)
 			{
-				r = new Rectangle(Number(this.parent.mouseX),Number(this.parent.mouseY),0,0);
-				selectionRectangle = new Canvas();		
-				selectionRectangle.x = r.x;
-				selectionRectangle.y = r.y;
-				selectionRectangle.width = r.width;
-				selectionRectangle.height = r.height;
-				selectionRectangle.styleName = "selectionRectangleStyle";
-				this.parent.addEventListener(MouseEvent.MOUSE_UP, onMouseUp,false,0,true);
-				this.addEventListener(MouseEvent.MOUSE_UP, onMouseUp,false,0,true);
-				this.parent.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove,false,0,true);	
-				this.addChild(selectionRectangle);			
+				for each(var item:IContentListRenderer in _selectedItems) {
+					item.selected = false;
+				}
+				_selectedItems = [];
+				selectionRectangle = new MarchingAntsSelectionRectangle();
+				selectionRectangle.lineThickness=1; 
+				selectionRectangle.x = selectionRectangle.y= 0;
+				this.addChild(selectionRectangle);
+				
+				r = new Rectangle(Number(this.parent.mouseX),Number(this.parent.mouseY),1,1);
+				addEventListener(Event.ENTER_FRAME,updateSelection_handler);
+				
 			}
+		}
+		private function updateSelection_handler(evt:Event):void{
+			r.width=mouseX-r.x;
+			r.height=mouseY-r.y;
+			this.selectionRectangle.rect=r;
 		}
 		private function get dragImage():UIComponent
 		{
@@ -646,7 +681,7 @@ package org.mig.view.containers
 		            indicator.height = 100;
 		            indicator.visible = false;	
 		           				
-					this.parentDocument.addChild(indicator);			
+					this.parentDocument.addElement(indicator);			
 				}			
 			}
 		    else
@@ -738,7 +773,7 @@ package org.mig.view.containers
 		{
 			if(!isDragging && indicator!=null && this.parentDocument.contains(indicator))
 			{
-				this.parentDocument.removeChild(indicator);	
+				this.parentDocument.removeElement(indicator);	
 				indicator = null;
 				this.callLater(refreshLayout);
 			}		
@@ -819,58 +854,6 @@ package org.mig.view.containers
 			invalidateSize();
 			invalidateDisplayList();
 			animator.invalidateLayout();
-		}
-		private function onMouseUp(e:MouseEvent):void
-		{
-			//Get an array of items on stage
-			var children:Array = this.getChildren();		
-			_selectedItems = new Array();		
-			/* Find items that intersect with the selection rectangle */
-			for(var i:uint = 0; i< children.length; i++)
-			{
-				if((children[i] as DisplayObject) != selectionRectangle && children[i] != indicator && !(children[i] is Canvas))
-				{
-					if(selectionRectangle.getRect(this).intersects((children[i] as DisplayObject).getRect(this)))
-					{
-						_selectedItems.push(children[i]);
-						IContentListRenderer(children[i]).selected = true;
-					}
-					else
-						IContentListRenderer(children[i]).selected = false;
-				}
-			}		
-			//Remove the selection rectangle
-			//this.parentDocument.removeChild(selectionRectangle);
-			//ouText = _selectedItems.length + " items selected";
-			this.parent.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-			this.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-			this.parent.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-			this.removeChild(selectionRectangle);
-		}
-		
-		private function onMouseMove(e:MouseEvent):void
-		{
-			//Keep resizing the Rectangle object and the canva
-			r.bottomRight = new Point(this.parent.mouseX, this.parent.mouseY);
-			selectionRectangle.x = r.x;
-			selectionRectangle.y = r.y;
-			selectionRectangle.width = r.width;
-			selectionRectangle.height = r.height;
-			updateMarquis();
-		}
-		private function updateMarquis():void
-		{
-			//trace(Math.abs(selectionRectangle.y+selectionRectangle.height - parent.height));
-			if(Math.abs(selectionRectangle.y+selectionRectangle.height - parent.height) <= 10 && selectionRectangle.height > 0)
-			{
-				trace("down");
-				this.verticalScrollPosition += 10;
-				r.bottomRight = new Point(this.mouseX, this.mouseY+10);
-				selectionRectangle.width = r.width;
-				selectionRectangle.height = r.height;				
-				this.callLater(updateMarquis);
-			}			
-		}
-		
+		}		
 	}
 }

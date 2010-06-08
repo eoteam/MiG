@@ -15,6 +15,7 @@ package org.mig.controller.configuration
 	import org.mig.view.components.main.MainView;
 	import org.mig.view.components.main.ManagersTree;
 	import org.mig.view.components.main.NewContentView;
+	import org.mig.view.components.main.PendingListView;
 	import org.mig.view.components.main.StatusModule;
 	import org.mig.view.components.managers.media.AddDirectoryView;
 	import org.mig.view.components.managers.media.DownloadView;
@@ -31,12 +32,14 @@ package org.mig.controller.configuration
 	import org.mig.view.mediators.main.MainViewMediator;
 	import org.mig.view.mediators.main.ManagersTreeMediator;
 	import org.mig.view.mediators.main.NewContentMediator;
+	import org.mig.view.mediators.main.PendingListMediator;
 	import org.mig.view.mediators.main.StatusModuleMediator;
 	import org.mig.view.mediators.managers.media.AddDirectoryMediator;
 	import org.mig.view.mediators.managers.media.DownloadMediator;
 	import org.mig.view.mediators.managers.media.FileUploadMediator;
 	import org.mig.view.mediators.managers.media.MediaManagerMediator;
 	import org.mig.view.mediators.managers.media.RenameMediator;
+	import org.mig.view.renderers.MediaTile;
 	import org.robotlegs.mvcs.Command;
 	import org.robotlegs.utilities.statemachine.StateEvent;
 		
@@ -55,6 +58,8 @@ package org.mig.controller.configuration
 			mediatorMap.mapView( ContentViewer,		ContentViewerMediator	); 
 			mediatorMap.mapView( ContainerPathView,	ContainerPathMediator	);
 			mediatorMap.mapView( NewContentView,	NewContentMediator		);
+			mediatorMap.mapView( PendingListView,	PendingListMediator		);  
+			
 				//tabs
 			mediatorMap.mapView(ContentView,ContentViewMediator);
 			mediatorMap.mapView(ContentGeneralEditor,ContentGeneralEditorMediator);
@@ -74,8 +79,8 @@ package org.mig.controller.configuration
 			//non mediated views
 			injector.mapClass(MainMiddleView,MainMiddleView);
 			injector.mapClass(TagsCategoriesTab,TagsCategoriesTab);
-			//injector.mapClass(MediaTile, MediaTile);
-			
+			injector.mapClass(MediaTile, MediaTile);
+		
 			trace("Configure: Views Complete");
 			//notifiy the state machine that we are done with this step
 			eventDispatcher.dispatchEvent( new StateEvent(StateEvent.ACTION, AppConfigStateConstants.CONFIGURE_VIEWS_COMPLETE));

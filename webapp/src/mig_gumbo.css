@@ -2,17 +2,23 @@
 @namespace s "library://ns.adobe.com/flex/spark";
 @namespace mx "library://ns.adobe.com/flex/mx";
 @namespace containers "org.mig.view.containers.*";
+@namespace controls "org.mig.view.controls.*";
 
 @font-face {
 	src: url("/fonts/Transit/TransNor.ttf");
 	fontFamily: "Transit-Normal";
-	embedAsCFF: true;
+	embedAsCFF: true
 }
 @font-face {
 	src: url("/fonts/Transit/TransBol.ttf");
 	fontFamily: "Transit-Bold";
 	embedAsCFF: true;
 }
+
+
+/************************************/
+/************ Components ************/
+/************************************/
 containers|ResizableTitleWindow {
 	skinClass: ClassReference("org.mig.view.skins.containers.ResizableTitleWindowSkin");
 }
@@ -22,7 +28,73 @@ s|TitleWindow {
 s|VScrollBar {
 	skinClass: ClassReference("org.mig.view.skins.controls.MiGScrollBarSkin");
 }
-s|Label{
+s|HSlider {
+	skinClass: ClassReference("org.mig.view.skins.controls.MiGHSliderSkin");
+}
+s|CheckBox {
+	skinClass: ClassReference("org.mig.view.skins.controls.CheckBoxSkin");
+	color: #888888	;
+}
+s|NumericStepper {
+	borderVisible: none;
+	textAlign:center;
+	symbolColor: #CCCCCC;
+	contentBackgroundColor: #111111;
+	contentBackgroundAlpha:1;
+	color: #ffffff;
+	fontSize: 14;
+	skinClass: ClassReference("org.mig.view.skins.controls.NumericStepperSkin");
+}
+/*********************************/
+/************ Buttons ************/
+/*********************************/
+controls|IconToggleButton {
+	skinClass: ClassReference("org.mig.view.skins.buttons.IconToggleButtonSkin");
+}
+controls|IconButton {
+	skinClass: ClassReference("org.mig.view.skins.buttons.IconButtonSkin");
+}
+s|Button {
+	color: #ffffff;
+	fontLookup: embeddedCFF;
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #000000;
+	renderingMode:normal;
+	skinClass: ClassReference("org.mig.view.skins.buttons.GrayButtonSkin");
+}
+.defaultBlackButton {
+	skinClass: ClassReference("org.mig.view.skins.buttons.BlackButtonSkin");
+}
+.defaultGrayButton {
+	skinClass: ClassReference("org.mig.view.skins.buttons.GrayButtonSkin");
+}
+.grayIconButton {
+	skinClass: ClassReference("org.mig.view.skins.buttons.GrayIconButtonSkin");
+}
+.textOnlyButton {
+	skinClass: ClassReference("org.mig.view.skins.buttons.TextOnlyButtonSkin");
+}
+.linkButton {
+	skinClass: ClassReference("org.mig.view.skins.buttons.LinkButtonSkin");
+}
+.locationHeader {
+	skinClass: ClassReference("org.mig.view.skins.buttons.BoldTextOnlyButtonSkin");
+	color: #666666;
+	fontFamily: Transit-Bold;
+	fontSize: 14pt;
+	fontLookup: embeddedCFF;
+}
+/**************************************/
+/************ TabNavigator ************/
+/**************************************/
+.toolTabBar {
+	skinClass: ClassReference("org.mig.view.skins.controls.ToolTabBarSkin");
+	cornerRadius: 0;
+}
+/******************************/
+/************ Text ************/
+/******************************/
+s|Label {
 	color: #FFFFFF;
 	fontFamily: Transit-Normal;
 	fontSize: 14pt;
@@ -44,44 +116,36 @@ s|TextArea {
 	unfocusedTextSelectionColor: #333333;
 	contentBackgroundColor: #111111;
 }
-s|HSlider {
-	skinClass: ClassReference("org.mig.view.skins.controls.MiGHSliderSkin");
-}
-s|CheckBox {
-	skinClass: ClassReference("org.mig.view.skins.controls.CheckBoxSkin");
-	color: #888888	;
-}
-s|NumericStepper {
-	borderVisible: none;
-	textAlign:center;
-	symbolColor: #CCCCCC;
-	contentBackgroundColor: #111111;
-	contentBackgroundAlpha:1;
-	color: #ffffff;
-	fontSize: 14;
-	skinClass: ClassReference("org.mig.view.skins.controls.NumericStepperSkin");
-}
-
-/* Buttons */
-s|Button {
-	color: #ffffff;
+.boldCopy {
+	color: white;
+	fontFamily: Transit-Bold;
+	fontWeight: normal;
+	fontSize: 14pt;
+	textAlign: left;
+	textDecoration: none;
 	fontLookup: embeddedCFF;
-	textRollOverColor: #FFFFFF;
-	textSelectedColor: #000000;
-	renderingMode:normal;
+	renderingMode:cff;
 }
-.defaultBlackButton {
-	skinClass: ClassReference("org.mig.view.skins.buttons.DefaultBlackButtonSkin");
+.bodyCopy {
+	color: white;
+	fontFamily: Transit-Normal;
+	fontWeight: normal;
+	fontSize: 14pt;
+	textAlign: left;
+	textDecoration: none;
+	fontLookup: embeddedCFF;
+	renderingMode: normal;
 }
-.defaultGrayButton {
-	skinClass: ClassReference("org.mig.view.skins.buttons.DefaultGrayButtonSkin");
+.statusModCopy {
+	color: #ffffff;
+	fontFamily: Transit-Normal;
+	fontSize: 14pt;
+	fontLookup: embeddedCFF;
+	renderingMode: normal;
 }
-.textOnlyButton {
-	skinClass: ClassReference("org.mig.view.skins.buttons.TextOnlyButtonSkin");
-}
-.linkButton {
-	skinClass: ClassReference("org.mig.view.skins.buttons.LinkButtonSkin");
-}
+/***********************************/
+/************ TextInput ************/
+/***********************************/
 s|TextInput {
 	contentBackgroundColor: #333333;
 	fontLookup: embeddedCFF;
@@ -95,31 +159,6 @@ s|TextInput {
 	chromeColor: #ed1c58;
 	renderingMode: normal;
 	focusColor: #ed1c58;
-}
-.locationHeader {
-	skinClass: ClassReference("org.mig.view.skins.buttons.BoldTextOnlyButtonSkin");
-	color: #666666;
-}
-.boldCopy {
-	color: white;
-	fontFamily: Transit-Bold;
-	fontWeight: normal;
-	fontSize: 14pt;
-	textAlign: left;
-	textDecoration: none;
-	fontLookup: embeddedCFF;
-	renderingMode:cff;
-}
-
-.bodyCopy {
-	color: white;
-	fontFamily: Transit-Normal;
-	fontWeight: normal;
-	fontSize: 14pt;
-	textAlign: left;
-	textDecoration: none;
-	fontLookup: embeddedCFF;
-	renderingMode: normal;
 }
 .inputFieldGray{
 	disabledColor: #FFFFFF;
@@ -139,11 +178,9 @@ s|TextInput {
 	paddingRight: 3;
 	renderingMode: normal;	
 }
-.locationHeader {
-	fontFamily: Transit-Bold;
-	fontSize: 14pt;
-	fontLookup: embeddedCFF;
-}
+/**********************************/
+/************ ComboBox ************/
+/**********************************/
 .migComboBox {
 	fontSize: 14;
 	color: #888888	;
@@ -173,8 +210,43 @@ s|TextInput {
 	selectionColor: #ED1C58;
 	borderVisible: false;
 }
+/*****************************************/
+/************ Halo Components ************/
+/*****************************************/
 
-/****************** HALO *****************/
+/************ Tree ************/
+mx|Tree {
+	defaultLeafIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_noIcon");
+	folderClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_noIcon");
+	folderOpenIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_noIcon");
+	contentBackgroundAlpha: 0;
+	borderVisible: false;
+	rollOverColor: #ED1C58;
+	selectionColor: #ED1C58;
+	textRollOverColor: #333333;
+	textSelectedColor: #333333;
+}
+.containerTree{
+	color: #3F3F3F;	
+	disclosureClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderClosedIconGray");
+	disclosureOpenIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderOpenIconGray");
+	textRollOverColor: #ffffff;
+	textSelectedColor: #ffffff;
+	dropIndicatorSkin: ClassReference("org.mig.view.skins.TreeDropIndicator");
+}
+.managerTree{
+	color: #FFFFFF;
+	disclosureClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderClosedIcon");
+	disclosureOpenIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderOpenIcon");
+	textRollOverColor: #ffffff;
+	textSelectedColor: #ffffff;
+}
+
+mx|Text {
+	color: #FFFFFF;
+	fontSize: 14;
+}
+/************ Calendar ************/
 mx|DateChooser {
 	cornerRadius: 0;
 	headerColors: #888888, #777777;
@@ -194,16 +266,14 @@ mx|DateChooser {
 }
 .dateChooserHeaderStyle{
 	color: white;
-	font-family: Transit-Bold;
-	font-weight: normal;
-	
+	fontFamily: Transit-Bold;
+	fontWeight: normal;
 }
 .dateChooserWeekDayStyle {
 	color: white;
-	font-family: Transit-Bold;
-	font-weight: normal;
+	fontFamily: Transit-Bold;
+	fontWeight: normal;
 }
-
 .dateChooserTextInput {
 	color: white;
 	fontFamily: Transit-Normal;
@@ -218,6 +288,27 @@ mx|DateChooser {
 	paddingLeft: 3;
 	paddingRight: 3;
 	textSelectionColor: #ff0011;
+}
+/************ Datagrid ************/
+mx|DataGrid {
+	fontFamily: Transit-Normal;
+	fontSize: 13pt;
+	alternatingItemColors: #191819, #111111;
+	horizontalGridLines: false;
+	letterSpacing: 0;
+	verticalGridLineColor: #333333;
+	rollOverColor: #ED1C58;
+	selectionColor: #ED1C58;
+	borderVisible: false;
+	color: #ffffff;
+	contentBackgroundColor: #191919;
+	textAlign: left;
+	textSelectedColor: #ffffff;
+	textRollOverColor: #ffffff;
+	openDuration:250;
+	headerStyleName: "dataGridHeaderStyle";
+	sortArrowSkin: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderOpenIcon");
+	headerBackgroundSkin: ClassReference("org.mig.view.skins.datagrid.DataGridHeaderBackgroundSkin");
 }
 mx|AdvancedDataGrid {
 	fontFamily: Transit-Normal;
@@ -258,37 +349,16 @@ mx|AdvancedDataGrid {
 	paddingTop: 0;
 	textAlign: left;
 }
-mx|Tree {
-	defaultLeafIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_noIcon");
-	folderClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_noIcon");
-	folderOpenIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_noIcon");
-	contentBackgroundAlpha: 0;
-	borderVisible: false;
-	rollOverColor: #ED1C58;
-	selectionColor: #ED1C58;
-	textRollOverColor: #333333;
-	textSelectedColor: #333333;
-}
-mx|Text {
-	color: #FFFFFF;
-	fontSize: 14;
-}
-.containerTree{
-	color: #3F3F3F;	
-	disclosureClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderClosedIconGray");
-	disclosureOpenIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderOpenIconGray");
-	textRollOverColor: #ffffff;
-	textSelectedColor: #ffffff;
-	dropIndicatorSkin: ClassReference("org.mig.view.skins.TreeDropIndicator");
-}
-.managerTree{
-	color: #FFFFFF;
-	disclosureClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderClosedIcon");
-	disclosureOpenIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderOpenIcon");
-	textRollOverColor: #ffffff;
-	textSelectedColor: #ffffff;
-}
 
+/* Gradient background to migrate */ 
+.selectionRectangleStyle
+{
+	backgroundAlpha: 0.2;
+	backgroundColor: #ED1C58;
+	borderColor: #FFFFFF;
+	borderStyle: inset;
+	borderVisible: true;
+}
 .defaultButtonBackground{
 	backgroundImage: ClassReference("org.mig.view.skins.GradientBackground");
 	backgroundSize: "100%";
@@ -306,9 +376,4 @@ mx|Text {
 	backgroundSize: "100%";
 	fillColors: #ED1C58, #BD1E53;
 	fillAlphas: 1, 1;
-} 
-
-.toolTabBar {
-	skinClass: ClassReference("org.mig.view.skins.controls.ToolTabBarSkin");
-	cornerRadius: 0;
 }

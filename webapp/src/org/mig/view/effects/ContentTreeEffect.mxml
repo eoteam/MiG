@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Parallel xmlns:fx="http://ns.adobe.com/mxml/2009"  effectStart="parallel1_effectStartHandler(event)"
+		 xmlns:s="library://ns.adobe.com/flex/spark"  
+		 xmlns:mx="library://ns.adobe.com/flex/mx">
+
+	
+	<fx:Metadata>
+		[Exclude(name="duration",kind="property")]
+		[Exclude(name="effectTargetHost",kind="property")]
+		[Exclude(name="perElementOffset",kind="property")]
+		[Exclude(name="filter",kind="property")]
+		[Exclude(name="children",kind="property")]
+		[Exclude(name="fadeIn1",kind="property")]
+		[Exclude(name="fadeIn2",kind="property")]
+		[Exclude(name="fadeOut1",kind="property")]
+		[Exclude(name="fadeOut2",kind="property")]
+		[Exclude(name="grow",kind="property")]
+		[Exclude(name="shrink",kind="property")]
+		[Exclude(name="wipeUp1",kind="property")]
+		[Exclude(name="dissolve1",kind="property")]
+		[Exclude(name="target",kind="property")]
+		[Exclude(name="targets",kind="property")]
+		[Exclude(name="repeatCount",kind="property")]
+		[Exclude(name="repeatDelay",kind="property")]
+		[Exclude(name="customFilter",kind="property")]
+	</fx:Metadata>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.events.EffectEvent;
+		
+		//----------------------------------------------------------------------
+		//
+		//  Variables
+		//
+		//----------------------------------------------------------------------
+		
+		/**
+		*  @private
+		*/
+		private var _fadeOutDuration:Number = 300;
+		
+		/**
+		*  @private
+		*/
+		private var _fadeInDuration:Number = 300;
+		
+		/**
+		*  @private
+		*/
+		private var _shrinkDuration:Number = 300;
+		
+		/**
+		*  @private
+		*/
+		private var _growDuration:Number = 300;
+		
+		/**
+		*  @private
+		*/
+		private var _removedElementOffset:Number = 60;
+		
+		/**
+		*  @private
+		*/
+		private var _color:uint = 0xFFFFFF;
+		
+		//----------------------------------------------------------------------
+		//
+		//  Properties
+		//
+		//----------------------------------------------------------------------
+		
+		//----------------------------------
+		//  fadeOutDuration
+		//----------------------------------
+		
+		[Inspectable(category="General", defaultValue="300")]
+		
+		/**
+		*  The duration, in milliseconds, used for 
+		*  fading out renderers for added and removed items.
+		*
+		*  @default 300
+		*  
+		* @langversion 3.0
+		* @playerversion Flash 9
+		* @playerversion AIR 1.1
+		* @productversion Flex 3
+		*/
+		public function get fadeOutDuration():Number
+		{
+		return _fadeOutDuration;
+		}
+		
+		/**
+		*  @private
+		*/
+		public function set fadeOutDuration(value:Number):void
+		{
+		_fadeOutDuration = value;
+		fadeOut1.duration = value;
+		fadeOut2.duration = value;
+		}
+		
+		//----------------------------------
+		//  fadeInDuration
+		//----------------------------------
+		
+		[Inspectable(category="General", defaultValue="300")]
+		
+		/**
+		*  The duration, in milliseconds, for fading
+		*  in renderers for added and removed items.
+		*
+		*  @default 300
+		*  
+		* @langversion 3.0
+		* @playerversion Flash 9
+		* @playerversion AIR 1.1
+		* @productversion Flex 3
+		*/
+		public function get fadeInDuration():Number
+		{
+		return _fadeInDuration;
+		}
+		
+		/**
+		*  @private
+		*/
+		public function set fadeInDuration(value:Number):void
+		{
+		_fadeInDuration = value;
+		fadeIn1.duration = value;
+		fadeIn2.duration = value;
+		}
+		
+		//----------------------------------
+		//  shrinkDuration
+		//----------------------------------
+		
+		[Inspectable(category="General", defaultValue="300")]
+		
+		/**
+		*  The duration, in milliseconds, 
+		*  applied to renderers for added and removed items.
+		*
+		*  @default 300
+		*  
+		* @langversion 3.0
+		* @playerversion Flash 9
+		* @playerversion AIR 1.1
+		* @productversion Flex 3
+		*/
+		public function get shrinkDuration():Number
+		{
+		return _shrinkDuration;
+		}
+		
+		/**
+		*  @private
+		*/
+		public function set shrinkDuration(value:Number):void
+		{
+		_shrinkDuration = value;
+		shrink.duration = value;
+		}
+		
+		//----------------------------------
+		//  growDuration
+		//----------------------------------
+		
+		[Inspectable(category="General", defaultValue="300")]
+		
+		/**
+		*  The duration, in milliseconds, 
+		*  applied to renderers for added and removed items.
+		*
+		*  @default 300
+		*  
+		* @langversion 3.0
+		* @playerversion Flash 9
+		* @playerversion AIR 1.1
+		* @productversion Flex 3
+		*/
+		public function get growDuration():Number
+		{
+		return _growDuration;
+		}
+		
+		/**
+		*  @private
+		*/
+		public function set growDuration(value:Number):void
+		{
+		_growDuration = value;
+		grow.duration = value;
+		}
+		
+		//----------------------------------
+		//  removedElementOffset
+		//----------------------------------
+		
+		[Inspectable(category="General", defaultValue="100")]
+		
+		/**
+		*  The offset in milliseconds between the effects applied
+		*  to the renderers representing multiple items deleted
+		*  at the same time. If 0, all renderers will fade and shrink
+		*  simultaneously.
+		*
+		*  @default 100
+		*  
+		*  @langversion 3.0
+		*  @playerversion Flash 9
+		*  @playerversion AIR 1.1
+		*  @productversion Flex 3
+		*/
+		public function get removedElementOffset():Number
+		{
+		return _removedElementOffset;
+		}
+		
+		/**
+		*  @private
+		*/
+		public function set removedElementOffset(value:Number):void
+		{
+		_removedElementOffset = value;
+		fadeOut1.perElementOffset = value;
+		}
+		
+		//----------------------------------
+		//  color
+		//----------------------------------
+		
+		[Inspectable(category="General", format="Color", defaultValue="0xFFFFFF")]
+		
+		/** 
+		*  Hex value that represents the color used when fading
+		*  the added and removed item.
+		*
+		*  @default 0xFFFFFF
+		*  
+		*  @langversion 3.0
+		*  @playerversion Flash 9
+		*  @playerversion AIR 1.1
+		*  @productversion Flex 3
+		*/
+		public function get color():Number
+		{
+		return _color;
+		}
+		
+		/**
+		*  @private
+		*/
+		public function set color(value:Number):void
+		{
+		_color = value;
+	/* 	fadeOut1.color = value;
+		fadeOut2.color = value;
+		fadeIn1.color = value;
+		fadeIn2.color = value;
+		dissolve1.color = value; */
+		}
+		
+		//----------------------------------------------------------------------
+		//
+		//  Overridden methods: Effect
+		//
+		//----------------------------------------------------------------------
+		
+		/**
+		*  @private
+		*/
+/* 		public override function createInstances(targets:Array = null):Array
+		{
+		// Temporary workaround for beta
+		// persistAfterEnd will become a public property after API
+		// changes are finalized.
+		//fadeOut1.mx_internal::persistAfterEnd = true;
+		//wipeUp1.mx_internal::persistAfterEnd = true;
+		//dissolve1.mx_internal::persistAfterEnd = true;
+		return super.createInstances(targets);
+		}
+		 */
+
+			protected function parallel1_effectStartHandler(event:EffectEvent):void
+			{
+				trace("FFFFFFFFFFFF");
+			}
+
+		]]>
+	</fx:Script>
+	
+	<s:children>
+		<!-- Removed items fade out sequentially, then collapse down to nothing -->
+		<s:Sequence filter="removeItem" >
+			<!-- To work with device fonts, Dissolve instead of Fade -->
+			<s:Fade id="fadeOut1"  alphaFrom="1.0" alphaTo="0.0" duration="300"  perElementOffset="60" />
+			<!-- Resizing is tricky with device fonts...even though the Dissolve rectangle will stay in -->
+			<!-- place it will resize along with the renderer. But the resizing doesn't clip the text -->
+			<!-- in the default renderer, so we do a simultaneous Wipe -->
+			<s:Parallel id="shrink" duration="300" >
+				<s:Resize  heightTo="0.0" />
+	<!--			<mx:WipeUp id="wipeUp1" showTarget="false" />-->
+			</s:Parallel>
+			<mx:RemoveItemAction/>
+			<!-- temporary workaround for issue in how Sequence end events are triggered -->
+			<s:Resize duration="1"/> 
+		</s:Sequence>
+		<!-- suspendBackgroundProcessing helps reduce flicker noticeably here -->
+		<s:Sequence filter="addItem" suspendBackgroundProcessing="true" >
+			<s:Fade id="dissolve1" alphaTo="0.0" duration="1" />
+			<mx:AddItemAction/>
+			<s:Parallel id="grow" duration="300">
+				<mx:WipeDown/>
+				<s:Resize heightFrom="0.0"/>
+			</s:Parallel>
+			<s:Fade id="fadeIn1" alphaFrom="0.0" alphaTo="1.0" duration="300"/>
+		</s:Sequence>
+		<s:Sequence>
+			<s:Fade id="fadeOut2" alphaTo="0.0" duration="300"  filter="replacedItem" />
+			<mx:RemoveItemAction filter="replacedItem" />
+			<mx:AddItemAction filter="replacementItem"/>
+			<s:Fade id="fadeIn2" alphaTo="1.0" duration="300"  filter="replacementItem"/>
+		</s:Sequence>
+	</s:children>
+
+</s:Parallel>

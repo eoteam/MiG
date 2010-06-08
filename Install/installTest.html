@@ -6,13 +6,15 @@
 </head>
 <body>
 
-<form name="contentForm" method="POST" action="installFileTest.php">
+<form name="contentForm" enctype="multipart/form-data" method="POST" action="installFileTest.php">
 
-	MiG package : <input type="file" size="32" name="Filedata" value=""> <br /><br />
+	MiG package* : <input type="file" size="32" name="Filedata" value=""> <br />
+	* All the files and folders contained in the zip will be extracted at the same level as the installer script. <br /><br />
+
 
 	Server : <input type="text" name="db_server"/> <br />
 	User name : <input type="text" name="db_user"/> <br />
-	Password : <input type="text" name="db_pass"/> <br />
+	Password : <input type="password" name="db_pass"/> <br />
 	DB name : <input type="text" name="db_name"/> <br /><br />
 	
 	'Files' folder name: <input type="text" name="folder_name" value="files"/> <br /><br />

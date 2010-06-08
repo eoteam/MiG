@@ -7,12 +7,13 @@ package org.mig.view.components.main
 	
 	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.content.ContainerNode;
+	import org.mig.view.controls.MigTree;
 	import org.mig.view.events.ContentViewEvent;
 	
 	public class ContentTreeDataDescriptor extends DefaultDataDescriptor
 	{
-		protected var tree:Tree;
-		public function ContentTreeDataDescriptor(tree:Tree) {
+		protected var tree:MigTree;
+		public function ContentTreeDataDescriptor(tree:MigTree) {
 			this.tree = tree;
 			super();
 		}

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <flexLibProperties includeAllClasses="true" version="3">
   <includeClasses>
     <classEntry path="org.mig.view.skins.controls.ToolTabBarSkin"/>
@@ -9,7 +9,6 @@
     <classEntry path="org.mig.view.controls.DataButton"/>
     <classEntry path="org.mig.view.skins.datagrid.DataGridHeaderBackgroundSkin"/>
     <classEntry path="org.mig.view.controls.DataCheckBox"/>
-    <classEntry path="org.mig.view.skins.buttons.LinkButtonSkin"/>
     <classEntry path="org.mig.view.skins.dropdowns.Test"/>
     <classEntry path="org.mig.view.controls.colorPicker"/>
     <classEntry path="org.mig.view.controls.AdvancedColorPicker"/>
@@ -20,6 +19,11 @@
     <classEntry path="org.mig.view.skins.controls.NumericStepperSkin"/>
     <classEntry path="org.mig.view.skins.buttons.StepperDownArrowSkin"/>
     <classEntry path="org.mig.view.renderers.CustomFieldListCheckBox"/>
+    <classEntry path="org.mig.view.controls.IconToggleButton"/>
+    <classEntry path="org.mig.view.skins.buttons.IconToggleButtonSkin"/>
+    <classEntry path="org.mig.view.controls.IconButton"/>
+    <classEntry path="org.mig.view.skins.buttons.IconButtonSkin"/>
+    <classEntry path="org.mig.view.skins.buttons.DefaultGrayToggleButtonSkin"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -52,6 +52,7 @@ package org.mig.controller
 					for each(var node:ContainerNode in event.args[0]) {
 						service.deleteContainer(node);
 						service.addHandlers(handleContainerDelete);
+						node.state = ContentNode.LOADING;
 					}
 				break; 
 				case ContentEvent.DUPLICATE:
@@ -79,13 +80,14 @@ package org.mig.controller
 		private function handleContainerDelete(data:Object):void {
 			var result:StatusResult = data.result as StatusResult;
 			var node:ContainerNode = data.token.content as ContainerNode;
+			node.state = ContentNode.LOADED;
 			if(result.success) {
 				var index:int = node.parentNode.children.getItemIndex(node);
 				node.parentNode.children.removeItemAt(index);
 				eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Container delete successfully"));
 				deleteTracker++;
 				if(deleteTracker == deleteCount) {
-					eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_CONTENT));
+					//eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_CONTENT));
 				}
 			}
 		}
@@ -97,7 +99,7 @@ package org.mig.controller
 			node.parentNode.children.addItemAt(newNode,0);
 			
 			eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Container duplicated successfully"));
-			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_CONTENT));
+			//eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_CONTENT));
 			
 			/*			dupTracker++;
 			if(dupTracker == dupCount)
@@ -200,7 +202,7 @@ package org.mig.controller
 			var node:ContainerNode = new ContainerNode(contentData.migtitle,config,contentData,contentModel.currentContainer,
 									contentModel.currentContainer.privileges,false,is_fixed,nesting);
 			contentModel.currentContainer.children.addItemAt(node,0);
-			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.ENABLE_NEWCONTENT,false));
+			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.ENABLE_NEW_CONTENT,false));
 			eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Container created successfully"));
 		}
 	}

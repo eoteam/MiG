@@ -10,6 +10,7 @@ require_once "filepath.php";
 
 // VALID ACTION NAMES - FOR SECURITY!
 $validReadFunctions = array (
+"getRoot",
 "validateUser",
 "getCustomFields",
 "getData",

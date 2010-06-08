@@ -26,7 +26,7 @@ package org.mig.services
 			service = new HTTPService();
 			service.method = URLRequestMethod.POST;
 			service.url = url;
-			service.showBusyCursor = true;
+			service.showBusyCursor = false;
 			service.resultFormat = HTTPService.RESULT_FORMAT_OBJECT;
 			service.concurrency = Concurrency.MULTIPLE;
 			service.xmlDecode = (responseType == ResponseType.DATA) ? decodeData:decodeStatus;

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="false" xmlns:controls="com.thanksmister.controls.*">
+	
+	<fx:Script>
+		<![CDATA[
+			import org.mig.events.ViewEvent;
+			import org.mig.model.vo.content.ContainerNode;
+			import org.mig.model.vo.content.ContentStatus;
+			import org.mig.view.skins.buttons.TextOnlyButtonSkin;
+			public var thumbURL:String;
+			[Bindable] public var imageSource:String;
+			[Bindable] private var content:ContainerNode;
+			[Bindable] private var bgColor:uint;	
+			override public function set data(value:Object):void {
+				super.data = value;
+				content = value as ContainerNode;
+				if(content) {
+					imageSource = thumbURL + content.data.path + content.data.name;
+					var c:String = String(content.data.color);
+					bgColor = Number('0x'+c.substr(1,c.length));
+				}
+			}
+			private function handleDetailClick(event:MouseEvent):void {
+				this.owner.dispatchEvent(new ViewEvent(ViewEvent.SHOW_CONTENT_MEDIA_DETAIL));
+			}
+		]]>
+	</fx:Script>
+	<s:states>
+		<s:State name="normal" />            
+		<s:State name="hovered" />
+		<s:State name="selected" />
+		<s:State name="normalAndShowsCaret"/>
+		<s:State name="hoveredAndShowsCaret"/>
+		<s:State name="selectedAndShowsCaret"/>
+	</s:states>
+	
+	<s:VGroup top="0" bottom="0" left="0" right="0">
+		<s:Group>
+			<s:Rect height="210" width="200" includeIn="selected">
+				<s:stroke>
+					<s:SolidColorStroke  weight="2" color="0xed1c58" />
+				</s:stroke>
+			</s:Rect>
+			<controls:ImageCache height="208" width="198" id="image"  source="{imageSource}" maintainAspectRatio="true"   />	
+		</s:Group>
+		
+		<s:HGroup left="0" right="0" verticalAlign="middle">
+			<s:Group height="20" width="100%">
+				<s:Rect top="0" bottom="0" left="0" right="0">
+					<s:fill>
+						<s:SolidColor color="{bgColor}" />
+					</s:fill>
+				</s:Rect>
+				<s:Label text="{content.baseLabel}" width="100%" styleName="bodyCopy" verticalCenter="0"/>	
+			</s:Group>
+			
+			<s:Button label="i" skinClass="org.mig.view.skins.buttons.TextOnlyButtonSkin" click="handleDetailClick(event)"  />
+		</s:HGroup>
+				
+	</s:VGroup>
+	
+	<s:CheckBox left="8" top="8" selected="{content.data.statusid == ContentStatus.DRAFT?false:true}" />
+
+	
+</s:ItemRenderer>

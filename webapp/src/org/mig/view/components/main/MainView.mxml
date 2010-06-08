@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group
-		xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		xmlns:s="library://ns.adobe.com/flex/spark" 
-		xmlns:mx="library://ns.adobe.com/flex/mx"
-		xmlns:view="org.mig.view.*" 
-		xmlns:components="org.mig.view.components.*"
-		xmlns:main="org.mig.view.components.main.*"
-		xmlns:fe="com.fxcomponents.controls.fe.*"
-		xmlns:assets="org.mig.view.assets.*"
-		height="100%"
-		creationComplete="handleCreationComplete()"
-		resize="handleResize()" xmlns:easing="com.greensock.easing.*">
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:view="org.mig.view.*" 
+	xmlns:components="org.mig.view.components.*"
+	xmlns:main="org.mig.view.components.main.*"
+	xmlns:fe="com.fxcomponents.controls.fe.*"
+	xmlns:assets="org.mig.view.assets.*"
+	height="100%"
+	creationComplete="handleCreationComplete()"
+	resize="handleResize()" xmlns:easing="com.greensock.easing.*" xmlns:controls="org.mig.view.controls.*">
 	
 	<fx:Script>
 		<![CDATA[ 
 			import mx.effects.easing.Exponential;
 			
 			import org.mig.view.skins.buttons.AddContainerButtonSkin;
-			import org.mig.view.skins.buttons.FullScreenButtonSkin;
-			import org.mig.view.skins.buttons.LeftPanelCollapseButtonSkin;
-			import org.mig.view.skins.buttons.RightPanelCollapseButtonSkin;
 			import org.mig.view.skins.buttons.SearchButtonSkin;
-			import org.mig.view.skins.buttons.TrashButtonSkin;
 			import org.mig.view.skins.dropdowns.ComboBoxHeaderButtonSkin;
 			import org.mig.view.skins.dropdowns.DefaultComboBoxSkin;
 			[Embed(source='/migAssets/library.swf#Tree_folderClosedIcon')]
@@ -45,59 +41,47 @@
 			public var optionsComboPrompt:String;
 			public var helpComboPrompt:String = "Help"; 
 			
-			private function handleCreationComplete():void
-			{
+			private function handleCreationComplete():void {
 				var c:Number = preloaderHolder.width > preloaderHolder.height ? preloaderHolder.height : preloaderHolder.height;
 				var a:Number = Math.sqrt(c*c/2);
 				preloaderHolder.x = (this.width +a)/2;
 				preloaderHolder.y = (this.height+a)/2;
+				pendingTree.visible = false;
 			}
-			
-			public function set containerPanelVisible(newVal:Boolean):void
-			{
+			public function set containerPanelVisible(newVal:Boolean):void {
 				_containerPanelVisible = newVal;
 				toggleContainerPanelVisible();
 			}
-			public function get containerPanelVisible():Boolean
-			{
+			public function get containerPanelVisible():Boolean {
 				return _containerPanelVisible;
 			}
-			private function toggleContainerPanelVisible():void
-			{
-				if(_containerPanelVisible == true)
-				{
+			private function toggleContainerPanelVisible():void {
+				if(_containerPanelVisible == true) {
 					containerPanelCollapseButton.selected = false;
 					//hide/show tray content
 					containerTray.visible = true;
 					controlBox.visible = true;
 				}
-				else
-				{
+				else {
 					containerPanelCollapseButton.selected = true;
 					containerTray.visible = false;
 					controlBox.visible = false;
 				}
 			}
-			public function set toolsPanelVisible(newVal:Boolean):void
-			{
+			public function set toolsPanelVisible(newVal:Boolean):void {
 				_toolsPanelVisible = newVal;
 				toggleToolsPanelVisible();
 			}
-			public function get toolsPanelVisible():Boolean
-			{
+			public function get toolsPanelVisible():Boolean {
 				return _toolsPanelVisible;
 			}
-			
-			private function toggleToolsPanelVisible():void
-			{
-				if(_toolsPanelVisible == true)
-				{
+			private function toggleToolsPanelVisible():void {
+				if(_toolsPanelVisible == true) {
 					toolsPanelCollapseButton.selected = false;
 					//hide/show tray content
 					//editorsView.visible = true;
 				}
-				else
-				{
+				else {
 					toolsPanelCollapseButton.selected = true;
 					//editorsView.visible = false;	
 				}
@@ -114,11 +98,56 @@
 					preloaderHolder.y = (this.height+a)/2;
 				}
 			}
-
+			private function handleSliderParentReSize(event:Event):void{
+				//handle reaction to dragging from a closed state or 
+				//to a closed state so that the arrow reflects this
+				//for both sliders
+				if(event.currentTarget.name=="pendingTray"){
+					if (event.currentTarget.height > pendingTrayTitleHolder.height && pendingTree.visible == false){
+						pendingTree.visible = true;
+						pendingStateIcon.source = openIcon;
+					}
+					else{
+						if (event.currentTarget.height < pendingTrayTitleHolder.height){
+							pendingTree.visible = false;
+							event.currentTarget.height = pendingTrayTitleHolder.height;
+							pendingStateIcon.source = closeIcon;
+						}
+					}
+				}
+				else{
+					if (event.currentTarget.width > SIDEBAR_CLOSED_WIDTH){
+						event.currentTarget.visible = true;
+						if(event.currentTarget.name=="leftMain"){containerPanelVisible = true;}
+						else if(event.currentTarget.name=="rightMain"){toolsPanelVisible = true;}
+						
+					}
+					else{
+						if (event.currentTarget.width <= SIDEBAR_CLOSED_WIDTH){
+							
+							if(event.currentTarget.name=="leftMain"){containerPanelVisible = false;}
+							else if(event.currentTarget.name=="rightMain"){toolsPanelVisible = false;}
+							event.currentTarget.width = SIDEBAR_CLOSED_WIDTH;
+						}
+					} 
+				}
+			}	
+			private function pendingTrayToggle(event:MouseEvent):void {
+				if(pendingTree.visible == true) {
+					closePendingTray.play();
+					pendingTree.visible = false;
+					pendingStateIcon.source = closeIcon;
+				}
+				else {
+					openPendingTray.play();
+					pendingTree.visible = true;
+					pendingStateIcon.source = openIcon;
+				}
+			}
 		]]>
 	</fx:Script>
 	<mx:SWFLoader id="bgLogoHolder" source="{bgLogo}" visible="false" horizontalCenter="0" top="200" width="211" height="290" showEffect="fadeIn" />
-
+	
 	<s:VGroup id="bodyContainer"  top="85" width="100%" height="100%" visible="false" showEffect="fadeIn" gap="0" >
 		
 		<s:Rect width="100%" height="1">
@@ -129,55 +158,66 @@
 		<mx:Spacer height="3" />
 		
 		<fe:ExtendedDividedBox direction="horizontal" width="100%" height="100%" 
-		   liveDragging="false" clipContent="false" id="mainBody"  
-		   barFillColors="[0xFFFFFF,0xFFFFFF]" 
-		   dividerThickness="1" dividerSkin="com.fxcomponents.skins.MainDividerSkin">
-
-			<s:Group width="{LEFT_SIDEBAR_OPEN_WIDTH}" height="100%" id="leftMain" left="5">
+							   liveDragging="false" clipContent="false" id="mainBody"  
+							   barFillColors="[0xFFFFFF,0xFFFFFF]" 
+							   dividerThickness="1" dividerSkin="com.fxcomponents.skins.MainDividerSkin">
 			
+			<s:Group width="{LEFT_SIDEBAR_OPEN_WIDTH}" height="100%" id="leftMain" left="5">
+				
 				<fe:ExtendedDividedBox id="containerTray" direction="vertical" width="100%" height="{leftMain.height - 38}" liveDragging="false" clipContent="false"
-				barFillColors="[0xFFFFFF,0xFFFFFF]" dividerThickness="1" dividerSkin="com.fxcomponents.skins.MainDividerSkin" top="{controlBox.height+2}" right="3">
+									   barFillColors="[0xFFFFFF,0xFFFFFF]" dividerThickness="1" dividerSkin="com.fxcomponents.skins.MainDividerSkin" top="{controlBox.height+2}" right="3">
 					
 					<s:VGroup id="treesVBox" width="100%" height="100%"  paddingLeft="0" paddingTop="0" paddingRight="0" paddingBottom="0" gap="0">
 						<main:ManagersTree width="100%" id="managersTree" height="24" verticalScrollPolicy="off"  />
 						<main:ContentTree width="100%" height="100%" id="contentTree" />	
 					</s:VGroup>
 					
-					<s:VGroup id="pendingTray" width="100%" height="25" gap="0">
-						<s:HGroup width="100%" gap="0" paddingTop="0" verticalAlign="middle">
-							<mx:SWFLoader source="{closeIcon}" id="pendingStateIcon" mouseChildren="false" useHandCursor="true" buttonMode="true" />
-							<mx:SWFLoader source="{draftIconWhite}" height="25" />
-							<s:Label id="pendingTrayTitle" text="Pending Containers" mouseChildren="false" useHandCursor="true" buttonMode="true"/>
-						</s:HGroup>		
-						<!--<content:PendingList width="100%"  height="100%" id="pendingTree"  />-->
+					<s:VGroup id="pendingTray" width="100%" height="25" gap="0" resize="handleSliderParentReSize(event)">
+						<s:HGroup width="100%" gap="2" paddingTop="0" verticalAlign="middle" height="25" id="pendingTrayTitleHolder">
+							<mx:SWFLoader  height="100%"	 source="{closeIcon}"  id="pendingStateIcon" mouseChildren="false" useHandCursor="true" buttonMode="true"  click="pendingTrayToggle(event)"/>
+							<mx:SWFLoader  height="100%"	 source="{draftIconWhite}" mouseChildren="false" useHandCursor="true" buttonMode="true"  click="pendingTrayToggle(event)"/>
+							<s:Label text="Pending Containers"  height="100%"	mouseChildren="false" useHandCursor="true" buttonMode="true" click="pendingTrayToggle(event)"/>
+						</s:HGroup>	
+						<main:PendingListView  width="100%"  height="100%" id="pendingTree"  />
 					</s:VGroup>
 				</fe:ExtendedDividedBox>
-	
-				<s:ToggleButton id="containerPanelCollapseButton"  mouseChildren="false" buttonMode="true" skinClass="org.mig.view.skins.buttons.LeftPanelCollapseButtonSkin"
-				click="containerPanelVisible=!containerPanelVisible; if(containerPanelVisible==true){openContainerTray.play();}else{closeContainerTray.play();}" bottom="3" right="4"/>
-			
-				<!--<content:PublishDropBox width="100%" height="{contentTree.height-2}"  top="{managersTree.height+controlBox.height+2}" id="publishDropBox" 
-										visible="false" hideEffect="publishFadeOut" showEffect="publishFadeIn" right="3" />	
-				-->
-			
+				
+				<controls:IconToggleButton id="containerPanelCollapseButton"  mouseChildren="false" buttonMode="true" 
+										   icon1="@Embed(source='/migAssets/library.swf#collapsePanelIconRight')"
+										   icon2="@Embed(source='/migAssets/library.swf#collapsePanelIconLeft')"
+										   click="containerPanelVisible=!containerPanelVisible; if(containerPanelVisible==true){openContainerTray.play();}else{closeContainerTray.play();}" bottom="3" right="4"/>
+				
+				<s:SkinnableContainer width="100%" height="{contentTree.height-2}"  top="{managersTree.height+controlBox.height+2}" id="publishDropBox" 
+									  visible="false" hideEffect="fadeOut" showEffect="fadeIn" right="3"  backgroundColor="0x000000" backgroundAlpha="0.9" >
+					<s:layout>
+						<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" gap="8" />
+					</s:layout>
+					<s:Label text="Drop containers to publish" styleName="locationHeader" fontSize="16" color="0xffffff"/>
+					<controls:Spinner tickWidth="4" size="40" numTicks="10" tickColor="0xffffff" autoPlay="true" visible="false" id="publishSpinner" />					
+				</s:SkinnableContainer>
+				
 				<!-- Content Control -->
 				<s:HGroup width="100%" id="controlBox" paddingTop="0" clipAndEnableScrolling="false" right="3" >
 					<s:ToggleButton styleName="searchButton" id="searchButton" mouseChildren="false" buttonMode="true"  toolTip="Search" selected="false" skinClass="org.mig.view.skins.buttons.SearchButtonSkin" />
 					<s:ToggleButton  enabled="false" styleName="addContainerButton"  id="addButton" toolTip="New Container" mouseChildren="false" buttonMode="true" skinClass="org.mig.view.skins.buttons.AddContainerButtonSkin"/>
 					<s:Rect width="100%" />
-					<s:ToggleButton styleName="trashButton"  toolTip="Delete"  id="trashButton" mouseChildren="false"  buttonMode="true" skinClass="org.mig.view.skins.buttons.TrashButtonSkin" />
+					<controls:IconToggleButton styleName="trashButton"  toolTip="Delete"  id="trashButton" mouseChildren="false"  buttonMode="true" 
+											   icon1="@Embed(source='/migAssets/library.swf#trashSelectedUp')"
+											   icon2="@Embed(source='/migAssets/library.swf#trashUp')" />
 				</s:HGroup>
-			
+				
 			</s:Group>
-		
+			
 			<!-- Main Content Area -->
 			<main:ContentViewer  width="55%" height="100%"  id="contentViewer"  top="3"/>			
 			
 			<!-- Tools -->
 			<s:Group id="rightMain" width="{RIGHT_SIDEBAR_OPEN_WIDTH}" height="100%">
 				<main:Tools id="editorsView"  width="100%" height="{rightMain.height - 38}" clipContent="true" horizontalScrollPolicy="off"   />
-				<s:ToggleButton id="toolsPanelCollapseButton"  mouseChildren="false" buttonMode="true"  skinClass="org.mig.view.skins.buttons.RightPanelCollapseButtonSkin" 
-				click="toolsPanelVisible=!toolsPanelVisible; if(toolsPanelVisible==true){openToolsTray.play();}else{closeToolsTray.play();}" bottom="3"  left="4"/>
+				<controls:IconToggleButton id="toolsPanelCollapseButton"  mouseChildren="false" buttonMode="true"  
+										   icon2="@Embed(source='/migAssets/library.swf#collapsePanelIconRight')"
+										   icon1="@Embed(source='/migAssets/library.swf#collapsePanelIconLeft')"
+										   click="toolsPanelVisible=!toolsPanelVisible; if(toolsPanelVisible==true){openToolsTray.play();}else{closeToolsTray.play();}" bottom="3"  left="4"/>
 			</s:Group>			
 		</fe:ExtendedDividedBox>	
 	</s:VGroup>
@@ -190,9 +230,11 @@
 		<s:HGroup verticalAlign="middle" id="topControls" gap="3" paddingTop="3">
 			<s:DropDownList styleName="migComboBox" width="160" id="appOptionsCombo" enabled="false"   />
 			<s:Button width="160" id="prompt" label="{loginView.prompt}" click="loginView.visible=!loginView.visible" top="2" 
-			skinClass="org.mig.view.skins.dropdowns.ComboBoxHeaderButtonSkin" />					
+					  skinClass="org.mig.view.skins.dropdowns.ComboBoxHeaderButtonSkin" />					
 			<s:DropDownList  styleName="migComboBox" width="160"  id="helpCombo"  prompt="Help" enabled="false"  skinClass="org.mig.view.skins.dropdowns.DefaultComboBoxSkin" />
-			<s:ToggleButton id="fullScreenButton"  mouseChildren="false" buttonMode="true" toolTip="Toggle Fullscreen" skinClass="org.mig.view.skins.buttons.FullScreenButtonSkin"/>				
+			<controls:IconToggleButton  id="fullScreenButton"  mouseChildren="false" buttonMode="true" toolTip="Toggle Fullscreen"
+										icon1="@Embed(source='/migAssets/library.swf#fullScreen')" icon2="@Embed(source='/migAssets/library.swf#fullScreen')" />				
+			<s:CheckBox label="show ids" id="idCheckBox" />
 		</s:HGroup>
 	</s:Group>
 	
@@ -210,25 +252,22 @@
 	
 	
 	<mx:SWFLoader id="mainLogo" source="migAssets/introLogoAnimation.swf" width="560" height="560" top="2" right="0" autoLoad="true"
-	complete="logoCompleteHandler(event)" />
+				  complete="logoCompleteHandler(event)" />
 	
 	<!--	<mx:Text styleName="bodyCopy" id="timestamp" fontSize="10" text="04/29/09" y="70" right="5" visible="false" />	--> 
 	
 	<fx:Declarations>
-		<s:Resize id="wipeDown" duration="500" easer="{wipeDownEaser}" heightTo="320" disableLayout="true" />
-		<s:Resize id="wipeUp" duration="500" easer="{wipeUpEaser}" heightTo="0" disableLayout="true"/>
-				
-		<s:Sine easeInFraction="1"  id="wipeUpEaser" />
-		<s:Sine easeInFraction="0" id="wipeDownEaser" />
+		<s:Resize id="wipeDown" duration="500" easer="{easeOut}" heightTo="320" disableLayout="true" />
+		<s:Resize id="wipeUp" duration="500" easer="{easeIn}" heightTo="0" disableLayout="true"/>
 		
-		<mx:Fade alphaFrom="0" alphaTo="1" duration="400" id="fadeIn" easingFunction="Exponential.easeOut" />	
-		<mx:Fade alphaFrom="1" alphaTo="0" duration="400" id="fadeOut" easingFunction="Exponential.easeIn" />
+		<s:Sine easeInFraction="1"  id="easeOut" />
+		<s:Sine easeInFraction="0" id="easeIn" /> 
+		
+		<s:Fade alphaFrom="0" alphaTo="1" duration="400" id="fadeIn"  easer="{easeOut}" />	
+		<s:Fade alphaFrom="1" alphaTo="0" duration="400" id="fadeOut"  easer="{easeIn}" />
 		
 		<mx:Fade alphaFrom="0" alphaTo="1" duration="800" id="logoFadeIn"  target="{mainLogo}" />	
 		<mx:Fade alphaFrom="1" alphaTo="0" duration="800" startDelay="600" id="logoFadeOut"  target="{mainLogo}" />
-		
-		<mx:Fade alphaFrom="0" alphaTo="1" duration="400" id="publishFadeIn" easingFunction="Exponential.easeOut" />	
-		<mx:Fade alphaFrom="1" alphaTo="0" duration="400" id="publishFadeOut" easingFunction="Exponential.easeIn" />	
 		
 		<mx:Resize id="closePendingTray" targets="{[pendingTray]}" duration="400" heightTo="10" />
 		<mx:Resize id="openPendingTray" targets="{[pendingTray]}" duration="400" heightTo="250"/>
@@ -241,8 +280,5 @@
 		
 		<mx:Resize id="openManagers" target="{managersTree}" duration="200" />
 	</fx:Declarations>
-		
-	
-	
 	
 </s:Group>

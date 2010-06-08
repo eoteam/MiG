@@ -29,7 +29,7 @@ in accordance with the terms of the license agreement accompanying it.
 		/** 
 		* @copy spark.skins.spark.ApplicationSkin#hostComponent
 		*/
-		[HostComponent("spark.components.ToggleButton")]
+		[HostComponent("org.mig.view.controls.IconToggleButton")]
 		]]>
 	</fx:Metadata>
 	
@@ -65,7 +65,7 @@ in accordance with the terms of the license agreement accompanying it.
 		<s:State name="disabledAndSelected" stateGroups="selectedUpStates, disabledStates, selectedStates" />
 	</s:states>
 	
-	<mx:SWFLoader source.selectedStates="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#trashSelectedUp')" id="graphic"
-				  source.deselected="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#trashUp')" />
+	<mx:SWFLoader source.selectedStates="{this.hostComponent.icon1}" id="graphic"
+				  source.deselected="{this.hostComponent.icon2}" />
 	
 </s:SparkSkin>

@@ -5,7 +5,7 @@
 	xmlns:mx="library://ns.adobe.com/flex/mx"	
 	width="100%"  styleName="toolsContainer"  
 	height.open="100%" height.closed="{MIN_HEIGHT}" minHeight.closed="{MIN_HEIGHT}" 
-	creationComplete="addComponents()" xmlns:containers="org.mig.view.containers.*">
+	creationComplete="addComponents()" xmlns:containers="org.mig.view.containers.*" xmlns:controls="org.mig.view.controls.*">
 	
 	<fx:Metadata>
 		[DefaultProperty("contentChild")] 
@@ -83,7 +83,9 @@
 		selectedIndex="{_selectedIndex}" tabIndexChange="_selectedIndex = container.selectedIndex"  backgroundAlpha="0" 
 		paddingLeft="4" paddingRight="4" paddingTop="10"     />
 	-->
-	<s:ToggleButton top="5" right="6" width="10"  selected="{_opened}" click="opened =! opened"  skinClass="org.mig.view.skins.buttons.ToolPanelToggleButtonSkin"
+	<controls:IconToggleButton top="5" right="6" width="10"  selected="{_opened}" click="opened =! opened"  
+	 icon1="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#toolPanelClosedIcon')"
+	 icon2="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#toolPanelOpenedIcon')"
 	mouseChildren="false" buttonMode="true" />	
 	
 	<s:states>

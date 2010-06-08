@@ -7,6 +7,7 @@ package org.mig.controller.startup
 	import org.mig.model.vo.BaseContentData;
 	import org.mig.model.vo.content.ContainerNode;
 	import org.mig.model.vo.content.ContentData;
+	import org.mig.services.interfaces.IContentService;
 	import org.robotlegs.mvcs.Command;
 	import org.robotlegs.utilities.statemachine.StateEvent;
 	
@@ -18,14 +19,18 @@ package org.mig.controller.startup
 		[Inject]
 		public var appModel:AppModel;
 		
+		[Inject]
+		public var service:IContentService;
+		
 		override public function execute():void {
+			service.retrieveContentRoot()
+			service.addHandlers(handleContentLoaded);
+		}
+		private function handleContentLoaded(data:Object):void {
+			var result:ContentData = data.result[0] as ContentData;
 			var contentConfig:XML 		= appModel.config.controller[1]; //XML(config.controller.(@id == "contentController"));
 			var root:XML = XML(contentConfig.child[0].toString());
-			var data:ContentData = new ContentData();
-			data.id = 0;
-			data.count = 10000;
-			contentModel.contentModel = new ContainerNode (root.@name, root,data,null,appModel.user.privileges,true,true,false);
-			eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.RETRIEVE_CHILDREN,contentModel.contentModel));
+			contentModel.contentModel = new ContainerNode (root.@name, root,result,null,appModel.user.privileges,true,true,false);
 			
 			trace("Startup: Content Model Complete");
 			appModel.startupCount = 2;

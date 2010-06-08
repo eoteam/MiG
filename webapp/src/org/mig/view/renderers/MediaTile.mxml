@@ -18,8 +18,8 @@
 	<mx:Canvas id="dragHolder" height="150"  width="150" scaleX="{_scalePercent}" scaleY="{_scalePercent}" verticalScrollPolicy="off" horizontalScrollPolicy="off" >
 		<mx:Image doubleClickEnabled="false"  source="{imageSource}"  id="imageHolder"  scaleContent="false" width="100%" height="100%" />
 		<mx:Canvas  visible="false" id="dragCanvas"  width="100%" height="100%">
-			<mx:Image horizontalCenter="0" verticalCenter="0" width="100%" height="100%" id="fileImage"  source="{docIcon}" brokenImageSkin="com.map.assets.NoImageIcon" />
-			<mx:Label mouseEnabled="false"  width="{150*325/400}" styleName="boldCopy" color="0xffffff" text="{fileExtension}" textAlign="left" fontSize="40"  verticalCenter="0" />
+			<mx:Image horizontalCenter="0" verticalCenter="0" width="100%" height="100%" id="fileImage"  source="{docIcon}" brokenImageSkin="@Embed(source='/migAssets/library.swf#noImageIcon')" />
+			<mx:Label mouseEnabled="false"  width="{150*325/400}" styleName="boldCopy" color="0xffffff" text="{_data.extension}" textAlign="left" fontSize="40"  verticalCenter="0" />
 		</mx:Canvas>		
 	</mx:Canvas>	
 	<mx:HBox id="imageTitle" horizontalScrollPolicy="off">

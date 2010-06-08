@@ -53,8 +53,7 @@
 				<s:GradientEntry color="0x262626" alpha="1"  ratio="1" />
 			</s:LinearGradient>
 		</s:fill>
-	</s:Rect>
-	
+	</s:Rect>	
 	<s:VGroup id="mainContainer" top="15"  bottom="30"
 			  paddingTop="20" paddingLeft="10" paddingRight="10" paddingBottom="20"
 			  width="98%" gap="12">
