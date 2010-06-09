@@ -1,5 +1,6 @@
 package  org.mig.view.layouts {
     import mx.core.ILayoutElement;
+    
     import spark.components.supportClasses.GroupBase;
     import spark.layouts.supportClasses.LayoutBase;
 
@@ -13,7 +14,7 @@ package  org.mig.view.layouts {
     public class FlowLayout extends LayoutBase {
         private var _border:Number = 10;
         private var _gap:Number = 10;
-
+		[Bindable] public var runningHeight:Number = 0;
         public function set border(val:Number):void {
             _border = val;
             var layoutTarget:GroupBase = target;
@@ -73,7 +74,7 @@ package  org.mig.view.layouts {
                 //update the current pos, and add the gap
                 x += elementWidth + _gap;
             }
-
+			runningHeight = maxHeight;
             //set final content size (needed for scrolling)
             layoutTarget.setContentSize(maxWidth + _border, maxHeight + _border);
         }

@@ -45,9 +45,9 @@
 	</s:states>
 	
 
-	<s:Group width="100%">
+	<s:Group width="100%" id="buttonHolder">
 		<s:layout>
-		 	<layouts:FlowLayout gap="4" />
+		 	<layouts:FlowLayout gap="4" id="flowLayout"/>
 		</s:layout>
 		<s:Button styleName="defaultGrayButton" label="Youtube" id="youtubeBtn" click="addYoutubeVideo()" enabled.uploading="false" />				
 		<s:Button styleName="defaultGrayButton" label="Choose File(s)" id="browseBtn" click="browseFiles()" enabled.uploading="false"/>
@@ -58,6 +58,8 @@
 		visible.uploading="true" visible.upload="true" visible.browse="false"
 		enabled.upload="true" enabled.uploading="false"  enabled.browse="true"/>
 	</s:Group>
+	
+	<s:Rect height="{flowLayout.runningHeight}" />
 	
 	<s:Group id="progressBar" width="100%" height="2" alpha="0" hideEffect="fadeOut" showEffect="fadeIn" visible.browse="false" visible.uploading="true">
 		<s:Rect id="bg" width="100%" height="1">
@@ -76,8 +78,9 @@
 		<s:Label styleName="bodyCopy" id="progressText1" height="20" />	
 		<s:Label styleName="bodyCopy" id="progressText2" height="20" />			
 	</s:HGroup>
-	<mx:TextArea alpha="0" width="100%" height="100%" contentBackgroundColor="#222222" color="0xffffff"  borderStyle="none" hideEffect="fadeOut" showEffect="fadeIn"
-	styleName="bodyCopy" id="completedFilesList" visible.browse="false" visible.uploading="true" />
+	<s:TextArea alpha="0" width="100%" height="100%" contentBackgroundColor="#222222" color="0xffffff" 
+	borderVisible="false" hideEffect="fadeOut" showEffect="fadeIn" styleName="bodyCopy"
+	id="completedFilesList" visible.browse="false" visible.uploading="true" />
 	
 	<fx:Declarations>
 		<s:Fade alphaFrom="0" alphaTo="1" id="fadeIn"/>			

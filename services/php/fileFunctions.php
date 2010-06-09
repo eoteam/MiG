@@ -428,7 +428,7 @@ else {
 return $result;
 }
 function getKeywords($file) {
-	$result = parseXMP($file);
+	$result = parseXMP($file['file']);
 	if($result[0] == true) {
 		$xmp = $result[1];
 		$tempArr = explode("<dc:subject>",$xmp);

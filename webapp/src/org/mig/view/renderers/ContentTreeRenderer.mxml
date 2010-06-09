@@ -13,6 +13,8 @@
 			import org.mig.model.vo.ContentNode;
 			import org.mig.model.vo.content.ContentStatus;
 			import org.mig.view.events.ContentViewEvent;
+			[Bindable] private var labelColor:uint;
+			
 			public function set editable(value:Boolean):void {
 				input.visible = value;
 /* 				overFill.visible = bgFill.visible = labelField.visible  = !value;
@@ -24,9 +26,20 @@
 					this.owner.dispatchEvent(new ContentViewEvent(ContentViewEvent.TITLE_CHANGED,this.data,input.text));
 				}
 			}
+			override public function set data(value:Object):void {
+				super.data = value;
+				labelColor = data.data.statusid == ContentStatus.PUBLISHED ? 0x3F3F3F:0xffffff;
+				if(data.state == ContentNode.LOADING) {
+					if (selected && hasState("selected"))
+						currentState = "selectedAndLoading";	
+					else if (hovered && hasState("hovered"))
+						currentState = "hoveredAndLoading";
+					else
+						currentState =  "normalAndLoading";
+				}
+			}
 			override protected  function getCurrentRendererState():String {
 				if(data.state == ContentNode.LOADING) {
-					
 					if (selected && hasState("selected"))
 						return "selectedAndLoading";
 					
@@ -94,12 +107,12 @@
 		<s:BitmapImage id="iconImage" source="{data.isRoot?treeListData.icon:null}" visible="{data.isRoot}" includeInLayout="{data.isRoot}" />
 		<s:Group width="100%">
 			<s:Label id="labelField"  verticalCenter="0"  text="{treeListData.label}"  maxDisplayedLines="1" width="100%" 
-			color="{data.data.statusid == ContentStatus.PUBLISHED ? 0x3F3F3F:0xffffff}"
+			color="{labelColor}"
 			color.selectedStates="0xFFFFFF" color.hoveredStates="0xFFFFFF" styleName="boldCopy"  />
 			<s:TextInput width="100%" styleName="inputFieldGray" verticalCenter="0" visible="false" color="0xFFFFFF" 
 			fontFamily="Transit-Bold" id="input" text="{data.baseLabel}"
 			focusOut="editable=false" enter="editable=false"  />			
 		</s:Group>
-		<controls:Spinner  includeIn="loadingStates"  id="spinner"  tickColor="0x333333" size="20" tickWidth="2" numTicks="10" visible="{data.state == ContentNode.LOADING?true:false}"   autoPlay="true" />
+		<controls:Spinner  includeIn="loadingStates"  id="spinner" visible="{data.state == ContentNode.LOADING}"  tickColor="0x333333" size="20" tickWidth="2" numTicks="10" autoPlay="true" />
 	</s:HGroup>
 </s:MXTreeItemRenderer>

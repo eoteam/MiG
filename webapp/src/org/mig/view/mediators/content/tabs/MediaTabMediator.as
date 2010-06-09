@@ -67,6 +67,7 @@ package org.mig.view.mediators.content.tabs
 			view.addEventListener(ViewEvent.SHOW_CONTENT_MEDIA_DETAIL,handleDetailView);
 			view.currentState = "usage";
 			view.addEventListener("viewBtn",handleViewButtons);
+			view.scaleSlider.value = 1;
 		}
 		private function handleViewButtons(event:DataEvent):void {
 			var index:int = Number(event.data);

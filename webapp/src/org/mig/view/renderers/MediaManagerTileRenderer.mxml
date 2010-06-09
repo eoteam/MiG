@@ -138,14 +138,13 @@
 				<s:SolidColor color="0x727376" />
 			</s:fill>
 		</s:Rect>
-		<controls:ImageCache verticalCenter="0" alpha="0" horizontalCenter="0" 
-		 width="100%" height="100%" 
+		<controls:ImageCache verticalCenter="0" alpha="0"  width="100%" height="100%" 
 		 id="thumbHolder" progress="handleImageProgress(event)" complete="handleImageComplete(event)"  
 		 brokenImageSkin="org.mig.view.assets.NoImageIcon" />
-		<s:Label text="{fileExtension}" id="thumbLabel" left="5" verticalCenter="0" width="100%"/>		
+		<s:Label text="{fileExtension}" id="thumbLabel" fontSize="22" horizontalCenter="0" verticalCenter="0" width="100%"/>		
 	</s:Group>
 
 
-	<s:Label fontSize="20" width="100%" id="textHolder"   text="{_content.label}" maxDisplayedLines="1"  
+	<s:Label fontSize="16" width="100%" id="textHolder" textAlign="center"   text="{_content.label}" maxDisplayedLines="1"  
 	styleName="bodyMedium"  scaleX="{1/scalePercent}" scaleY="{1/scalePercent}"/>
 </s:ItemRenderer>

@@ -12,7 +12,7 @@ package org.mig.view
 		import org.mig.view.controls.CachedLabel; CachedLabel;
 		import org.mig.view.controls.LayoutAnimator; LayoutAnimator;
 		import org.mig.view.controls.LayoutTarget; LayoutTarget;
-		import org.mig.view.controls.MiGList; MiGList;
+		/*import org.mig.view.controls.MiGList; MiGList;*/
 		import org.mig.view.controls.MiGNumericStepper; MiGNumericStepper;	
 		import org.mig.view.controls.MiGTextInput; MiGTextInput;
 		import org.mig.view.controls.MiGTextInputSpell; MiGTextInputSpell;
