@@ -47,7 +47,7 @@ package org.mig.controller
 					node = event.args[0] as DirectoryNode;
 					var name:String = event.args[1];
 					var dirData:MediaData = event.args[2];
-					var newDirectory:String = node.directory + "/" + name;
+					var newDirectory:String = node.directory + name;
 					directory = new DirectoryNode(name,node.config, dirData, node, newDirectory, node.privileges);
 					var index:int = 0;
 					for each(item in node.children) {

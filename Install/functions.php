@@ -8,9 +8,8 @@ function checkPHPVersion($minVersion)
 {
 	$phpV = PHP_VERSION;
 
-	// if we've got a system like ubuntu or something else,
-	// we get something like '5.2.4-2ubuntu5.2',
-	// to fix this, use the following
+	// if we've got a system like ubuntu or something else, we get something like '5.2.4-2ubuntu5.2',
+	// the following will fix it
 	if (strpos($phpV,'-') != null) {
 		$phpV = substr($phpV,0,strpos($phpV,'-'));
 	}
@@ -35,15 +34,15 @@ function checkPHPVersion($minVersion)
  */
 function findFilesByExt($rootDir, $extension)
 {
-	$files[] = '';
-	
+	$files = array();
+
 	$directory = new RecursiveDirectoryIterator($rootDir);
 	$iterator = new RecursiveIteratorIterator($directory); // gets all files and directories under $rootDir
 	$ext = '/^.+\.'.$extension.'$/i';
 	$regex = new RegexIterator($iterator, $ext, RecursiveRegexIterator::GET_MATCH); // gets all .extension files recursively
 
 	foreach ($regex as $path=>$cur) {
-		//$path = str_replace("\\", "/", $path);
+		$path = preg_replace("{\\\}", "/", $path);
 		$files[] .= $path;
 	}
 
@@ -84,7 +83,6 @@ function deleteFile($path)
 {
 	$filename = substr($path, strrpos($path, '/') + 1);
 	$filepath = substr($path, 0, strrpos($path, '/'));
-
 	$olddir = getcwd();
 	chdir($filepath);
 
@@ -133,7 +131,7 @@ function createFile($path, $data)
 }
 
 /**
- * recursively deletes directory's content except $filesStay files  
+ * recursively deletes directory's content except $filesStay files
  * @param $rootDir
  * @param $filesStay
  */
@@ -275,4 +273,42 @@ function text_crypt_symbol($c) {
 	return chr($START_CHAR_CODE + ($c & 240) / 16).chr($START_CHAR_CODE + ($c & 15));
 }
 
+
+/**
+ * displays a table of configuration options
+ * @param array $iniKeys
+ * @param array $iniCurValues
+ * @param array $iniSugValues
+ */
+function displayTable($iniKeys, $iniCurValues, $iniSugValues)
+{
+	?>
+<html>
+<head></head>
+<body>
+<br /><br />
+<table border cellpadding=3>
+	<tr>
+		<td>Configuration option</td>
+		<td>Current value</td>
+		<td>Suggested value</td>
+	</tr>
+	<?php
+	foreach($iniKeys as $key => $value)
+	{
+		?>
+	<tr>
+		<td><?php echo $value?></td>
+		<td><?php echo $iniCurValues[$key]?></td>
+		<td><?php echo $iniSugValues[$key]?></td>
+	</tr>
+
+	<?php
+	}
+	?>
+</table>
+</body>
+</html>
+	<?php
+}
 ?>

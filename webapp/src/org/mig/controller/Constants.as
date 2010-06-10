@@ -1,4 +1,4 @@
- package org.mig.controller
+package org.mig.controller
 {
 	public final class Constants
 	{

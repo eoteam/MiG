@@ -4,10 +4,11 @@ require_once "zip/pclzip.lib.php";
 
 $errorMsg = "";
 $minRequiredPHPV = "5.2";
-$rootDir = "."; // uses for functions: findFilesByName, emptyFolder
+$rootDir = "."; // uses for functions: findFilesByName, emptyFolder; (the same directory as cwd)
+
+$olddir = getcwd();
 
 // changes current working directory to C:/testintaller
-$olddir = getcwd();
 chdir('/testinstaller'); //TODO: check whether it works without changing cwd
 
 // if error occurs, working folder will be clean, but these files will stay
@@ -47,8 +48,8 @@ for($i = 0, $size = sizeof($arrExtToCheck); $i < $size; ++$i)
 //////////////////////////////////////////////////////////////////////////////////
 // gets package filepath
 
-$zipFilepath = sanitize_file_name($_FILES['Filedata']['name']);
-if (is_file($zipFilepath)) {
+$zipFilename = sanitize_file_name($_FILES['Filedata']['name']);
+if (is_file($zipFilename)) {
 	$errorMsg .= "Package is provided.\n";
 } else {
 	$errorMsg .= "ERROR : Package is not provided.\n";
@@ -61,7 +62,7 @@ if (is_file($zipFilepath)) {
 //////////////////////////////////////////////////////////////////////////////////
 //unzips package
 
-$archive = new PclZip($zipFilepath);
+$archive = new PclZip($zipFilename);
 if (($v_result_list = $archive->extract(PCLZIP_OPT_PATH, './')) != 0) {
 	$errorMsg .= "Package unzipped successfully.\n";
 } else {
@@ -88,20 +89,20 @@ isset($_REQUEST['db_pass']) && isset($_REQUEST['db_name'])) {
 		// finds database.php file
 		$filename = "database.php";
 		$foundFilesArray = findFilesByName($rootDir, $filename);
-		$countFiles = sizeof($foundFilesArray); // how many files found
+		$countFiles = sizeof($foundFilesArray); // counts found files
 
 		if ($countFiles > 1) {
-			$errorMsg .= "ERROR : More than one " .$filename. " found.\n";
+			$errorMsg .= "ERROR : More than one '" .$filename. "' files found.\n";
 			
-			emptyFolder($rootDir, $arrMandatoryFiles);
+			emptyFolder($rootDir, $arrMandatoryFiles); // revert
 			$errorMsg .= "(folder is empty)\n";
 	
 			chdir($olddir);
 			die($errorMsg);
 		} else if ($countFiles == 0) {
-			$errorMsg .= "ERROR : " .$filename. " file not found.\n";
+			$errorMsg .= "ERROR : File '" .$filename. "' not found.\n";
 			
-			emptyFolder($rootDir, $arrMandatoryFiles);
+			emptyFolder($rootDir, $arrMandatoryFiles); // revert
 			$errorMsg .= "(folder is empty)\n";
 	
 			chdir($olddir);
@@ -110,7 +111,7 @@ isset($_REQUEST['db_pass']) && isset($_REQUEST['db_name'])) {
 			foreach ($foundFilesArray as $key=>$value) {
 				$databaseFilepath = $value;
 			}
-			$errorMsg .= $databaseFilepath. " file found.\n";
+			$errorMsg .= "File '" .$databaseFilepath. "' found.\n";
 		}
 
 		// deletes and creates new database.php file
@@ -121,11 +122,11 @@ isset($_REQUEST['db_pass']) && isset($_REQUEST['db_name'])) {
 			define("DB_NAME", "'. $db_name .'");?>';
 
 		if (deleteFile($databaseFilepath)) {
-			$errorMsg .= "File " .$databaseFilepath. " deleted.\n";
+			$errorMsg .= "File '" .$databaseFilepath. "' deleted.\n";
 		} else {
-			$errorMsg .= "ERROR : File " .$databaseFilepath. " is not a file or cannot be deleted.\n";
+			$errorMsg .= "ERROR : File '" .$databaseFilepath. "' is not a file or cannot be deleted.\n";
 			
-			emptyFolder($rootDir, $arrMandatoryFiles);
+			emptyFolder($rootDir, $arrMandatoryFiles); // revert
 			$errorMsg .= "(folder is empty)\n";
 	
 			chdir($olddir);
@@ -133,11 +134,11 @@ isset($_REQUEST['db_pass']) && isset($_REQUEST['db_name'])) {
 		}
 
 		if (createFile($databaseFilepath, $data)) {
-			$errorMsg .= "File " .$databaseFilepath. " created.\n";
+			$errorMsg .= "File '" .$databaseFilepath. "' created.\n";
 		} else {
-			$errorMsg .= "ERROR : File " .$databaseFilepath. " exists or cannot be created.\n";
+			$errorMsg .= "ERROR : File '" .$databaseFilepath. "' exists or cannot be created.\n";
 			
-			emptyFolder($rootDir, $arrMandatoryFiles);
+			emptyFolder($rootDir, $arrMandatoryFiles); // revert
 			$errorMsg .= "(folder is empty)\n";
 	
 			chdir($olddir);
@@ -152,7 +153,7 @@ isset($_REQUEST['db_pass']) && isset($_REQUEST['db_name'])) {
 	} else {
 		$errorMsg .= "ERROR : Invalid db data provided.\n";
 		
-		emptyFolder($rootDir, $arrMandatoryFiles);
+		emptyFolder($rootDir, $arrMandatoryFiles); // revert
 		$errorMsg .= "(folder is empty)\n";
 	
 		chdir($olddir);
@@ -161,7 +162,7 @@ isset($_REQUEST['db_pass']) && isset($_REQUEST['db_name'])) {
 } else {
 	$errorMsg .= "ERROR : DB information is not provided. All fields are required.\n";
 	
-	emptyFolder($rootDir, $arrMandatoryFiles);
+	emptyFolder($rootDir, $arrMandatoryFiles); // revert
 	$errorMsg .= "(folder is empty)\n";
 	
 	chdir($olddir);
@@ -183,20 +184,20 @@ if (isset($_REQUEST['folder_name'])) {
 			// finds filepath.php file
 			$filename = "filepath.php";
 			$foundFilesArray = findFilesByName($rootDir, $filename);
-			$countFiles = sizeof($foundFilesArray); // how many files found
+			$countFiles = sizeof($foundFilesArray); // count found files
 
 			if ($countFiles > 1) {
-				$errorMsg .= "ERROR : More than one " .$filename. " found.\n";
+				$errorMsg .= "ERROR : More than one '" .$filename. "' files found.\n";
 				
-				emptyFolder($rootDir, $arrMandatoryFiles);
+				emptyFolder($rootDir, $arrMandatoryFiles); // revert
 				$errorMsg .= "(folder is empty)\n";
 	
 				chdir($olddir);
 				die($errorMsg);
 			} else if ($countFiles == 0) {
-				$errorMsg .= "ERROR : " .$filename. " file not found.\n";
+				$errorMsg .= "ERROR : File '" .$filename. "' not found.\n";
 				
-				emptyFolder($rootDir, $arrMandatoryFiles);
+				emptyFolder($rootDir, $arrMandatoryFiles); // revert
 				$errorMsg .= "(folder is empty)\n";
 	
 				chdir($olddir);
@@ -205,7 +206,7 @@ if (isset($_REQUEST['folder_name'])) {
 				foreach ($foundFilesArray as $key=>$value) {
 					$constantFilepath = $value;
 				}
-				$errorMsg .= $constantFilepath. " file found.\n";
+				$errorMsg .= "File '" .$constantFilepath. "' found.\n";
 			}
 
 			// deletes and creates new filepath.php file
@@ -217,9 +218,9 @@ if (isset($_REQUEST['folder_name'])) {
 			if (deleteFile($constantFilepath)) {
 				$errorMsg .= "File " .$constantFilepath. " deleted.\n";
 			} else {
-				$errorMsg .= "ERROR : File " .$constantFilepath. " is not a file or cannot be deleted.\n";
+				$errorMsg .= "ERROR : File '" .$constantFilepath. "' is not a file or cannot be deleted.\n";
 
-				emptyFolder($rootDir, $arrMandatoryFiles);
+				emptyFolder($rootDir, $arrMandatoryFiles); // revert
 				$errorMsg .= "(folder is empty)\n";
 	
 				chdir($olddir);
@@ -227,11 +228,11 @@ if (isset($_REQUEST['folder_name'])) {
 			}
 
 			if (createFile($constantFilepath, $data)) {
-				$errorMsg .= "File " .$constantFilepath. " created.\n";
+				$errorMsg .= "File '" .$constantFilepath. "' created.\n";
 			} else {
-				$errorMsg .= "ERROR : File " .$constantFilepath. " exists or cannot be created.\n";
+				$errorMsg .= "ERROR : File '" .$constantFilepath. "' exists or cannot be created.\n";
 				
-				emptyFolder($rootDir, $arrMandatoryFiles);
+				emptyFolder($rootDir, $arrMandatoryFiles); // revert
 				$errorMsg .= "(folder is empty)\n";
 	
 				chdir($olddir);
@@ -241,7 +242,7 @@ if (isset($_REQUEST['folder_name'])) {
 	} else {
 		$errorMsg .= "ERROR : Folder name is null.\n";
 		
-		emptyFolder($rootDir, $arrMandatoryFiles);
+		emptyFolder($rootDir, $arrMandatoryFiles); //revert
 		$errorMsg .= "(folder is empty)\n";
 	
 		chdir($olddir);
@@ -250,7 +251,7 @@ if (isset($_REQUEST['folder_name'])) {
 } else {
 	$errorMsg .= "ERROR : Folder name is not provided.\n";
 	
-	emptyFolder($rootDir, $arrMandatoryFiles);
+	emptyFolder($rootDir, $arrMandatoryFiles); // revert
 	$errorMsg .= "(folder is empty)\n";
 	
 	chdir($olddir);
@@ -274,11 +275,11 @@ $arrFoldersToCreate = array( $fileDir, $thumbDir, $tempDir, $fontsDir );//, $xml
 for($i = 0, $size = sizeof($arrFoldersToCreate); $i < $size; ++$i)
 {
 	if (mkdir($arrFoldersToCreate[$i], 0777)) {
-		$errorMsg .= "Folder ".$arrFoldersToCreate[$i]." successfully created.\n";
+		$errorMsg .= "Folder '" .$arrFoldersToCreate[$i]. "' successfully created.\n";
 	} else {
-		$errorMsg .= "ERROR : Failed to create ".$arrFoldersToCreate[$i]." folder.\n";
+		$errorMsg .= "ERROR : Failed to create '" .$arrFoldersToCreate[$i]. "' folder.\n";
 		
-		emptyFolder($rootDir, $arrMandatoryFiles);
+		emptyFolder($rootDir, $arrMandatoryFiles); // revert
 		$errorMsg .= "(folder is empty)\n";
 	
 		chdir($olddir);
@@ -293,22 +294,20 @@ for($i = 0, $size = sizeof($arrFoldersToCreate); $i < $size; ++$i)
 
 $extension = "sql";
 $foundFilesArray = findFilesByExt($rootDir, $extension);
-$countFiles = sizeof($foundFilesArray); // how many files found
-
-print_r($foundFilesArray);
+$countFiles = sizeof($foundFilesArray); // count found files
 
 if ($countFiles > 1) {
-	$errorMsg .= "ERROR : More than one " .strtoupper($extension). " file found.\n";
+	$errorMsg .= "ERROR : More than one '" .strtoupper($extension). "' files found.\n";
 	
-	emptyFolder($rootDir, $arrMandatoryFiles);
+	emptyFolder($rootDir, $arrMandatoryFiles); // revert
 	$errorMsg .= "(folder is empty)\n";
 	
 	chdir($olddir);
 	die($errorMsg);
 } else if ($countFiles == 0) {
-	$errorMsg .= "ERROR : " .strtoupper($extension). " file not found.\n";
+	$errorMsg .= "ERROR : File '" .strtoupper($extension). "' not found.\n";
 	
-	emptyFolder($rootDir, $arrMandatoryFiles);
+	emptyFolder($rootDir, $arrMandatoryFiles); // revert
 	$errorMsg .= "(folder is empty)\n";
 	
 	chdir($olddir);
@@ -317,7 +316,7 @@ if ($countFiles > 1) {
 	foreach ($foundFilesArray as $key=>$value) {
 		$sqlFilepath = $value;			// SQL filepath
 	}
-	$errorMsg .= strtoupper($extension). " file found (" .$sqlFilepath. ").\n";
+	$errorMsg .= strtoupper($extension). " file found ('" .$sqlFilepath. "').\n";
 }
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -349,7 +348,7 @@ if ($result) {
 	$errorMsg .= "ERROR : " .$result. "\n";
 	mysql_close($mysql);
 	
-	emptyFolder($rootDir, $arrMandatoryFiles);
+	emptyFolder($rootDir, $arrMandatoryFiles); // revert
 	$errorMsg .= "(folder is empty)\n";
 	
 	chdir($olddir);
@@ -374,13 +373,13 @@ if ($handle) {
 				$errorMsg .= "ERROR : " .$result. "\n";
 				mysql_close($mysql);
 
-				if ($remove = removeDatabase($db_name)) {
+				if ($remove = removeDatabase($db_name)) { // revert
 					$errorMsg .= "(database removed)\n";
 				} else {
 					$errorMsg .= "ERROR : " .$remove. " (cannot remove database)\n";
 				}
 
-				emptyFolder($rootDir, $arrMandatoryFiles);
+				emptyFolder($rootDir, $arrMandatoryFiles); // revert
 				$errorMsg .= "(folder is empty)\n";
 
 				chdir($olddir);
@@ -396,7 +395,7 @@ if ($handle) {
 	$errorMsg .= "ERROR : Failed to open " .$sqlFilepath. " file.\n";
 	mysql_close($mysql);
 	
-	emptyFolder($rootDir, $arrMandatoryFiles);
+	emptyFolder($rootDir, $arrMandatoryFiles); // revert
 	$errorMsg .= "(folder is empty)\n";
 	
 	chdir($olddir);
@@ -410,11 +409,11 @@ if ($handle) {
 
 $mysql = connectNewDatabase();	// connects to new mig database
 
-$query = " INSERT INTO `user` ( username, password, createdate ) ";
-$query = " VALUES ( " .$db_user. ", " .text_crypt($db_pass). ", " .date('mdY'). " ) ";
+$query = " INSERT INTO `user` ( id, usergroupid, username, password, createdate, createdby, modifiedby ) ";
+$query .= " VALUES ( '1', '8', '" .$db_user. "', '" .text_crypt($db_pass). "', '" .date('mdY'). "', '1', '1' ) ";
 
 if ($result = queryDatabase($query, $mysql)) {
-	$errorMsg .= "New user " .$db_user. " inserted to 'user' table.\n";
+	$errorMsg .= "New user '" .$db_user. "' inserted to 'user' table.\n";
 	mysql_close($mysql);
 } else {
 	$errorMsg .= "ERROR : " .$result. "\n";
@@ -426,7 +425,7 @@ if ($result = queryDatabase($query, $mysql)) {
 		$errorMsg .= "ERROR : " .$remove. " (cannot remove database)\n";
 	}
 
-	emptyFolder($rootDir, $arrMandatoryFiles);
+	emptyFolder($rootDir, $arrMandatoryFiles); // revert
 	$errorMsg .= "(folder is empty)\n";
 	
 	chdir($olddir);
@@ -436,8 +435,9 @@ if ($result = queryDatabase($query, $mysql)) {
 
 
 //////////////////////////////////////////////////////////////////////////////////
-// deletes files: sql ($sqlFilepath), zip ($zipFilepath), ... (?)
+// deletes files: sql, zip, ... (?)
 
+$zipFilepath = "./".$zipFilename;
 $arrFilesToDel = array( $sqlFilepath, $zipFilepath );	// files to delete by path
 
 for($i = 0, $size = sizeof($arrFilesToDel); $i < $size; ++$i)
@@ -453,7 +453,7 @@ for($i = 0, $size = sizeof($arrFilesToDel); $i < $size; ++$i)
 			$errorMsg .= "ERROR : " .$remove. " (cannot remove database)\n";
 		}
 
-		emptyFolder($rootDir, $arrMandatoryFiles);
+		emptyFolder($rootDir, $arrMandatoryFiles); // revert
 		$errorMsg .= "(folder is empty)\n";
 		
 		chdir($olddir);
@@ -462,8 +462,28 @@ for($i = 0, $size = sizeof($arrFilesToDel); $i < $size; ++$i)
 }
 //////////////////////////////////////////////////////////////////////////////////
 
+
+//////////////////////////////////////////////////////////////////////////////////
+// checks for configuration options
+
+$arrIniParams = array( "max_execution_time", "max_input_time", "magic_quotes_gpc", "safe_mode", 
+"upload_max_filesize", "post_max_size", "memory_limit" ); // checks these ini parameters
+
+$arrIniSugValues = array( "3600", "3600", "ON", "OFF", 
+"1024M", "1025M", "1026M" ); // suggested values
+
+for($i = 0, $size = sizeof($arrIniParams); $i < $size; ++$i) {
+	$get = ini_get($arrIniParams[$i]); // string on success, or an empty string on failure or for null values. 
+	if ($get == null) $get = "OFF or 'no value'";
+	if ($get == 1) $get = "ON or 1";
+	$arrIniCurValues[$i] = $get; // current values
+}
+//////////////////////////////////////////////////////////////////////////////////
+
 chdir($olddir);
 $errorMsg .= "\n SUCCESS \n";
 echo $errorMsg;
+
+displayTable($arrIniParams, $arrIniCurValues, $arrIniSugValues);
 
 ?>
