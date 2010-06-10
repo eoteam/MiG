@@ -191,22 +191,22 @@
 				<s:layout>
 					<s:VerticalLayout clipAndEnableScrolling="false" />
 				</s:layout>
-				<s:List width="100%" height="100%" id="thumbView" dataProvider="{tileDP}" 
+				<controls:MiGList width="100%" height="100%" id="thumbView" dataProvider="{tileDP}" 
 						rollOverColor="0xed1c58" 
 						creationComplete="this.dispatchEvent(new Event('thumbViewCreated'))"
 						selectionColor="0xed1c58"  
 						 doubleClickEnabled="true" requireSelection="false"
 						allowMultipleSelection="true" borderVisible="false"
 						dragEnabled="true">
-					<s:itemRenderer>
+					<controls:itemRenderer>
 						<fx:Component>
 							<renderers:MediaManagerTileRenderer doubleClickEnabled="true"  scalePercent="{outerDocument.scalePercent}" thumbURL="{outerDocument.thumbURL}"  />
 						</fx:Component>
-					</s:itemRenderer>
-					<s:layout>
+					</controls:itemRenderer>
+					<controls:layout>
 						<s:TileLayout  verticalGap="4" horizontalGap="4" clipAndEnableScrolling="true" useVirtualLayout="true" orientation="rows" rowHeight="{250*scalePercent}" columnWidth="{250*scalePercent}" />
-					</s:layout>
-				</s:List>
+					</controls:layout>
+				</controls:MiGList>
 				<!--<mx:Canvas width="100%" height="100%" horizontalScrollPolicy="off">
 					<controls:MiGTileList
 						creationComplete="this.dispatchEvent(new Event('thumbViewCreated'))"

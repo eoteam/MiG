@@ -11,8 +11,10 @@ package org.mig.view.controls
 	
 	import mx.controls.AdvancedDataGrid;
 	import mx.controls.listClasses.IListItemRenderer;
-	import mx.core.IUIComponent; 
- 	import mx.core.mx_internal;	
+	import mx.core.DragSource;
+	import mx.core.IUIComponent;
+	import mx.core.mx_internal;
+
 	use namespace mx_internal;
  	[Event(name="childrenCreated", type="flash.events.Event")]
 	public class MiGAdvancedDataGrid extends AdvancedDataGrid
@@ -71,7 +73,7 @@ package org.mig.view.controls
 		override protected function addDragData(ds:Object):void
 		{
 			if(dragFormat != null && dragFormat != "")
-				ds.formats.push(dragFormat);
+				DragSource(ds).addData(this.selectedItems, dragFormat);
 			super.addDragData(ds);
 			
 		}

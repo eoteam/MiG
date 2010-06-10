@@ -7,8 +7,10 @@ package org.mig.view.mediators.content.tabs
 	import mx.collections.ArrayCollection;
 	import mx.collections.ArrayList;
 	import mx.core.ClassFactory;
+	import mx.events.DragEvent;
 	import mx.events.IndexChangedEvent;
 	import mx.events.ListEvent;
+	import mx.managers.DragManager;
 	import mx.utils.ArrayUtil;
 	
 	import org.mig.events.ViewEvent;
@@ -18,8 +20,11 @@ package org.mig.view.mediators.content.tabs
 	import org.mig.model.vo.content.ContentData;
 	import org.mig.model.vo.content.SubContainerNode;
 	import org.mig.view.components.content.tabs.MediaTab;
+	import org.mig.view.constants.DraggableViews;
 	import org.mig.view.events.ListItemEvent;
 	import org.robotlegs.mvcs.Mediator;
+	
+	import spark.layouts.supportClasses.DropLocation;
 	
 	public class MediaTabMediator extends Mediator
 	{
@@ -56,18 +61,27 @@ package org.mig.view.mediators.content.tabs
 			imageRenderer = new ClassFactory(classRef);
 			dragFormats = String(content.config.@formats.toString()).split(",");			
 			
-			view.usageList.dataProvider = new ArrayList(types);
-			view.usageList.validateNow();			
+			
+						
 			view.animatedList.addEventListener("orderChange",handleAnimatedListOrderChange);
 			view.animatedList.itemRenderer = imageRenderer;
+			
 			view.thumbURL = appModel.thumbURL;
+			view.scaleSlider.value = view.scalePercent = 1;
 			
 			view.stack.addEventListener(Event.CHANGE, handleStackChange);
-			view.usageList.addEventListener(ListItemEvent.ITEM_DOUBLE_CLICK,handleUsageSelection); 
+			
 			view.addEventListener(ViewEvent.SHOW_CONTENT_MEDIA_DETAIL,handleDetailView);
 			view.currentState = "usage";
 			view.addEventListener("viewBtn",handleViewButtons);
-			view.scaleSlider.value = 1;
+			
+			
+			
+			view.usageList.dataProvider = new ArrayList(types);
+			view.usageList.invalidateDisplayList();
+			view.usageList.addEventListener(ListItemEvent.ITEM_DOUBLE_CLICK,handleUsageSelection);
+			view.usageList.addEventListener(DragEvent.DRAG_ENTER,handleUsageListDragEnter);
+			
 		}
 		private function handleViewButtons(event:DataEvent):void {
 			var index:int = Number(event.data);
@@ -151,6 +165,13 @@ package org.mig.view.mediators.content.tabs
 					view.currentState = "view3";
 					break;
 			}
-		}		
+		}	
+		private function handleUsageListDragEnter(event:DragEvent):void {
+			if(event.dragSource.hasFormat(DraggableViews.MEDIA_ITEMS)) {
+				var location:DropLocation = view.usageList.layout.calculateDropLocation(event);
+				view.usageList.selectedIndex = location.dropIndex;
+				DragManager.acceptDragDrop(view.usageList.it
+			}
+		}
 	}
 }

@@ -85,7 +85,7 @@
 			doubleClickEnabled="true" requireSelection="false"
 			allowMultipleSelection="true" borderVisible="false">
 				<s:layout>
-					<s:TileLayout  verticalGap="4" horizontalGap="4" clipAndEnableScrolling="true" useVirtualLayout="true" orientation="rows" rowHeight="{210*scalePercent}" columnWidth="{210*scalePercent}" />
+					<s:TileLayout verticalGap="4" horizontalGap="4" clipAndEnableScrolling="true" useVirtualLayout="true" orientation="rows" rowHeight="{210*scalePercent}" columnWidth="{210*scalePercent}" />
 				</s:layout>	
 				<s:itemRenderer>
 					<fx:Component>
@@ -117,7 +117,7 @@
 								<s:VerticalLayout paddingLeft="5" paddingTop="5" paddingRight="5" paddingBottom="5" />
 							</s:layout>
 							<mx:SWFLoader maintainAspectRatio="true" width="200" height="150" source="@Embed(source='/migAssets/library.swf#mediaFolder')" />
-							<s:Label text="{data.name}" styleName="bodyMedium" fontSize="20" width="100%"  maxDisplayedLines="1" height="20" minHeight="20" />
+							<s:Label text="{data.name}" styleName="bodyMedium" textAlign="center" fontSize="20" width="100%"  maxDisplayedLines="1" height="20" minHeight="20" />
 						</s:ItemRenderer>
 					</fx:Component>
 				</s:itemRenderer>
@@ -171,7 +171,7 @@
 	</s:SkinnableContainer>	
 	<s:HGroup width="100%">
 		<s:Rect width="100%" />
-		<controls:MiGHSlider id="scaleSlider" value="1"  minimum="0.25" maximum="2" change="scalePercent=scaleSlider.value"   
+		<controls:MiGHSlider id="scaleSlider" value="0.1"  minimum="0.25" maximum="2" change="scalePercent=scaleSlider.value"   
 		mouseEnabled="false" enabled="false" enabled.scalingStates="true" />
 	</s:HGroup>
 

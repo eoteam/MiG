@@ -32,6 +32,7 @@ package org.mig.view.mediators.managers.media
 	import org.mig.view.components.managers.media.DownloadView;
 	import org.mig.view.components.managers.media.MediaManagerView;
 	import org.mig.view.components.managers.media.RenameView;
+	import org.mig.view.constants.DraggableViews;
 	import org.mig.view.events.ListItemEvent;
 	import org.robotlegs.mvcs.Mediator;
 	
@@ -64,7 +65,7 @@ package org.mig.view.mediators.managers.media
 				view.listView.invalidateList();
 			}
 			else {
-				//view.thumbView.invalidateList();
+				//view.thumbView.i
 			}
 		}		
 		private function addListeners():void {
@@ -100,18 +101,18 @@ package org.mig.view.mediators.managers.media
 			view.parentdirButton.enabled = false;
 			view.parentdirButton.alpha = 0.5;
 			view.currentState = "loading";
+			view.listView.dragFormat  = DraggableViews.MEDIA_ITEMS;
 		}
 		private function handleContent(event:FlexEvent):void {
 			this.selectedContent = contentModel.currentDirectory as DirectoryNode;
 		}
 		private function handleThumbView(event:Event):void {
 			view.currentState = "loading";
+			view.thumbView.dragFormat = DraggableViews.MEDIA_ITEMS;
 			view.thumbView.addEventListener(FlexEvent.UPDATE_COMPLETE,handleListUpdate); 
-			view.thumbView.addEventListener(ListItemEvent.ITEM_DOUBLE_CLICK, handleThumbItemDoubleClick);
-
+			view.thumbView.addEventListener(ListItemEvent.ITEM_DOUBLE_CLICK, handleThumbItemDoubleClick);	
 			view.thumbView.addEventListener(ListEvent.ITEM_CLICK,handleThumbItem);
 			view.thumbView.addEventListener(KeyboardEvent.KEY_DOWN,handleThumbItem);
-			
 			GlobalUtils.createContextMenu(["Remove","Rename","Download","New Folder"],menuItemSelectHandler,null,[view.thumbView]);
 		}
 		private function addContextMenu():void {
