@@ -15,6 +15,7 @@ package org.mig.view.containers
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.collections.ArrayCollection;
+	import mx.collections.IList;
 	import mx.containers.Canvas;
 	import mx.controls.Label;
 	import mx.controls.SWFLoader;
@@ -58,8 +59,8 @@ package org.mig.view.containers
 	
 	public class DragTile extends Canvas
 	{
-		private var _items:ArrayCollection;
-		private var _pendingItems:ArrayCollection;
+		private var _items:IList;
+		private var _pendingItems:IList;
 		protected var dpChanged:Boolean = false;
 		protected var itemsChanged:Boolean = false;
 		/** true if the renderers need to be regenerated */
@@ -220,7 +221,7 @@ package org.mig.view.containers
 		{
 			return _scalePercent;
 		}		
-		public function set dataProvider(value:ArrayCollection):void
+		public function set dataProvider(value:IList):void
 		{
 			_pendingItems= value;
 			renderersDirty = true;
@@ -228,7 +229,7 @@ package org.mig.view.containers
 			dpChanged = true;
 			invalidateProperties();			
 		}
-		[Bindable] public function get dataProvider():ArrayCollection
+		[Bindable] public function get dataProvider():IList
 		{
 			return 	_items;
 		}
@@ -749,8 +750,9 @@ package org.mig.view.containers
 			if(e.action == DragManager.MOVE && e.dragSource.dataForFormat("target") != this)
 			{
 				var dragFromIndex:Number = Number(e.dragSource.dataForFormat("index"));
-				_items.source.splice(dragFromIndex,1);
-				_items.refresh();
+				_items.removeItemAt(dragFromIndex);
+				//_items.source.splice(dragFromIndex,1);
+				//_items.refresh();
 				var r:IUIComponent = renderers.splice(dragFromIndex,1)[0];
 				removeChild(DisplayObject(r));
 				animator.invalidateLayout();

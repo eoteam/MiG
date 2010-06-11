@@ -133,7 +133,7 @@
 					allowDragSelection="true"
 					dragEnabled="true"
 					dropEnabled="true"
-					dragMoveEnabled="true"
+					dragMoveEnabled="false"
 					dragFormat="Media"   
 					allowMultipleSelection="true"
 					headerHeight="22"  

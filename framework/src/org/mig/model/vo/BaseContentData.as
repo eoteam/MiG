@@ -8,6 +8,6 @@ package org.mig.model.vo
 		public var modifiedby:int;
 		public var modifieddate:Number;		
 		public var loaded:Boolean = false;
-		public var count:int;
+		public var childrencount:int;
 	}
 }

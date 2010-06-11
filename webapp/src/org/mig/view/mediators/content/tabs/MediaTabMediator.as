@@ -7,6 +7,7 @@ package org.mig.view.mediators.content.tabs
 	import mx.collections.ArrayCollection;
 	import mx.collections.ArrayList;
 	import mx.core.ClassFactory;
+	import mx.core.UIComponent;
 	import mx.events.DragEvent;
 	import mx.events.IndexChangedEvent;
 	import mx.events.ListEvent;
@@ -24,6 +25,7 @@ package org.mig.view.mediators.content.tabs
 	import org.mig.view.events.ListItemEvent;
 	import org.robotlegs.mvcs.Mediator;
 	
+	import spark.components.supportClasses.ItemRenderer;
 	import spark.layouts.supportClasses.DropLocation;
 	
 	public class MediaTabMediator extends Mediator
@@ -39,10 +41,11 @@ package org.mig.view.mediators.content.tabs
 		
 		private var type:String;
 		private var dragFormats:Array;
+		private var types:ArrayList;
 		override public function onRegister():void {
 			
 			var content:SubContainerNode = view.content as SubContainerNode;
-			var types:Array = [];
+			types = new ArrayList();
 			
 			var imageRenderer:ClassFactory;
 			var tmp:Array = content.config.@usages.toString().split(",");
@@ -51,10 +54,10 @@ package org.mig.view.mediators.content.tabs
 				type = item.split(' ').join('_').toLowerCase();
 				content.children.filterFunction = filterByUsage;
 				content.children.refresh();		
-				var dp:ArrayCollection = new ArrayCollection();
+				var dp:ArrayList = new ArrayList();
 				for each(var item2:ContentNode in content.children)
 					dp.addItem(item2);
-				types.push({type:item,name:item + ' ('+content.children.length+')',dataProvider:dp});
+				types.addItem({type:item,name:item + ' ('+content.children.length+')',dataProvider:dp});
 			}
 			var classToUse:String = content.config.object[0].@contentView;
 			var classRef:Class = getDefinitionByName(classToUse) as Class; 
@@ -77,7 +80,7 @@ package org.mig.view.mediators.content.tabs
 			
 			
 			
-			view.usageList.dataProvider = new ArrayList(types);
+			view.usageList.dataProvider = types;
 			view.usageList.invalidateDisplayList();
 			view.usageList.addEventListener(ListItemEvent.ITEM_DOUBLE_CLICK,handleUsageSelection);
 			view.usageList.addEventListener(DragEvent.DRAG_ENTER,handleUsageListDragEnter);
@@ -170,8 +173,22 @@ package org.mig.view.mediators.content.tabs
 			if(event.dragSource.hasFormat(DraggableViews.MEDIA_ITEMS)) {
 				var location:DropLocation = view.usageList.layout.calculateDropLocation(event);
 				view.usageList.selectedIndex = location.dropIndex;
-				DragManager.acceptDragDrop(view.usageList.it
+				if(location.dropIndex >= 0 && location.dropIndex < view.usageList.dataProvider.length) {
+					var renderer:ItemRenderer = view.usageList.dataGroup.getElementAt(location.dropIndex) as ItemRenderer;
+					DragManager.showFeedback(DragManager.COPY);
+					DragManager.acceptDragDrop(renderer);
+					renderer.addEventListener(DragEvent.DRAG_DROP,handleUsageListDragDrop);
+				}
 			}
+		}
+		private function handleUsageListDragDrop(event:DragEvent):void {
+			var type:Object = view.usageList.selectedItem;
+			var dp:ArrayList = type.dataProvider;
+			var items:Array = event.dragSource.dataForFormat(DraggableViews.MEDIA_ITEMS) as Array;
+			for each(var item:ContentNode in items) {	
+				dp.addItem(item);
+			}
+			
 		}
 	}
 }
