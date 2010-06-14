@@ -562,7 +562,7 @@ package org.mig.view.containers
 					var dragItem:IUIComponent = renderers[dragIdx];	
 					var dragImage:UIComponent = this.dragImage;
 					var dragSrc:DragSource = new DragSource();
-					dragSrc.addData([dataProvider[dragIdx]],"items");
+					dragSrc.addData([dataProvider.getItemAt(dragIdx)],"items");
 					dragSrc.addData(dragIdx,"index");
 					
 					var pt:Point = DisplayObject(dragItem).localToGlobal(new Point(0,0));

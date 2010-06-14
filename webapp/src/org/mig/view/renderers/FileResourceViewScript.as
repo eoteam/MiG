@@ -10,12 +10,13 @@ import org.mig.model.vo.ContentNode;
 import org.mig.model.vo.content.ContainerNode;
 import org.mig.model.vo.content.ContentData;
 import org.mig.model.vo.media.MimeTypes;
+import org.mig.model.vo.relational.ContentMedia;
 
 
 public var thumbURL:String;
 
-[Bindable] private var _content:ContainerNode;
-[Bindable] private var _data:ContentData;
+[Bindable] private var _content:ContentNode;
+[Bindable] private var _data:ContentMedia;
 [Bindable] private var imageSource:String;
 [Bindable] private var _scalePercent:Number;
 
@@ -53,8 +54,8 @@ public var isImage:Boolean;
 	return imageSource;
 }*/
 public function set content(value:ContentNode):void {
-	_content = value as ContainerNode;
-	_data = _content.data as ContentData;
+	_content = value;
+	_data = _content.data as ContentMedia;
 
 	if(_data.mimetypeid == MimeTypes.IMAGE) {
 		imageSource = thumbURL+_data.path.toString()+_data.name.toString();

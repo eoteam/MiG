@@ -9,6 +9,7 @@ package org.mig.controller
 	import org.mig.events.NotificationEvent;
 	import org.mig.events.ViewEvent;
 	import org.mig.model.ContentModel;
+	import org.mig.model.vo.BaseContentData;
 	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.StatusResult;
 	import org.mig.model.vo.content.ContainerNode;
@@ -180,14 +181,11 @@ package org.mig.controller
 				}
 			}
 			else if(content is SubContainerNode) {
-				ContentData(content.data).loaded = true;
-				for each (item in results) {
-					resultLabel = item[content.config.@labelField];				
-					/*resultLabel = resultLabel.replace(/<.*?>/g, "");
-					resultLabel = resultLabel.replace(/]]>/g, "");*/
-					node = new ContainerNode(resultLabel,content.config.object[0],item,content,content.privileges,false,false,false);
-					//node.addEventListener(ContentNodeEvent.READY,handleNodeReady);
-					content.children.addItem(node);
+				BaseContentData(content.data).loaded = true;
+				for each (var reldata:BaseContentData in results) {
+					resultLabel = reldata[content.config.@labelField];				
+					var relnode:ContentNode = new ContentNode(resultLabel,content.config,reldata,content,content.privileges);
+					content.children.addItem(relnode);
 				}
 			}	
 		}

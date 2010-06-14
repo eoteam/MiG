@@ -30,6 +30,7 @@ package org.mig.model
 		public var defaultUpdate:String;
 		public var defaultRetrieve:String;
 		public var defaultDelete:String;
+		public var defaultTable:String;
 		
 		public function getMimetypeString(extension:String):String {
 			for each(var mimetype:MimeType in mimetypes) {

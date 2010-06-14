@@ -24,7 +24,9 @@ package org.mig.controller.startup
 			service.addHandlers(handleConfigLoaded);
 		}
 		private function handleConfigLoaded(data:Object): void {
-			var config:XML 				= appModel.config;			
+			var config:XML = data.result as XML;
+			appModel.config = config;	
+			
 			var mediaConfig:XML 		= config.controller[0]; //XML(config.controller.(@id == "mediaController"));
 			appModel.fileDir			= mediaConfig.@fileDir;
 			appModel.thumbDir			= mediaConfig.@thumbDir;
@@ -44,6 +46,8 @@ package org.mig.controller.startup
 			contentModel.defaultRetrieve	= contentConfig.@retrieveContent;
 			contentModel.defaultUpdate		= contentConfig.@updateContent;
 			contentModel.defaultDelete		= contentConfig.@deleteContent;
+			contentModel.defaultTable		= contentConfig.@tablename;
+			
 			contentModel.configEelements 	= config.elements[0];
 			//process xml file and
 			var containers:XMLList = contentConfig.children();
@@ -70,10 +74,42 @@ package org.mig.controller.startup
 			if(node.attribute("updateContent").length() == 0) {
 				node.@updateContent = contentModel.defaultUpdate;
 			}
+			if(node.attribute("tablename").length() == 0) {
+				node.@tablename = contentModel.defaultTable;
+			}
+			
 			var tabs:XMLList = node.tab;
-			var tray:XMLList = node.tray;
+			var trays:XMLList = node.tray;
+			var element:XML;
+			var tab:XML; var tray:XML;
+			var parameters:XML; var parameter:XML;
 			if(tabs.length() > 0 ) {
-				
+				for each(element in tabs) {
+					tab = contentModel.configEelements.tab.(@type == element.@type.toString())[0] as XML;
+					parameters = XML(tab.parameters[0].toString());
+					for each(parameter in parameters.children()) {
+						if(element.attribute(parameter.@name.toString()).length() == 0 ) {//doesnt exist
+							element.@[parameter.@name.toString()] = parameter.@defaultvalue.toString();
+						}
+					}
+					for each(parameter in tab.attributes()) {
+						element.@[parameter.name()] = parameter.toString();
+					}
+				}	
+			}
+			if(trays.length() > 0 ) {
+				for each(element in trays) {
+					tray = contentModel.configEelements.tray.(@type == element.@type.toString())[0] as XML;
+					parameters = XML(tray.parameters[0].toString());
+					for each(parameter in parameters.children()) {
+						if(element.attribute(parameter.@name.toString()).length() == 0 ) {//doesnt exist
+							element.@[parameter.@name.toString()] = parameter.@defaultvalue.toString();
+						}
+					}
+					for each(parameter in tray.attributes()) {
+						element.@[parameter.name()] = parameter.toString();
+					}
+				}	
 			}
 			if(node.children().length() > 0) {
 				for each(var subnode:XML in node.children()) {

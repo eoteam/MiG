@@ -2,9 +2,10 @@ package org.mig.model.vo.relational
 {
 	import org.mig.model.vo.BaseContentData;
 
+	[Bindable]	
 	public class ContentMedia extends BaseContentData
 	{
-		public var statusid:int;
+		
 		public var contentid:Number;
 		public var mediaid:Number;
 		
@@ -25,12 +26,13 @@ package org.mig.model.vo.relational
 		public var width:int;
 		public var height:int;
 		public var rating:int;
-		public var color:String;
+		public var color:uint;
 		
 		public var caption:String;
 		public var credits:String;
 		public var displayorder:int;
 		public var usage_type:String;
+		public var statusid:int;
 		
 	}
 }

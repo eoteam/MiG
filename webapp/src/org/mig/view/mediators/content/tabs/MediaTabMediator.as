@@ -20,6 +20,7 @@ package org.mig.view.mediators.content.tabs
 	import org.mig.model.vo.content.ContainerNode;
 	import org.mig.model.vo.content.ContentData;
 	import org.mig.model.vo.content.SubContainerNode;
+	import org.mig.model.vo.relational.ContentMedia;
 	import org.mig.view.components.content.tabs.MediaTab;
 	import org.mig.view.constants.DraggableViews;
 	import org.mig.view.events.ListItemEvent;
@@ -48,7 +49,7 @@ package org.mig.view.mediators.content.tabs
 			types = new ArrayList();
 			
 			var imageRenderer:ClassFactory;
-			var tmp:Array = content.config.@usages.toString().split(",");
+			var tmp:Array = content.config.@usage	.toString().split(",");
 			for each(var item:String in tmp)
 			{
 				type = item.split(' ').join('_').toLowerCase();
@@ -59,7 +60,7 @@ package org.mig.view.mediators.content.tabs
 					dp.addItem(item2);
 				types.addItem({type:item,name:item + ' ('+content.children.length+')',dataProvider:dp});
 			}
-			var classToUse:String = content.config.object[0].@contentView;
+			var classToUse:String = content.config.@itemView;
 			var classRef:Class = getDefinitionByName(classToUse) as Class; 
 			imageRenderer = new ClassFactory(classRef);
 			dragFormats = String(content.config.@formats.toString()).split(",");			
@@ -93,9 +94,9 @@ package org.mig.view.mediators.content.tabs
 		private function handleDetailView(event:ViewEvent):void {
 			view.detailView.visible = true;;
 		}
-		private function filterByUsage(item:ContainerNode):Boolean
+		private function filterByUsage(item:ContentNode):Boolean
 		{
-			if(ContentData(item.data).usage_type.toString().toLowerCase() == type)
+			if(ContentMedia(item.data).usage_type.toString().toLowerCase() == type)
 				return true;
 			else
 				return false;

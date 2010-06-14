@@ -7,16 +7,17 @@
 	<fx:Script>
 		<![CDATA[
 			import org.mig.events.ViewEvent;
+			import org.mig.model.vo.ContentNode;
 			import org.mig.model.vo.content.ContainerNode;
 			import org.mig.model.vo.content.ContentStatus;
 			import org.mig.view.skins.buttons.TextOnlyButtonSkin;
 			public var thumbURL:String;
 			[Bindable] public var imageSource:String;
-			[Bindable] private var content:ContainerNode;
+			[Bindable] private var conten:ContentNode;
 			[Bindable] private var bgColor:uint;	
 			override public function set data(value:Object):void {
 				super.data = value;
-				content = value as ContainerNode;
+				content = value as ContentNode;
 				if(content) {
 					imageSource = thumbURL + content.data.path + content.data.name;
 					var c:String = String(content.data.color);

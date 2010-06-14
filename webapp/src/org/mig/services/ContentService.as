@@ -5,6 +5,7 @@ package org.mig.services
 	import mx.rpc.AsyncToken;
 	import mx.rpc.events.ResultEvent;
 	import mx.utils.ObjectUtil;
+	import flash.utils.getDefinitionByName;
 	
 	import org.mig.controller.Constants;
 	import org.mig.model.AppModel;
@@ -191,7 +192,9 @@ package org.mig.services
 					else
 						params[item] = SubContainerNode(content).queryVars[item];
 				}
-				var service:XMLHTTPService = this.createService(params,ResponseType.DATA,ContentData);
+				var classToUse:String = content.config.@dataObject;
+				var classRef:Class = getDefinitionByName(classToUse) as Class;
+				var service:XMLHTTPService = this.createService(params,ResponseType.DATA,classRef);
 				service.token.content = content;				
 			}
 		}

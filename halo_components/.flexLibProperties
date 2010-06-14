@@ -5,6 +5,7 @@
     <classEntry path="flexlib.FlexlibClasses"/>
     <classEntry path="org.mig.view.MiGComponentClasses"/>
     <classEntry path="sjd.SJDClasses"/>
+    <classEntry path="be.vip.marchingantsdemo.view.BeComponents"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

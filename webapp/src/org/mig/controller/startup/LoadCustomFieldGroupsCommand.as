@@ -23,6 +23,11 @@ package org.mig.controller.startup
 			service.addHandlers(handleCustomFieldGroups);
 		}
 		private function handleCustomFieldGroups(data:Object):void {
+			var results:Array = data.result as Array;
+			for each(var item:Object in results) {
+				appModel.customfields.push(item);
+				item.children = [];
+			}
 			trace("Startup: CustomField Groups Complete");
 			appModel.startupCount = 5;
 			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP_PROGRESS,"CustomField Groups loaded"));
