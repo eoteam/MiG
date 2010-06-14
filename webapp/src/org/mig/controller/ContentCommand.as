@@ -194,13 +194,13 @@ package org.mig.controller
 		private function handleNewContainer(data:Object):void {
 			var config:XML = data.token.config as XML;
 			var contentData:ContentData = data.result[0] as ContentData;
-			var is_fixed:Boolean = contentData.is_fixed == "0"?false:true;
+			var is_fixed:Boolean = contentData.is_fixed == 0 ?false:true;
 			var nesting:Boolean = false;
 			if(config.attribute("nesting").length() > 0) {
 				nesting = config.@nesting.toString() == "0" ? false : true;
 			}
 			var node:ContainerNode = new ContainerNode(contentData.migtitle,config,contentData,contentModel.currentContainer,
-									contentModel.currentContainer.privileges,false,is_fixed,nesting);
+													   contentModel.currentContainer.privileges,false,is_fixed,nesting);
 			contentModel.currentContainer.children.addItemAt(node,0);
 			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.ENABLE_NEW_CONTENT,false));
 			eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Container created successfully"));

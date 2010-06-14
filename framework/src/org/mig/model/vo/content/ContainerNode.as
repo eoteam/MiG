@@ -1,5 +1,6 @@
 package org.mig.model.vo.content
 {
+	import org.mig.model.vo.BaseContentData;
 	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.UpdateData;
 	import org.mig.model.vo.content.ContentData;

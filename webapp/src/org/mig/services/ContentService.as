@@ -34,7 +34,11 @@ package org.mig.services
 		}
 		public function retrieveContentRoot():void {
 			var params:Object = new Object();
-			params.action = "getRoot";
+			/*var contentConfig:XML 	= appModel.config.controller[1]; //XML(config.controller.(@id == "contentController"));
+			var root:XML = XML(contentConfig.child[0].toString());
+			root.@retrieveContent = contentModel.defaultRetrieve;
+			params.action = root.@retrieveContent.toString();*/
+			params.action = ValidFunctions.GET_ROOT;
 			this.createService(params,ResponseType.DATA,ContentData);
 		}
 		public function retrieveChildren(content:ContentNode):void {
@@ -53,22 +57,22 @@ package org.mig.services
 				this.createService(params,ResponseType.DATA,ContentData);
 			}
 		}
-		public function deleteContainer(content:ContainerNode):void {
+		public function deleteContainer(container:ContainerNode):void {
 			var params:Object = new Object();
-			params.action = content.config.@deleteContent.toString();
+			params.action = container.config.@deleteContent.toString();
 			params.tablename = "content";
-			params.id = content.data.id;
+			params.id = container.data.id;
 			if(params.action == ValidFunctions.UPDATE_RECORD) {
 				params.deleted = 1;
 			}
 			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
-			service.token.content = content;
+			service.token.content = container;
 		}
-		public function duplicateContainer(content:ContainerNode):void {
+		public function duplicateContainer(container:ContainerNode):void {
 			var params:Object = new Object();
 			params.action = ValidFunctions.DUPLICATE_CONTENT;
-			params.id = content.data.id;
-			this.createService(params,ResponseType.DATA,ContentData).token.content = content;
+			params.id = container.data.id;
+			this.createService(params,ResponseType.DATA,ContentData).token.content = container;
 		}
 		public function updateContainer(container:ContainerNode,update:UpdateData):void {
 			var params:Object = new Object();
@@ -148,7 +152,7 @@ package org.mig.services
 					return;
 				}
 			}		
-			params.action = content.config.@action.toString();			
+			params.action = content.config.@retrieveContent.toString();			
 			params.deleted = 0;
 			if(content.config.attribute("orderby").length() > 0) 
 				params.orderby = content.config.@orderby.toString();
@@ -164,7 +168,7 @@ package org.mig.services
 		private function loadSubContainer(content:ContentNode):void {
 			if(SubContainerNode(content).queryVars != null) {
 				var params:Object = new Object();
-				params.action = content.config.@getContent.toString();
+				params.action = content.config.@retrieveContent.toString();
 				if(params.action == "getData") {
 					if(content.config.attribute("tablename").length() > 0) 
 						params.tablename = content.config.@tablename.toString();

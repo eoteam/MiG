@@ -45,7 +45,7 @@ package org.mig.model.vo
 			this.privileges = privileges;
 			this._config = config;
 			this.state = 0;
-			this.hasChildren =  data.count > 0 ? true :  false;
+			this.hasChildren =  data.childrencount > 0 ? true :  false;
 			children = new ArrayCollection();
 			subContainers = new Dictionary();
 			children.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleCollection);								
@@ -62,14 +62,14 @@ package org.mig.model.vo
 			return _config;
 		}		
 		public function get label():String {
-			if(data.count > 0)
-				return _baseLabel + " (" + data.count + ")";
+			if(data.childrencount > 0)
+				return _baseLabel + " (" + data.childrencount + ")";
 			else
 				return _baseLabel;	
 		}
 		public function get debugLabel():String {
-			if(data.count > 0)
-				return  "id=" + data.id + " " + _baseLabel + " (" + data.count + ")";
+			if(data.childrencount > 0)
+				return  "id=" + data.id + " " + _baseLabel + " (" + data.childrencount + ")";
 			else
 				return "id=" + data.id + " " + _baseLabel;			
 		}	

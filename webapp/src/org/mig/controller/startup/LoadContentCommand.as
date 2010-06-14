@@ -27,8 +27,8 @@ package org.mig.controller.startup
 			service.addHandlers(handleContentLoaded);
 		}
 		private function handleContentLoaded(data:Object):void {
-			var result:ContentData = data.result[0] as ContentData;
-			var contentConfig:XML 		= appModel.config.controller[1]; //XML(config.controller.(@id == "contentController"));
+			var result:ContentData 	= data.result[0] as ContentData;
+			var contentConfig:XML 	= appModel.config.controller[1]; //XML(config.controller.(@id == "contentController"));
 			var root:XML = XML(contentConfig.child[0].toString());
 			contentModel.contentModel = new ContainerNode (root.@name, root,result,null,appModel.user.privileges,true,true,false);
 			

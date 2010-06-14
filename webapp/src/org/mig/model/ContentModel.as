@@ -13,6 +13,8 @@ package org.mig.model
 		public var contentModel:ContainerNode;
 		public var templates:ArrayCollection = new ArrayCollection();
 		public var currentContainer:ContainerNode;
+		public var configEelements:XML;
+		
 		
 		public var mediaModel:DirectoryNode;
 		public var currentDirectory:DirectoryNode;
@@ -24,7 +26,10 @@ package org.mig.model
 		public var mediaToLoad:Number;
 		public var mediaLoaded:Number;
 		
-		//public var mediaModel:MediaCategoryNode;
+		public var defaultCreate:String;
+		public var defaultUpdate:String;
+		public var defaultRetrieve:String;
+		public var defaultDelete:String;
 		
 		public function getMimetypeString(extension:String):String {
 			for each(var mimetype:MimeType in mimetypes) {

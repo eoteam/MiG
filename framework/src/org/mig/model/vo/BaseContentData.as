@@ -1,5 +1,6 @@
 package org.mig.model.vo
 {
+	[Bindable]
 	public dynamic class BaseContentData extends ValueObject
 	{
 		public var modified:Boolean = false;

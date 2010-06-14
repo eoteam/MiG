@@ -108,7 +108,7 @@ CREATE TABLE `content` (
   KEY `content_status_fk` (`statusid`),
   KEY `content_createdby_fk` (`createdby`),
   KEY `content_modifiedby_fk` (`modifiedby`),
-  CONSTRAINT `content_parent_content_fk` FOREIGN KEY (`parentid`) REFERENCES `content` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `content_parent_content_fk` FOREIGN KEY (`parentid`) REFERENCES `content` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `content_status_fk` FOREIGN KEY (`statusid`) REFERENCES `statuses` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `content_template_fk` FOREIGN KEY (`templateid`) REFERENCES `templates` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `content_createdby_fk` FOREIGN KEY (`createdby`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -170,6 +170,7 @@ CREATE TABLE `content_media` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `contentid` int(11) NOT NULL,
   `mediaid` int(11) NOT NULL,
+  `statusid` int(11) NOT NULL,
   `usage_type` varchar(255) NOT NULL,
   `credits` mediumtext NOT NULL,
   `caption` varchar(255) NOT NULL,
@@ -185,10 +186,12 @@ CREATE TABLE `content_media` (
   KEY `content_media_mediaid_fk` (`mediaid`),
   KEY `content_media_createdby_fk` (`createdby`),
   KEY `content_media_modifiedby_fk` (`modifiedby`),
+  KEY `content_media_statusid_fk` (`statusid`),
   CONSTRAINT `content_media_contentid_fk` FOREIGN KEY (`contentid`) REFERENCES `content` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `content_media_mediaid_fk` FOREIGN KEY (`mediaid`) REFERENCES `media` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `content_media_createdby_fk` FOREIGN KEY (`createdby`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `content_media_modifiedby_fk` FOREIGN KEY (`modifiedby`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `content_media_modifiedby_fk` FOREIGN KEY (`modifiedby`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `content_media_statusid_fk` FOREIGN KEY (`statusid`) REFERENCES `statuses` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -292,6 +295,7 @@ CREATE TABLE `media` (
   `width` int(11) NOT NULL,
   `height` int(11) NOT NULL,
   `playtime` float NOT NULL,
+  `rating` int(11) NOT NULL,
   `path` varchar(255) NOT NULL,
   `thumb` varchar(255) NOT NULL,
   `video_proxy` varchar(255) NOT NULL,
@@ -571,76 +575,86 @@ CREATE TABLE `usergroups` (
 
 
 LOCK TABLES `config` WRITE;
-INSERT INTO `config` (`id`, `name`, `value`, `system`) VALUES (1, 'Media', 'ON', 0);
-INSERT INTO `config` (`id`, `name`, `value`, `system`) VALUES (2, 'Users', 'ON', 0);
-INSERT INTO `config` (`id`, `name`, `value`, `system`) VALUES (3, 'Fonts', 'OFF', 0);
-INSERT INTO `config` (`id`, `name`, `value`, `system`) VALUES (4, 'Tags', 'ON', 0);
-INSERT INTO `config` (`id`, `name`, `value`, `system`) VALUES (5, 'Contacts', 'OFF', 0);
-INSERT INTO `config` (`id`, `name`, `value`, `system`) VALUES (7, 'Custom Fields', 'OFF', 0);
-INSERT INTO `config` (`id`, `name`, `value`, `system`) VALUES (8, 'Events', 'OFF', 0);
-INSERT INTO `config` (`id`, `name`, `value`, `system`) VALUES (9, 'configfile', 'xml/config.xml', 0);
-INSERT INTO `config` (`id`, `name`, `value`, `system`) VALUES (10, 'prompt', 'New Deal Design', 0);
+INSERT INTO `config` (`id`, `name`, `value`, `system`) VALUES 
+	(1, 'Media', 'ON', 0),
+	(2, 'Users', 'ON', 0),
+	(3, 'Fonts', 'OFF', 0)
+	(4, 'Tags', 'ON', 0),
+	(5, 'Contacts', 'OFF', 0),
+	(7, 'Custom Fields', 'OFF', 0),
+	(8, 'Events', 'OFF', 0),
+	(9, 'configfile', 'xml/config.xml', 0),
+	(10, 'prompt', 'New Deal Design', 0);
 UNLOCK TABLES;
 
 
 LOCK TABLES `content` WRITE;
-INSERT INTO `content` (`id`, `parentid`, `templateid`, `migtitle`, `statusid`, `containerpath`, `deleted`, `is_fixed`, `createdby`, `createdate`, `modifieddate`, `modifiedby`, `search_exclude`, `can_have_children`, `displayorder`, `customfield1`, `customfield2`, `customfield3`, `customfield4`, `customfield5`, `customfield6`, `customfield7`, `customfield8`, `customfield9`, `customfield10`, `customfield11`, `customfield12`, `customfield13`, `customfield14`, `customfield15`, `customfield16`, `customfield17`, `customfield18`) VALUES (1, 1, 1, 'Rootsss', 4, '', 0, 1, 1, 0, 0, 1, 1, 1, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
-INSERT INTO `content` (`id`, `parentid`, `templateid`, `migtitle`, `statusid`, `containerpath`, `deleted`, `is_fixed`, `createdby`, `createdate`, `modifieddate`, `modifiedby`, `search_exclude`, `can_have_children`, `displayorder`, `customfield1`, `customfield2`, `customfield3`, `customfield4`, `customfield5`, `customfield6`, `customfield7`, `customfield8`, `customfield9`, `customfield10`, `customfield11`, `customfield12`, `customfield13`, `customfield14`, `customfield15`, `customfield16`, `customfield17`, `customfield18`) VALUES (2, 2, 2, 'FAQs', 4, 'FAQs<>FAQs<>FAQs<>FAQs<>FAQs<>FAQs<>FAQs<>FAQs<>FAQs', 0, 1, 0, 0, 1269375147, 1, 1, 1, 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+INSERT INTO `content` (`id`, `parentid`, `templateid`, `migtitle`, `statusid`, `containerpath`, `deleted`, `is_fixed`, `createdby`, `createdate`, `modifieddate`, `modifiedby`, `search_exclude`, `can_have_children`, `displayorder`, `customfield1`, `customfield2`, `customfield3`, `customfield4`, `customfield5`, `customfield6`, `customfield7`, `customfield8`, `customfield9`, `customfield10`, `customfield11`, `customfield12`, `customfield13`, `customfield14`, `customfield15`, `customfield16`, `customfield17`, `customfield18`) VALUES 
+	(1, 1, 1, 'Containers', 4, '', 0, 1, 1, 0, 0, 1, 1, 1, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
 UNLOCK TABLES;
 
 
 LOCK TABLES `customfieldtypes` WRITE;
-INSERT INTO `customfieldtypes` (`id`, `type`, `sqltypes`) VALUES (1, 'binary', 'int(1)');
-INSERT INTO `customfieldtypes` (`id`, `type`, `sqltypes`) VALUES (2, 'select', 'varchar(10)');
-INSERT INTO `customfieldtypes` (`id`, `type`, `sqltypes`) VALUES (3, 'string', 'varchar(255)');
-INSERT INTO `customfieldtypes` (`id`, `type`, `sqltypes`) VALUES (4, 'html-text', 'longtext,mediumtext');
-INSERT INTO `customfieldtypes` (`id`, `type`, `sqltypes`) VALUES (5, 'multiple-select', 'varchar(255)');
-INSERT INTO `customfieldtypes` (`id`, `type`, `sqltypes`) VALUES (6, 'color', 'int(11)');
-INSERT INTO `customfieldtypes` (`id`, `type`, `sqltypes`) VALUES (7, 'text', 'longtext,mediumtext');
-INSERT INTO `customfieldtypes` (`id`, `type`, `sqltypes`) VALUES (8, 'date', 'bigint(20)');
-INSERT INTO `customfieldtypes` (`id`, `type`, `sqltypes`) VALUES (9, 'integer', 'int(11),bigint(20)');
-INSERT INTO `customfieldtypes` (`id`, `type`, `sqltypes`) VALUES (10, 'file-link', 'varch(255)');
-INSERT INTO `customfieldtypes` (`id`, `type`, `sqltypes`) VALUES (11, 'multiple-select-with-order', 'varch(255)');
+INSERT INTO `customfieldtypes` (`id`, `type`, `sqltypes`) VALUES 
+	(1, 'binary', 'int(1)'),
+	(2, 'select', 'varchar(10)'),
+	(3, 'string', 'varchar(255)'),
+	(4, 'html-text', 'longtext,mediumtext'),
+	(5, 'multiple-select', 'varchar(255)'),
+	(6, 'color', 'int(11)'),
+	(7, 'text', 'longtext,mediumtext'),
+	(8, 'date', 'bigint(20)'),
+	(9, 'integer', 'int(11),bigint(20)'),
+	(10, 'file-link', 'varch(255)'),
+	(11, 'multiple-select-with-order', 'varch(255)');
 UNLOCK TABLES;
 
 
 LOCK TABLES `mimetypes` WRITE;
-INSERT INTO `mimetypes` (`id`, `name`, `extensions`) VALUES (1, 'images', 'jpg,jpeg, gif,png');
-INSERT INTO `mimetypes` (`id`, `name`, `extensions`) VALUES (2, 'videos', 'flv,mov,mp4,m4v,f4v');
-INSERT INTO `mimetypes` (`id`, `name`, `extensions`) VALUES (3, 'audio', 'mp3');
-INSERT INTO `mimetypes` (`id`, `name`, `extensions`) VALUES (4, 'swf', '');
-INSERT INTO `mimetypes` (`id`, `name`, `extensions`) VALUES (5, 'file', '');
-INSERT INTO `mimetypes` (`id`, `name`, `extensions`) VALUES (6, 'youtube', '');
-INSERT INTO `mimetypes` (`id`, `name`, `extensions`) VALUES (7, 'font', 'ttf,otf');
+INSERT INTO `mimetypes` (`id`, `name`, `extensions`) VALUES 
+	(1, 'images', 'jpg,jpeg, gif,png'),
+	(2, 'videos', 'flv,mov,mp4,m4v,f4v'),
+	(3, 'audio', 'mp3'),
+	(4, 'swf', ''),
+	(5, 'file', ''),
+	(6, 'youtube', ''),
+	(7, 'font', 'ttf,otf');
 UNLOCK TABLES;
 
 
 LOCK TABLES `statuses` WRITE;
-INSERT INTO `statuses` (`id`, `status`, `displayorder`) VALUES (1, 'Draft', 0);
-INSERT INTO `statuses` (`id`, `status`, `displayorder`) VALUES (2, 'Awaiting Approval', 0);
-INSERT INTO `statuses` (`id`, `status`, `displayorder`) VALUES (3, 'Published (Internal Only)', 0);
-INSERT INTO `statuses` (`id`, `status`, `displayorder`) VALUES (4, 'Published', 0);
+INSERT INTO `statuses` (`id`, `status`, `displayorder`) VALUES 
+	(1, 'Draft', 0), 
+	(2, 'Awaiting Approval', 0),
+	(3, 'Published (Internal Only)', 0),
+	(4, 'Published', 0);
 UNLOCK TABLES;
 
 
 LOCK TABLES `templates` WRITE;
-INSERT INTO `templates` (`id`, `name`, `classname`, `createdby`, `createdate`, `modifiedby`, `modifieddate`) VALUES (1, 'Default', '', 1, 1267733775, 1, 1267733775);
-INSERT INTO `templates` (`id`, `name`, `classname`, `createdby`, `createdate`, `modifiedby`, `modifieddate`) VALUES (2, 'FAQ', '', 1, 1267733775, 1, 1267733775);
+INSERT INTO `templates` (`id`, `name`, `classname`, `createdby`, `createdate`, `modifiedby`, `modifieddate`) VALUES 
+	(1, 'Default', '', 1, 1267733775, 1, 1267733775);
 UNLOCK TABLES;
 
 
 LOCK TABLES `usergroups` WRITE;
-INSERT INTO `usergroups` (`id`, `parentid`, `usergroup`, `createdby`, `createdate`, `modifiedby`, `modifieddate`) VALUES (1, 1, 'MiG Group', 1, 123421421, 1, 123421421);
-INSERT INTO `usergroups` (`id`, `parentid`, `usergroup`, `createdby`, `createdate`, `modifiedby`, `modifieddate`) VALUES (2, 2, 'Front End Group', 1, 123421421, 1, 123421421);
-INSERT INTO `usergroups` (`id`, `parentid`, `usergroup`, `createdby`, `createdate`, `modifiedby`, `modifieddate`) VALUES (3, 1, 'Administrator', 1, 123421421, 1, 123421421);
-INSERT INTO `usergroups` (`id`, `parentid`, `usergroup`, `createdby`, `createdate`, `modifiedby`, `modifieddate`) VALUES (4, 1, 'Writer 1', 1, 123421421, 1, 123421421);
-INSERT INTO `usergroups` (`id`, `parentid`, `usergroup`, `createdby`, `createdate`, `modifiedby`, `modifieddate`) VALUES (5, 1, 'Writer 2', 1, 123421421, 1, 123421421);
-INSERT INTO `usergroups` (`id`, `parentid`, `usergroup`, `createdby`, `createdate`, `modifiedby`, `modifieddate`) VALUES (6, 1, 'Reader', 1, 123421421, 1, 123421421);
-INSERT INTO `usergroups` (`id`, `parentid`, `usergroup`, `createdby`, `createdate`, `modifiedby`, `modifieddate`) VALUES (7, 2, 'Front End', 1, 123421421, 1, 123421421);
-INSERT INTO `usergroups` (`id`, `parentid`, `usergroup`, `createdby`, `createdate`, `modifiedby`, `modifieddate`) VALUES (8, 1, 'MiG Admin', 1, 123421421, 1, 123421421);
+INSERT INTO `usergroups` (`id`,`parentid`,`usergroup`,`createdby`,`createdate`,`modifiedby`,`modifieddate`)
+VALUES
+	(1, 1, 'MiG Group', 1, 123421421, 1, 123421421),
+	(2, 2, 'Front End Group', 1, 123421421, 1, 123421421),
+	(3, 1, 'MiG Admin', 1, 123421421, 1, 123421421),
+	(4, 1, 'Administrator', 1, 123421421, 1, 123421421),
+	(5, 1, 'Writer 1', 1, 123421421, 1, 123421421),
+	(6, 1, 'Writer 2', 1, 123421421, 1, 123421421),
+	(7, 1, 'Reader', 1, 123421421, 1, 123421421),
+	(8, 2, 'Front End', 1, 123421421, 1, 123421421);
 UNLOCK TABLES;
 
-
+LOCK TABLES `usergroups` WRITE;
+INSERT INTO `user` (`id`,`usergroupid`,`firstname`,`lastname`,`username`,`email`,`password`,`lastlogin`,`active`,`createdby`,`createdate`,`modifiedby`,`modifieddate`)
+VALUES
+	(1, 3, 'Raed', 'Atoui', 'raed', 'raed@themapoffice.com', 'kriohqiriq', 1267733775, 1, 1, 1267733775, 1, 1267733775);
+UNLOCK TABLES;
 
 
 SET FOREIGN_KEY_CHECKS = 1;

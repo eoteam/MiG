@@ -22,7 +22,7 @@ package org.mig.services
 		}	
 		public function retrieveChildren(content:DirectoryNode):void {
 			var params:Object = new Object();
-			params.action = content.config.@action.toString();
+			params.action = content.config.@retrieveContent.toString();
 			params.tablename = content.config.@tablename;
 			params.path = content.directory;
 			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,MediaData);

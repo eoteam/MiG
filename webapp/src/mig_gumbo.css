@@ -3,18 +3,25 @@
 @namespace mx "library://ns.adobe.com/flex/mx";
 @namespace containers "org.mig.view.containers.*";
 @namespace controls "org.mig.view.controls.*";
+@namespace tlf "flashx.textLayout.elements.*";
 
 @font-face {
 	src: url("/fonts/Transit/TransNor.ttf");
 	fontFamily: "Transit-Normal";
-	embedAsCFF: true
+	embedAsCFF: true;
 }
 @font-face {
 	src: url("/fonts/Transit/TransBol.ttf");
 	fontFamily: "Transit-Bold";
 	embedAsCFF: true;
 }
-
+tlf|TextFlow {
+	columnCount:		"1";
+	fontLookup: 		"embeddedCFF";
+	renderingMode:		"cff";
+	paddingTop:			"4";
+	paddingLeft:        "4";
+}
 
 /************************************/
 /************ Components ************/
@@ -56,10 +63,10 @@ controls|IconButton {
 }
 s|Button {
 	color: #ffffff;
-	fontLookup: embeddedCFF;
+	fontLookup: "embeddedCFF";
 	textRollOverColor: #FFFFFF;
 	textSelectedColor: #000000;
-	renderingMode:normal;
+	renderingMode:		"cff";
 	skinClass: ClassReference("org.mig.view.skins.buttons.GrayButtonSkin");
 }
 .defaultBlackButton {
@@ -82,7 +89,7 @@ s|Button {
 	color: #666666;
 	fontFamily: Transit-Bold;
 	fontSize: 14pt;
-	fontLookup: embeddedCFF;
+	fontLookup: "embeddedCFF";
 }
 /**************************************/
 /************ TabNavigator ************/
@@ -99,18 +106,18 @@ s|Label {
 	fontFamily: Transit-Normal;
 	fontSize: 14pt;
 	backgroundAlpha: 0;
-	fontLookup: embeddedCFF;
+	fontLookup: "embeddedCFF";
 	renderingMode: normal;
 }
 s|RichText {
 	color: white;
-	fontLookup: embeddedCFF;
-	renderingMode:normal;
+	fontLookup: "embeddedCFF";
+	renderingMode:		"cff";
 }
 s|TextArea {
 	color: white;
-	fontLookup: embeddedCFF;
-	renderingMode:normal;
+	fontLookup: "embeddedCFF";
+	renderingMode:		"cff";
 	fontSize: 14;
 	focusedTextSelectionColor: #ed1c58;
 	unfocusedTextSelectionColor: #333333;
@@ -123,7 +130,7 @@ s|TextArea {
 	fontSize: 14pt;
 	textAlign: left;
 	textDecoration: none;
-	fontLookup: embeddedCFF;
+	fontLookup: "embeddedCFF";
 	renderingMode:cff;
 }
 .bodyCopy {
@@ -133,14 +140,14 @@ s|TextArea {
 	fontSize: 14pt;
 	textAlign: left;
 	textDecoration: none;
-	fontLookup: embeddedCFF;
+	fontLookup: "embeddedCFF";
 	renderingMode: normal;
 }
 .statusModCopy {
 	color: #ffffff;
 	fontFamily: Transit-Normal;
 	fontSize: 14pt;
-	fontLookup: embeddedCFF;
+	fontLookup: "embeddedCFF";
 	renderingMode: normal;
 }
 /***********************************/
@@ -148,7 +155,7 @@ s|TextArea {
 /***********************************/
 s|TextInput {
 	contentBackgroundColor: #333333;
-	fontLookup: embeddedCFF;
+	fontLookup: "embeddedCFF";
 	color: #FFFFFF;
 	fontFamily: Transit-Normal;
 	fontWeight: normal;
