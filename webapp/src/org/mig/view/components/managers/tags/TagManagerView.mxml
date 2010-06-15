@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SkinnableContainer 
+		xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		xmlns:mx="library://ns.adobe.com/flex/mx"
+		backgroundColor="0x121212"
+		width="100%" height="100%" xmlns:controls="org.mig.view.controls.*" xmlns:renderers="org.mig.view.renderers.*">
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:VGroup width="100%" id="mainHolder"  height="100%" contentBackgroundAlpha="0" gap="0">
+		<s:HGroup width="100%" id="header" verticalAlign="middle" gap="2" clipAndEnableScrolling="false">
+			<mx:SWFLoader source="@Embed(source='/migAssets/library.swf#tagIcon')" />
+			<s:Label styleName="boldCopy" left="-3" bottom="-5" width="100%" text="Tag Manager"/>
+			<s:Rect width="100%"/>
+			<s:Button styleName="defaultGrayButton" label="Close" click="this.visible=false"/>
+			<s:Button styleName="defaultGrayButton" label="Save Changes" />
+		</s:HGroup>
+		<s:Rect height="10" />
+		<s:Rect id="rule1" width="100%" height="1">
+			<s:fill>
+				<s:SolidColor color="0x999999" />
+			</s:fill>
+		</s:Rect> 	
+		<s:Rect height="6" />
+		<s:TabBar  dataProvider="{tabNavigator}" id="tabBar"  height="22"  cornerRadius="0" styleName="toolTabBar"  />
+		<mx:ViewStack  historyManagementEnabled="false" styleName="toolsTabNavigator"
+		width="100%" height="100%" creationPolicy="all" id="tabNavigator"  contentBackgroundAlpha="0">
+			<s:NavigatorContent width="100%" height="100%" label="Tags">
+				<s:Rect width="100%" height="100%">
+					<s:fill>
+						<s:LinearGradient spreadMethod="pad"  interpolationMethod="rgb" rotation="90">
+							<s:GradientEntry color="0x595959" alpha="1" ratio="0" />
+							<s:GradientEntry color="0x262626" alpha="1"  ratio="1" />
+						</s:LinearGradient>
+					</s:fill>
+				</s:Rect>
+				<s:HGroup id="controlsBox1" gap="2" paddingTop="10">
+					<controls:IconButton id="addTagButton1"   mouseChildren="false" buttonMode="true" width="35" height="22" 
+					icon="@Embed(source='/migAssets/library.swf#addTagUp')" styleName="grayIconButton"/>	
+					
+					<controls:IconButton width="30" height="22" id="trashButton" toolTip="Delete" icon="@Embed(source='/migAssets/library.swf#deleteIconSmall')" 
+					 mouseChildren="false" buttonMode="true" styleName="grayIconButton" />							
+				</s:HGroup>
+
+				<controls:MiGDataGrid 	width="100%" dragEnabled="true"  top="40" bottom="15"
+				allowMultipleSelection="true" allowDragSelection="true"
+				id="termsGrid" paddingTop="0" height="100%"  
+				editable="true">
+					<controls:columns>
+						<mx:DataGridColumn width="26" editable="false" >
+							<mx:itemRenderer>
+								<fx:Component>
+									<mx:Box paddingLeft="4" paddingTop="4">
+										<mx:SWFLoader source="@Embed(source='/migAssets/library.swf#tagIcon')" />
+									</mx:Box>
+								</fx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+						<mx:DataGridColumn  paddingLeft="6" headerText="Tag" dataField="name" editable="false"   editorUsesEnterKey="true" >
+							<mx:itemRenderer>
+								<fx:Component>
+									<renderers:DGCell  colorEnabled="true"/>
+								</fx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
+					</controls:columns>
+					<controls:dataProvider>
+						<s:ArrayList>
+							<fx:Object name="blue" />
+							<fx:Object name="red" />
+							<fx:Object name="white" />
+						</s:ArrayList>
+					</controls:dataProvider>
+				</controls:MiGDataGrid>
+				<s:Label styleName="bodyCopy" text="{termsGrid.dataProvider.length + ' items'}" textAlign="center" width="100%" bottom="0" />
+			</s:NavigatorContent>
+			<s:NavigatorContent width="100%" height="100%" label="Categories">
+				<s:Rect width="100%" height="100%">
+					<s:fill>
+						<s:LinearGradient spreadMethod="pad"  interpolationMethod="rgb" rotation="90">
+							<s:GradientEntry color="0x595959" alpha="1" ratio="0" />
+							<s:GradientEntry color="0x262626" alpha="1"  ratio="1" />
+						</s:LinearGradient>
+					</s:fill>
+				</s:Rect>
+				<s:HGroup id="controlsBox2" gap="2" paddingTop="10">
+					<controls:IconButton width="32"  toolTip="Add Parent Row" id="insertParentButton"
+					icon="@Embed(source='/migAssets/library.swf#addParentRowIcon')" styleName="grayIconButton"/>
+					<controls:IconButton width="30"  toolTip="Add Child Row"  id="insertChildButton" enabled="false"  
+					icon="@Embed(source='/migAssets/library.swf#addChildRowIcon')" styleName="grayIconButton" 
+					disabledIcon="@Embed(source='/migAssets/library.swf#addChildRowDisabledIcon')" />
+					<controls:IconButton width="30" height="22" id="trashButton2" toolTip="Delete" mouseChildren="false" buttonMode="true"	
+					icon="@Embed(source='/migAssets/library.swf#deleteIconSmall')" styleName="grayIconButton"/>
+				</s:HGroup>
+				<controls:MiGAdvancedDataGrid
+					height="100%" width="100%" id="catGrid" 
+					dragEnabled="true"
+					allowMultipleSelection="true"
+					allowDragSelection="true"
+					editable="true"
+					treeColumn="{treeColumn}"
+					selectionColor="0xed1c58" sortableColumns="false"
+					sortExpertMode="false" 
+					sortItemRenderer="{null}"
+					headerHeight="22"
+					variableRowHeight="true"
+					dragMoveEnabled="true"
+					dropEnabled="true"
+					defaultLeafIcon="{null}"
+					top="40" bottom="10">
+					<controls:columns>	
+						<mx:AdvancedDataGridColumn minWidth="26" id="treeColumn" width="26" editable="false" >
+							<mx:itemRenderer>
+								<fx:Component>
+									<s:MXAdvancedDataGridItemRenderer>
+										<s:HGroup verticalCenter="0" verticalAlign="middle" paddingTop="2" paddingBottom="2" paddingRight="2" paddingLeft="{this.listData.indent}">
+											<mx:SWFLoader source="@Embed(source='migAssets/library.swf#tagIcon')"  />	
+										</s:HGroup>
+									</s:MXAdvancedDataGridItemRenderer>
+								</fx:Component>
+							</mx:itemRenderer>
+						</mx:AdvancedDataGridColumn>
+						
+						<mx:AdvancedDataGridColumn  paddingLeft="6" headerText="Name" dataField="name" editable="false"   editorUsesEnterKey="true" >
+							<mx:itemRenderer>
+								<fx:Component>
+									<renderers:ADGCell colorEnabled="true" textColor="0xffffff"/>
+								</fx:Component>
+							</mx:itemRenderer>
+						</mx:AdvancedDataGridColumn>
+						<mx:AdvancedDataGridColumn  paddingLeft="6" headerText="Slug" dataField="slug" editable="false"   editorUsesEnterKey="true" >
+							<mx:itemRenderer>
+								<fx:Component>
+									<renderers:ADGCell colorEnabled="true" textColor="0xffffff"/>
+								</fx:Component>
+							</mx:itemRenderer>
+						</mx:AdvancedDataGridColumn>
+<!--						<mx:AdvancedDataGridColumn  paddingLeft="6" headerText="Description" dataField="description" editable="false"   editorUsesEnterKey="true" >
+							<mx:itemRenderer>
+								<fx:Component>
+									<renderers:ADGTextArea colorEnabled="true" textColor="0xffffff"/>
+								</fx:Component>
+							</mx:itemRenderer>
+						</mx:AdvancedDataGridColumn>						
+						<mx:AdvancedDataGridColumn width="26" paddingLeft="6" headerText="Color" dataField="color" editable="false"   editorUsesEnterKey="true" >
+							<mx:itemRenderer>
+								<fx:Component>
+									<renderers:AdvancedDatagridColorEditor colorEditable="true"/>
+								</fx:Component>
+							</mx:itemRenderer>
+						</mx:AdvancedDataGridColumn>	-->																		
+					</controls:columns>
+				</controls:MiGAdvancedDataGrid>
+				
+			</s:NavigatorContent>			
+		</mx:ViewStack>	
+	</s:VGroup>
+</s:SkinnableContainer>

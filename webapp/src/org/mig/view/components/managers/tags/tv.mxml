@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:userManager="com.map.view.userManager.*"
+	xmlns:controls="com.map.view.controls.*"
+	xmlns:tagManager="com.map.view.tagManager.*" 
+	xmlns:controls1="com.mapx.view.controls.*" 
+	xmlns:renderers="com.mapx.view.renderers.*"	
+	xmlns:view="com.map.view.*"
+	implements="com.map.view.manager.IManagerView"
+	backgroundColor="0x111111" width="100%"
+	horizontalScrollPolicy="off"
+	creationComplete="init()"  >
+	<mx:Script>
+		<![CDATA[
+			import mx.events.IndexChangedEvent;
+			import mx.core.UIComponent;
+		]]>
+	</mx:Script>
+	
+	<mx:Script source="TagManagerViewScript.as" />
+	
+	<mx:states>
+		<mx:State id="loading" name="loading"/>
+		<mx:State id="loaded" name="loaded"/>
+	</mx:states>
+	
+	<mx:transitions>
+		<mx:Transition toState="loading">
+			<mx:Sequence>
+				<mx:SetPropertyAction target="{loadingScreen}" name="visible" value="true"/>
+				<mx:SetPropertyAction target="{tabNavigator}" name="alpha" value="0"/>
+				<mx:Fade target="{loadingScreen}" alphaTo="1" duration="1000"/>
+			</mx:Sequence>
+		</mx:Transition>
+		<mx:Transition toState="loaded">
+			<mx:Sequence>
+				<mx:Fade target="{loadingScreen}" alphaTo="0" duration="500"/>
+				<mx:SetPropertyAction target="{loadingScreen}" name="visible" value="false"/>
+				<mx:SetPropertyAction target="{tabNavigator}" name="visible" value="true"/>
+				<mx:Fade target="{tabNavigator}" alphaFrom="0" alphaTo="1" duration="1000"/>
+			</mx:Sequence>
+		</mx:Transition>
+	</mx:transitions>
+	
+	<mx:VBox width="100%" id="mainHolder"  height="100%" verticalGap="0" paddingLeft="4" paddingRight="4">
+		<mx:HBox width="100%" id="header" clipContent="false" verticalAlign="middle" horizontalGap="2">
+			<mx:SWFLoader source="@Embed(source='/migAssets/library.swf#tagIcon')" />
+			<mx:Text styleName="boldCopy" left="-3" bottom="-5" width="100%" text="Tag Manager"/>
+			<mx:Spacer width="100%"/>
+			<mx:Button styleName="defaultButton" label="Close" click="handleCloseClicked(event)"/>
+			<mx:Button styleName="defaultButton" enabled="false" id="cancelButton" label="Cancel Changes" click="tagManager.cancelChanges()"/>
+			<mx:Button styleName="defaultButton" label="Save Changes" click="saveChanges()" />
+		</mx:HBox>	
+		<mx:Spacer height="4" />
+		<mx:HRule id="rule1" width="100%" strokeWidth="1" strokeColor="#999999"  />	
+		<mx:Spacer height="16" />	
+		
+		<mx:TabNavigator historyManagementEnabled="false" styleName="toolsTabNavigator" visible="false"  
+						 width="100%" height="100%" creationPolicy="all"
+						 id="tabNavigator">
+			<mx:Canvas label="Tags"	width="100%" height="100%" styleName="toolsContainer">	
+				<controls1:MiGDataGrid
+					width="100%" dragEnabled="true"  top="40" bottom="10"
+					allowMultipleSelection="true" allowDragSelection="true"
+					id="termsGrid" paddingTop="0" height="100%" 
+					dataProvider="{tagManager.terms.source}" 
+					editable="true">
+					
+					<controls1:columns>	
+						<mx:DataGridColumn width="26" editable="false" >
+							<mx:itemRenderer>
+								<mx:Component>
+									<mx:Box paddingLeft="4" paddingTop="4">
+										<mx:SWFLoader source="@Embed(source='/migAssets/library.swf#tagIcon')" />
+									</mx:Box>
+								</mx:Component>
+							</mx:itemRenderer>
+							
+						</mx:DataGridColumn>
+						
+						<mx:DataGridColumn  paddingLeft="6" headerText="Tag" dataField="name" editable="false"   editorUsesEnterKey="true" >
+							<mx:itemRenderer>
+								<mx:Component>
+									<renderers:DatagridCellEditor colorEnabled="true"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>							
+					</controls1:columns>
+				</controls1:MiGDataGrid>
+				<mx:Label styleName="bodyCopy" text="{tagManager.terms.length + ' items'}"
+						  textAlign="center" width="100%" bottom="0" />
+				<mx:HBox id="controlsBox1" horizontalGap="0" paddingTop="10">
+					<mx:Button id="addTagButton1"   mouseChildren="false" buttonMode="true" icon="@Embed(source='/migAssets/library.swf#addTagUp')" 
+							   click="addTagTerm()" width="35"  paddingTop="4" height="22"  />	
+					<mx:Button width="30" id="trashButton" toolTip="Delete" icon="@Embed(source='/migAssets/library.swf#deleteIconSmall')" 
+							   dragEnter="handleDragEnter(event)"  click="this.deleteTags()" paddingLeft="9" paddingTop="2"
+							   dragDrop="handleDrop(event)" mouseChildren="false" buttonMode="true" />							
+				</mx:HBox>
+				
+			</mx:Canvas>
+			<mx:Canvas label="Categories" width="100%" height="100%" styleName="toolsContainer">	
+				<controls1:MiGAdvancedDataGrid 
+					height="100%" width="100%" id="catGrid" 
+					dragEnabled="true"
+					allowMultipleSelection="true"
+					allowDragSelection="true"
+					editable="true"
+					treeColumn="{treeColumn}"
+					itemClick="insertChildButton.enabled = true"
+					selectionColor="0xed1c58" sortableColumns="false"
+					sortExpertMode="false" 
+					sortItemRenderer="{null}"
+					headerHeight="22"
+					variableRowHeight="true"
+					dragMoveEnabled="true"
+					dropEnabled="true"
+					dragComplete="handleCatGridDC(event)"
+					dragDrop="handleCatGridDD(event)"
+					headerSortSeparatorSkin="com.mapx.view.skins.SortSeparatorSkin"
+					defaultLeafIcon="{null}"
+					folderClosedIcon="@Embed(source='/migAssets/library.swf#folderIcon')"
+					folderOpenIcon="@Embed(source='/migAssets/library.swf#folderIcon')"
+					top="40" bottom="10">
+					<controls1:columns>	
+						<mx:AdvancedDataGridColumn minWidth="26" id="treeColumn" width="26" editable="false" >
+							<mx:itemRenderer>
+								<mx:Component>
+									<renderers:AdvancedDatagridTagCell />
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:AdvancedDataGridColumn>
+						
+						<mx:AdvancedDataGridColumn  paddingLeft="6" headerText="Name" dataField="name" editable="false"   editorUsesEnterKey="true" >
+							<mx:itemRenderer>
+								<mx:Component>
+									<renderers:AdvancedDatagridCellEditor colorEnabled="true" textColor="0xffffff"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:AdvancedDataGridColumn>
+						<mx:AdvancedDataGridColumn  paddingLeft="6" headerText="Slug" dataField="slug" editable="false"   editorUsesEnterKey="true" >
+							<mx:itemRenderer>
+								<mx:Component>
+									<renderers:AdvancedDatagridCellEditor colorEnabled="true" textColor="0xffffff"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:AdvancedDataGridColumn>
+						<mx:AdvancedDataGridColumn  paddingLeft="6" headerText="Description" dataField="description" editable="false"   editorUsesEnterKey="true" >
+							<mx:itemRenderer>
+								<mx:Component>
+									<renderers:AdvancedDatagridTextAreaEditor colorEnabled="true" textColor="0xffffff"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:AdvancedDataGridColumn>						
+						<mx:AdvancedDataGridColumn width="26" paddingLeft="6" headerText="Color" dataField="color" editable="false"   editorUsesEnterKey="true" >
+							<mx:itemRenderer>
+								<mx:Component>
+									<renderers:AdvancedDatagridColorEditor colorEditable="true"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:AdvancedDataGridColumn>																			
+					</controls1:columns>
+				</controls1:MiGAdvancedDataGrid>
+				<mx:Label styleName="bodyCopy" text="{tagManager.categories.length + ' items'}" textAlign="center" width="100%" bottom="0"/>
+				<mx:HBox id="controlsBox2" horizontalGap="0" paddingTop="10">
+					<mx:Button icon="{addParentRowIcon}" click="insertSiblingTerm()" width="32" paddingTop="2" paddingLeft="4" toolTip="Add Parent Row" id="insertParentButton"/>
+					<mx:Button icon="{addChildRowIcon}"  click="insertChildTerm()" disabledIcon="{addChildRowDisabledIcon}" width="30" paddingTop="2" paddingLeft="7"  
+							   toolTip="Add Child Row"  id="insertChildButton" enabled="false" />		
+					<mx:Button icon="@Embed(source='/migAssets/library.swf#deleteIconSmall')" id="trashButton2" toolTip="Delete"  
+							   dragEnter="handleDragEnter(event)"  click="this.deleteTags()" width="30"
+							   dragDrop="handleDrop(event)" mouseChildren="false" paddingLeft="9" paddingTop="2" buttonMode="true"/>											
+				</mx:HBox>
+				
+			</mx:Canvas>			
+		</mx:TabNavigator>
+		<mx:Spacer height="10" />		
+	</mx:VBox>		
+	<mx:VBox id="loadingScreen" backgroundColor="0x000000" backgroundAlpha="0" 
+			 width="100%" height="100%" visible="false" alpha="0">
+		<mx:Spacer height="35%" width="100%"/>
+		<mx:HBox width="100%">
+			<mx:Spacer  height="100%" width="55%"/>
+			<view:MigLoaderSmall percentLoaded="{1}" scaleX=".75" scaleY=".75" rotation="45"/>
+			<mx:Spacer height="100%" width="45%"/>
+		</mx:HBox>
+		<mx:Spacer height="65%" width="100%" />
+	</mx:VBox>	
+</mx:Canvas>
+

@@ -20,7 +20,8 @@ package org.mig.services
 		public static const MIG_SEARCH:String 						= "migSearch";
 		public static const GET_TAGS:String 						= "getTags";
 		public static const GET_ROOT:String							= "getRoot";
-
+		
+		
 		public static const UPDATE_TAG:String 						= "updateTag";
 		public static const UPDATE_RECORD:String 					= "updateRecord";
 		public static const UPDATE_RECORDS:String 					= "updateRecords";
@@ -36,8 +37,7 @@ package org.mig.services
 		public static const DELETE_MEDIA_BY_PATH:String 			= "deleteMediaByPath";
 		public static const DUPLICATE_CONTENT:String 				= "duplicateContent";
 
-	
-
+		
 		public static const READ_DIRECTORY:String					= "readDirectory";
 		public static const CREATE_DIRECTORY:String					= "createDirectory";
 		public static const DELETE_DIRECTORY:String					= "removeDirectory";

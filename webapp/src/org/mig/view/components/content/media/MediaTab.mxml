@@ -6,8 +6,8 @@
 	implements="org.mig.view.interfaces.IEditableContentView" 
 	xmlns:controls="org.mig.view.controls.*"
 	xmlns:containers="org.mig.view.containers.*"
-	xmlns:tabs="org.mig.view.components.content.tabs.*"
-	paddingLeft="2" paddingRight="2" paddingBottom="10" gap="5" xmlns:renderers="org.mig.view.renderers.*">
+	xmlns:media="org.mig.view.components.content.media.*"
+	paddingLeft="2" paddingRight="2" paddingBottom="10" gap="5" >
 	<fx:Script>
 		<![CDATA[
 			import flash.events.DataEvent;
@@ -63,12 +63,12 @@
 		<s:ToggleButton includeIn="viewingStates" id="view3Btn"  width="30"  toolTip="Preview"  click="handleViewBtn(3)" selected="{view3Selected}" />
 		
 		<s:Rect width="5" includeIn="viewingStates"/>
-		<controls:IconButton includeIn="viewingStates" id="trashButton" toolTip="Delete" styleName="grayIconButton" icon="@Embed(source='/migAssets/library.swf#trashUp')"/>
+		<controls:IconButton height="22" includeIn="viewingStates" id="trashButton" toolTip="Delete" styleName="grayIconButton" icon="@Embed(source='/migAssets/library.swf#trashUp')"/>
 		
 		<!--  dragDrop="handleTrashDrop(event)" click="handleTrashClick()" dragEnter="handleTrashEnter(event)" -->						
 		<s:Rect width="5" includeIn="viewingStates"/>
 		
-		<controls:IconButton width="34" styleName="grayIconButton"  icon="@Embed(source='/migAssets/library.swf#fileActions')"  id="actionButton" includeIn="viewingStates" />	
+		<controls:IconButton width="34" height="22" styleName="grayIconButton"  icon="@Embed(source='/migAssets/library.swf#fileActions')"  id="actionButton" includeIn="viewingStates" />	
 		<s:Rect  width="5" includeIn="viewingStates"/><!-- click="actionButton_clickHandler(event)" -->
 	</s:HGroup>	
 	<s:SkinnableContainer backgroundColor="0x303030" width="100%" height="100%">
@@ -127,7 +127,7 @@
 		<mx:Canvas width="100%" id="animatedTileHolder" height="100%" horizontalScrollPolicy="off">
 			<containers:DragTile
 				horizontalScrollPolicy="off"
-				dataField="content" thumbURL="{thumbURL}"
+				dataField="data" thumbURL="{thumbURL}"
 				backgroundColor="#ffffff" backgroundAlpha="0" 
 				scalePercent="{scalePercent}" 
 				dragOver='event.target.showDragFeedback(event,"move")'
@@ -136,7 +136,7 @@
 				width="100%" height="100%" >
 			</containers:DragTile>		
 		</mx:Canvas>
-	
+		
 		<s:NavigatorContent width="100%" height="100%" id="tileHolder">
 			<!--dragEnter="handleDragEnter(event)" 
 			dragComplete="animListDirty=true" -->
@@ -155,7 +155,7 @@
 				</controls:layout>
 				<controls:itemRenderer>
 					<fx:Component>
-						<renderers:MediaTabFixedListRenderer thumbURL="{outerDocument.thumbURL}" />
+						<media:MediaTabFixedListRenderer thumbURL="{outerDocument.thumbURL}" />
 					</fx:Component>
 				</controls:itemRenderer>
 			</controls:MiGList>
@@ -165,9 +165,9 @@
 		<!--	<mediaManager:MediaPlayer id="slideShowContainer" />-->
 		</s:NavigatorContent>
 	</mx:ViewStack>
-	<tabs:ContentMediaDetailView maskType="clip"   id="detailView" y="-550" horizontalCenter="0" visible="false" showEffect="showDetailView"  hideEffect="hideDetailView">
+	<media:ContentMediaDetailView maskType="clip"   id="detailView" y="-550" horizontalCenter="0" visible="false" showEffect="showDetailView"  hideEffect="hideDetailView">
 		
-	</tabs:ContentMediaDetailView>
+	</media:ContentMediaDetailView>
 	</s:SkinnableContainer>	
 	<s:HGroup width="100%">
 		<s:Rect width="100%" />

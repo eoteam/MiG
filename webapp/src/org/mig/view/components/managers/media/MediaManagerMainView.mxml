@@ -11,7 +11,7 @@
 	</s:layout>
 	<!--Title Bar-->
 	<s:HGroup width="100%" id="header" verticalAlign="middle" gap="2" clipAndEnableScrolling="false">
-		<mx:Label styleName="boldCopy"  width="100%" text="Media Manager" />
+		<s:Label styleName="boldCopy"  width="100%" text="Media Manager" />
 		<s:Rect width="100%"/>
 		<s:Button id="closeButton" styleName="defaultGrayButton" label="Close" click="this.visible=false"/>
 	</s:HGroup>

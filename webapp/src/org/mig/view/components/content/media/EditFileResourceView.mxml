@@ -23,7 +23,7 @@
 				}
 				[Bindable] private var _content:ContentNode;	
 				[Bindable] public var bgColor:uint;	
-				public var file:MediaTile;
+				public var file:MediaTabAnimatedListRenderer;
 				private function handleCreditsChange():void
 				{
 					_content.data.credits = creditsInput.text;

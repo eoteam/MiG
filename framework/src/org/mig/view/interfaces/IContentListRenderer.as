@@ -2,6 +2,7 @@ package org.mig.view.interfaces
 {
 	
 	import org.mig.model.vo.BaseContentData;
+	import org.mig.model.vo.relational.ContentMedia;
 	
 	public interface IContentListRenderer // purely visual operations.
 	//the DragTile should stop managing components state and just do layout, the parenting list will deal with the 
@@ -22,5 +23,7 @@ package org.mig.view.interfaces
 		function get selectionColor():uint;
 
 		function set url(value:String):void;
+		
+		function set data(value:Object):void;
 	}
 }

@@ -15,7 +15,6 @@ import org.mig.model.vo.relational.ContentMedia;
 
 public var thumbURL:String;
 
-[Bindable] private var _content:ContentNode;
 [Bindable] private var _data:ContentMedia;
 [Bindable] private var imageSource:String;
 [Bindable] private var _scalePercent:Number;
@@ -53,35 +52,33 @@ public var isImage:Boolean;
 /*public function get fileExtension():String{
 	return imageSource;
 }*/
-public function set content(value:ContentNode):void {
-	_content = value;
-	_data = _content.data as ContentMedia;
-
-	if(_data.mimetypeid == MimeTypes.IMAGE) {
-		imageSource = thumbURL+_data.path.toString()+_data.name.toString();
-		isImage = true;
-	}
-	else if(_data.mimetypeid == MimeTypes.VIDEO && _data.thumb.toString() != '') {
-		imageSource =thumbURL+_data.path.toString()+_data.thumb.toString();
-		isImage = true;		
-	}
-	else
-	{
-		if(_data.mimetypeid == MimeTypes.YOUTUBE)
-		{
-			docIcon = youtubeIcon;
-			imageSource = '';
+override public function set data(value:Object):void {
+	super.data = value;
+	if(value) {
+		_data = value.data as ContentMedia;
+	
+		if(_data.mimetypeid == MimeTypes.IMAGE) {
+			imageSource = thumbURL+_data.path.toString()+_data.name.toString();
+			isImage = true;
 		}
-		else
-		{
-			docIcon="migAssets/images/docIcon.png";
+		else if(_data.mimetypeid == MimeTypes.VIDEO && _data.thumb.toString() != '') {
+			imageSource =thumbURL+_data.path.toString()+_data.thumb.toString();
+			isImage = true;		
 		}
-		isImage = false;	
-	}	
-	if(imageHolder != null)
-		imageHolder.source = imageSource;
-	if(imageName != null)
-		imageName.text = _data.name.toString();	
+		else {
+			if(_data.mimetypeid == MimeTypes.YOUTUBE) {
+				docIcon = youtubeIcon;
+				imageSource = '';
+			}
+			else
+				docIcon="migAssets/images/docIcon.png";
+			isImage = false;	
+		}	
+		if(imageHolder != null)
+			imageHolder.source = imageSource;
+		if(imageName != null)
+			imageName.text = _data.name.toString();
+	}
 }
 private function handleCreationComplete():void
 {
@@ -94,12 +91,7 @@ private function handleCreationComplete():void
 		dragCanvas.visible = true;
 	}
 }
-public function get content():ContentNode
-{
-	return _content;
-}
-public function set selected(value:Boolean):void
-{
+public function set selected(value:Boolean):void {
 	_selected = value;
 	if(!value)
 	{
@@ -144,7 +136,7 @@ public function dispatchInfoOpenedEvent():void
 {
 	info = new EditFileResourceView();
 	info.bgColor = bgColorSelected;
-	info.content = _content;
+	//info.content = _content;
 	info.file = this;
 	info.x = FlexGlobals.topLevelApplication.mouseX-this.mouseX; 
 	info.y = FlexGlobals.topLevelApplication.mouseY-this.mouseY+this.height;	

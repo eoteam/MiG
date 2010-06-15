@@ -14,5 +14,7 @@ package org.mig.services.interfaces
 		function loadTemplates():void;
 		
 		function loadMimeTypes():void;
+		
+		function loadTerms():void;
 	}
 }

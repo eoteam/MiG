@@ -47,6 +47,11 @@ package org.mig.controller.startup
 		public static const LOAD_MIMETYPES_COMPLETE:String  	= "action/start/mimetypes/complete";
 		public static const LOAD_MIMETYPES_FAILED:String    	= "action/start/mimetypes/failed";
 
+		public static const LOADING_TERMS:String				= "state/starting/terms";
+		public static const LOAD_TERMS:String					= "event/start/terms";
+		public static const LOAD_TERMS_COMPLETE:String  		= "action/start/terms/complete";
+		public static const LOAD_TERMS_FAILED:String    		= "action/start/terms/failed";		
+		
 		public static const LOADING_CFGROUPS:String				= "state/starting/cfgroups";
 		public static const LOAD_CFGROUPS:String				= "event/start/cfgroups";
 		public static const LOAD_CFGROUPS_COMPLETE:String  		= "action/start/cfgroups/complete";
@@ -99,8 +104,13 @@ package org.mig.controller.startup
 		
 
 				<state name={LOADING_MIMETYPES} changed={LOAD_MIMETYPES}>
-				   <transition action={LOAD_MIMETYPES_COMPLETE} target={LOADING_CFGROUPS}/>			       
+				   <transition action={LOAD_MIMETYPES_COMPLETE} target={LOADING_TERMS}/>			       
 				   <transition action={LOAD_MIMETYPES_FAILED} target={FAILING}/>
+				</state>
+		
+				<state name={LOADING_TERMS} changed={LOAD_TERMS}>
+				   <transition action={LOAD_TERMS_COMPLETE} target={LOADING_CFGROUPS}/>			       
+				   <transition action={LOAD_TERMS_FAILED} target={FAILING}/>
 				</state>
 		
 				<state name={LOADING_CFGROUPS} changed={LOAD_CFGROUPS}>

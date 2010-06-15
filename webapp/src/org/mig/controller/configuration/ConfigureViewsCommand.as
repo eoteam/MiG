@@ -6,8 +6,9 @@ package org.mig.controller.configuration
 	import org.mig.view.components.content.ContentGeneralEditor;
 	import org.mig.view.components.content.ContentView;
 	import org.mig.view.components.content.MainMiddleView;
-	import org.mig.view.components.content.tabs.MediaTab;
-	import org.mig.view.components.content.tabs.TagsCategoriesTab;
+	import org.mig.view.components.content.media.MediaTab;
+	import org.mig.view.components.content.media.MediaTabAnimatedListRenderer;
+	import org.mig.view.components.content.tags.TagsCategoriesTab;
 	import org.mig.view.components.main.ContainerPathView;
 	import org.mig.view.components.main.ContentTree;
 	import org.mig.view.components.main.ContentViewer;
@@ -24,7 +25,7 @@ package org.mig.controller.configuration
 	import org.mig.view.components.managers.media.RenameView;
 	import org.mig.view.mediators.content.ContentGeneralEditorMediator;
 	import org.mig.view.mediators.content.ContentViewMediator;
-	import org.mig.view.mediators.content.tabs.MediaTabMediator;
+	import org.mig.view.mediators.content.media.MediaTabMediator;
 	import org.mig.view.mediators.main.ContainerPathMediator;
 	import org.mig.view.mediators.main.ContentTreeMediator;
 	import org.mig.view.mediators.main.ContentViewerMediator;
@@ -39,7 +40,7 @@ package org.mig.controller.configuration
 	import org.mig.view.mediators.managers.media.FileUploadMediator;
 	import org.mig.view.mediators.managers.media.MediaManagerMediator;
 	import org.mig.view.mediators.managers.media.RenameMediator;
-	import org.mig.view.renderers.MediaTile;
+	import org.mig.view.components.content.media.MediaTabAnimatedListRenderer;	
 	import org.robotlegs.mvcs.Command;
 	import org.robotlegs.utilities.statemachine.StateEvent;
 		
@@ -79,8 +80,7 @@ package org.mig.controller.configuration
 			//non mediated views
 			injector.mapClass(MainMiddleView,MainMiddleView);
 			injector.mapClass(TagsCategoriesTab,TagsCategoriesTab);
-			injector.mapClass(MediaTile, MediaTile);
-		
+			injector.mapClass(MediaTabAnimatedListRenderer, MediaTabAnimatedListRenderer);
 			trace("Configure: Views Complete");
 			//notifiy the state machine that we are done with this step
 			eventDispatcher.dispatchEvent( new StateEvent(StateEvent.ACTION, AppConfigStateConstants.CONFIGURE_VIEWS_COMPLETE));

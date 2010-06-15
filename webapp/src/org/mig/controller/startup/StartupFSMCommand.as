@@ -21,6 +21,7 @@ package org.mig.controller.startup
 			commandMap.mapEvent( AppStartupStateConstants.LOAD_CONTENT, LoadContentCommand, StateEvent, true );
 			commandMap.mapEvent( AppStartupStateConstants.LOAD_MEDIA,LoadMediaCommand, StateEvent, true );
 			commandMap.mapEvent( AppStartupStateConstants.LOAD_MIMETYPES,LoadMimeTypesCommand, StateEvent, true );
+			commandMap.mapEvent( AppStartupStateConstants.LOAD_TERMS,LoadTermsCommand, StateEvent, true );
 			commandMap.mapEvent( AppStartupStateConstants.LOAD_CFGROUPS, LoadCustomFieldGroupsCommand, StateEvent, true );
 			commandMap.mapEvent( AppStartupStateConstants.LOAD_CFS, LoadCustomFieldsCommand,  StateEvent, true);
 			commandMap.mapEvent( AppStartupStateConstants.LOAD_TEMPLATES, LoadTemplatesCommand,  StateEvent, true);

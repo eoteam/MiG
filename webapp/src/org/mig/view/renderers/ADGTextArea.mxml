@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:MXAdvancedDataGridItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+								  xmlns:s="library://ns.adobe.com/flex/spark" 
+								  xmlns:mx="library://ns.adobe.com/flex/mx" autoDrawBackground="false"  
+								  focusEnabled="true">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.core.UITextField;
+			import mx.events.FlexEvent;
+			import mx.controls.advancedDataGridClasses.AdvancedDataGridListData;
+			import mx.controls.listClasses.BaseListData;
+			
+			[Bindable] public var isPassword:Boolean = false;	         
+			[Bindable] public var editable:Boolean = true;
+			[Bindable] public var textColor:Number = 0x666666;
+			
+			[Bindable] private var cellValue:String; 
+			[Bindable] public var enabledField:String;
+			[Bindable] public var fieldStyleName:String = "inputFieldBlack";
+			public var outerFunction:Function;
+			public var colorEnabled:Boolean = false;
+			
+			
+			override public function get data():Object
+			{
+				return super.data;
+			}    
+			override public function set data(value:Object):void 
+			{  
+				super.data = value;  
+				if(value != null)  
+				{
+					if(outerFunction != null)
+					{
+						cellValue = outerFunction.call(null,data) as String;
+					}
+					else
+						cellValue = value[AdvancedDataGridListData(this.listData).dataField]; 
+					if(cellValue == null)
+						cellValue = value[AdvancedDataGridListData(this.listData).dataField];       
+					if(data.hasOwnProperty("active"))
+					{
+						this.enabled = (data.active == 1) ? true:false;
+					}
+				}   
+			} 
+			private function handleValueChange():void
+			{
+				data[AdvancedDataGridListData(this.listData).dataField] = input.text;
+			}       
+		]]>
+	</fx:Script>
+	<s:TextArea id="input" top="0" left="0" right="0" bottom="0"  fontFamily="Transit-Bold"  
+	width="100%" displayAsPassword="{isPassword}"  text="{cellValue}" borderVisible="false" 
+	contentBackgroundColor="0" color="{textColor}" heightInLines="{NaN}"  
+	change="handleValueChange()" editable="{editable}" mouseChildren="{editable}"  />
+</s:MXAdvancedDataGridItemRenderer>

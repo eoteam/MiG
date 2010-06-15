@@ -1,4 +1,4 @@
-package org.mig.view.mediators.content.tabs
+package org.mig.view.mediators.content.media
 {
 	import flash.events.DataEvent;
 	import flash.events.Event;
@@ -21,7 +21,7 @@ package org.mig.view.mediators.content.tabs
 	import org.mig.model.vo.content.ContentData;
 	import org.mig.model.vo.content.SubContainerNode;
 	import org.mig.model.vo.relational.ContentMedia;
-	import org.mig.view.components.content.tabs.MediaTab;
+	import org.mig.view.components.content.media.MediaTab;
 	import org.mig.view.constants.DraggableViews;
 	import org.mig.view.events.ListItemEvent;
 	import org.robotlegs.mvcs.Mediator;

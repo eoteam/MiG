@@ -302,7 +302,7 @@ function getContent($params)
 	// first let's grab customfield names, so we can translate!!
 
 	// first get all custom fields!
-	$sql = "SELECT * FROM customfields";
+	//$sql = "SELECT * FROM customfields";
 	$sql = "SELECT template_customfields.fieldid, customfields.name, customfields.displayname
 				FROM template_customfields " .
 	 			"LEFT JOIN customfields ON customfields.id = template_customfields.customfieldid";
@@ -1575,20 +1575,52 @@ function getTags($params) {
 
 	/*
 		-- VALID PARAMS --
-		-- ALL ARE OPTIONAL --
+		-- ALL ARE OPTIONAL --	
 
 		//tagid (int) - specifies a specific media id to return (can be comma-delimited)
 		//contentids (int) - specifies a specific content id to return media results for (can be comma-delimited)
 		//include_unused (1,0) - include media that is not tied to content - defaults to 0 (NO).
 		*/
-
+		
 	$sendParams = array();
 	$validParams = array("action","tagid","contentid","include_unused");
 
-	// define the sql query
-	$sql = "SELECT terms.name,terms.slug,term_taxonomy.* , GROUP_CONCAT(DISTINCT content_terms.contentid) AS contentids,GROUP_CONCAT(DISTINCT content.migtitle) AS contenttitles, " .
-		   "GROUP_CONCAT(DISTINCT media.path,media.name) AS mediatitles, GROUP_CONCAT(DISTINCT media.id) AS mediaids";
+	$sql = "SELECT termtaxonomy_customfields.fieldid, customfields.name, customfields.displayname
+			FROM termtaxonomy_customfields 
+ 			LEFT JOIN customfields ON customfields.id = termtaxonomy_customfields.customfieldid WHERE customfields.groupid = '2'";
 
+	$result = queryDatabase($sql);
+	$customfields = array();
+
+	if ($result->rowCount() > 0) { // make sure some custom fields exist!
+
+		while ($row = $result->fetch(PDO::FETCH_ASSOC))
+		$customfields[$row['fieldid']] = $row['name'];
+
+		// now cycle through all params, and translate to custom field number if we have one
+		foreach ($params as $key=>$value) {
+
+			if ($cfKey = array_search($key, $customfields)) {
+
+				$params['customfield'.$cfKey] = $params[$key];
+				unset($params[$key]);
+					
+			}
+		}
+	}	
+	
+
+	// define the sql query
+	$sql = "SELECT"; 
+	foreach ($customfields AS $key=>$value)
+		$sql .= " customfield".$key." AS ".$value.",";
+		
+	$sql .= " terms.name,terms.slug,terms.name,terms.slug,term_taxonomy.id,term_taxonomy.parentid,term_taxonomy.termid,term_taxonomy.displayorder, 
+			GROUP_CONCAT(DISTINCT content_terms.contentid) AS contentids,
+			GROUP_CONCAT(DISTINCT content.migtitle) AS contenttitles,
+		    GROUP_CONCAT(DISTINCT media.path,media.name) AS mediatitles,
+		    GROUP_CONCAT(DISTINCT media.id) AS mediaids";
+	
 	$sql .= " FROM term_taxonomy
 			  LEFT JOIN terms ON terms.id = term_taxonomy.termid
 			  LEFT JOIN content_terms ON content_terms.termid = term_taxonomy.id
@@ -1598,25 +1630,6 @@ function getTags($params) {
 	// WHERE CLAUSE INFO
 
 	$sql .= " WHERE term_taxonomy.id <> 0 ";
-	//
-	//	if (isset($params['tagid'])) {
-	//
-	//		$sql .= " AND tagid.id IN (".$params['tagid'].")";
-	//
-	//	}
-	//
-	//	if (isset($params['contentid'])) {
-	//
-	//		$sql .= " AND content_tags.contentid IN (".$params['contentid'].")";
-	//
-	//	}
-	//
-	//	if (!isset($params['include_unused']) || ($params['include_unused'] == 0) ) {
-	//
-	//		$sql .= " AND conte	nt_tags.id IS NOT NULL";
-	//
-	//	}
-	// GET ANY EXTRA PARAMS AND APPLY THOSE TO THE WHERE CLAUSE
 
 	foreach ($params as $key=>$value)
 	{
@@ -1631,7 +1644,7 @@ function getTags($params) {
 
 	// ORDER BY
 	$sql .= " ORDER BY term_taxonomy.displayorder ASC";
-
+	echo $sql;
 	$result = queryDatabase($sql, $sendParams);
 
 	// return the results

@@ -35,25 +35,30 @@ package org.mig.services
 		}
 		public function loadCustomFieldGroups():void {
 			var params:Object = new  Object();
-			params.action = "getData";
+			params.action = ValidFunctions.GET_DATA;
 			params.tablename = "customfieldgroups"; 
 			this.createService(params,ResponseType.DATA,Object);
 		}		
 		public function loadCustomFields():void {
 			var params:Object = new  Object();
-			params.action = "getData";
+			params.action = ValidFunctions.GET_DATA;
 			params.tablename = "customfields";
 			this.createService(params,ResponseType.DATA,CustomField);
 		}
 		public function loadTemplates():void {
 			var params:Object = new  Object();
-			params.action = "getTemplates";
+			params.action = ValidFunctions.GET_TEMPLATES;
 			this.createService(params,ResponseType.DATA,Object);		
 		}
 		public function loadMimeTypes():void {
 			var params:Object = new Object();
-			params.action = "getData";
+			params.action = ValidFunctions.GET_DATA;
 			params.tablename = "mimetypes";
+			this.createService(params,ResponseType.DATA,MimeType);
+		}
+		public function loadTerms():void {
+			var params:Object = new Object();
+			params.action = ValidFunctions.GET_TEMPLATES;
 			this.createService(params,ResponseType.DATA,MimeType)
 		}
 

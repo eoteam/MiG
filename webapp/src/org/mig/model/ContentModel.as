@@ -10,27 +10,32 @@ package org.mig.model
 
 	public class ContentModel extends Actor
 	{
+		//content
 		public var contentModel:ContainerNode;
 		public var templates:ArrayCollection = new ArrayCollection();
 		public var currentContainer:ContainerNode;
 		public var configEelements:XML;
-		
-		
-		public var mediaModel:DirectoryNode;
-		public var currentDirectory:DirectoryNode;
-		public var mimetypes:Array;
-		
-		public var containersToLoad:Number = 0;
-		public var containersLoaded:Number = 0;
-		
-		public var mediaToLoad:Number;
-		public var mediaLoaded:Number;
-		
 		public var defaultCreate:String;
 		public var defaultUpdate:String;
 		public var defaultRetrieve:String;
 		public var defaultDelete:String;
 		public var defaultTable:String;
+		
+		//media
+		public var mediaModel:DirectoryNode;
+		public var currentDirectory:DirectoryNode;
+		public var mimetypes:Array;
+		
+		//tags
+		public var terms:ArrayCollection;
+		public var terms_taxonomy:ArrayCollection;
+/*		public var containersToLoad:Number = 0;
+		public var containersLoaded:Number = 0;
+		
+		public var mediaToLoad:Number;
+		public var mediaLoaded:Number;*/
+		
+
 		
 		public function getMimetypeString(extension:String):String {
 			for each(var mimetype:MimeType in mimetypes) {

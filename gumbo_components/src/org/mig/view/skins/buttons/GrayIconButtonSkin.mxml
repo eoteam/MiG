@@ -29,7 +29,7 @@
         /** 
          * @copy spark.skins.spark.ApplicationSkin#hostComponent
          */
-        [HostComponent("spark.components.Button")]
+        [HostComponent("org.mig.view.controls.IconButton")]
         ]]>
     </fx:Metadata>
     
@@ -106,6 +106,7 @@
     
     <!-- layer 8: text -->
     <!--- @copy spark.components.supportClasses.ButtonBase#labelDisplay -->
-	<mx:SWFLoader source="{this.hostComponent.icon}" id="graphic" verticalCenter="0" horizontalCenter="0"   />
+	<mx:SWFLoader source="{this.hostComponent.icon}" source.disabled="{this.hostComponent.disabledIcon?this.hostComponent.disabledIcon:this.hostComponent.icon}" 
+	id="graphic" verticalCenter="0" horizontalCenter="0"   />
     
 </s:SparkSkin>

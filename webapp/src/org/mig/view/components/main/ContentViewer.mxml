@@ -4,7 +4,8 @@
 	xmlns:s="library://ns.adobe.com/flex/spark" 
 	xmlns:mx="library://ns.adobe.com/flex/mx"
 	height="100%" width="100%" clipAndEnableScrolling="false"  
-	xmlns:media="org.mig.view.components.managers.media.*">
+	xmlns:media="org.mig.view.components.managers.media.*" 
+	xmlns:tags="org.mig.view.components.managers.tags.*">
 	
 
 	
@@ -17,5 +18,6 @@
 	<userManager:UserManagerView id="userManager" width="100%" height="100%" visible="false"  backgroundAlpha=".95" left="-2" right="2"/>
 -->
 
-	<media:MediaManagerMainView id="mediaManager" width="100%" height="100%" visible="false" left="-2" right="2"/>
+	<media:MediaManagerMainView id="mediaManager" width="100%" height="100%" visible="false" />
+	<tags:TagManagerView id="tagManager"  width="100%" height="100%" visible="false"/>
 </s:Group>

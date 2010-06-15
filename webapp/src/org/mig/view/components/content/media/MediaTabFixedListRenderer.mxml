@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
-				xmlns:s="library://ns.adobe.com/flex/spark" 
-				xmlns:mx="library://ns.adobe.com/flex/mx" 
-				autoDrawBackground="false" xmlns:controls="com.thanksmister.controls.*">
+				xmlns:s="library://ns.adobe.com/flex/spark" 			
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				xmlns:controls="com.thanksmister.controls.*"	
+				autoDrawBackground="false">
 	
 	<fx:Script>
 		<![CDATA[
@@ -13,14 +14,13 @@
 			import org.mig.view.skins.buttons.TextOnlyButtonSkin;
 			public var thumbURL:String;
 			[Bindable] public var imageSource:String;
-			[Bindable] private var conten:ContentNode;
+			
 			[Bindable] private var bgColor:uint;	
 			override public function set data(value:Object):void {
 				super.data = value;
-				content = value as ContentNode;
-				if(content) {
-					imageSource = thumbURL + content.data.path + content.data.name;
-					var c:String = String(content.data.color);
+				if(data) {
+					imageSource = thumbURL + data.path + data.name;
+					var c:String = String(data.color);
 					bgColor = Number('0x'+c.substr(1,c.length));
 				}
 			}
@@ -55,7 +55,7 @@
 						<s:SolidColor color="{bgColor}" />
 					</s:fill>
 				</s:Rect>
-				<s:Label text="{content.baseLabel}" width="100%" styleName="bodyCopy" verticalCenter="0"/>	
+				<s:Label text="{data.name}" width="100%" styleName="bodyCopy" verticalCenter="0"/>	
 			</s:Group>
 			
 			<s:Button label="i" skinClass="org.mig.view.skins.buttons.TextOnlyButtonSkin" click="handleDetailClick(event)"  />
@@ -63,7 +63,7 @@
 				
 	</s:VGroup>
 	
-	<s:CheckBox left="8" top="8" selected="{content.data.statusid == ContentStatus.DRAFT?false:true}" />
+	<s:CheckBox left="8" top="8" selected="{data.statusid == ContentStatus.DRAFT?false:true}" />
 
 	
 </s:ItemRenderer>

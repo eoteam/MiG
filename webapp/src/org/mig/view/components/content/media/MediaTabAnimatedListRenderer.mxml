@@ -2,7 +2,7 @@
 <mx:VBox
 	xmlns:mx="http://www.adobe.com/2006/mxml"
 	doubleClickEnabled="false"
-	implements="org.mig.view.interfaces.IContentView, org.mig.view.interfaces.IContentListRenderer"	
+	implements="org.mig.view.interfaces.IContentListRenderer"	
 	backgroundColor="0x111111" horizontalGap="0"  creationComplete="handleCreationComplete()"	
 	paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5"
 	verticalScrollPolicy="off" horizontalScrollPolicy="off" 

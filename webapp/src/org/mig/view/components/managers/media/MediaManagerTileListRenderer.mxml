@@ -5,8 +5,8 @@
 				scaleX="{scalePercent}" scaleY="{scalePercent}"
 				scaleX.dragging="1" scaleY.dragging="1"
 				creationComplete="handleCreatonComplete()"
-				 doubleClickEnabled="true" doubleClick="itemrenderer1_doubleClickHandler(event)"
-				implements="org.mig.view.interfaces.IContentView" mouseChildren="false"
+				doubleClickEnabled="true" doubleClick="itemrenderer1_doubleClickHandler(event)"
+				mouseChildren="false"
 				autoDrawBackground="true" xmlns:controls="com.thanksmister.controls.*">
 	
 	<fx:Script>
@@ -51,24 +51,17 @@
 			}            
 			override public function set data(value:Object):void {
 				super.data = value;
-				content = value as ContentNode;  
-			}								
-			public function get content():ContentNode {
-				return _content;
-			}
-			public function set content(contentNode:ContentNode):void {
-				_content = contentNode;
+				_content = value as ContentNode;
 				fileSrc  = toolTip = _content.label;
 				fileExtension = '.'+MediaData(_content.data).extension;
 				if(created)
 					handleDataChange();
-			}
+			}								
 			public function handleCreatonComplete():void {
 				created = true;
 				handleDataChange();			
 			}
-			private function handleDataChange():void
-			{
+			private function handleDataChange():void {
 				var fileData:MediaData = _content.data as MediaData;
 				if(_content is DirectoryNode) {
 					thumbLabel.visible = false;

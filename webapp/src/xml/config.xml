@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configDocument>
 
+<!--	<controller id="tagController">-->
+<!--		<child labelfield="name"-->
+<!--		tablename="terms" />-->
+<!--	</controller>-->
 	<controller id="mediaController" mediaURL="http://migdev.mig.pentagram.com/files"
 		thumbURL="http://migdev.mig.pentagram.com/files/migThumbs" fileDir="files"
 		thumbDir="files/migThumbs">
@@ -69,8 +73,8 @@
 		</tray><!--  will need more elaboration, could use parentid -->
 
 		<tab type="Media" 
-			contentView="org.mig.view.components.content.tabs.MediaTab"
-			itemView="org.mig.view.renderers.MediaTile" 
+			contentView="org.mig.view.components.content.media.MediaTab"
+			itemView="org.mig.view.components.content.media.MediaTabAnimatedListRenderer" 
 			dataObject="org.mig.model.vo.relational.ContentMedia" 
 			tablename="content_media" 
 			vars="contentid" labelField="name"

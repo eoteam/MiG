@@ -5,7 +5,7 @@ package org.mig.view.controls
 	public class IconButton extends Button
 	{
 		[Bindable] public var icon:Class;
-		
+		[Bindable] public var disabledIcon:Class;
 		public function IconButton()
 		{
 			super();

@@ -56,7 +56,13 @@ package org.mig.view.mediators.main
 			switch (item.name) {
 				
 				case "Media":
-					view.mediaManager.visible = true;
+					view.mediaManager.visible = !view.mediaManager.visible;
+					view.tagManager.visible = false;
+				break;
+				
+				case "Tags":
+					view.mediaManager.visible = false;
+					view.tagManager.visible = !view.tagManager.visible;
 				break;
 			}
 		}

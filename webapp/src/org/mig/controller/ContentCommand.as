@@ -39,7 +39,6 @@ package org.mig.controller
 				case ContentEvent.RETRIEVE_CHILDREN:
 					service.retrieveChildren(event.args[0] as ContentNode);
 					service.addHandlers(processChildren);
-					contentModel.containersToLoad++;
 					ContentNode(event.args[0]).state = ContentNode.LOADING;
 				break;
 				
