@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark">
+	
+	<!--<fx:Library>
+		<fx:Definition name="Star">
+			<s:Group>
+				<s:Path data="M7.99316 0L9.88086 5.80762 15.9883 5.80762 11.0469 9.39746 12.9355 15.2051 7.99316 11.6152 3.05469 15.2051 4.94141 9.39746 0 5.80762 6.10645 5.80762 7.99316 0Z">
+					<s:fill>
+						<s:SolidColor color="0x999999" />
+					</s:fill>
+				</s:Path>		
+			</s:Group>				
+		</fx:Definition>
+		
+		<fx:Definition name="StarOn">
+			<s:Group>
+				<s:Path data="M7.99316 0L9.88086 5.80762 15.9883 5.80762 11.0469 9.39746 12.9355 15.2051 7.99316 11.6152 3.05469 15.2051 4.94141 9.39746 0 5.80762 6.10645 5.80762 7.99316 0Z">
+					<s:fill>
+						<s:SolidColor color="0xFFFFFF" />
+					</s:fill>
+				</s:Path>		
+			</s:Group>				
+		</fx:Definition>
+	</fx:Library>-->
+	
+	<!-- host component -->
+	<fx:Metadata>
+		<![CDATA[ 
+		[HostComponent("org.mig.view.controls.RatingComponent")]
+		]]>
+	</fx:Metadata> 
+		
+	<s:states>
+		<s:State name="up" />
+		<s:State name="down" />
+		<s:State name="over" />
+		<s:State name="disabled" />
+	</s:states>
+	
+	<s:Group id="hotSpot" alpha="0">
+		<s:Rect width="{this.width}" height="{this.height}">
+			<s:fill>
+				<s:SolidColor color="0xed1c58" />
+			</s:fill>
+		</s:Rect>
+	</s:Group>
+	<s:Group horizontalCenter="0" verticalCenter="0">
+		<s:HGroup id="passiveGroup" gap="6"  verticalCenter="0" verticalAlign="middle" >
+			<s:Group>
+				<s:Ellipse width="6" height="6">
+					<s:fill>
+						<s:SolidColor color="0xffffff" />
+					</s:fill>
+				</s:Ellipse>		
+			</s:Group>
+			<s:Group>
+				<s:Ellipse width="6" height="6">
+					<s:fill>
+						<s:SolidColor color="0xffffff" />
+					</s:fill>
+				</s:Ellipse>		
+			</s:Group>		
+			<s:Group>
+				<s:Ellipse width="6" height="6">
+					<s:fill>
+						<s:SolidColor color="0xffffff" />
+					</s:fill>
+				</s:Ellipse>			
+			</s:Group>		
+			<s:Group>
+				<s:Ellipse width="6" height="6">
+					<s:fill>
+						<s:SolidColor color="0xffffff" />
+					</s:fill>
+				</s:Ellipse>		
+			</s:Group>		
+			<s:Group>
+				<s:Ellipse width="6" height="6">
+					<s:fill>
+						<s:SolidColor color="0xffffff" />
+					</s:fill>
+				</s:Ellipse>			
+			</s:Group>		
+			<s:filters>
+				<s:GlowFilter strength="0" strength.over="1" strength.down="2"/>
+			</s:filters>
+		</s:HGroup>
+		<s:HGroup id="activeGroup" gap="1">
+			<s:mask>
+				<s:Group>
+					<s:Rect id="ratingMask" width="55" height="15">
+						<s:fill>
+							<s:SolidColor color="#ffffff"/>
+						</s:fill>
+					</s:Rect>
+				</s:Group>
+			</s:mask>
+			<s:Group>
+				<s:Path data="M7.99316 0L9.88086 5.80762 15.9883 5.80762 11.0469 9.39746 12.9355 15.2051 7.99316 11.6152 3.05469 15.2051 4.94141 9.39746 0 5.80762 6.10645 5.80762 7.99316 0Z">
+					<s:fill>
+						<s:SolidColor color="0xFFFFFF" />
+					</s:fill>
+				</s:Path>		
+			</s:Group>	
+			<s:Group>
+				<s:Path data="M7.99316 0L9.88086 5.80762 15.9883 5.80762 11.0469 9.39746 12.9355 15.2051 7.99316 11.6152 3.05469 15.2051 4.94141 9.39746 0 5.80762 6.10645 5.80762 7.99316 0Z">
+					<s:fill>
+						<s:SolidColor color="0xFFFFFF" />
+					</s:fill>
+				</s:Path>		
+			</s:Group>	
+			<s:Group>
+				<s:Path data="M7.99316 0L9.88086 5.80762 15.9883 5.80762 11.0469 9.39746 12.9355 15.2051 7.99316 11.6152 3.05469 15.2051 4.94141 9.39746 0 5.80762 6.10645 5.80762 7.99316 0Z">
+					<s:fill>
+						<s:SolidColor color="0xFFFFFF" />
+					</s:fill>
+				</s:Path>		
+			</s:Group>	
+			<s:Group>
+				<s:Path data="M7.99316 0L9.88086 5.80762 15.9883 5.80762 11.0469 9.39746 12.9355 15.2051 7.99316 11.6152 3.05469 15.2051 4.94141 9.39746 0 5.80762 6.10645 5.80762 7.99316 0Z">
+					<s:fill>
+						<s:SolidColor color="0xFFFFFF" />
+					</s:fill>
+				</s:Path>		
+			</s:Group>	
+			<s:Group>
+				<s:Path data="M7.99316 0L9.88086 5.80762 15.9883 5.80762 11.0469 9.39746 12.9355 15.2051 7.99316 11.6152 3.05469 15.2051 4.94141 9.39746 0 5.80762 6.10645 5.80762 7.99316 0Z">
+					<s:fill>
+						<s:SolidColor color="0xFFFFFF" />
+					</s:fill>
+				</s:Path>		
+			</s:Group>	
+		</s:HGroup>
+	</s:Group>
+</s:SparkSkin>

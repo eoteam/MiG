@@ -53,7 +53,7 @@
 
 			
 	<s:HGroup width="100%" height="30" id="controlBox" gap="0" verticalAlign="middle" paddingLeft="6" paddingRight="6">
-		<s:Label id="typeLabel"  styleName="boldCopy" text="{usageList.selectedItem.name}" includeIn="viewingStates" />
+		<s:Label id="typeLabel"  styleName="boldCopy" text="{usageList.selectedItem.label}" includeIn="viewingStates" />
 		<mx:SWFLoader  source="@Embed(source='/migAssets/library.swf#mediaParentFolder')"  mouseChildren="false" id="parentDirIcon" 
 		click="parentDirIcon_clickHandler(event)" toolTip="Up 1 Folder" buttonMode="true" useHandCursor="true"  includeIn="viewingStates"/>
 		<s:Rect width="100%" />
@@ -79,8 +79,8 @@
 
 	<mx:ViewStack width="100%" height="100%" id="stack" creationPolicy="all">
 		<s:NavigatorContent width="100%" height="100%" id="usageHolder">
-			<s:List id="usageList"
-		   	width="100%" height="100%" 
+			<s:List id="usageList" mouseDownOutside="usageList.selectedIndex=-1"
+		   	width="100%" height="100%" left="12" right="12" top="4" bottom="4"
 			rollOverColor="0xed1c58"   selectionColor="0xed1c58"
 			doubleClickEnabled="true" requireSelection="false"
 			allowMultipleSelection="true" borderVisible="false">
@@ -117,7 +117,7 @@
 								<s:VerticalLayout paddingLeft="5" paddingTop="5" paddingRight="5" paddingBottom="5" />
 							</s:layout>
 							<mx:SWFLoader maintainAspectRatio="true" width="200" height="150" source="@Embed(source='/migAssets/library.swf#mediaFolder')" />
-							<s:Label text="{data.name}" styleName="bodyMedium" textAlign="center" fontSize="20" width="100%"  maxDisplayedLines="1" height="20" minHeight="20" />
+							<s:Label text="{data.label}" styleName="bodyMedium" textAlign="center" fontSize="20" width="100%"  maxDisplayedLines="1" height="20" minHeight="20" />
 						</s:ItemRenderer>
 					</fx:Component>
 				</s:itemRenderer>
@@ -141,10 +141,10 @@
 			<!--dragEnter="handleDragEnter(event)" 
 			dragComplete="animListDirty=true" -->
 			<controls:MiGList
-				id="fixedList" 
+				id="fixedList"  left="12" right="12" top="12" bottom="8"
 				width="100%" height="100%"
 				dragFormat="TabFiles"  customProxy="true"
-				doubleClickEnabled="true" 
+				doubleClickEnabled="true" mouseDownOutside="fixedList.selectedIndex=-1"
 				borderVisible="false"  requireSelection="false"
 				contentBackgroundColor="0xffffff" contentBackgroundAlpha="0" focusAlpha="0"	
 				rollOverColor="0xed1c58" color="0xed1c58" selectionColor="0xed1c58"  

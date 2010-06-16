@@ -35,7 +35,7 @@ package org.mig.view.containers
 	import mx.events.FlexEvent;
 	import mx.managers.DragManager;
 	
-	import org.mig.model.vo.media.FileNode;
+	import org.mig.model.vo.relational.ContentMedia;
 	import org.mig.view.controls.AssociativeInstanceCache;
 	import org.mig.view.controls.CachedLabel;
 	import org.mig.view.controls.DragTileMultiProxy;
@@ -297,7 +297,7 @@ package org.mig.view.containers
 			var result:Array = [];
 			for each (var item:UIComponent in renderers)
 			{
-				if(item[dataField] is FileNode)
+				if(item[dataField] is ContentMedia)
 				{
 					result.push(item);
 				}
@@ -384,27 +384,15 @@ package org.mig.view.containers
 						BindingUtils.bindProperty(Object(renderer), "scalePercent", this, "scalePercent");	
 						renderer.addEventListener("selected", handleItemSelected,false,0,true);
 						var newIndex:int
-						if(_items.getItemAt(i) is FileNode)
+						if(_items.getItemAt(i) is ContentMedia)
 						{
-							IContentListRenderer(renderer).added = false;
-							
 							if(_selectedItems && selectedItems.indexOf(_items.getItemAt(i)) != -1)
 							{
 								newIndex = selectedItems.indexOf(_items.getItemAt(i));
 								_selectedItems[newIndex] = renderer;
 								IContentListRenderer(renderer).selected = true;
 							}							
-						}
-						else
-						{
-							IContentListRenderer(renderer).added = true;
-							if(_selectedItems && selectedItems.indexOf(_items.getItemAt(i)) != -1)
-							{
-								newIndex = selectedItems.indexOf(_items.getItemAt(i));
-								_selectedItems[newIndex] = renderer;
-								IContentListRenderer(renderer).selected = true;
-							}
-						}				
+						}			
 					}						
 				}
 				_renderCache.endAssociation();
@@ -667,7 +655,7 @@ package org.mig.view.containers
 				e.action = _dragAction;
 				DragManager.showFeedback(DragManager.COPY);
 				isDragging = true;
-				if(!indicator || !this.parentDocument.contains(indicator))
+				if(!indicator || !this.contains(indicator))
 				{ 
 					indicator = new UIComponent();
 					var sprite:Sprite = new	Sprite();
@@ -682,7 +670,7 @@ package org.mig.view.containers
 		            indicator.height = 100;
 		            indicator.visible = false;	
 		           				
-					this.parentDocument.addElement(indicator);			
+					this.addChild(indicator);			
 				}			
 			}
 		    else
@@ -775,7 +763,7 @@ package org.mig.view.containers
 		{
 			if(!isDragging && indicator!=null && this.parentDocument.contains(indicator))
 			{
-				this.parentDocument.removeElement(indicator);	
+				this.removeChild(indicator);	
 				indicator = null;
 				this.callLater(refreshLayout);
 			}		

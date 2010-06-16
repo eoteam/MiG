@@ -265,8 +265,8 @@ function getUsers($params) {
 }
 function getRoot($params) {
 	
-	$sql = " SELECT `content`.*, childrencount.count FROM `content` 
-			  LEFT JOIN ( SELECT parentid, COUNT(*) AS count FROM `content` WHERE `content`.`parentid` ='1' GROUP BY parentid) 
+	$sql = " SELECT `content`.*, childrencount.childrencount FROM `content` 
+			  LEFT JOIN ( SELECT parentid, COUNT(*) AS childrencount FROM `content` WHERE `content`.`parentid` ='1' GROUP BY parentid) 
 			  AS childrencount ON childrencount.parentid = content.id WHERE `content`.`id` = '1' ";
 	$result = queryDatabase($sql);	
 	return $result;
@@ -414,7 +414,7 @@ function getContent($params)
 	if (isset($arrCFFlag[$params['verbosity']])) {
 
 		foreach ($customfields AS $key=>$value)
-		$sql .= " customfield".$key." AS ".$value.",";
+		$sql .= " content.customfield".$key." AS ".$value.",";
 	}
 
 	// remove last comma!
@@ -443,7 +443,7 @@ function getContent($params)
 
 
 	
-	$sql .= " LEFT JOIN ( SELECT parentid, COUNT(*) AS count FROM `content` WHERE parentid IN (". $params['contentid'] .") AND `content`.`deleted` = '0' GROUP BY parentid
+	$sql .= " LEFT JOIN ( SELECT parentid, COUNT(*) AS childrencount FROM `content` WHERE parentid IN (". $params['contentid'] .") AND `content`.`deleted` = '0' GROUP BY parentid
 				  ) AS childrencount ON childrencount.parentid = content.id";
 
 	
@@ -1613,7 +1613,7 @@ function getTags($params) {
 	// define the sql query
 	$sql = "SELECT"; 
 	foreach ($customfields AS $key=>$value)
-		$sql .= " customfield".$key." AS ".$value.",";
+		$sql .= " term_taxonomy.customfield".$key." AS ".$value.",";
 		
 	$sql .= " terms.name,terms.slug,terms.name,terms.slug,term_taxonomy.id,term_taxonomy.parentid,term_taxonomy.termid,term_taxonomy.displayorder, 
 			GROUP_CONCAT(DISTINCT content_terms.contentid) AS contentids,
@@ -1644,7 +1644,7 @@ function getTags($params) {
 
 	// ORDER BY
 	$sql .= " ORDER BY term_taxonomy.displayorder ASC";
-	echo $sql;
+	//echo $sql . "<br><br>";
 	$result = queryDatabase($sql, $sendParams);
 
 	// return the results

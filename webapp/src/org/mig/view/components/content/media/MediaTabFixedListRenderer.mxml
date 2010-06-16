@@ -2,8 +2,7 @@
 <s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
 				xmlns:s="library://ns.adobe.com/flex/spark" 			
 				xmlns:mx="library://ns.adobe.com/flex/mx"
-				xmlns:controls="com.thanksmister.controls.*"	
-				autoDrawBackground="false">
+				xmlns:controls="com.thanksmister.controls.*" autoDrawBackground="false">
 	
 	<fx:Script>
 		<![CDATA[
@@ -20,12 +19,21 @@
 				super.data = value;
 				if(data) {
 					imageSource = thumbURL + data.path + data.name;
-					var c:String = String(data.color);
-					bgColor = Number('0x'+c.substr(1,c.length));
+					if(data.color) {
+						var c:String = data.color;
+						bgColor = Number('0x'+c.substr(1,c.length));
+					}
 				}
 			}
 			private function handleDetailClick(event:MouseEvent):void {
 				this.owner.dispatchEvent(new ViewEvent(ViewEvent.SHOW_CONTENT_MEDIA_DETAIL));
+			}
+			override protected function getCurrentRendererState():String {
+				if(selected) {
+					trace("Media Item Selected");
+				}
+				return super.getCurrentRendererState();
+				
 			}
 		]]>
 	</fx:Script>
@@ -40,19 +48,19 @@
 	
 	<s:VGroup top="0" bottom="0" left="0" right="0">
 		<s:Group>
-			<s:Rect height="210" width="200" includeIn="selected">
+			<controls:ImageCache height="210" width="200" id="image"  source="{imageSource}" maintainAspectRatio="false"   />	
+			<s:Rect height="210" width="200">
 				<s:stroke>
-					<s:SolidColorStroke  weight="2" color="0xed1c58" />
+					<s:SolidColorStroke  weight="4" color="0xed1c58" alpha="0" alpha.selected="1" alpha.selectedAndShowsCaret="1" />
 				</s:stroke>
-			</s:Rect>
-			<controls:ImageCache height="208" width="198" id="image"  source="{imageSource}" maintainAspectRatio="true"   />	
+			</s:Rect>		
 		</s:Group>
 		
 		<s:HGroup left="0" right="0" verticalAlign="middle">
 			<s:Group height="20" width="100%">
 				<s:Rect top="0" bottom="0" left="0" right="0">
 					<s:fill>
-						<s:SolidColor color="{bgColor}" />
+						<s:SolidColor color="{bgColor}" alpha="{data.color?1:0}" />
 					</s:fill>
 				</s:Rect>
 				<s:Label text="{data.name}" width="100%" styleName="bodyCopy" verticalCenter="0"/>	

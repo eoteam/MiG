@@ -2,7 +2,7 @@
 <s:NavigatorContent
 	xmlns:fx="http://ns.adobe.com/mxml/2009" 
 	xmlns:s="library://ns.adobe.com/flex/spark" 
-	xmlns:mx="library://ns.adobe.com/flex/mx" label="{_content.label}"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
 	implements="org.mig.view.interfaces.IEditableContentView"
 	height="100%" width="100%">
 
@@ -20,6 +20,7 @@
 			public var configured:Boolean = false;
 			public function set content(value:ContentNode):void {
 				_content = value as SubContainerNode;
+				this.label = _content.label;
 			}
 			public function get content():ContentNode {
 				return _content;

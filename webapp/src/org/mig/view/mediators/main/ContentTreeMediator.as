@@ -177,9 +177,8 @@ package org.mig.view.mediators.main
 						popup.noLabelText = "Continue";
 						return;
 					}
-					var tmp:Array = GlobalUtils.accumulateChildren(node);
-					for each(var n:ContainerNode in tmp)
-						itemsToDelete.push(n);
+					GlobalUtils.accumulateChildren(node,itemsToDelete);
+
 				}
 				var itemsString:String = '';
 				for each(node in itemsToDelete) {

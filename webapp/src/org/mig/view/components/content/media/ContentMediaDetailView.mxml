@@ -30,6 +30,7 @@
 
 	<s:HGroup width="100%">
 		<s:Label width="97" text="Rating" />
+		<controls:RatingComponent  rating="0" />
 	</s:HGroup>
 	
 	<s:HGroup width="100%">

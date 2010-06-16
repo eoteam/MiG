@@ -4,7 +4,7 @@ package org.mig.model.vo.content
 	import org.mig.model.vo.ValueObject;
 
 	[Bindable] 
-	public  class ContentData extends BaseContentData
+	public dynamic class ContentData extends BaseContentData
 	{
 		public var parentid:int;		
 		public var statusid:int;

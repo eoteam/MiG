@@ -82,10 +82,7 @@ package org.mig.view.mediators.main
 			pendingArray = new Array();
 			var containers:Array = event.dragSource.dataForFormat(DraggableViews.CONTENT_TREE_CONTAINERS) as Array;
 			for each(var item:ContainerNode in containers) {
-				var tmp:Array = GlobalUtils.accumulateChildren(item)
-				for each(var n:ContainerNode in tmp) {
-					pendingArray.push(n);
-				}
+				GlobalUtils.accumulateChildren(item,pendingArray);
 			}
 			contentService.updateContainersStatus(pendingArray,ContentStatus.DRAFT);
 			contentService.addHandlers(handlePendingContainers);

@@ -33,11 +33,11 @@ package org.mig.controller.startup
 				template.id = Number(item.id);
 				contentModel.templates.addItem(template);
 				if(item.rowids != '') {
-					var cfs1:Array = item.rowids.split(',');
-					var cfs2:Array = item.customfieldids.split(',');
-					var cfs3:Array = item.fieldids.split(',');
-					var cfs4:Array = item.displayorders.split(',');
-					var cfs5:Array = item.rowids.split(',');
+					var cfs1:Array = item.rowids.toString().split(',');
+					var cfs2:Array = item.customfieldids.toString().split(',');
+					var cfs3:Array = item.fieldids.toString().split(',');
+					var cfs4:Array = item.displayorders.toString().split(',');
+					var cfs5:Array = item.rowids.toString().split(',');
 					
 					for (var i:int=0;i<cfs1.length;i++) {
 						var templateCustomField:TemplateCustomField = new TemplateCustomField();
@@ -58,7 +58,7 @@ package org.mig.controller.startup
 				}
 			}
 			trace("Startup: Templates Complete");
-			appModel.startupCount = 7;	
+			appModel.startupCount = 8;	
 			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP_PROGRESS,"Templates loaded"));
 			eventDispatcher.dispatchEvent(new StateEvent(StateEvent.ACTION, AppStartupStateConstants.LOAD_TEMPLATES_COMPLETE));	
 		}

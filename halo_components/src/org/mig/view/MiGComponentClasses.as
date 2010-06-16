@@ -1,7 +1,6 @@
 package org.mig.view
 {
 	
-	
 	internal class MiGComponentClasses
 	{
 		
@@ -19,6 +18,7 @@ package org.mig.view
 		import org.mig.view.controls.PromptTextInput; PromptTextInput;
 		import org.mig.view.controls.SelectionColor; SelectionColor;
 		import org.mig.view.controls.UIBitmap; UIBitmap;	
+
 		
 		//containers
 		import org.mig.view.containers.MiGCollapsibleTabNavigator; MiGCollapsibleTabNavigator;

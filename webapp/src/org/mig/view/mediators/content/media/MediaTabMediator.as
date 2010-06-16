@@ -20,7 +20,12 @@ package org.mig.view.mediators.content.media
 	import org.mig.model.vo.content.ContainerNode;
 	import org.mig.model.vo.content.ContentData;
 	import org.mig.model.vo.content.SubContainerNode;
+	import org.mig.model.vo.media.DirectoryNode;
+	import org.mig.model.vo.media.FileNode;
+	import org.mig.model.vo.media.MediaData;
 	import org.mig.model.vo.relational.ContentMedia;
+	import org.mig.utils.GlobalUtils;
+	import org.mig.view.components.content.ContentTabItem;
 	import org.mig.view.components.content.media.MediaTab;
 	import org.mig.view.constants.DraggableViews;
 	import org.mig.view.events.ListItemEvent;
@@ -49,17 +54,20 @@ package org.mig.view.mediators.content.media
 			types = new ArrayList();
 			
 			var imageRenderer:ClassFactory;
-			var tmp:Array = content.config.@usage	.toString().split(",");
+			var tmp:Array = content.config.@usage.toString().split(",");
 			for each(var item:String in tmp)
 			{
 				type = item.split(' ').join('_').toLowerCase();
 				content.children.filterFunction = filterByUsage;
 				content.children.refresh();		
 				var dp:ArrayList = new ArrayList();
-				for each(var item2:ContentNode in content.children)
+				for each(var item2:ContentMedia in content.children)
 					dp.addItem(item2);
-				types.addItem({type:item,name:item + ' ('+content.children.length+')',dataProvider:dp});
+				types.addItem({type:item,baseLabel:item,label:item + ' ('+content.children.length+')',dataProvider:dp});
 			}
+			content.children.filterFunction = null;
+			content.children.refresh();
+			
 			var classToUse:String = content.config.@itemView;
 			var classRef:Class = getDefinitionByName(classToUse) as Class; 
 			imageRenderer = new ClassFactory(classRef);
@@ -92,11 +100,12 @@ package org.mig.view.mediators.content.media
 			handleView(index);
 		}
 		private function handleDetailView(event:ViewEvent):void {
-			view.detailView.visible = true;;
+			view.detailView.visible = true;
+			
 		}
-		private function filterByUsage(item:ContentNode):Boolean
+		private function filterByUsage(item:ContentMedia):Boolean
 		{
-			if(ContentMedia(item.data).usage_type.toString().toLowerCase() == type)
+			if(item.usage_type.toString().toLowerCase() == type)
 				return true;
 			else
 				return false;
@@ -185,11 +194,44 @@ package org.mig.view.mediators.content.media
 		private function handleUsageListDragDrop(event:DragEvent):void {
 			var type:Object = view.usageList.selectedItem;
 			var dp:ArrayList = type.dataProvider;
+			var usage_type:String = type.type;
 			var items:Array = event.dragSource.dataForFormat(DraggableViews.MEDIA_ITEMS) as Array;
-			for each(var item:ContentNode in items) {	
-				dp.addItem(item);
+			var files:Array = [];
+			for each(var item:ContentNode in items) {
+				if(item is FileNode)
+					files.push(item);
+				else
+					GlobalUtils.accumulateFiles(item as DirectoryNode,files);
 			}
-			
+			for each(var file:FileNode in files) {	
+				var newItem:ContentMedia = new ContentMedia;
+				var fileData:MediaData = file.data as MediaData;
+
+				newItem.contentid = view.content.data.id;
+				
+				newItem.mediaid		= fileData.id;
+				newItem.path		= fileData.path;
+				newItem.name		= fileData.name;
+				newItem.mimetypeid	= fileData.mimetypeid;
+				newItem.thumb		= fileData.thumb;
+				newItem.video_proxy = fileData.video_proxy;
+				newItem.size		= fileData.size;
+				newItem.playtime	= fileData.playtime;
+				newItem.url			= fileData.url;
+				newItem.extension	= fileData.extension;
+				newItem.width		= fileData.width;
+				newItem.height		= fileData.height;
+				newItem.rating		= fileData.rating;
+				newItem.color		= fileData.color;
+				
+				newItem.usage_type = usage_type;
+				newItem.displayorder = dp.length + 1;
+				newItem.added = false;
+				dp.addItem(newItem);
+				
+			}
+			type.label =  type.baseLabel + ' ('+dp.length+')';		
+			view.usageList.invalidateProperties();
 		}
 	}
 }

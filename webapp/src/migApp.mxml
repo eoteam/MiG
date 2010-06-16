@@ -7,7 +7,7 @@
 	xmlns:local="*"
 	backgroundColor="0"
 	 creationComplete="handleCreationComplete()"
-	preloader="org.mig.view.components.main.SitePreloader">
+	preloader="org.mig.view.components.main.SitePreloader" xmlns:controls="org.mig.view.controls.*">
 	<!-- creationPolicy="none"
 	preinitialize="loadCSS(event)"
 	 -->
@@ -41,5 +41,4 @@
 		</s:fill>
 	</s:Rect>
 	<main:MainView width="100%" height="100%"  top="0" right="8" left="8" bottom="8"/>
-	
 </s:Application>

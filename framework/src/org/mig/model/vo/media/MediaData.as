@@ -5,13 +5,13 @@ package org.mig.model.vo.media
 
 	//this VO will not be dynamic. It will mirror the media table and its current feature set UNLESS custom fields are introduced.	
 	[Bindable]
-	public class MediaData extends org.mig.model.vo.BaseContentData
+	public class MediaData extends BaseContentData
 	{
 		public var id3:XML;
+		public var title:String;
 		public var name:String;
 		public var path:String;
 		public var mimetypeid:int;
-		public var mimetype:String;
 		public var thumb:String;
 		public var video_proxy:String;
 		public var size:Number;

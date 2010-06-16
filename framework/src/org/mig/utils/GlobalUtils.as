@@ -11,6 +11,8 @@ package org.mig.utils
 	import mx.core.UIComponent;
 	
 	import org.mig.model.vo.ContentNode;
+	import org.mig.model.vo.media.DirectoryNode;
+	import org.mig.model.vo.media.FileNode;
 
 	public class GlobalUtils //implements IGlobalUtils
 	{
@@ -38,11 +40,12 @@ package org.mig.utils
 			return StageDisplayState.FULL_SCREEN;
 		}
 		
-		public static function accumulateChildren(content:ContentNode):Array {
-			var arr:Array = new Array();
+		public static function accumulateChildren(content:ContentNode,arr:Array):void {
 			arr.push(content);
 			addChildren(content,arr);
-			return arr;
+		}
+		public static function accumulateFiles(directory:DirectoryNode,arr:Array):void {
+			addMediaChildren(directory,arr);
 		}
 		private static function addChildren(node:ContentNode,arr:Array):void {
 			if(node.children) {
@@ -52,5 +55,15 @@ package org.mig.utils
 				}
 			}
 		}
+		private static function addMediaChildren(node:DirectoryNode,arr:Array):void {
+			if(node.children) {
+				for each(var item:ContentNode in node.children) {
+					if(item is FileNode)
+						arr.push(item);
+					else
+						addMediaChildren(item as DirectoryNode,arr);
+				}
+			}
+		}		
 	}
 }

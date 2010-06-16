@@ -27,7 +27,7 @@ package org.mig.controller.startup
 			commandMap.mapEvent( AppStartupStateConstants.LOAD_TEMPLATES, LoadTemplatesCommand,  StateEvent, true);
 			commandMap.mapEvent( AppStartupStateConstants.STARTUP_COMPLETE,StartupCompleteCommand, StateEvent, true );
 			
-			appModel.startupItems = 8;
+			appModel.startupItems = 9;
 			
 			commandMap.mapEvent( AppStartupStateConstants.FAIL,StartupFailedCommand, StateEvent, true );
 

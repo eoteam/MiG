@@ -29,6 +29,9 @@ tlf|TextFlow {
 containers|ResizableTitleWindow {
 	skinClass: ClassReference("org.mig.view.skins.containers.ResizableTitleWindowSkin");
 }
+controls|RatingComponent {
+	skinClass: ClassReference("org.mig.view.skins.controls.RatingComponentSkin");
+}
 s|TitleWindow {
 	skinClass: ClassReference("org.mig.view.skins.containers.TitleWindowSkin");
 }
@@ -356,6 +359,7 @@ mx|AdvancedDataGrid {
 	paddingTop: 0;
 	textAlign: left;
 }
+   
 
 /* Gradient background to migrate */ 
 .selectionRectangleStyle

@@ -182,9 +182,9 @@ package org.mig.controller
 			else if(content is SubContainerNode) {
 				BaseContentData(content.data).loaded = true;
 				for each (var reldata:BaseContentData in results) {
-					resultLabel = reldata[content.config.@labelField];				
-					var relnode:ContentNode = new ContentNode(resultLabel,content.config,reldata,content,content.privileges);
-					content.children.addItem(relnode);
+					//resultLabel = reldata[content.config.@labelField];				
+					//var relnode:ContentNode = new ContentNode(resultLabel,content.config,reldata,content,content.privileges);
+					content.children.addItem(reldata);
 				}
 			}	
 		}

@@ -53,8 +53,9 @@ package org.mig.model.vo
 	
 		public function handleCollection(event:CollectionEvent):void {
 			if(event.kind == CollectionEventKind.ADD) {
-				for each(var node:ContentNode in event.items) {
-					node.parentNode = this;
+				for each(var node:Object in event.items) {
+					if(node is ContentNode) 
+						ContentNode(node).parentNode = this;
 				}
 			}	
 		}	
@@ -88,7 +89,7 @@ package org.mig.model.vo
 		/*		public function removeNode(node:ContentNode):void {
 		var fc:Function
 		if(children.filterFunction != null)
-		{
+		{	
 		children.filterFunction = null;
 		children.refresh();
 		}

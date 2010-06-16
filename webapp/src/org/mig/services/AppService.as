@@ -6,6 +6,7 @@ package org.mig.services
 	import mx.rpc.http.HTTPService;
 	
 	import org.mig.model.vo.CustomField;
+	import org.mig.model.vo.manager.Term;
 	import org.mig.model.vo.media.MimeType;
 	import org.mig.services.interfaces.IAppService;
 
@@ -59,7 +60,7 @@ package org.mig.services
 		public function loadTerms():void {
 			var params:Object = new Object();
 			params.action = ValidFunctions.GET_TEMPLATES;
-			this.createService(params,ResponseType.DATA,MimeType)
+			this.createService(params,ResponseType.DATA,Term)
 		}
 
 	}
