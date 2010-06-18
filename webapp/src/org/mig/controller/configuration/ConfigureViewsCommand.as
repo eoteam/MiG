@@ -23,6 +23,7 @@ package org.mig.controller.configuration
 	import org.mig.view.components.managers.media.FileUploadView;
 	import org.mig.view.components.managers.media.MediaManagerView;
 	import org.mig.view.components.managers.media.RenameView;
+	import org.mig.view.components.managers.tags.TagManagerView;
 	import org.mig.view.mediators.content.ContentGeneralEditorMediator;
 	import org.mig.view.mediators.content.ContentViewMediator;
 	import org.mig.view.mediators.content.media.MediaTabMediator;
@@ -40,7 +41,7 @@ package org.mig.controller.configuration
 	import org.mig.view.mediators.managers.media.FileUploadMediator;
 	import org.mig.view.mediators.managers.media.MediaManagerMediator;
 	import org.mig.view.mediators.managers.media.RenameMediator;
-	import org.mig.view.components.content.media.MediaTabAnimatedListRenderer;	
+	import org.mig.view.mediators.managers.tags.TagManagerMediator;
 	import org.robotlegs.mvcs.Command;
 	import org.robotlegs.utilities.statemachine.StateEvent;
 		
@@ -70,7 +71,8 @@ package org.mig.controller.configuration
 			mediatorMap.mapView(MediaManagerView,MediaManagerMediator);
 			mediatorMap.mapView(FileUploadView,FileUploadMediator);
 			
-			
+			 //tag manager
+			mediatorMap.mapView(TagManagerView,TagManagerMediator);
 			
 			//popup mediations
 			mediatorMap.mapView(AddDirectoryView,AddDirectoryMediator, null, false, false ); //disable auto mediation

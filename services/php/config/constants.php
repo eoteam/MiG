@@ -25,7 +25,7 @@ $validReadFunctions = array (
 "getMedia",
 "contentSearch",
 "migSearch",
-"getTags",
+"getTerms",
 "sendUserInformation"
 );
 

@@ -1571,7 +1571,7 @@ function fetchChildren($contentid,$depth,$level = 0){ // this function is used b
 	}
 }
 
-function getTags($params) {
+function getTerms($params) {
 
 	/*
 		-- VALID PARAMS --

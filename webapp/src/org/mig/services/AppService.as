@@ -59,7 +59,7 @@ package org.mig.services
 		}
 		public function loadTerms():void {
 			var params:Object = new Object();
-			params.action = ValidFunctions.GET_TEMPLATES;
+			params.action = ValidFunctions.GET_TERMS;
 			this.createService(params,ResponseType.DATA,Term)
 		}
 

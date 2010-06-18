@@ -18,7 +18,7 @@ package org.mig.services
 		public static const CONTENT_SEARCH:String 					= "contentSearch";
 		public static const SEND_USER_INFO:String 					= "sendUserInformation";
 		public static const MIG_SEARCH:String 						= "migSearch";
-		public static const GET_TAGS:String 						= "getTags";
+		public static const GET_TERMS:String 						= "getTerms";
 		public static const GET_ROOT:String							= "getRoot";
 		
 		

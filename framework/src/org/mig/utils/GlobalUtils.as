@@ -39,7 +39,10 @@ package org.mig.utils
 		public function get fullScreenMode():String {
 			return StageDisplayState.FULL_SCREEN;
 		}
-		
+		public static function sanitizeString(input:String):String {
+			var output:String = input.replace(new RegExp("[^a-zA-Z 0-9]+", "g"), "").replace(new RegExp("\\s+","g"), "-").toLowerCase();
+			return output;
+		}
 		public static function accumulateChildren(content:ContentNode,arr:Array):void {
 			arr.push(content);
 			addChildren(content,arr);
