@@ -4,10 +4,11 @@ package org.mig.model.vo.manager
 	import flash.events.EventDispatcher;
 	import flash.utils.describeType;
 	
+	import org.mig.model.vo.ContentData;
 	import org.mig.model.vo.ValueObject;
 	
 	[Bindable]
-	public dynamic class Term extends ValueObject
+	public dynamic class Term extends ContentData
 	{
 		public var name:String;
 		public var slug:String;
@@ -19,6 +20,6 @@ package org.mig.model.vo.manager
 		public var contentList:Array;
 		public var mediaList:Array;
 		public var displayorder:Number;
-		public var edited:Boolean = false;
+
 	}
 }

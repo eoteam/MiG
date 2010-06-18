@@ -4,7 +4,7 @@ package org.mig.view.mediators.main
 	import org.mig.events.ViewEvent;
 	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.content.ContainerNode;
-	import org.mig.model.vo.content.ContentData;
+	import org.mig.model.vo.content.ContainerData;
 	import org.mig.view.components.main.ContainerPathView;
 	import org.mig.view.events.ContainerPathEvent;
 	import org.robotlegs.mvcs.Mediator;
@@ -24,7 +24,7 @@ package org.mig.view.mediators.main
 		private function handleContainer(event:ContainerPathEvent):void {
 			var container:ContainerNode = event.container;
 			if(!container.isRoot) {
-				if(ContentData(container.data).loaded)
+				if(ContainerData(container.data).loaded)
 					eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.SELECT,container));
 				else 
 					eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.RETRIEVE_VERBOSE,container));

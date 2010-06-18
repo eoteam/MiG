@@ -1,9 +1,9 @@
 package org.mig.model.vo.user
 {
-	import org.mig.model.vo.BaseContentData;
+	import org.mig.model.vo.ContentData;
 
 	[Bindable]
-	public class User extends BaseContentData
+	public class User extends ContentData
 	{
 		public var email:String;
 		public var active:int;

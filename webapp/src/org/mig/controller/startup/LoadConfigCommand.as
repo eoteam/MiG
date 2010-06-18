@@ -28,6 +28,7 @@ package org.mig.controller.startup
 			appModel.config = config;	
 			
 			var mediaConfig:XML 		= config.controller[0]; //XML(config.controller.(@id == "mediaController"));
+			contentModel.mediaConfig	= mediaConfig.child[0];
 			appModel.fileDir			= mediaConfig.@fileDir;
 			appModel.thumbDir			= mediaConfig.@thumbDir;
 			appModel.mediaURL			= mediaConfig.@mediaURL;

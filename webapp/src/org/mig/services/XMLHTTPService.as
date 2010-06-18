@@ -10,7 +10,7 @@ package org.mig.services
 	import mx.rpc.mxml.Concurrency;
 	import mx.rpc.xml.SimpleXMLDecoder;
 	
-	import org.mig.model.vo.StatusResult;
+	import org.mig.model.vo.app.StatusResult;
 
 
 	internal class XMLHTTPService

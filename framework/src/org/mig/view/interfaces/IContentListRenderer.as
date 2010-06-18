@@ -1,7 +1,7 @@
 package org.mig.view.interfaces
 {
 	
-	import org.mig.model.vo.BaseContentData;
+	import org.mig.model.vo.ContentData;
 	import org.mig.model.vo.relational.ContentMedia;
 	
 	public interface IContentListRenderer // purely visual operations.

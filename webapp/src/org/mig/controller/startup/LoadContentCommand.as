@@ -4,9 +4,9 @@ package org.mig.controller.startup
 	import org.mig.events.ContentEvent;
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
-	import org.mig.model.vo.BaseContentData;
+	import org.mig.model.vo.ContentData;
 	import org.mig.model.vo.content.ContainerNode;
-	import org.mig.model.vo.content.ContentData;
+	import org.mig.model.vo.content.ContainerData;
 	import org.mig.services.interfaces.IContentService;
 	import org.robotlegs.mvcs.Command;
 	import org.robotlegs.utilities.statemachine.StateEvent;
@@ -27,7 +27,7 @@ package org.mig.controller.startup
 			service.addHandlers(handleContentLoaded);
 		}
 		private function handleContentLoaded(data:Object):void {
-			var result:ContentData 	= data.result[0] as ContentData;
+			var result:ContainerData 	= data.result[0] as ContainerData;
 			var contentConfig:XML 	= appModel.config.controller[1]; //XML(config.controller.(@id == "contentController"));
 			var root:XML = XML(contentConfig.child[0].toString());
 			contentModel.contentModel = new ContainerNode (root.@name, root,result,null,appModel.user.privileges,true,true,false);

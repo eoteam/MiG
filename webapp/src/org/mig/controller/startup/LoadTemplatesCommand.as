@@ -3,7 +3,7 @@ package org.mig.controller.startup
 	import org.mig.events.AppEvent;
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
-	import org.mig.model.vo.CustomField;
+	import org.mig.model.vo.app.CustomField;
 	import org.mig.model.vo.content.Template;
 	import org.mig.model.vo.content.TemplateCustomField;
 	import org.mig.services.interfaces.IAppService;

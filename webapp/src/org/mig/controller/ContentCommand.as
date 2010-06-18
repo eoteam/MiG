@@ -9,11 +9,12 @@ package org.mig.controller
 	import org.mig.events.NotificationEvent;
 	import org.mig.events.ViewEvent;
 	import org.mig.model.ContentModel;
-	import org.mig.model.vo.BaseContentData;
+	import org.mig.model.vo.ConfigurableContentData;
+	import org.mig.model.vo.ContentData;
 	import org.mig.model.vo.ContentNode;
-	import org.mig.model.vo.StatusResult;
+	import org.mig.model.vo.app.StatusResult;
+	import org.mig.model.vo.content.ContainerData;
 	import org.mig.model.vo.content.ContainerNode;
-	import org.mig.model.vo.content.ContentData;
 	import org.mig.model.vo.content.SubContainerNode;
 	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.services.ContentService;
@@ -74,7 +75,7 @@ package org.mig.controller
 		}
 		private function handleLoadComplete(data:Object):void {
 			ContainerNode(event.args[0]).data = data.result[0]; 
-			ContentData(ContainerNode(event.args[0]).data).loaded = true;
+			ContainerData(ContainerNode(event.args[0]).data).loaded = true;
 			eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.SELECT,event.args[0]));
 		}
 		private function handleContainerDelete(data:Object):void {
@@ -93,7 +94,7 @@ package org.mig.controller
 		}
 		private function handleDuplicate(data:Object):void {
 			var node:ContainerNode = data.token.content as ContainerNode;
-			var contentData:ContentData = data.result[0] as ContentData;
+			var contentData:ContainerData = data.result[0] as ContainerData;
 			
 			var newNode:ContainerNode = new ContainerNode(contentData.migtitle,node.config,contentData,node.parentNode,node.privileges,false,false,node.isNesting);
 			node.parentNode.children.addItemAt(newNode,0);
@@ -128,7 +129,7 @@ package org.mig.controller
 			var nesting:Boolean;
 			var fixed:Boolean;
 			var node:ContainerNode;
-			var item:ContentData;
+			var item:ContainerData;
 			var resultLabel:String; 
 			var content:ContentNode = data.token.content;
 						
@@ -180,8 +181,8 @@ package org.mig.controller
 				}
 			}
 			else if(content is SubContainerNode) {
-				BaseContentData(content.data).loaded = true;
-				for each (var reldata:BaseContentData in results) {
+				ContainerData(content.data).loaded = true;
+				for each (var reldata:ContentData in results) {
 					//resultLabel = reldata[content.config.@labelField];				
 					//var relnode:ContentNode = new ContentNode(resultLabel,content.config,reldata,content,content.privileges);
 					content.children.addItem(reldata);
@@ -190,7 +191,7 @@ package org.mig.controller
 		}
 		private function handleNewContainer(data:Object):void {
 			var config:XML = data.token.config as XML;
-			var contentData:ContentData = data.result[0] as ContentData;
+			var contentData:ContainerData = data.result[0] as ContainerData;
 			var is_fixed:Boolean = contentData.is_fixed == 0 ?false:true;
 			var nesting:Boolean = false;
 			if(config.attribute("nesting").length() > 0) {

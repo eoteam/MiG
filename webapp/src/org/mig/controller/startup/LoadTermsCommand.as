@@ -2,6 +2,7 @@ package org.mig.controller.startup
 {
 	import mx.charts.AreaChart;
 	
+	import org.mig.collections.DataCollection;
 	import org.mig.events.AppEvent;
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
@@ -52,6 +53,7 @@ package org.mig.controller.startup
 					}
 				}
 			}
+			contentModel.tagTerms.state = contentModel.categoryTerms.state = DataCollection.COMMITED;	
 			trace("Startup: Terms Complete");
 			appModel.startupCount = 5;
 			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP_PROGRESS,"Terms loaded"));

@@ -2,7 +2,7 @@ package org.mig.controller.startup
 {
 	import org.mig.events.AppEvent;
 	import org.mig.model.AppModel;
-	import org.mig.model.vo.CustomField;
+	import org.mig.model.vo.app.CustomField;
 	import org.mig.services.interfaces.IAppService;
 	import org.robotlegs.mvcs.Command;
 	import org.robotlegs.utilities.statemachine.StateEvent;

@@ -16,7 +16,7 @@
 			<s:Label styleName="boldCopy" left="-3" bottom="-5" width="100%" text="Tag Manager"/>
 			<s:Rect width="100%"/>
 			<s:Button styleName="defaultGrayButton" label="Close" click="this.visible=false"/>
-			<s:Button styleName="defaultGrayButton" label="Save Changes" />
+			<s:Button styleName="defaultGrayButton" label="Save Changes" id="submitButton" enabled="false" />
 		</s:HGroup>
 		<s:Rect height="10" />
 		<s:Rect id="rule1" width="100%" height="1">
@@ -38,10 +38,10 @@
 					</s:fill>
 				</s:Rect>
 				<s:HGroup id="controlsBox1" gap="2" paddingTop="10">
-					<controls:IconButton id="addTagButton1"   mouseChildren="false" buttonMode="true" width="35" height="22" 
+					<controls:IconButton id="insertButton"   mouseChildren="false" buttonMode="true" width="35" height="22" 
 					icon="@Embed(source='/migAssets/library.swf#addTagUp')" styleName="grayIconButton"/>	
 					
-					<controls:IconButton width="30" height="22" id="trashButton" toolTip="Delete" icon="@Embed(source='/migAssets/library.swf#deleteIconSmall')" 
+					<controls:IconButton width="30" height="22" id="trashButton1" toolTip="Delete" icon="@Embed(source='/migAssets/library.swf#deleteIconSmall')" 
 					 mouseChildren="false" buttonMode="true" styleName="grayIconButton" />							
 				</s:HGroup>
 

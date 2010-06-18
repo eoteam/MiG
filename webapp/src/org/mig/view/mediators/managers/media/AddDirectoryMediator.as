@@ -5,7 +5,7 @@ package org.mig.view.mediators.managers.media
 	import org.mig.events.MediaEvent;
 	import org.mig.events.NotificationEvent;
 	import org.mig.model.ContentModel;
-	import org.mig.model.vo.StatusResult;
+	import org.mig.model.vo.app.StatusResult;
 	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.model.vo.media.MediaData;
 	import org.mig.services.interfaces.IFileService;

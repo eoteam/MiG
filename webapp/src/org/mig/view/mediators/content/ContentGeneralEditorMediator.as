@@ -7,7 +7,7 @@ package org.mig.view.mediators.content
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
 	import org.mig.model.vo.UpdateData;
-	import org.mig.model.vo.content.ContentData;
+	import org.mig.model.vo.content.ContainerData;
 	import org.mig.model.vo.content.Template;
 	import org.mig.model.vo.content.TemplateCustomField;
 	import org.mig.view.components.content.ContentGeneralEditor;
@@ -40,7 +40,7 @@ package org.mig.view.mediators.content
 			{
 				var cfElement:CustomFieldElement = new CustomFieldElement();
 				cfElement.field = field;
-				cfElement.vo = view.content.data as ContentData;
+				cfElement.vo = view.content.data as ContainerData;
 				view.mainContainer.addElement(cfElement);
 				cfElements.push(cfElement);
 			}
@@ -48,7 +48,7 @@ package org.mig.view.mediators.content
 			eventMap.mapListener(view,ContentViewEvent.PUBLISH,publishContent,ContentViewEvent);
 		}
 		private function filterByTemplate(item:Template):Boolean {
-			if(item.id == ContentData(view.content.data).templateid)
+			if(item.id == ContainerData(view.content.data).templateid)
 				return true;
 			else
 				return false;

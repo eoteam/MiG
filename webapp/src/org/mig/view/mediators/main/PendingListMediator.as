@@ -7,9 +7,9 @@ package org.mig.view.mediators.main
 	import org.mig.events.NotificationEvent;
 	import org.mig.events.ViewEvent;
 	import org.mig.model.ContentModel;
-	import org.mig.model.vo.StatusResult;
+	import org.mig.model.vo.app.StatusResult;
 	import org.mig.model.vo.content.ContainerNode;
-	import org.mig.model.vo.content.ContentData;
+	import org.mig.model.vo.content.ContainerData;
 	import org.mig.model.vo.content.ContentStatus;
 	import org.mig.services.interfaces.IContentService;
 	import org.mig.services.interfaces.IService;
@@ -93,7 +93,7 @@ package org.mig.view.mediators.main
 			var containers:Array = data.token.containers;
 			if(result.success) {
 				for each(var container:ContainerNode in containers) {
-					ContentData(container.data).statusid = ContentStatus.DRAFT; 
+					ContainerData(container.data).statusid = ContentStatus.DRAFT; 
 				}
 				eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Containers drafted successfully"));
 				eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.VALIDATE_CONTENT));

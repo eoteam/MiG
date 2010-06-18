@@ -1,9 +1,9 @@
 package org.mig.model.vo.content
 {
-	import org.mig.model.vo.BaseContentData;
+	import org.mig.model.vo.ContentData;
 	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.UpdateData;
-	import org.mig.model.vo.content.ContentData;
+	import org.mig.model.vo.content.ContainerData;
 	
 	[Bindable] 
 	public class ContainerNode extends ContentNode
@@ -14,7 +14,7 @@ package org.mig.model.vo.content
 		public var isNesting:Boolean = false; //if turned on, this node and its children share the same template
 		public var isBranch:Boolean = false; //used for the spring loaded mechanism
 		
-		public function ContainerNode(baseLabel:String, config:XML, data:ContentData, parentContent:ContentNode,
+		public function ContainerNode(baseLabel:String, config:XML, data:ContainerData, parentContent:ContentNode,
 		priveleges:int,root:Boolean=true,fixed:Boolean=false,nesting:Boolean=false) {
 			super(baseLabel, config, data, parentContent,priveleges);
 			isRoot = root;

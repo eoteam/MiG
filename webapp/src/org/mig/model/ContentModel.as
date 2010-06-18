@@ -5,6 +5,7 @@ package org.mig.model
 	import mx.events.CollectionEventKind;
 	import mx.events.PropertyChangeEvent;
 	
+	import org.mig.collections.DataCollection;
 	import org.mig.model.vo.content.ContainerNode;
 	import org.mig.model.vo.manager.Term;
 	import org.mig.model.vo.media.DirectoryNode;
@@ -26,21 +27,43 @@ package org.mig.model
 		public var defaultDelete:String;
 		public var defaultTable:String;
 		
-		//media
+		//media - model media after Terms. Flat VO, single config, single config
 		public var mediaModel:DirectoryNode;
 		public var currentDirectory:DirectoryNode;
 		public var mimetypes:Array;
+		public var mediaConfig:XML;
 		
 		//tags
-		public var tagTerms:ArrayCollection;
-		public var categoryTerms:ArrayCollection;
-
-		public function ContentModel() {
-			tagTerms = new ArrayCollection();
-			categoryTerms = new ArrayCollection();
-			templates = new ArrayCollection();
+		public var tagTerms:DataCollection;
+		public var categoryTerms:DataCollection;
+		public var termsConfig:XML;
+		
+		public function AppModel():void {
+			tagTerms = new DataCollection();
+			categoryTerms = new DataCollection();
 			tagTerms.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleTagTerms);
 			categoryTerms.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleCategoryTerms);
+		}
+		private function handleTagTerms(event:CollectionEvent):void {
+			if(event.kind == CollectionEventKind.UPDATE) {
+				for each(var change:PropertyChangeEvent in event.items) {
+					var term:Term = change.source as Term;
+					if(change.property == "name")
+						term.slug = GlobalUtils.sanitizeString(term.name);
+				}
+			}
+		}
+		private function handleCategoryTerms(event:CollectionEvent):void {
+			if(event.kind == CollectionEventKind.UPDATE) {
+				for each(var change:PropertyChangeEvent in event.items) {
+					var term:Term = change.source as Term;
+					if(change.property == "name")
+						term.slug = GlobalUtils.sanitizeString(term.name);
+				}
+			}
+		}		
+		public function ContentModel() {
+			templates = new ArrayCollection();
 		}
 		
 		public function getMimetypeString(extension:String):String {
@@ -62,23 +85,6 @@ package org.mig.model
 				}
 			}
 			return MimeTypes.FILE;
-		}
-		private function handleTagTerms(event:CollectionEvent):void {
-			if(event.kind == CollectionEventKind.UPDATE) {
-				for each(var change:PropertyChangeEvent in event.items) {
-					var term:Term = change.source as Term;
-					term.edited = true;
-					if(change.property == "name")
-						term.slug = GlobalUtils.sanitizeString(term.name);
-				}
-			}
-		}
-		private function handleCategoryTerms(event:CollectionEvent):void {
-			if(event.kind == CollectionEventKind.UPDATE) {
-				for each(var term:Term in categoryTerms) {
-					term.slug = GlobalUtils.sanitizeString(term.name);
-				}
-			}
 		}
 	}
 }

@@ -1,10 +1,10 @@
 package org.mig.model.vo.relational
 {
-	import org.mig.model.vo.BaseContentData;
+	import org.mig.model.vo.ContentData;
 	import org.mig.model.vo.content.ContentStatus;
 
 	[Bindable]	
-	public class ContentMedia extends BaseContentData
+	public class ContentMedia extends ContentData
 	{
 		
 		public var contentid:Number;

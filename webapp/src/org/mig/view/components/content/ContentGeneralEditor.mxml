@@ -13,18 +13,18 @@
 	<fx:Script>
 		<![CDATA[
 			import org.mig.model.vo.ContentNode;
-			import org.mig.model.vo.content.ContentData;
+			import org.mig.model.vo.content.ContainerData;
 			import org.mig.view.events.ContentViewEvent;
 			import org.mig.view.interfaces.IEditableContentView;
 			
-			[Bindable] public var _data:ContentData;
+			[Bindable] public var _data:ContainerData;
 			[Bindable] private var gradientMatrix:Matrix = new Matrix();
 			
 			private var _content:ContentNode;
 			
 			public function set content(value:ContentNode):void {
 				_content = value;
-				_data = value.data as ContentData;
+				_data = value.data as ContainerData;
 			}
 			public function get content():ContentNode {
 				return _content;

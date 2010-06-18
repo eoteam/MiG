@@ -7,7 +7,7 @@
 	
 	import org.mig.events.NotificationEvent;
 	import org.mig.events.ViewEvent;
-	import org.mig.model.vo.StatusResult;
+	import org.mig.model.vo.app.StatusResult;
 	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.model.vo.media.FileNode;
 	import org.mig.model.vo.media.MediaData;

@@ -17,7 +17,7 @@ package org.mig.utils
 			}
 			catch (e:Error)
 			{
-				throw new Error("Could not find class for className: " + className);
+					throw new Error("Could not find class for className: " + className);
 			}
 			
 			return new instance();

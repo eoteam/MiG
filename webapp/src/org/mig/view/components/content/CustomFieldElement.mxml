@@ -22,10 +22,10 @@
 			
 			import org.mig.model.AppModel;
 			import org.mig.model.vo.ContentNode;
-			import org.mig.model.vo.CustomField;
-			import org.mig.model.vo.CustomFieldTypes;
+			import org.mig.model.vo.app.CustomField;
+			import org.mig.model.vo.app.CustomFieldTypes;
 			import org.mig.model.vo.content.ContainerNode;
-			import org.mig.model.vo.content.ContentData;
+			import org.mig.model.vo.content.ContainerData;
 			import org.mig.model.vo.content.TemplateCustomField;
 			import org.mig.model.vo.media.FileNode;
 			import org.mig.view.controls.DataCheckBox;
@@ -45,7 +45,7 @@
 			
 				
 			public var field:TemplateCustomField;
-			public var vo:ContentData;
+			public var vo:ContainerData;
 			private var customfield:CustomField;
 			
 			public var modified:Boolean = false;

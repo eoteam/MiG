@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configDocument>
 
-<!--	<controller id="tagController">-->
-<!--		<child labelfield="name"-->
-<!--		tablename="terms" />-->
-<!--	</controller>-->
 	<controller id="mediaController" mediaURL="http://migdev.mig.pentagram.com/files"
 		thumbURL="http://migdev.mig.pentagram.com/files/migThumbs" fileDir="files"
 		thumbDir="files/migThumbs">
@@ -12,8 +8,10 @@
 			tablename="media" 
 			createContent="insertRecord" 
 			retrieveContent="getData"
-			updateContent="updateContentRecord"
-			deleteContent="deleteContentMedia" 
+			updateContent="updateRecord"
+			updateDirectory="updateMediaByPath"
+			deleteDirectory="deleteMediaByPath"
+			deleteFile="deleteRecord"
 			addDirectoryView="org.mig.view.components.AddDirectoryView"
 			directoryContentView="com.mapx.view.mediaManager.DirectoryView"
 			parentDirectoryContentView="com.mapx.view.mediaManager.ParentDirectoryView" />
@@ -61,6 +59,14 @@
 			</child>
 		</child>
 	</controller>
+	<controller id="termsController">
+		<child labelfield="name"
+			createContent="insertTag" 
+			retrieveContent="getTerms"
+			updateContent="updateTag"
+			deleteContent="deleteTag" />
+	</controller>
+	
 	<elements>
 		<tray type="RelatedContent" contentView="com.mapx.view.content.trays.LinkingTray"
 			itemView="com.mapx.view.content.trays.LinkView" labelField="migtitle"
@@ -75,7 +81,7 @@
 		<tab type="Media" 
 			contentView="org.mig.view.components.content.media.MediaTab"
 			itemView="org.mig.view.components.content.media.MediaTabAnimatedListRenderer" 
-			dataObject="org.mig.model.vo.relational.ContentMedia" 
+			dto="org.mig.model.vo.relational.ContentMedia" 
 			tablename="content_media" 
 			vars="contentid" labelField="name"
 			retrieveContent="getContentMedia"
@@ -88,7 +94,7 @@
 		</tab>
 
 		<tab type="TagsCategories" contentView="org.mig.view.components.content.tabs.TagsCategoriesTab"
-			itemView="com.mapx.view.content.trays.TagView" tablename="content_terms" dataObject="org.mig.model.vo.content.ContentData"
+			itemView="com.mapx.view.content.trays.TagView" tablename="content_terms" dto="org.mig.model.vo.content.ContainerData"
 			vars="contentid" retrieveContent="getContentTags" updateContent="updateContentRecord"
 			deleteContent="deleteRecord">
 			<parameters>

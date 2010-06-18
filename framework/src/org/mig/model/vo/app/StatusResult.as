@@ -1,4 +1,4 @@
-package org.mig.model.vo
+package org.mig.model.vo.app
 {
 	[Bindable]
 	public dynamic class StatusResult

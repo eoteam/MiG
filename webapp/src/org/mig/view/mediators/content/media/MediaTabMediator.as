@@ -18,7 +18,7 @@ package org.mig.view.mediators.content.media
 	import org.mig.model.AppModel;
 	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.content.ContainerNode;
-	import org.mig.model.vo.content.ContentData;
+	import org.mig.model.vo.content.ContainerData;
 	import org.mig.model.vo.content.SubContainerNode;
 	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.model.vo.media.FileNode;

@@ -1,5 +1,6 @@
-package org.mig.model.vo
+package org.mig.model.vo.app
 {
+	import org.mig.model.vo.ValueObject;
 
 	[Bindable]
 	public class CustomField extends ValueObject

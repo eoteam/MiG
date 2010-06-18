@@ -32,8 +32,8 @@ package org.mig.services
 			var date:Date = new Date();
 			var time:Number = Math.round(date.time / 1000);
 			var params:Object = new Object();
-			params.action = ValidFunctions.INSERT_RECORD;
-			params.tablename = "media";
+			params.action = directory.config.@createContent;
+			params.tablename = directory.config.@tablename;
 			params.name = file.name;
 			params.extension = file.extension;
 			params.size = file.size;
@@ -55,23 +55,23 @@ package org.mig.services
 		}
 		public function deleteDirectory(directory:DirectoryNode):void {
 			var params:Object = new Object();
-			params.action = ValidFunctions.DELETE_MEDIA_BY_PATH;
+			params.action = directory.config.@deleteDirectory;
 			params.path = '/'+MediaData(directory.data).name + '/';
 			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
 			service.token.directory = directory;
 		}
 		public function deleteFile(file:FileNode):void {
 			var params:Object = new Object();
-			params.action = ValidFunctions.DELETE_RECORD;
-			params.tablename = "media";
+			params.action = file.config.@deleteFile;
+			params.tablename = file.config.@tablename;
 			params.id = file.data.id;
 			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
 			service.token.file = file;	
 		}
 		public function updateFile(file:FileNode,name:String):void {
 			var params:Object = new Object();
-			params.action = ValidFunctions.UPDATE_RECORD;
-			params.tablename = "media";
+			params.action = file.config.@updateContent;
+			params.tablename = file.config.@tablename;
 			params.id = file.data.id.toString();
 			params.name = name;
 			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
@@ -79,7 +79,7 @@ package org.mig.services
 		}
 		public function updateDirectory(directory:DirectoryNode,name:String):void {
 			var params:Object = new Object();
-			params.action = ValidFunctions.UPDATE_MEDIA_BY_PATH;
+			params.action = directory.config.@updateDirectory;
 			params.oldpath = directory.baseLabel;
 			params.newpath = name;
 			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);

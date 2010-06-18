@@ -8,7 +8,7 @@ package org.mig.view.mediators.content
 	import mx.events.IndexChangedEvent;
 	
 	import org.mig.events.ContentEvent;
-	import org.mig.model.vo.content.ContentData;
+	import org.mig.model.vo.content.ContainerData;
 	import org.mig.model.vo.content.ContentStatus;
 	import org.mig.model.vo.content.SubContainerNode;
 	import org.mig.utils.ClassUtils;
@@ -48,7 +48,7 @@ package org.mig.view.mediators.content
 					else
 						queryVars[queryVar] = view.content.data[queryVar].toString();
 				}
-				var data:ContentData = new ContentData();
+				var data:ContainerData = new ContainerData();
 				data.id = view.content.data.id;
 				
 				var subNode:SubContainerNode;

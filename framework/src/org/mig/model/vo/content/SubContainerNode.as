@@ -1,7 +1,7 @@
 package org.mig.model.vo.content
 {
 
-	import org.mig.model.vo.content.ContentData;
+	import org.mig.model.vo.content.ContainerData;
 	import org.mig.model.vo.ContentNode;
 
 	import flash.errors.IllegalOperationError;
@@ -15,7 +15,7 @@ package org.mig.model.vo.content
 	public class SubContainerNode extends ContentNode
 	{
 		public var queryVars:Object;
-		public function SubContainerNode(baseLabel:String, config:XML, data:ContentData, parentContent:ContentNode,privileges:int,queryVars:Object) {
+		public function SubContainerNode(baseLabel:String, config:XML, data:ContainerData, parentContent:ContentNode,privileges:int,queryVars:Object) {
 			super(baseLabel, config, data, parentContent,privileges);
 			this.queryVars = queryVars;
 		}

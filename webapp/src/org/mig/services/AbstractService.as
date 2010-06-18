@@ -18,7 +18,7 @@
 	
 	import org.mig.controller.Constants;
 	import org.mig.events.AlertEvent;
-	import org.mig.model.vo.StatusResult;
+	import org.mig.model.vo.app.StatusResult;
 	import org.mig.utils.GUID;
 	import org.robotlegs.mvcs.Actor;
 	

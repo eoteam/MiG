@@ -4,8 +4,7 @@ package org.mig.model
 	import org.robotlegs.mvcs.Actor;
 	
 	public class AppModel extends Actor
-	{
-		
+	{	
 		//constants
 		public var config:XML;
 		public var prompt:String;
@@ -19,7 +18,6 @@ package org.mig.model
 		public var thumbURL:String;
 		public var fileDir:String;
 		public var thumbDir:String;
-		
 		
 		//settings
 		public var timeZoneOffset:Number = -8*3600*1000;
@@ -39,5 +37,6 @@ package org.mig.model
 		//startup count
 		public var startupItems:int;
 		public var startupCount:int;
+		
 	}
 }

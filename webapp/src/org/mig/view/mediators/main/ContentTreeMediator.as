@@ -16,12 +16,12 @@ package org.mig.view.mediators.main
 	import org.mig.events.NotificationEvent;
 	import org.mig.events.ViewEvent;
 	import org.mig.model.ContentModel;
-	import org.mig.model.vo.BaseContentData;
+	import org.mig.model.vo.ContentData;
 	import org.mig.model.vo.ContentNode;
-	import org.mig.model.vo.StatusResult;
+	import org.mig.model.vo.app.StatusResult;
 	import org.mig.model.vo.UpdateData;
 	import org.mig.model.vo.content.ContainerNode;
-	import org.mig.model.vo.content.ContentData;
+	import org.mig.model.vo.content.ContainerData;
 	import org.mig.services.interfaces.IContentService;
 	import org.mig.utils.GlobalUtils;
 	import org.mig.view.components.main.ContentTree;
@@ -110,7 +110,7 @@ package org.mig.view.mediators.main
 		private function handleItemDoubleClick(event:ListEvent):void {
 			var selectedNode:ContainerNode = event.itemRenderer.data as ContainerNode
 			if(!selectedNode.isRoot) {
-				if(ContentData(selectedNode.data).loaded)
+				if(ContainerData(selectedNode.data).loaded)
 					eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.SELECT,selectedNode));
 				else 
 					eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.RETRIEVE_VERBOSE,selectedNode));

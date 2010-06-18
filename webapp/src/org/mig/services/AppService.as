@@ -5,7 +5,7 @@ package org.mig.services
 	import mx.rpc.Responder;
 	import mx.rpc.http.HTTPService;
 	
-	import org.mig.model.vo.CustomField;
+	import org.mig.model.vo.app.CustomField;
 	import org.mig.model.vo.manager.Term;
 	import org.mig.model.vo.media.MimeType;
 	import org.mig.services.interfaces.IAppService;

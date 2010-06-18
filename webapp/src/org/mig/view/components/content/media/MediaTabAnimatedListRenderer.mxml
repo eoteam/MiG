@@ -20,7 +20,7 @@
 			
 			import org.mig.model.vo.ContentNode;
 			import org.mig.model.vo.content.ContainerNode;
-			import org.mig.model.vo.content.ContentData;
+			import org.mig.model.vo.content.ContainerData;
 			import org.mig.model.vo.media.MimeTypes;
 			import org.mig.model.vo.relational.ContentMedia;
 			

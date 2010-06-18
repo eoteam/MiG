@@ -11,10 +11,10 @@ package org.mig.services
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
 	import org.mig.model.vo.ContentNode;
-	import org.mig.model.vo.CustomField;
+	import org.mig.model.vo.app.CustomField;
 	import org.mig.model.vo.UpdateData;
 	import org.mig.model.vo.content.ContainerNode;
-	import org.mig.model.vo.content.ContentData;
+	import org.mig.model.vo.content.ContainerData;
 	import org.mig.model.vo.content.ContentStatus;
 	import org.mig.model.vo.content.SubContainerNode;
 	import org.mig.model.vo.content.Template;
@@ -40,7 +40,7 @@ package org.mig.services
 			root.@retrieveContent = contentModel.defaultRetrieve;
 			params.action = root.@retrieveContent.toString();*/
 			params.action = ValidFunctions.GET_ROOT;
-			this.createService(params,ResponseType.DATA,ContentData);
+			this.createService(params,ResponseType.DATA,ContainerData);
 		}
 		public function retrieveChildren(content:ContentNode):void {
 			//this is fine here, params are a map object. Im guessing REST will form a URL, but awareness of these vars is tricky
@@ -55,7 +55,7 @@ package org.mig.services
 				params.action = ValidFunctions.GET_CONTENT;
 				params.contentid = content.data.id;
 				params.verbosity = 1;
-				this.createService(params,ResponseType.DATA,ContentData);
+				this.createService(params,ResponseType.DATA,ContainerData);
 			}
 		}
 		public function deleteContainer(container:ContainerNode):void {
@@ -73,7 +73,7 @@ package org.mig.services
 			var params:Object = new Object();
 			params.action = ValidFunctions.DUPLICATE_CONTENT;
 			params.id = container.data.id;
-			this.createService(params,ResponseType.DATA,ContentData).token.content = container;
+			this.createService(params,ResponseType.DATA,ContainerData).token.content = container;
 		}
 		public function updateContainer(container:ContainerNode,update:UpdateData):void {
 			var params:Object = new Object();
@@ -133,7 +133,7 @@ package org.mig.services
 			params.modifieddate = time;
 			params.statusid = ContentStatus.DRAFT;
 			params.verbose = true;
-			this.createService(params,ResponseType.DATA,ContentData).token.config = config;	
+			this.createService(params,ResponseType.DATA,ContainerData).token.config = config;	
 		}
 		private function loadContainer(content:ContentNode):void {
 			var params:Object = new Object();
@@ -145,7 +145,7 @@ package org.mig.services
 					params.parentid = 1;
 			}
 			else {//Anything else, even fixed ones, will onyl get their children
-				params.parentid = ContentData(content.data).id.toString();
+				params.parentid = ContainerData(content.data).id.toString();
 				if(ContainerNode(content).isNesting || content.config.children().length() > 0)
 					execute = true; //good for content leaves AND relational nodes in tabs and trays
 				else {
@@ -163,7 +163,7 @@ package org.mig.services
 				params.verbosity = content.config.@verbosity.toString();
 			else
 				params.verbosity = 0;
-			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,ContentData);
+			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,ContainerData);
 			service.token.content = content;
 		}
 		private function loadSubContainer(content:ContentNode):void {
@@ -192,7 +192,7 @@ package org.mig.services
 					else
 						params[item] = SubContainerNode(content).queryVars[item];
 				}
-				var classToUse:String = content.config.@dataObject;
+				var classToUse:String = content.config.@dto;
 				var classRef:Class = getDefinitionByName(classToUse) as Class;
 				var service:XMLHTTPService = this.createService(params,ResponseType.DATA,classRef);
 				service.token.content = content;				

@@ -7,7 +7,7 @@ package org.mig.view.mediators.main
 	
 	import org.mig.events.AppEvent;
 	import org.mig.model.AppModel;
-	import org.mig.model.vo.StatusResult;
+	import org.mig.model.vo.app.StatusResult;
 	import org.mig.model.vo.UpdateData;
 	import org.mig.model.vo.user.UserToken;
 	import org.mig.services.interfaces.IUserService;
