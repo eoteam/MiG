@@ -164,8 +164,8 @@ is defined by the ComboBoxTextInputSkin class.
     
 
 
-	<s:Button label="{this.hostComponent.prompt}"  id="openButton" left="0" right="0" top="0" bottom="0" focusEnabled="false" skinClass="org.mig.view.skins.dropdowns.DropDownSymbolSkin" />  
-    <s:Label id="labelDisplay" visible="false" left="0" right="18" top="0" bottom="0" /> 
+	<s:Button id="openButton" left="0" right="0" top="0" bottom="0" focusEnabled="false" skinClass="org.mig.view.skins.dropdowns.DropDownSymbolSkin" />  
+    <s:Label id="labelDisplay" visible="true" left="5" right="18"  verticalCenter="0" textAlign="left" mouseChildren="false" mouseEnabled="false" /> 
     
 	 
 

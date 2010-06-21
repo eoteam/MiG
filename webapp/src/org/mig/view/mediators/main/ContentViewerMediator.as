@@ -1,8 +1,10 @@
 package org.mig.view.mediators.main
 {
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.system.System;
 	
+	import mx.core.IVisualElement;
 	import mx.core.UIComponent;
 	
 	import org.mig.events.ContentEvent;
@@ -29,8 +31,11 @@ package org.mig.view.mediators.main
 		private function handleNodeSelected(event:ContentEvent):void
 		{
 			var node:ContainerNode = event.args[0] as ContainerNode;
-			//if(!BaseContentData(selectedNode.data).modified)
-			view.mediaManager.visible = false;
+			view.managerContainer.visible = false;
+			for(var i:int = 0;i<view.managerContainer.numChildren;i++) {
+				var manager:DisplayObject = view.managerContainer.getChildAt(i);
+				manager.visible = false;
+			}
 			if(node != content && node != null)
 			{
 				content = node;
@@ -53,17 +58,14 @@ package org.mig.view.mediators.main
 		}
 		private function handleManager(event:ViewEvent):void {
 			var item:Object = event.args[0];
-			switch (item.name) {
-				
-				case "Media":
-					view.mediaManager.visible = !view.mediaManager.visible;
-					view.tagManager.visible = false;
-				break;
-				
-				case "Tags":
-					view.mediaManager.visible = false;
-					view.tagManager.visible = !view.tagManager.visible;
-				break;
+			for(var i:int = 0;i<view.managerContainer.numChildren;i++) {
+				trace(view.managerContainer.getChildAt(i).name);
+				if(view.managerContainer.getChildAt(i).name != item.name)
+					view.managerContainer.getChildAt(i).visible = false;
+				else {
+					view.managerContainer.getChildAt(i).visible = true;
+					view.managerContainer.visible = true;
+				}
 			}
 		}
 	}

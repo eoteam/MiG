@@ -20,6 +20,8 @@ package org.mig.model.vo.manager
 		public var contentList:Array;
 		public var mediaList:Array;
 		public var displayorder:Number;
+		
+		public var config:XML;
 
 	}
 }

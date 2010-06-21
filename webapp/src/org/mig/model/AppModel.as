@@ -30,9 +30,9 @@ package org.mig.model
 		public var pendingURL:String;
 		
 		//data strucutures
-		public var managers:Array = [];
 		public var customfields:Array = [];
 		public var customfieldsFlat:Array = [];
+		public var customfieldsConfig:XML;
 		
 		//startup count
 		public var startupItems:int;

@@ -7,7 +7,7 @@ package org.mig.collections
 	import mx.events.PropertyChangeEvent;
 	
 	import org.mig.model.vo.ContentData;
-	[Event(name="stateChange", type="flash.events.Event")] 
+	
 	public class DataCollection extends ArrayCollection
 	{
 		public static const NEW_COLLECTION:int = 0;
@@ -26,41 +26,46 @@ package org.mig.collections
 			deletedItems = [];
 			modifiedItems = [];
 			state = 0;
-			list.addEventListener( CollectionEvent.COLLECTION_CHANGE, onCollectionEvent);  
+			//list.addEventListener( CollectionEvent.COLLECTION_CHANGE, onCollectionEvent);  
 		}
-		private function onCollectionEvent(event:CollectionEvent) :void {	
-			var items:Array = event.items;
-			var propChange:PropertyChangeEvent;
-			var item:ContentData
-			switch(event.kind) {
-				case "remove":
-					for each(item in items) 
-						deletedItems.push(item);
-					this.dispatchEvent(new Event("stageChange",true));
-				break;
-				case "add":
-					if(state > 0) {
+    
+		override public function dispatchEvent(event:Event):Boolean {
+			
+			if(event is CollectionEvent) {
+				var items:Array = CollectionEvent(event).items;
+				var propChange:PropertyChangeEvent;
+				var item:ContentData
+				switch(CollectionEvent(event).kind) {
+					case "remove":
 						for each(item in items) 
+						deletedItems.push(item);
+						//this.dispatchEvent(new Event("stageChange",true));
+						break;
+					case "add":
+						if(state > 0) {
+							for each(item in items) 
 							newItems.push(item);
-						this.state = 1;
-						this.dispatchEvent(new Event("stageChange",true));
-					}
-				break;
-				case "update":
-					if(state > 0 ) {
-						for each(propChange in items) {
-							if(newItems.indexOf(propChange.source) == -1 && modifiedItems.indexOf(propChange.source) == -1) {
-								modifiedItems.push(propChange.source);
-								ContentData(propChange.source).modified = true;
-							}
+							this.state = 1;
+							//this.dispatchEvent(new Event("stageChange",true));
 						}
-						this.state = 1;
-						this.dispatchEvent(new Event("stageChange",true));
-					}
-				break;
-				
+						break;
+					case "update":
+						if(state > 0 ) {
+							for each(propChange in items) {
+								if(newItems.indexOf(propChange.source) == -1 && modifiedItems.indexOf(propChange.source) == -1) {
+									modifiedItems.push(propChange.source);
+									ContentData(propChange.source).modified = true;
+								}
+							}
+							this.state = 1;
+							//this.dispatchEvent(new Event("stageChange",true));
+						}
+						break;
+					
+				}
 			}
-		}     
+			return super.dispatchEvent(event);
+		}
 		public function commit():void {
 			state = 1;
 			this.dispatchEvent(new Event("stageChange",true));

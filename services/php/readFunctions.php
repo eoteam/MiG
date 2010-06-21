@@ -1609,8 +1609,8 @@ function getTerms($params) {
 		}
 	}	
 	
-
 	// define the sql query
+
 	$sql = "SELECT"; 
 	foreach ($customfields AS $key=>$value)
 		$sql .= " term_taxonomy.customfield".$key." AS ".$value.",";
@@ -1621,6 +1621,7 @@ function getTerms($params) {
 		    GROUP_CONCAT(DISTINCT media.path,media.name) AS mediatitles,
 		    GROUP_CONCAT(DISTINCT media.id) AS mediaids";
 	
+
 	$sql .= " FROM term_taxonomy
 			  LEFT JOIN terms ON terms.id = term_taxonomy.termid
 			  LEFT JOIN content_terms ON content_terms.termid = term_taxonomy.id
@@ -1644,7 +1645,6 @@ function getTerms($params) {
 
 	// ORDER BY
 	$sql .= " ORDER BY term_taxonomy.displayorder ASC";
-	//echo $sql . "<br><br>";
 	$result = queryDatabase($sql, $sendParams);
 
 	// return the results

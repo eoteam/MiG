@@ -10,13 +10,5 @@ package org.mig.services.interfaces
 		
 		function loadCustomFieldGroups():void ;
 		
-		//these are loaded by the app service but stored in the content model...
-		function loadTemplates():void;
-		
-		function loadMimeTypes():void;
-		
-		function loadTerms():void;
-		
-		//function update
 	}
 }

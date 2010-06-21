@@ -10,7 +10,7 @@ package org.mig.model.vo.app
 		public var visible:Boolean;
 		public var name:String;
 		public var displayname:String;
-		public var optionsArray:Array;
+		public var optionsArray:Array = [];
 		public var defaultvalue:String = "";
 		public var createdby:int;
 		public var createdate:Number;
@@ -19,14 +19,19 @@ package org.mig.model.vo.app
 		
 		public function set options(ops:String):void
 		{
-			optionsArray = [];
 			var tmp:Array = ops.split(',');
 			for each(var op:String in tmp) {
 				var tokens:Array = op.split('=');
 				optionsArray.push({index:tokens[0],value:tokens[1]});
 			}
 		}
-		
+		public function get options():String {
+			var result:String = '';
+			for each(var item:Object in optionsArray) {
+				result += item.value + ',';
+			}
+			return result;
+		}
 
 	}
 }

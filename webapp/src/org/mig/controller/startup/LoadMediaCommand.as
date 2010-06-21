@@ -21,7 +21,7 @@ package org.mig.controller.startup
 			var data:MediaData = new MediaData();
 			data.id = 0;
 			data.childrencount = 1000;
-			contentModel.currentDirectory = contentModel.mediaModel = new DirectoryNode("files", contentModel.mediaConfig, data, null,'/',appModel.user.privileges);
+			contentModel.currentDirectory = contentModel.mediaModel = new DirectoryNode("files", contentModel.mediaConfig.child[0], data, null,'/',appModel.user.privileges);
 			eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.RETRIEVE_CHILDREN,contentModel.mediaModel));
 			
 			trace("Startup: Media Model Complete");

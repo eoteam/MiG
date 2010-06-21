@@ -28,7 +28,7 @@ package org.mig.model.vo
 		public var children:ArrayCollection;
 		public var parentNode:ContentNode;
 		public var subContainers:Dictionary;
-		public var data:ContentData;
+		public var data:ConfigurableContentData;
 		public var privileges:int;		
 		
 		public var state:int;
@@ -37,7 +37,7 @@ package org.mig.model.vo
 		protected var _config:XML;
 		protected var _baseLabel:String;
 		
-		public function ContentNode(baseLabel:String, config:XML, data:ContentData, parentNode:ContentNode,privileges:int) {
+		public function ContentNode(baseLabel:String, config:XML, data:ConfigurableContentData, parentNode:ContentNode,privileges:int) {
 			this.parentNode = parentNode;	
 			this.baseLabel = baseLabel.replace(/<.*?>/g, "");
 			this.baseLabel = baseLabel.replace(/]]>/g, "");

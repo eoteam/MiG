@@ -10,6 +10,7 @@ package org.mig.view.mediators.managers.media
 	
 	import mx.collections.HierarchicalData;
 	import mx.controls.AdvancedDataGrid;
+	import mx.events.AdvancedDataGridEvent;
 	import mx.events.CloseEvent;
 	import mx.events.DragEvent;
 	import mx.events.FlexEvent;
@@ -59,6 +60,7 @@ package org.mig.view.mediators.managers.media
 		}
 		private function handleConfigLoaded(event:AppEvent):void {
 			view.thumbURL = appModel.thumbURL;
+			view.name = view.parentDocument.name = contentModel.mediaConfig.@name.toString();
 		}
 		private function handleRefresh(event:ViewEvent):void {
 			if(view.stack.selectedIndex == 0) {
@@ -91,7 +93,7 @@ package org.mig.view.mediators.managers.media
 			view.listView.addEventListener(DragEvent.DRAG_ENTER, handleListDragEnter);
 			view.listView.addEventListener(DragEvent.DRAG_EXIT,handleListDragExit);
 			view.listView.addEventListener(DragEvent.DRAG_COMPLETE,handleListDragComplete);
-			
+			view.listView.addEventListener(AdvancedDataGridEvent.ITEM_OPEN,handleListItemOpen);
 			view.addEventListener('thumbViewCreated',handleThumbView);
 		}
 		private function initView():void {
@@ -156,8 +158,11 @@ package org.mig.view.mediators.managers.media
 			view.currentState = "loaded";
 		}
 		private function handleListItemDoubleClick(event:Event):void {
-			if(view.listView.selectedItem is DirectoryNode)
+			if(view.listView.selectedItem is DirectoryNode) {
+				if(DirectoryNode(view.listView.selectedItem).state == ContentNode.NOT_LOADED)
+					eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.RETRIEVE_CHILDREN, view.listView.selectedItem as DirectoryNode)); 
 				this.selectedContent = view.listView.selectedItem as DirectoryNode;	
+			}
 		}
 		private function handleListItem(event:Event):void {
 			handleSelection(view.listView.selectedItems);
@@ -390,8 +395,13 @@ package org.mig.view.mediators.managers.media
 			// when dropping in a Tree
 			view.listView.hideDropFeedback(event);
 		}
-	
-		//set current node
+		private function handleListItemOpen(event:AdvancedDataGridEvent):void {
+			if(event.itemRenderer){
+			if(DirectoryNode(event.itemRenderer.data).state == ContentNode.NOT_LOADED)
+			eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.RETRIEVE_CHILDREN,event.itemRenderer.data)); 
+			}
+
+		}//set current node
 		private function set selectedContent(value:DirectoryNode):void {
 			if(_selectedNode != value) {
 				_selectedNode = contentModel.currentDirectory = value;

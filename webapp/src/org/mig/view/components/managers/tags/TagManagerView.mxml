@@ -51,10 +51,10 @@
 				id="termsGrid" paddingTop="0" height="100%"  
 				editable="true">
 					<controls:columns>
-						<mx:DataGridColumn width="26" editable="false" >
+						<mx:DataGridColumn width="26" editable="false" resizable="false">
 							<mx:itemRenderer>
 								<fx:Component>
-									<mx:Box paddingLeft="4" paddingTop="4">
+									<mx:Box paddingLeft="4" paddingTop="4" verticalCenter="0" horizontalCenter="0">
 										<mx:SWFLoader source="@Embed(source='/migAssets/library.swf#tagIcon')" />
 									</mx:Box>
 								</fx:Component>
@@ -67,7 +67,7 @@
 								</fx:Component>
 							</mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn  paddingLeft="6" headerText="Tag" dataField="slug" editable="false"   editorUsesEnterKey="true" >
+						<mx:DataGridColumn  paddingLeft="6" headerText="Slug" dataField="slug" editable="false"   editorUsesEnterKey="true" >
 							<mx:itemRenderer>
 								<fx:Component>
 									<renderers:DGCell  colorEnabled="true"/>

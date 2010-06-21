@@ -30,9 +30,6 @@ package org.mig.controller.configuration
 					case "configfile":
 						appModel.configfile = item.value;
 						break;
-					default:
-						appModel.managers.push(item);
-						break
 				}
 			}
 			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.CONFIG_LOADED));

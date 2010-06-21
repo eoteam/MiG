@@ -5,13 +5,14 @@ package org.mig.controller.startup
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
 	import org.mig.services.interfaces.IAppService;
+	import org.mig.services.interfaces.IContentService;
 	import org.robotlegs.mvcs.Command;
 	import org.robotlegs.utilities.statemachine.StateEvent;
 	
 	public class LoadMimeTypesCommand extends Command
 	{
 		[Inject]
-		public var service:IAppService;
+		public var service:IContentService;
 		
 		[Inject]
 		public var contentModel:ContentModel;

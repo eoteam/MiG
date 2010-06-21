@@ -35,6 +35,7 @@ package org.mig.controller
 			switch(event.type) {
 				case MediaEvent.RETRIEVE_CHILDREN:
 					node = event.args[0] as DirectoryNode;
+					node.state = ContentNode.LOADING;
 					fileService.readDirectory(node as DirectoryNode);
 					fileService.addHandlers(handleDiskResults);
 				break;
@@ -80,7 +81,7 @@ package org.mig.controller
 					else 
 						dirs.push(item);
 					}
-						//if the file belongs to any of the directories selected, then skip, because the directory delete 
+					///if the file belongs to any of the directories selected, then skip, because the directory delete 
 					//will remove the file from disk, and then the DB delete will look for all the files that have that path
 					//otherwise, the file needs file and db delete
 					
@@ -121,7 +122,6 @@ package org.mig.controller
 					var categoryNode:DirectoryNode = new DirectoryNode(item.name, content.config, item,content, newdirectory,content.privileges);
 					content.children.addItem(categoryNode);
 					content.numFolders += 1;	
-					eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.RETRIEVE_CHILDREN,categoryNode));
 				}
 				else
 					content.diskFiles.push(item);
@@ -136,6 +136,7 @@ package org.mig.controller
 			var result:MediaData;
 			var file:Object;
 			var d:Date = new Date();
+			content.state = ContentNode.LOADED;
 			if(results.length > 0) {// some files are stored, correlate disk with DB
 				for each(item in content.diskFiles) {
 					var found:Boolean = false;

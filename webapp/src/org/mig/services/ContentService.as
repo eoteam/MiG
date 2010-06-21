@@ -1,24 +1,26 @@
 package org.mig.services
 {
+	import flash.utils.getDefinitionByName;
 	import flash.xml.XMLDocument;
 	
 	import mx.rpc.AsyncToken;
 	import mx.rpc.events.ResultEvent;
 	import mx.utils.ObjectUtil;
-	import flash.utils.getDefinitionByName;
 	
 	import org.mig.controller.Constants;
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
 	import org.mig.model.vo.ContentNode;
-	import org.mig.model.vo.app.CustomField;
 	import org.mig.model.vo.UpdateData;
-	import org.mig.model.vo.content.ContainerNode;
+	import org.mig.model.vo.app.CustomField;
 	import org.mig.model.vo.content.ContainerData;
+	import org.mig.model.vo.content.ContainerNode;
 	import org.mig.model.vo.content.ContentStatus;
 	import org.mig.model.vo.content.SubContainerNode;
 	import org.mig.model.vo.content.Template;
 	import org.mig.model.vo.content.TemplateCustomField;
+	import org.mig.model.vo.manager.Term;
+	import org.mig.model.vo.media.MimeType;
 	import org.mig.model.vo.user.UserPrivileges;
 	import org.mig.services.interfaces.IContentService;
 
@@ -32,6 +34,28 @@ package org.mig.services
 		
 		public function ContentService() {
 			
+		}
+		public function loadTemplates():void {
+			var params:Object = new  Object();
+			params.action = ValidFunctions.GET_TEMPLATES;
+			this.createService(params,ResponseType.DATA,Object);		
+		}
+		public function loadMimeTypes():void {
+			var params:Object = new Object();
+			params.action = ValidFunctions.GET_DATA;
+			params.tablename = "mimetypes";
+			this.createService(params,ResponseType.DATA,MimeType);
+		}
+		public function loadTerms():void {
+			var params:Object = new Object();
+			params.action = contentModel.termsConfig.child[0].@retrieveContent.toString();
+			this.createService(params,ResponseType.DATA,Term)
+		}
+		public function loadCategoriesCustomFields():void {
+			var params:Object = new Object();
+			params.action = ValidFunctions.GET_DATA;
+			params.tablename = "termtaxonomy_customfields";
+			this.createService(params,ResponseType.DATA);
 		}
 		public function retrieveContentRoot():void {
 			var params:Object = new Object();

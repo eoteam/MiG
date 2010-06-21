@@ -27,14 +27,15 @@ package org.mig.controller.startup
 			var config:XML = data.result as XML;
 			appModel.config = config;	
 			
-			var mediaConfig:XML 		= config.controller[0]; //XML(config.controller.(@id == "mediaController"));
-			contentModel.mediaConfig	= mediaConfig.child[0];
+			var mediaConfig:XML 		= config.manager[0]; //XML(config.controller.(@id == "mediaController"));
+			contentModel.mediaConfig	= mediaConfig;
 			appModel.fileDir			= mediaConfig.@fileDir;
 			appModel.thumbDir			= mediaConfig.@thumbDir;
 			appModel.mediaURL			= mediaConfig.@mediaURL;
 			appModel.thumbURL			= mediaConfig.@thumbURL;
 			
-			var contentConfig:XML 		= config.controller[1]; //XML(config.controller.(@id == "contentController"));
+			var contentConfig:XML 		= config.controller[0]; //XML(config.controller.(@id == "contentController"));
+			contentModel.contentConfig	= contentConfig.child[0];
 			appModel.rootURL 			= contentConfig.@rootURL;
 			appModel.pendingURL			= contentConfig.@pendingURL;
 			appModel.publishedURL		= contentConfig.@publishedURL;
@@ -48,6 +49,9 @@ package org.mig.controller.startup
 			contentModel.defaultUpdate		= contentConfig.@updateContent;
 			contentModel.defaultDelete		= contentConfig.@deleteContent;
 			contentModel.defaultTable		= contentConfig.@tablename;
+			
+			contentModel.termsConfig		= config.manager[1];
+			appModel.customfieldsConfig		= config.manager[2];
 			
 			contentModel.configEelements 	= config.elements[0];
 			//process xml file and

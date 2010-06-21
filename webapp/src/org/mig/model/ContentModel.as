@@ -17,6 +17,7 @@ package org.mig.model
 	public class ContentModel extends Actor
 	{
 		//content
+		public var contentConfig:XML;
 		public var contentModel:ContainerNode;
 		public var templates:ArrayCollection;
 		public var currentContainer:ContainerNode;
@@ -28,6 +29,7 @@ package org.mig.model
 		public var defaultTable:String;
 		
 		//media - model media after Terms. Flat VO, single config, single config
+		//actuall no, better to have media 2D like content, first layer is metadata about the VOs, 2nd layer is VO
 		public var mediaModel:DirectoryNode;
 		public var currentDirectory:DirectoryNode;
 		public var mimetypes:Array;
@@ -36,13 +38,16 @@ package org.mig.model
 		//tags
 		public var tagTerms:DataCollection;
 		public var categoryTerms:DataCollection;
+		public var categoriesCustomFields:Array;	
 		public var termsConfig:XML;
 		
-		public function AppModel():void {
+		public function ContentModel() {
+			templates = new ArrayCollection();
 			tagTerms = new DataCollection();
 			categoryTerms = new DataCollection();
 			tagTerms.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleTagTerms);
 			categoryTerms.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleCategoryTerms);
+			categoriesCustomFields = [];
 		}
 		private function handleTagTerms(event:CollectionEvent):void {
 			if(event.kind == CollectionEventKind.UPDATE) {
@@ -62,10 +67,6 @@ package org.mig.model
 				}
 			}
 		}		
-		public function ContentModel() {
-			templates = new ArrayCollection();
-		}
-		
 		public function getMimetypeString(extension:String):String {
 			for each(var mimetype:MimeType in mimetypes) {
 				for each(var ext:String  in mimetype.extensionsArray) {

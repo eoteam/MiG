@@ -50,8 +50,8 @@ package org.mig.controller.startup
 		public static const LOADING_TERMS:String				= "state/starting/terms";
 		public static const LOAD_TERMS:String					= "event/start/terms";
 		public static const LOAD_TERMS_COMPLETE:String  		= "action/start/terms/complete";
-		public static const LOAD_TERMS_FAILED:String    		= "action/start/terms/failed";		
-		
+		public static const LOAD_TERMS_FAILED:String    		= "action/start/terms/failed";	
+				
 		public static const LOADING_CFGROUPS:String				= "state/starting/cfgroups";
 		public static const LOAD_CFGROUPS:String				= "event/start/cfgroups";
 		public static const LOAD_CFGROUPS_COMPLETE:String  		= "action/start/cfgroups/complete";
@@ -66,6 +66,11 @@ package org.mig.controller.startup
 		public static const LOAD_TEMPLATES:String				= "event/start/templates";
 		public static const LOAD_TEMPLATES_COMPLETE:String  	= "action/start/templates/complete";
 		public static const LOAD_TEMPLATES_FAILED:String    	= "action/start/templates/failed";
+
+		public static const LOADING_CATEGORIESCF:String			= "state/starting/categoriescf";
+		public static const LOAD_CATEGORIESCF:String			= "event/start/categoriescf";
+		public static const LOAD_CATEGORIESCF_COMPLETE:String  	= "action/start/categoriescf/complete";
+		public static const LOAD_CATEGORIESCF_FAILED:String    	= "action/start/categoriescf/failed";
 		
 		public static const STARTINGUP_COMPLETE:String			= "state/startingComplete";
 		public static const STARTUP_COMPLETE:String				= "event/startComplete";
@@ -112,7 +117,7 @@ package org.mig.controller.startup
 				   <transition action={LOAD_TERMS_COMPLETE} target={LOADING_CFGROUPS}/>			       
 				   <transition action={LOAD_TERMS_FAILED} target={FAILING}/>
 				</state>
-		
+					
 				<state name={LOADING_CFGROUPS} changed={LOAD_CFGROUPS}>
 				   <transition action={LOAD_CFGROUPS_COMPLETE} target={LOADING_CFS}/>			       
 				   <transition action={LOAD_CFGROUPS_FAILED} target={FAILING}/>
@@ -124,11 +129,15 @@ package org.mig.controller.startup
 				</state>
 		
 				<state name={LOADING_TEMPLATES} changed={LOAD_TEMPLATES}>
-				   <transition action={LOAD_TEMPLATES_COMPLETE} target={STARTINGUP_COMPLETE}/>			       
+				   <transition action={LOAD_TEMPLATES_COMPLETE} target={LOADING_CATEGORIESCF}/>			       
 				   <transition action={LOAD_TEMPLATES_FAILED} target={FAILING}/>
 				</state>		
 		
-								
+				<state name={LOADING_CATEGORIESCF} changed={LOAD_CATEGORIESCF}>
+				   <transition action={LOAD_CATEGORIESCF_COMPLETE} target={STARTINGUP_COMPLETE}/>			       
+				   <transition action={LOAD_CATEGORIESCF_FAILED} target={FAILING}/>
+				</state>
+		
 				<!-- READY TO ACCEPT BROWSER OR USER NAVIGATION -->
 				<state name={STARTINGUP_COMPLETE} changed={STARTUP_COMPLETE}/>
 				

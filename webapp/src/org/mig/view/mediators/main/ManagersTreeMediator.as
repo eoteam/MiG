@@ -32,9 +32,11 @@ package org.mig.view.mediators.main
 			var root:Object = new Object();
 			root.name = "Managers";
 			root.children = [];
-			for each(var item:Object in appModel.managers) {
-				if(item.value == "ON")
-					root.children.push(item);
+			var managers:XMLList = appModel.config.manager;
+			for each(var item:XML in managers) {
+				var manager:Object = new Object();
+				manager.name = item.@name.toString();
+				root.children.push(manager);
 			}
 			view.dataProvider = root;	
 			view.addEventListener(TreeEvent.ITEM_OPEN,handleResize);

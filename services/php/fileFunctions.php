@@ -219,6 +219,150 @@ function downloadZip($params) {
  * ################################# Help Functions #########################################
  * ##########################################################################################
  */
+function outputDirectoryListing($newdir){
+	$dir=opendir($newdir);
+	$resultList = array();
+	
+	if($dir)
+	{
+		while(($file = readdir($dir)) !== false){
+			
+			if($file !== "." && $file !== ".." && $file != "migThumbs" && $file != ".DS_Store"){
+				
+				$mtime = filemtime($newdir.$file);
+				
+				if(is_file($newdir.$file))
+				{	
+					$type="file";
+					$size = shell_exec("du -k " . $newdir.$file);
+					$chars = preg_split("/[\s,]*\\\"([^\\\"]+)\\\"[\s,]*|" . "[\s,]*'([^']+)'[\s,]*|" . "[\s,]+/", $size, -1, PREG_SPLIT_OFFSET_CAPTURE);	
+					//print_r($chars);
+					$size = $chars[0][0];
+					$createthumb = preg_match_all('/^.*\.(jpg|jpeg|png|gif|tiff|tiff|bmp|mov|m4v|flv|f4v|mp4)$/i',$file, $arr, PREG_PATTERN_ORDER);
+					$childrencount = 0;
+				}
+				else
+				{
+					$type="folder";
+					$size = dirsize($newdir.$file);
+					$createthumb = 0;
+					$childrencount = num_files($newdir.$file,3);
+				}
+				$size *= 1024;
+				//$size = byteSize($size);
+				$arr =  array("name"=>$file,"createdate"=>$mtime,"size"=>$size,"type"=>$type,"createthumb"=>$createthumb,"childrendcount"=>$childrencount);
+				array_push($resultList, $arr);
+				
+			}
+		}
+		serializeArray($resultList);
+		closedir($dir);
+	}
+}
+function num_files($dir, $type, $ext="")
+{
+// type 1: files only
+// type 2: direcories only
+// type 3: files and directories added
+// type 4: files and directories separated with a space
+
+    if (!isset($dir) OR empty($dir))
+    {
+        echo '<b>Syntax error:</b> $dir value empty.';
+        exit;
+    }
+
+    $num_files = 0;
+    $num_dirs = 0;
+    switch($type)
+    { 
+        case 1: // count only files, not dirs
+            if ($dir = @opendir($dir))
+            {
+                while (($file = readdir($dir)) !== false)
+                {
+                    if(is_file($file) AND $file != "." AND $file != "..")
+                    {
+                        if (isset($ext) AND !empty($ext))
+                        {
+                            $extension = end(explode(".", $file));
+                            if ($ext == $extension)
+                            {
+                                $num_files++;
+                            }
+                        }
+                        else
+                        {
+                            $num_files++;
+                        }
+                    }
+                }  
+                closedir($dir);
+                $total = $num_files;
+            }
+        break;
+
+        case 2: // count only dirs, not files
+            if ($dir = opendir($dir))
+            {
+                while (($file = readdir($dir)) !== false)
+                {
+                    if(is_dir($file) AND $file != "." AND $file != "..")
+                    {
+                        $num_dirs++;
+                    }
+                }  
+                closedir($dir);    
+                $total = $num_dirs;
+            }
+        break;
+
+        case 3: // count files PLUS dirs in once variable
+            if ($dir = opendir($dir))
+            {
+            	echo $dir;
+                while (($file = readdir($dir)) !== false)
+                {
+                    if(is_dir($file) OR is_dir($file))
+                    {
+                        if ($file != "." AND $file != "..")
+                        {
+                            $num_files++;
+                        }
+                    }
+                }  
+                closedir($dir);
+                $total = $num_files;
+            }
+        break;
+
+        case 4: // count files AND dirs separately
+            if ($dir = @opendir($dir))
+            {
+                while (($file = readdir($dir)) !== false)
+                {
+                    if(is_file($file) AND $file != "." AND $file != "..")
+                    {
+                        $num_files++;
+                    }
+
+                    if(is_dir($file) AND $file != "." AND $file != "..")
+                    {
+                        $num_dirs++;
+                    }
+                }  
+                closedir($dir);
+                $total = $num_files." ".$num_dirs;
+            }
+        break;
+
+        default:
+            echo '<b>Syntax error:</b> $type value empty.';
+        break;
+    }
+
+    return $total;
+}
 function rm_recursive($filepath)
 {
 	if (is_dir($filepath) && !is_link($filepath))

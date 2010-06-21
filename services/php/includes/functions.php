@@ -210,43 +210,6 @@ function queryDatabase($query, $params=null, &$outparams=null)
 /**
  * Return xml version of result set.
  */
-function outputDirectoryListing($newdir){
-	$dir=opendir($newdir);
-	$resultList = array();
-	
-	if($dir)
-	{
-		while(($file = readdir($dir)) !== false){
-			
-			if($file !== "." && $file !== ".." && $file != "migThumbs" && $file != ".DS_Store"){
-				
-				$mtime = filemtime($newdir.$file);
-				
-				if(is_file($newdir.$file))
-				{	
-					$type="file";
-					$size = shell_exec("du -k " . $newdir.$file);
-					$chars = preg_split("/[\s,]*\\\"([^\\\"]+)\\\"[\s,]*|" . "[\s,]*'([^']+)'[\s,]*|" . "[\s,]+/", $size, -1, PREG_SPLIT_OFFSET_CAPTURE);	
-					//print_r($chars);
-					$size = $chars[0][0];
-					$createthumb = preg_match_all('/^.*\.(jpg|jpeg|png|gif|tiff|tiff|bmp|mov|m4v|flv|f4v|mp4)$/i',$file, $arr, PREG_PATTERN_ORDER);
-				}
-				else
-				{
-					$type="folder";
-					$size = dirsize($newdir.$file);
-					$createthumb = 0;
-				}
-				$size *= 1024;
-				//$size = byteSize($size);
-				$arr =  array("name"=>$file,"createdate"=>$mtime,"size"=>$size,"type"=>$type,"createthumb"=>$createthumb);
-				array_push($resultList, $arr);
-				
-			}
-		}
-		serializeArray($resultList);
-	}
-}
 function serializeArray($resultList)
 {
     $options = array(

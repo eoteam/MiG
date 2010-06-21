@@ -146,7 +146,7 @@
 					editable="true" borderVisible="false" 
 					clearingLines="true" clearVLineIndices="[]" customProxy="true" 	 	 
 					doubleClickEnabled="true" 
-					treeColumn="{treeColumn}"
+					treeColumn="{treeColumn}" displayDisclosureIcon="true"
 					dataProvider="{listDP}">		
 					<controls:columns>
 						<mx:AdvancedDataGridColumn  editable="false" headerText="Name"  width="350" dataField="label"  id="treeColumn">

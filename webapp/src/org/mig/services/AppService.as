@@ -5,6 +5,7 @@ package org.mig.services
 	import mx.rpc.Responder;
 	import mx.rpc.http.HTTPService;
 	
+	import org.mig.model.ContentModel;
 	import org.mig.model.vo.app.CustomField;
 	import org.mig.model.vo.manager.Term;
 	import org.mig.model.vo.media.MimeType;
@@ -12,6 +13,8 @@ package org.mig.services
 
 	public class AppService extends AbstractService implements IAppService
 	{
+		[Inject]
+		public var contentModel:ContentModel;
 		
 		public function AppService() {
 			super();
@@ -46,22 +49,5 @@ package org.mig.services
 			params.tablename = "customfields";
 			this.createService(params,ResponseType.DATA,CustomField);
 		}
-		public function loadTemplates():void {
-			var params:Object = new  Object();
-			params.action = ValidFunctions.GET_TEMPLATES;
-			this.createService(params,ResponseType.DATA,Object);		
-		}
-		public function loadMimeTypes():void {
-			var params:Object = new Object();
-			params.action = ValidFunctions.GET_DATA;
-			params.tablename = "mimetypes";
-			this.createService(params,ResponseType.DATA,MimeType);
-		}
-		public function loadTerms():void {
-			var params:Object = new Object();
-			params.action = ValidFunctions.GET_TERMS;
-			this.createService(params,ResponseType.DATA,Term)
-		}
-
 	}
 }

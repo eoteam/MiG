@@ -22,12 +22,13 @@ package org.mig.controller.startup
 			commandMap.mapEvent( AppStartupStateConstants.LOAD_MEDIA,LoadMediaCommand, StateEvent, true );
 			commandMap.mapEvent( AppStartupStateConstants.LOAD_MIMETYPES,LoadMimeTypesCommand, StateEvent, true );
 			commandMap.mapEvent( AppStartupStateConstants.LOAD_TERMS,LoadTermsCommand, StateEvent, true );
+			commandMap.mapEvent( AppStartupStateConstants.LOAD_CATEGORIESCF,LoadCategoriesCustomFields, StateEvent, true );
 			commandMap.mapEvent( AppStartupStateConstants.LOAD_CFGROUPS, LoadCustomFieldGroupsCommand, StateEvent, true );
 			commandMap.mapEvent( AppStartupStateConstants.LOAD_CFS, LoadCustomFieldsCommand,  StateEvent, true);
 			commandMap.mapEvent( AppStartupStateConstants.LOAD_TEMPLATES, LoadTemplatesCommand,  StateEvent, true);
 			commandMap.mapEvent( AppStartupStateConstants.STARTUP_COMPLETE,StartupCompleteCommand, StateEvent, true );
 			
-			appModel.startupItems = 9;
+			appModel.startupItems = 10;
 			
 			commandMap.mapEvent( AppStartupStateConstants.FAIL,StartupFailedCommand, StateEvent, true );
 

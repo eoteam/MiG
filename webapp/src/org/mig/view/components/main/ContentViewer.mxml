@@ -5,7 +5,7 @@
 	xmlns:mx="library://ns.adobe.com/flex/mx"
 	height="100%" width="100%" clipAndEnableScrolling="false"  
 	xmlns:media="org.mig.view.components.managers.media.*" 
-	xmlns:tags="org.mig.view.components.managers.tags.*">
+	xmlns:tags="org.mig.view.components.managers.tags.*" xmlns:customfields="org.mig.view.components.managers.customfields.*">
 	
 
 	
@@ -17,7 +17,10 @@
 	<contactManager:ContactManagerView id="contactManager"  width="100%" height="100%" visible="false"  backgroundAlpha=".95" left="-2" right="2"/>
 	<userManager:UserManagerView id="userManager" width="100%" height="100%" visible="false"  backgroundAlpha=".95" left="-2" right="2"/>
 -->
+	<s:Group width="100%" height="100%" clipAndEnableScrolling="false" visible="false" id="managerContainer">
+		<media:MediaManagerMainView id="mediaManager" width="100%" height="100%" visible="false" />
+		<tags:TagManagerView id="tagManager"  width="100%" height="100%" visible="false"/>	
+		<customfields:CustomFieldsManagerView id="customfieldsManager" width="100%" height="100%" visible="false"/>	
+	</s:Group>
 
-	<media:MediaManagerMainView id="mediaManager" width="100%" height="100%" visible="false" />
-	<tags:TagManagerView id="tagManager"  width="100%" height="100%" visible="false"/>
 </s:Group>

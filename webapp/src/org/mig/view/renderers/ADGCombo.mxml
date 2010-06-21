@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:MXAdvancedDataGridItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+								  xmlns:s="library://ns.adobe.com/flex/spark" 
+								  xmlns:mx="library://ns.adobe.com/flex/mx" 
+								  focusEnabled="true" autoDrawBackground="false">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayList;
+			import mx.controls.advancedDataGridClasses.AdvancedDataGridListData;
+			
+			import spark.events.DropDownEvent;
+			[Bindable] public var dp:ArrayList;
+			public var voField:String;
+			[Bindable] private var selectedIndex:int=-1;
+			protected function dropDown_closeHandler(event:DropDownEvent):void {
+				if(data.hasOwnProperty(AdvancedDataGridListData(this.listData).dataField))
+					this.data[AdvancedDataGridListData(this.listData).dataField] = dropDown.selectedItem[voField]; 
+			}
+			override public function set data(value:Object):void
+			{
+				super.data = value;
+				if(data != null) {
+					if(voField) {
+						if(dp) {
+							var src:Array = this.dp.source;
+							for each(var vo:Object in src) {
+								if(vo[voField] == data[AdvancedDataGridListData(this.listData).dataField]) {
+									selectedIndex = dp.getItemIndex(vo);
+									//if(dropDown)
+									//	dropDown.invalidateDisplayList();
+									break;
+								}
+								else
+									selectedIndex = data[AdvancedDataGridListData(this.listData).dataField];
+							}
+						}
+					}	
+					else
+						selectedIndex = data[AdvancedDataGridListData(this.listData).dataField];
+				}	           	 
+			}
+		]]>
+	</fx:Script>
+	<s:DropDownList id="dropDown"  enabled="false" visible="false" labelField="label" width="100%"
+	dataProvider="{dp}" close="dropDown_closeHandler(event)" styleName="migComboBox" selectedIndex="{selectedIndex}"/>
+</s:MXAdvancedDataGridItemRenderer>

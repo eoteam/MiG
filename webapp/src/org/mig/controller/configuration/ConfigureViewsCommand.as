@@ -18,6 +18,7 @@ package org.mig.controller.configuration
 	import org.mig.view.components.main.NewContentView;
 	import org.mig.view.components.main.PendingListView;
 	import org.mig.view.components.main.StatusModule;
+	import org.mig.view.components.managers.customfields.CustomFieldsManagerView;
 	import org.mig.view.components.managers.media.AddDirectoryView;
 	import org.mig.view.components.managers.media.DownloadView;
 	import org.mig.view.components.managers.media.FileUploadView;
@@ -36,6 +37,7 @@ package org.mig.controller.configuration
 	import org.mig.view.mediators.main.NewContentMediator;
 	import org.mig.view.mediators.main.PendingListMediator;
 	import org.mig.view.mediators.main.StatusModuleMediator;
+	import org.mig.view.mediators.managers.customfields.CustomFiledsManagerMediator;
 	import org.mig.view.mediators.managers.media.AddDirectoryMediator;
 	import org.mig.view.mediators.managers.media.DownloadMediator;
 	import org.mig.view.mediators.managers.media.FileUploadMediator;
@@ -71,8 +73,11 @@ package org.mig.controller.configuration
 			mediatorMap.mapView(MediaManagerView,MediaManagerMediator);
 			mediatorMap.mapView(FileUploadView,FileUploadMediator);
 			
-			 //tag manager
+				//tag manager
 			mediatorMap.mapView(TagManagerView,TagManagerMediator);
+			
+				//customfields manager
+			mediatorMap.mapView(CustomFieldsManagerView ,CustomFiledsManagerMediator);
 			
 			//popup mediations
 			mediatorMap.mapView(AddDirectoryView,AddDirectoryMediator, null, false, false ); //disable auto mediation

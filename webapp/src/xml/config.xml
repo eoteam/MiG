@@ -1,22 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configDocument>
 
-	<controller id="mediaController" mediaURL="http://migdev.mig.pentagram.com/files"
-		thumbURL="http://migdev.mig.pentagram.com/files/migThumbs" fileDir="files"
-		thumbDir="files/migThumbs">
-		<child labelField="name" 
-			tablename="media" 
-			createContent="insertRecord" 
-			retrieveContent="getData"
-			updateContent="updateRecord"
-			updateDirectory="updateMediaByPath"
-			deleteDirectory="deleteMediaByPath"
-			deleteFile="deleteRecord"
-			addDirectoryView="org.mig.view.components.AddDirectoryView"
-			directoryContentView="com.mapx.view.mediaManager.DirectoryView"
-			parentDirectoryContentView="com.mapx.view.mediaManager.ParentDirectoryView" />
-	</controller>
-
 	<controller id="contentController" rootURL="http://migdev.mig.pentagram.com/"
 		pendingURL="http://migdev.mig.pentagram.com/" publishedURL="http://migdev.mig.pentagram.com/"
 		textEditorColor="0xCCCCCC" renderer="flash" textFormat="textFieldHTMLFormat"
@@ -59,14 +43,39 @@
 			</child>
 		</child>
 	</controller>
-	<controller id="termsController">
+	<manager id="mediaManager" name="Media"
+		mediaURL="http://migdev.mig.pentagram.com/files"
+		thumbURL="http://migdev.mig.pentagram.com/files/migThumbs" 
+		fileDir="files"
+		thumbDir="files/migThumbs">
+		<child labelField="name" 
+			tablename="media" 
+			createContent="insertRecord" 
+			retrieveContent="getData"
+			updateContent="updateRecord"
+			updateDirectory="updateMediaByPath"
+			deleteDirectory="deleteMediaByPath"
+			deleteFile="deleteRecord"
+			addDirectoryView="org.mig.view.components.AddDirectoryView"
+			directoryContentView="com.mapx.view.mediaManager.DirectoryView"
+			parentDirectoryContentView="com.mapx.view.mediaManager.ParentDirectoryView" />
+	</manager>
+
+	
+	<manager id="termsManager" name="Tags &amp; Categories">
 		<child labelfield="name"
 			createContent="insertTag" 
 			retrieveContent="getTerms"
 			updateContent="updateTag"
 			deleteContent="deleteTag" />
-	</controller>
-	
+	</manager>
+	<manager id="customfieldsManager" name="Custom Fields">
+		<child labelfield="name"
+			createContent="insertRecord" 
+			retrieveContent="getData"
+			updateContent="updateRecord"
+			deleteContent="deleteRecord" />
+	</manager>	
 	<elements>
 		<tray type="RelatedContent" contentView="com.mapx.view.content.trays.LinkingTray"
 			itemView="com.mapx.view.content.trays.LinkView" labelField="migtitle"
