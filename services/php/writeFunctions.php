@@ -622,13 +622,15 @@ function insertRecord($params) //+
 
 		if (isset($params['verbose'])) {
 			if($params['verbose'] == 'true')
-			$sql = "SELECT * FROM `".$params['tablename']."`  WHERE id = '".$insertid."'";
-			else $sql = "SELECT id FROM `".$params['tablename']."`  WHERE id = '".$insertid."'";
-		} else $sql = "SELECT id FROM `".$params['tablename']."`  WHERE id = '".$insertid."'";
-
-		if ($result = queryDatabase($sql)) {
-			return $result;
-		} else die("Query Failed: " . $result->errorInfo());
+				$sql = "SELECT * FROM `".$params['tablename']."`  WHERE id = '".$insertid."'";
+			else 
+				$sql = "SELECT id FROM `".$params['tablename']."`  WHERE id = '".$insertid."'";
+			if ($result = queryDatabase($sql)) 
+				return $result;
+		 	else die("Query Failed: " . $result->errorInfo());
+		} 
+		else 
+		sendSuccess($insertid);
 	} else die("Query Failed: " . $result->errorInfo());
 }
 

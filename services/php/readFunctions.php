@@ -1615,7 +1615,7 @@ function getTerms($params) {
 	foreach ($customfields AS $key=>$value)
 		$sql .= " term_taxonomy.customfield".$key." AS ".$value.",";
 		
-	$sql .= " terms.name,terms.slug,terms.name,terms.slug,term_taxonomy.id,term_taxonomy.parentid,term_taxonomy.termid,term_taxonomy.displayorder, 
+	$sql .= " terms.name,terms.slug,terms.name,terms.slug,term_taxonomy.id,term_taxonomy.parentid,term_taxonomy.termid,term_taxonomy.displayorder,term_taxonomy.taxonomy, 
 			GROUP_CONCAT(DISTINCT content_terms.contentid) AS contentids,
 			GROUP_CONCAT(DISTINCT content.migtitle) AS contenttitles,
 		    GROUP_CONCAT(DISTINCT media.path,media.name) AS mediatitles,

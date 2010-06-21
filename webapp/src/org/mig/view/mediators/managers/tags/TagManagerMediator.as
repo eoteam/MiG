@@ -13,9 +13,13 @@ package org.mig.view.mediators.managers.tags
 		import org.mig.collections.DataCollection;
 		import org.mig.controller.startup.AppStartupStateConstants;
 		import org.mig.events.AppEvent;
+		import org.mig.events.NotificationEvent;
 		import org.mig.model.ContentModel;
+		import org.mig.model.vo.UpdateData;
 		import org.mig.model.vo.app.CustomField;
+		import org.mig.model.vo.app.StatusResult;
 		import org.mig.model.vo.manager.Term;
+		import org.mig.services.interfaces.IContentService;
 		import org.mig.utils.GlobalUtils;
 		import org.mig.view.components.managers.tags.TagManagerView;
 		import org.mig.view.renderers.ADGCustomField;
@@ -30,12 +34,16 @@ package org.mig.view.mediators.managers.tags
 		[Inject]
 		public var contentModel:ContentModel;
 		
+		[Inject]
+		public var contentService:IContentService;
+		
 		override public function onRegister():void {
 			eventMap.mapListener(eventDispatcher,StateEvent.ACTION,handleTermsLoaded);
 			eventMap.mapListener(eventDispatcher,AppEvent.CONFIG_FILE_LOADED,handleConfigLoaded,AppEvent);
 			view.addEventListener(FlexEvent.SHOW,handleContent);
 			view.insertButton.addEventListener(MouseEvent.CLICK,handleInsertButton);
 			view.submitButton.addEventListener(MouseEvent.CLICK, handleSubmitButton);
+			view.trashButton1.addEventListener(MouseEvent.CLICK,handleTagDeleteButton)
 		}
 		private function handleConfigLoaded(event:AppEvent):void {
 			view.name = contentModel.termsConfig.@name.toString();
@@ -68,17 +76,52 @@ package org.mig.view.mediators.managers.tags
 		private function handleInsertButton	(event:MouseEvent):void {
 			var term:Term = new Term();
 			term.taxonomy = "tag";
+			term.updateData.taxonomy = "tag";
 			contentModel.tagTerms.addItemAt(term,0);
 		}
 		private function handleTermsStateChange(event:Event):void {
 			if(contentModel.tagTerms.state == DataCollection.MODIFIED || contentModel.categoryTerms.state == DataCollection.MODIFIED)
 				view.submitButton.enabled = true; 
 		}
+		public var cudTotal:int;
+		public var cudCount:int;
+		
 		private function handleSubmitButton(event:Event):void {
-			for each(var term:Term in contentModel.tagTerms.modifiedItems) {
-				
+			cudCount = cudTotal = 0;
+			var term:Term;
+			for each(term in contentModel.tagTerms.modifiedItems.source) {
+				contentService.updateContent(term,contentModel.termsConfig.child[0]);
+				contentService.addHandlers(handleTagTermUpdated);
+				cudTotal++;
 			}
-			//for each(
+			for each(term in contentModel.tagTerms.newItems.source) {
+				contentService.createContent(term,contentModel.termsConfig.child[0]);
+				contentService.addHandlers(handleTagTermCreated);
+				cudTotal++;
+			}
+		}
+		private function handleTagDeleteButton(event:MouseEvent):void {
+			for each(var item:Term in view.termsGrid.selectedItem) {
+				//if(contentModel.
+			}
+		}
+		private function handleTagTermUpdated(data:Object):void {
+			var status:StatusResult = data.result as StatusResult;
+			if(status.success) {
+				cudCount++;
+				if(cudCount == cudTotal)
+					eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Tags & Categories updated successfully"));
+				contentModel.tagTerms.setItemNotModified(data.token.content as Term);
+			}	
+		}
+		private function handleTagTermCreated(data:Object):void {
+			var results:Array = data.result as Array;
+			if(results.length == 1) {
+				cudCount++;
+				if(cudCount == cudTotal)
+					eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Tags & Categories updated successfully"));
+				contentModel.tagTerms.setItemNotNew(data.token.content as Term);
+			}	
 		}
 	}
 }

@@ -88,11 +88,13 @@ package org.mig.view.mediators.managers.media
 			view.listView.addEventListener(ListEvent.ITEM_DOUBLE_CLICK,handleListItemDoubleClick);
 			view.listView.addEventListener(ListEvent.ITEM_CLICK,handleListItem);
 			view.listView.addEventListener(KeyboardEvent.KEY_DOWN,handleListItem);			
-			view.listView.addEventListener(DragEvent.DRAG_OVER,handleListDragOver);
+			
+/*			view.listView.addEventListener(DragEvent.DRAG_OVER,handleListDragOver);
 			view.listView.addEventListener(DragEvent.DRAG_DROP,handleListDragDrop);
 			view.listView.addEventListener(DragEvent.DRAG_ENTER, handleListDragEnter);
-			view.listView.addEventListener(DragEvent.DRAG_EXIT,handleListDragExit);
+			view.listView.addEventListener(DragEvent.DRAG_EXIT,handleListDragExit);*/
 			view.listView.addEventListener(DragEvent.DRAG_COMPLETE,handleListDragComplete);
+			
 			view.listView.addEventListener(AdvancedDataGridEvent.ITEM_OPEN,handleListItemOpen);
 			view.addEventListener('thumbViewCreated',handleThumbView);
 		}

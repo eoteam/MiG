@@ -60,10 +60,17 @@
 								</fx:Component>
 							</mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn  paddingLeft="6" headerText="Tag" dataField="name" editable="false"   editorUsesEnterKey="true" >
-							<mx:itemRenderer>
+						<mx:DataGridColumn  paddingLeft="6" headerText="Tag" dataField="name" editable="true" editorUsesEnterKey="true" >
+							<mx:itemEditor>
 								<fx:Component>
 									<renderers:DGCell  colorEnabled="true"/>
+								</fx:Component>
+							</mx:itemEditor>
+							<mx:itemRenderer>
+								<fx:Component>
+									<s:MXDataGridItemRenderer  autoDrawBackground="false" focusEnabled="true">
+										<s:Label styleName="bodyCopy" text="{data.name}" verticalCenter="0" left="5" />
+									</s:MXDataGridItemRenderer>
 								</fx:Component>
 							</mx:itemRenderer>
 						</mx:DataGridColumn>

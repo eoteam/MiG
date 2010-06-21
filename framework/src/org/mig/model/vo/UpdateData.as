@@ -1,6 +1,6 @@
 package org.mig.model.vo
 {
-	public dynamic class UpdateData extends ValueObject
+	public dynamic class UpdateData
 	{
 
 	}

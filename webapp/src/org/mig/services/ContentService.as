@@ -1,8 +1,10 @@
 package org.mig.services
 {
 	import flash.utils.getDefinitionByName;
+	import flash.utils.getQualifiedClassName;
 	import flash.xml.XMLDocument;
 	
+	import mx.core.ClassFactory;
 	import mx.rpc.AsyncToken;
 	import mx.rpc.events.ResultEvent;
 	import mx.utils.ObjectUtil;
@@ -10,9 +12,11 @@ package org.mig.services
 	import org.mig.controller.Constants;
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
+	import org.mig.model.vo.ContentData;
 	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.UpdateData;
 	import org.mig.model.vo.app.CustomField;
+	import org.mig.model.vo.app.StatusResult;
 	import org.mig.model.vo.content.ContainerData;
 	import org.mig.model.vo.content.ContainerNode;
 	import org.mig.model.vo.content.ContentStatus;
@@ -159,12 +163,64 @@ package org.mig.services
 			params.verbose = true;
 			this.createService(params,ResponseType.DATA,ContainerData).token.config = config;	
 		}
+		public function updateContent(vo:ContentData,config:XML):void {
+			var updateData:UpdateData = vo.updateData;
+			var params:Object = new Object();
+			for (var prop:String in updateData) {
+				if(prop != "modified" && prop != "updateData")
+					params[prop] = updateData[prop];
+			}
+			params.action = config.@updateContent.toString();
+			if(ValidFunctions.FUNCTIONS_WITH_TABLENAME.indexOf(params.action) == -1)
+				params.tablename = config.@tablename.toString();
+			params.id = vo.id;
+			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS,null,handleContentUpdated);
+			service.service.showBusyCursor = true;
+			service.token.content = vo;
+			service.token.update = updateData;
+		}
+		public function createContent(vo:ContentData,config:XML):void {
+			var updateData:UpdateData = vo.updateData;
+			var params:Object = new Object();
+			for (var prop:String in updateData) {
+				if(prop != "modified" && prop != "updateData" && prop != "mx_internal_uid")
+					params[prop] = updateData[prop];
+			}
+			params.action = config.@createContent.toString();
+			if(ValidFunctions.FUNCTIONS_WITH_TABLENAME.indexOf(params.action) != -1)
+				params.tablename = config.@tablename.toString();
+			
+			var classToUse:String = flash.utils.getQualifiedClassName(vo);
+			var classRef:Class = flash.utils.getDefinitionByName(classToUse) as Class; 
+			//var resultClass:ClassFactory = new ClassFactory(classRef);
+			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,classRef,handleContentCreated);
+			service.service.showBusyCursor = true;
+			service.token.content = vo;
+		}
+		private function handleContentUpdated(data:Object):void {
+			var status:StatusResult = data.result as StatusResult;
+			if(status.success) {
+				var vo:ContentData = data.token.content as ContentData;
+				for (var prop:String in vo.updateData)
+					vo[prop] = vo.updateData[prop];
+				vo.updateData = new UpdateData();
+			}	
+		}
+		private function handleContentCreated(data:Object):void {
+			var results:Array = data.result as Array;
+			if(results.length == 1) {
+				var result:ContentData = results[0] as ContentData;
+				var vo:ContentData = data.token.content as ContentData;
+				for (var prop:String in result)
+					vo[prop] = result[prop];
+			}	
+		}
 		private function loadContainer(content:ContentNode):void {
 			var params:Object = new Object();
 			var execute:Boolean = false;			
 			if(ContainerNode(content).isRoot) { //Containers
 				if(content.privileges ==  UserPrivileges.MiGAdmin)
-					params.parentid = "1,2	";
+					params.parentid = "1,2";
 				else
 					params.parentid = 1;
 			}

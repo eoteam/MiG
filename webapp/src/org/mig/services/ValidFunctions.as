@@ -30,7 +30,7 @@ package org.mig.services
 		public static const INSET_TAG:String 						= "insertTag";
 		public static const INSERT_RECORD:String 					= "insertRecord";
 		public static const INSET_RECORD_WITH_RELATED_TAGS:String 	= "insertRecordWithRelatedTag";
-		public static const DELETE_TAGS:String 						= "deleteTag";
+		public static const DELETE_TAG:String 						= "deleteTag";
 		public static const DELETE_RECORD:String 					= "deleteRecord";
 		public static const DELETE_RECORDS:String 					= "deleteRecords";
 		public static const DELETE_CONTENT:String 					= "deleteContent";
@@ -49,6 +49,8 @@ package org.mig.services
 		public static const GET_KEYWORDS:String 					= "getKeywords";
 		public static const GET_PLAYTIME:String 					= "getPlayTime";
 		public static const DOWNLOAD_ZIP:String 					= "downloadZip";
+		
+		public static const FUNCTIONS_WITH_TABLENAME:Array = [GET_DATA,UPDATE_RECORD,UPDATE_RECORDS,INSERT_RECORD,DELETE_RECORD,DELETE_RECORDS];
 
 	}
 }

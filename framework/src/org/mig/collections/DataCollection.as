@@ -3,6 +3,7 @@ package org.mig.collections
 	import flash.events.Event;
 	
 	import mx.collections.ArrayCollection;
+	import mx.collections.ArrayList;
 	import mx.events.CollectionEvent;
 	import mx.events.PropertyChangeEvent;
 	
@@ -14,17 +15,17 @@ package org.mig.collections
 		public static const MODIFIED:int = 1;
 		public static const COMMITED:int = 2;
 		
-		public var newItems:Array;
-		public var deletedItems:Array;
-		public var modifiedItems:Array;
+		public var newItems:ArrayList;
+		public var deletedItems:ArrayList;
+		public var modifiedItems:ArrayList;
 		
 		public var state:int;
 		public function DataCollection(source:Array=null)
 		{
 			super(source);
-			newItems = [];
-			deletedItems = [];
-			modifiedItems = [];
+			newItems = new ArrayList();
+			deletedItems = new ArrayList();
+			modifiedItems = new ArrayList();
 			state = 0;
 			//list.addEventListener( CollectionEvent.COLLECTION_CHANGE, onCollectionEvent);  
 		}
@@ -38,37 +39,49 @@ package org.mig.collections
 				switch(CollectionEvent(event).kind) {
 					case "remove":
 						for each(item in items) 
-						deletedItems.push(item);
+						deletedItems.addItem(item);
 						//this.dispatchEvent(new Event("stageChange",true));
-						break;
+					break;
 					case "add":
 						if(state > 0) {
 							for each(item in items) 
-							newItems.push(item);
+							newItems.addItem(item);
 							this.state = 1;
 							//this.dispatchEvent(new Event("stageChange",true));
 						}
-						break;
+					break;
 					case "update":
 						if(state > 0 ) {
 							for each(propChange in items) {
-								if(newItems.indexOf(propChange.source) == -1 && modifiedItems.indexOf(propChange.source) == -1) {
-									modifiedItems.push(propChange.source);
+								if(propChange.property != "modified" && propChange.property != "updateData") {
+									if(modifiedItems.getItemIndex(propChange.source) == -1 && newItems.getItemIndex(propChange.source) == -1 ) {
+										modifiedItems.addItem(propChange.source)
+									}
 									ContentData(propChange.source).modified = true;
+									ContentData(propChange.source).updateData[propChange.property] = propChange.newValue;
 								}
 							}
 							this.state = 1;
 							//this.dispatchEvent(new Event("stageChange",true));
 						}
-						break;
-					
+					break;
 				}
 			}
 			return super.dispatchEvent(event);
-		}
+		}	
 		public function commit():void {
 			state = 1;
 			this.dispatchEvent(new Event("stageChange",true));
+		}
+		public function setItemNotModified(item:ContentData):void {
+			if(this.modifiedItems.getItemIndex(item) != -1) {
+				modifiedItems.removeItem(item);
+			}		
+		}
+		public function setItemNotNew(item:ContentData):void {
+			if(this.newItems.getItemIndex(item) != -1) {
+				newItems.removeItem(item);
+			}				
 		}
 	}
 }

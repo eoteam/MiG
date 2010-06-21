@@ -55,6 +55,8 @@ package org.mig.model
 					var term:Term = change.source as Term;
 					if(change.property == "name")
 						term.slug = GlobalUtils.sanitizeString(term.name);
+						if(!isNaN(term.termid))
+							term.updateData.termid = term.termid;
 				}
 			}
 		}

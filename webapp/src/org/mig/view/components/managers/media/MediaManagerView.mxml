@@ -135,7 +135,7 @@
 					allowDragSelection="true"
 					dragEnabled="true"
 					dropEnabled="true"
-					dragMoveEnabled="false"
+					dragMoveEnabled="true" 
 					dragFormat="Media"   
 					allowMultipleSelection="true"
 					headerHeight="22"  
@@ -145,7 +145,7 @@
 					styleName="mediaManagerGrid"
 					editable="true" borderVisible="false" 
 					clearingLines="true" clearVLineIndices="[]" customProxy="true" 	 	 
-					doubleClickEnabled="true" 
+					doubleClickEnabled="true"
 					treeColumn="{treeColumn}" displayDisclosureIcon="true"
 					dataProvider="{listDP}">		
 					<controls:columns>
