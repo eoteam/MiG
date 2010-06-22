@@ -34,6 +34,9 @@ containers|ResizableTitleWindow {
 controls|RatingComponent {
 	skinClass: ClassReference("org.mig.view.skins.controls.RatingComponentSkin");
 }
+controls|MiGList {
+	skinClass: ClassReference("org.mig.view.skins.controls.MiGListSkin");
+}
 s|TitleWindow {
 	skinClass: ClassReference("org.mig.view.skins.containers.TitleWindowSkin");
 }

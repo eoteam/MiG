@@ -5,6 +5,7 @@ package org.mig.collections
 	import mx.collections.ArrayCollection;
 	import mx.collections.ArrayList;
 	import mx.events.CollectionEvent;
+	import mx.events.CollectionEventKind;
 	import mx.events.PropertyChangeEvent;
 	
 	import org.mig.model.vo.ContentData;
@@ -35,14 +36,14 @@ package org.mig.collections
 			if(event is CollectionEvent) {
 				var items:Array = CollectionEvent(event).items;
 				var propChange:PropertyChangeEvent;
-				var item:ContentData
+				var item:ContentData; 
 				switch(CollectionEvent(event).kind) {
-					case "remove":
+					/*case "remove":
 						for each(item in items) 
 						deletedItems.addItem(item);
 						//this.dispatchEvent(new Event("stageChange",true));
-					break;
-					case "add":
+					break;*/
+					case CollectionEventKind.ADD:
 						if(state > 0) {
 							for each(item in items) 
 							newItems.addItem(item);
@@ -50,7 +51,7 @@ package org.mig.collections
 							//this.dispatchEvent(new Event("stageChange",true));
 						}
 					break;
-					case "update":
+					case CollectionEventKind.UPDATE:
 						if(state > 0 ) {
 							for each(propChange in items) {
 								if(propChange.property != "modified" && propChange.property != "updateData") {
@@ -83,5 +84,11 @@ package org.mig.collections
 				newItems.removeItem(item);
 			}				
 		}
+		public function isItemNew(item:ContentData):Boolean {
+			return newItems.getItemIndex(item) == -1?false:true;
+		}
+		public function isItemModified(item:ContentData):Boolean {
+			return modifiedItems.getItemIndex(item) == -1?false:true;
+		}		
 	}
 }

@@ -4,7 +4,19 @@
 		xmlns:s="library://ns.adobe.com/flex/spark" 
 		xmlns:mx="library://ns.adobe.com/flex/mx"
 		backgroundColor="0x121212"
-		width="100%" height="100%" xmlns:controls="org.mig.view.controls.*" xmlns:renderers="org.mig.view.renderers.*">
+		width="100%" height="100%" xmlns:controls="org.mig.view.controls.*" xmlns:renderers="org.mig.view.renderers.*" xmlns:managers="org.mig.view.components.managers.*">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.DataGridEvent;
+
+			protected function termsGrid_itemEditEndHandler(event:DataGridEvent):void
+			{
+				termsGrid.destroyItemEditor();
+				event.preventDefault(); 
+			}
+
+		]]>
+	</fx:Script>
 	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -16,7 +28,7 @@
 			<s:Label styleName="boldCopy" left="-3" bottom="-5" width="100%" text="Tag Manager"/>
 			<s:Rect width="100%"/>
 			<s:Button styleName="defaultGrayButton" label="Close" click="this.visible=false"/>
-			<s:Button styleName="defaultGrayButton" label="Save Changes" id="submitButton" enabled="false" />
+			<s:Button styleName="defaultGrayButton" label="Save Changes" enabled="false" id="submitButton"/>
 		</s:HGroup>
 		<s:Rect height="10" />
 		<s:Rect id="rule1" width="100%" height="1">
@@ -47,7 +59,7 @@
 
 				<controls:MiGDataGrid 	width="100%" dragEnabled="true"  top="40" bottom="15"
 				allowMultipleSelection="true" allowDragSelection="true"
-				clearingLines="true" clearVLineIndices="[]"
+				clearingLines="true" clearVLineIndices="[]" itemEditEnd="termsGrid_itemEditEndHandler(event)"
 				id="termsGrid" paddingTop="0" height="100%" 
 				editable="true">
 					<controls:columns>
@@ -106,7 +118,8 @@
 					<controls:IconButton width="30" height="22" id="trashButton2" toolTip="Delete" mouseChildren="false" buttonMode="true"	
 					icon="@Embed(source='/migAssets/library.swf#deleteIconSmall')" styleName="grayIconButton"/>
 				</s:HGroup>
-				<controls:MiGAdvancedDataGrid
+				<managers:HierarchicalPanelView width="100%" height="100%" id="categoriesView" top="40" bottom="10"/>
+<!--				<controls:MiGAdvancedDataGrid
 					height="100%" width="100%" id="catGrid" 
 					dragEnabled="true"
 					allowMultipleSelection="true"
@@ -149,23 +162,9 @@
 									<renderers:ADGCell colorEnabled="true" textColor="0xffffff"/>
 								</fx:Component>
 							</mx:itemRenderer>
-						</mx:AdvancedDataGridColumn>
-<!--						<mx:AdvancedDataGridColumn  paddingLeft="6" headerText="Description" dataField="description" editable="false"   editorUsesEnterKey="true" >
-							<mx:itemRenderer>
-								<fx:Component>
-									<renderers:ADGTextArea colorEnabled="true" textColor="0xffffff"/>
-								</fx:Component>
-							</mx:itemRenderer>
-						</mx:AdvancedDataGridColumn>						
-						<mx:AdvancedDataGridColumn width="26" paddingLeft="6" headerText="Color" dataField="color" editable="false"   editorUsesEnterKey="true" >
-							<mx:itemRenderer>
-								<fx:Component>
-									<renderers:AdvancedDatagridColorEditor colorEditable="true"/>
-								</fx:Component>
-							</mx:itemRenderer>
-						</mx:AdvancedDataGridColumn>	-->																		
+						</mx:AdvancedDataGridColumn>																
 					</controls:columns>
-				</controls:MiGAdvancedDataGrid>
+				</controls:MiGAdvancedDataGrid>-->
 				
 			</s:NavigatorContent>			
 		</mx:ViewStack>	

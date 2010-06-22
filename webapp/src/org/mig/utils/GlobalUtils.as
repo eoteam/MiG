@@ -90,14 +90,15 @@ package org.mig.utils
 			}
 		}	
 		
-		public static function createCustomField(vo:ContentData,customfield:CustomField):UIComponent {		
+		public static function createCustomField(customfield:CustomField,vo:ContentData=null):UIComponent {		
 			var option:Object;
 			var child:UIComponent;
 			switch(customfield.typeid)
 			{
 				case CustomFieldTypes.BINARY:
 					child = new CheckBox();
-					CheckBox(child).selected = vo[customfield.name] == "true"?true:false;
+					if(vo)
+						CheckBox(child).selected = vo[customfield.name] == "true"?true:false;
 				break; 
 				
 				case CustomFieldTypes.SELECT:
@@ -106,10 +107,12 @@ package org.mig.utils
 					DropDownList(child).labelField = "value";
 					DropDownList(child).styleName = "comboBoxBlack";
 					DropDownList(child).dataProvider = new ArrayList(customfield.optionsArray);
-					for each(option in customfield.optionsArray) {
-					if(option.index.toString() == vo[customfield.name]) {
-						DropDownList(child).selectedItem = option;
-						break;
+					if(vo) {
+						for each(option in customfield.optionsArray) {
+						if(option.index.toString() == vo[customfield.name]) {
+							DropDownList(child).selectedItem = option;
+							break;
+						}
 					}
 				}
 				break;
@@ -118,27 +121,31 @@ package org.mig.utils
 					child = new TextInput();
 					child.styleName = "inputFieldBlack";
 					child.percentWidth = 100;
-					TextInput(child).text = vo[customfield.name].toString(); 
+					if(vo)
+						TextInput(child).text = vo[customfield.name].toString(); 
 				break;
 				
 				case CustomFieldTypes.HTML_TEXT:
 					child = new MiGTLFTextArea();
-					MiGTLFTextArea(child).htmlText = vo[customfield.name];
 					child.percentWidth =100;
+					if(vo)
+						MiGTLFTextArea(child).htmlText = vo[customfield.name];
 				break;
 				
 				case CustomFieldTypes.TEXT:
 					child = new TextArea();
-					TextArea(child).text = vo[customfield.name];
 					TextArea(child).heightInLines = NaN;
 					child.percentWidth = 100;
 					child.styleName = "bodyCopy";
-					child.setStyle("backgroundColor",0x0f0f0f);	
+					child.setStyle("backgroundColor",0);	
+					if(vo)
+						TextArea(child).text = vo[customfield.name];
 				break;					
 				
 				case CustomFieldTypes.COLOR:
 					child = new colorPicker();
-					colorPicker(child).selectedColor= Number(vo[customfield.name]);				
+					if(vo)
+						colorPicker(child).selectedColor= Number(vo[customfield.name]);				
 				break;
 				
 				case CustomFieldTypes.MULTIPLE_SELECT:
@@ -151,9 +158,11 @@ package org.mig.utils
 						checkBox.label = option.value;
 						checkBox.data = option;
 						child.addChild(checkBox);
-						if(vo[customfield.name].toString().search(option.value) != -1)
-							checkBox.selected = true;
-					}
+						if(vo) {
+							if(vo[customfield.name].toString().search(option.value) != -1)
+								checkBox.selected = true;
+						}
+				}
 				break;
 				
 				case CustomFieldTypes.INTEGER:
@@ -161,12 +170,13 @@ package org.mig.utils
 					child.styleName = "inputFieldBlack";
 					child.percentWidth = 100;
 					TextInput(child).restrict="0-9\\-";
-					TextInput(child).text = vo[customfield.name];						
+					if(vo)
+						TextInput(child).text = vo[customfield.name];						
 				break;				
 				
 				case CustomFieldTypes.DATE:
 					child = new DateTimePicker();
-					if(vo[customfield.name].toString() != '')
+					if(vo && vo[customfield.name].toString() != '')
 					{
 						var date:Date = new Date();
 						date.time = Number(vo[customfield.name].toString());
@@ -181,7 +191,8 @@ package org.mig.utils
 					child = new TextInput();
 					child.styleName = "inputFieldBlack";
 					child.percentWidth = 100;			
-					TextInput(child).text = vo[customfield.name];						
+					if(vo)
+						TextInput(child).text = vo[customfield.name];						
 				break;	
 				
 				case CustomFieldTypes.MULTIPLE_SELECT_WITH_ORDER:
@@ -222,6 +233,106 @@ package org.mig.utils
 			}
 			return child;
 		}
-		
+		public static function populateCustomField(child:UIComponent,vo:ContentData,customfield:CustomField):void {
+			var option:Object;
+			switch(customfield.typeid)
+			{
+				case CustomFieldTypes.BINARY:
+						CheckBox(child).selected = vo[customfield.name] == "true"?true:false;
+				break; 
+				
+				case CustomFieldTypes.SELECT:
+					for each(option in customfield.optionsArray) {
+						if(option.index.toString() == vo[customfield.name]) {
+							DropDownList(child).selectedItem = option;
+							break;
+						}
+					}	
+				break;
+				
+				case CustomFieldTypes.STRING:
+					TextInput(child).text = vo[customfield.name].toString(); 
+				break;
+				
+				case CustomFieldTypes.HTML_TEXT:
+					MiGTLFTextArea(child).htmlText = vo[customfield.name];
+				break;
+				
+				case CustomFieldTypes.TEXT:
+					TextArea(child).text = vo[customfield.name];
+				break;					
+				
+				case CustomFieldTypes.COLOR:
+						colorPicker(child).selectedColor= Number(vo[customfield.name]);				
+				break;
+				
+				case CustomFieldTypes.MULTIPLE_SELECT:
+					var i:int = 0;
+					for each(option in customfield.optionsArray)
+					{
+						var checkBox:DataCheckBox = child.getChildAt(i) as DataCheckBox;
+						i++;
+						if(vo[customfield.name].toString().search(option.value) != -1)
+							checkBox.selected = true;
+					}
+					break;
+				
+				case CustomFieldTypes.INTEGER:
+					TextInput(child).text = vo[customfield.name];						
+				break;				
+				
+				case CustomFieldTypes.DATE:
+					if(vo[customfield.name].toString() != '')
+					{
+						var date:Date = new Date();
+						date.time = Number(vo[customfield.name].toString());
+						DateTimePicker(child).selectedDate = date;
+					}
+					else
+						DateTimePicker(child).selectedDate = new Date();
+					
+					break;
+				
+				case CustomFieldTypes.FILE_LINK:
+					TextInput(child).text = vo[customfield.name];						
+				break;	
+				
+				case CustomFieldTypes.MULTIPLE_SELECT_WITH_ORDER:
+					/*var dp:ArrayList = new ArrayList();
+					var summary:String = '';
+					if(vo[customfield.name].toString() != '')
+					{
+						var selected:Array = vo[customfield.name].toString().split(',');
+						for each(var index:String in selected)
+						{
+							var item:Object = customfield.optionsArray[Number(index)-1];
+							item.selected = true;
+							dp.addItem(item);
+							summary += item.value+', ';
+						}
+					}
+					for each(item in customfield.optionsArray)
+					{
+						if(dp.getItemIndex(item) == -1)
+						{
+							dp.addItem(item);
+							item.selected = false;
+						}
+					}
+					child = new List();
+					child.percentHeight = 100;
+					child.width = 300;
+					List(child).styleName = 'customFieldsList';
+					List(child).dataProvider = dp;
+					List(child).labelField = "value";
+					List(child).allowMultipleSelection = true;
+					List(child).dragMoveEnabled = true;
+					List(child).dragEnabled = true;
+					List(child).dropEnabled = true;	
+					var optionRenderer:ClassFactory = new ClassFactory(CustomFieldListCheckBox);
+					List(child).itemRenderer = optionRenderer;*/
+					break;	
+			}
+		}
 	}
 }

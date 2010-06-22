@@ -1,6 +1,7 @@
 package org.mig.controller.startup
 {
 	import mx.charts.AreaChart;
+	import mx.collections.ArrayCollection;
 	
 	import org.mig.collections.DataCollection;
 	import org.mig.events.AppEvent;
@@ -48,8 +49,9 @@ package org.mig.controller.startup
 					if(i.parentid == j.id && i != j)
 					{
 						if(!j.children)
-							j.children = [];
-						j.children.push(i);
+							j.children = new ArrayCollection();
+						j.children.addItem(i);
+						i.parent = j;
 						break;
 					}
 				}

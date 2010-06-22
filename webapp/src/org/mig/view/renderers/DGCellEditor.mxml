@@ -5,8 +5,10 @@
 						  focusEnabled="true" height="28">
 	<fx:Script>
 		<![CDATA[
+			import mx.controls.DataGrid;
 			import mx.controls.dataGridClasses.DataGridListData;
 			import mx.controls.listClasses.BaseListData;
+			import mx.events.DataGridEvent;
 			import mx.events.FlexEvent;
 			
 			import org.mig.view.controls.MiGDataGrid;
@@ -33,7 +35,8 @@
 						textColor = 0xffffff;
 					if(lblData && doFocus) {
 						lblData.setFocus();
-						lblData.selectRange(cellValue.length,cellValue.length);
+						if(cellValue)
+							lblData.selectRange(cellValue.length,cellValue.length);
 					}
 				}   
 			} 
@@ -43,9 +46,15 @@
 			public function get editorvalue():String {
 				return lblData.text;
 			}			
+
+			protected function lblData_enterHandler(event:FlexEvent):void
+			{
+				//var editEndEvent:DataGridEvent
+				DataGrid(this.owner).editedItemPosition = {rowIndex:-1,columnIndex:-1};
+			}
 		]]>
 	</fx:Script>
 	<s:TextInput id="lblData" top="0" left="0" right="0" bottom="0"  styleName="{fieldStyleName}"
 	 displayAsPassword="{isPassword}"  text="{cellValue}" color="{textColor}"  borderVisible="false" 
-	 change="handleValueChange()" enter="handleValueChange()" fontFamily="Transit-Bold" fontSize="16"/>
+	 change="handleValueChange()"  fontFamily="Transit-Bold" fontSize="16" enter="lblData_enterHandler(event)"/>
 </s:MXDataGridItemRenderer>

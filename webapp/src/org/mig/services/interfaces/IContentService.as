@@ -35,6 +35,6 @@ package org.mig.services.interfaces
 		//refactor this later
 		function updateContent(vo:ContentData,config:XML):void;
 		function createContent(vo:ContentData,config:XML):void;
-		//function deleteTerm(term:Term):void;*/
+		function deleteContent(vo:ContentData,config:XML):void;
 	}
 }

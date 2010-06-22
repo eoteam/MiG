@@ -197,6 +197,20 @@ package org.mig.services
 			service.service.showBusyCursor = true;
 			service.token.content = vo;
 		}
+		public function deleteContent(vo:ContentData,config:XML):void {
+		
+			var params:Object = new Object();
+			params.action = config.@deleteContent.toString();
+			if(ValidFunctions.FUNCTIONS_WITH_TABLENAME.indexOf(params.action) != -1)
+				params.tablename = config.@tablename.toString();
+			params.id = vo.id;
+			var classToUse:String = flash.utils.getQualifiedClassName(vo);
+			var classRef:Class = flash.utils.getDefinitionByName(classToUse) as Class; 
+			//var resultClass:ClassFactory = new ClassFactory(classRef);
+			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS,classRef);
+			service.service.showBusyCursor = true;
+			service.token.content = vo;			
+		}
 		private function handleContentUpdated(data:Object):void {
 			var status:StatusResult = data.result as StatusResult;
 			if(status.success) {

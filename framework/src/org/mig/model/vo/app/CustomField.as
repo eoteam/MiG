@@ -7,11 +7,11 @@ package org.mig.model.vo.app
 	{	
 		public var typeid:int;
 		public var groupid:int;
-		public var visible:Boolean;
 		public var name:String;
 		public var displayname:String;
 		public var optionsArray:Array = [];
 		public var defaultvalue:String = "";
+		
 		public var createdby:int;
 		public var createdate:Number;
 		public var modifiedby:int;
