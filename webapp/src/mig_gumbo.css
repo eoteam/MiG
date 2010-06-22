@@ -9,11 +9,13 @@
 	src: url("/fonts/Transit/TransNor.ttf");
 	fontFamily: "Transit-Normal";
 	embedAsCFF: true;
+	advancedAntiAliasing: true;
 }
 @font-face {
 	src: url("/fonts/Transit/TransBol.ttf");
 	fontFamily: "Transit-Bold";
 	embedAsCFF: true;
+	advancedAntiAliasing: true; 
 }
 tlf|TextFlow {
 	columnCount:		"1";

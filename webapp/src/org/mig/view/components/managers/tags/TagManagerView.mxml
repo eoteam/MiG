@@ -48,7 +48,7 @@
 				<controls:MiGDataGrid 	width="100%" dragEnabled="true"  top="40" bottom="15"
 				allowMultipleSelection="true" allowDragSelection="true"
 				clearingLines="true" clearVLineIndices="[]"
-				id="termsGrid" paddingTop="0" height="100%"  
+				id="termsGrid" paddingTop="0" height="100%" 
 				editable="true">
 					<controls:columns>
 						<mx:DataGridColumn width="26" editable="false" resizable="false">
@@ -60,35 +60,31 @@
 								</fx:Component>
 							</mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn  paddingLeft="6" headerText="Tag" dataField="name" editable="true" editorUsesEnterKey="true" >
+						<mx:DataGridColumn  paddingLeft="6" headerText="Tag" dataField="name" editorDataField="editorvalue" editable="true" editorUsesEnterKey="true" >
 							<mx:itemEditor>
 								<fx:Component>
-									<renderers:DGCell  colorEnabled="true"/>
+									<renderers:DGCellEditor/>
 								</fx:Component>
 							</mx:itemEditor>
 							<mx:itemRenderer>
 								<fx:Component>
-									<s:MXDataGridItemRenderer  autoDrawBackground="false" focusEnabled="true">
-										<s:Label styleName="bodyCopy" text="{data.name}" verticalCenter="0" left="5" />
-									</s:MXDataGridItemRenderer>
+									<renderers:DGCellRenderer/>
 								</fx:Component>
 							</mx:itemRenderer>
 						</mx:DataGridColumn>
-						<mx:DataGridColumn  paddingLeft="6" headerText="Slug" dataField="slug" editable="false"   editorUsesEnterKey="true" >
+						<mx:DataGridColumn  paddingLeft="6" headerText="Slug" dataField="slug" editable="true" editorDataField="editorvalue"  editorUsesEnterKey="true" >
+							<mx:itemEditor>
+								<fx:Component>
+									<renderers:DGCellEditor />
+								</fx:Component>
+							</mx:itemEditor>
 							<mx:itemRenderer>
 								<fx:Component>
-									<renderers:DGCell  colorEnabled="true"/>
+									<renderers:DGCellRenderer/>
 								</fx:Component>
 							</mx:itemRenderer>
-						</mx:DataGridColumn>						
+						</mx:DataGridColumn>				
 					</controls:columns>
-					<controls:dataProvider>
-						<s:ArrayList>
-							<fx:Object name="blue" />
-							<fx:Object name="red" />
-							<fx:Object name="white" />
-						</s:ArrayList>
-					</controls:dataProvider>
 				</controls:MiGDataGrid>
 				<s:Label styleName="bodyCopy" text="{termsGrid.dataProvider.length + ' items'}" textAlign="center" width="100%" bottom="0" />
 			</s:NavigatorContent>

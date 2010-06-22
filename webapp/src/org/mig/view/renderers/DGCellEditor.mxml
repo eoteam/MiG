@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:MXDataGridItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
-						  xmlns:s="library://ns.adobe.com/flex/spark" 
+						  xmlns:s="library://ns.adobe.com/flex/spark"  
 						  xmlns:mx="library://ns.adobe.com/flex/mx"  autoDrawBackground="false"
-						  focusEnabled="true">
+						  focusEnabled="true" height="28">
 	<fx:Script>
 		<![CDATA[
-			import mx.events.FlexEvent;
 			import mx.controls.dataGridClasses.DataGridListData;
 			import mx.controls.listClasses.BaseListData;
+			import mx.events.FlexEvent;
+			
+			import org.mig.view.controls.MiGDataGrid;
 			
 			[Bindable] public var isPassword:Boolean = false;	         
-			[Bindable] public var editable:Boolean = true;
 			[Bindable] public var textColor:Number = 0xffffff;
 			[Bindable] public var fieldStyleName:String = "inputFieldBlack";
 			[Bindable] private var cellValue:String; 
 			[Bindable] public var enabledField:String;
 			
 			public var colorEnabled:Boolean = false;
-			
+			private var doFocus:Boolean = true;
 			override public function get data():Object
 			{
 				return super.data;
@@ -30,24 +31,21 @@
 						textColor = 0x666666;
 					else
 						textColor = 0xffffff;
-					
-					if(data.hasOwnProperty("active")) {
-						this.enabled = (data.active == 1) ? true:false;
+					if(lblData && doFocus) {
+						lblData.setFocus();
+						lblData.selectRange(cellValue.length,cellValue.length);
 					}
-					
 				}   
 			} 
 			private function handleValueChange():void {
 				data[DataGridListData(this.listData).dataField] = lblData.text;
 			}
-			override protected function measure():void {
-				super.measure();
-				this.measuredMinHeight = 28;
-				this.measuredHeight = 28;
-			}         
+			public function get editorvalue():String {
+				return lblData.text;
+			}			
 		]]>
 	</fx:Script>
 	<s:TextInput id="lblData" top="0" left="0" right="0" bottom="0"  styleName="{fieldStyleName}"
 	 displayAsPassword="{isPassword}"  text="{cellValue}" color="{textColor}"  borderVisible="false" 
-	 change="handleValueChange()" editable="{editable}" mouseChildren="{editable}" />
+	 change="handleValueChange()" enter="handleValueChange()" fontFamily="Transit-Bold" fontSize="16"/>
 </s:MXDataGridItemRenderer>
