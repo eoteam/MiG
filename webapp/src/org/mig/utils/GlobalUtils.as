@@ -51,10 +51,10 @@ package org.mig.utils
 				target.contextMenu = menu;
 			return menu;
 		}
-		public function get uploadView():String {
+		public static function get uploadView():String {
 			return "com.map.view.mediaManager.FileUpload";	
 		}
-		public function get fullScreenMode():String {
+		public static function get fullScreenMode():String {
 			return StageDisplayState.FULL_SCREEN;
 		}
 		public static function sanitizeString(input:String):String {
@@ -198,7 +198,7 @@ package org.mig.utils
 				case CustomFieldTypes.MULTIPLE_SELECT_WITH_ORDER:
 					var dp:ArrayList = new ArrayList();
 					var summary:String = '';
-					if(vo[customfield.name].toString() != '')
+					if(vo && vo[customfield.name].toString() != '')
 					{
 						var selected:Array = vo[customfield.name].toString().split(',');
 						for each(var index:String in selected)

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Button xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx" 
+		  skinClass="org.mig.view.skins.buttons.LinkButtonSkin"
+		  toolTip = "Drag to a container to link" mouseDown="handleSocketClick(event)">
+	<fx:Script>
+		<![CDATA[
+			import mx.core.UIComponent;
+			
+			import org.mig.view.skins.buttons.LinkButtonSkin;
+			
+			import spark.components.TextInput;
+			
+			public var drawingLayer:UIComponent;
+			public var textInput:TextInput;
+			
+			private var mouseXInit:Number;
+			private var mouseYInit:Number;
+			
+			private function handleSocketClick(event:MouseEvent):void	
+			{
+				mouseXInit = parentApplication.mouseX-this.mouseX+this.width/2-10;
+				mouseYInit = parentApplication.mouseY-this.mouseY+this.height/2;					
+				//Application.application.linkingMode = true;
+				//Application.application.showDrawingLayer();
+				parentApplication.stage.addEventListener(MouseEvent.MOUSE_MOVE,handleMouseMove);
+				parentApplication.stage.addEventListener(MouseEvent.MOUSE_UP,removeLine);
+			}
+			private function handleMouseMove(event:MouseEvent):void
+			{
+				//var drawingLayer:UIComponent = Application.application.drawingLayer;
+				drawingLayer.graphics.clear(); 
+				drawingLayer.graphics.lineStyle(3, 0xFCEE21, 1); 
+				drawingLayer.graphics.moveTo(mouseXInit, mouseYInit); 
+				drawingLayer.graphics.lineTo(drawingLayer.mouseX, drawingLayer.mouseY);
+				drawingLayer.graphics.endFill();  
+			}		
+			private function removeLine(event:Event):void
+			{
+				//Application.application.linkingMode = false;
+/* 				var currPoint:Point = new Point(Application.application.mouseX,Application.application.mouseY);
+				var mediaObjects:Array = Application.application.mainView.rightMain.getObjectsUnderPoint(currPoint);
+				var treeObjects:Array = Application.application.mainView.contentTree.getObjectsUnderPoint(currPoint);
+				
+				if(treeObjects.length > 0)
+				{
+					var node:ContentNode = Application.application.mainView.contentTree.selectedItem;
+					this.linkInput.text = "event:content="+node.data.id.toString();
+					
+				}
+				else if(mediaObjects.length > 0)
+				{
+					
+					if(Application.application.mainView.editorsView.linkedResource != null)
+					{
+						var file:MediaContainerNode = Application.application.mainView.editorsView.linkedResource;
+						var mediaPath:String =ControllerLocator.mediaManagerController.mediaURL+file.data.path.toString()+file.data.name.toString();					
+						var baseLink:String = ControllerLocator.controller.contentModel.config.@publishedLink;	
+						this.linkInput.text = mediaPath;	// baseLink+"download.php?file="+ 
+					}
+				} */
+				drawingLayer.graphics.clear();
+				parentApplication.stage.removeEventListener(MouseEvent.MOUSE_MOVE,handleMouseMove);
+				parentApplication.stage.removeEventListener(MouseEvent.MOUSE_UP,removeLine);
+				//Application.application.hideDrawingLayer();
+
+			}
+			private var clearLineTimer:Timer;			
+		]]>
+	</fx:Script>
+
+</s:Button>

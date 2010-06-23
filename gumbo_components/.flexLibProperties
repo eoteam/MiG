@@ -25,6 +25,7 @@
     <classEntry path="org.mig.view.skins.buttons.IconButtonSkin"/>
     <classEntry path="org.mig.view.skins.buttons.DefaultGrayToggleButtonSkin"/>
     <classEntry path="org.mig.view.skins.controls.MiGListSkin"/>
+    <classEntry path="org.mig.view.controls.LinkSocket"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

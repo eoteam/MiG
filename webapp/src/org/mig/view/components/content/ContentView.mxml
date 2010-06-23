@@ -35,7 +35,7 @@
 	<s:TabBar  dataProvider="{contentTabs}" id="tabBar"  height="23"  cornerRadius="0" styleName="toolTabBar"  />
 	
 	<mx:ViewStack
-		borderVisible="false" contentBackgroundAlpha="0"  creationPolicy="queued" 
+		borderVisible="false" contentBackgroundAlpha="0"
 		width="100%" verticalGap="0" height="100%"
 		historyManagementEnabled="false"
 		id="contentTabs" />

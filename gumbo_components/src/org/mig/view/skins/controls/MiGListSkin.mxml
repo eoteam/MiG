@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			 xmlns:s="library://ns.adobe.com/flex/spark"
+			 alpha.disabled="0.5">
+	
+	<fx:Metadata>
+		[HostComponent("org.mig.view.controls.MiGList")]
+	</fx:Metadata>
+	
+	<s:states>
+		<s:State name="normal" />
+		<s:State name="disabled" />
+	</s:states>
+	
+	<!-- border -->
+	<s:Rect left="0" right="0" top="19" bottom="0">
+		<s:stroke>
+			<s:SolidColorStroke color="0x686868" weight="1"/>
+		</s:stroke>
+	</s:Rect>
+	
+	<!-- fill -->
+	<!--- Defines the background appearance of the list-based component. -->
+<!--	<s:Rect id="background" left="1" right="1" top="20" bottom="1">
+		<s:fill>
+			<s:SolidColor color="#EEEEEE" />
+		</s:fill>
+	</s:Rect>-->
+	
+	<s:Scroller id="scroller"
+				left="0"
+				top="19"
+				right="0"
+				bottom="0"
+				minViewportInset="1"
+				focusEnabled="false">
+		
+		<!--The container for the data items.-->
+		<s:DataGroup id="dataGroup" itemRenderer="spark.skins.spark.DefaultItemRenderer">
+			<s:layout>
+				<s:VerticalLayout gap="0" horizontalAlign="contentJustify" />
+			</s:layout>
+		</s:DataGroup>
+	</s:Scroller>
+	
+	<s:Button id="header" label="{this.hostComponent.headerText}" left="0" right="0" height="20" />
+	
+</s:SparkSkin>

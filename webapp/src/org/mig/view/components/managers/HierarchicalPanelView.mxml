@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:controls="org.mig.view.controls.*" 
+		 xmlns:fe="com.fxcomponents.controls.fe.*" xmlns:managers="org.mig.view.components.managers.*"> 
+
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.collections.ArrayList;
+			import mx.events.ListEvent;
+			
+			import org.mig.model.vo.ContentData;
+			
+			import spark.events.IndexChangeEvent;
+			protected function parentList_itemClickHandler(event:ListEvent):void
+			{
+				inspector.content = event.itemRenderer.data as ContentData;
+			}
+
+		]]>
+	</fx:Script>
+	
+	<s:Rect height="1" width="100%">
+		<s:fill>
+			<s:SolidColor color="0xffffff" />
+		</s:fill>
+	</s:Rect>
+	
+	<fe:ExtendedDividedBox direction="horizontal" width="100%" height="100%" 
+    liveDragging="false" clipContent="false" id="mainBody"  
+    barFillColors="[0xFFFFFF,0xFFFFFF]" 
+    dividerThickness="1" dividerSkin="com.fxcomponents.skins.MainDividerSkin">
+		
+		<controls:SpringLoadedTree width="25%" height="100%" id="categoryList" 
+		 itemClick="parentList_itemClickHandler(event)" labelField="name"
+		contentBackgroundColor="0xffffff" contentBackgroundAlpha="0" focusAlpha="0"	
+		rollOverColor="0xed1c58" color="0xffffff" selectionColor="0xed1c58"  
+		allowMultipleSelection="true"
+		dropEnabled="true" dragMoveEnabled="true" dragEnabled="true" />
+							
+		<managers:ContentDataInspector width="50%"  height="100%" id="inspector" />
+	</fe:ExtendedDividedBox>
+	
+</s:VGroup>

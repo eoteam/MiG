@@ -281,4 +281,5 @@
 		<mx:Resize id="openManagers" target="{managersTree}" duration="200" />
 	</fx:Declarations>
 	
+	<mx:UIComponent id="drawingLayer" width="100%" height="100%" />
 </s:Group>

@@ -7,9 +7,10 @@
 	
 	<mx:Script>
 		<![CDATA[
-			import org.mig.view.renderers.CustomFieldListCheckBox;
 			import flexlib.containers.FlowContainer;
 			
+			import mx.binding.utils.BindingUtils;
+			import mx.collections.ArrayCollection;
 			import mx.collections.ArrayList;
 			import mx.controls.ColorPicker;
 			import mx.controls.DateChooser;
@@ -17,22 +18,28 @@
 			import mx.core.Application;
 			import mx.core.FlexGlobals;
 			import mx.core.UIComponent;
+			import mx.events.CollectionEvent;
 			import mx.events.DragEvent;
 			import mx.events.ListEvent;
+			import mx.events.ResizeEvent;
 			
 			import org.mig.model.AppModel;
 			import org.mig.model.vo.ContentNode;
 			import org.mig.model.vo.app.CustomField;
+			import org.mig.model.vo.app.CustomFieldOption;
 			import org.mig.model.vo.app.CustomFieldTypes;
-			import org.mig.model.vo.content.ContainerNode;
 			import org.mig.model.vo.content.ContainerData;
+			import org.mig.model.vo.content.ContainerNode;
 			import org.mig.model.vo.content.TemplateCustomField;
 			import org.mig.model.vo.media.FileNode;
 			import org.mig.view.controls.DataCheckBox;
 			import org.mig.view.controls.DateTimePicker;
+			import org.mig.view.controls.LinkSocket;
 			import org.mig.view.controls.MiGDateField;
 			import org.mig.view.controls.MiGTLFTextArea;
 			import org.mig.view.controls.colorPicker;
+			import org.mig.view.layouts.FlowLayout;
+			import org.mig.view.renderers.CustomFieldListCheckBox;
 			
 			import spark.components.Button;
 			import spark.components.CheckBox;
@@ -49,20 +56,23 @@
 			private var customfield:CustomField;
 			
 			public var modified:Boolean = false;
-			private var mouseXInit:Number;
-			private var mouseYInit:Number;	
-			private var linkButton:Button;		
+			
 			private var child:UIComponent;	
-			[Bindable] private var maxH:Number = 30;
-			
-			[Inject]
-			public var appModel:AppModel;
-			
+			[Bindable] public var maxH:Number = 30;
+						
 			private function init():void
-			{
+			{	
 				customfield = field.customfield;
 				this.headerLabel = 	customfield.displayname;			
 				var option:Object;
+				var item:CustomFieldOption;
+				var opt:Object;
+				var optionRenderer:ClassFactory
+				var dp:ArrayCollection = new ArrayCollection();
+				var summary:String = '';
+				var selected:Array;
+				var index:String;
+				
 				switch(customfield.typeid)
 				{
 					case CustomFieldTypes.BINARY:
@@ -98,16 +108,15 @@
 						MiGTLFTextArea(child).htmlText = vo[customfield.name];
 						//child.styleName="sectionTextEditorTextArea";	
 						child.percentWidth =100;
-						maxH = child.height = 350;
-						this.addEventListener('open',handleTray);
-						this.addEventListener('closed',handleTray);		
+						maxH = child.height = 350;			
 						this.summaryText = vo[customfield.name].toString().slice(0,150)+'...';
 					break;
 					case CustomFieldTypes.TEXT:
 						child = new TextArea();
 						TextArea(child).text = vo[customfield.name];
+						TextArea(child).heightInLines = NaN;
+						BindingUtils.bindProperty(this,"maxH",TextArea(child),"height");
 						child.percentWidth =100;
-						maxH = child.height = 200;
 						child.styleName = "bodyCopy";
 						child.setStyle("backgroundColor",0x0f0f0f);	
 						this.summaryText = vo[customfield.name].toString().slice(0,150)+'...';
@@ -119,21 +128,40 @@
 						colorPicker(child).selectedColor= Number(vo[customfield.name]);		
 						this.summaryText = Number(vo[customfield.name]).toString(16);		
 					break;
-					case CustomFieldTypes.MULTIPLE_SELECT:
-						child = new FlowContainer();
-						child.percentHeight=100;
-						child.percentWidth=100;
-						this.summaryText = vo[customfield.name].toString();
-						for each(option in customfield.optionsArray)
+					case CustomFieldTypes.MULTIPLE_SELECT:						
+						for each(opt in customfield.optionsArray)
+						{		
+							item = new CustomFieldOption();
+							item.value = opt.value;
+							item.index = Number(opt.index);
+							item.selected = false;
+							dp.addItem(item);
+						}	
+						if(vo[customfield.name].toString() != '')
 						{
-							var checkBox:DataCheckBox = new DataCheckBox();
-							checkBox.label = option.value;
-							checkBox.data = option;
-							checkBox.addEventListener(Event.CHANGE,handleMultipleSelect);
-							child.addChild(checkBox);
-							if(vo[customfield.name].toString().search(option.value) != -1)
-								checkBox.selected = true;
+							selected = vo[customfield.name].toString().split(',');
+							for each(index in selected)
+							{
+								item = dp.getItemAt(Number(index)-1) as CustomFieldOption;
+								item.selected = true;
+								summary += item.value+', ';
+							}
 						}
+						summary = summary.substring(0,summary.length-2);
+						this.summaryText = summary;
+						
+						child = new List();
+						child.percentHeight = 100;
+						child.width = 300;
+						List(child).styleName = 'customFieldsList';
+						List(child).dataProvider = dp;
+						List(child).labelField = "value";
+						List(child).layout = new FlowLayout();
+						optionRenderer = new ClassFactory(CustomFieldListCheckBox);						
+						List(child).itemRenderer = optionRenderer;
+						dp.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleListChange);
+						BindingUtils.bindProperty(this,"maxH",FlowLayout(List(child).layout),"runningHeight");
+						//maxH = 100;
 					break;
 					case CustomFieldTypes.INTEGER:
 						child = new TextInput();
@@ -164,29 +192,28 @@
 						this.summaryText = vo[customfield.name].toString().slice(0,150)+'...';
 					break;	
 					case CustomFieldTypes.MULTIPLE_SELECT_WITH_ORDER:
-						var dp:ArrayList = new ArrayList();;
-						var summary:String = '';
+	
+						for each(opt in customfield.optionsArray)
+						{		
+							item = new CustomFieldOption();
+							item.value = opt.value;
+							item.index = Number(opt.index);
+							item.selected = false;
+							dp.addItem(item);
+						}	
 						if(vo[customfield.name].toString() != '')
 						{
-							var selected:Array = vo[customfield.name].toString().split(',');
-							for each(var index:String in selected)
+							selected = vo[customfield.name].toString().split(',');
+							for each(index in selected)
 							{
-								var item:Object = customfield.optionsArray[Number(index)-1];
+								item = dp.getItemAt(Number(index)-1) as CustomFieldOption;
 								item.selected = true;
-								dp.addItem(item);
 								summary += item.value+', ';
 							}
 						}
 						summary = summary.substring(0,summary.length-2);
 						this.summaryText = summary;
-						for each(item in customfield.optionsArray)
-						{
-							if(dp.getItemIndex(item) == -1)
-							{
-								dp.addItem(item);
-								item.selected = false;
-							}
-						}
+
 						child = new List();
 						child.percentHeight = 100;
 						child.width = 300;
@@ -197,109 +224,29 @@
 						List(child).dragMoveEnabled = true;
 						List(child).dragEnabled = true;
 						List(child).dropEnabled = true;	
-						var optionRenderer:ClassFactory = new ClassFactory(CustomFieldListCheckBox);						
+						optionRenderer = new ClassFactory(CustomFieldListCheckBox);						
 						List(child).itemRenderer = optionRenderer;
-						List(child).addEventListener(ListEvent.ITEM_CLICK,handleItemClick);
-						List(child).addEventListener(DragEvent.DRAG_COMPLETE,handleItemClick);
-						maxH = 200;
-									
+						dp.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleListChange);
+						maxH = 200;			
 					break;							
 				}
 				container.addChild(child);
 				child.addEventListener(Event.CHANGE,dataChangeProxy);		
 				if(customfield.typeid == CustomFieldTypes.FILE_LINK)
 				{
-					linkButton = new Button();
-					linkButton.styleName = "linkButton";
-					linkButton.toolTip = "Drag to a container to link";
-					linkButton.addEventListener(MouseEvent.MOUSE_DOWN,handleLinkButton);
+					var linkButton:LinkSocket = new LinkSocket();
+					linkButton.drawingLayer = FlexGlobals.topLevelApplication.mainView.drawingLayer;
+					linkButton.textInput = TextInput(child);
 					linkButton.setStyle("right",2);
 					linkButton.setStyle("top",0);
 					container.addChild(linkButton);		
 				}				
 						
-			}
-			private function handleLinkButton(event:Event):void
-			{
-				mouseXInit = FlexGlobals.topLevelApplication.mouseX-linkButton.mouseX+linkButton.width/2;
-				mouseYInit = FlexGlobals.topLevelApplication.mouseY-linkButton.mouseY+linkButton.height/2;					
-				FlexGlobals.topLevelApplication.linkingMode = true;
-				FlexGlobals.topLevelApplication.showDrawingLayer();
-				FlexGlobals.topLevelApplication.stage.addEventListener(MouseEvent.MOUSE_MOVE,handleMouseMove);
-				FlexGlobals.topLevelApplication.stage.addEventListener(MouseEvent.MOUSE_UP,removeLine);		
-			}
-			private function handleMouseMove(event:MouseEvent):void
-			{
-				var drawingLayer:UIComponent = FlexGlobals.topLevelApplication.drawingLayer;
-		 		drawingLayer.graphics.clear(); 
-				drawingLayer.graphics.lineStyle(3, 0xFCEE21, 1); 
-				drawingLayer.graphics.moveTo(mouseXInit, mouseYInit); 
-				drawingLayer.graphics.lineTo(drawingLayer.mouseX, drawingLayer.mouseY);
-				drawingLayer.graphics.endFill();  
-			}
-			private function removeLine(event:Event):void
-			{
-				FlexGlobals.topLevelApplication.linkingMode = false; 
-				var currPoint:Point = new Point(FlexGlobals.topLevelApplication.mouseX,FlexGlobals.topLevelApplication.mouseY);
-				var mediaObjects:Array = FlexGlobals.topLevelApplication.mainView.rightMain.getObjectsUnderPoint(currPoint);
-				var treeObjects:Array = FlexGlobals.topLevelApplication.mainView.contentTree.getObjectsUnderPoint(currPoint);
-				
-				if(treeObjects.length > 0)
-				{
-					var node:ContainerNode = FlexGlobals.topLevelApplication.mainView.contentTree.selectedItem;
-					TextInput(this.child).text = "event:content="+node.data.id.toString();
-					TextInput(this.child).setFocus();
-					TextInput(this.child).dispatchEvent(new Event(Event.CHANGE));					
-				}
-				else if(mediaObjects.length > 0)
-				{
-					
-					if(FlexGlobals.topLevelApplication.mainView.editorsView.linkedResource != null)
-					{
-/* 						var file:MediaContainerNode = FlexGlobals.topLevelApplication.mainView.editorsView.linkedResource;
-						var mediaPath:String = appModel.mediaURL+file.data.path.toString()+file.data.name.toString();					
-						var baseLink:String = appModel.publishedURL;	
-						MiGTextInput(this.child).text = baseLink+mediaPath;
-						MiGTextInput(this.child).setFocus();
-						MiGTextInput(this.child).dispatchEvent(new Event(Event.CHANGE));	 */
-					}
-				}
-				FlexGlobals.topLevelApplication.stage.removeEventListener(MouseEvent.MOUSE_MOVE,handleMouseMove);
-				FlexGlobals.topLevelApplication.stage.removeEventListener(MouseEvent.MOUSE_UP,removeLine);
-				FlexGlobals.topLevelApplication.hideDrawingLayer();
-			}						
-			private function handleMultipleSelect(event:Event):void
-			{
-				var value:String = '';
-				for each(var checkBox:DataCheckBox in FlowContainer(event.target.parent).getChildren())
-				{
-					if(checkBox.selected)
-						value += checkBox.data.value+',';
-				}
-				vo[customfield.name] = value.substr(0,value.length-1);
-				modified = true;
-			}
-			private function handleItemClick(event:Event):void
-			{
-				var summary:String = '';
-				var ordereredItems:String = '';
-				for each(var item:Object in List(child).dataProvider)
-				{
-					if(item.selected)
-					{	
-						ordereredItems += item.index + ',';
-						summary += item.value+', ';
-					}
-				}	
-				ordereredItems = ordereredItems.substr(0,ordereredItems.length-1);
-				vo[customfield.name] = ordereredItems;
-				summary = summary.substring(0,summary.length-2);
-				this.summaryText = summary;				
-				modified = true;
-			}
+			}				
 			private function dataChangeProxy(event:Event):void
 			{
 				modified = true;
+				trace(customfield.typeid);
 				switch(customfield.typeid)
 				{
 					case "binary":
@@ -329,27 +276,79 @@
 						if(DateTimePicker(event.target).selectedDate)
 							vo[customfield.name] = DateTimePicker(event.target).selectedDate.time;			
 						else
-							vo[customfield.name] = ' ';
-					case "multiple-select":
-					break;	
+							vo[customfield.name] = 0;
 					case "file-link":
 					 	vo[customfield.name] = TextInput(event.target).text;
 					break;	
-					case "multiple-select-with-order":					
-					break;						
 				}				
+			}			
+			private function handleListChange(event:CollectionEvent):void {
+				var summary:String = '';
+				var ordereredItems:String = '';
+				for each(var item:Object in List(child).dataProvider) {
+					if(item.selected) {	
+						ordereredItems += item.index + ',';
+						summary += item.value+', ';
+					}
+				}	
+				ordereredItems = ordereredItems.substr(0,ordereredItems.length-1);
+				vo[customfield.name] = ordereredItems;
+				summary = summary.substring(0,summary.length-2);
+				this.summaryText = summary;				
+				modified = true;					
 			}
-			
-			private function handleTray(event:Event):void
-			{
-				/* var tools:Tools = Tools(FlexGlobals.topLevelApplication.mainView.editorsView);
-				if(event.type == "open")
-					tools.instantiateToolSet(["Browse","Preview","Metadata","Upload","Text"]);	
-				else
-					tools.instantiateToolSet(["Browse","Preview","Metadata","Upload"]);	 */
-			}
-			
 		]]>
 	</mx:Script>
 	<mx:DateFormatter id="dateFormatter"  formatString="MM/DD/YY"/>
 </containers:MinMaxTray>
+<!-- 
+Link Button
+private function handleLinkButton(event:Event):void
+{
+mouseXInit = FlexGlobals.topLevelApplication.mouseX-linkButton.mouseX+linkButton.width/2;
+mouseYInit = FlexGlobals.topLevelApplication.mouseY-linkButton.mouseY+linkButton.height/2;					
+FlexGlobals.topLevelApplication.linkingMode = true;
+FlexGlobals.topLevelApplication.showDrawingLayer();
+FlexGlobals.topLevelApplication.stage.addEventListener(MouseEvent.MOUSE_MOVE,handleMouseMove);
+FlexGlobals.topLevelApplication.stage.addEventListener(MouseEvent.MOUSE_UP,removeLine);		
+}
+private function handleMouseMove(event:MouseEvent):void
+{
+var drawingLayer:UIComponent = FlexGlobals.topLevelApplication.drawingLayer;
+drawingLayer.graphics.clear(); 
+drawingLayer.graphics.lineStyle(3, 0xFCEE21, 1); 
+drawingLayer.graphics.moveTo(mouseXInit, mouseYInit); 
+drawingLayer.graphics.lineTo(drawingLayer.mouseX, drawingLayer.mouseY);
+drawingLayer.graphics.endFill();  
+}
+private function removeLine(event:Event):void
+{
+FlexGlobals.topLevelApplication.linkingMode = false; 
+var currPoint:Point = new Point(FlexGlobals.topLevelApplication.mouseX,FlexGlobals.topLevelApplication.mouseY);
+var mediaObjects:Array = FlexGlobals.topLevelApplication.mainView.rightMain.getObjectsUnderPoint(currPoint);
+var treeObjects:Array = FlexGlobals.topLevelApplication.mainView.contentTree.getObjectsUnderPoint(currPoint);
+
+if(treeObjects.length > 0)
+{
+var node:ContainerNode = FlexGlobals.topLevelApplication.mainView.contentTree.selectedItem;
+TextInput(this.child).text = "event:content="+node.data.id.toString();
+TextInput(this.child).setFocus();
+TextInput(this.child).dispatchEvent(new Event(Event.CHANGE));					
+}
+else if(mediaObjects.length > 0)
+{
+
+if(FlexGlobals.topLevelApplication.mainView.editorsView.linkedResource != null)
+{
+/* 						var file:MediaContainerNode = FlexGlobals.topLevelApplication.mainView.editorsView.linkedResource;
+var mediaPath:String = appModel.mediaURL+file.data.path.toString()+file.data.name.toString();					
+var baseLink:String = appModel.publishedURL;	
+MiGTextInput(this.child).text = baseLink+mediaPath;
+MiGTextInput(this.child).setFocus();
+MiGTextInput(this.child).dispatchEvent(new Event(Event.CHANGE));	 */
+}
+}
+FlexGlobals.topLevelApplication.stage.removeEventListener(MouseEvent.MOUSE_MOVE,handleMouseMove);
+FlexGlobals.topLevelApplication.stage.removeEventListener(MouseEvent.MOUSE_UP,removeLine);
+FlexGlobals.topLevelApplication.hideDrawingLayer();
+}		-->
