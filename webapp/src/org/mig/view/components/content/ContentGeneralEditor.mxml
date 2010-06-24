@@ -6,7 +6,7 @@
 	xmlns:controls="org.mig.view.controls.*"
 	xmlns:containers="org.mig.view.containers.*"
 	implements="org.mig.view.interfaces.IEditableContentView, org.mig.view.interfaces.ITabView"
-	label="General"
+	label="General" 
 	width="100%" height="100%">
 
     
@@ -18,7 +18,7 @@
 			import org.mig.view.interfaces.IEditableContentView;
 			
 			[Bindable] public var _data:ContainerData;
-			[Bindable] private var gradientMatrix:Matrix = new Matrix();
+
 			
 			private var _content:ContentNode;
 			
@@ -39,13 +39,12 @@
 			public function submit(statusid:int=0):void {
 				this.dispatchEvent(new ContentViewEvent(ContentViewEvent.PUBLISH));
 			}
-			override protected function updateDisplayList(w:Number, h:Number):void {
-				super.updateDisplayList(w,h);
-				gradientMatrix.createGradientBox(w, h, Math.PI / 2);
-			}
-			
+		
 		]]>
 	</fx:Script>
+	<s:layout>
+		<s:BasicLayout clipAndEnableScrolling="true" />
+	</s:layout>
 	<s:Rect width="100%" height="100%">
 		<s:fill>
 			<s:LinearGradient spreadMethod="pad"  interpolationMethod="rgb" rotation="90">
@@ -54,41 +53,9 @@
 			</s:LinearGradient>
 		</s:fill>
 	</s:Rect>	
-	<s:VGroup id="mainContainer" top="15"  bottom="30"
-			  paddingTop="20" paddingLeft="10" paddingRight="10" paddingBottom="20"
-			  width="98%" gap="12">
-		
-		
-<!--		 	<mx:HBox width="90%">
-		 		<mx:Label text="Title" styleName="inputFieldTitle" width="97" />
-		 		<controls:MiGTextInputSpell height="25" id="sectionTitle" width="100%" styleName="inputFieldBlack" text="{_data.migtitle}" /> 
-		 	</mx:HBox>
-			<mx:HBox width="90%" id="colorHolder" >
-				<mx:Label  styleName="inputFieldTitle" text="Color" width="97" />	
-				<controls:colorPicker height="25"  selectedColor="{_data.color}" id="mythemeColorapplication"/>
-			</mx:HBox>
-			<mx:HBox width="90%" id="dateHolder">
-				<mx:Label  styleName="inputFieldTitle" text="Date" width="97" />
-				<controls:DateTimePicker  id="dateField"  />--><!-- 	selectedDate="{_date}"  --> 					
-				<!--				</mx:HBox>			
-			<mx:Canvas width="90%" id="urlHolder">
-				<mx:Label  styleName="inputFieldTitle" text="Url" width="97" />
-		 		<controls:MiGTextInput paddingLeft="{catLabel.width}" left="105" height="25" id="url" width="100%" styleName="inputFieldBlack" text="{_data.url}" /> 
-				<mx:Label left="109"   styleName="bodyCopy" id="catLabel" />
-			</mx:Canvas>
-
-			<containers:MinMaxTray id="descTray"  width="90%" maxHeight="350" headerLabel="Description"
-			summaryText="{String(sectionText.text).slice(0,150)+'...'}">
-				<controls:MiGTLFTextArea width="100%" height="350" id="sectionText"
-				 htmlText="{_data.description}" minStateXParent="{descTray.contentBody}" minStateYParent="{descTray}" maxStateParent="{this}"/>
-			</containers:MinMaxTray>
-			
-			<containers:MinMaxTray id="descTray2"  width="90%" maxHeight="350" headerLabel="Short Description" 
-				summaryText="{String(sectionText2.text).slice(0,150)+'...'}" >
-				<controls:MiGTLFTextArea width="100%" height="350" id="sectionText2" 
-				htmlText="{_data.shortdescription}" minStateXParent="{descTray2.contentBody}" minStateYParent="{descTray2}" maxStateParent="{this}" />
-			</containers:MinMaxTray>-->
-		
+	<s:VGroup id="mainContainer" top="15"  clipAndEnableScrolling="true"
+	paddingTop="20" paddingLeft="10" paddingRight="10" paddingBottom="20"
+	 width="98%" gap="12">
 	</s:VGroup>		
 	
 	<fx:Declarations>

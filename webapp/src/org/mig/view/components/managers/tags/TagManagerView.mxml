@@ -24,7 +24,7 @@
 	
 	<s:VGroup width="100%" id="mainHolder"  height="100%" contentBackgroundAlpha="0" gap="0">
 		<s:HGroup width="100%" id="header" verticalAlign="middle" gap="2" clipAndEnableScrolling="false">
-			<mx:SWFLoader source="@Embed(source='/migAssets/library.swf#tagIcon')" />
+			<s:BitmapImage source="@Embed(source='/migAssets/library.swf#tagIcon')" />
 			<s:Label styleName="boldCopy" left="-3" bottom="-5" width="100%" text="Tag Manager"/>
 			<s:Rect width="100%"/>
 			<s:Button styleName="defaultGrayButton" label="Close" click="this.visible=false"/>
@@ -66,9 +66,9 @@
 						<mx:DataGridColumn width="26" editable="false" resizable="false">
 							<mx:itemRenderer>
 								<fx:Component>
-									<mx:Box paddingLeft="4" paddingTop="4" verticalCenter="0" horizontalCenter="0">
-										<mx:SWFLoader source="@Embed(source='/migAssets/library.swf#tagIcon')" />
-									</mx:Box>
+									<s:MXDataGridItemRenderer verticalCenter="0" horizontalCenter="0" autoDrawBackground="false">
+										<s:BitmapImage left="4" top="4"  source="@Embed(source='/migAssets/library.swf#tagIcon')" />
+									</s:MXDataGridItemRenderer>
 								</fx:Component>
 							</mx:itemRenderer>
 						</mx:DataGridColumn>

@@ -83,6 +83,13 @@
 			updateContent="updateRecord"
 			deleteContent="deleteRecord" />
 	</manager>	
+		<manager id="userManager" name="Manager">
+		<child labelfield="name"
+			createContent="insertRecord" 
+			retrieveContent="getData"
+			updateContent="updateRecord"
+			deleteContent="deleteRecord" />
+	</manager>	
 	<elements>
 		<tray type="RelatedContent" contentView="com.mapx.view.content.trays.LinkingTray"
 			itemView="com.mapx.view.content.trays.LinkView" labelField="migtitle"

@@ -30,7 +30,7 @@ package org.mig.view.mediators.main
 		private function handleContentSelected(event:ContentEvent):void {
 			var contentNode:ContainerNode = event.args[0] as ContainerNode;
 			var dataProvider:ArrayList = new ArrayList();
-			if(contentNode.config.attribute("insertContent").length() > 0)
+			if(contentNode.config.attribute("createContent").length() > 0)
 			{
 				if(ContainerNode(contentNode).isNesting) {
 					dataProvider.addItem(contentNode.config);

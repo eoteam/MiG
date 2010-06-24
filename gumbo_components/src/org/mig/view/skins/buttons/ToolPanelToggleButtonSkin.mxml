@@ -65,7 +65,7 @@ in accordance with the terms of the license agreement accompanying it.
 		<s:State name="disabledAndSelected" stateGroups="selectedUpStates, disabledStates, selectedStates" />
 	</s:states>
 	
-	<mx:SWFLoader  id="graphic"
+	<s:BitmapImage  id="graphic"
 				  source.selectedStates="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#toolPanelClosedIcon')"
 				  source.deselected="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#toolPanelOpenedIcon')" />
 	

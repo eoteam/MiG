@@ -40,7 +40,7 @@
 	
 	<s:VGroup gap="5" width="100%">
 		<s:HGroup width="100%" gap="0" verticalAlign="middle">
-			<mx:SWFLoader source="{folderIcon}" width="23" height="17" />
+			<s:BitmapImage source="{folderIcon}" width="23" height="17" />
 			<s:Label text="Folder Name"  paddingLeft="0"/>
 		</s:HGroup>
 		<s:TextInput styleName="inputFieldGray"  text="" width="80%" id="nameInput" restrict="a-z\A-Z\0-9\_"/>						

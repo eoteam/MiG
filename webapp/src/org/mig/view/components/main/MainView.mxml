@@ -105,13 +105,15 @@
 				if(event.currentTarget.name=="pendingTray"){
 					if (event.currentTarget.height > pendingTrayTitleHolder.height && pendingTree.visible == false){
 						pendingTree.visible = true;
-						pendingStateIcon.source = openIcon;
+						pendingStateIcon.icon = openIcon;
+						pendingStateIcon.invalidateSkinState();
 					}
 					else{
 						if (event.currentTarget.height < pendingTrayTitleHolder.height){
 							pendingTree.visible = false;
 							event.currentTarget.height = pendingTrayTitleHolder.height;
-							pendingStateIcon.source = closeIcon;
+							pendingStateIcon.icon = closeIcon;
+							pendingStateIcon.invalidateSkinState();
 						}
 					}
 				}
@@ -136,12 +138,14 @@
 				if(pendingTree.visible == true) {
 					closePendingTray.play();
 					pendingTree.visible = false;
-					pendingStateIcon.source = closeIcon;
+					pendingStateIcon.icon = closeIcon;
+					pendingStateIcon.invalidateSkinState();
 				}
 				else {
 					openPendingTray.play();
 					pendingTree.visible = true;
-					pendingStateIcon.source = openIcon;
+					pendingStateIcon.icon = openIcon;
+					pendingStateIcon.invalidateSkinState();
 				}
 			}
 		]]>
@@ -174,8 +178,8 @@
 					
 					<s:VGroup id="pendingTray" width="100%" height="25" gap="0" resize="handleSliderParentReSize(event)">
 						<s:HGroup width="100%" gap="2" paddingTop="0" verticalAlign="middle" height="25" id="pendingTrayTitleHolder">
-							<mx:SWFLoader  height="100%"	 source="{closeIcon}"  id="pendingStateIcon" mouseChildren="false" useHandCursor="true" buttonMode="true"  click="pendingTrayToggle(event)"/>
-							<mx:SWFLoader  height="100%"	 source="{draftIconWhite}" mouseChildren="false" useHandCursor="true" buttonMode="true"  click="pendingTrayToggle(event)"/>
+							<controls:IconButton height="100%"	 icon="{closeIcon}"  id="pendingStateIcon" mouseChildren="false" useHandCursor="true" buttonMode="true"  click="pendingTrayToggle(event)"/>
+							<controls:IconButton height="100%"	 icon="{draftIconWhite}" mouseChildren="false" useHandCursor="true" buttonMode="true"  click="pendingTrayToggle(event)"/>
 							<s:Label text="Pending Containers"  height="100%"	mouseChildren="false" useHandCursor="true" buttonMode="true" click="pendingTrayToggle(event)"/>
 						</s:HGroup>	
 						<main:PendingListView  width="100%"  height="100%" id="pendingTree"  />

@@ -106,7 +106,7 @@
     
     <!-- layer 8: text -->
     <!--- @copy spark.components.supportClasses.ButtonBase#labelDisplay -->
-	<mx:SWFLoader source="{this.hostComponent.icon}" source.disabled="{this.hostComponent.disabledIcon?this.hostComponent.disabledIcon:this.hostComponent.icon}" 
+	<s:BitmapImage source="{this.hostComponent.icon}" source.disabled="{this.hostComponent.disabledIcon?this.hostComponent.disabledIcon:this.hostComponent.icon}" 
 	id="graphic" verticalCenter="0" horizontalCenter="0"   />
     
 </s:SparkSkin>

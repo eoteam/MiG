@@ -64,7 +64,7 @@ in accordance with the terms of the license agreement accompanying it.
 		<s:State name="disabled" />
 	</s:states>
 
-	<mx:SWFLoader source="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#linkTargetUp')" 
+	<s:BitmapImage source="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#linkTargetUp')" 
 				  source.disabled="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#linkTargetDisabled')"
 				  id="graphic"   />
 </s:SparkSkin>

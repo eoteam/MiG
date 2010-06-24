@@ -17,6 +17,7 @@
 			protected function parentList_itemClickHandler(event:ListEvent):void
 			{
 				inspector.content = event.itemRenderer.data as ContentData;
+				selectedCategoryLabel.text = event.itemRenderer.data.name;
 			}
 
 		]]>
@@ -39,8 +40,22 @@
 		rollOverColor="0xed1c58" color="0xffffff" selectionColor="0xed1c58"  
 		allowMultipleSelection="true"
 		dropEnabled="true" dragMoveEnabled="true" dragEnabled="true" />
-							
-		<managers:ContentDataInspector width="50%"  height="100%" id="inspector" />
+		
+		<s:VGroup width="50%"  height="100%">
+			<s:HGroup verticalAlign="middle">
+				<s:BitmapImage source="@Embed(source='/migAssets/library.swf#tagIcon')" />
+				<s:Label styleName="bodyCopy" fontSize="20" id="selectedCategoryLabel"/>
+			</s:HGroup>
+			
+			<s:Rect width="100%" height="1">
+				<s:fill>
+					<s:SolidColor color="0xffffff" />
+				</s:fill>
+			</s:Rect>
+			<managers:ContentDataInspector width="100%"  height="100%" id="inspector" />
+			
+		</s:VGroup>
+		
 	</fe:ExtendedDividedBox>
 	
 </s:VGroup>

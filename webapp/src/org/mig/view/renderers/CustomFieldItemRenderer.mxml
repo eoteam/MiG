@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				contentBackgroundAlpha="1"  width="100%" 
+				implements="org.mig.view.interfaces.ICustomFieldView"
+				creationComplete="itemrenderer1_creationCompleteHandler(event)" 
+				autoDrawBackground="false">
+	
+		<s:layout>
+			<s:HorizontalLayout gap="2" verticalAlign="top" paddingLeft="5" paddingRight="5" paddingTop="2" paddingBottom="2"/>
+		</s:layout>
+		
+		<fx:Script>
+			<![CDATA[
+				import mx.core.UIComponent;
+				import mx.events.FlexEvent;
+				
+				import org.mig.model.vo.ContentData;
+				import org.mig.model.vo.ValueObject;
+				import org.mig.model.vo.app.CustomField;
+				import org.mig.utils.GlobalUtils;
+				
+				public var element:UIComponent;
+				private var _vo:ContentData;
+				private var _customfield:CustomField;
+				override public function set data(value:Object):void {
+					super.data = value;
+					customfield = value as CustomField;
+				}
+				
+				public function set vo(value:ValueObject):void {
+					_vo = value as ContentData;
+				}
+				
+				public function get vo():ValueObject {
+					return _vo
+				}
+				
+				public function set customfield(value:CustomField):void {
+					_customfield = value;
+				}
+				
+				public function get customfield():CustomField {
+					return _customfield;
+				}						
+				protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
+				{
+					var tmp:Array = GlobalUtils.createCustomField(this);
+					element = tmp[0] as UIComponent;
+					element.enabled = false;	
+				}
+			]]>
+		</fx:Script>
+		<s:Label width="150" styleName="boldCopy" text="{data.displayname}"/>
+</s:ItemRenderer>

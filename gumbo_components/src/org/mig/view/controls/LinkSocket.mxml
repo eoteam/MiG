@@ -38,8 +38,9 @@
 			}		
 			private function removeLine(event:Event):void
 			{
+				var currPoint:Point = new Point(parentApplication.mouseX,parentApplication.mouseY);
 				//Application.application.linkingMode = false;
-/* 				var currPoint:Point = new Point(Application.application.mouseX,Application.application.mouseY);
+/* 				
 				var mediaObjects:Array = Application.application.mainView.rightMain.getObjectsUnderPoint(currPoint);
 				var treeObjects:Array = Application.application.mainView.contentTree.getObjectsUnderPoint(currPoint);
 				
@@ -60,6 +61,7 @@
 						this.linkInput.text = mediaPath;	// baseLink+"download.php?file="+ 
 					}
 				} */
+				var objects:Array = this.parentApplication.getObjectsUnderPoint(currPoint);
 				drawingLayer.graphics.clear();
 				parentApplication.stage.removeEventListener(MouseEvent.MOUSE_MOVE,handleMouseMove);
 				parentApplication.stage.removeEventListener(MouseEvent.MOUSE_UP,removeLine);

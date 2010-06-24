@@ -88,7 +88,7 @@
 				 textAlign="left"
 				 verticalAlign="middle" color.down="0"
 				 maxDisplayedLines="1" width="100%"/>
-		<mx:SWFLoader source="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#Tree_folderOpenIcon')" id="graphic"   />
+		<s:BitmapImage source="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#Tree_folderOpenIcon')" id="graphic"   />
 	</s:HGroup>
 
     

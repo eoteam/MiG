@@ -83,7 +83,7 @@
 	</fx:Declarations>
 
 	<s:HGroup verticalCenter="0" horizontalCenter="0" height="100%" width="465" verticalAlign="middle">
-		<mx:SWFLoader source="{alertIcon}" width="86" />
+		<s:BitmapImage source="{alertIcon}" width="86" />
 		<s:VGroup  width="100%"  id="textBox" paddingLeft="5">
 			<s:TextArea focusAlpha="0" minWidth="50"  heightInLines="{NaN}"  maxHeight="460" editable="false"  id="messageText" width="100%"  contentBackgroundAlpha="0" borderVisible="false" />
 			<s:HGroup includeIn="alertStates">	
@@ -96,7 +96,7 @@
 		</s:VGroup>
 	</s:HGroup> 
 	
-	<mx:SWFLoader id="logo" source="@Embed(source='/migAssets/library.swf#migLogoLine')" width="250" height="300" top="0" right="100" />
+	<s:BitmapImage id="logo" source="@Embed(source='/migAssets/library.swf#migLogoLine')" width="250" height="300" top="0" right="100" />
 	
 	<s:states>
 		<s:State name="default" stateGroups="alertStates"/>

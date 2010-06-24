@@ -21,7 +21,7 @@
 				<s:SolidColor color="{_selectedColor}" />
 			</s:fill>
 		</s:Ellipse>
-		<mx:SWFLoader source="{colorWheel}" id="colorWheelImg"  />		
+		<s:BitmapImage source="{colorWheel}" id="colorWheelImg"  />		
 	</s:HGroup>
 
 	

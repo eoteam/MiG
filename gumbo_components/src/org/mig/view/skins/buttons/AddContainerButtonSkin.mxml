@@ -65,7 +65,7 @@
         <s:State name="disabledAndSelected" stateGroups="selectedUpStates, disabledStates, selectedStates" />
     </s:states>
  
-	<mx:SWFLoader source.overStates="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#addContainerOver')" id="graphic"
+	<s:BitmapImage source.overStates="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#addContainerOver')" id="graphic"
 				  source.disabledStates="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#addContainerDisabled')"
 				  source.down="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#addContainerUp')"
 				  source.up="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#addContainerUp')" 

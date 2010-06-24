@@ -120,16 +120,22 @@ s|Label {
 s|RichText {
 	color: white;
 	fontLookup: "embeddedCFF";
-	renderingMode:		"cff";
+	renderingMode: normal;	
 }
 s|TextArea {
-	color: white;
+	contentBackgroundColor: #000000;
 	fontLookup: "embeddedCFF";
-	renderingMode:		"cff";
-	fontSize: 14;
+	color: #FFFFFF;
+	fontFamily: Transit-Normal;
+	fontWeight: normal;
+	fontSize: 14pt;
+	focusColor: #000000;
 	focusedTextSelectionColor: #ed1c58;
 	unfocusedTextSelectionColor: #333333;
-	contentBackgroundColor: #111111;
+	chromeColor: #ed1c58;
+	renderingMode: normal;
+	focusColor: #ed1c58;
+	borderVisible: false;
 }
 .boldCopy {
 	color: white;

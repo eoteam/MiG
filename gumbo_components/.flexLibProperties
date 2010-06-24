@@ -18,7 +18,6 @@
     <classEntry path="org.mig.view.controls.MiGDateField"/>
     <classEntry path="org.mig.view.skins.controls.NumericStepperSkin"/>
     <classEntry path="org.mig.view.skins.buttons.StepperDownArrowSkin"/>
-    <classEntry path="org.mig.view.renderers.CustomFieldListCheckBox"/>
     <classEntry path="org.mig.view.controls.IconToggleButton"/>
     <classEntry path="org.mig.view.skins.buttons.IconToggleButtonSkin"/>
     <classEntry path="org.mig.view.controls.IconButton"/>

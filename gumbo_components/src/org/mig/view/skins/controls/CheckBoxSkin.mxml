@@ -85,7 +85,7 @@
         <s:State name="disabledAndSelected" stateGroups="disabledStates, selectedStates" />
     </s:states>
     
-	<mx:SWFLoader  id="check"	source.disabled="@Embed(source='../../../../../../webapp/src/migAssets/flex_skins.swf#CheckBox_disabledIcon')"
+	<s:BitmapImage  id="check"	source.disabled="@Embed(source='../../../../../../webapp/src/migAssets/flex_skins.swf#CheckBox_disabledIcon')"
 					source.up="@Embed(source='../../../../../../webapp/src/migAssets/flex_skins.swf#CheckBox_upIcon')"
 					source.over="@Embed(source='../../../../../../webapp/src/migAssets/flex_skins.swf#CheckBox_overIcon')"
 					source.down="@Embed(source='../../../../../../webapp/src/migAssets/flex_skins.swf#CheckBox_downIcon')"

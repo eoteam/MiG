@@ -92,7 +92,7 @@
 		</s:layout>
 	-->
 		<mx:Canvas>
-			<mx:SWFLoader left="8" source="@Embed(source='/migAssets/library.swf#folderIcon')" mouseChildren="false"  buttonMode="true" useHandCursor="true" /><!--   width="18" height="16" -->	
+			<controls:IconButton left="8" icon="@Embed(source='/migAssets/library.swf#folderIcon')" mouseChildren="false"  buttonMode="true" useHandCursor="true" /><!--   width="18" height="16" -->	
 		</mx:Canvas>
 		<mx:Text htmlText="{currentLocation}" id="locationText" styleName="boldCopy" />
 		
@@ -104,19 +104,19 @@
 		rotation="45" toolTip="Clear Search" mouseChildren="false" buttonMode="true" visible="false"   />
 		
 		<!--Views-->
-		<mx:SWFLoader source="@Embed(source='/migAssets/library.swf#thumbViewIcon')" id="thumbButton"
+		<controls:IconButton  icon="@Embed(source='/migAssets/library.swf#thumbViewIcon')" id="thumbButton"
 		buttonMode="true" useHandCursor="true" mouseChildren="false" toolTip="Image View"   />
-		<mx:SWFLoader source="@Embed(source='/migAssets/library.swf#listViewIcon')"  id="listButton"
+		<controls:IconButton  icon="@Embed(source='/migAssets/library.swf#listViewIcon')"  id="listButton"
 		buttonMode="true" useHandCursor="true" mouseChildren="false" toolTip="List View" />
 		<mx:Spacer width="5" />
 		<controls:MiGHSlider id="scaleSlider" minimum="0.25" maximum="2" change="handleSliderChange(event)" mouseChildren="false" />
 		
 		<!-- Directory -->
-		<mx:SWFLoader source="@Embed(source='/migAssets/library.swf#parentFolderIcon')"  
+		<controls:IconButton  icon="@Embed(source='/migAssets/library.swf#parentFolderIcon')"  
 		mouseChildren="false" id="parentdirButton" alpha="1" toolTip="Up 1 Folder" buttonMode="true" useHandCursor="true" />
 		<mx:Canvas>
-			<mx:SWFLoader  mouseChildren="false" id="addDirectoryButton" alpha="1" toolTip="New Folder" top="6"
-			source="@Embed(source='/migAssets/library.swf#addFolderIcon')" buttonMode="true" useHandCursor="true"/>
+			<controls:IconButton   mouseChildren="false" id="addDirectoryButton" alpha="1" toolTip="New Folder" top="6"
+			icon="@Embed(source='/migAssets/library.swf#addFolderIcon')" buttonMode="true" useHandCursor="true"/>
 		</mx:Canvas>
 		<controls:IconButton  icon="@Embed(source='/migAssets/library.swf#trashUp')"  toolTip="Delete"  id="trashButton" mouseChildren="false"  buttonMode="true" />			
 	</container:FlowContainer>

@@ -13,6 +13,8 @@
 	 -->
 	<fx:Script>
 		<![CDATA[
+			import flashx.textLayout.compose.TextLineRecycler;
+			
 			import mx.events.FlexEvent;
 			import mx.events.StyleEvent;
 			
@@ -26,7 +28,8 @@
 			private function handleCreationComplete(): void {
 				this.createDeferredContent();
 				context = new MiGContext();
-				context.contextView = this;				
+				context.contextView = this;		
+				TextLineRecycler.textLineRecyclerEnabled = false;
 			}
 			
 		]]>

@@ -65,7 +65,7 @@ in accordance with the terms of the license agreement accompanying it.
 		<s:State name="disabledAndSelected" stateGroups="selectedUpStates, disabledStates, selectedStates" />
 	</s:states>
 	
-	<mx:SWFLoader source.selectedStates="{this.hostComponent.icon1}" id="graphic"
+	<s:BitmapImage source.selectedStates="{this.hostComponent.icon1}" id="graphic"
 				  source.deselected="{this.hostComponent.icon2}" />
 	
 </s:SparkSkin>
