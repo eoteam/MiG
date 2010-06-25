@@ -17,6 +17,8 @@ package org.mig.utils
 	import mx.core.FlexGlobals;
 	import mx.core.UIComponent;
 	import mx.events.CollectionEvent;
+	import mx.events.PropertyChangeEvent;
+	import mx.events.PropertyChangeEventKind;
 	import mx.formatters.DateFormatter;
 	
 	import org.mig.model.vo.ContentData;

@@ -171,7 +171,7 @@ package org.mig.services
 					params[prop] = updateData[prop];
 			}
 			params.action = config.@updateContent.toString();
-			if(ValidFunctions.FUNCTIONS_WITH_TABLENAME.indexOf(params.action) == -1)
+			if(ValidFunctions.FUNCTIONS_WITH_TABLENAME.indexOf(params.action) != -1)
 				params.tablename = config.@tablename.toString();
 			params.id = vo.id;
 			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS,null,handleContentUpdated);

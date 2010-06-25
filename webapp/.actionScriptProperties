@@ -52,9 +52,9 @@
       <libraryPathEntry kind="3" linkType="1" path="/gumbo_components/bin/gumbo_components.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/textLayout_ui/bin/textLayout_ui.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/Robotlegs/bin/Robotlegs.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="/SwiftSuspenders/bin/SwiftSuspenders.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/Robotlegs-StateMachine/bin/Robotlegs-StateMachine.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/components_framework/bin/components_framework.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="/SwiftSuspsenders/bin/SwiftSuspsenders.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>

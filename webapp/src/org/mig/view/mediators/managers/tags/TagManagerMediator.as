@@ -145,6 +145,11 @@ package org.mig.view.mediators.managers.tags
 				contentService.addHandlers(handleTagTermCreated);
 				cudTotal++;
 			}
+			for each(term in contentModel.categoryTerms.modifiedItems.source) {
+				contentService.updateContent(term,contentModel.termsConfig.child[0]);
+				contentService.addHandlers(handleCategoryTermUpdated);
+				cudTotal++;
+			}
 		}
 		private function handleTagDeleteButton(event:MouseEvent):void {
 			for each(var item:Term in view.termsGrid.selectedItems) {
@@ -165,6 +170,17 @@ package org.mig.view.mediators.managers.tags
 					view.submitButton.enabled = false;
 				}
 				contentModel.tagTerms.setItemNotModified(data.token.content as Term);
+			}	
+		}
+		private function handleCategoryTermUpdated(data:Object):void {
+			var status:StatusResult = data.result as StatusResult;
+			if(status.success) {
+				cudCount++;
+				if(cudCount == cudTotal) {
+					eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Tag updated successfully"));
+					view.submitButton.enabled = false;
+				}
+				contentModel.categoryTerms.setItemNotModified(data.token.content as Term);
 			}	
 		}
 		private function handleTagTermCreated(data:Object):void {
