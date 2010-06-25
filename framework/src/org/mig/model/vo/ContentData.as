@@ -15,7 +15,7 @@ package org.mig.model.vo
 		public var updateData:UpdateData = new UpdateData();
 		
 		public var parent:ContentData;
-		public var children:ArrayCollection;
+		public var children:Array;
 		
 	}
 }

@@ -5,7 +5,7 @@ package org.mig.controller.startup
 	import org.mig.model.ContentModel;
 	import org.mig.model.vo.app.CustomField;
 	import org.mig.model.vo.content.Template;
-	import org.mig.model.vo.content.TemplateCustomField;
+	import org.mig.model.vo.app.ContentCustomField;
 	import org.mig.services.interfaces.IAppService;
 	import org.mig.services.interfaces.IContentService;
 	import org.robotlegs.mvcs.Command;
@@ -41,11 +41,11 @@ package org.mig.controller.startup
 					var cfs5:Array = item.rowids.toString().split(',');
 					
 					for (var i:int=0;i<cfs1.length;i++) {
-						var templateCustomField:TemplateCustomField = new TemplateCustomField();
+						var templateCustomField:ContentCustomField = new ContentCustomField();
 						templateCustomField.id = cfs1[i];
 						templateCustomField.fieldid = cfs3[i];
 						templateCustomField.displayorder = cfs4[i];
-						templateCustomField.visible = cfs5[i] == '1'?true:false;
+						//templateCustomField.visible = cfs5[i] == '1'?true:false;
 						
 						var cfid:int = cfs2[i];
 						for each(var field:CustomField in appModel.customfieldsFlat) {

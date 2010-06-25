@@ -37,16 +37,18 @@ package org.mig.model
 		
 		//tags
 		public var tagTerms:DataCollection;
-		public var categoryTerms:DataCollection;
+		public var categoryTerms:Array;
+		public var categoryTermsFlat:DataCollection;
 		public var categoriesCustomFields:Array;	
 		public var termsConfig:XML;
 		
 		public function ContentModel() {
 			templates = new ArrayCollection();
 			tagTerms = new DataCollection();
-			categoryTerms = new DataCollection();
+			categoryTerms = []
+			categoryTermsFlat = new DataCollection();
 			tagTerms.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleTagTerms);
-			categoryTerms.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleCategoryTerms);
+			categoryTermsFlat.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleCategoryTerms);
 			categoriesCustomFields = [];
 		}
 		private function handleTagTerms(event:CollectionEvent):void {
@@ -55,8 +57,13 @@ package org.mig.model
 					var term:Term = change.source as Term;
 					if(change.property == "name")
 						term.slug = GlobalUtils.sanitizeString(term.name);
-						if(!isNaN(term.termid))
-							term.updateData.termid = term.termid;
+					if(!isNaN(term.termid))
+						term.updateData.termid = term.termid;
+				}
+			}
+			else if(event.kind == CollectionEventKind.ADD) {
+				for each(term in event.items) {
+					term.updateData.taxonomy = "tag";	
 				}
 			}
 		}
@@ -66,6 +73,13 @@ package org.mig.model
 					var term:Term = change.source as Term;
 					if(change.property == "name")
 						term.slug = GlobalUtils.sanitizeString(term.name);
+					if(!isNaN(term.termid))
+						term.updateData.termid = term.termid;
+				}
+			}
+			else if(event.kind == CollectionEventKind.ADD) {
+				for each(term in event.items) {
+					term.updateData.taxonomy = "category";	
 				}
 			}
 		}		

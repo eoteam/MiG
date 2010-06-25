@@ -15,6 +15,7 @@ package org.mig.services
 	import org.mig.model.vo.ContentData;
 	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.UpdateData;
+	import org.mig.model.vo.app.ContentCustomField;
 	import org.mig.model.vo.app.CustomField;
 	import org.mig.model.vo.app.StatusResult;
 	import org.mig.model.vo.content.ContainerData;
@@ -22,7 +23,6 @@ package org.mig.services
 	import org.mig.model.vo.content.ContentStatus;
 	import org.mig.model.vo.content.SubContainerNode;
 	import org.mig.model.vo.content.Template;
-	import org.mig.model.vo.content.TemplateCustomField;
 	import org.mig.model.vo.manager.Term;
 	import org.mig.model.vo.media.MimeType;
 	import org.mig.model.vo.user.UserPrivileges;
@@ -59,7 +59,7 @@ package org.mig.services
 			var params:Object = new Object();
 			params.action = ValidFunctions.GET_DATA;
 			params.tablename = "termtaxonomy_customfields";
-			this.createService(params,ResponseType.DATA);
+			this.createService(params,ResponseType.DATA,ContentCustomField);
 		}
 		public function retrieveContentRoot():void {
 			var params:Object = new Object();
@@ -141,7 +141,7 @@ package org.mig.services
 				params.templateid = contentModel.currentContainer.config.@templateid.toString();
 				for each(var template:Template in contentModel.templates) {
 					if(params.templateid == template.id) {
-						for each(var field:TemplateCustomField in template.customfields) {
+						for each(var field:ContentCustomField in template.customfields) {
 							if(field.customfield.defaultvalue != null) {
 								params["customfield"+field.fieldid] = field.customfield.defaultvalue;
 							}
@@ -163,7 +163,7 @@ package org.mig.services
 			params.verbose = true;
 			this.createService(params,ResponseType.DATA,ContainerData).token.config = config;	
 		}
-		public function updateContent(vo:ContentData,config:XML):void {
+		public function updateContent(vo:ContentData,config:XML,customfields:Array):void {
 			var updateData:UpdateData = vo.updateData;
 			var params:Object = new Object();
 			for (var prop:String in updateData) {
@@ -174,12 +174,24 @@ package org.mig.services
 			if(ValidFunctions.FUNCTIONS_WITH_TABLENAME.indexOf(params.action) != -1)
 				params.tablename = config.@tablename.toString();
 			params.id = vo.id;
+			
+			//reverse translate customfields
+			for (prop in params) {
+				for each(var customfield:ContentCustomField in customfields) {
+					if(prop == customfield.customfield.name)
+					var value:String = params[prop];
+					if(value != null) {
+						delete params[prop];
+						params["customfield"+customfield.fieldid] = value;
+					}
+				}
+			}
 			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS,null,handleContentUpdated);
 			service.service.showBusyCursor = true;
 			service.token.content = vo;
 			service.token.update = updateData;
 		}
-		public function createContent(vo:ContentData,config:XML):void {
+		public function createContent(vo:ContentData,config:XML,customfields:Array):void {
 			var updateData:UpdateData = vo.updateData;
 			var params:Object = new Object();
 			for (var prop:String in updateData) {
@@ -190,6 +202,17 @@ package org.mig.services
 			if(ValidFunctions.FUNCTIONS_WITH_TABLENAME.indexOf(params.action) != -1)
 				params.tablename = config.@tablename.toString();
 			
+			//reverse translate customfields
+			for (prop in params) {
+				for each(var customfield:ContentCustomField in customfields) {
+					if(prop == customfield.customfield.name)
+						var value:String = params[prop];
+					if(value != null) {
+						delete params[prop];
+						params["customfield"+customfield.fieldid] = value;
+					}
+				}
+			}
 			var classToUse:String = flash.utils.getQualifiedClassName(vo);
 			var classRef:Class = flash.utils.getDefinitionByName(classToUse) as Class; 
 			//var resultClass:ClassFactory = new ClassFactory(classRef);

@@ -9,7 +9,7 @@ package org.mig.model.vo.app
 		public var value:String = '';
 		public var selected:Boolean = false;
 		
-		public var vo:ValueObject;
+		public var vo:*;
 		public var customfield:CustomField;
 	}
 }

@@ -30,9 +30,10 @@ package bxf.ui.controls
 	import mx.controls.Menu;
 	import mx.controls.listClasses.IListItemRenderer;
 	import mx.core.Application;
+	import mx.core.FlexGlobals;
 	import mx.events.MenuEvent;
 	import mx.events.ResizeEvent;
-	import mx.core.Application;
+
 	/**
 	 * HUDImagePopupControl is an image control with the popup menu functionality. It allows specifying 
 	 * a separate control as the owner to be able to position the menu relative to that control. 
@@ -43,7 +44,7 @@ package bxf.ui.controls
 			
 	    	/* Copied implementation of Menu.createMenu() */
 	        this.tabEnabled = false;
-	        this.owner = DisplayObjectContainer(Application.application);
+	        this.owner = DisplayObjectContainer(FlexGlobals.topLevelApplication);
 	        this.showRoot = true;
 	        Menu.popUpMenu(this, inParent, inValues);
 

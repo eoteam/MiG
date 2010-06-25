@@ -28,6 +28,8 @@ package  org.mig.model.vo.media
 			numFolders = 0;
 			diskFiles = [];
 			newFiles = [];
+			if(data.childrencount > 0 )
+				children.addItem({label: 'loading ...', data:null});
 		}	
 		/*		
 		override protected function update(value:UpdateData):void {

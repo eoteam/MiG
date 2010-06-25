@@ -126,13 +126,13 @@ package org.mig.view.controls {
 		 
 		 
 		private static function classConstruct():Boolean {
-			if (!StyleManager.getStyleDeclaration("Spinner")) {
+/*			if (!StyleManager.getStyleDeclaration("Spinner")) {
 				// If there is no CSS definition for StyledRectangle, 
 				// then create one and set the default value.
 				var newStyleDeclaration:CSSStyleDeclaration = new CSSStyleDeclaration();
 				newStyleDeclaration.setStyle(STYLE_TICK_COLOR, 0x000000);
 				StyleManager.setStyleDeclaration("Spinner", newStyleDeclaration, true);
-			}
+			}*/
 			return true;
 		}
 		

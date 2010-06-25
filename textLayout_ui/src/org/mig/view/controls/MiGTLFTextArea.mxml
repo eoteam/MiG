@@ -3,8 +3,6 @@
 		 horizontalGap="0" creationComplete="creationCompleteHandler(event)" xmlns:textEditBar="textEditBar.*">
 	<mx:Script>
 		<![CDATA[
-
-			
 			import flash.geom.Point;
 			import flash.text.engine.FontLookup;
 			
@@ -21,6 +19,7 @@
 			import mx.binding.utils.ChangeWatcher;
 			import mx.controls.buttonBarClasses.ButtonBarButton;
 			import mx.core.Application;
+			import mx.core.FlexGlobals;
 			import mx.core.UIComponent;
 			import mx.events.EffectEvent;
 			import mx.events.FlexEvent;
@@ -123,7 +122,7 @@
 			}
 			private function fullScreen_clickHandler():void {
 				if(fsButton.selected) {  
-					pt = Application.application.localToGlobal(new Point(minStateXParent.x,minStateYParent.y));
+					pt = FlexGlobals.topLevelApplication.localToGlobal(new Point(minStateXParent.x,minStateYParent.y)); 
 					prevParent = this.parent as UIComponent;
 					maxStateParent.addChild(this);
 					this.includeInLayout = false;

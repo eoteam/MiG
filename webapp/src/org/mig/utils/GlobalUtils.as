@@ -17,6 +17,7 @@ package org.mig.utils
 	import mx.core.FlexGlobals;
 	import mx.core.UIComponent;
 	import mx.events.CollectionEvent;
+	import mx.events.FlexEvent;
 	import mx.events.PropertyChangeEvent;
 	import mx.events.PropertyChangeEventKind;
 	import mx.formatters.DateFormatter;
@@ -165,6 +166,7 @@ package org.mig.utils
 				case CustomFieldTypes.TEXT:
 					child = new TextArea();
 					TextArea(child).heightInLines = NaN;
+					TextArea(child).addEventListener(FlexEvent.UPDATE_COMPLETE,handleTextAreaUpdate);
 					TextArea(child).maxHeight = 300;
 					child.percentWidth = 100;
 					child.styleName = "bodyCopy";
@@ -237,7 +239,7 @@ package org.mig.utils
 					if(vo && vo[customfield.name].toString() != '')
 					{
 						var date:Date = new Date();
-						date.time = Number(vo[customfield.name].toString());
+						date.time = Number(vo[customfield.name].toString())*1000;
 						DateTimePicker(child).selectedDate = date;
 						summary =  dateFormatter.format(date);	
 					}
@@ -311,7 +313,6 @@ package org.mig.utils
 				var container:ICustomFieldView = UIComponent(event.target).parent as ICustomFieldView;
 				var customfield:CustomField = container.customfield;
 				var vo:ValueObject = container.vo;
-				trace(customfield.typeid);
 				switch(customfield.typeid)
 				{
 					case CustomFieldTypes.BINARY:
@@ -337,7 +338,7 @@ package org.mig.utils
 						break;		
 					case CustomFieldTypes.DATE:
 						if(DateTimePicker(event.target).selectedDate)
-							vo[customfield.name] = DateTimePicker(event.target).selectedDate.time;			
+							vo[customfield.name] = DateTimePicker(event.target).selectedDate.time / 1000;			
 						else
 							vo[customfield.name] = 0;
 					break;
@@ -354,15 +355,28 @@ package org.mig.utils
 			var vo:ValueObject = item.vo;
 			var summary:String = '';
 			var ordereredItems:String = '';
-			for each(item in list) {
-				if(item.selected) {	
-					ordereredItems += item.index + ',';
-					summary += item.value+', ';
+			var modified:Boolean = false;
+			if(event.kind == "update") {
+				var prop:PropertyChangeEvent = event.items[0];
+				if(prop.property != "vo") 
+					modified = true;
+			}
+			else if(event.kind == "remove" || event.kind == "move")
+				modified = true;
+			if(modified) {
+				for each(item in list) {
+					if(item.selected) {	
+						ordereredItems += item.index + ',';
+						summary += item.value+', ';
+					}
 				}
-			}	
-			ordereredItems = ordereredItems.substr(0,ordereredItems.length-1);
-			vo[customfield.name] = ordereredItems;
-			summary = summary.substring(0,summary.length-2);			
+				ordereredItems = ordereredItems.substr(0,ordereredItems.length-1);
+				vo[customfield.name] = ordereredItems;
+				summary = summary.substring(0,summary.length-2);
+			}		
+		}
+		private static function handleTextAreaUpdate(event:FlexEvent):void {
+			TextArea(event.target).heightInLines = NaN;
 		}
 		public static function populateCustomField(container:ICustomFieldView,child:UIComponent):void {
 			var option:Object;
@@ -416,7 +430,11 @@ package org.mig.utils
 							summary += item.value+', ';
 						}
 						summary = summary.substring(0,summary.length-2);
-					}			
+					}
+					else {
+						for each(item in List(child).dataProvider) 
+							item.selected = false;
+					}
 					break;
 				
 				case CustomFieldTypes.INTEGER:
@@ -427,7 +445,7 @@ package org.mig.utils
 					if(vo[customfield.name].toString() != '')
 					{
 						var date:Date = new Date();
-						date.time = Number(vo[customfield.name].toString());
+						date.time = Number(vo[customfield.name].toString())*1000;
 						DateTimePicker(child).selectedDate = date;
 					}
 					else
@@ -453,6 +471,10 @@ package org.mig.utils
 						}
 						summary = summary.substring(0,summary.length-2);
 					}	
+					else {
+						for each(item in List(child).dataProvider) 
+						item.selected = false;
+					}
 				break;	
 			}
 		}

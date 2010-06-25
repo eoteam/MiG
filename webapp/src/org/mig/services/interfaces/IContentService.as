@@ -33,8 +33,8 @@ package org.mig.services.interfaces
 		function updateContainersStatus(containers:Array,statusid:int):void;
 		
 		//refactor this later
-		function updateContent(vo:ContentData,config:XML):void;
-		function createContent(vo:ContentData,config:XML):void;
+		function updateContent(vo:ContentData,config:XML,customfields:Array):void;
+		function createContent(vo:ContentData,config:XML,customfields:Array):void;
 		function deleteContent(vo:ContentData,config:XML):void;
 	}
 }

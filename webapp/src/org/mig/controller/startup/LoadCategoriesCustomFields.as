@@ -3,6 +3,7 @@ package org.mig.controller.startup
 	import org.mig.events.AppEvent;
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
+	import org.mig.model.vo.app.ContentCustomField;
 	import org.mig.model.vo.app.CustomField;
 	import org.mig.services.interfaces.IContentService;
 	import org.robotlegs.mvcs.Command;
@@ -25,9 +26,9 @@ package org.mig.controller.startup
 		}
 		private function handleCategoriesCustomFields(data:Object):void {
 			var results:Array = data.result as Array;
-			for each(var result:Object in results) {
+			for each(var result:ContentCustomField in results) {
 				for each(var cf:CustomField in appModel.customfieldsFlat) {
-					if(result.customfieldid.toString() == cf.id.toString()) {
+					if(result.customfieldid == cf.id) {
 						result.customfield = cf;
 						contentModel.categoriesCustomFields.push(result);
 						break;

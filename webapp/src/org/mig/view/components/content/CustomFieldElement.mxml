@@ -31,12 +31,13 @@
 			import org.mig.model.vo.ContentData;
 			import org.mig.model.vo.ContentNode;
 			import org.mig.model.vo.ValueObject;
+			import org.mig.model.vo.app.ContentCustomField;
 			import org.mig.model.vo.app.CustomField;
 			import org.mig.model.vo.app.CustomFieldOption;
 			import org.mig.model.vo.app.CustomFieldTypes;
 			import org.mig.model.vo.content.ContainerData;
 			import org.mig.model.vo.content.ContainerNode;
-			import org.mig.model.vo.content.TemplateCustomField;
+
 			import org.mig.model.vo.media.FileNode;
 			import org.mig.utils.GlobalUtils;
 			import org.mig.view.components.managers.customfields.CustomFieldListCheckBox;
@@ -59,17 +60,17 @@
 			import spark.components.TextInput;
 			
 				
-			private var _field:TemplateCustomField;
+			private var _field:ContentCustomField;
 			private var _vo:ContainerData;
 			private var _customfield:CustomField;
 			[Bindable] public var headerLabel:String;
 			[Bindable] public var summaryText:String;
 			
-			public function set field(value:TemplateCustomField):void {
+			public function set field(value:ContentCustomField):void {
 				_field = value;
 				customfield = value.customfield;
 			}
-			public function get field():TemplateCustomField {
+			public function get field():ContentCustomField {
 				return _field
 			}
 			public function set vo(value:ValueObject):void {

@@ -19,6 +19,8 @@ package org.mig.view.controls
 	{
 		public var keyboardLookUp:Boolean = false;
 		public var customProxy:Boolean = false; 
+		public var includeHeader:Boolean = true;
+		
 		public var dragFormat:String;
 		[Bindable] public var headerText:String;
 		public function MiGList()

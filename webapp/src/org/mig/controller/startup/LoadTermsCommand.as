@@ -37,26 +37,26 @@ package org.mig.controller.startup
 				if(i.taxonomy == 'tag')
 					contentModel.tagTerms.addItem(i);
 				else {
-					flatCategoryTerms.push(i);
+					contentModel.categoryTermsFlat.addItem(i);
 					if(i.id == i.parentid) 
-						contentModel.categoryTerms.addItem(i);
+						contentModel.categoryTerms.push(i);
 				}
 			}		
-			for each(i in flatCategoryTerms)
+			for each(i in contentModel.categoryTermsFlat)
 			{
-				for each(var j:Term in flatCategoryTerms)
+				for each(var j:Term in contentModel.categoryTermsFlat)
 				{
 					if(i.parentid == j.id && i != j)
 					{
 						if(!j.children)
-							j.children = new ArrayCollection();
-						j.children.addItem(i);
+							j.children = []
+						j.children.push(i);
 						i.parent = j;
 						break;
 					}
 				}
 			}
-			contentModel.tagTerms.state = contentModel.categoryTerms.state = DataCollection.COMMITED;	
+			contentModel.tagTerms.state = contentModel.categoryTermsFlat.state = DataCollection.COMMITED;	
 			trace("Startup: Terms Complete");
 			appModel.startupCount = 5;
 			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP_PROGRESS,"Terms loaded"));

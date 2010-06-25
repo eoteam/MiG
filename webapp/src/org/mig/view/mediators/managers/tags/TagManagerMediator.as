@@ -20,6 +20,7 @@ package org.mig.view.mediators.managers.tags
 		import org.mig.events.NotificationEvent;
 		import org.mig.model.ContentModel;
 		import org.mig.model.vo.UpdateData;
+		import org.mig.model.vo.app.ContentCustomField;
 		import org.mig.model.vo.app.CustomField;
 		import org.mig.model.vo.app.CustomFieldTypes;
 		import org.mig.model.vo.app.StatusResult;
@@ -66,7 +67,7 @@ package org.mig.view.mediators.managers.tags
 		private function handleTermsLoaded(event:StateEvent):void {
 			if(event.action == AppStartupStateConstants.LOAD_CATEGORIESCF_COMPLETE) {	
 				contentModel.tagTerms.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleChange);
-				contentModel.categoryTerms.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleChange);
+				contentModel.categoryTermsFlat.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleChange);
 			/*	var cols:Array = view.catGrid.columns;
 				for each(var categoryTerm:Term in contentModel.categoryTerms) {
 					for each(var cf:Object in contentModel.categoriesCustomFields) {
@@ -104,7 +105,7 @@ package org.mig.view.mediators.managers.tags
 			cf.displayname = "Slug";
 			desc.addItem(cf);
 			
-			for each(var item:Object in contentModel.categoriesCustomFields)
+			for each(var item:ContentCustomField in contentModel.categoriesCustomFields)
 				desc.addItem(item.customfield);
 						
 			view.categoriesView.inspector.dataProvider = desc;
@@ -136,19 +137,26 @@ package org.mig.view.mediators.managers.tags
 			cudCount = cudTotal = 0;
 			var term:Term;
 			for each(term in contentModel.tagTerms.modifiedItems.source) {
-				contentService.updateContent(term,contentModel.termsConfig.child[0]);
+				contentService.updateContent(term,contentModel.termsConfig.child[0],contentModel.categoriesCustomFields);
 				contentService.addHandlers(handleTagTermUpdated);
 				cudTotal++;
 			}
 			for each(term in contentModel.tagTerms.newItems.source) {
-				contentService.createContent(term,contentModel.termsConfig.child[0]);
+				contentService.createContent(term,contentModel.termsConfig.child[0],contentModel.categoriesCustomFields);
 				contentService.addHandlers(handleTagTermCreated);
 				cudTotal++;
 			}
-			for each(term in contentModel.categoryTerms.modifiedItems.source) {
-				contentService.updateContent(term,contentModel.termsConfig.child[0]);
+			for each(term in contentModel.categoryTermsFlat.modifiedItems.source) {
+				contentService.updateContent(term,contentModel.termsConfig.child[0],contentModel.categoriesCustomFields);
 				contentService.addHandlers(handleCategoryTermUpdated);
 				cudTotal++;
+			}
+			for each(term in contentModel.categoryTermsFlat.newItems.source) {
+				if(term.name != "new") {
+					contentService.createContent(term,contentModel.termsConfig.child[0],contentModel.categoriesCustomFields);
+					contentService.addHandlers(handleCategoryTermCreated);
+					cudTotal++;
+				}
 			}
 		}
 		private function handleTagDeleteButton(event:MouseEvent):void {
@@ -172,17 +180,6 @@ package org.mig.view.mediators.managers.tags
 				contentModel.tagTerms.setItemNotModified(data.token.content as Term);
 			}	
 		}
-		private function handleCategoryTermUpdated(data:Object):void {
-			var status:StatusResult = data.result as StatusResult;
-			if(status.success) {
-				cudCount++;
-				if(cudCount == cudTotal) {
-					eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Tag updated successfully"));
-					view.submitButton.enabled = false;
-				}
-				contentModel.categoryTerms.setItemNotModified(data.token.content as Term);
-			}	
-		}
 		private function handleTagTermCreated(data:Object):void {
 			var results:Array = data.result as Array;
 			if(results.length == 1) {
@@ -190,8 +187,36 @@ package org.mig.view.mediators.managers.tags
 				if(cudCount == cudTotal) {
 					eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Tag created successfully"));
 					view.submitButton.enabled = false;
+					
 				}
 				contentModel.tagTerms.setItemNotNew(data.token.content as Term);
+			}	
+		}
+		private function handleCategoryTermUpdated(data:Object):void {
+			var status:StatusResult = data.result as StatusResult;
+			if(status.success) {
+				cudCount++;
+				
+				if(cudCount == cudTotal) {
+					eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Tag updated successfully"));
+					view.submitButton.enabled = false;
+					view.categoriesView.selectedCategoryLabel.text = view.categoriesView.categoryList.selectedItem.name;
+					view.categoriesView.categoryList.invalidateList();
+				}
+				contentModel.categoryTermsFlat.setItemNotModified(data.token.content as Term);
+			}	
+		}
+		private function handleCategoryTermCreated(data:Object):void {
+			var results:Array = data.result as Array;
+			if(results.length == 1) {
+				cudCount++;
+				if(cudCount == cudTotal) {
+					eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Tag created successfully"));
+					view.submitButton.enabled = false;
+					view.categoriesView.selectedCategoryLabel.text = view.categoriesView.categoryList.selectedItem.name;
+					view.categoriesView.categoryList.invalidateList();
+				}
+				contentModel.categoryTermsFlat.setItemNotNew(data.token.content as Term);
 			}	
 		}
 		private function handleTagTermDeleted(data:Object):void {
@@ -216,10 +241,13 @@ package org.mig.view.mediators.managers.tags
 			}
 			var currentTerm:Term = view.categoriesView.categoryList.selectedItem as Term;
 			if(currentTerm && currentTerm.parent) {
-				currentTerm.parent.children.addItem(term);
+				currentTerm.parent.children.push(term);
 				term.parent = currentTerm.parent;
-			}else 
-				contentModel.categoryTerms.addItem(term);
+			}
+			else {
+				contentModel.categoryTermsFlat.addItem(term);
+				contentModel.categoryTerms.push(term);
+			}
 			view.categoriesView.categoryList.invalidateList();
 		}
 		private function handleInsertChildCategory(event:MouseEvent):void {
@@ -232,10 +260,14 @@ package org.mig.view.mediators.managers.tags
 				term[cf.customfield.name] = '';
 			}
 			if(!currentTerm.children)
-				currentTerm.children = new ArrayCollection();
-			currentTerm.children.addItem(term);
+				currentTerm.children = [];
+			currentTerm.children.push(term);
+			contentModel.categoryTermsFlat.addItem(term);
 			term.parent = currentTerm;
+			term.parentid = currentTerm.id;
+			term.updateData.parentid = currentTerm.id;
 			view.categoriesView.categoryList.invalidateList();
+			view.categoriesView.categoryList.expandItem(currentTerm,true);
 			
 		}
 	}

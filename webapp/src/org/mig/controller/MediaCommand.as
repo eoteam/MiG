@@ -1,5 +1,7 @@
 package org.mig.controller
 {
+	import mx.collections.ArrayCollection;
+	
 	import org.mig.events.MediaEvent;
 	import org.mig.events.NotificationEvent;
 	import org.mig.events.ViewEvent;
@@ -116,6 +118,7 @@ package org.mig.controller
 		private function handleDiskResults(data:Object):void {
 			var results:Array = data.result as Array;
 			var content:DirectoryNode = data.token.directory;	
+			content.children.removeAll();
 			for each (var item:MediaData in results) {
 				if(item.type.toString() == "folder") {
 					var newdirectory:String = content.directory + item.name.toString() + '/';
