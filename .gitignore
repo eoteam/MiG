@@ -1,11 +1,16 @@
 .metadata
-components/bin/components.swc
+halo_components/bin/halo_components.swc
 framework/bin/framework.swc
 textLayout/bin/textLayout.swc
 textLayout_ui/bin/textLayout_ui.swc
 components_framework/bin/components_framework.swc
+Robotlegs/bin/Robotlegs.swc
+Robotlegs-StateMachine/bin/Robotlegs-StateMachine.swc
+SwiftSuspenders/bin/SwiftSuspenders.swc
+gumbo_components/bin/gumbo_components
 framework/.actionScriptProperties
 framework/.flexLibProperties
+Robotlegs
 airapp/bin-debug/
 webapp/bin-debug/
 webapp/release/
@@ -14,3 +19,4 @@ services/files/
 .DS_Store
 .svn
 webapp/release/
+webapp/.DS_Store
