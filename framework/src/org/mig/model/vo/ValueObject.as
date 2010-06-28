@@ -14,7 +14,7 @@ package org.mig.model.vo
 	{
 		public var id:Number;
 		public function ValueObject() {
-			this.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, updateHandler);
+			//this.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, updateHandler);
 		}
 		//need better logging...?	
 		 public function toString():String {

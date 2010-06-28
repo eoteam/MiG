@@ -11,32 +11,30 @@
     Learn more about Flex at http://flex.org 
     // -->
     <head>
-        <title>${title}</title>         
+        <title>${title}</title>
+        <meta name="google" value="notranslate">         
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<!-- Include CSS to eliminate any default margins/padding and set the height of the html element and 
 		     the body element to 100%, because Firefox, or any Gecko based browser, interprets percentage as 
-			 the percentage of the height of its parent container, which has to be set explicitly.  Initially, 
-			 don't display flashContent div so it won't show if JavaScript disabled.
+			 the percentage of the height of its parent container, which has to be set explicitly.  Fix for
+			 Firefox 3.6 focus border issues.  Initially, don't display flashContent div so it won't show 
+			 if JavaScript disabled.
 		-->
-		<style type="text/css" media="screen"> 
-	        html, body	{ height:100%; }
-	        body { 
-	               font-family:"Lucida Grande", "Lucida Sans Unicode", Arial, Verdana, sans-serif;	
-	               margin:0; padding:0; overflow:auto; text-align:center; 
-	               background-color: #000000; }   
-	        #flashContent { display:none; }
-	        a:link,a:visited{		
-	        color: #FFF; text-decoration:underline		
-	        }
-	    </style>
+        <style type="text/css" media="screen"> 
+			html, body	{ height:100%; }
+			body { margin:0; padding:0; overflow:auto; text-align:center; 
+			       background-color: ${bgcolor}; }   
+			object:focus { outline:none; }
+			#flashContent { display:none; }
+        </style>
 		
 		<!-- Enable Browser History by replacing useBrowserHistory tokens with two hyphens -->
         <!-- BEGIN Browser History required section ${useBrowserHistory}>
-        <!${useBrowserHistory} END Browser History required section -->  
         <link rel="stylesheet" type="text/css" href="history/history.css" />
-        <script type="text/javascript" src="history/history.js"></script>		    
-		<script type="text/javascript" src="swfobject.js"></script>
-		<script type="text/javascript" src="js/swfmacmousewheel.js"></script>
+        <script type="text/javascript" src="history/history.js"></script>
+        <!${useBrowserHistory} END Browser History required section -->  
+		    
+        <script type="text/javascript" src="swfobject.js"></script>
         <script type="text/javascript">
             <!-- For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. --> 
             var swfVersionStr = "${version_major}.${version_minor}.${version_revision}";
@@ -48,7 +46,6 @@
             params.bgcolor = "${bgcolor}";
             params.allowscriptaccess = "sameDomain";
             params.allowfullscreen = "true";
-            params.wmode = "opaque";
             var attributes = {};
             attributes.id = "${application}";
             attributes.name = "${application}";
@@ -60,7 +57,6 @@
                 flashvars, params, attributes);
 			<!-- JavaScript enabled so display the flashContent div in case it is not replaced with a swf object. -->
 			swfobject.createCSS("#flashContent", "display:block;text-align:left;");
-			swfmacmousewheel.registerObject(attributes.id);
         </script>
     </head>
     <body>
@@ -69,17 +65,15 @@
 			 when JavaScript is disabled.
 		-->
         <div id="flashContent">
-        	<div align="left" style="width:976px; padding-left:20px">
-    			<img src="bg_image.jpg" width="799" height="432">
-  				<p>
-        			<span style="color:#FFF; font-size:16px; font-weight: bold;">Get <a href="http://www.adobe.com/go/getflashplayer" target="_blank">Adobe Flash</a> player to run the MiG&nbsp;&nbsp;&nbsp;</span>
-					<span><a href="http://www.adobe.com/go/getflashplayer" target="_blank">
-					<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" align="middle" />
-				</a></span></p>
-				<p>
-					<span style="color:#FFF;font-size:16px">If you see this message, contact the <a href="http://themapoffice.com" target="_blank">Map Office</a> for support at <a href="mailto:info@themapoffice.com">info@themapoffice.com</a>
-					</span></p>
-    		</div>
+        	<p>
+	        	To view this page ensure that Adobe Flash Player version 
+				${version_major}.${version_minor}.${version_revision} or greater is installed. 
+			</p>
+			<script type="text/javascript"> 
+				var pageHost = ((document.location.protocol == "https:") ? "https://" :	"http://"); 
+				document.write("<a href='http://www.adobe.com/go/getflashplayer'><img src='" 
+								+ pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' /></a>" ); 
+			</script> 
         </div>
 	   	
        	<noscript>

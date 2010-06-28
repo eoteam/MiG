@@ -12,10 +12,11 @@ package org.mig.model.vo.media
 	
 	import org.mig.model.vo.ContentNode;
 	
+	
 	[Bindable]
 	public class FileNode extends ContentNode
 	{
-		
+		public var isBranch:Boolean = false;
 		public function FileNode(baseLabel:String, config:XML, data:MediaData, parentContent:ContentNode,privileges:int) {
 			super(baseLabel, config, data, parentContent,privileges);	
 			children = null;

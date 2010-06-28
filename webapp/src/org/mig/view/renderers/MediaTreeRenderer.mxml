@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:MXTreeItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					  xmlns:s="library://ns.adobe.com/flex/spark"  autoDrawBackground="false"
+					  xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="24" xmlns:controls="org.mig.view.controls.*">
+	<fx:Script>
+		<![CDATA[
+			import org.mig.model.vo.ContentNode;
+			import org.mig.model.vo.media.DirectoryNode;
+			import org.mig.utils.GlobalUtils;
+			override public function set data(value:Object):void {
+				super.data = value;
+				if(data && data.state == ContentNode.LOADING) {
+					if (selected && hasState("selected"))
+						currentState = "selectedAndLoading";	
+					else if (hovered && hasState("hovered"))
+						currentState = "hoveredAndLoading";
+					else
+						currentState =  "normalAndLoading";
+				}
+			}
+			override protected  function getCurrentRendererState():String {
+				if(data && data.state == ContentNode.LOADING) {
+					if (selected && hasState("selected"))
+						return "selectedAndLoading";
+					
+					if (hovered && hasState("hovered"))
+						return "hoveredAndLoading";
+					
+					if (hasState("normal"))    
+						return "normalAndLoading";
+					
+					// If none of the above states are defined in the item renderer,
+					// we return the empty string. This means the user-defined renderer
+					// will display but essentially be non-interactive visually. 
+					return null;
+				}
+				else 
+					return super.getCurrentRendererState();
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:states>
+		<s:State name="normal" stateGroups="normalStates" />            
+		<s:State name="hovered" stateGroups="hoveredStates" />
+		<s:State name="selected" stateGroups="selectedStates" />
+		<s:State name="normalAndLoading"  stateGroups="normalStates,loadingStates"/>
+		<s:State name="hoveredAndLoading"  stateGroups="hoveredStates,loadingStates"/>
+		<s:State name="selectedAndLoading"  stateGroups="selectedStates,loadingStates"/>
+	</s:states>
+	<s:HGroup left="0" right="0" top="0" bottom="0" verticalAlign="middle">
+		<s:Rect id="indentationSpacer" width="{treeListData.indent}" percentHeight="100" alpha="0">
+			<s:fill>
+				<s:SolidColor color="0xFFFFFF" />
+			</s:fill>
+		</s:Rect>
+		<s:Group id="disclosureGroup">
+			<s:BitmapImage source="{treeListData.disclosureIcon}" visible="{treeListData.hasChildren}" />
+		</s:Group>
+		
+		<s:BitmapImage id="iconImage" source="{data is DirectoryNode?treeListData.icon:null}" 
+					   includeInLayout="{data is DirectoryNode?true:false}"  
+					   visible="{data is DirectoryNode?true:false}" />
+		<s:HGroup width="100%" verticalAlign="middle">
+			<s:Label id="labelField"  text="{data.label}" paddingTop="2" styleName="boldCopy"  />
+			<controls:Spinner includeIn="loadingStates"  id="spinner" visible="{data.state == ContentNode.LOADING}"  tickColor="0xffffff" size="20" tickWidth="2" numTicks="10" autoPlay="true" />	
+		</s:HGroup>
+		
+		<s:Label  text="{GlobalUtils.tranlateSize(data.data.size)}" paddingTop="2" styleName="boldCopy" color="0x666666" width="100%" />
+		<s:Label  text="{data.data.extension}" paddingTop="2" styleName="boldCopy" color="0x666666" width="100%"	/>
+	</s:HGroup>
+</s:MXTreeItemRenderer>

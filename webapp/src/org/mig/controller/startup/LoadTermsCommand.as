@@ -51,6 +51,7 @@ package org.mig.controller.startup
 						if(!j.children)
 							j.children = []
 						j.children.push(i);
+						j.isBranch = true;
 						i.parent = j;
 						break;
 					}

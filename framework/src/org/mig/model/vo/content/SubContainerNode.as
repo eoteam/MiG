@@ -25,6 +25,9 @@ package org.mig.model.vo.content
 			else
 				return _baseLabel + " (0)";	
 		}
+		override public function set label(value:String):void {
+			
+		}
 /*		
 
 		private function handleChildren(results:Array):void {

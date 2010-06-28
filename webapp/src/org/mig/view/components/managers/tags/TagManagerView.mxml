@@ -4,7 +4,9 @@
 		xmlns:s="library://ns.adobe.com/flex/spark" 
 		xmlns:mx="library://ns.adobe.com/flex/mx"
 		backgroundColor="0x121212"
-		width="100%" height="100%" xmlns:controls="org.mig.view.controls.*" xmlns:renderers="org.mig.view.renderers.*" xmlns:managers="org.mig.view.components.managers.*">
+		width="100%" height="100%" 
+		xmlns:controls="org.mig.view.controls.*" 
+		xmlns:renderers="org.mig.view.renderers.*" xmlns:managers="org.mig.view.components.managers.*">
 	<fx:Script>
 		<![CDATA[
 			import mx.events.DataGridEvent;

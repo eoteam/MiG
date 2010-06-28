@@ -4,7 +4,7 @@ package org.mig.view.controls
 	import flash.events.TimerEvent;
 	
 	import mx.controls.Tree;
-	import mx.controls.treeClasses.TreeItemRenderer;
+	import mx.controls.listClasses.IListItemRenderer;
 	import mx.core.mx_internal;
 	import mx.effects.Fade;
 	import mx.events.DragEvent;
@@ -25,7 +25,7 @@ package org.mig.view.controls
 		private var _cleanUpDelayedTimer:DelayedTimer = new DelayedTimer();
 						
 		//Store last folder that the user was over.
-		private var _lastNodeOver:TreeItemRenderer;
+		private var _lastNodeOver:IListItemRenderer;
 		
 		//Fade effect instance for the icon TreeItemRenderer.
 		private var _treeItemRendererFadeEffect:Fade = new Fade();
@@ -84,7 +84,7 @@ package org.mig.view.controls
 		/**
 		* When true the node dropped into will be closed on drop complete.
 		**/
-		private var _autoCloseOnDrop:Boolean=true;
+		private var _autoCloseOnDrop:Boolean=false;
 		[Bindable]
 		public function set autoCloseOnDrop(value:Boolean):void{
 			_autoCloseOnDrop=value;
@@ -152,10 +152,20 @@ package org.mig.view.controls
 				//Stop the indicator if required.
 				if (_treeItemRendererFadeEffect.isPlaying){
 					_treeItemRendererFadeEffect.end();
-					TreeItemRenderer(itemToItemRenderer(event.currentTarget.item)).alpha = 1;
+					itemToItemRenderer(event.currentTarget.item).alpha = 1;
 				}
 				trace(event.currentTarget.item.isBranch);
-				if (event.currentTarget.item.children.length !=0){
+				/*if(event.currentTarget.item.children == null) {
+					event.currentTarget.item.children = [];
+					event.currentTarget.item.isBranch = true;
+					try{
+						expandItem(event.currentTarget.item,true,false,true,event);
+					}
+					catch (err:Error){
+						return;
+					}
+				}*/
+				if (event.currentTarget.item.children.length !=0) {
 					try{
 						expandItem(event.currentTarget.item,true,true,true,event);
 						toggleState(false);
@@ -182,7 +192,7 @@ package org.mig.view.controls
 		private function initOpeningIndication(value:Object):void{
 						
 			//Grab the TreeItemRenderer.
-			var currNodeOver:TreeItemRenderer = TreeItemRenderer(itemToItemRenderer(value));
+			var currNodeOver:IListItemRenderer = IListItemRenderer(itemToItemRenderer(value));
 			
 			stopAnimation();
 			
@@ -310,17 +320,18 @@ package org.mig.view.controls
 			
 			if(autoCloseOpenNodes==false){return;}
 					
-			//Get the node currently dragging over.
-			var currNodeOver:TreeItemRenderer = TreeItemRenderer(indexToItemRenderer(calculateDropIndex(event)));
+			//Get the node currently dragging over. 
+			
+			var currNodeOver:IListItemRenderer  = indexToItemRenderer(calculateDropIndex(event));
 			
 			if (currNodeOver !=null){
 				
 				//If not a branch node exit.
-				if (currNodeOver.data.isBranch!=true){
+/*				if (currNodeOver.data.isBranch!=true){
 					_delayedTimer.cancelDelayedTimer();
 					stopAnimation();
 					return;
-				}
+				}*/
 				
 				//Cleanup opened nodes.
 				closeNodes(currNodeOver.data);

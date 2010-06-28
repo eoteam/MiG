@@ -19,6 +19,9 @@
 				inspector.content = event.itemRenderer.data as ContentData;
 				selectedCategoryLabel.text = event.itemRenderer.data.name;
 			}
+			public function refresh():void {
+				inspector.content = categoryList.selectedItem as ContentData;
+			}
 
 		]]>
 	</fx:Script>
@@ -36,9 +39,7 @@
 		
 		<controls:SpringLoadedTree width="25%" height="100%" id="categoryList" 
 		 itemClick="parentList_itemClickHandler(event)" labelField="name"
-		contentBackgroundColor="0xffffff" contentBackgroundAlpha="0" focusAlpha="0"	
-		rollOverColor="0xed1c58" color="0xffffff" selectionColor="0xed1c58"  
-		allowMultipleSelection="true"
+		allowMultipleSelection="true" styleName="categoryTree"
 		dropEnabled="true" dragMoveEnabled="true" dragEnabled="true" />
 		
 		<s:VGroup width="50%"  height="100%">

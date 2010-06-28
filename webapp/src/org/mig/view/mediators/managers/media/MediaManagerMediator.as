@@ -20,6 +20,7 @@ package org.mig.view.mediators.managers.media
 	import mx.managers.PopUpManagerChildList;
 	
 	import org.mig.events.AppEvent;
+	import org.mig.events.ContentEvent;
 	import org.mig.events.MediaEvent;
 	import org.mig.events.ViewEvent;
 	import org.mig.model.AppModel;
@@ -34,6 +35,7 @@ package org.mig.view.mediators.managers.media
 	import org.mig.view.components.managers.media.MediaManagerView;
 	import org.mig.view.components.managers.media.RenameView;
 	import org.mig.view.constants.DraggableViews;
+	import org.mig.view.events.ContentViewEvent;
 	import org.mig.view.events.ListItemEvent;
 	import org.robotlegs.mvcs.Mediator;
 	
@@ -88,14 +90,10 @@ package org.mig.view.mediators.managers.media
 			view.listView.addEventListener(ListEvent.ITEM_DOUBLE_CLICK,handleListItemDoubleClick);
 			view.listView.addEventListener(ListEvent.ITEM_CLICK,handleListItem);
 			view.listView.addEventListener(KeyboardEvent.KEY_DOWN,handleListItem);			
+			view.listView.addEventListener(ContentViewEvent.LOAD_CHILDREN,handleLoadChildren);
+			view.listView.addEventListener(DragEvent.DRAG_COMPLETE,handleListDragComplete);	
+			//view.listView.addEventListener(AdvancedDataGridEvent.ITEM_OPEN,handleListItemOpen);
 			
-/*			view.listView.addEventListener(DragEvent.DRAG_OVER,handleListDragOver);
-			view.listView.addEventListener(DragEvent.DRAG_DROP,handleListDragDrop);
-			view.listView.addEventListener(DragEvent.DRAG_ENTER, handleListDragEnter);
-			view.listView.addEventListener(DragEvent.DRAG_EXIT,handleListDragExit);*/
-			view.listView.addEventListener(DragEvent.DRAG_COMPLETE,handleListDragComplete);
-			
-			view.listView.addEventListener(AdvancedDataGridEvent.ITEM_OPEN,handleListItemOpen);
 			view.addEventListener('thumbViewCreated',handleThumbView);
 		}
 		private function initView():void {
@@ -372,43 +370,30 @@ package org.mig.view.mediators.managers.media
 			view.listView.invalidateList();
 		}
             
-		private function handleListDragEnter(event:DragEvent):void {
-			// Cancel default behaviour
-			event.preventDefault();
-			// Tell the DragManager that the Tree will accent the DragDrop
-			DragManager.acceptDragDrop(AdvancedDataGrid(event.target));
-			// hide the "drop line" that is shown in Tree control
-			// when dropping in a Tree
-			view.listView.showDropFeedback(event);
-		}    
-		private function handleListDragOver(event:DragEvent):void {
-			// Show the default "drop line" in the Tree control
-			view.listView.showDropFeedback(event);
-			// Cancel default behavious
-			event.preventDefault();
-		}    
-		private function handleListDragExit(event:DragEvent):void {
-			// hide the "drop line" that is shown in Tree control
-			// when dropping in a Tree
-			view.listView.hideDropFeedback(event);
-		}
 		private function handleListDragComplete(event:DragEvent):void {
-			// hide the "drop line" that is shown in Tree control
-			// when dropping in a Tree
-			view.listView.hideDropFeedback(event);
+			var items:Array = event.dragSource.dataForFormat(DraggableViews.MEDIA_ITEMS) as Array;
+			for each(var item:ContentNode in items) {
+				//move and rename item
+				
+			}
 		}
-		private function handleListItemOpen(event:AdvancedDataGridEvent):void {
+/*		private function handleListItemOpen(event:AdvancedDataGridEvent):void {
 			if(event.itemRenderer){
 			if(DirectoryNode(event.itemRenderer.data).state == ContentNode.NOT_LOADED)
 			eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.RETRIEVE_CHILDREN,event.itemRenderer.data)); 
 			}
 
-		}//set current node
+		}*/
+		private function handleLoadChildren(event:ContentViewEvent):void {
+			var node:DirectoryNode = event.args[0];
+			eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.RETRIEVE_CHILDREN,node));
+		}
+		//set current node
 		private function set selectedContent(value:DirectoryNode):void {
 			if(_selectedNode != value) {
 				_selectedNode = contentModel.currentDirectory = value;
 				view.currentState = "loading";
-				view.listDP = new HierarchicalData(value.children);
+				//view.listDP = new HierarchicalData(value.children);
 				view.tileDP = value.children;
 				var arr:Array = String(value.directory).split("/");
 				var currentLocation:String = "<font color='#999999'>"+appModel.fileDir;

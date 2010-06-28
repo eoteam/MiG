@@ -88,7 +88,7 @@ function renameItem($params)
 		sendSuccess();
 	}
 	else
-	sendFailed("Missing arguments for file rename");
+		sendFailed("Missing arguments for file rename");
 }
 function moveFile($params)
 {

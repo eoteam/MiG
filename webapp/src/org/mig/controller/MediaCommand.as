@@ -102,6 +102,9 @@ package org.mig.controller
 						}
 					}
 				break;
+				case MediaEvent.RENAME:
+					//fileService.moveFile(
+				break;
 			}
 		}	
 		private function checkDir(dir:DirectoryNode,dirs:Array):Boolean {
@@ -118,7 +121,7 @@ package org.mig.controller
 		private function handleDiskResults(data:Object):void {
 			var results:Array = data.result as Array;
 			var content:DirectoryNode = data.token.directory;	
-			content.children.removeAll();
+			//content.children.removeAll();
 			for each (var item:MediaData in results) {
 				if(item.type.toString() == "folder") {
 					var newdirectory:String = content.directory + item.name.toString() + '/';

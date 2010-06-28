@@ -20,7 +20,7 @@ package  org.mig.model.vo.media
 		public var numItems:int = 0;
 		public var diskFiles:Array;
 		public var newFiles:Array;
-		
+		public var isBranch:Boolean = false;
 		public function DirectoryNode(baseLabel:String, config:XML, data:MediaData, parentContent:ContentNode, directory:String,privileges:int) {
 			super(baseLabel, config, data, parentContent,privileges);	
 			this.directory = directory;
@@ -28,8 +28,10 @@ package  org.mig.model.vo.media
 			numFolders = 0;
 			diskFiles = [];
 			newFiles = [];
-			if(data.childrencount > 0 )
-				children.addItem({label: 'loading ...', data:null});
+			if(data.childrencount > 0 ) {
+				//children.addItem({label: 'loading ...', data:null});
+				isBranch = true;
+			}
 		}	
 		/*		
 		override protected function update(value:UpdateData):void {

@@ -81,7 +81,8 @@
 			createContent="insertRecord" 
 			retrieveContent="getData"
 			updateContent="updateRecord"
-			deleteContent="deleteRecord" />
+			deleteContent="deleteRecord" 
+			createVerbose="true" />
 	</manager>	
 		<manager id="userManager" name="Manager">
 		<child labelfield="name"

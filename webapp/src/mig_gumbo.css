@@ -261,8 +261,41 @@ mx|Tree {
 	disclosureOpenIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderOpenIcon");
 	textRollOverColor: #ffffff;
 	textSelectedColor: #ffffff;
+}	
+.categoryTree {
+	color: #FFFFFF;
+	disclosureClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderClosedIcon");
+	disclosureOpenIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderOpenIcon");
+	textRollOverColor: #ffffff;
+	textSelectedColor: #ffffff;
+	contentBackgroundColor: #ffffff;
+	contentBackgroundAlpha: 0; 
+	focusAlpha: 0;	
+	rollOverColor: #ed1c58; 
+	color: #ffffff;
+	selectionColor: #ed1c58;  
+	fontSize:14;
+	fontFamily: Transit-Bold;
 }
-
+.mediaTree {
+	color: #FFFFFF;
+	alternatingItemColors: #191819, #111111;
+	defaultLeafIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_noIcon");
+	folderClosedIcon: Embed(source='/migAssets/library.swf#folderIcon');
+	folderOpenIcon: Embed(source='/migAssets/library.swf#folderIcon');
+	disclosureClosedIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderClosedIcon");
+	disclosureOpenIcon: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderOpenIcon");
+	textRollOverColor: #ffffff;
+	textSelectedColor: #ffffff;
+	contentBackgroundColor: #ffffff;
+	contentBackgroundAlpha: 0; 
+	focusAlpha: 0;	
+	rollOverColor: #ed1c58; 
+	color: #ffffff;
+	selectionColor: #ed1c58;  
+	fontSize:14;
+	fontFamily: Transit-Bold;
+}
 mx|Text {
 	color: #FFFFFF;
 	fontSize: 14;

@@ -19,10 +19,12 @@
 	itemRenderer="org.mig.view.renderers.ContentTreeRenderer"
 	dataDescriptor="{new ContentTreeDataDescriptor(this)}"
 	rendererIsEditor="true" variableRowHeight="true"
+	dragFormat="{DraggableViews.CONTENT_TREE_CONTAINERS}"
 	showRoot="true" xmlns:effects="org.mig.view.effects.*">
 	<!-- -->
 	<fx:Script>
 		<![CDATA[
+			import org.mig.utils.ContentTreeDataDescriptor;
 			import mx.controls.treeClasses.ITreeDataDescriptor;
 			import mx.core.DragSource;
 			import mx.events.EffectEvent;
@@ -36,10 +38,6 @@
 			public var containerIcon:Class;
 			
 			public var editMode:Boolean = false;
-			override protected function addDragData(ds:Object):void {
-				DragSource(ds).addData(this.selectedItems, DraggableViews.CONTENT_TREE_CONTAINERS);
-				super.addDragData(ds);
-			}
 			override protected function keyDownHandler(event:KeyboardEvent):void {
 				if(!editMode)
 					super.keyDownHandler(event);

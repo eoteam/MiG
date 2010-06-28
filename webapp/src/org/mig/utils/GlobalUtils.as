@@ -78,6 +78,20 @@ package org.mig.utils
 				output = input.replace(new RegExp("[^a-zA-Z 0-9]+", "g"), "").replace(new RegExp("\\s+","g"), "-").toLowerCase();
 			return output;
 		}
+		
+		
+		public static function tranlateSize(size:Number):String {
+			var label:String = '';
+			if (size < 1024)
+				label = size + " B";
+			else if ((size > 1024) && (size < 1048576))
+				label = Math.round(size / 1024).toString() + " KB";
+			else if (size > 1048576)
+				label = Math.round(size / 1048576).toString() + " MB";	
+			
+			return label;	
+		}
+		
 		public static function accumulateChildren(content:ContentNode,arr:Array):void {
 			arr.push(content);
 			addChildren(content,arr);
@@ -218,6 +232,7 @@ package org.mig.utils
 					List(child).layout = flowLayout;
 					optionRenderer = new ClassFactory(CustomFieldListCheckBox);						
 					List(child).itemRenderer = optionRenderer;
+					List(child).addEventListener(FlexEvent.CREATION_COMPLETE,handleListCreationComplete);
 					BindingUtils.bindProperty(List(child),"height",flowLayout,"runningHeight");
 					BindingUtils.bindProperty(container,"height",flowLayout,"runningHeight");
 					dp.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleListChange);
@@ -377,6 +392,9 @@ package org.mig.utils
 		}
 		private static function handleTextAreaUpdate(event:FlexEvent):void {
 			TextArea(event.target).heightInLines = NaN;
+		}
+		private static function handleListCreationComplete(event:FlexEvent):void {
+			List(event.target).dataGroup.clipAndEnableScrolling = false;
 		}
 		public static function populateCustomField(container:ICustomFieldView,child:UIComponent):void {
 			var option:Object;

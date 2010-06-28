@@ -540,7 +540,7 @@ function insertTag($params) //+
 				$sql = "SELECT * FROM `term_taxonomy` WHERE id = '".$autoIncrementTermTax."'";
 			} else if (!isset($params['verbose']) || (isset($params['verbose']) && $params['verbose'] == 'true')) {
 				$sql = "SELECT * FROM `term_taxonomy` WHERE id = '".$insertid."'";
-			} else $sql = "SELECT * FROM `term_taxonomy` WHERE id = '".$insertid."'"; // verbose = false
+			} else $sql = "SELECT id FROM `term_taxonomy` WHERE id = '".$insertid."'"; // verbose = false
 
 			if ($result = queryDatabase($sql)) {
 				return $result;

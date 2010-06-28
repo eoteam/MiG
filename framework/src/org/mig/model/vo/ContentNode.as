@@ -53,6 +53,9 @@ package org.mig.model.vo
 	
 		public function handleCollection(event:CollectionEvent):void {
 			if(event.kind == CollectionEventKind.ADD) {
+				this.hasChildren = true;
+				//if(this.state != LOADING)
+					data.childrencount = children.length	;
 				for each(var node:Object in event.items) {
 					if(node is ContentNode) 
 						ContentNode(node).parentNode = this;
@@ -67,6 +70,9 @@ package org.mig.model.vo
 				return _baseLabel + " (" + data.childrencount + ")";
 			else
 				return _baseLabel;	
+		}
+		public function set label(value:String):void {
+			
 		}
 		public function get debugLabel():String {
 			if(data.childrencount > 0)

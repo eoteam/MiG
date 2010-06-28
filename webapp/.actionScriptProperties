@@ -1,9 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <actionScriptProperties mainApplicationPath="migApp.mxml" projectUUID="4911a525-0645-4162-bdd2-82f66f6e08b8" version="6">
-  <compiler additionalCompilerArguments="-locale en_US -keep-as3-metadata+=Inject -keep-as3-metadata+=PostConstruct" autoRSLOrdering="true" copyDependentFiles="true" flexSDK="Flex 4.1" fteInMXComponents="true" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" rootURL="" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
+  <compiler additionalCompilerArguments="-locale en_US -keep-as3-metadata+=Inject -keep-as3-metadata+=PostConstruct" autoRSLOrdering="true" copyDependentFiles="true" flexSDK="Flex 4.1" fteInMXComponents="true" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
     <compilerSourcePath/>
     <libraryPath defaultLinkType="3">
       <libraryPathEntry kind="4" path="">
+        <modifiedEntries>
+          <libraryPathEntry kind="3" linkType="4" path="${PROJECT_FRAMEWORKS}/libs/datavisualization.swc" useDefaultLinkType="true">
+            <crossDomainRsls>
+              <crossDomainRslEntry autoExtract="true" policyFileUrl="" rslUrl="datavisualization_4.1.0.16076.swz"/>
+            </crossDomainRsls>
+          </libraryPathEntry>
+        </modifiedEntries>
         <excludedEntries>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/flex.swc" useDefaultLinkType="false"/>
         </excludedEntries>
@@ -12,7 +19,11 @@
       <libraryPathEntry kind="3" linkType="1" path="/framework/bin/framework.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/halo_components/bin/halo_components.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/gumbo_components/bin/gumbo_components.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="/textLayout_ui/bin/textLayout_ui.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="4" path="/textLayout_ui/bin/textLayout_ui.swc" useDefaultLinkType="false">
+        <crossDomainRsls>
+          <crossDomainRslEntry autoExtract="true" policyFileUrl="" rslUrl="textLayout_ui.swf"/>
+        </crossDomainRsls>
+      </libraryPathEntry>
       <libraryPathEntry kind="3" linkType="1" path="/Robotlegs/bin/Robotlegs.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/Robotlegs-StateMachine/bin/Robotlegs-StateMachine.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/components_framework/bin/components_framework.swc" useDefaultLinkType="false"/>

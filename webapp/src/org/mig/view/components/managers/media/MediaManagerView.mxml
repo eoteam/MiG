@@ -6,26 +6,34 @@
 	xmlns:controls="org.mig.view.controls.*" 
 	xmlns:renderers="org.mig.view.renderers.*"
 	width="100%" height="100%"
-	contentBackgroundAlpha="0" 
+	contentBackgroundAlpha="0"  creationComplete="vgroup1_creationCompleteHandler(event)"
 	xmlns:assets="org.mig.view.components.assets.*" 
 	xmlns:container="com.appdivision.view.container.*" 
 	xmlns:layouts="org.mig.view.layouts.*" 
-	xmlns:media="org.mig.view.components.managers.media.*">
+	xmlns:media="org.mig.view.components.managers.media.*" xmlns:local="*">
 
 	<fx:Script>
 		<![CDATA[
 			import mx.collections.ArrayCollection;
+			import mx.collections.ArrayList;
 			import mx.collections.HierarchicalData;
+			import mx.collections.Sort;
+			import mx.collections.SortField;
 			import mx.core.Application;
 			import mx.effects.easing.*;
+			import mx.events.CollectionEvent;
+			import mx.events.CollectionEventKind;
+			import mx.events.FlexEvent;
 			
 			import org.mig.model.vo.media.FileNode;
 			import org.mig.model.vo.user.User;
-
+			import org.mig.utils.ContentTreeDataDescriptor;
+			import org.mig.view.constants.DraggableViews;
+			
 			
 			[Bindable] public var scalePercent:Number = 1;
 			[Bindable] public var currentLocation:String='';
-			[Bindable] public var listDP:HierarchicalData;
+			//[Bindable] public var listDP:;
 			[Bindable] public var tileDP:ArrayCollection;
 			[Bindable] public var thumbURL:String;
 			
@@ -80,6 +88,34 @@
 				else
 					clearSearch.visible = true;
 			}
+
+			protected function vgroup1_creationCompleteHandler(event:FlexEvent):void
+			{
+				this.testDataGridHeader.dataProvider= new ArrayList(columns);
+			}
+			private var lastSortIndex:int;
+			private function sortDG(event:Event):void
+			{
+				var s:Sort;
+				
+				if (testDataGridHeader.selectedIndex == -1)
+					return;
+				
+				var col:ColumnInfo = columns[testDataGridHeader.selectedIndex];
+				if (lastSortIndex == testDataGridHeader.selectedIndex)
+				{
+					col.descending = !col.descending;
+				}
+				s = new Sort(); 
+				s.fields = [new SortField(col.dataField, col.caseInsensitive, col.descending, col.numeric)];
+				ArrayCollection(listView.dataProvider).sort = s;
+				ArrayCollection(listView.dataProvider).refresh();
+				lastSortIndex = testDataGridHeader.selectedIndex;
+				testDataGridHeader.selectedIndex = -1;
+				testDataGridHeader.dataProvider.dispatchEvent(new CollectionEvent(CollectionEvent.COLLECTION_CHANGE, false, false, CollectionEventKind.RESET));
+				
+			}
+
 		]]>
 	</fx:Script>
 	
@@ -128,64 +164,81 @@
 				<s:layout>
 					<s:VerticalLayout  clipAndEnableScrolling="false" />
 				</s:layout>
-				<controls:MiGAdvancedDataGrid		
-					itemRollOver="lastRollOverIndex = event.rowIndex"
-					id="listView" 
-					thumbURL="{thumbURL}"
-					allowDragSelection="true"
-					dragEnabled="true"
-					dropEnabled="true"
-					dragMoveEnabled="true" 
-					dragFormat="Media"   
-					allowMultipleSelection="true"
-					headerHeight="22"  
-					sortableColumns="true"
-					draggableColumns="false" 
-					width="100%" height="100%" 
-					styleName="mediaManagerGrid"
-					editable="true" borderVisible="false" 
-					clearingLines="true" clearVLineIndices="[]" customProxy="true" 	 	 
-					doubleClickEnabled="true"
-					treeColumn="{treeColumn}" displayDisclosureIcon="true"
-					dataProvider="{listDP}">		
-					<controls:columns>
-						<mx:AdvancedDataGridColumn  editable="false" headerText="Name"  width="350" dataField="label"  id="treeColumn">
-<!--							<mx:itemRenderer>
-								<fx:Component>
-									<mx:TextInput borderStyle="none" backgroundAlpha="0" editable="false" enter="this.editable=true"   mouseDownOutside="this.editable=false" text="{this.data}" styleName="inputFieldBlack" />
-								</fx:Component>
-							</mx:itemRenderer>-->
-						</mx:AdvancedDataGridColumn>
-						<mx:AdvancedDataGridColumn editable="false" color="0x666666"  headerText="File Size" dataField="size" width="100">
-							<mx:itemRenderer>
-								<fx:Component>	
-									<renderers:ADGCell 	colorEnabled="true" outerFunction="{this.outerDocument.handleSizeField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>
-								</fx:Component>
-							</mx:itemRenderer>
-						</mx:AdvancedDataGridColumn>
-						<mx:AdvancedDataGridColumn  editable="false" color="0x666666" headerText="Extension" dataField="extension" width="50">
-							<mx:itemRenderer>
-								<fx:Component>
-									<renderers:ADGCell colorEnabled="true" outerFunction="{this.outerDocument.handleExtensionField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>
-								</fx:Component>
-							</mx:itemRenderer>			
-						</mx:AdvancedDataGridColumn>
-						<mx:AdvancedDataGridColumn  editable="false" headerText="Created By" dataField="createdby">
-							<mx:itemRenderer>
-								<fx:Component>
-									<renderers:ADGCell colorEnabled="true" outerFunction="{this.outerDocument.handleUserField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>
-								</fx:Component>
-							</mx:itemRenderer>
-						</mx:AdvancedDataGridColumn>
-						<mx:AdvancedDataGridColumn editable="false" headerText="Creation Date" dataField="createdate">
-							<mx:itemRenderer>
-								<fx:Component>
-									<renderers:ADGCell colorEnabled="true" outerFunction="{this.outerDocument.handleDateField}" textColor="0x666666" editable="false" fieldStyleName="managerGrayCell"/>
-								</fx:Component>
-							</mx:itemRenderer>
-						</mx:AdvancedDataGridColumn>
-					</controls:columns>
-				</controls:MiGAdvancedDataGrid>
+				<s:List id="testDataGridHeader" width="100%" labelField="headerText"  change="sortDG(event)" 
+						requireSelection="false" dragEnabled="true" dropEnabled="true" dragMoveEnabled="false"
+						 >
+					<s:layout>
+						<s:HorizontalLayout gap="0"/>
+					</s:layout>
+					<s:itemRenderer>
+						<fx:Component>
+							<s:ItemRenderer dataChange="update()" width="100%">
+								<fx:Script>
+									<![CDATA[
+										import spark.components.List;
+										import mx.collections.ICollectionView;
+										import mx.collections.Sort;
+										import mx.collections.SortField;
+										
+										// show correct sort arrow if appropriate
+										private function update():void
+										{
+											if (!data)
+												return;
+											
+											//width = data.width;
+											var s:Sort = ICollectionView(outerDocument.listView.dataProvider).sort;
+											var isSortColumn:Boolean;
+											var descending:Boolean;
+											if (s)
+											{
+												if (s.fields.length == 1)
+												{
+													if (s.fields[0].name == data.dataField)
+													{
+														isSortColumn = true;
+														descending = s.fields[0].descending;
+													}
+												}
+											}
+											sortArrowDown.visible = isSortColumn && descending;
+											sortArrowDown.includeInLayout = isSortColumn && descending;
+											sortArrowUp.visible = isSortColumn && !descending;
+											sortArrowUp.includeInLayout = isSortColumn && !descending;
+										}
+									]]>
+								</fx:Script>
+								<s:layout>
+									<s:HorizontalLayout paddingLeft="2" paddingRight="2" paddingTop="2" paddingBottom="1"/>
+								</s:layout>
+								<s:Group clipAndEnableScrolling="true" width="100%" minWidth="0">
+									<s:Label id="labelDisplay" />
+								</s:Group>
+								<s:Path id="sortArrowDown" data="M 0 0 L 8 0 L 4 8 L 0 0" >
+									<s:fill>
+										<s:SolidColor color="0" />
+									</s:fill>
+								</s:Path>
+								<s:Path id="sortArrowUp" data="M 0 8 L 8 8 L 4 0 L 0 8" >
+									<s:fill>
+										<s:SolidColor color="0" />
+									</s:fill>
+								</s:Path>
+							</s:ItemRenderer>
+						</fx:Component>
+					</s:itemRenderer>
+				</s:List>
+				<controls:MigTree styleName="mediaTree" id="listView"
+			    allowDragSelection="true" 
+			    dragEnabled="true" color="0xffffff"
+			    dropEnabled="true"  allowMultipleSelection="true"
+			    dragMoveEnabled="true"  labelField="label"
+			    width="100%" height="100%" 
+				doubleClickEnabled="true"  dragFormat="{DraggableViews.MEDIA_ITEMS}"
+				dataDescriptor="{new ContentTreeDataDescriptor(listView)}"
+			    dataProvider="{tileDP}" itemRenderer="org.mig.view.renderers.MediaTreeRenderer"/>
+			    
+
 				<s:Label styleName="bodyCopy" text="{tileDP.length + ' items'}" textAlign="center" width="100%"/>
 			</s:NavigatorContent>	
 
@@ -244,15 +297,11 @@
 		<s:SkinnableContainer id="loadingScreen" backgroundColor="0x000000" backgroundAlpha="0" 
 		width="100%" height="100%" visible.loading="true" visible.loaded="false">
 			<s:layout>
-				<s:VerticalLayout />
-			</s:layout>
-			<s:Rect height="35%" width="100%"/>
-			<s:HGroup width="100%">
-				<s:Rect  height="100%" width="55%"/>
+				<s:VerticalLayout verticalAlign="middle" horizontalAlign="center" />
+			</s:layout>			
 				<assets:MigLoaderSmall percentLoaded="1" scaleX=".75" scaleY=".75" rotation="45"/>
-				<s:Rect height="100%" width="45%"/>
-			</s:HGroup>	
-			<s:Rect height="65%" width="100%"/>
+				<s:Rect height="150" />
+				<controls:Spinner tickWidth="4" size="40" numTicks="10" tickColor="0xffffff" autoPlay="true" id="pendingSpinner" />					
 		</s:SkinnableContainer>
 	</s:Group>
 
@@ -265,6 +314,10 @@
 			<mx:Fade id="fadeOut" alphaFrom="1" alphaTo=".5" duration="200" /><!-- effectEnd="handleEffectEnd()" -->
 			<mx:Fade id="fadeIn" alphaFrom="0.5" alphaTo="1" duration="200" />
 		</mx:Sequence>
+		<fx:Array id="columns" >
+			<local:ColumnInfo dataField="name" headerText="Name" itemRenderer="spark.components.Label" valueProperty="text" />
+			<local:ColumnInfo dataField="size" headerText="Size" itemRenderer="spark.components.Label" valueProperty="text" />>
+		</fx:Array>
 	</fx:Declarations>
 
 	<s:states>

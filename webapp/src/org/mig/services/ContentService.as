@@ -135,7 +135,6 @@ package org.mig.services
 			var params:Object = new Object();
 			params.action = ValidFunctions.INSERT_RECORD;
 			params.tablename = config.@tablename.toString();
-			
 			if(contentModel.currentContainer.config.attribute("templateid").length() > 0)
 			{
 				params.templateid = contentModel.currentContainer.config.@templateid.toString();
@@ -201,7 +200,9 @@ package org.mig.services
 			params.action = config.@createContent.toString();
 			if(ValidFunctions.FUNCTIONS_WITH_TABLENAME.indexOf(params.action) != -1)
 				params.tablename = config.@tablename.toString();
-			
+			if(config.attribute("createVerbose").length() > 0) {
+				params.verbose = config.@createVerbose.toString() == "true" ? true:false;
+			}
 			//reverse translate customfields
 			for (prop in params) {
 				for each(var customfield:ContentCustomField in customfields) {
@@ -248,8 +249,8 @@ package org.mig.services
 			if(results.length == 1) {
 				var result:ContentData = results[0] as ContentData;
 				var vo:ContentData = data.token.content as ContentData;
-				for (var prop:String in result)
-					vo[prop] = result[prop];
+				vo.id = results[0].id;
+				vo.updateData = new UpdateData();
 			}	
 		}
 		private function loadContainer(content:ContentNode):void {

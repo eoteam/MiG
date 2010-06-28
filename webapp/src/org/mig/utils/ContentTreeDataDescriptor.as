@@ -1,4 +1,4 @@
-package org.mig.view.components.main
+package org.mig.utils
 {
 	import mx.collections.ICollectionView;
 	import mx.controls.Tree;
@@ -19,8 +19,8 @@ package org.mig.view.components.main
 		}
 		
 		override public function getChildren(node:Object, model:Object=null):ICollectionView {
-			if (node is ContainerNode) {
-				var nl:ContainerNode = node as ContainerNode;
+			if (node is ContentNode) {
+				var nl:ContentNode = node as ContentNode;
 				if (nl.state == ContentNode.NOT_LOADED && nl.hasChildren) {
 					tree.dispatchEvent(new ContentViewEvent(ContentViewEvent.LOAD_CHILDREN,nl));
 				}
@@ -31,8 +31,8 @@ package org.mig.view.components.main
 		}
 		//when the node is a LazyLoading, use the hasChildren property read from the data source
 		override public function hasChildren(node:Object, model:Object=null):Boolean {
-			if (node is ContainerNode) {
-				return (node as ContainerNode).hasChildren;
+			if (node is ContentNode) {
+				return (node as ContentNode).hasChildren;
 			} else {
 				return super.hasChildren(node, model);
 			}
