@@ -26,9 +26,10 @@ package org.mig.controller.startup
 			commandMap.mapEvent( AppStartupStateConstants.LOAD_CFGROUPS, LoadCustomFieldGroupsCommand, StateEvent, true );
 			commandMap.mapEvent( AppStartupStateConstants.LOAD_CFS, LoadCustomFieldsCommand,  StateEvent, true);
 			commandMap.mapEvent( AppStartupStateConstants.LOAD_TEMPLATES, LoadTemplatesCommand,  StateEvent, true);
+			commandMap.mapEvent( AppStartupStateConstants.LOAD_COLORS, LoadColorsCommand, StateEvent, true); 
 			commandMap.mapEvent( AppStartupStateConstants.STARTUP_COMPLETE,StartupCompleteCommand, StateEvent, true );
 			
-			appModel.startupItems = 10;
+			appModel.startupItems = 11;
 			
 			commandMap.mapEvent( AppStartupStateConstants.FAIL,StartupFailedCommand, StateEvent, true );
 

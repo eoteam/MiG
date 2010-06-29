@@ -49,5 +49,11 @@ package org.mig.services
 			params.tablename = "customfields";
 			this.createService(params,ResponseType.DATA,CustomField);
 		}
+		public function loadColors():void {
+			var params:Object = new  Object();
+			params.action = ValidFunctions.GET_DATA;
+			params.tablename = "colors";
+			this.createService(params,ResponseType.DATA,Object);			
+		}
 	}
 }

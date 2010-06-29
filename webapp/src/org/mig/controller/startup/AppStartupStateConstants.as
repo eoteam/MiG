@@ -71,6 +71,12 @@ package org.mig.controller.startup
 		public static const LOAD_CATEGORIESCF:String			= "event/start/categoriescf";
 		public static const LOAD_CATEGORIESCF_COMPLETE:String  	= "action/start/categoriescf/complete";
 		public static const LOAD_CATEGORIESCF_FAILED:String    	= "action/start/categoriescf/failed";
+
+		public static const LOADING_COLORS:String				= "state/starting/colors";
+		public static const LOAD_COLORS:String					= "event/start/colors";
+		public static const LOAD_COLORS_COMPLETE:String			= "action/start/colors/complete";
+		public static const LOAD_COLORS_FAILED:String			= "action/start/colors/failed";		
+		
 		
 		public static const STARTINGUP_COMPLETE:String			= "state/startingComplete";
 		public static const STARTUP_COMPLETE:String				= "event/startComplete";
@@ -134,8 +140,13 @@ package org.mig.controller.startup
 				</state>		
 		
 				<state name={LOADING_CATEGORIESCF} changed={LOAD_CATEGORIESCF}>
-				   <transition action={LOAD_CATEGORIESCF_COMPLETE} target={STARTINGUP_COMPLETE}/>			       
+				   <transition action={LOAD_CATEGORIESCF_COMPLETE} target={LOADING_COLORS}/>			       
 				   <transition action={LOAD_CATEGORIESCF_FAILED} target={FAILING}/>
+				</state>
+		
+				<state name={LOADING_COLORS} changed={LOAD_COLORS}>
+				   <transition action={LOAD_COLORS_COMPLETE} target={STARTINGUP_COMPLETE}/>			       
+				   <transition action={LOAD_COLORS_FAILED} target={FAILING}/>
 				</state>
 		
 				<!-- READY TO ACCEPT BROWSER OR USER NAVIGATION -->

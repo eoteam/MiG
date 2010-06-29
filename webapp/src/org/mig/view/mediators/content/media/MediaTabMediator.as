@@ -87,7 +87,7 @@ package org.mig.view.mediators.content.media
 			view.currentState = "usage";
 			view.addEventListener("viewBtn",handleViewButtons);
 			
-			
+			view.detailView.colorPicker.dataProvider = appModel.colors;
 			
 			view.usageList.dataProvider = types;
 			view.usageList.invalidateDisplayList();

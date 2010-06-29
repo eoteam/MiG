@@ -18,5 +18,7 @@ package org.mig.services.interfaces
 		function updateFile(file:FileNode,update:UpdateData):void;
 		
 		function updateDirectory(directory:DirectoryNode, name:String):void;
+		
+		function updateFilesByDirectory(directory:DirectoryNode,newdir:String):void;
 	}
 }

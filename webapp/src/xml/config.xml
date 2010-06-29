@@ -38,7 +38,6 @@
 					<tray type="RelatedContent" templateid="1" name="Related Posts" />
 					<tab type="Media" />
 					<tab type="TagsCategories" />
-
 				</child>
 			</child>
 		</child>

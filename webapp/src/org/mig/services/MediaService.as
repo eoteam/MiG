@@ -89,6 +89,14 @@ package org.mig.services
 			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
 			service.token.directory = directory;	
 		}
+		public function updateFilesByDirectory(directory:DirectoryNode,newdir:String):void {
+			var params:Object = new Object();
+			params.action = directory.config.@updateDirectory;
+			params.oldpath = directory.directory;
+			params.newpath = newdir;
+			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
+			service.token.directory = directory;
+		}
 		private function handleFileUpdated(data:Object):void {
 			var status:StatusResult = data.result as StatusResult;
 			if(status.success) {

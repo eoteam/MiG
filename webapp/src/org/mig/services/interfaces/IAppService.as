@@ -10,5 +10,6 @@ package org.mig.services.interfaces
 		
 		function loadCustomFieldGroups():void ;
 		
+		function loadColors():void;
 	}
 }

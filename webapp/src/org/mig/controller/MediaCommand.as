@@ -44,6 +44,8 @@ package org.mig.controller
 				case MediaEvent.RETRIEVE_CHILDREN:
 					node = event.args[0] as DirectoryNode;
 					node.state = ContentNode.LOADING;
+					node.newFiles = [];
+					node.numFolders = node.numFiles = 0;
 					fileService.readDirectory(node as DirectoryNode);
 					fileService.addHandlers(handleDiskResults);
 				break;
@@ -110,8 +112,10 @@ package org.mig.controller
 				break;
 				case MediaEvent.MOVE:
 					total = count = 0;
-					fileService.moveItem(event.args[0] as ContentNode, event.args[1] as DirectoryNode);
-					fileService.addHandlers(handleDiskMove);
+					for each(var content:ContentNode in event.args[0] as Array) {
+						fileService.moveItem(content, event.args[1] as DirectoryNode);
+						fileService.addHandlers(handleDiskMove);
+					}
 				break;
 			}
 		}	
@@ -159,7 +163,7 @@ package org.mig.controller
 							found = true;
 							var node:FileNode = new FileNode(result.name, content.config, result, content,content.privileges);
 							content.children.addItem(node);
-							content.numItems += 1;	
+							content.numFiles += 1;	
 							break;
 						}
 						else
@@ -198,7 +202,7 @@ package org.mig.controller
 				if(result.mimetypeid == MimeTypes.YOUTUBE) {
 					node = new FileNode(result.name, content.config, result, content,content.privileges);
 					content.children.addItem(node);
-					content.numItems += 1;	
+					content.numFiles += 1;	
 				}
 			}
 		}
@@ -245,7 +249,6 @@ package org.mig.controller
 		private var count:int;
 		
 		private function handleDiskMove(data:Object):void {
-			total = count = 0;
 			var result:StatusResult = data.result as StatusResult;
 			if(result.success) {
 				var dir:DirectoryNode = data.token.directory as DirectoryNode;
@@ -254,22 +257,36 @@ package org.mig.controller
 				if(content is FileNode) {
 					update = new UpdateData();
 					update.id = content.data.id;
-					update.path = dir.baseLabel + MediaData(content.data).path;
+					update.path = dir.directory;
 					mediaService.updateFile(content as FileNode,update);
 					mediaService.addHandlers(handleDBMove);
 					total++;
 				}
 				else {
-					var arr:Array = [];
-					GlobalUtils.accumulateFiles(content as DirectoryNode,arr);
-					for each(var file:FileNode in arr) {
-						update = new UpdateData();
-						update.id = content.data.id;
-						update.path = dir.baseLabel + MediaData(file.data).path;
-						mediaService.updateFile(file,update);
+					var newdir:String = dir.directory + content.baseLabel + '/';
+					if(content.state == ContentNode.LOADED) {
+						var arr:Array = [];
+						GlobalUtils.accumulateFiles(content as DirectoryNode,arr);
+						for each(var file:FileNode in arr) {
+							update = new UpdateData();
+							update.id = file.data.id;
+							if(file.parentNode == content)
+								update.path = newdir;
+							else
+								update.path =dir.directory.substr(0,dir.directory.length-1) + DirectoryNode(file.parentNode).directory; 
+							mediaService.updateFile(file,update);
+							mediaService.addHandlers(handleDBMove);
+							total++;
+						}
+						if(arr.length == 0) 
+							eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Folder moved successfully"));
+					}
+					else if(content.state == ContentNode.NOT_LOADED) {
+						mediaService.updateFilesByDirectory(content as DirectoryNode,newdir);
 						mediaService.addHandlers(handleDBMove);
 						total++;
 					}
+					DirectoryNode(content).directory = newdir;
 				}
 			}
 		}
@@ -280,6 +297,6 @@ package org.mig.controller
 				if(total == count)
 					eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Files moved successfully"));
 			}		
-		}
+		}			
 	}
 }

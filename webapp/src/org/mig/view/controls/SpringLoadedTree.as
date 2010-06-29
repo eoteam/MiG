@@ -165,7 +165,7 @@ package org.mig.view.controls
 						return;
 					}
 				}*/
-				if (event.currentTarget.item.children.length !=0) {
+				if (event.currentTarget.item.children && event.currentTarget.item.children.length !=0) {
 					try{
 						expandItem(event.currentTarget.item,true,true,true,event);
 						toggleState(false);
@@ -174,7 +174,7 @@ package org.mig.view.controls
 						return;
 					}
 				}
-				else{
+				else if(event.currentTarget.item.children) {
 					try{
 						expandItem(event.currentTarget.item,true,false,true,event);
 						toggleState(false);
@@ -337,7 +337,7 @@ package org.mig.view.controls
 				closeNodes(currNodeOver.data);
 						
 				//If the current node is not open then dispatch timer.
-				if (isItemOpen(currNodeOver.data)==false){
+				if (isItemOpen(currNodeOver.data)==false && currNodeOver.data.children != null){
 				
 					//If it's already running on the current item avoid a timer reset.
 					if (_delayedTimer.running ==true && _delayedTimer.item ==currNodeOver.data){
@@ -358,13 +358,9 @@ package org.mig.view.controls
 					}
 														
 					//Create callback.
-					_delayedTimer.startDelayedTimer(dispatchDelayedOpen,null,null,autoOpenTimerMS,1,currNodeOver.data);
-					
-					
-					
+					_delayedTimer.startDelayedTimer(dispatchDelayedOpen,null,null,autoOpenTimerMS,1,currNodeOver.data);								
 				}
-			}
-			
+			}		
 			else{
 				//If not over any node cleanup and return.
 				if (_lastNodeOver != null){

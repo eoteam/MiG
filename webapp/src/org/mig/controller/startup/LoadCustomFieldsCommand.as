@@ -31,7 +31,7 @@ package org.mig.controller.startup
 				}
 			}
 			trace("Startup: CustomFields Complete");
-			appModel.startupCount = 7;
+			appModel.startupCount = 8;
 			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP_PROGRESS,"CustomFields loaded")); 
 			eventDispatcher.dispatchEvent(new StateEvent(StateEvent.ACTION, AppStartupStateConstants.LOAD_CFS_COMPLETE));
 			

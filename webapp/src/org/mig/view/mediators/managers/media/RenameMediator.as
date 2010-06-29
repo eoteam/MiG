@@ -5,8 +5,10 @@
 	
 	import mx.managers.PopUpManager;
 	
+	import org.mig.events.MediaEvent;
 	import org.mig.events.NotificationEvent;
 	import org.mig.events.ViewEvent;
+	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.UpdateData;
 	import org.mig.model.vo.app.StatusResult;
 	import org.mig.model.vo.media.DirectoryNode;
@@ -70,7 +72,16 @@
 		}		
 		private function handleDBDirectoryRename(data:Object):void {
 			MediaData(view.content.data).name = view.input.text;
-			DirectoryNode(view.content).directory = "/"+view.input.text+"/";
+			DirectoryNode(view.content).directory =   DirectoryNode(view.content.parentNode).directory + view.input.text+"/";
+			if(view.content.state == ContentNode.LOADED) {
+				//reload, easiest thing to do
+				view.content.state = ContentNode.NOT_LOADED;
+				view.content.children.removeAll();
+				//weird, the contentTreeDescriptor will validate, check the state, triggered by the removeAll
+				//eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.RETRIEVE_CHILDREN,view.content));
+			}
+			
+			
 			DirectoryNode(view.content).baseLabel = view.input.text;
 			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_MEDIA));
 			eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Directory renamed successfully")); 

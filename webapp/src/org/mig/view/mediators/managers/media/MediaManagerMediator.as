@@ -12,6 +12,7 @@ package org.mig.view.mediators.managers.media
 	import mx.controls.AdvancedDataGrid;
 	import mx.events.AdvancedDataGridEvent;
 	import mx.events.CloseEvent;
+	import mx.events.ColorPickerEvent;
 	import mx.events.DragEvent;
 	import mx.events.FlexEvent;
 	import mx.events.ListEvent;
@@ -28,6 +29,7 @@ package org.mig.view.mediators.managers.media
 	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.model.vo.media.FileNode;
+	import org.mig.model.vo.media.MediaData;
 	import org.mig.utils.GlobalUtils;
 	import org.mig.view.components.main.SystemPopup;
 	import org.mig.view.components.managers.media.AddDirectoryView;
@@ -91,10 +93,13 @@ package org.mig.view.mediators.managers.media
 			view.listView.addEventListener(ListEvent.ITEM_CLICK,handleListItem);
 			view.listView.addEventListener(KeyboardEvent.KEY_DOWN,handleListItem);			
 			view.listView.addEventListener(ContentViewEvent.LOAD_CHILDREN,handleLoadChildren);
-			view.listView.addEventListener(DragEvent.DRAG_COMPLETE,handleListDragComplete);	
+			view.listView.addEventListener(DragEvent.DRAG_COMPLETE,handleListDragComplete);
+			view.listView.addEventListener(Event.CHANGE,handleListChange);
 			//view.listView.addEventListener(AdvancedDataGridEvent.ITEM_OPEN,handleListItemOpen);
 			
 			view.addEventListener('thumbViewCreated',handleThumbView);
+			view.colorPicker.addEventListener(ColorPickerEvent.CHANGE,handleColorPicker);
+			view.colorPicker.dataProvider = appModel.colors;
 		}
 		private function initView():void {
 			view.user = appModel.user;
@@ -334,11 +339,30 @@ package org.mig.view.mediators.managers.media
 		}   
 		private function handleListDragComplete(event:DragEvent):void {
 			var items:Array = event.dragSource.dataForFormat(DraggableViews.MEDIA_ITEMS) as Array;
-			if(items.length > 0 ) {
-				var parent:DirectoryNode = items[0].parentNode as DirectoryNode;
-				for each(var item:ContentNode in items) {
-					eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.MOVE,item,parent));
+			if(event.action != "none" && items.length > 0 ) {
+				var parent:DirectoryNode = items[0].parentNode as DirectoryNode;				
+				eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.MOVE,items,parent));
+			}
+		}
+		private function handleListChange(event:Event):void {
+			if(view.listView.selectedItem) {
+				view.colorPicker.enabled = true; 
+				var media:MediaData = view.listView.selectedItem.data as MediaData;
+				if(media.color) {
+					view.colorPicker.selectedColor = Number('0x'+String(media.color).substr(1,media.color.length));	
 				}
+				else
+					view.colorPicker.selectedColor = 0;
+			}
+			else
+				view.colorPicker.enabled = true; 
+		}
+		private function handleColorPicker(event:Event):void {
+			if(view.listView.selectedItems.length > 0) {
+				for each(var content:ContentNode in view.listView.selectedItems) 
+					MediaData(content.data).color = '#'+view.colorPicker.selectedColor.toString(16);
+				
+				view.listView.invalidateList();
 			}
 		}
 /*		private function handleListItemOpen(event:AdvancedDataGridEvent):void {

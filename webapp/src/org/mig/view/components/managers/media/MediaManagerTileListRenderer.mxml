@@ -51,12 +51,14 @@
 			}            
 			override public function set data(value:Object):void {
 				super.data = value;
+				if(value) {
 				_content = value as ContentNode;
 				fileSrc  = toolTip = _content.label;
 				fileExtension = '.'+MediaData(_content.data).extension;
 				if(created)
 					handleDataChange();
-			}								
+				}
+			}
 			public function handleCreatonComplete():void {
 				created = true;
 				handleDataChange();			

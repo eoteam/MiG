@@ -11,53 +11,14 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import flexlib.containers.FlowContainer;
-			
-			import mx.binding.utils.BindingUtils;
-			import mx.collections.ArrayCollection;
-			import mx.collections.ArrayList;
-			import mx.controls.ColorPicker;
-			import mx.controls.DateChooser;
-			import mx.controls.DateField;
-			import mx.core.Application;
-			import mx.core.FlexGlobals;
 			import mx.core.UIComponent;
-			import mx.events.CollectionEvent;
-			import mx.events.DragEvent;
-			import mx.events.ListEvent;
-			import mx.events.ResizeEvent;
 			
-			import org.mig.model.AppModel;
-			import org.mig.model.vo.ContentData;
-			import org.mig.model.vo.ContentNode;
 			import org.mig.model.vo.ValueObject;
 			import org.mig.model.vo.app.ContentCustomField;
 			import org.mig.model.vo.app.CustomField;
-			import org.mig.model.vo.app.CustomFieldOption;
-			import org.mig.model.vo.app.CustomFieldTypes;
 			import org.mig.model.vo.content.ContainerData;
-			import org.mig.model.vo.content.ContainerNode;
-
-			import org.mig.model.vo.media.FileNode;
 			import org.mig.utils.GlobalUtils;
-			import org.mig.view.components.managers.customfields.CustomFieldListCheckBox;
-			import org.mig.view.controls.DataCheckBox;
-			import org.mig.view.controls.DateTimePicker;
-			import org.mig.view.controls.LinkSocket;
-			import org.mig.view.controls.MiGDateField;
-			import org.mig.view.controls.MiGTLFTextArea;
-			import org.mig.view.controls.colorPicker;
 			import org.mig.view.interfaces.ICustomFieldView;
-			import org.mig.view.layouts.FlowLayout;
-			
-			import spark.components.Button;
-			import spark.components.CheckBox;
-			import spark.components.ComboBox;
-			import spark.components.DropDownList;
-			import spark.components.List;
-			import spark.components.NumericStepper;
-			import spark.components.TextArea;
-			import spark.components.TextInput;
 			
 				
 			private var _field:ContentCustomField;

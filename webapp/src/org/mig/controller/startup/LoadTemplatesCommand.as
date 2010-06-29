@@ -59,7 +59,7 @@ package org.mig.controller.startup
 				}
 			}
 			trace("Startup: Templates Complete");
-			appModel.startupCount = 8;	
+			appModel.startupCount = 9;	
 			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP_PROGRESS,"Templates loaded"));
 			eventDispatcher.dispatchEvent(new StateEvent(StateEvent.ACTION, AppStartupStateConstants.LOAD_TEMPLATES_COMPLETE));	
 		}

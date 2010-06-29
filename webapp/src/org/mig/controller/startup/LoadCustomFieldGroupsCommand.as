@@ -29,7 +29,7 @@ package org.mig.controller.startup
 				item.children = [];
 			}
 			trace("Startup: CustomField Groups Complete");
-			appModel.startupCount = 6;
+			appModel.startupCount = 7;
 			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP_PROGRESS,"CustomField Groups loaded"));
 			eventDispatcher.dispatchEvent(new StateEvent(StateEvent.ACTION, AppStartupStateConstants.LOAD_CFGROUPS_COMPLETE));	
 			
