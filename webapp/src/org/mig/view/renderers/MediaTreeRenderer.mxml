@@ -90,7 +90,7 @@
 		<s:HorizontalLayout verticalAlign="middle" />
 	</s:layout>
 	
-	<s:HGroup  top="0" bottom="0" maxWidth="350" verticalAlign="middle" id="holder">
+	<s:HGroup  top="0" bottom="0" minWidth="150" width="350" verticalAlign="middle" id="holder">
 		
 		<s:Rect id="indentationSpacer" width="{treeListData.indent}" percentHeight="100" alpha="0">
 			<s:fill>

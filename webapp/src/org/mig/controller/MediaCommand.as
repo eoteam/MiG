@@ -16,6 +16,7 @@ package org.mig.controller
 	import org.mig.services.interfaces.IContentService;
 	import org.mig.services.interfaces.IFileService;
 	import org.mig.services.interfaces.IMediaService;
+	import org.mig.utils.GlobalUtils;
 	import org.robotlegs.mvcs.Command;
 	
 	public class MediaCommand extends Command
@@ -108,6 +109,7 @@ package org.mig.controller
 					}
 				break;
 				case MediaEvent.MOVE:
+					total = count = 0;
 					fileService.moveItem(event.args[0] as ContentNode, event.args[1] as DirectoryNode);
 					fileService.addHandlers(handleDiskMove);
 				break;
@@ -239,24 +241,44 @@ package org.mig.controller
 			if(deleteTracker == deleteCount)
 				eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_MEDIA));
 		}
+		private var total:int;
+		private var count:int;
+		
 		private function handleDiskMove(data:Object):void {
+			total = count = 0;
 			var result:StatusResult = data.result as StatusResult;
 			if(result.success) {
 				var dir:DirectoryNode = data.token.directory as DirectoryNode;
 				var content:ContentNode = data.token.content as ContentNode;
+				var  update:UpdateData;
 				if(content is FileNode) {
-					var  update:UpdateData = new UpdateData();
+					update = new UpdateData();
 					update.id = content.data.id;
 					update.path = dir.baseLabel + MediaData(content.data).path;
 					mediaService.updateFile(content as FileNode,update);
 					mediaService.addHandlers(handleDBMove);
+					total++;
+				}
+				else {
+					var arr:Array = [];
+					GlobalUtils.accumulateFiles(content as DirectoryNode,arr);
+					for each(var file:FileNode in arr) {
+						update = new UpdateData();
+						update.id = content.data.id;
+						update.path = dir.baseLabel + MediaData(file.data).path;
+						mediaService.updateFile(file,update);
+						mediaService.addHandlers(handleDBMove);
+						total++;
+					}
 				}
 			}
 		}
 		private function handleDBMove(data:Object):void {
 			var result:StatusResult = data.result as StatusResult;
 			if(result.success) {
-				
+				count++;
+				if(total == count)
+					eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Files moved successfully"));
 			}		
 		}
 	}
