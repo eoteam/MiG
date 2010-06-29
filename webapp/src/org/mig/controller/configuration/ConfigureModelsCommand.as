@@ -4,6 +4,7 @@ package org.mig.controller.configuration
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
 	import org.mig.model.vo.relational.ContentMedia;
+	import org.mig.utils.GlobalUtils;
 	import org.robotlegs.mvcs.Command;
 	import org.robotlegs.utilities.statemachine.StateEvent;
 
@@ -14,6 +15,7 @@ package org.mig.controller.configuration
 			injector.mapSingleton(AppModel);
 			injector.mapSingleton(ContentModel);
 			
+			//injector.mapSingleton(GlobalUtils);
 			//register configurable VOs
 			injector.mapClass(ContentMedia,ContentMedia);
 			

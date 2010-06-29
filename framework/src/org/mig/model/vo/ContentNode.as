@@ -55,12 +55,15 @@ package org.mig.model.vo
 			if(event.kind == CollectionEventKind.ADD) {
 				this.hasChildren = true;
 				//if(this.state != LOADING)
-					data.childrencount = children.length	;
+					data.childrencount = children.length;
 				for each(var node:Object in event.items) {
 					if(node is ContentNode) 
 						ContentNode(node).parentNode = this;
 				}
-			}	
+			}
+			else if(event.kind == CollectionEventKind.REMOVE) {
+				data.childrencount = children.length;
+			}
 		}	
 		public function get config():XML {
 			return _config;

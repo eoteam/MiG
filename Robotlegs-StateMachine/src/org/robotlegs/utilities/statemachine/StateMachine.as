@@ -13,7 +13,7 @@ package org.robotlegs.utilities.statemachine
 		public var eventDispatcher:IEventDispatcher;
 		
 		/**
-		 *  StateMachine Constructor
+		 * StateMachine Constructor
 		 * @param eventDispatcher an event deispatcher used to commincate with interested actors.
 		 * This is typically the Robotlegs framework.
 		 * 
@@ -28,8 +28,21 @@ package org.robotlegs.utilities.statemachine
 		{
 			eventDispatcher.addEventListener( StateEvent.ACTION, handleStateAction );
 			eventDispatcher.addEventListener( StateEvent.CANCEL, handleStateCancel );
+			eventDispatcher.addEventListener( StateEvent.DISPOSE, handleStateDispose );
 			if ( initial ) transitionTo( initial, null );
 		}
+        
+		public function dispose():void 
+        {
+            eventDispatcher.removeEventListener( StateEvent.ACTION, handleStateAction );
+			eventDispatcher.removeEventListener( StateEvent.CANCEL, handleStateCancel );
+            eventDispatcher.removeEventListener( StateEvent.DISPOSE, handleStateDispose );
+            //_currentState = null;
+            states = null;
+            initial = null;
+            eventDispatcher.dispatchEvent( new StateEvent(StateEvent.DISPOSED) );
+            eventDispatcher = null;
+        }
 		
 		protected function handleStateAction(event:StateEvent):void
 		{
@@ -42,6 +55,11 @@ package org.robotlegs.utilities.statemachine
 		protected function handleStateCancel(event:StateEvent):void
 		{
 			canceled = true;
+		}
+        
+        protected function handleStateDispose(event:StateEvent):void
+		{
+			dispose();
 		}
 
 		/**

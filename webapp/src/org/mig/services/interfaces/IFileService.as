@@ -2,6 +2,7 @@ package org.mig.services.interfaces
 {
 	import flash.net.FileReference;
 	
+	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.model.vo.media.FileNode;
 
@@ -29,6 +30,6 @@ package org.mig.services.interfaces
 		
 		function renameDirectory(directory:DirectoryNode,name:String):void;
 		
-			
+		function moveItem(content:ContentNode,to:DirectoryNode):void;	
 	}
 }

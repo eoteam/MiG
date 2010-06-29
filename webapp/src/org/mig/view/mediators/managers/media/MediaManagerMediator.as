@@ -331,50 +331,14 @@ package org.mig.view.mediators.managers.media
 			PopUpManager.addPopUp(popup, view , false , PopUpManagerChildList.POPUP);
 			mediatorMap.createMediator( popup );
 			PopUpManager.centerPopUp(popup);
-		}
-		private function handleListDragDrop(event:DragEvent):void {
-			
-			// cancel default
-			event.preventDefault();
-                
-			// get the drag format (its always items in our case
-			// when you are dragging FROM a Tree its treeItems
-			var draggedFormat:String = event.dragSource.formats[0];
-                
-			// Get the dragged items
-			var draggedItems:Array = event.dragSource.dataForFormat(draggedFormat) as Array;
-                
-			// Calculate the index in the Tree where the items were dropped 
-			var dropIndex:int = view.listView.calculateDropIndex(event);
-                
-			// Set the selected index of the Tree to the dropIndex
-			view.listView.selectedIndex = dropIndex;
-                
-			// Check if we are dropping on a node
-                
-			// Add each dragged item to the Tree by apppending it
-			// as a child of the selected node in the Tree.
-			for each( var node:ContentNode in view.listView.selectedItems ) {
-				// create item
-				// use appendChild to add the item. 
-				// (if selected item is an item then append to parent)
-				if( view.listView.selectedItem is FileNode) {
-					FileNode(view.listView.selectedItem).parentNode.children.addItem(node);
-					node.parentNode = FileNode(view.listView.selectedItem).parentNode;
-				}
-				else {
-					DirectoryNode(view.listView.selectedItem).children.addItem(node);  
-					node.parentNode =  DirectoryNode(view.listView.selectedItem);             
-            	}
-			}
-			view.listView.invalidateList();
-		}
-            
+		}   
 		private function handleListDragComplete(event:DragEvent):void {
 			var items:Array = event.dragSource.dataForFormat(DraggableViews.MEDIA_ITEMS) as Array;
-			for each(var item:ContentNode in items) {
-				//move and rename item
-				
+			if(items.length > 0 ) {
+				var parent:DirectoryNode = items[0].parentNode as DirectoryNode;
+				for each(var item:ContentNode in items) {
+					eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.MOVE,item,parent));
+				}
 			}
 		}
 /*		private function handleListItemOpen(event:AdvancedDataGridEvent):void {

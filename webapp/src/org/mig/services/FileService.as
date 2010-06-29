@@ -148,6 +148,18 @@ package org.mig.services
 			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
 			service.token.directory = directory;	
 		}
+		public function moveItem(content:ContentNode,to:DirectoryNode):void {
+			var params:Object = new Object();
+			params.action = ValidFunctions.RENAME_ITEM;
+			if(content is FileNode)
+				params.oldname = MediaData(content.data).path + MediaData(content.data).name;
+			else 
+				params.oldname = DirectoryNode(content).directory;
+			params.newname = '/'+to.baseLabel + params.oldname;		
+			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
+			service.token.content = content;
+			service.token.directory = to;
+		}
 		private function handleProgress(event:ProgressEvent):void {
 			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.FILE_DOWNLOAD_PROGRESS,event.bytesLoaded,event.bytesTotal));
 		}

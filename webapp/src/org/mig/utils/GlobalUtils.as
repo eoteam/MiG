@@ -22,6 +22,8 @@ package org.mig.utils
 	import mx.events.PropertyChangeEventKind;
 	import mx.formatters.DateFormatter;
 	
+	import org.mig.model.AppModel;
+	import org.mig.model.UserModel;
 	import org.mig.model.vo.ContentData;
 	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.ValueObject;
@@ -48,6 +50,7 @@ package org.mig.utils
 	
 	public class GlobalUtils //implements IGlobalUtils
 	{
+
 		public static function createContextMenu(titles:Array,itemCallBack:Function,menuCallback:Function,targets:Array):Object {
 			 return createFlexMenu(titles,itemCallBack,menuCallback,targets);
 		}
@@ -90,6 +93,17 @@ package org.mig.utils
 				label = Math.round(size / 1048576).toString() + " MB";	
 			
 			return label;	
+		}
+		public static function translateUser(userid:int):String {
+		return "";//userModel.findUserById(userid).toString()
+		}
+		public static function translateDate(value:Number,format:String=null):String {
+			var d:Date = new Date();
+			d.time = value*1000;
+			dateFormatter.formatString = "MM/DD/YY";
+			if(format)
+				dateFormatter.formatString = format;
+			return dateFormatter.format(d);
 		}
 		
 		public static function accumulateChildren(content:ContentNode,arr:Array):void {

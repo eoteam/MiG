@@ -10,7 +10,8 @@
 	xmlns:assets="org.mig.view.components.assets.*" 
 	xmlns:container="com.appdivision.view.container.*" 
 	xmlns:layouts="org.mig.view.layouts.*" 
-	xmlns:media="org.mig.view.components.managers.media.*" xmlns:local="*">
+	xmlns:media="org.mig.view.components.managers.media.*"
+	xmlns:utils="org.mig.utils.*">
 
 	<fx:Script>
 		<![CDATA[
@@ -24,9 +25,13 @@
 			import mx.events.CollectionEvent;
 			import mx.events.CollectionEventKind;
 			import mx.events.FlexEvent;
+			import mx.utils.ObjectUtil;
+			import mx.utils.StringUtil;
 			
+			import org.mig.model.vo.ContentNode;
 			import org.mig.model.vo.media.FileNode;
 			import org.mig.model.vo.user.User;
+			import org.mig.utils.ColumnInfo;
 			import org.mig.utils.ContentTreeDataDescriptor;
 			import org.mig.view.constants.DraggableViews;
 			
@@ -92,7 +97,45 @@
 			protected function vgroup1_creationCompleteHandler(event:FlexEvent):void
 			{
 				this.testDataGridHeader.dataProvider= new ArrayList(columns);
+				var n:int = columns.length;
+				for (var i:int = 0; i < n; i++)
+				{
+					var sep:HeaderSeparator = new HeaderSeparator();
+					sep.columns = columns;
+					sep.top = 0;
+					sep.bottom = 0;
+					sep.addEventListener("columnResize", refresh);
+					separators.addElement(sep);
+				}
+				updateSeparators();
 			}
+			private function refresh(event:Event = null):void
+			{
+				testDataGridHeader.dataProvider.dispatchEvent(new CollectionEvent(CollectionEvent.COLLECTION_CHANGE, false, false, CollectionEventKind.RESET));
+				listView.dataProvider.dispatchEvent(new CollectionEvent(CollectionEvent.COLLECTION_CHANGE, false, false, CollectionEventKind.RESET));
+				updateSeparators();
+			}
+			private function updateSeparators():void
+			{
+				var n:int = separators.numElements;//columns.length;
+				var ww:Number = 0;
+				for (var i:int = 0; i < n; i++)
+				{
+					var sep:HeaderSeparator = separators.getElementAt(i) as HeaderSeparator;
+					if (sep)
+					{
+						ww += columns[i].width;
+						sep.x = ww;
+						
+						// don't show renderers if they'd cover the border or be off screen
+						if (listView && (sep.x >= listView.width - 2))
+							sep.visible = false;
+						else
+							sep.visible = true;
+					}
+				}
+			} 
+			
 			private var lastSortIndex:int;
 			private function sortDG(event:Event):void
 			{
@@ -106,14 +149,29 @@
 				{
 					col.descending = !col.descending;
 				}
-				s = new Sort(); 
+			 	s = new Sort(); 
 				s.fields = [new SortField(col.dataField, col.caseInsensitive, col.descending, col.numeric)];
+				s.compareFunction = listCompare;
 				ArrayCollection(listView.dataProvider).sort = s;
 				ArrayCollection(listView.dataProvider).refresh();
+				//listView.invalidateDisplayList();
 				lastSortIndex = testDataGridHeader.selectedIndex;
-				testDataGridHeader.selectedIndex = -1;
-				testDataGridHeader.dataProvider.dispatchEvent(new CollectionEvent(CollectionEvent.COLLECTION_CHANGE, false, false, CollectionEventKind.RESET));
+				//testDataGridHeader.selectedIndex = -1;
+				//testDataGridHeader.dataProvider.dispatchEvent(new CollectionEvent(CollectionEvent.COLLECTION_CHANGE, false, false, CollectionEventKind.RESET)); */
 				
+			}
+			private function listCompare(a:ContentNode,b:ContentNode,fields:Array):int {
+				var field:SortField = fields[0] as SortField;
+				var valueA:* = a.data[field.name];
+				var valueB:* = b.data[field.name];
+				var result:int;
+				if(field.numeric) {
+					result =  ObjectUtil.numericCompare(valueA,valueB);
+				}
+				else {
+					result =   ObjectUtil.stringCompare(valueA,valueB,field.caseInsensitive);
+				}
+				return result;
 			}
 
 		]]>
@@ -161,23 +219,21 @@
 	<s:Group width="100%" height="100%">
 		<mx:ViewStack width="100%" height="100%" id="stack" visible.loading="false" visible.loaded="true">
 			<s:NavigatorContent width="100%" height="100%">
-				<s:layout>
-					<s:VerticalLayout  clipAndEnableScrolling="false" />
-				</s:layout>
+
 				<s:List id="testDataGridHeader" width="100%" labelField="headerText"  change="sortDG(event)" 
-						requireSelection="false" dragEnabled="true" dropEnabled="true" dragMoveEnabled="false"
-						 >
+				dragDrop="callLater(updateSeparators)" updateComplete="updateSeparators()" visible="false"
+				requireSelection="false" dragEnabled="true" dropEnabled="false" dragMoveEnabled="false">
 					<s:layout>
 						<s:HorizontalLayout gap="0"/>
 					</s:layout>
 					<s:itemRenderer>
 						<fx:Component>
-							<s:ItemRenderer dataChange="update()" width="100%">
+							<s:ItemRenderer dataChange="update()" height="22">
 								<fx:Script>
 									<![CDATA[
 										import spark.components.List;
 										import mx.collections.ICollectionView;
-										import mx.collections.Sort;
+											import mx.collections.Sort;
 										import mx.collections.SortField;
 										
 										// show correct sort arrow if appropriate
@@ -186,7 +242,7 @@
 											if (!data)
 												return;
 											
-											//width = data.width;
+											width = data.width;
 											var s:Sort = ICollectionView(outerDocument.listView.dataProvider).sort;
 											var isSortColumn:Boolean;
 											var descending:Boolean;
@@ -208,38 +264,43 @@
 										}
 									]]>
 								</fx:Script>
-								<s:layout>
-									<s:HorizontalLayout paddingLeft="2" paddingRight="2" paddingTop="2" paddingBottom="1"/>
-								</s:layout>
-								<s:Group clipAndEnableScrolling="true" width="100%" minWidth="0">
-									<s:Label id="labelDisplay" />
+								<s:Group clipAndEnableScrolling="true" width="100%" minWidth="0" 
+								top="2" bottom="1" left="2" right="2">
+									<s:Button styleName="defaultGrayButton" label="{data.headerText}" width="100%" />
+									<s:Path id="sortArrowDown" data="M 0 0 L 8 0 L 4 8 L 0 0" right="2" verticalCenter="0">
+										<s:fill>
+											<s:SolidColor color="0" />
+										</s:fill>
+									</s:Path>
+									<s:Path id="sortArrowUp" data="M 0 8 L 8 8 L 4 0 L 0 8" right="2" verticalCenter="0">
+										<s:fill>
+											<s:SolidColor color="0" />
+										</s:fill>
+									</s:Path>
 								</s:Group>
-								<s:Path id="sortArrowDown" data="M 0 0 L 8 0 L 4 8 L 0 0" >
-									<s:fill>
-										<s:SolidColor color="0" />
-									</s:fill>
-								</s:Path>
-								<s:Path id="sortArrowUp" data="M 0 8 L 8 8 L 4 0 L 0 8" >
-									<s:fill>
-										<s:SolidColor color="0" />
-									</s:fill>
-								</s:Path>
+								
 							</s:ItemRenderer>
 						</fx:Component>
 					</s:itemRenderer>
 				</s:List>
 				<controls:MigTree styleName="mediaTree" id="listView"
-			    allowDragSelection="true" 
+			    allowDragSelection="true"  top="26"
 			    dragEnabled="true" color="0xffffff"
 			    dropEnabled="true"  allowMultipleSelection="true"
 			    dragMoveEnabled="true"  labelField="label"
 			    width="100%" height="100%" 
 				doubleClickEnabled="true"  dragFormat="{DraggableViews.MEDIA_ITEMS}"
 				dataDescriptor="{new ContentTreeDataDescriptor(listView)}"
-			    dataProvider="{tileDP}" itemRenderer="org.mig.view.renderers.MediaTreeRenderer"/>
+			    dataProvider="{tileDP}">
+					<controls:itemRenderer>
+						<fx:Component>
+							<renderers:MediaTreeRenderer columns="{outerDocument.columns}" />
+						</fx:Component>
+					</controls:itemRenderer>
+				</controls:MigTree>
 			    
-
-				<s:Label styleName="bodyCopy" text="{tileDP.length + ' items'}" textAlign="center" width="100%"/>
+				<s:Group id="separators" top="0" bottom="0" left="0" right="0"  visible="false"/>
+				<s:Label styleName="bodyCopy" text="{tileDP.length + ' items'}" bottom="0" textAlign="center" width="100%"/>
 			</s:NavigatorContent>	
 
 			<s:NavigatorContent width="100%" height="100%">
@@ -262,33 +323,6 @@
 						<s:TileLayout  verticalGap="4" horizontalGap="4" clipAndEnableScrolling="true" useVirtualLayout="true" orientation="rows" rowHeight="{250*scalePercent}" columnWidth="{250*scalePercent}" />
 					</controls:layout>
 				</controls:MiGList>
-				<!--<mx:Canvas width="100%" height="100%" horizontalScrollPolicy="off">
-					<controls:MiGTileList
-						creationComplete="this.dispatchEvent(new Event('thumbViewCreated'))"
-						itemRollOver="lastRollOverIndex = event.rowIndex"
-						id="thumbView" 
-						width="100%"
-						thumbURL="{thumbURL}"
-						allowDragSelection="true"
-						dragEnabled="true" dragFormat="Media"
-						allowMultipleSelection="true" 
-						doubleClickEnabled="true"
-						columnWidth="{260*scalePercent}"  
-						rowHeight="{300*scalePercent}" 
-						scalePercent="{scalePercent}"
-						borderVisible="false"
-						contentBackgroundAlpha="0" 	
-						rollOverColor="0xed1c58" 
-						selectionColor="0xed1c58" 
-						selectionEasingFunction="Exponential.easeIn"
-						dataProvider="{tileDP}">
-						<controls:itemRenderer>
-							<fx:Component>
-								<renderers:MediaManagerTileRenderer scalePercent="{outerDocument.scalePercent}" thumbURL="{outerDocument.thumbURL}" />
-							</fx:Component>
-						</controls:itemRenderer>
-					</controls:MiGTileList>
-				</mx:Canvas>-->
 				<s:Label styleName="bodyCopy" text="{tileDP.length + ' items'}" textAlign="center" width="100%" bottom="5"/>
 			</s:NavigatorContent>
 		</mx:ViewStack>	
@@ -315,9 +349,93 @@
 			<mx:Fade id="fadeIn" alphaFrom="0.5" alphaTo="1" duration="200" />
 		</mx:Sequence>
 		<fx:Array id="columns" >
-			<local:ColumnInfo dataField="name" headerText="Name" itemRenderer="spark.components.Label" valueProperty="text" />
-			<local:ColumnInfo dataField="size" headerText="Size" itemRenderer="spark.components.Label" valueProperty="text" />>
+			<utils:ColumnInfo dataField="name" headerText="Name"  valueProperty="text"  />
+			<utils:ColumnInfo dataField="size" headerText="Size" numeric="true"  valueProperty="text"  width="150" />
+			<utils:ColumnInfo dataField="extension" headerText="Extension" numeric="false"  valueProperty="text"  width="150" />
 		</fx:Array>
+		<fx:Component className="HeaderSeparator">
+			<s:Group mouseDown="startDragColumn(event)" mouseOver="showCursor(event)" mouseOut="hideCursor(event)"
+					 alpha="0.8">
+				<fx:Script>
+					<![CDATA[
+						import mx.events.SandboxMouseEvent;
+						
+						import org.mig.view.skins.controls.ColumnDragCursor;
+						
+						import spark.components.Group;
+						
+						private var dragCursorID:int;
+						public var columns:Array;
+						
+						private function showCursor(event:MouseEvent):void
+						{
+							if (inDrag)
+								return;
+							
+							dragCursorID = cursorManager.setCursor(ColumnDragCursor);
+						}
+						
+						private function hideCursor(event:MouseEvent):void
+						{
+							if (inDrag)
+								return;
+							
+							if (dragCursorID != -1)
+								cursorManager.removeCursor(dragCursorID);
+							dragCursorID = -1;
+						}
+						
+						private var inDrag:Boolean;
+						
+						private function startDragColumn(event:MouseEvent):void
+						{
+							inDrag = true;
+							
+							systemManager.getSandboxRoot().addEventListener(MouseEvent.MOUSE_UP, stopDragColumn);
+							systemManager.getSandboxRoot().addEventListener(SandboxMouseEvent.MOUSE_UP_SOMEWHERE, stopDragColumn);
+							systemManager.getSandboxRoot().addEventListener(MouseEvent.MOUSE_MOVE, dragColumn);
+							//trace("startDragColumn");
+						}
+						
+						private function stopDragColumn(event:Event):void
+						{
+							inDrag = false;
+							
+							if (dragCursorID != -1)
+								cursorManager.removeCursor(dragCursorID);
+							dragCursorID = -1;
+							
+							systemManager.getSandboxRoot().removeEventListener(MouseEvent.MOUSE_UP, stopDragColumn);
+							systemManager.getSandboxRoot().removeEventListener(SandboxMouseEvent.MOUSE_UP_SOMEWHERE, stopDragColumn);
+							systemManager.getSandboxRoot().removeEventListener(MouseEvent.MOUSE_MOVE, dragColumn);
+							
+							//trace("stopDragColumn");
+						}
+						
+						private function dragColumn(event:MouseEvent):void
+						{
+							//trace("dragColumn");
+							var pt:Point = parent.globalToLocal(new Point(event.stageX, event.stageY));
+							x = pt.x;
+							
+							var index:int = Group(parent).getElementIndex(this);
+							var ww:Number = 0;
+							for (var i:int = 0; i < index; i++)
+								ww += columns[i].width;
+							
+							columns[i].width = x - ww;
+							dispatchEvent(new Event("columnResize"));
+						}
+						
+					]]>
+				</fx:Script>
+				<s:Rect width="2" top="0" bottom="0" >
+					<s:fill>
+						<s:SolidColor color="0" />
+					</s:fill>
+				</s:Rect>
+			</s:Group>
+		</fx:Component>
 	</fx:Declarations>
 
 	<s:states>

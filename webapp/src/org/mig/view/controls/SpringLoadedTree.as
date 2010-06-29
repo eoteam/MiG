@@ -25,7 +25,7 @@ package org.mig.view.controls
 		private var _cleanUpDelayedTimer:DelayedTimer = new DelayedTimer();
 						
 		//Store last folder that the user was over.
-		private var _lastNodeOver:IListItemRenderer;
+		public var _lastNodeOver:IListItemRenderer;
 		
 		//Fade effect instance for the icon TreeItemRenderer.
 		private var _treeItemRendererFadeEffect:Fade = new Fade();
@@ -394,7 +394,6 @@ package org.mig.view.controls
 		private function handleDragComplete(event:DragEvent):void{
 			if(autoCloseOpenNodes==true){
 				_delayedTimer.cancelDelayedTimer();
-				_lastNodeOver = null;
 				
 				stopAnimation();
 				

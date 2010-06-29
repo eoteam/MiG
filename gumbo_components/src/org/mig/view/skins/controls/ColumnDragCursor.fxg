@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Graphic xmlns="http://ns.adobe.com/fxg/2008" version="2.0">
+<Group>
+    <Path data="M -7 0 L -3 9 L 3 9 L 7 0 L 3 -9 L -3 -9 L -7 0">
+        <fill>
+            <SolidColor id="fillColor" color="#ffffff" />
+        </fill>
+    </Path>
+    <Path data="M -6 0 L -4 4 L -4 1.5 L -1 2.5 L -2 8 L -1 8 L -1 -8 L -2 -8 L -2 -1.5 L -4 -1.5 L -4 -4 L -6 0 M 6 0 L 4 4 L 4 1.5 L 2 1.5 L 2 8 L 1 8 L 1 -8 L 2 -8 L 2 -1.5 L 4 -1.5 L 4 -4 L 6 0">
+        <fill>
+            <SolidColor id="fillColor" color="#000000" />
+        </fill>
+    </Path>
+</Group>
+</Graphic>

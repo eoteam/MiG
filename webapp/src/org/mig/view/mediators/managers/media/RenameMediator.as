@@ -7,6 +7,7 @@
 	
 	import org.mig.events.NotificationEvent;
 	import org.mig.events.ViewEvent;
+	import org.mig.model.vo.UpdateData;
 	import org.mig.model.vo.app.StatusResult;
 	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.model.vo.media.FileNode;
@@ -48,12 +49,14 @@
 		private function handleDiskFileRename(data:Object):void {
 			var result:StatusResult = data.result as StatusResult;
 			if(result.success) {
-				mediaService.updateFile(view.content as FileNode,view.input.text);
+				var update:UpdateData = new UpdateData();
+				update.name = view.input.text;
+				update.id = FileNode(view.content).data.id;
+				mediaService.updateFile(view.content as FileNode,update);
 				mediaService.addHandlers(handleFileDBFileRename);
 			}
 		}
 		private function handleFileDBFileRename(data:Object):void {
-			MediaData(view.content.data).name = view.input.text;
 			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_MEDIA));
 			eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"File renamed successfully"));
 			PopUpManager.removePopUp(view);

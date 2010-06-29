@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:MXTreeItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
-					  xmlns:s="library://ns.adobe.com/flex/spark"  autoDrawBackground="false"
-					  xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="24" xmlns:controls="org.mig.view.controls.*">
+					  xmlns:s="library://ns.adobe.com/flex/spark"  
+					  xmlns:controls="org.mig.view.controls.*"
+					  autoDrawBackground="false" 
+					  dataChange="update()" creationComplete="created=true;update()"
+					  xmlns:mx="library://ns.adobe.com/flex/mx" 
+					  width="100%" height="24">
 	<fx:Script>
 		<![CDATA[
+			import mx.core.IVisualElement;
+			
 			import org.mig.model.vo.ContentNode;
 			import org.mig.model.vo.media.DirectoryNode;
 			import org.mig.utils.GlobalUtils;
+			
+			public var columns:Array;
+			private var created:Boolean = false;
+			
 			override public function set data(value:Object):void {
 				super.data = value;
 				if(data && data.state == ContentNode.LOADING) {
@@ -37,6 +47,33 @@
 				else 
 					return super.getCurrentRendererState();
 			}
+			private function update():void
+			{
+				if(created) {
+				var i:int;
+				var element:IVisualElement;
+				var n:int = columns.length;
+				
+/* 				if (numElements != n)
+				{
+					while (numElements)
+						removeElementAt(0);
+					
+					
+					for (i = 0; i < n; i++)
+					{
+						element = IVisualElement(cols[i].itemRenderer.newInstance());
+						addElement(element);
+					}
+				} */
+				for (i = 1; i < n; i++)
+				{
+					element = holder2.getElementAt(i-1);
+					element.width = columns[i].width - 4;
+					//element[columns[i].valueProperty] = data[columns[i].dataField];
+				}
+				}
+			}
 			
 		]]>
 	</fx:Script>
@@ -49,25 +86,34 @@
 		<s:State name="hoveredAndLoading"  stateGroups="hoveredStates,loadingStates"/>
 		<s:State name="selectedAndLoading"  stateGroups="selectedStates,loadingStates"/>
 	</s:states>
-	<s:HGroup left="0" right="0" top="0" bottom="0" verticalAlign="middle">
+	<s:layout>
+		<s:HorizontalLayout verticalAlign="middle" />
+	</s:layout>
+	
+	<s:HGroup  top="0" bottom="0" maxWidth="350" verticalAlign="middle" id="holder">
+		
 		<s:Rect id="indentationSpacer" width="{treeListData.indent}" percentHeight="100" alpha="0">
 			<s:fill>
 				<s:SolidColor color="0xFFFFFF" />
 			</s:fill>
 		</s:Rect>
+		
 		<s:Group id="disclosureGroup">
 			<s:BitmapImage source="{treeListData.disclosureIcon}" visible="{treeListData.hasChildren}" />
 		</s:Group>
 		
 		<s:BitmapImage id="iconImage" source="{data is DirectoryNode?treeListData.icon:null}" 
-					   includeInLayout="{data is DirectoryNode?true:false}"  
-					   visible="{data is DirectoryNode?true:false}" />
-		<s:HGroup width="100%" verticalAlign="middle">
-			<s:Label id="labelField"  text="{data.label}" paddingTop="2" styleName="boldCopy"  />
-			<controls:Spinner includeIn="loadingStates"  id="spinner" visible="{data.state == ContentNode.LOADING}"  tickColor="0xffffff" size="20" tickWidth="2" numTicks="10" autoPlay="true" />	
-		</s:HGroup>
+	    includeInLayout="{data is DirectoryNode?true:false}"  
+	    visible="{data is DirectoryNode?true:false}" />
 		
-		<s:Label  text="{GlobalUtils.tranlateSize(data.data.size)}" paddingTop="2" styleName="boldCopy" color="0x666666" width="100%" />
-		<s:Label  text="{data.data.extension}" paddingTop="2" styleName="boldCopy" color="0x666666" width="100%"	/>
+		<s:Label id="labelField"  text="{data.label}" paddingTop="2" styleName="boldCopy"  />
+		<controls:Spinner includeIn="loadingStates"  id="spinner" visible="{data.state == ContentNode.LOADING}"  tickColor="0xffffff" size="20" tickWidth="2" numTicks="10" autoPlay="true" />	
+	</s:HGroup>		
+	
+	<s:HGroup top="0" bottom="0" verticalAlign="middle" id="holder2">
+		<s:Label text="{GlobalUtils.tranlateSize(data.data.size)}" paddingTop="2" styleName="boldCopy" color="0x666666"  />
+		<s:Label text="{data.data.extension}" paddingTop="2" styleName="boldCopy" color="0x666666"	/>
+		<s:Label text="{GlobalUtils.translateDate(data.data.createdate)}" styleName="boldCopy" color="0x666666" />
+		<s:Label text="{data.data.createdby}" styleName="boldCopy" color="0x666666" />
 	</s:HGroup>
 </s:MXTreeItemRenderer>

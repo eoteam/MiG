@@ -4,6 +4,8 @@ package org.mig.services
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
 	import org.mig.model.vo.ContentNode;
+	import org.mig.model.vo.UpdateData;
+	import org.mig.model.vo.app.StatusResult;
 	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.model.vo.media.FileNode;
 	import org.mig.model.vo.media.MediaData;
@@ -68,14 +70,16 @@ package org.mig.services
 			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
 			service.token.file = file;	
 		}
-		public function updateFile(file:FileNode,name:String):void {
+		public function updateFile(file:FileNode,update:UpdateData):void {
 			var params:Object = new Object();
 			params.action = file.config.@updateContent;
 			params.tablename = file.config.@tablename;
-			params.id = file.data.id.toString();
-			params.name = name;
-			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
+			for (var prop:String in update) {
+				params[prop] = update[prop];
+			}
+			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS,null,handleFileUpdated);
 			service.token.file = file;	
+			service.token.update = update;
 		}
 		public function updateDirectory(directory:DirectoryNode,name:String):void {
 			var params:Object = new Object();
@@ -84,6 +88,15 @@ package org.mig.services
 			params.newpath = name;
 			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
 			service.token.directory = directory;	
+		}
+		private function handleFileUpdated(data:Object):void {
+			var status:StatusResult = data.result as StatusResult;
+			if(status.success) {
+				var file:FileNode = data.token.file as FileNode;
+				var update:UpdateData = data.token.update as UpdateData;
+				for (var prop:String in update)
+					file.data[prop] = update[prop];
+			}	
 		}
 		
 	}

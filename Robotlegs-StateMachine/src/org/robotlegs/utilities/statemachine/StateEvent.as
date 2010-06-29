@@ -13,6 +13,8 @@ package org.robotlegs.utilities.statemachine
 		public static const CHANGED:String = "changed";
 		public static const ACTION:String = "action";
 		public static const CANCEL:String = "cancel";
+        public static const DISPOSE:String = "dispose";
+        public static const DISPOSED:String = "disposed";
 		
 		public var action:String;
 	    public var data:Object;

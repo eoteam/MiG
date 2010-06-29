@@ -6,12 +6,14 @@ package org.mig.controller
 	import org.mig.events.NotificationEvent;
 	import org.mig.events.ViewEvent;
 	import org.mig.model.vo.ContentNode;
+	import org.mig.model.vo.UpdateData;
 	import org.mig.model.vo.app.StatusResult;
 	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.model.vo.media.FileNode;
 	import org.mig.model.vo.media.MediaData;
 	import org.mig.model.vo.media.MimeTypes;
 	import org.mig.services.FileService;
+	import org.mig.services.interfaces.IContentService;
 	import org.mig.services.interfaces.IFileService;
 	import org.mig.services.interfaces.IMediaService;
 	import org.robotlegs.mvcs.Command;
@@ -23,6 +25,9 @@ package org.mig.controller
 		
 		[Inject]
 		public var fileService:IFileService;
+		
+		[Inject]
+		public var contentService:IContentService;		
 		
 		[Inject]
 		public var event:MediaEvent;
@@ -102,8 +107,9 @@ package org.mig.controller
 						}
 					}
 				break;
-				case MediaEvent.RENAME:
-					//fileService.moveFile(
+				case MediaEvent.MOVE:
+					fileService.moveItem(event.args[0] as ContentNode, event.args[1] as DirectoryNode);
+					fileService.addHandlers(handleDiskMove);
 				break;
 			}
 		}	
@@ -232,6 +238,26 @@ package org.mig.controller
 		private function checkDeleteCount():void {
 			if(deleteTracker == deleteCount)
 				eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_MEDIA));
+		}
+		private function handleDiskMove(data:Object):void {
+			var result:StatusResult = data.result as StatusResult;
+			if(result.success) {
+				var dir:DirectoryNode = data.token.directory as DirectoryNode;
+				var content:ContentNode = data.token.content as ContentNode;
+				if(content is FileNode) {
+					var  update:UpdateData = new UpdateData();
+					update.id = content.data.id;
+					update.path = dir.baseLabel + MediaData(content.data).path;
+					mediaService.updateFile(content as FileNode,update);
+					mediaService.addHandlers(handleDBMove);
+				}
+			}
+		}
+		private function handleDBMove(data:Object):void {
+			var result:StatusResult = data.result as StatusResult;
+			if(result.success) {
+				
+			}		
 		}
 	}
 }
