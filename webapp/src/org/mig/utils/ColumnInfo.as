@@ -10,6 +10,8 @@ package org.mig.utils
         public var valueProperty:String;
         public var itemRenderer:IFactory;
         public var width:Number = 100;
+		public var minWidth:Number = 100;
+		public var maxWidth:Number = 100;
         public var descending:Boolean;
         public var caseInsensitive:Boolean;
         public var numeric:Boolean;

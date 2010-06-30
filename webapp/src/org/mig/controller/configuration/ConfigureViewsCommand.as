@@ -25,9 +25,11 @@ package org.mig.controller.configuration
 	import org.mig.view.components.managers.media.MediaManagerView;
 	import org.mig.view.components.managers.media.RenameView;
 	import org.mig.view.components.managers.tags.TagManagerView;
+	import org.mig.view.controls.MiGColorPicker;
 	import org.mig.view.mediators.content.ContentGeneralEditorMediator;
 	import org.mig.view.mediators.content.ContentViewMediator;
 	import org.mig.view.mediators.content.media.MediaTabMediator;
+	import org.mig.view.mediators.controls.MiGColorPickerMediator;
 	import org.mig.view.mediators.main.ContainerPathMediator;
 	import org.mig.view.mediators.main.ContentTreeMediator;
 	import org.mig.view.mediators.main.ContentViewerMediator;
@@ -78,6 +80,9 @@ package org.mig.controller.configuration
 			
 				//customfields manager
 			mediatorMap.mapView(CustomFieldsManagerView ,CustomFiledsManagerMediator);
+			
+				//components
+			mediatorMap.mapView(MiGColorPicker ,MiGColorPickerMediator); 
 			
 			//popup mediations
 			mediatorMap.mapView(AddDirectoryView,AddDirectoryMediator, null, false, false ); //disable auto mediation

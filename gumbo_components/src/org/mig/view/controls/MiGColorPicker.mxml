@@ -39,12 +39,12 @@
 			
 			[Bindable] public var pickerLabel:String;
 			
-			[Bindable] private var _selectedColor:Number;
+			[Bindable] private var _selectedColor:uint;
 			
-			public function set selectedColor(value:Number):void {
+			public function set selectedColor(value:uint):void {
 				_selectedColor = value;
 			}
-			[Bindable] public function get selectedColor():Number
+			[Bindable] public function get selectedColor():uint
 			{
 				return _selectedColor;
 			}

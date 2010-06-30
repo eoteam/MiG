@@ -37,7 +37,7 @@ package org.mig.utils
 	import org.mig.view.controls.DateTimePicker;
 	import org.mig.view.controls.LinkSocket;
 	import org.mig.view.controls.MiGTLFTextArea;
-	import org.mig.view.controls.colorPicker;
+	import org.mig.view.controls.MiGColorPicker;
 	import org.mig.view.interfaces.ICustomFieldView;
 	import org.mig.view.layouts.FlowLayout;
 	
@@ -206,9 +206,9 @@ package org.mig.utils
 				break;					
 				
 				case CustomFieldTypes.COLOR:
-					child = new colorPicker();
+					child = new MiGColorPicker();
 					if(vo) {
-						colorPicker(child).selectedColor= Number(vo[customfield.name]);				
+						MiGColorPicker(child).selectedColor= Number(vo[customfield.name]);				
 						summary = Number(vo[customfield.name]).toString(16);
 					}
 				break;
@@ -360,7 +360,7 @@ package org.mig.utils
 						vo[customfield.name] = TextArea(event.target).text;
 						break;					
 					case CustomFieldTypes.COLOR:
-						vo[customfield.name] =  colorPicker(event.target).selectedColor.toString(16);
+						vo[customfield.name] =  MiGColorPicker(event.target).selectedColor.toString(16);
 						break;
 					case CustomFieldTypes.INTEGER:
 						vo[customfield.name] = TextInput(event.target).text;
@@ -446,7 +446,7 @@ package org.mig.utils
 				break;					
 				
 				case CustomFieldTypes.COLOR:
-						colorPicker(child).selectedColor= Number(vo[customfield.name]);				
+						MiGColorPicker(child).selectedColor= Number(vo[customfield.name]);				
 				break;
 				
 				case CustomFieldTypes.MULTIPLE_SELECT:

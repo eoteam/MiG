@@ -87,15 +87,15 @@ package org.mig.services
 			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
 			service.token.file = file;	
 		}
-		public function updateFile(file:FileNode,update:UpdateData):void {
+		public function updateContent(content:ContentNode,update:UpdateData):void {
 			var params:Object = new Object();
-			params.action = file.config.@updateContent;
-			params.tablename = file.config.@tablename;
+			params.action = content.config.@updateContent;
+			params.tablename = content.config.@tablename;
 			for (var prop:String in update) {
 				params[prop] = update[prop];
 			}
 			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS,null,handleFileUpdated);
-			service.token.file = file;	
+			service.token.content = content;	
 			service.token.update = update;
 		}
 		public function updateDirectory(directory:DirectoryNode,name:String):void {
@@ -117,10 +117,10 @@ package org.mig.services
 		private function handleFileUpdated(data:Object):void {
 			var status:StatusResult = data.result as StatusResult;
 			if(status.success) {
-				var file:FileNode = data.token.file as FileNode;
+				var content:ContentNode = data.token.content as ContentNode;
 				var update:UpdateData = data.token.update as UpdateData;
 				for (var prop:String in update)
-					file.data[prop] = update[prop];
+					content.data[prop] = update[prop];
 			}	
 		}
 		

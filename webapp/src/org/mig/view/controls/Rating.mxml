@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+	width="70" height="10"
+	mouseDown="onMouseDown(event)">
+
+	<mx:Metadata>
+		[Event("change")]
+	</mx:Metadata>
+
+	<mx:Script>
+		<![CDATA[
+			
+			private var _value:int = 0;
+			
+			private var valueInvalidatedFlag:Boolean = true;
+			
+			private var lastShownValue:int = value;
+			
+			public var editable:Boolean = false;
+			
+			public function get value():int {
+				return _value;
+			}
+			
+			[Bindable]
+			public function set value(val:int):void {
+				_value = val;
+				
+				valueInvalidatedFlag = true;
+				invalidateProperties();
+			}
+			
+			override protected function commitProperties():void {
+				if (valueInvalidatedFlag) {
+					valueInvalidatedFlag = false;
+					
+					showRating(_value);
+				}
+			}
+			
+			private function onMouseDown(event:MouseEvent):void {
+				if(!editable) {
+					return;
+				}
+				
+				var local:Point = globalToLocal(new Point(event.stageX, event.stageY));
+				showRating(x2rating(local.x));
+				
+				stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+				stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+			}
+			
+			private function onMouseMove(event:MouseEvent):void {
+				var local:Point = globalToLocal(new Point(event.stageX, event.stageY));
+				
+				if(local.x > -90 && local.x < 160 && local.y > -100 && local.y < 110) {
+					showRating(x2rating(local.x));
+				} else {
+					showRating(value);
+				}
+			}
+			
+			private function onMouseUp(event:MouseEvent):void {
+				stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+				stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+				
+				if (value != lastShownValue) {
+					value = lastShownValue;
+					
+					dispatchEvent(new Event(Event.CHANGE));
+				}
+			}
+			
+			private function x2rating(x:int):uint {
+				var r:int = (x - 1) / 10;
+				r = Math.max(0, Math.min(5, r));
+				return r;
+			}
+			
+			private function showRating(value:int):void {
+				lastShownValue = value;
+				
+				star1.source = (value >= 1) ? starIcon : dotIcon;
+				star2.source = (value >= 2) ? starIcon : dotIcon;
+				star3.source = (value >= 3) ? starIcon : dotIcon;
+				star4.source = (value >= 4) ? starIcon : dotIcon;
+				star5.source = (value >= 5) ? starIcon : dotIcon;
+			}
+/* 			.RatingDot {
+				backgroundImage:
+			}
+			
+			.RatingStar {
+				backgroundImage: Embed("/migAssets/images/black_star.png");
+			}  
+ */			[Bindable]
+			[Embed(source="/migAssets/images/black_dot.png")]
+			private var dotIcon:Class;
+			
+			[Bindable]
+			[Embed(source="/migAssets/images/black_star.png")]
+			private var starIcon:Class;			
+			
+		]]>
+	</mx:Script>
+	
+	<mx:Image id="star1" x="10" width="10" height="10" source="{dotIcon}"/>
+	<mx:Image id="star2" x="20" width="10" height="10" source="{dotIcon}"/>
+	<mx:Image id="star3" x="30" width="10" height="10" source="{dotIcon}"/>
+	<mx:Image id="star4" x="40" width="10" height="10" source="{dotIcon}"/>
+	<mx:Image id="star5" x="50" width="10" height="10" source="{dotIcon}"/>
+</mx:Canvas>

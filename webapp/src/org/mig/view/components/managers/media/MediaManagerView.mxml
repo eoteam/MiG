@@ -6,7 +6,7 @@
 	xmlns:controls="org.mig.view.controls.*" 
 	xmlns:renderers="org.mig.view.renderers.*"
 	width="100%" height="100%"
-	contentBackgroundAlpha="0"  creationComplete="vgroup1_creationCompleteHandler(event)"
+	contentBackgroundAlpha="0"  creationComplete="handleCreationComplete(event)"
 	xmlns:assets="org.mig.view.components.assets.*" 
 	xmlns:container="com.appdivision.view.container.*" 
 	xmlns:layouts="org.mig.view.layouts.*" 
@@ -46,46 +46,6 @@
 			private function handleSliderChange(event:Event):void
 			{
 				scalePercent = scaleSlider.value;
-			}
-			public function handleSizeField(data:Object):String {
-				var label:String = '';
-				if(data.data) {
-					if (data.data.size < 1024)
-						label = data.data.size + " B";
-					else if ((data.data.size > 1024) && (data.data.size < 1048576))
-						label = Math.round(data.data.size / 1024).toString() + " KB";
-					else if (data.data.size > 1048576)
-						label = Math.round(data.data.size / 1048576).toString() + " MB";	
-				} 
-				return label;	
-			}
-			public function handleDateField(data:Object):String {
-				var label:String ="";
-				if(data.data) {
-					if(data.data is FileNode) {
-						var d:Date = new Date();
-						d.time = data.data.createdate;
-						label=d.toDateString()	;
-					}
-				}
-				return label;
-			}
-			public function handleExtensionField(data:Object):String {
-				var label:String='';
-				if(data.data) {
-					label = data.data.extension;
-				}
-				return label;
-			}	
-			public function handleUserField(data:Object):String {
-				var label:String ='';
-				if(data.data) {
-/* 					if(data.data.createdby != undefined && data.createdby != 0) {
-						//var userName:String =  UserManager(ManagerBase.getInstance(UserManager)).findUserById(Number(data.createdby));
-						//label = userName;
-					} */
-				}
-				return label;
 			}			
 			private function searchInput_changeHandler(event:Event):void {
 				if(searchInput.text == '')
@@ -93,9 +53,7 @@
 				else
 					clearSearch.visible = true;
 			}
-
-			protected function vgroup1_creationCompleteHandler(event:FlexEvent):void
-			{
+			private function handleCreationComplete(event:FlexEvent):void {
 				this.testDataGridHeader.dataProvider= new ArrayList(columns);
 				var n:int = columns.length;
 				for (var i:int = 0; i < n; i++)
@@ -109,14 +67,12 @@
 				}
 				updateSeparators();
 			}
-			private function refresh(event:Event = null):void
-			{
+			private function refresh(event:Event = null):void {
 				testDataGridHeader.dataProvider.dispatchEvent(new CollectionEvent(CollectionEvent.COLLECTION_CHANGE, false, false, CollectionEventKind.RESET));
 				listView.dataProvider.dispatchEvent(new CollectionEvent(CollectionEvent.COLLECTION_CHANGE, false, false, CollectionEventKind.RESET));
 				updateSeparators();
 			}
-			private function updateSeparators():void
-			{
+			private function updateSeparators():void {
 				var n:int = separators.numElements;//columns.length;
 				var ww:Number = 0;
 				for (var i:int = 0; i < n; i++)
@@ -137,9 +93,9 @@
 			} 
 			
 			private var lastSortIndex:int;
+			public var currentSort:Sort;
 			private function sortDG(event:Event):void
 			{
-				var s:Sort;
 				
 				if (testDataGridHeader.selectedIndex == -1)
 					return;
@@ -149,15 +105,23 @@
 				{
 					col.descending = !col.descending;
 				}
-			 	s = new Sort(); 
-				s.fields = [new SortField(col.dataField, col.caseInsensitive, col.descending, col.numeric)];
-				s.compareFunction = listCompare;
-				ArrayCollection(listView.dataProvider).sort = s;
+				currentSort = new Sort(); 
+				var sortField:SortField = new SortField(col.dataField, col.caseInsensitive, col.descending, col.numeric);
+				//sortField.compareFunction = listCompare;
+				currentSort.fields = [sortField];
+				currentSort.compareFunction = listCompare;
+				ArrayCollection(listView.dataProvider).sort = currentSort;
 				ArrayCollection(listView.dataProvider).refresh();
-				//listView.invalidateDisplayList();
+				for each(var node:ContentNode in ArrayCollection(listView.dataProvider)) {
+					applySortToChildren(node,currentSort);
+				}
+				
+				listView.invalidateDisplayList();
+				listView.invalidateList();
+				
 				lastSortIndex = testDataGridHeader.selectedIndex;
-				//testDataGridHeader.selectedIndex = -1;
-				//testDataGridHeader.dataProvider.dispatchEvent(new CollectionEvent(CollectionEvent.COLLECTION_CHANGE, false, false, CollectionEventKind.RESET)); */
+				testDataGridHeader.selectedIndex = -1; 
+				testDataGridHeader.dataProvider.dispatchEvent(new CollectionEvent(CollectionEvent.COLLECTION_CHANGE, false, false, CollectionEventKind.RESET));
 				
 			}
 			private function listCompare(a:ContentNode,b:ContentNode,fields:Array):int {
@@ -166,14 +130,29 @@
 				var valueB:* = b.data[field.name];
 				var result:int;
 				if(field.numeric) {
-					result =  ObjectUtil.numericCompare(valueA,valueB);
+					if(field.descending)
+						result =  ObjectUtil.numericCompare(valueA,valueB);
+					else
+						result =  ObjectUtil.numericCompare(valueB,valueA);
 				}
 				else {
-					result =   ObjectUtil.stringCompare(valueA,valueB,field.caseInsensitive);
+					if(field.descending)
+						result =  ObjectUtil.stringCompare(valueA,valueB,field.caseInsensitive);
+					else
+						result =  ObjectUtil.stringCompare(valueB,valueA,field.caseInsensitive);
 				}
+				trace("Sort result",result);
 				return result;
 			}
-
+			private function applySortToChildren(node:ContentNode,sort:Sort):void {
+				if(node.children) {
+					node.children.sort = sort;
+					node.children.refresh();
+					for each(var child:ContentNode in node.children) {
+						applySortToChildren(child,sort);
+					}
+				}
+			}
 		]]>
 	</fx:Script>
 	
@@ -213,19 +192,18 @@
 			icon="@Embed(source='/migAssets/library.swf#addFolderIcon')" buttonMode="true" useHandCursor="true"/>
 		</mx:Canvas>
 		<controls:IconButton  icon="@Embed(source='/migAssets/library.swf#trashUp')"  toolTip="Delete"  id="trashButton" mouseChildren="false"  buttonMode="true" />			
-		<controls:colorPicker id="colorPicker" enabled="false" />
+		<controls:MiGColorPicker id="colorPicker" enabled="false" />
 	</container:FlowContainer>
 	<!--</s:Group>-->
 	
 	<s:Group width="100%" height="100%">
 		<mx:ViewStack width="100%" height="100%" id="stack" visible.loading="false" visible.loaded="true">
 			<s:NavigatorContent width="100%" height="100%">
-
 				<s:List id="testDataGridHeader" width="100%" labelField="headerText"  change="sortDG(event)" 
-				dragDrop="callLater(updateSeparators)" updateComplete="updateSeparators()"  visible="false"
+				dragDrop="callLater(updateSeparators)" updateComplete="updateSeparators()" borderVisible="false" 
 				requireSelection="false" dragEnabled="true" dropEnabled="false" dragMoveEnabled="false">
 					<s:layout>
-						<s:HorizontalLayout gap="0"/>
+						<s:HorizontalLayout gap="0"  clipAndEnableScrolling="false"/>
 					</s:layout>
 					<s:itemRenderer>
 						<fx:Component>
@@ -300,7 +278,7 @@
 					</controls:itemRenderer>
 				</controls:MigTree>
 			    
-				<s:Group id="separators" top="0" bottom="0" left="0" right="0" visible="false"/>
+				<s:Group id="separators" top="0" bottom="0" left="0" right="0" />
 				<s:Label styleName="bodyCopy" text="{tileDP.length + ' items'}" bottom="0" textAlign="center" width="100%"/>
 			</s:NavigatorContent>	
 
@@ -350,17 +328,18 @@
 			<mx:Fade id="fadeIn" alphaFrom="0.5" alphaTo="1" duration="200" />
 		</mx:Sequence>
 		<fx:Array id="columns" >
-			<utils:ColumnInfo dataField="name" headerText="Name"  valueProperty="text"  />
-			<utils:ColumnInfo dataField="size" headerText="Size" numeric="true"  valueProperty="text"  width="150" />
-			<utils:ColumnInfo dataField="createdate" headerText="Creation Date" numeric="true"  width="150" />
+			<utils:ColumnInfo dataField="name" headerText="Name"  valueProperty="text" width="350" minWidth="150"  />
+			<utils:ColumnInfo dataField="size" headerText="Size" numeric="true"  valueProperty="text"  width="120"  minWidth="80"/>
+			<utils:ColumnInfo dataField="createdate" headerText="Creation Date" numeric="true"  width="120"  minWidth="80"/>
+			<utils:ColumnInfo dataField="createdby" headerText="Creation By" numeric="false"  width="120"  minWidth="80"/>
 		</fx:Array>
 		<fx:Component className="HeaderSeparator">
-			<s:Group mouseDown="startDragColumn(event)" mouseOver="showCursor(event)" mouseOut="hideCursor(event)"
-					 alpha="0.8">
+			<s:Group mouseDown="startDragColumn(event)" mouseOver="showCursor(event)" mouseOut="hideCursor(event)" alpha="0.8">
 				<fx:Script>
 					<![CDATA[
 						import mx.events.SandboxMouseEvent;
 						
+						import org.flexunit.internals.builders.NullBuilder;
 						import org.mig.view.skins.controls.ColumnDragCursor;
 						
 						import spark.components.Group;
@@ -424,7 +403,25 @@
 							for (var i:int = 0; i < index; i++)
 								ww += columns[i].width;
 							
-							columns[i].width = x - ww;
+							
+							if(x-ww < columns[i].minWidth)
+								columns[i].minWidth;
+							
+							else{
+								var newtotal:Number = 0;
+								
+								var prev:Number = columns[i].width;
+								columns[i].width = x - ww;
+								
+								for(var j:int = 0; j <columns.length ; j++) {
+									newtotal += columns[j].width;
+								}	
+								if(newtotal > parent.parent.width-2) {
+									var diff:Number = newtotal - (parent.parent.width-2);
+									columns[i].width = columns[i].width-diff;
+								}	
+							} 	
+							
 							dispatchEvent(new Event("columnResize"));
 						}
 						
@@ -432,7 +429,7 @@
 				</fx:Script>
 				<s:Rect width="2" top="0" bottom="0" >
 					<s:fill>
-						<s:SolidColor color="0" />
+						<s:SolidColor color="0x333333" />
 					</s:fill>
 				</s:Rect>
 			</s:Group>

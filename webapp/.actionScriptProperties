@@ -33,7 +33,6 @@
   </compiler>
   <applications>
     <application path="migApp.mxml"/>
-    <application path="ColorConverter.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

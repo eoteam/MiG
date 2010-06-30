@@ -35,7 +35,7 @@
 	
 	<s:HGroup width="100%">
 		<s:Label width="97" text="Color" />
-		<controls:colorPicker id="colorPicker" />
+		<controls:MiGColorPicker id="colorPicker" />
 	</s:HGroup>	
 	
 	</s:SkinnableContainer>

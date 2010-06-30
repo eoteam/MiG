@@ -24,7 +24,7 @@ package bxf.ui.inspectors
 {
 	import bxf.ui.controls.ConflictOverlay;
 	
-	import org.mig.view.controls.colorPicker;
+	import org.mig.view.controls.MiGColorPicker;
 	
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
@@ -35,7 +35,7 @@ package bxf.ui.inspectors
 
 	public class ColorPropertyEditor extends PropertyEditorBase implements IPropertyEditor
 	{
-		private var mPicker:colorPicker;
+		private var mPicker:MiGColorPicker;
 		private var mConflictOverlay:ConflictOverlay = null;
 		private var mChangeNotify:ValueChangeNotifier;
 		private var mSelColor:int = 0;
@@ -51,7 +51,7 @@ package bxf.ui.inspectors
 		{
 			super.createChildren();
 			if (null == mPicker) {
-				mPicker = new colorPicker();	
+				mPicker = new MiGColorPicker();	
 /*				mPicker.width = 30;
 				mPicker.height = 18;*/
 			

@@ -61,28 +61,17 @@
 			private function update():void
 			{
 				if(created) {
-				var i:int;
-				var element:IVisualElement;
-				var n:int = columns.length;
-				
-/* 				if (numElements != n)
-				{
-					while (numElements)
-						removeElementAt(0);
-					
-					
-					for (i = 0; i < n; i++)
+					var i:int;
+					var element:IVisualElement;
+					var n:int = columns.length;
+	
+					holder.width = columns[0].width - 4;
+					for (i = 1; i < n; i++)
 					{
-						element = IVisualElement(cols[i].itemRenderer.newInstance());
-						addElement(element);
-					}
-				} */
-			for (i = 1; i < n; i++)
-				{
-					element = holder2.getElementAt(i-1);
-					element.width = columns[i].width - 4;
-					//element[columns[i].valueProperty] = data[columns[i].dataField];
-				} 
+						element = holder2.getElementAt(i-1);
+						element.width = columns[i].width - 4;
+						//element[columns[i].valueProperty] = data[columns[i].dataField];
+					} 
 				}
 			}
 			
@@ -125,10 +114,10 @@
 		</s:HGroup>		
 		
 		<s:HGroup top="0" bottom="0" verticalAlign="middle" id="holder2">
-			<s:Label width="80" text="{GlobalUtils.tranlateSize(data.data.size)}" paddingTop="2" styleName="boldCopy" color="0x666666"  />
-			<s:Label width="50" text="{data.data.extension}" paddingTop="2" styleName="boldCopy" color="0x666666"	/>
-			<s:Label width="80" text="{GlobalUtils.translateDate(data.data.createdate)}" styleName="boldCopy" color="0x666666" />
-			<s:Label text="{data.data.createdby}" styleName="boldCopy" color="0x666666" />
+			<s:Label width="80" text="{GlobalUtils.tranlateSize(data.data.size)}" textAlign="center" styleName="boldCopy" color="0x666666"  />
+			<s:Label width="80" text="{GlobalUtils.translateDate(data.data.createdate)}" styleName="boldCopy" color="0x666666" textAlign="center"/>
+			<s:Label text="{data.data.createdby}" styleName="boldCopy" color="0x666666" textAlign="center" />
 		</s:HGroup>
+		<controls:Rating editable="true"/>
 	</s:HGroup>
 </s:MXTreeItemRenderer>

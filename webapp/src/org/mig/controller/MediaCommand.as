@@ -1,6 +1,7 @@
 package org.mig.controller
 {
 	import mx.collections.ArrayCollection;
+	import mx.collections.Sort;
 	
 	import org.mig.events.MediaEvent;
 	import org.mig.events.NotificationEvent;
@@ -35,14 +36,23 @@ package org.mig.controller
 		
 		private var deleteCount:int = 0;
 		private var deleteTracker:int = 0;
+		private var collectionSort:Sort;
 		override public function execute():void {
 			var node:DirectoryNode;
 			var file:FileNode;
 			var item:ContentNode;
-			var directory:DirectoryNode
+			var directory:DirectoryNode;
+
 			switch(event.type) {
 				case MediaEvent.RETRIEVE_CHILDREN:
+					
 					node = event.args[0] as DirectoryNode;
+					if(node.parentNode && node.parentNode.children.sort) {
+						node.parentNode.children.sort = null; 
+						node.children.sort = null;
+						node.parentNode.children.refresh();
+						node.children.refresh();
+					}
 					node.state = ContentNode.LOADING;
 					node.newFiles = [];
 					node.numFolders = node.numFiles = 0;
@@ -211,9 +221,12 @@ package org.mig.controller
 					}
 				}
 			}	
-				
-	
-			
+			if(collectionSort) {
+				content.parentNode.children.sort = collectionSort; 
+				content.children.sort = collectionSort;
+				content.parentNode.children.refresh();
+				content.children.refresh();
+			}
 		
 /*		else { //none in DB and all on disk
 			for each(item in content.diskFiles) {
@@ -282,7 +295,7 @@ package org.mig.controller
 					update = new UpdateData();
 					update.id = content.data.id;
 					update.path = dir.directory;
-					mediaService.updateFile(content as FileNode,update);
+					mediaService.updateContent(content as FileNode,update);
 					mediaService.addHandlers(handleDBMove);
 					total++;
 				}
@@ -298,7 +311,7 @@ package org.mig.controller
 								update.path = newdir;
 							else
 								update.path = dir.directory.substr(0,dir.directory.length-1) + DirectoryNode(file.parentNode).directory; 
-							mediaService.updateFile(file,update);
+							mediaService.updateContent(file,update);
 							mediaService.addHandlers(handleDBMove);
 							total++;
 						}

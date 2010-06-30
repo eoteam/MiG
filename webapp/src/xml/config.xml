@@ -83,7 +83,7 @@
 			deleteContent="deleteRecord" 
 			createVerbose="true" />
 	</manager>	
-		<manager id="userManager" name="Manager">
+		<manager id="userManager" name="User">
 		<child labelfield="name"
 			createContent="insertRecord" 
 			retrieveContent="getData"

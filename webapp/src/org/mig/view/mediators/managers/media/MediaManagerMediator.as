@@ -9,6 +9,7 @@ package org.mig.view.mediators.managers.media
 	import flash.events.MouseEvent;
 	
 	import mx.collections.HierarchicalData;
+	import mx.collections.Sort;
 	import mx.controls.AdvancedDataGrid;
 	import mx.events.AdvancedDataGridEvent;
 	import mx.events.CloseEvent;
@@ -23,13 +24,17 @@ package org.mig.view.mediators.managers.media
 	import org.mig.events.AppEvent;
 	import org.mig.events.ContentEvent;
 	import org.mig.events.MediaEvent;
+	import org.mig.events.NotificationEvent;
 	import org.mig.events.ViewEvent;
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
 	import org.mig.model.vo.ContentNode;
+	import org.mig.model.vo.UpdateData;
+	import org.mig.model.vo.app.StatusResult;
 	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.model.vo.media.FileNode;
 	import org.mig.model.vo.media.MediaData;
+	import org.mig.services.interfaces.IMediaService;
 	import org.mig.utils.GlobalUtils;
 	import org.mig.view.components.main.SystemPopup;
 	import org.mig.view.components.managers.media.AddDirectoryView;
@@ -40,6 +45,7 @@ package org.mig.view.mediators.managers.media
 	import org.mig.view.events.ContentViewEvent;
 	import org.mig.view.events.ListItemEvent;
 	import org.robotlegs.mvcs.Mediator;
+	import org.robotlegs.utilities.statemachine.StateEvent;
 	
 	public class MediaManagerMediator extends Mediator
 	{
@@ -51,6 +57,9 @@ package org.mig.view.mediators.managers.media
 
 		[Inject]
 		public var appModel:AppModel;
+		
+		[Inject]
+		public var mediaService:IMediaService;
 		
 		private var _selectedNode:DirectoryNode;
 		
@@ -99,7 +108,6 @@ package org.mig.view.mediators.managers.media
 			
 			view.addEventListener('thumbViewCreated',handleThumbView);
 			view.colorPicker.addEventListener(ColorPickerEvent.CHANGE,handleColorPicker);
-			view.colorPicker.dataProvider = appModel.colors;
 		}
 		private function initView():void {
 			view.user = appModel.user;
@@ -205,7 +213,7 @@ package org.mig.view.mediators.managers.media
 			if(items.length == 1 && items[0] is DirectoryNode)				
 				eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.SELECT,items[0]));
 			else if(items.length > 1)
-				eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.MULTIPLE_SELECT));
+				eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.MULTIPLE_SELECT)	);
 		}		
 		private function search(input:String):void {
 			
@@ -357,12 +365,28 @@ package org.mig.view.mediators.managers.media
 			else
 				view.colorPicker.enabled = true; 
 		}
+		private var cudTotal:int=0;
 		private function handleColorPicker(event:Event):void {
 			if(view.listView.selectedItems.length > 0) {
-				for each(var content:ContentNode in view.listView.selectedItems) 
-					MediaData(content.data).color = '#'+view.colorPicker.selectedColor.toString(16);
+				cudTotal = 0;
+				for each(var content:ContentNode in view.listView.selectedItems) {
+					var update:UpdateData = new UpdateData();
+					update.id = content.data.id;
+					update.color =  '#'+view.colorPicker.selectedColor.toString(16);
+					mediaService.updateContent(content,update);
+					mediaService.addHandlers(updateComplete);
+				}	
 				
-				view.listView.invalidateList();
+			}
+		}
+		private function updateComplete(data:Object):void {
+			var result:StatusResult = data.result as StatusResult;
+			if(result.success) {
+				cudTotal++;
+				if(cudTotal == view.listView.selectedItems.length) {
+					view.listView.invalidateList();
+					eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Update complete"));
+				}
 			}
 		}
 /*		private function handleListItemOpen(event:AdvancedDataGridEvent):void {

@@ -1,5 +1,6 @@
 package org.mig.services.interfaces
 {
+	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.UpdateData;
 	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.model.vo.media.FileNode;
@@ -16,7 +17,7 @@ package org.mig.services.interfaces
 		
 		function deleteFile(file:FileNode):void;
 		
-		function updateFile(file:FileNode,update:UpdateData):void;
+		function updateContent(content:ContentNode,update:UpdateData):void;
 		
 		function updateDirectory(directory:DirectoryNode, name:String):void;
 		

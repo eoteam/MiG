@@ -54,7 +54,7 @@
 				var update:UpdateData = new UpdateData();
 				update.name = view.input.text;
 				update.id = FileNode(view.content).data.id;
-				mediaService.updateFile(view.content as FileNode,update);
+				mediaService.updateContent(view.content as FileNode,update);
 				mediaService.addHandlers(handleFileDBFileRename);
 			}
 		}

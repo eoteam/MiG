@@ -26,7 +26,8 @@ package org.mig.controller.startup
 			service.addHandlers(handleColorsLoaded);
 		}
 		private function handleColorsLoaded(data:Object):void {
-			var results:Array  = data.result[0] as Array;
+			var results:Array  = data.result as Array;
+			appModel.colors = [];
 			for each(var c:Object in results) {
 				var color:uint = Number('0x'+c.value.toString().substring(1,c.value.length));
 				appModel.colors.push(color);
