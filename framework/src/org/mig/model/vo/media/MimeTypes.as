@@ -9,7 +9,7 @@ package org.mig.model.vo.media
 		public static const FILE:int = 5;
 		public static const YOUTUBE:int = 6;	
 		public static const FONT:int = 7;
-		
+		public static const DIRECTORY:int = 8;
 /*		public var imageExtensions:Array= [".jpg", ".jpeg", ".gif", ".png"];
 		public var videoExtensions:Array= [".flv", ".mov", ".mp4", ".m4v", ".f4v"];
 		public var audioExtensions:Array=[".mp3"];

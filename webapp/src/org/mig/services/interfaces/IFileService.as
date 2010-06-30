@@ -20,8 +20,10 @@ package org.mig.services.interfaces
 		
 		function readDirectory(node:DirectoryNode):void;
 		
-		function addDirectory(name:String):void;
+		function createDirectory(name:String):void;
 		
+		function refreshDirectorySize(directory:DirectoryNode):void;
+	
 		function downloadFiles(files:Array):void;
 		
 		function cancelDownload():void;

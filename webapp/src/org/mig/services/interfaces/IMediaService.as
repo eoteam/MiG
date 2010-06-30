@@ -3,6 +3,7 @@ package org.mig.services.interfaces
 	import org.mig.model.vo.UpdateData;
 	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.model.vo.media.FileNode;
+	import org.mig.model.vo.media.MediaData;
 
 	public interface IMediaService extends IService
 	{
@@ -20,5 +21,7 @@ package org.mig.services.interfaces
 		function updateDirectory(directory:DirectoryNode, name:String):void;
 		
 		function updateFilesByDirectory(directory:DirectoryNode,newdir:String):void;
+		
+		function createDirectory(media:MediaData):void;
 	}
 }

@@ -21,6 +21,7 @@ package org.mig.events
 		public static const SELECT:String = "mediaSelected";
 		public static const MULTIPLE_SELECT:String = "mediaMultipleSelected";
 	
+		public static const GET_DIRECTORY_SIZE:String = "getDirectorySize";
 		
 		public var args:Array;
 		

@@ -214,6 +214,15 @@ function downloadZip($params) {
 		print($fileContent);
 	}
 }
+function getDirSize($params) {
+	global $fileDir;
+	if(isset($params["directory"])) {
+		$size = dirSize($fileDir.$params["directory"]) * 1024;
+		sendSuccess($size);
+	}
+	else
+		sendFailed("Directory is not specified");
+}
 /*
  * ##########################################################################################
  * ################################# Help Functions #########################################
@@ -250,7 +259,7 @@ function outputDirectoryListing($newdir){
 				}
 				$size *= 1024;
 				//$size = byteSize($size);
-				$arr =  array("name"=>$file,"createdate"=>$mtime,"size"=>$size,"type"=>$type,"createthumb"=>$createthumb,"childrendcount"=>$childrencount);
+				$arr =  array("name"=>$file,"createdate"=>$mtime,"size"=>$size,"type"=>$type,"createthumb"=>$createthumb,"childrencount"=>$childrencount);
 				array_push($resultList, $arr);
 				
 			}
@@ -318,28 +327,26 @@ function num_files($dir, $type, $ext="")
         break;
 
         case 3: // count files PLUS dirs in once variable
-            if ($dir = opendir($dir))
+            if ($dirhandler = opendir($dir))
             {
-            	echo $dir;
-                while (($file = readdir($dir)) !== false)
+            	//echo $dir;
+                while (($file = readdir($dirhandler)) !== false)
                 {
-                    if(is_dir($file) OR is_dir($file))
-                    {
-                        if ($file != "." AND $file != "..")
+                        if ($file != "." && $file != "..")
                         {
                             $num_files++;
                         }
-                    }
+                    
                 }  
-                closedir($dir);
+                closedir($dirhandler);
                 $total = $num_files;
             }
         break;
 
         case 4: // count files AND dirs separately
-            if ($dir = @opendir($dir))
+            if ($dirhandler = opendir($dir))
             {
-                while (($file = readdir($dir)) !== false)
+                while (($file = readdir($dirhandler)) !== false)
                 {
                     if(is_file($file) AND $file != "." AND $file != "..")
                     {
@@ -351,7 +358,7 @@ function num_files($dir, $type, $ext="")
                         $num_dirs++;
                     }
                 }  
-                closedir($dir);
+                closedir($dirhandler);
                 $total = $num_files." ".$num_dirs;
             }
         break;
@@ -653,6 +660,93 @@ function checkName($t,$b,$e,$index)
 	else
 	return $index;
 }
+/**
+ * Calculate the size of a directory by iterating its contents
+ *
+ * @author      Aidan Lister <aidan@php.net>
+ * @version     1.2.0
+ * @link        http://aidanlister.com/repos/v/function.dirsize.php
+ * @param       string   $directory    Path to directory
+ */
+function dirsize($path)
+{
+    // Init
+    $size = 0;
+
+    // Trailing slash
+    if (substr($path, -1, 1) !== DIRECTORY_SEPARATOR) {
+        $path .= DIRECTORY_SEPARATOR;
+    }
+
+    // Sanity check
+    if (is_file($path)) {
+        return filesize($path);
+    } elseif (!is_dir($path)) {
+        return false;
+    }
+
+    // Iterate queue
+    $queue = array($path);
+    for ($i = 0, $j = count($queue); $i < $j; ++$i)
+    {
+        // Open directory
+        $parent = $i;
+        if (is_dir($queue[$i]) && $dir = @dir($queue[$i])) {
+            $subdirs = array();
+            while (false !== ($entry = $dir->read())) {
+                // Skip pointers
+                if ($entry == '.' || $entry == '..') {
+                    continue;
+                }
+
+                // Get list of directories or filesizes
+                $path = $queue[$i] . $entry;
+                if (is_dir($path)) {
+                    $path .= DIRECTORY_SEPARATOR;
+                    $subdirs[] = $path;
+                } elseif (is_file($path)) {
+					$temp = shell_exec("du -k " . $path);
+					$chars = preg_split("/[\s,]*\\\"([^\\\"]+)\\\"[\s,]*|" . "[\s,]*'([^']+)'[\s,]*|" . "[\s,]+/", $temp, -1, PREG_SPLIT_OFFSET_CAPTURE);	
+					$size += $chars[0][0];
+                }
+            }
+
+            // Add subdirectories to start of queue
+            unset($queue[0]);
+            $queue = array_merge($subdirs, $queue);
+
+            // Recalculate stack size
+            $i = -1;
+            $j = count($queue);
+
+            // Clean up
+            $dir->close();
+            unset($dir);
+        }
+    }
+
+    return $size;
+}
+
+function byteSize($bytes)  
+{ 
+    $size = $bytes; 
+    if($size < 1024){ 
+        $size = number_format($size, 2); 
+        $size .= ' KB'; 
+    }  
+    else { 
+    	if($size / 1024 < 1024)  { 
+            $size = number_format($size / 1024, 2); 
+            $size .= ' MB'; 
+       }  
+        else if ($size / 1024 / 1024 < 1024) { 
+            $size = number_format($size / 1024 / 1024, 2); 
+            $size .= ' GB'; 
+        }  
+    } 
+    return $size; 
+} 
 //function createFont($params)
 //{
 //	//./3.0.0.477/bin/mxmlc AkkuratRegular.as -output=fonts/Akkurat/AkkuratRegular.swf

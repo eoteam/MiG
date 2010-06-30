@@ -49,6 +49,7 @@ package org.mig.services
 		public static const GET_KEYWORDS:String 					= "getKeywords";
 		public static const GET_PLAYTIME:String 					= "getPlayTime";
 		public static const DOWNLOAD_ZIP:String 					= "downloadZip";
+		public static const DIRECTORY_SIZE:String 					= "getDirSize";
 		
 		public static const FUNCTIONS_WITH_TABLENAME:Array = [GET_DATA,UPDATE_RECORD,UPDATE_RECORDS,INSERT_RECORD,DELETE_RECORD,DELETE_RECORDS];
 

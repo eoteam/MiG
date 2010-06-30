@@ -38,6 +38,7 @@ package org.mig.controller.configuration
 			commandMap.mapEvent( MediaEvent.ADD_FILE,				MediaCommand, MediaEvent );
 			commandMap.mapEvent( MediaEvent.DELETE,					MediaCommand, MediaEvent );
 			commandMap.mapEvent( MediaEvent.MOVE,					MediaCommand, MediaEvent );
+			commandMap.mapEvent( MediaEvent.GET_DIRECTORY_SIZE,		MediaCommand, MediaEvent );
 			//upload
 			commandMap.mapEvent(UploadEvent.UPLOAD,					UploadCommand, UploadEvent );
 			commandMap.mapEvent(UploadEvent.CANCEL,					UploadCommand, UploadEvent );

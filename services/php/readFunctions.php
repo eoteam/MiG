@@ -1203,7 +1203,7 @@ function getMedia($params) {
 	//	print_r($sendParams);
 	//print_r($sql);
 
-	print_r($sql);
+	//print_r($sql);
 	// get the results
 	$result = queryDatabase($sql, $sendParams);
 

@@ -81,6 +81,7 @@ package org.mig.controller
 			if(index == files.length) {
 				uploading = false;
 				eventDispatcher.dispatchEvent(new UploadEvent(UploadEvent.COMPLETE));
+				eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.GET_DIRECTORY_SIZE,contentModel.currentDirectory));
 			}
 			else
 				uploadFile(index);

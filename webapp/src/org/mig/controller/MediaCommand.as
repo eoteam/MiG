@@ -117,6 +117,9 @@ package org.mig.controller
 						fileService.addHandlers(handleDiskMove);
 					}
 				break;
+				case MediaEvent.GET_DIRECTORY_SIZE:
+					fileService.refreshDirectorySize(event.args[0] as DirectoryNode);
+				break;
 			}
 		}	
 		private function checkDir(dir:DirectoryNode,dirs:Array):Boolean {
@@ -130,17 +133,14 @@ package org.mig.controller
 				return false;
 		}
 		
+
 		private function handleDiskResults(data:Object):void {
 			var results:Array = data.result as Array;
 			var content:DirectoryNode = data.token.directory;	
 			//content.children.removeAll();
 			for each (var item:MediaData in results) {
-				if(item.type.toString() == "folder") {
-					var newdirectory:String = content.directory + item.name.toString() + '/';
-					var categoryNode:DirectoryNode = new DirectoryNode(item.name, content.config, item,content, newdirectory,content.privileges);
-					content.children.addItem(categoryNode);
-					content.numFolders += 1;	
-				}
+				if(item.type.toString() == "folder")
+					content.diskFolders.push(item);	
 				else
 					content.diskFiles.push(item);
 			}
@@ -155,56 +155,80 @@ package org.mig.controller
 			var file:Object;
 			var d:Date = new Date();
 			content.state = ContentNode.LOADED;
-			if(results.length > 0) {// some files are stored, correlate disk with DB
-				for each(item in content.diskFiles) {
-					var found:Boolean = false;
-					for each(result in results) {
-						if(item.name == result.name) {
-							found = true;
-							var node:FileNode = new FileNode(result.name, content.config, result, content,content.privileges);
-							content.children.addItem(node);
-							content.numFiles += 1;	
-							break;
+			
+			var found:Boolean = false;
+			
+			if(results.length > 0) {// some items are stored, correlate disk with DB
+				
+				for each(result in results) {
+					if(result.mimetypeid != MimeTypes.DIRECTORY) {
+						for each(item in content.diskFiles) {		
+							if(item.name == result.name) {
+								found = true;
+								var node:FileNode = new FileNode(result.name, content.config, result, content,content.privileges);
+								content.children.addItem(node);
+								content.numFiles += 1;	
+								break;
+							}
 						}
-						else
-							found = false;
+						if(!found) {
+							item.modifieddate = d.time;
+							//item.parent = '';
+							item.createthumb = item.createthumb.toString();							
+							content.newFiles.push(item);	
+							/*if(file.createthumb == "1") {
+							thumbTotal++;
+							trace("thumb total",thumbTotal);
+							var op:XmlHttpOperation = new XmlHttpOperation(Constants.CREATE_THUMB);
+							op.addEventListener(Event.COMPLETE,handleThumbComplete);			
+							var params:Object = new Object();
+							params.name = file.name;
+							params.path = '/'+this.directory+'/';
+							var tokens:Object = new Object();
+							tokens.file = file;
+							op.tokens = tokens;
+							op.params = params;
+							op.execute();*/	
+						}
 					}
-					if(!found) {
+					else if(result.mimetypeid == MimeTypes.DIRECTORY) {
+						for each(item in content.diskFolders) {	
+							if(result.name == item.name) {
+								found = true;
+								result.childrencount = item.childrencount;
+								result.size = item.size;
+								var newdirectory:String = content.directory + item.name.toString() + '/';
+								var categoryNode:DirectoryNode = new DirectoryNode(result.name, content.config, result,content, newdirectory,content.privileges);
+								content.children.addItem(categoryNode);
+								content.numFolders += 1;
+								break;
+							}
+						}
+						if(!found) {
+							content.newFolders.push(item);
+						}
 						
-						item.modifieddate = d.time;
-						//item.parent = '';
-						item.createthumb = item.createthumb.toString();							
-						content.newFiles.push(item);	
-						/*if(file.createthumb == "1") {
-						thumbTotal++;
-						trace("thumb total",thumbTotal);
-						var op:XmlHttpOperation = new XmlHttpOperation(Constants.CREATE_THUMB);
-						op.addEventListener(Event.COMPLETE,handleThumbComplete);			
-						var params:Object = new Object();
-						params.name = file.name;
-						params.path = '/'+this.directory+'/';
-						var tokens:Object = new Object();
-						tokens.file = file;
-						op.tokens = tokens;
-						op.params = params;
-						op.execute();*/	
-					}	
+					}
 				}
+			}	
+				
+	
+			
+		
+/*		else { //none in DB and all on disk
+			for each(item in content.diskFiles) {
+				item.modifieddate = d.time;
+				item.createthumb = item.createthumb.toString();							
+				content.newFiles.push(item);
 			}
-			else { //none in DB and all on disk
-				for each(item in content.diskFiles) {
-					item.modifieddate = d.time;
-					item.createthumb = item.createthumb.toString();							
-					content.newFiles.push(item);
-				}
+		}
+		for each(result in results) { // not on disk but in DB: virtual asset, namely youtube, remote asset, etc..
+			if(result.mimetypeid == MimeTypes.YOUTUBE) {
+				node = new FileNode(result.name, content.config, result, content,content.privileges);
+				content.children.addItem(node);
+				content.numItems += 1;	
 			}
-			for each(result in results) { // not on disk but in DB: virtual asset, namely youtube, remote asset, etc..
-				if(result.mimetypeid == MimeTypes.YOUTUBE) {
-					node = new FileNode(result.name, content.config, result, content,content.privileges);
-					content.children.addItem(node);
-					content.numFiles += 1;	
-				}
-			}
+		}*/
 		}
 		private function handleDirectoryDeleted(data:Object):void {
 			var result:StatusResult = data.result as StatusResult;
@@ -273,13 +297,15 @@ package org.mig.controller
 							if(file.parentNode == content)
 								update.path = newdir;
 							else
-								update.path =dir.directory.substr(0,dir.directory.length-1) + DirectoryNode(file.parentNode).directory; 
+								update.path = dir.directory.substr(0,dir.directory.length-1) + DirectoryNode(file.parentNode).directory; 
 							mediaService.updateFile(file,update);
 							mediaService.addHandlers(handleDBMove);
 							total++;
 						}
-						if(arr.length == 0) 
+						if(arr.length == 0) {
 							eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Folder moved successfully"));
+							eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.GET_DIRECTORY_SIZE,content));
+						}
 					}
 					else if(content.state == ContentNode.NOT_LOADED) {
 						mediaService.updateFilesByDirectory(content as DirectoryNode,newdir);

@@ -33,20 +33,31 @@ package org.mig.view.mediators.managers.media
 		}
 		private function handleSubmitButton(event:MouseEvent):void {
 			if(view.nameInput.text.length > 0) {
-				fileService.addDirectory(view.nameInput.text);
-				fileService.addHandlers(handleDirectoryAdded);
+				fileService.createDirectory(view.nameInput.text);
+				fileService.addHandlers(handleDirectoryAddedToDisk);
 			}
 		}
-		private function handleDirectoryAdded(data:Object):void {
+		private function handleDirectoryAddedToDisk(data:Object):void {
 			var mediaData:MediaData = data.result[0] as MediaData;	
-			view.close();
-			var directory:DirectoryNode = contentModel.currentDirectory;
+			
 			if(mediaData) {
-				eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Directory added successfully"));
-				eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.ADD_DIRECTORY,directory,view.nameInput.text,mediaData));
+				mediaService.createDirectory(mediaData);
+				mediaService.addHandlers(handleDirectoryAddedToDB);
 			}
 			else {
 				
+			}
+		}
+		private function handleDirectoryAddedToDB(data:Object):void {
+			view.close();
+			var result:StatusResult = data.result as StatusResult;
+			var mediaData:MediaData = data.token.media as MediaData;
+			var directory:DirectoryNode = contentModel.currentDirectory;
+			if(result.success) {
+				//this is written in a way that that makes the command unaware of the current directory
+				//is this event ADD_DIRECTORY meant to  allow adding directories to other directories other than the currrently selected one?
+				eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Directory added successfully"));
+				eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.ADD_DIRECTORY,directory,view.nameInput.text,mediaData));
 			}
 		}
 	}

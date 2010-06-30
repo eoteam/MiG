@@ -1,5 +1,5 @@
 <?php
-$fileDir = "../files/";
-$thumbDir = "../files/migThumbs/";
+$fileDir = "../files";
+$thumbDir = "../files/migThumbs";
 $tempDir = "../temporary/";
 ?>

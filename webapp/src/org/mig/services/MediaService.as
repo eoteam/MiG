@@ -9,6 +9,7 @@ package org.mig.services
 	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.model.vo.media.FileNode;
 	import org.mig.model.vo.media.MediaData;
+	import org.mig.model.vo.media.MimeTypes;
 	import org.mig.services.interfaces.IMediaService;
 
 	public class MediaService extends AbstractService implements IMediaService
@@ -54,6 +55,22 @@ package org.mig.services
 			params.verbose = true;
 			//params.tags = file.tags;
 			this.createService(params,ResponseType.DATA,MediaData);
+		}
+		public function createDirectory(media:MediaData):void {
+			var date:Date = new Date();
+			var time:Number = Math.round(date.time / 1000);
+			var params:Object = new Object();
+			params.action = contentModel.currentDirectory.config.@createContent.toString();
+			params.tablename = "media";
+			params.name = media.name;
+			params.path = contentModel.currentDirectory.directory;
+			params.createdby = appModel.user.id;
+			params.modifiedby = appModel.user.id;
+			params.createdate = time;
+			params.modifieddate = time;
+			params.mimetypeid = MimeTypes.DIRECTORY;
+			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
+			service.token.media = media;
 		}
 		public function deleteDirectory(directory:DirectoryNode):void {
 			var params:Object = new Object();

@@ -57,7 +57,8 @@ $validFileFunctions = array (
 "getID3",
 "getKeywords",
 "getPlayTime",
-"downloadZip"
+"downloadZip",
+"getDirSize"
 );
 
 

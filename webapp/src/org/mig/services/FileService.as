@@ -17,6 +17,7 @@ package org.mig.services
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
 	import org.mig.model.vo.ContentNode;
+	import org.mig.model.vo.app.StatusResult;
 	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.model.vo.media.FileNode;
 	import org.mig.model.vo.media.MediaData;
@@ -62,7 +63,7 @@ package org.mig.services
 				
 			} 
 		}	
-		public function addDirectory(name:String):void {
+		public function createDirectory(name:String):void {
 			var content:DirectoryNode = contentModel.currentDirectory;
 			var params:Object = new Object();
 			params.directory = content.directory;
@@ -71,6 +72,13 @@ package org.mig.services
 			if(params.directory == null || params.directory == "")
 				params.directory = " ";	
 			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,MediaData);
+		}
+		public function refreshDirectorySize(directory:DirectoryNode):void {
+			var params:Object = new Object();
+			params.action = ValidFunctions.DIRECTORY_SIZE;
+			params.directory = directory.directory;
+			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS,null,handleDirSize);
+			service.token.directory = directory
 		}
 		public function getXMP(file:String):void {
 			
@@ -187,6 +195,13 @@ package org.mig.services
 			var progressString:String = (progress*100).toString()+'% Complete';
 			trace("Upload Progress\t",progress,"\n=====================");
 			eventDispatcher.dispatchEvent(new UploadEvent(UploadEvent.PROGRESS,progress,progressString));
+		}
+		
+		private function handleDirSize(data:Object):void {
+			var dir:DirectoryNode = data.token.directory;
+			var result:StatusResult = data.result as StatusResult;
+			if(result.success) 
+				MediaData(dir.data).size = Number(result.message);
 		}
 		/*private function fileUploadComplete(event:Event):void {	
 		trace("Upload Complete");
