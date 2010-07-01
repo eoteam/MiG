@@ -45,11 +45,11 @@ package org.mig.view.mediators.main
 			}
 			if(dataProvider.length > 0) {
 				view.addLabel.text = "Add Container";
-				eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.ENABLE_NEW_CONTENT,true));
+				eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.ENABLE_NEW_CONTENT,true,false));
 				//selectedNode = col.getItemAt(0) as ContentNode;
 			}
 			else
-				eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.ENABLE_NEW_CONTENT,false));
+				eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.ENABLE_NEW_CONTENT,false,false));
 			view.dataProvider = dataProvider;
 		}
 		private function handleCancel(event:MouseEvent):void {

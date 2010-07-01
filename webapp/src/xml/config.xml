@@ -68,13 +68,13 @@
 			updateContent="updateTag"
 			deleteContent="deleteTag" />
 	</manager>
-	<manager id="customfieldsManager" name="Custom Fields">
-		<child labelfield="name"
-			createContent="insertRecord" 
-			retrieveContent="getData"
-			updateContent="updateRecord"
-			deleteContent="deleteRecord" />
-	</manager>
+<!--	<manager id="customfieldsManager" name="Custom Fields">-->
+<!--		<child labelfield="name"-->
+<!--			createContent="insertRecord" -->
+<!--			retrieveContent="getData"-->
+<!--			updateContent="updateRecord"-->
+<!--			deleteContent="deleteRecord" />-->
+<!--	</manager>-->
 	<manager id="templateManager" name="Templates">
 		<child labelfield="name"
 			createContent="insertRecord" 

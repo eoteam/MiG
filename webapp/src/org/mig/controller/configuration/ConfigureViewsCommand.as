@@ -1,8 +1,6 @@
 package org.mig.controller.configuration
 {
 	import org.mig.AppConfigStateConstants;
-	import org.mig.model.AppModel;
-	import org.mig.model.ContentModel;
 	import org.mig.view.components.content.ContentGeneralEditor;
 	import org.mig.view.components.content.ContentView;
 	import org.mig.view.components.content.MainMiddleView;
@@ -18,13 +16,13 @@ package org.mig.controller.configuration
 	import org.mig.view.components.main.NewContentView;
 	import org.mig.view.components.main.PendingListView;
 	import org.mig.view.components.main.StatusModule;
-	import org.mig.view.components.managers.customfields.CustomFieldsManagerView;
 	import org.mig.view.components.managers.media.AddDirectoryView;
 	import org.mig.view.components.managers.media.DownloadView;
 	import org.mig.view.components.managers.media.FileUploadView;
 	import org.mig.view.components.managers.media.MediaManagerView;
 	import org.mig.view.components.managers.media.RenameView;
 	import org.mig.view.components.managers.tags.TagManagerView;
+	import org.mig.view.components.managers.templates.TemplatesManagerView;
 	import org.mig.view.controls.MiGColorPicker;
 	import org.mig.view.mediators.content.ContentGeneralEditorMediator;
 	import org.mig.view.mediators.content.ContentViewMediator;
@@ -39,13 +37,13 @@ package org.mig.controller.configuration
 	import org.mig.view.mediators.main.NewContentMediator;
 	import org.mig.view.mediators.main.PendingListMediator;
 	import org.mig.view.mediators.main.StatusModuleMediator;
-	import org.mig.view.mediators.managers.customfields.CustomFiledsManagerMediator;
 	import org.mig.view.mediators.managers.media.AddDirectoryMediator;
 	import org.mig.view.mediators.managers.media.DownloadMediator;
 	import org.mig.view.mediators.managers.media.FileUploadMediator;
 	import org.mig.view.mediators.managers.media.MediaManagerMediator;
 	import org.mig.view.mediators.managers.media.RenameMediator;
 	import org.mig.view.mediators.managers.tags.TagManagerMediator;
+	import org.mig.view.mediators.managers.templates.TemplatesManagerMediator;
 	import org.robotlegs.mvcs.Command;
 	import org.robotlegs.utilities.statemachine.StateEvent;
 		
@@ -79,7 +77,11 @@ package org.mig.controller.configuration
 			mediatorMap.mapView(TagManagerView,TagManagerMediator);
 			
 				//customfields manager
-			mediatorMap.mapView(CustomFieldsManagerView ,CustomFiledsManagerMediator);
+			//mediatorMap.mapView(CustomFieldsManagerView ,CustomFiledsManagerMediator);
+			
+				//templates manager
+			mediatorMap.mapView(TemplatesManagerView,TemplatesManagerMediator);
+			
 			
 				//components
 			mediatorMap.mapView(MiGColorPicker ,MiGColorPickerMediator); 

@@ -91,8 +91,8 @@
 					}
 				}
 			} 
-			
-			private var lastSortIndex:int;
+
+						private var lastSortIndex:int;
 			public var currentSort:Sort;
 			private function sortDG(event:Event):void
 			{
@@ -162,7 +162,7 @@
 			<layouts:FlowLayout gap="4" id="flowLayout" />
 		</s:layout>		
 	</s:Group>
-	<container:FlowContainer  direction="horizontal"  width="100%" horizontalGap="8" verticalAlign="middle" accentColor="0" contentBackgroundAlpha="1">
+	<container:FlowContainer id="toolBar"  direction="horizontal"  width="100%" horizontalGap="8" verticalAlign="middle" accentColor="0" contentBackgroundAlpha="1">
 	
 <!--	<s:Group width="100%" accentColor="0" contentBackgroundAlpha="1">
 		<s:layout>
@@ -178,26 +178,26 @@
 		<s:ToggleButton  skinClass="org.mig.view.skins.buttons.SearchButtonSkin" mouseChildren="false" buttonMode="true"  toolTip="Search" selected="false" />
 		<s:TextInput  styleName="inputFieldBlack" id="searchInput" change="searchInput_changeHandler(event)"/>
 		<mx:Spacer width="-25"/>
-		<controls:IconButton id="clearSearch" icon="@Embed(source='/migAssets/library.swf#plus')"
+		<controls:IconButton id="clearSearch" icon="@Embed(source='/migAssets/library.swf#plus')" 
 		rotation="45" toolTip="Clear Search" mouseChildren="false" buttonMode="true" visible="false"   />
 		
 		<!--Views-->
-		<controls:IconToggleButton  icon1="@Embed(source='/migAssets/library.swf#thumbViewIcon')" id="thumbButton"
-		buttonMode="true" useHandCursor="true" mouseChildren="false" toolTip="Image View" styleName="grayIconButton"  />
-		<controls:IconToggleButton  icon1="@Embed(source='/migAssets/library.swf#listViewIcon')"  id="listButton"
-		buttonMode="true" useHandCursor="true" mouseChildren="false" toolTip="List View" styleName="grayIconButton"/>
-		<mx:Spacer width="5" />
-		<controls:MiGHSlider id="scaleSlider" minimum="0.25" maximum="2" change="handleSliderChange(event)" mouseChildren="false" />
+		<controls:IconToggleButton height="22" width="28" icon1="@Embed(source='/migAssets/library.swf#thumbViewIcon')" id="thumbButton"
+		buttonMode="true" useHandCursor="true" mouseChildren="false" toolTip="Image View" styleName="grayIconToggleButton"  />
+		<controls:IconToggleButton height="22" width="28" icon1="@Embed(source='/migAssets/library.swf#listViewIcon')"  id="listButton"
+		buttonMode="true" useHandCursor="true" mouseChildren="false" toolTip="List View" styleName="grayIconToggleButton"/>
 		
 		<!-- Directory -->
-		<controls:IconButton  icon="@Embed(source='/migAssets/library.swf#parentFolderIcon')"  styleName="grayIconButton"
-		mouseChildren="false" id="parentdirButton" alpha="1" toolTip="Up 1 Folder" buttonMode="true" useHandCursor="true" />
-
-		<controls:IconButton   mouseChildren="false" id="addDirectoryButton" alpha="1" toolTip="New Folder" 
+<!--		<controls:IconButton  height="22" width="44" icon="@Embed(source='/migAssets/library.swf#parentFolderIcon')"  styleName="grayIconButton"
+		mouseChildren="false" id="parentdirButton" alpha="1" toolTip="Up 1 Folder" buttonMode="true" useHandCursor="true" />-->
+		<controls:IconButton  height="22" width="40" mouseChildren="false" id="addDirectoryButton" alpha="1" toolTip="New Folder" 
 		icon="@Embed(source='/migAssets/library.swf#addFolderIcon')" buttonMode="true" useHandCursor="true" styleName="grayIconButton"/>
-
-		<controls:IconButton  icon="@Embed(source='/migAssets/library.swf#trashUp')"  toolTip="Delete"  styleName="grayIconButton" id="trashButton" mouseChildren="false"  buttonMode="true" />			
-		<controls:MiGColorPicker id="colorPicker" enabled="false" />
+		
+		<!-- Actions -->
+		<!--<controls:IconButton height="22" width="28" icon="@Embed(source='/migAssets/library.swf#trashUp')"  toolTip="Delete"  styleName="grayIconButton" id="trashButton" mouseChildren="false"  buttonMode="true" />			-->
+		<controls:IconButton width="34" height="22" styleName="grayIconButton" 
+		icon="@Embed(source='/migAssets/library.swf#fileActions')"  id="actionButton" />	
+		<controls:MiGColorPicker id="colorPicker" enabled="false"  />
 	</container:FlowContainer>
 	<!--</s:Group>-->
 	
@@ -205,7 +205,7 @@
 		<mx:ViewStack width="100%" height="100%" id="stack" visible.loading="false" visible.loaded="true">
 			<s:NavigatorContent width="100%" height="100%">
 				<s:List id="testDataGridHeader" width="100%" labelField="headerText"  change="sortDG(event)" 
-				dragDrop="callLater(updateSeparators)" updateComplete="updateSeparators()" borderVisible="false" 
+				dragDrop="callLater(updateSeparators)" updateComplete="updateSeparators()" 
 				requireSelection="false" dragEnabled="true" dropEnabled="false" dragMoveEnabled="false">
 					<s:layout>
 						<s:HorizontalLayout gap="0"  clipAndEnableScrolling="false"/>
@@ -284,7 +284,6 @@
 				</controls:MigTree>
 			    
 				<s:Group id="separators" top="0" bottom="0" left="0" right="0" />
-				<s:Label styleName="bodyCopy" text="{tileDP.length + ' items'}" bottom="0" textAlign="center" width="100%"/>
 			</s:NavigatorContent>	
 
 			<s:NavigatorContent width="100%" height="100%">
@@ -307,10 +306,14 @@
 						<s:TileLayout  verticalGap="4" horizontalGap="4" clipAndEnableScrolling="true" useVirtualLayout="true" orientation="rows" rowHeight="{250*scalePercent}" columnWidth="{250*scalePercent}" />
 					</controls:layout>
 				</controls:MiGList>
-				<s:Label styleName="bodyCopy" text="{tileDP.length + ' items'}" textAlign="center" width="100%" bottom="5"/>
+				
 			</s:NavigatorContent>
 		</mx:ViewStack>	
 		
+		<s:HGroup width="100%" bottom="2">
+			<s:Label styleName="bodyCopy" text="{tileDP.length + ' items'}" textAlign="center" width="100%" bottom="5"/>
+			<controls:MiGHSlider id="scaleSlider" minimum="0.25" maximum="2" change="handleSliderChange(event)" mouseChildren="false" />
+		</s:HGroup>
 		
 		<s:SkinnableContainer id="loadingScreen" backgroundColor="0x000000" backgroundAlpha="0" 
 		width="100%" height="100%" visible.loading="true" visible.loaded="false"

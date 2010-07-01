@@ -32,11 +32,10 @@ $params = array();
 // escape all post data, for security!
 
 foreach ($postData as $key=>$value) {
-	
-	if (($postData[$key] || $postData[$key] == '0') && $key != 'submit')
+	//echo $key;
+	if ($key != 'submit')  //???
 		 	$params[$key] = addslashes($value);
 }
-
 // append custom functions to vaildActions array!
 
 $validActions = array_merge($validReadFunctions,$validWriteFunctions);

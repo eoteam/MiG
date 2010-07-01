@@ -135,10 +135,8 @@ package org.mig.view.mediators.main
 			}
 		}
 		private function handleNewContent(event:ViewEvent):void {
-			var enable:Boolean = event.args[0] as Boolean;
-			view.addButton.enabled = enable;
-			if(!enable)
-				view.addButton.selected = enable;
+			view.addButton.enabled = event.args[0] as Boolean;
+			view.addButton.selected = event.args[1] as Boolean;
 		}
 		private function handlePublishDropBox(event:ViewEvent):void {
 			view.publishDropBox.visible = event.args[0] as Boolean;

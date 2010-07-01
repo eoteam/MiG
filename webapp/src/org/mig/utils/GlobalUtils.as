@@ -111,14 +111,14 @@ package org.mig.utils
 				accumulateParents(content.parentNode,arr);
 			}
 		}
-		public static function accumulateChildren(content:ContentNode,arr:Array):void {
+		public static function accumulateChildren(content:*,arr:Array):void {
 			arr.push(content);
 			addChildren(content,arr);
 		}
 		public static function accumulateFiles(directory:DirectoryNode,arr:Array):void {
 			addMediaChildren(directory,arr);
 		}
-		private static function addChildren(node:ContentNode,arr:Array):void {
+		private static function addChildren(node:*,arr:Array):void {
 			if(node.children) {
 				for each(var item:ContentNode in node.children) {
 					arr.push(item);
@@ -242,7 +242,7 @@ package org.mig.utils
 										
 					child = new List();
 					child.percentHeight = 100;
-					child.width = 300;
+					child.percentWidth = 100;
 					List(child).styleName = 'customFieldsList';
 					List(child).dataProvider = dp;
 					List(child).labelField = "value";
@@ -316,7 +316,7 @@ package org.mig.utils
 					}	
 					child = new List();
 					child.percentHeight = 100;
-					child.width = 300;
+					child.percentWidth = 100;
 					List(child).styleName = 'customFieldsList';
 					List(child).dataProvider = dp;
 					List(child).labelField = "value";
@@ -369,7 +369,7 @@ package org.mig.utils
 						break;
 					case CustomFieldTypes.INTEGER:
 						vo[customfield.name] = TextInput(event.target).text;
-						break;		
+						break;			
 					case CustomFieldTypes.DATE:
 						if(DateTimePicker(event.target).selectedDate)
 							vo[customfield.name] = DateTimePicker(event.target).selectedDate.time / 1000;			

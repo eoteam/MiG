@@ -23,7 +23,7 @@
 			override public function set data(value:Object):void {
 				super.data = value;
 				if(data) {
-					if(data.data.color  != null) {
+					if(data.data.color  != null && data.data.color != '') {
 						colorVisible = true;
 						bgColor = Number('0x'+String(data.data.color).substr(1,data.data.color.length));	
 					}

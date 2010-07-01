@@ -13,6 +13,6 @@ package org.mig.model.vo.content
 		public var name:String;
 		public var classname:String;
 		public var customfields:ArrayCollection;
-		
+		public var config:XML;
 	}
 }

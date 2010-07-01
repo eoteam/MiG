@@ -190,6 +190,7 @@ package org.mig.controller
 			}	
 		}
 		private function handleNewContainer(data:Object):void {
+			if(contentModel.currentContainer.state == ContentNode.LOADED) {
 			var config:XML = data.token.config as XML;
 			var contentData:ContainerData = data.result[0] as ContainerData;
 			var is_fixed:Boolean = contentData.is_fixed == 0 ?false:true;
@@ -200,7 +201,9 @@ package org.mig.controller
 			var node:ContainerNode = new ContainerNode(contentData.migtitle,config,contentData,contentModel.currentContainer,
 													   contentModel.currentContainer.privileges,false,is_fixed,nesting);
 			contentModel.currentContainer.children.addItemAt(node,0);
-			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.ENABLE_NEW_CONTENT,false));
+			}
+			contentModel.currentContainer.data.childrencount += 1;
+			eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.ENABLE_NEW_CONTENT,true,false));
 			eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Container created successfully"));
 		}
 	}

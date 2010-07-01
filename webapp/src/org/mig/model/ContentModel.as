@@ -19,8 +19,9 @@ package org.mig.model
 		//content
 		public var contentConfig:XML;
 		public var contentModel:ContainerNode;
-		public var templates:ArrayCollection;
 		public var currentContainer:ContainerNode;
+		public var templates:ArrayCollection;
+		public var templatesConfig:XML;
 		public var configEelements:XML;
 		public var defaultCreate:String;
 		public var defaultUpdate:String;

@@ -11,6 +11,7 @@ package org.mig.model.vo.app
 		public var displayname:String;
 		public var optionsArray:Array = [];
 		public var defaultvalue:String = "";
+		public var description:String = "";
 		
 		public var createdby:int;
 		public var createdate:Number;

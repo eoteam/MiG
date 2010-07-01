@@ -38,7 +38,7 @@
 			}
 			private function handleButtonClick(event:MouseEvent):void {
 				var node:ContainerNode = DataButton(event.target).data as ContainerNode;
-				this.dispatchEvent(new (ContentViewEvent.CONTAINER_SELECTED,node));
+				this.dispatchEvent(new ContentViewEvent(ContentViewEvent.CONTAINER_SELECTED,node));
 			} 
 			
 		]]>

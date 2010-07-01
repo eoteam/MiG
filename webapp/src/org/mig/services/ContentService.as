@@ -228,10 +228,10 @@ package org.mig.services
 			if(ValidFunctions.FUNCTIONS_WITH_TABLENAME.indexOf(params.action) != -1)
 				params.tablename = config.@tablename.toString();
 			params.id = vo.id;
-			var classToUse:String = flash.utils.getQualifiedClassName(vo);
-			var classRef:Class = flash.utils.getDefinitionByName(classToUse) as Class; 
+			//var classToUse:String = flash.utils.getQualifiedClassName(vo);
+			//var classRef:Class = flash.utils.getDefinitionByName(classToUse) as Class; 
 			//var resultClass:ClassFactory = new ClassFactory(classRef);
-			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS,classRef);
+			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
 			service.service.showBusyCursor = true;
 			service.token.content = vo;			
 		}

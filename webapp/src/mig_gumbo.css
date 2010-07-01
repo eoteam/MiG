@@ -1,3 +1,4 @@
+
 /* CSS file */
 @namespace s "library://ns.adobe.com/flex/spark";
 @namespace mx "library://ns.adobe.com/flex/mx";
@@ -36,6 +37,7 @@ controls|RatingComponent {
 }
 controls|MiGList {
 	skinClass: ClassReference("org.mig.view.skins.controls.MiGListSkin");
+	alternatingItemColors: #191819, #111111;
 }
 s|TitleWindow {
 	skinClass: ClassReference("org.mig.view.skins.containers.TitleWindowSkin");
@@ -85,6 +87,9 @@ s|Button {
 }
 .grayIconButton {
 	skinClass: ClassReference("org.mig.view.skins.buttons.GrayIconButtonSkin");
+}
+.grayIconToggleButton {
+	skinClass: ClassReference("org.mig.view.skins.buttons.GrayIconToggleButtonSkin");
 }
 .textOnlyButton {
 	skinClass: ClassReference("org.mig.view.skins.buttons.TextOnlyButtonSkin");
@@ -231,6 +236,18 @@ s|TextInput {
 	selectionColor: #ED1C58;
 	borderVisible: false;
 }
+/**********************************/
+/************ List ************/
+/**********************************/
+s|List {
+	borderVisible: false; 
+	selectionColor: #ED1C58;
+	rollOverColor: #ED1C58;
+}
+.dropDownList {
+	contentBackgroundColor: #333333;
+	contentBackgroundAlpha: 0.9;
+}
 /*****************************************/
 /************ Halo Components ************/
 /*****************************************/
@@ -364,7 +381,7 @@ mx|DataGrid {
 	sortArrowSkin: Embed(source="migAssets/flex_skins.swf",symbol="Tree_folderOpenIcon");
 	headerBackgroundSkin: ClassReference("org.mig.view.skins.datagrid.DataGridHeaderBackgroundSkin");
 }
-mx|AdvancedDataGrid {
+/*mx|AdvancedDataGrid {
 	fontFamily: Transit-Normal;
 	fontSize: 15pt;
 	alternatingItemColors: #191819, #111111;
@@ -387,7 +404,7 @@ mx|AdvancedDataGrid {
 	openDuration:250;
 	headerStyleName: dataGridHeaderStyle;
 	headerSeparatorSkin: Embed(source="migAssets/flex_skins.swf",symbol="DataGrid_headerSeparatorSkin");
-}
+}*/
 .mediaManagerGrid {
 	dropIndicatorSkin: ClassReference("org.mig.view.skins.OffsetedDropIndicator");
 	folderClosedIcon: Embed(source='/migAssets/library.swf#folderIcon');

@@ -53,6 +53,7 @@ package org.mig.view.mediators.managers.tags
 			view.addEventListener(FlexEvent.SHOW,handleContent);
 			view.insertButton.addEventListener(MouseEvent.CLICK,handleInsertButton);
 			view.trashButton1.addEventListener(MouseEvent.CLICK,handleTagDeleteButton);
+			view.trashButton2.addEventListener(MouseEvent.CLICK,handleCategoryDeleteButton);
 			view.submitButton.addEventListener(MouseEvent.CLICK,handleSubmitButton);
 			//view.termsGrid.addEventListener(DataGridEvent.ITEM_EDIT_END,handleTagEditEnd);
 			
@@ -160,15 +161,40 @@ package org.mig.view.mediators.managers.tags
 			}
 		}
 		private function handleTagDeleteButton(event:MouseEvent):void {
+			cudCount = cudTotal = 0;
 			for each(var item:Term in view.termsGrid.selectedItems) {
 				if(contentModel.tagTerms.isItemNew(item)) 
 					contentModel.tagTerms.removeItemAt(contentModel.tagTerms.getItemIndex(item));
 				else {
 					contentService.deleteContent(item,contentModel.termsConfig.child[0]);
 					contentService.addHandlers(handleTagTermDeleted);
+					cudTotal++;
 				}
 			}
 		}
+		private function handleCategoryDeleteButton(event:MouseEvent):void {
+			cudCount = cudTotal = 0;
+			var items:Array = [];
+			for each(var item:Term in view.categoriesView.categoryList.selectedItems) {
+				GlobalUtils.accumulateChildren(item,items);
+			}
+			var i:int, j : int;
+			for (i = 0; i < items.length - 1; i++)
+				for (j = i + 1; j < items.length; j++)
+					if (items[i] === items[j])
+						items.splice(j, 1);
+			
+			for each(item in items) {
+				if(contentModel.categoryTermsFlat.isItemNew(item)) 
+					contentModel.categoryTermsFlat.removeItemAt(contentModel.categoryTermsFlat.getItemIndex(item));
+				else {
+					contentService.deleteContent(item,contentModel.termsConfig.child[0]);
+					contentService.addHandlers(handleCategoryTermDeleted);
+					cudTotal++;
+				}
+			}
+		}
+
 		private function handleTagTermUpdated(data:Object):void {
 			var status:StatusResult = data.result as StatusResult;
 			if(status.success) {
@@ -182,6 +208,13 @@ package org.mig.view.mediators.managers.tags
 				checkCudCount();
 				contentModel.tagTerms.setItemNotNew(data.token.content as Term);
 			}	
+		}
+		private function handleTagTermDeleted(data:Object):void {
+			var status:StatusResult = data.result as StatusResult;
+			if(status.success) {
+				checkCudCount();
+				contentModel.tagTerms.removeItemAt(contentModel.tagTerms.getItemIndex(data.token.content as Term));
+			}				
 		}
 		private function handleCategoryTermUpdated(data:Object):void {
 			var status:StatusResult = data.result as StatusResult;
@@ -197,13 +230,18 @@ package org.mig.view.mediators.managers.tags
 				contentModel.categoryTermsFlat.setItemNotNew(data.token.content as Term);
 			}	
 		}
-		private function handleTagTermDeleted(data:Object):void {
+		private function handleCategoryTermDeleted(data:Object):void {
 			var status:StatusResult = data.result as StatusResult;
 			if(status.success) {
+				var term:Term = data.token.content as Term;
+				contentModel.categoryTermsFlat.removeItemAt(contentModel.categoryTermsFlat.getItemIndex(term));
+				if(term.parent == null)
+					contentModel.categoryTerms.splice(contentModel.categoryTerms.indexOf(term,1));
+				else
+					term.parent.children.splice(term.parent.children.indexOf(term,1));		
 				checkCudCount();
-				contentModel.tagTerms.removeItemAt(contentModel.tagTerms.getItemIndex(data.token.content as Term));
 			}				
-		}
+		}		
 		private function handleCategoryListClick(event:ListEvent):void {
 			view.insertChildButton.enabled = true;
 		}

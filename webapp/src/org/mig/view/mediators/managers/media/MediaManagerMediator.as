@@ -7,7 +7,9 @@ package org.mig.view.mediators.managers.media
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	
+	import mx.collections.ArrayList;
 	import mx.collections.HierarchicalData;
 	import mx.collections.Sort;
 	import mx.controls.AdvancedDataGrid;
@@ -16,6 +18,7 @@ package org.mig.view.mediators.managers.media
 	import mx.events.ColorPickerEvent;
 	import mx.events.DragEvent;
 	import mx.events.FlexEvent;
+	import mx.events.FlexMouseEvent;
 	import mx.events.ListEvent;
 	import mx.managers.DragManager;
 	import mx.managers.PopUpManager;
@@ -49,6 +52,8 @@ package org.mig.view.mediators.managers.media
 	import org.robotlegs.utilities.statemachine.StateEvent;
 	
 	import spark.components.Button;
+	import spark.components.List;
+	import spark.events.IndexChangeEvent;
 	
 	public class MediaManagerMediator extends Mediator
 	{
@@ -92,8 +97,9 @@ package org.mig.view.mediators.managers.media
 			view.listButton.addEventListener(MouseEvent.CLICK,handleListButton);
 			view.searchInput.addEventListener(FlexEvent.ENTER,handleSearchInput);
 			view.clearSearch.addEventListener(MouseEvent.CLICK,handleClearSearch);
-			view.trashButton.addEventListener(MouseEvent.CLICK,deleteItems);
-			view.parentdirButton.addEventListener(MouseEvent.CLICK,handleParentdirButton);
+			//view.trashButton.addEventListener(MouseEvent.CLICK,deleteItems);
+			view.actionButton.addEventListener(MouseEvent.CLICK,handleActionButton);
+			//view.parentdirButton.addEventListener(MouseEvent.CLICK,handleParentdirButton);
 			view.addEventListener(FlexEvent.SHOW,handleContent);
 			
 			view.scaleSlider.alpha = 0.2;
@@ -105,7 +111,6 @@ package org.mig.view.mediators.managers.media
 			view.listView.addEventListener(ListEvent.ITEM_DOUBLE_CLICK,handleListItemDoubleClick);
 			view.listView.addEventListener(ListEvent.ITEM_CLICK,handleListItem);
 			view.listView.addEventListener(KeyboardEvent.KEY_DOWN,handleListItem);
-			view.listView.addEventListener(Event.CHANGE,handleListChange);
 			
 						
 			view.listView.addEventListener(DragEvent.DRAG_COMPLETE,handleListDragComplete);
@@ -125,8 +130,8 @@ package org.mig.view.mediators.managers.media
 			view.user = appModel.user;
 			//TweenMax.to(view.thumbButton, 0.5, {colorTransform:{tint:0xffffff, tintAmount:1}, ease:Expo.easeOut});
 			//TweenMax.to(view.listButton, 0.5, {colorTransform:{tint:0xed1c58, tintAmount:1}, ease:Expo.easeOut});
-			view.parentdirButton.enabled = false;
-			view.parentdirButton.alpha = 0.5;
+			//view.parentdirButton.enabled = false;
+			//view.parentdirButton.alpha = 0.5;
 			view.currentState = "loading";
 			view.listView.dragFormat  = DraggableViews.MEDIA_ITEMS;
 		}
@@ -140,10 +145,10 @@ package org.mig.view.mediators.managers.media
 			view.thumbView.addEventListener(ListItemEvent.ITEM_DOUBLE_CLICK, handleThumbItemDoubleClick);	
 			view.thumbView.addEventListener(ListEvent.ITEM_CLICK,handleThumbItem);
 			view.thumbView.addEventListener(KeyboardEvent.KEY_DOWN,handleThumbItem);
-			GlobalUtils.createContextMenu(["Remove","Rename","Download","New Folder"],menuItemSelectHandler,null,[view.thumbView]);
+			GlobalUtils.createContextMenu(["Remove","Rename","Download","New Folder","Remove Color"],menuItemSelectHandler,null,[view.thumbView]);
 		}
 		private function addContextMenu():void {
-			GlobalUtils.createContextMenu(["Remove","Rename","Download","New Folder"],menuItemSelectHandler,null,[view.listView]);
+			GlobalUtils.createContextMenu(["Remove","Rename","Download","New Folder","Remove Color"],menuItemSelectHandler,null,[view.listView]);
 		}
 		private function menuItemSelectHandler(event:ContextMenuEvent):void {
 			switch(event.target.caption) {
@@ -158,6 +163,9 @@ package org.mig.view.mediators.managers.media
 				break;
 				case "New Folder":
 					addFolder();
+				break;
+				case "Remove Color":
+					removeColor();
 				break;
 			}	
 		}
@@ -229,7 +237,19 @@ package org.mig.view.mediators.managers.media
 			if(items.length == 1 && items[0] is DirectoryNode)				
 				eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.SELECT,items[0]));
 			else if(items.length > 1)
-				eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.MULTIPLE_SELECT)	);
+				eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.MULTIPLE_SELECT));
+			
+			if(items.length > 0) {
+				view.colorPicker.enabled = true; 
+				var media:MediaData = items[0].data as MediaData;
+				if(media.color) {
+					view.colorPicker.selectedColor = Number('0x'+String(media.color).substr(1,media.color.length));	
+				}
+				else
+					view.colorPicker.selectedColor = 0;
+			}
+			else
+				view.colorPicker.enabled = true; 
 		}		
 		private function search(input:String):void {
 			
@@ -361,6 +381,30 @@ package org.mig.view.mediators.managers.media
 			mediatorMap.createMediator( popup );
 			PopUpManager.centerPopUp(popup);
 		}   
+		private function removeColor():void {
+			var items:Array;
+			var item:ContentNode
+			if(view.stack.selectedIndex == 0)
+				items = view.listView.selectedItems;
+			else {
+				items = new Array();
+				if(view.thumbView.selectedItems) {
+					for (var i:int=0; i<view.thumbView.selectedItems.length;i++) {
+						item = view.thumbView.selectedItems[i] as ContentNode;
+						items.push(item);
+					}
+				}
+			}
+			cudTotal = 0;
+			for each(item in items) {
+				var update:UpdateData = new UpdateData();
+				update.id = item.data.id;
+				update.color =  '';
+				mediaService.updateContent(item,update);
+				mediaService.addHandlers(updateComplete);
+			}
+
+		}
 		private function handleListDragComplete(event:DragEvent):void {
 
 		}
@@ -383,19 +427,46 @@ package org.mig.view.mediators.managers.media
 				}
 			}
 		}
-		private function handleListChange(event:Event):void {
-			if(view.listView.selectedItem) {
-				view.colorPicker.enabled = true; 
-				var media:MediaData = view.listView.selectedItem.data as MediaData;
-				if(media.color) {
-					view.colorPicker.selectedColor = Number('0x'+String(media.color).substr(1,media.color.length));	
-				}
-				else
-					view.colorPicker.selectedColor = 0;
-			}
-			else
-				view.colorPicker.enabled = true; 
+		private function handleActionButton(event:MouseEvent):void
+		{
+			var list:List = new List();
+			list.width = 120;
+			list.styleName = "dropDownList";
+
+			
+			list.addEventListener(FlexMouseEvent.MOUSE_DOWN_OUTSIDE,closeList); 
+			list.addEventListener(IndexChangeEvent.CHANGE,handleItemClick);
+			list.dataProvider = new ArrayList(["Download","Delete","New Folder","Rename","Remove Color"]);
+			var pt:Point = view.toolBar.localToGlobal(new Point(view.actionButton.x,view.actionButton.y));
+			list.x = pt.x; list.y = pt.y+view.actionButton.height;	
+			PopUpManager.addPopUp(list,view,false,PopUpManagerChildList.POPUP);
+		}	
+		private function closeList(event:Event):void {
+			PopUpManager.removePopUp(event.target as List);
 		}
+		private function handleItemClick(event:Event):void {
+			var action:String = List(event.target).selectedItem;
+			switch(action) {
+				case "Rename":	
+					renameItem();
+					break;
+				case "Delete":
+					deleteItems();
+					break;
+				case "Download":
+					downloadItems();	
+					break;
+				case "New Folder":
+					addFolder();
+				break;
+				case "Remove Color":
+					removeColor();
+				break;
+				
+			}
+			PopUpManager.removePopUp(event.target as List);
+		}
+
 		private var cudTotal:int=0;
 		private function handleColorPicker(event:Event):void {
 			if(view.listView.selectedItems.length > 0) {
@@ -489,14 +560,14 @@ package org.mig.view.mediators.managers.media
 				view.currentLocation = currentLocation;*/
 				
 				
-				if(value == contentModel.mediaModel) {
+/*				if(value == contentModel.mediaModel) {
 					view.parentdirButton.enabled = false;
 					view.parentdirButton.alpha = 0.5;
 				}
 				else {
 					view.parentdirButton.enabled = true;
 					view.parentdirButton.alpha = 1;
-				}
+				}*/
 			}
 		}
 		private function handlePathButtonClick(event:MouseEvent):void {

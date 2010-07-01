@@ -9,9 +9,9 @@ package org.mig.view.mediators.content
 	import org.mig.model.vo.ContentData;
 	import org.mig.model.vo.UpdateData;
 	import org.mig.model.vo.ValueObject;
+	import org.mig.model.vo.app.ContentCustomField;
 	import org.mig.model.vo.content.ContainerData;
 	import org.mig.model.vo.content.Template;
-	import org.mig.model.vo.app.ContentCustomField;
 	import org.mig.view.components.content.ContentGeneralEditor;
 	import org.mig.view.components.content.CustomFieldElement;
 	import org.mig.view.events.ContentViewEvent;
