@@ -42,10 +42,13 @@ package org.mig.view.mediators.managers.media
 	import org.mig.view.components.managers.media.MediaManagerView;
 	import org.mig.view.components.managers.media.RenameView;
 	import org.mig.view.constants.DraggableViews;
+	import org.mig.view.controls.DataButton;
 	import org.mig.view.events.ContentViewEvent;
 	import org.mig.view.events.ListItemEvent;
 	import org.robotlegs.mvcs.Mediator;
 	import org.robotlegs.utilities.statemachine.StateEvent;
+	
+	import spark.components.Button;
 	
 	public class MediaManagerMediator extends Mediator
 	{
@@ -98,12 +101,21 @@ package org.mig.view.mediators.managers.media
 			view.scaleSlider.mouseChildren = false;
 			
 			view.listView.addEventListener(FlexEvent.UPDATE_COMPLETE,handleListUpdate);
+			
 			view.listView.addEventListener(ListEvent.ITEM_DOUBLE_CLICK,handleListItemDoubleClick);
 			view.listView.addEventListener(ListEvent.ITEM_CLICK,handleListItem);
-			view.listView.addEventListener(KeyboardEvent.KEY_DOWN,handleListItem);			
-			view.listView.addEventListener(ContentViewEvent.LOAD_CHILDREN,handleLoadChildren);
-			view.listView.addEventListener(DragEvent.DRAG_COMPLETE,handleListDragComplete);
+			view.listView.addEventListener(KeyboardEvent.KEY_DOWN,handleListItem);
 			view.listView.addEventListener(Event.CHANGE,handleListChange);
+			
+						
+			view.listView.addEventListener(DragEvent.DRAG_COMPLETE,handleListDragComplete);
+			view.listView.addEventListener(DragEvent.DRAG_EXIT,handleListDragEnter);
+			view.listView.addEventListener(DragEvent.DRAG_DROP,handleListDragDrop);
+			
+			view.listView.addEventListener(ContentViewEvent.LOAD_CHILDREN,handleLoadChildren);
+			view.listView.addEventListener(ContentViewEvent.MEDIA_RATING_SELECTED,handleRatingSelected);
+			view.listView.addEventListener(ContentViewEvent.MEDIA_RATING_DESELECTED,handleRatingDeselected);
+			
 			//view.listView.addEventListener(AdvancedDataGridEvent.ITEM_OPEN,handleListItemOpen);
 			
 			view.addEventListener('thumbViewCreated',handleThumbView);
@@ -111,8 +123,8 @@ package org.mig.view.mediators.managers.media
 		}
 		private function initView():void {
 			view.user = appModel.user;
-			TweenMax.to(view.thumbButton, 0.5, {colorTransform:{tint:0xffffff, tintAmount:1}, ease:Expo.easeOut});
-			TweenMax.to(view.listButton, 0.5, {colorTransform:{tint:0xed1c58, tintAmount:1}, ease:Expo.easeOut});
+			//TweenMax.to(view.thumbButton, 0.5, {colorTransform:{tint:0xffffff, tintAmount:1}, ease:Expo.easeOut});
+			//TweenMax.to(view.listButton, 0.5, {colorTransform:{tint:0xed1c58, tintAmount:1}, ease:Expo.easeOut});
 			view.parentdirButton.enabled = false;
 			view.parentdirButton.alpha = 0.5;
 			view.currentState = "loading";
@@ -192,16 +204,20 @@ package org.mig.view.mediators.managers.media
 		private function toggleView(index:int):void {
 			if(index != view.stack.selectedIndex) {
 				if(index == 1) {
-					TweenMax.to(view.thumbButton, 0.5, {colorTransform:{tint:0xed1c58, tintAmount:1}, ease:Expo.easeOut});
-					TweenMax.to(view.listButton, 0.5, {colorTransform:{tint:0xffffff, tintAmount:1}, ease:Expo.easeOut});
+					view.thumbButton.selected = true;
+					view.listButton.selected = false;
+					//TweenMax.to(view.thumbButton, 0.5, {colorTransform:{tint:0xed1c58, tintAmount:1}, ease:Expo.easeOut});
+					//TweenMax.to(view.listButton, 0.5, {colorTransform:{tint:0xffffff, tintAmount:1}, ease:Expo.easeOut});
 					view.scaleSlider.alpha = 1;
 					view.scaleSlider.mouseChildren = true;
 					view.scaleSlider.mouseEnabled = true;
 					view.stack.selectedIndex= 1;
 				}
 				else {
-					TweenMax.to(view.thumbButton, 0.5, {colorTransform:{tint:0xffffff, tintAmount:1}, ease:Expo.easeOut});
-					TweenMax.to(view.listButton, 0.5, {colorTransform:{tint:0xed1c58, tintAmount:1}, ease:Expo.easeOut});
+					view.thumbButton.selected = false;
+					view.listButton.selected = true;
+					//TweenMax.to(view.thumbButton, 0.5, {colorTransform:{tint:0xffffff, tintAmount:1}, ease:Expo.easeOut});
+					//TweenMax.to(view.listButton, 0.5, {colorTransform:{tint:0xed1c58, tintAmount:1}, ease:Expo.easeOut});
 					view.scaleSlider.alpha = 0.2;
 					view.scaleSlider.mouseEnabled = false;
 					view.scaleSlider.mouseChildren = false;
@@ -346,10 +362,25 @@ package org.mig.view.mediators.managers.media
 			PopUpManager.centerPopUp(popup);
 		}   
 		private function handleListDragComplete(event:DragEvent):void {
-			var items:Array = event.dragSource.dataForFormat(DraggableViews.MEDIA_ITEMS) as Array;
-			if(event.action != "none" && items.length > 0 ) {
-				var parent:DirectoryNode = items[0].parentNode as DirectoryNode;				
-				eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.MOVE,items,parent));
+
+		}
+		private function handleListDragEnter(event:DragEvent):void {
+			if(event.dragInitiator == view.listView) {
+				DragManager.acceptDragDrop(view.listView);
+			}
+			else {
+				event.preventDefault();
+				event.target.hideDropFeedback(event);
+				DragManager.showFeedback(DragManager.NONE);
+			}
+		}
+		private function handleListDragDrop(event:DragEvent):void {
+			if(event.dragInitiator == view.listView) {
+				var items:Array = event.dragSource.dataForFormat(DraggableViews.MEDIA_ITEMS) as Array;
+				if(event.action != "none" && items.length > 0 ) {
+					var parent:DirectoryNode = items[0].parentNode as DirectoryNode;				
+					eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.MOVE,items,parent));
+				}
 			}
 		}
 		private function handleListChange(event:Event):void {
@@ -389,6 +420,20 @@ package org.mig.view.mediators.managers.media
 				}
 			}
 		}
+		private function handleRatingSelected(event:Event):void {
+			view.listView.dragEnabled = view.listView.dropEnabled = view.listView.dragMoveEnabled = false;
+		}
+		private function handleRatingDeselected(event:ContentViewEvent):void {
+			cudTotal = 0;
+			view.listView.dragEnabled = view.listView.dropEnabled = view.listView.dragMoveEnabled = true;
+			var data:ContentNode = event.args[0] as ContentNode;
+			var rating:int = event.args[1] as int;
+			var update:UpdateData = new UpdateData();
+			update.id = data.data.id;
+			update.rating = rating;
+			mediaService.updateContent(data,update);
+			mediaService.addHandlers(updateComplete);
+		}
 /*		private function handleListItemOpen(event:AdvancedDataGridEvent):void {
 			if(event.itemRenderer){
 			if(DirectoryNode(event.itemRenderer.data).state == ContentNode.NOT_LOADED)
@@ -407,7 +452,24 @@ package org.mig.view.mediators.managers.media
 				view.currentState = "loading";
 				//view.listDP = new HierarchicalData(value.children);
 				view.tileDP = value.children;
-				var arr:Array = String(value.directory).split("/");
+				
+				
+				view.buttonHolder.removeAllElements();
+				var items:Array = [];
+				GlobalUtils.accumulateParents(_selectedNode,items);
+				items.reverse();
+				
+				for each(var item:ContentNode in items) {
+					var button:DataButton = new DataButton();
+					button.styleName = "locationHeader";
+					button.label = item.baseLabel + " /";
+					button.data = item;
+					button.addEventListener(MouseEvent.CLICK,handlePathButtonClick);
+					view.buttonHolder.addElement(button);
+				}
+				Button(view.buttonHolder.getElementAt(items.length-1)).setStyle("color",0xFFFFFF); 
+				
+/*				var arr:Array = String(value.directory).split("/");
 				var currentLocation:String = "<font color='#999999'>"+appModel.fileDir;
 				if(arr) {
 					arr.reverse();
@@ -424,7 +486,9 @@ package org.mig.view.mediators.managers.media
 						}
 					}
 				}
-				view.currentLocation = currentLocation;
+				view.currentLocation = currentLocation;*/
+				
+				
 				if(value == contentModel.mediaModel) {
 					view.parentdirButton.enabled = false;
 					view.parentdirButton.alpha = 0.5;
@@ -434,6 +498,12 @@ package org.mig.view.mediators.managers.media
 					view.parentdirButton.alpha = 1;
 				}
 			}
+		}
+		private function handlePathButtonClick(event:MouseEvent):void {
+			var directory:DirectoryNode = DataButton(event.target).data as DirectoryNode;
+			if(directory.state == ContentNode.NOT_LOADED)
+				eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.RETRIEVE_CHILDREN, directory)); 
+			this.selectedContent = directory;	
 		}
 		
 	}

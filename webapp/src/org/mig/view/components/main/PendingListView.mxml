@@ -43,7 +43,7 @@
 			<s:VerticalLayout verticalAlign="middle" horizontalAlign="center" gap="8" />
 		</s:layout>
 		<s:Label text="Drop containers to save as draft" styleName="locationHeader" fontSize="16" color="0xffffff"/>
-		<controls:Spinner tickWidth="4" size="40" numTicks="10" tickColor="0xffffff" autoPlay="true" visible="false" id="pendingSpinner" />					
+		<controls:Spinner tickWidth="4" size="40" numTicks="10" tickColor="0xffffff" autoPlay="false" visible="false" id="pendingSpinner" />					
 	</s:SkinnableContainer>
 	<fx:Declarations>
 		<s:Sine easeInFraction="1"  id="easeOut" />

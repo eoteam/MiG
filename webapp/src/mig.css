@@ -159,7 +159,6 @@ TextArea{
 	themeColor:#ED1C58;
 	
 }
-
 .popupmessage
 {
 	color: white;
@@ -527,8 +526,6 @@ Button{
 	paddingLeft: 0;
 	paddingTop: 0; 
 }
-
-
 .comboBoxHeaderButton{
 	skin: ClassReference("org.mig.view.skins.ComboBoxHeaderButtonSkin");
 	color: #ffffff;

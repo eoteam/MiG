@@ -8,20 +8,20 @@
 		<![CDATA[
 			import org.mig.model.vo.ContentNode;
 			import org.mig.model.vo.content.ContainerNode;
+			import org.mig.utils.GlobalUtils;
 			import org.mig.view.controls.DataButton;
-			import org.mig.view.events.ContainerPathEvent;
+			import org.mig.view.events.ContentViewEvent;
 			import org.mig.view.interfaces.IContentView;
 			
 			import spark.components.Button;
 			import spark.components.Label;
 			private var _content:ContainerNode;
-			private var items:Array;
+
 			public function set content(value:ContentNode):void {
 				_content = value as ContainerNode;
 				buttonHolder.removeAllElements()
-				items = [];
-				items.push(_content);
-				accumulateParents(_content);
+				var items:Array = [];
+				GlobalUtils.accumulateParents(_content,items);
 				items.reverse();
 				for each(var item:ContainerNode in items) {
 					var button:DataButton = new DataButton();
@@ -33,19 +33,13 @@
 				}
 				Button(buttonHolder.getElementAt(items.length-1)).setStyle("color",0xFFFFFF);
 			}
-			private function accumulateParents(node:ContainerNode):void {
-				if(node.parentNode) {
-					items.push(node.parentNode);
-					accumulateParents(node.parentNode as ContainerNode);
-				}
-			}
 			public function get content():ContentNode {
 				return _content;
 			}
 			private function handleButtonClick(event:MouseEvent):void {
 				var node:ContainerNode = DataButton(event.target).data as ContainerNode;
-				this.dispatchEvent(new ContainerPathEvent(ContainerPathEvent.CONTAINER_SELECTED,node));
-			}
+				this.dispatchEvent(new (ContentViewEvent.CONTAINER_SELECTED,node));
+			} 
 			
 		]]>
 	</fx:Script>

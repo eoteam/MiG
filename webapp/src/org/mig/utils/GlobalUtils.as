@@ -36,8 +36,8 @@ package org.mig.utils
 	import org.mig.view.controls.DataCheckBox;
 	import org.mig.view.controls.DateTimePicker;
 	import org.mig.view.controls.LinkSocket;
-	import org.mig.view.controls.MiGTLFTextArea;
 	import org.mig.view.controls.MiGColorPicker;
+	import org.mig.view.controls.MiGTLFTextArea;
 	import org.mig.view.interfaces.ICustomFieldView;
 	import org.mig.view.layouts.FlowLayout;
 	
@@ -105,7 +105,12 @@ package org.mig.utils
 				dateFormatter.formatString = format;
 			return dateFormatter.format(d);
 		}
-		
+		public static function accumulateParents(content:ContentNode,arr:Array):void {
+			arr.push(content);
+			if(content.parentNode) {
+				accumulateParents(content.parentNode,arr);
+			}
+		}
 		public static function accumulateChildren(content:ContentNode,arr:Array):void {
 			arr.push(content);
 			addChildren(content,arr);

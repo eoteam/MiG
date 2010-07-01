@@ -89,8 +89,8 @@ package org.mig.services
 		}
 		public function updateContent(content:ContentNode,update:UpdateData):void {
 			var params:Object = new Object();
-			params.action = content.config.@updateContent;
-			params.tablename = content.config.@tablename;
+			params.action = content.config.@updateContent.toString();
+			params.tablename = content.config.@tablename.toString();
 			for (var prop:String in update) {
 				params[prop] = update[prop];
 			}

@@ -13,6 +13,7 @@
 			import org.mig.model.vo.ContentNode;
 			import org.mig.model.vo.media.DirectoryNode;
 			import org.mig.utils.GlobalUtils;
+			import org.mig.view.events.ContentViewEvent;
 			
 			public var columns:Array;
 			private var created:Boolean = false;
@@ -110,14 +111,19 @@
 		    visible="{data is DirectoryNode?true:false}" />
 			
 			<s:Label id="labelField"  text="{data.label}" paddingTop="2" styleName="boldCopy"  />
-			<controls:Spinner includeIn="loadingStates"  id="spinner" visible="{data.state == ContentNode.LOADING}"  tickColor="0xffffff" size="20" tickWidth="2" numTicks="10" autoPlay="true" />	
+			<controls:Spinner includeIn="loadingStates"  id="spinner" 
+			visible="{data.state == ContentNode.LOADING}"  tickColor="0xffffff" size="20" tickWidth="2" numTicks="10" autoPlay="true" 
+			show="spinner.play()" hide="spinner.stop()"/>	
 		</s:HGroup>		
 		
 		<s:HGroup top="0" bottom="0" verticalAlign="middle" id="holder2">
 			<s:Label width="80" text="{GlobalUtils.tranlateSize(data.data.size)}" textAlign="center" styleName="boldCopy" color="0x666666"  />
 			<s:Label width="80" text="{GlobalUtils.translateDate(data.data.createdate)}" styleName="boldCopy" color="0x666666" textAlign="center"/>
 			<s:Label text="{data.data.createdby}" styleName="boldCopy" color="0x666666" textAlign="center" />
+			<controls:Rating editable="true" id="ratingComponent" value="{data.data.rating}"
+			mouseDown="this.owner.dispatchEvent(new ContentViewEvent(ContentViewEvent.MEDIA_RATING_SELECTED))"
+			change="this.owner.dispatchEvent(new ContentViewEvent(ContentViewEvent.MEDIA_RATING_DESELECTED,data,ratingComponent.value))"/>
 		</s:HGroup>
-		<controls:Rating editable="true"/>
+		
 	</s:HGroup>
 </s:MXTreeItemRenderer>

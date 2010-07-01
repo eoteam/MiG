@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+<s:Group 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
 	width="70" height="10"
 	mouseDown="onMouseDown(event)">
 
-	<mx:Metadata>
-		[Event("change")]
-	</mx:Metadata>
+	<fx:Metadata>
+		[Event(name="change",type="flash.events.Event")]
+	</fx:Metadata>
 
-	<mx:Script>
+	<fx:Script>
 		<![CDATA[
 			
 			private var _value:int = 0;
@@ -86,27 +89,20 @@
 				star4.source = (value >= 4) ? starIcon : dotIcon;
 				star5.source = (value >= 5) ? starIcon : dotIcon;
 			}
-/* 			.RatingDot {
-				backgroundImage:
-			}
-			
-			.RatingStar {
-				backgroundImage: Embed("/migAssets/images/black_star.png");
-			}  
- */			[Bindable]
-			[Embed(source="/migAssets/images/black_dot.png")]
+			[Bindable]
+			[Embed(source="../../../../../../webapp/src/migAssets/images/black_dot.png")]
 			private var dotIcon:Class;
 			
 			[Bindable]
-			[Embed(source="/migAssets/images/black_star.png")]
+			[Embed(source="../../../../../../webapp/src/migAssets/images/black_star.png")]
 			private var starIcon:Class;			
 			
 		]]>
-	</mx:Script>
+	</fx:Script>
 	
 	<mx:Image id="star1" x="10" width="10" height="10" source="{dotIcon}"/>
 	<mx:Image id="star2" x="20" width="10" height="10" source="{dotIcon}"/>
 	<mx:Image id="star3" x="30" width="10" height="10" source="{dotIcon}"/>
 	<mx:Image id="star4" x="40" width="10" height="10" source="{dotIcon}"/>
 	<mx:Image id="star5" x="50" width="10" height="10" source="{dotIcon}"/>
-</mx:Canvas>
+</s:Group>

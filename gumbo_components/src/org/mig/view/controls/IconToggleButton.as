@@ -4,7 +4,7 @@ package org.mig.view.controls
 	
 	public class IconToggleButton extends ToggleButton
 	{
-		[Bindable] public var icon1:Class;
+			 public var icon1:Class;
 		[Bindable] public var icon2:Class;
 		
 		public function IconToggleButton()

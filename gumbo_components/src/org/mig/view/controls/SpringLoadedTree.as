@@ -318,56 +318,63 @@ package org.mig.view.controls
 		**/
 		private function handleDragOver(event:DragEvent):void{
 			
-			if(autoCloseOpenNodes==false){return;}
-					
-			//Get the node currently dragging over. 
-			
-			var currNodeOver:IListItemRenderer  = indexToItemRenderer(calculateDropIndex(event));
-			
-			if (currNodeOver !=null){
-				
-				//If not a branch node exit.
-/*				if (currNodeOver.data.isBranch!=true){
-					_delayedTimer.cancelDelayedTimer();
-					stopAnimation();
-					return;
-				}*/
-				
-				//Cleanup opened nodes.
-				closeNodes(currNodeOver.data);
+			if(event.dragInitiator == this) {
+				if(autoCloseOpenNodes==false){return;}
 						
-				//If the current node is not open then dispatch timer.
-				if (isItemOpen(currNodeOver.data)==false && currNodeOver.data.children != null){
+				//Get the node currently dragging over. 
 				
-					//If it's already running on the current item avoid a timer reset.
-					if (_delayedTimer.running ==true && _delayedTimer.item ==currNodeOver.data){
-						return;
-					}
-					else if (_delayedTimer.running ==true) {
-						//Clear the current delayed timer.
+				var currNodeOver:IListItemRenderer  = indexToItemRenderer(calculateDropIndex(event));
+				
+				if (currNodeOver !=null){
+					
+					//If not a branch node exit.
+	/*				if (currNodeOver.data.isBranch!=true){
 						_delayedTimer.cancelDelayedTimer();
 						stopAnimation();
-					} 
-										
-					//Set the local new folder over.
-					_lastNodeOver = currNodeOver;
-				
-					//Start the indication if required "showOpeningIndication".
-					if (_showOpeningIndication){
-						initOpeningIndication(currNodeOver.data);
+						return;
+					}*/
+					
+					//Cleanup opened nodes.
+					closeNodes(currNodeOver.data);
+							
+					//If the current node is not open then dispatch timer.
+					if (isItemOpen(currNodeOver.data)==false && currNodeOver.data.children != null){
+					
+						//If it's already running on the current item avoid a timer reset.
+						if (_delayedTimer.running ==true && _delayedTimer.item ==currNodeOver.data){
+							return;
+						}
+						else if (_delayedTimer.running ==true) {
+							//Clear the current delayed timer.
+							_delayedTimer.cancelDelayedTimer();
+							stopAnimation();
+						} 
+											
+						//Set the local new folder over.
+						_lastNodeOver = currNodeOver;
+					
+						//Start the indication if required "showOpeningIndication".
+						if (_showOpeningIndication){
+							initOpeningIndication(currNodeOver.data);
+						}
+															
+						//Create callback.
+						_delayedTimer.startDelayedTimer(dispatchDelayedOpen,null,null,autoOpenTimerMS,1,currNodeOver.data);								
 					}
-														
-					//Create callback.
-					_delayedTimer.startDelayedTimer(dispatchDelayedOpen,null,null,autoOpenTimerMS,1,currNodeOver.data);								
+				}		
+				else{
+					//If not over any node cleanup and return.
+					if (_lastNodeOver != null){
+						_delayedTimer.cancelDelayedTimer();
+						stopAnimation();
+						_lastNodeOver = null;
+					}
 				}
-			}		
-			else{
-				//If not over any node cleanup and return.
-				if (_lastNodeOver != null){
-					_delayedTimer.cancelDelayedTimer();
-					stopAnimation();
-					_lastNodeOver = null;
-				}
+			}
+			else {
+				event.preventDefault();
+				event.target.hideDropFeedback(event);
+				DragManager.showFeedback(DragManager.NONE);
 			}
 		}
 		
@@ -402,12 +409,14 @@ package org.mig.view.controls
 		/**
 		* Same as above in a different handler due to it being an optional process. 
 		**/ 
-		private function handleDragExit(event:DragEvent):void{
-			_delayedTimer.cancelDelayedTimer();
-			_lastNodeOver = null;
-			stopAnimation();
-			if(_autoCloseOnExit==true){
-				closeNodes(null);
+		private function handleDragExit(event:DragEvent):void {
+			if(event.dragInitiator == this) {
+				_delayedTimer.cancelDelayedTimer();
+				_lastNodeOver = null;
+				stopAnimation();
+				if(_autoCloseOnExit==true){
+					closeNodes(null);
+				}
 			}
 			
 		}

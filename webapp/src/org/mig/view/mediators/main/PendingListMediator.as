@@ -87,6 +87,7 @@ package org.mig.view.mediators.main
 			contentService.updateContainersStatus(pendingArray,ContentStatus.DRAFT);
 			contentService.addHandlers(handlePendingContainers);
 			view.pendingSpinner.visible = true;
+			view.pendingSpinner.play();
 		}
 		private function handlePendingContainers(data:Object):void {
 			var result:StatusResult = data.result as StatusResult;
@@ -97,8 +98,10 @@ package org.mig.view.mediators.main
 				}
 				eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Containers drafted successfully"));
 				eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.VALIDATE_CONTENT));
-				view.pendingSpinner.visible = false;
+				view.pendingSpinner.visible = false
+				view.pendingSpinner.stop();;
 				view.dropBox.visible = false;
+				
 			}
 		}
 		private function handleDragExit(event:DragEvent):void {

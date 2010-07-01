@@ -154,6 +154,7 @@ package org.mig.view.mediators.main
 			contentService.updateContainersStatus(containers,ContentStatus.PUBLISHED);
 			contentService.addHandlers(handleContentDraft);
 			view.publishSpinner.visible = true;
+			view.publishSpinner.play();
 			pendingContainersDropped = true;	
 		}
 		private function handleContentDraft(data:Object):void {
@@ -166,6 +167,7 @@ package org.mig.view.mediators.main
 				eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Containers published successfully"));
 				eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.VALIDATE_CONTENT));
 				view.publishSpinner.visible = view.publishDropBox.visible = false;
+				view.publishSpinner.stop();
 			}
 		}
 	}

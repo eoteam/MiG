@@ -37,7 +37,7 @@
 			
 			
 			[Bindable] public var scalePercent:Number = 1;
-			[Bindable] public var currentLocation:String='';
+			//[Bindable] public var currentLocation:String='';
 			//[Bindable] public var listDP:;
 			[Bindable] public var tileDP:ArrayCollection;
 			[Bindable] public var thumbURL:String;
@@ -157,6 +157,11 @@
 	</fx:Script>
 	
 	<!--Control Bar-->
+	<s:Group width="100%" id="buttonHolder" height="{flowLayout.runningHeight}">
+		<s:layout>
+			<layouts:FlowLayout gap="4" id="flowLayout" />
+		</s:layout>		
+	</s:Group>
 	<container:FlowContainer  direction="horizontal"  width="100%" horizontalGap="8" verticalAlign="middle" accentColor="0" contentBackgroundAlpha="1">
 	
 <!--	<s:Group width="100%" accentColor="0" contentBackgroundAlpha="1">
@@ -167,7 +172,7 @@
 		<mx:Canvas>
 			<controls:IconButton left="8" icon="@Embed(source='/migAssets/library.swf#folderIcon')" mouseChildren="false"  buttonMode="true" useHandCursor="true" /><!--   width="18" height="16" -->	
 		</mx:Canvas>
-		<mx:Text htmlText="{currentLocation}" id="locationText" styleName="boldCopy" />
+		<!--<mx:Text htmlText="{currentLocation}" id="locationText" styleName="boldCopy" />-->
 		
 		<!--Search -->
 		<s:ToggleButton  skinClass="org.mig.view.skins.buttons.SearchButtonSkin" mouseChildren="false" buttonMode="true"  toolTip="Search" selected="false" />
@@ -177,21 +182,21 @@
 		rotation="45" toolTip="Clear Search" mouseChildren="false" buttonMode="true" visible="false"   />
 		
 		<!--Views-->
-		<controls:IconButton  icon="@Embed(source='/migAssets/library.swf#thumbViewIcon')" id="thumbButton"
-		buttonMode="true" useHandCursor="true" mouseChildren="false" toolTip="Image View"   />
-		<controls:IconButton  icon="@Embed(source='/migAssets/library.swf#listViewIcon')"  id="listButton"
-		buttonMode="true" useHandCursor="true" mouseChildren="false" toolTip="List View" />
+		<controls:IconToggleButton  icon1="@Embed(source='/migAssets/library.swf#thumbViewIcon')" id="thumbButton"
+		buttonMode="true" useHandCursor="true" mouseChildren="false" toolTip="Image View" styleName="grayIconButton"  />
+		<controls:IconToggleButton  icon1="@Embed(source='/migAssets/library.swf#listViewIcon')"  id="listButton"
+		buttonMode="true" useHandCursor="true" mouseChildren="false" toolTip="List View" styleName="grayIconButton"/>
 		<mx:Spacer width="5" />
 		<controls:MiGHSlider id="scaleSlider" minimum="0.25" maximum="2" change="handleSliderChange(event)" mouseChildren="false" />
 		
 		<!-- Directory -->
-		<controls:IconButton  icon="@Embed(source='/migAssets/library.swf#parentFolderIcon')"  
+		<controls:IconButton  icon="@Embed(source='/migAssets/library.swf#parentFolderIcon')"  styleName="grayIconButton"
 		mouseChildren="false" id="parentdirButton" alpha="1" toolTip="Up 1 Folder" buttonMode="true" useHandCursor="true" />
-		<mx:Canvas>
-			<controls:IconButton   mouseChildren="false" id="addDirectoryButton" alpha="1" toolTip="New Folder" top="6"
-			icon="@Embed(source='/migAssets/library.swf#addFolderIcon')" buttonMode="true" useHandCursor="true"/>
-		</mx:Canvas>
-		<controls:IconButton  icon="@Embed(source='/migAssets/library.swf#trashUp')"  toolTip="Delete"  id="trashButton" mouseChildren="false"  buttonMode="true" />			
+
+		<controls:IconButton   mouseChildren="false" id="addDirectoryButton" alpha="1" toolTip="New Folder" 
+		icon="@Embed(source='/migAssets/library.swf#addFolderIcon')" buttonMode="true" useHandCursor="true" styleName="grayIconButton"/>
+
+		<controls:IconButton  icon="@Embed(source='/migAssets/library.swf#trashUp')"  toolTip="Delete"  styleName="grayIconButton" id="trashButton" mouseChildren="false"  buttonMode="true" />			
 		<controls:MiGColorPicker id="colorPicker" enabled="false" />
 	</container:FlowContainer>
 	<!--</s:Group>-->
@@ -308,13 +313,14 @@
 		
 		
 		<s:SkinnableContainer id="loadingScreen" backgroundColor="0x000000" backgroundAlpha="0" 
-		width="100%" height="100%" visible.loading="true" visible.loaded="false">
+		width="100%" height="100%" visible.loading="true" visible.loaded="false"
+		show="pendingSpinner.play()" hide="pendingSpinner.stop()">
 			<s:layout>
 				<s:VerticalLayout verticalAlign="middle" horizontalAlign="center" />
 			</s:layout>			
 				<assets:MigLoaderSmall percentLoaded="1" scaleX=".75" scaleY=".75" rotation="45"/>
 				<s:Rect height="150" />
-				<controls:Spinner tickWidth="4" size="40" numTicks="10" tickColor="0xffffff" autoPlay="true" id="pendingSpinner" />					
+				<controls:Spinner tickWidth="4" size="40" numTicks="10" tickColor="0xffffff" autoPlay="false" id="pendingSpinner" />					
 		</s:SkinnableContainer>
 	</s:Group>
 
@@ -332,6 +338,7 @@
 			<utils:ColumnInfo dataField="size" headerText="Size" numeric="true"  valueProperty="text"  width="120"  minWidth="80"/>
 			<utils:ColumnInfo dataField="createdate" headerText="Creation Date" numeric="true"  width="120"  minWidth="80"/>
 			<utils:ColumnInfo dataField="createdby" headerText="Creation By" numeric="false"  width="120"  minWidth="80"/>
+			<utils:ColumnInfo dataField="rating" headerText="Rating" numeric="true"  width="80"  minWidth="80"/>
 		</fx:Array>
 		<fx:Component className="HeaderSeparator">
 			<s:Group mouseDown="startDragColumn(event)" mouseOver="showCursor(event)" mouseOut="hideCursor(event)" alpha="0.8">

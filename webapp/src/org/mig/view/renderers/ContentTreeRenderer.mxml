@@ -113,6 +113,8 @@
 			fontFamily="Transit-Bold" id="input" text="{data.baseLabel}"
 			focusOut="editable=false" enter="editable=false"  />			
 		</s:Group>
-		<controls:Spinner  includeIn="loadingStates"  id="spinner" visible="{data.state == ContentNode.LOADING}"  tickColor="0x333333" size="20" tickWidth="2" numTicks="10" autoPlay="true" />
+		<controls:Spinner  includeIn="loadingStates"  id="spinner" visible="{data.state == ContentNode.LOADING}"  
+		tickColor="0x333333" size="20" tickWidth="2" numTicks="10" autoPlay="true"
+	 	show="spinner.play()" hide="spinner.stop()"/>
 	</s:HGroup>
 </s:MXTreeItemRenderer>
