@@ -26,7 +26,8 @@ $validReadFunctions = array (
 "contentSearch",
 "migSearch",
 "getTerms",
-"sendUserInformation"
+"sendUserInformation",
+"getRelatedCustomFields"
 );
 
 $validWriteFunctions = array (

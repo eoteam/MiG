@@ -10,7 +10,7 @@ package org.mig.controller.startup
 		public var appModel:AppModel;
 		
 		override public function execute():void {
-			appModel.startupCount = 11;
+			appModel.startupCount = 10;
 			trace("Startup: Startup Complete"); 
 			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP_COMPLETE));
 		}

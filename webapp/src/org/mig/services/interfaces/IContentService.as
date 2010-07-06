@@ -10,6 +10,8 @@ package org.mig.services.interfaces
 	{
 		function loadTemplates():void;
 		
+		function loadTemplatesCustomFields():void;
+		
 		function loadMimeTypes():void;
 		
 		function loadTerms():void;

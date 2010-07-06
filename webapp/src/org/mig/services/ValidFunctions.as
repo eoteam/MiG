@@ -20,7 +20,7 @@ package org.mig.services
 		public static const MIG_SEARCH:String 						= "migSearch";
 		public static const GET_TERMS:String 						= "getTerms";
 		public static const GET_ROOT:String							= "getRoot";
-		
+		public static const GET_RELATED_CUSTOMFIELDS:String			= "getRelatedCustomFields";
 		
 		public static const UPDATE_TAG:String 						= "updateTag";
 		public static const UPDATE_RECORD:String 					= "updateRecord";

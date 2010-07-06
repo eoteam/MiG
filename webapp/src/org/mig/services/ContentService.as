@@ -15,7 +15,6 @@ package org.mig.services
 	import org.mig.model.vo.ContentData;
 	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.UpdateData;
-	import org.mig.model.vo.app.ContentCustomField;
 	import org.mig.model.vo.app.CustomField;
 	import org.mig.model.vo.app.StatusResult;
 	import org.mig.model.vo.content.ContainerData;
@@ -39,10 +38,17 @@ package org.mig.services
 		public function ContentService() {
 			
 		}
+		public function loadTemplatesCustomFields():void {
+			var params:Object = new  Object();
+			params.action = ValidFunctions.GET_RELATED_CUSTOMFIELDS;
+			params.tablename = "template_customfields";
+			this.createService(params,ResponseType.DATA,CustomField);				
+		}
 		public function loadTemplates():void {
 			var params:Object = new  Object();
-			params.action = ValidFunctions.GET_TEMPLATES;
-			this.createService(params,ResponseType.DATA,Object);		
+			params.action = ValidFunctions.GET_DATA;
+			params.tablename = "templates";
+			this.createService(params,ResponseType.DATA,Template);		
 		}
 		public function loadMimeTypes():void {
 			var params:Object = new Object();
@@ -57,9 +63,9 @@ package org.mig.services
 		}
 		public function loadCategoriesCustomFields():void {
 			var params:Object = new Object();
-			params.action = ValidFunctions.GET_DATA;
+			params.action = ValidFunctions.GET_RELATED_CUSTOMFIELDS;
 			params.tablename = "termtaxonomy_customfields";
-			this.createService(params,ResponseType.DATA,ContentCustomField);
+			this.createService(params,ResponseType.DATA,CustomField);
 		}
 		public function retrieveContentRoot():void {
 			var params:Object = new Object();
@@ -140,9 +146,9 @@ package org.mig.services
 				params.templateid = contentModel.currentContainer.config.@templateid.toString();
 				for each(var template:Template in contentModel.templates) {
 					if(params.templateid == template.id) {
-						for each(var field:ContentCustomField in template.customfields) {
-							if(field.customfield.defaultvalue != null) {
-								params["customfield"+field.fieldid] = field.customfield.defaultvalue;
+						for each(var field:CustomField in template.customfields) {
+							if(field.defaultvalue != null) {
+								params["customfield"+field.fieldid] = field.defaultvalue;
 							}
 						}
 					}
@@ -176,8 +182,8 @@ package org.mig.services
 			
 			//reverse translate customfields
 			for (prop in params) {
-				for each(var customfield:ContentCustomField in customfields) {
-					if(prop == customfield.customfield.name)
+				for each(var customfield:CustomField in customfields) {
+					if(prop == customfield.name)
 					var value:String = params[prop];
 					if(value != null) {
 						delete params[prop];
@@ -205,8 +211,8 @@ package org.mig.services
 			}
 			//reverse translate customfields
 			for (prop in params) {
-				for each(var customfield:ContentCustomField in customfields) {
-					if(prop == customfield.customfield.name)
+				for each(var customfield:CustomField in customfields) {
+					if(prop == customfield.name)
 						var value:String = params[prop];
 					if(value != null) {
 						delete params[prop];

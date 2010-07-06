@@ -22,6 +22,7 @@ package org.mig.model
 		public var currentContainer:ContainerNode;
 		public var templates:ArrayCollection;
 		public var templatesConfig:XML;
+		public var templatesCustomFields:ArrayCollection;
 		public var configEelements:XML;
 		public var defaultCreate:String;
 		public var defaultUpdate:String;
@@ -48,6 +49,7 @@ package org.mig.model
 			tagTerms = new DataCollection();
 			categoryTerms = []
 			categoryTermsFlat = new DataCollection();
+			templatesCustomFields = new ArrayCollection();
 			tagTerms.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleTagTerms);
 			categoryTermsFlat.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleCategoryTerms);
 			categoriesCustomFields = [];

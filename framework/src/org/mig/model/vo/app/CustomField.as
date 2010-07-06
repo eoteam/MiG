@@ -1,22 +1,27 @@
 package org.mig.model.vo.app
 {
-	import org.mig.model.vo.ValueObject;
+	import org.mig.model.vo.ContentData;
 
 	[Bindable]
-	public class CustomField extends ValueObject
+	public class CustomField extends ContentData
 	{	
+		
+		public var templateid:int;
+		public var customfieldid:int;
+		public var fieldid:int;
+		public var displayorder:int;
+		
+		
+		public var isNew:Boolean = true;
+		
 		public var typeid:int;
-		public var groupid:int;
 		public var name:String;
 		public var displayname:String;
 		public var optionsArray:Array = [];
 		public var defaultvalue:String = "";
 		public var description:String = "";
 		
-		public var createdby:int;
-		public var createdate:Number;
-		public var modifiedby:int;
-		public var modifieddate:Number;		
+	
 		
 		public function set options(ops:String):void
 		{
@@ -29,8 +34,9 @@ package org.mig.model.vo.app
 		public function get options():String {
 			var result:String = '';
 			for each(var item:Object in optionsArray) {
-				result += item.value + ',';
+				result += (optionsArray.indexOf(item)+1).toString()+'='+item.value + ',';
 			}
+			result = result.substring(0,result.length-1);
 			return result;
 		}
 

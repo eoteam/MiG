@@ -3,61 +3,89 @@
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx" contentBackgroundAlpha="1" contentBackgroundColor="0x00000"
 		 implements="org.mig.view.interfaces.ICustomFieldView" autoDrawBackground="true"  focusEnabled="true"
-		 xmlns:app="org.mig.model.vo.app.*" creationComplete="hgroup1_creationCompleteHandler(event)" 
+		 xmlns:app="org.mig.model.vo.app.*" creationComplete="creationCompleteHandler(event)" 
 		 xmlns:templates="org.mig.view.components.managers.templates.*">
 	<fx:Script>
 		<![CDATA[
+			import mx.collections.IList;
 			import mx.core.IVisualElement;
 			import mx.events.FlexEvent;
 			
 			import org.mig.model.vo.ValueObject;
-			import org.mig.model.vo.app.ContentCustomField;
 			import org.mig.model.vo.app.CustomField;
+			import org.mig.model.vo.app.CustomFieldOption;
 			import org.mig.model.vo.app.CustomFieldTypes;
 			import org.mig.utils.GlobalUtils;
 			import org.mig.view.events.ContentViewEvent;
 			
 			import spark.events.IndexChangeEvent;
 
-			protected function hgroup1_creationCompleteHandler(event:FlexEvent):void
-			{
-				generateCustomField();
-			}
-
 			[Bindable] private var _customfield:CustomField;
+			[Bindable] private var _defaultValueField:CustomField;
 			[Bindable] private var typeSelectedIndex:int = -1;
-			private var _field:ContentCustomField;
 			
-			public function set vo(value:ValueObject):void {
+			private function creationCompleteHandler(event:FlexEvent):void {
+				generateCustomField();
+				optionsList.addEventListener("addCustomField",handleAddCustomField);
+				optionsList.addEventListener("removeCustomField",handleRemoveCustomField);
+			}			
+			private function handleAddCustomField(event:Event):void {
+				event.target.enableAddButton=false;
+				var dp:IList = optionsList.dataProvider;
+				var item:CustomFieldOption = new CustomFieldOption();
+				dp.addItem(item);
+				item.index =  dp.length;
+				item.value = '';
+				item.customfield = this.data as CustomField;
 				
-			}	
-			public function get vo():ValueObject {
-				return null;
+				var lastOption:CustomFieldOptionRenderer = optionsList.dataGroup.getElementAt(0) as CustomFieldOptionRenderer;
+				lastOption.enableRemoveButton = true;	
+				optionsList.invalidateDisplayList();
 			}
-			
-			public function set field(value:ContentCustomField):void {
-				_field = value;
-				customfield = value.customfield;
+			private function handleRemoveCustomField(event:Event):void {
+				var dp:IList = optionsList.dataProvider;
+				dp.removeItemAt(dp.getItemIndex(event.target.data));
+				optionsList.invalidateDisplayList();
+				var lastOption:CustomFieldOptionRenderer;
+				if(dp.length == 1) {
+					lastOption =  optionsList.dataGroup.getElementAt(0) as CustomFieldOptionRenderer;
+					lastOption.enableAddButton = true;
+					lastOption.enableRemoveButton = false;
+				}
+				else {
+					lastOption = optionsList.dataGroup.getElementAt(dp.length-1) as CustomFieldOptionRenderer;
+					lastOption.enableAddButton = true;
+				}
 			}
-			public function set customfield(value:CustomField):void {
-				_customfield = value;
-				if(value) {
+			public function set vo(value:ValueObject):void {
+				_customfield = value as CustomField;
+				if(_customfield) {
 					for each(var item:Object in customFieldTypes.source) {
-						if(item.typeid == value.typeid) {
+						if(item.typeid == _customfield.typeid) {
 							typeSelectedIndex = customFieldTypes.getItemIndex(item);
 						}
 					}
+					var dv:CustomField = new CustomField();
+					dv.typeid = _customfield.typeid;
+					dv.name = "defaultvalue";
+					dv.options = _customfield.options;
+					customfield = dv;
 				}
-					
-			}
-			public function get customfield():CustomField {
+			}	
+			public function get vo():ValueObject {
 				return _customfield;
 			}
+			public function set customfield(value:CustomField):void {
+				_defaultValueField = value;		
+			}
+			public function get customfield():CustomField {
+				return _defaultValueField;
+			}
 			private function comboBoxBlack_changeHandler(event:IndexChangeEvent):void {
-				_customfield.typeid = typesList.selectedItem.typeid;
+				_customfield.typeid = _defaultValueField.typeid = typesList.selectedItem.typeid;
+				_customfield.defaultvalue = null;
 				cfHolder.removeAllElements();
-				generateCustomField();
-				
+				generateCustomField();			
 			}
 			private function generateCustomField():void {
 				
@@ -78,6 +106,9 @@
 							//optionsHolder.enabled = true;
 							optionsList.dataProvider = new ArrayList(_customfield.optionsArray);
 							break;
+						default:
+							optionsList.dataProvider = null;
+						break;
 					}
 				}
 			}
@@ -85,6 +116,13 @@
 				owner.dispatchEvent(new ContentViewEvent(ContentViewEvent.CUSTOMFIELD_DRAG_START));
 				blinkEffect.play();
 			}
+
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				var dp:IList = List(this.owner).dataProvider;
+				dp.removeItemAt(dp.getItemIndex(this.data));
+			}
+
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -153,7 +191,7 @@
 			</s:fill>
 		</s:Rect>
 		-->
-		<s:Button label="-" />
+		<s:Button label="-" click="button1_clickHandler(event)" />
 		<s:Rect width="1" height="100%">
 			<s:fill>
 				<s:SolidColor color="0"/>

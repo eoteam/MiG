@@ -155,7 +155,7 @@ package org.mig.utils
 			switch(customfield.typeid) {
 				case CustomFieldTypes.BINARY:
 					child = new CheckBox();
-					if(vo) {
+					if(vo && vo[customfield.name]) {
 						CheckBox(child).selected = vo[customfield.name] == "true"?true:false;
 						summary = vo[customfield.name].toString();
 					}
@@ -167,7 +167,7 @@ package org.mig.utils
 					DropDownList(child).styleName = "comboBoxBlack";
 					DropDownList(child).dataProvider = new ArrayList(customfield.optionsArray);
 					child.width = 180;
-					if(vo) {
+					if(vo && vo[customfield.name]) {
 						for each(option in customfield.optionsArray) {
 						if(option.index.toString() == vo[customfield.name]) {
 							DropDownList(child).selectedItem = option;
@@ -182,7 +182,7 @@ package org.mig.utils
 					child = new TextInput();
 					child.styleName = "inputFieldBlack";
 					child.percentWidth = 100;
-					if(vo) {
+					if(vo && vo[customfield.name]) {
 						TextInput(child).text = vo[customfield.name].toString(); 
 						summary = vo[customfield.name].toString().slice(0,150)+'...';
 					}
@@ -190,7 +190,7 @@ package org.mig.utils
 				
 				case CustomFieldTypes.HTML_TEXT:
 					child = new MiGTLFTextArea();
-					if(vo) {
+					if(vo && vo[customfield.name]) {
 						MiGTLFTextArea(child).htmlText = vo[customfield.name];
 						summary = vo[customfield.name].toString().slice(0,150)+'...';
 					}
@@ -204,7 +204,7 @@ package org.mig.utils
 					child.styleName = "bodyCopy";
 					child.setStyle("backgroundColor",0);
 					child.percentWidth = 100;
-					if(vo) {
+					if(vo && vo[customfield.name]) {
 						TextArea(child).text = vo[customfield.name];
 						summary = vo[customfield.name].toString().slice(0,150)+'...';
 					}
@@ -212,7 +212,7 @@ package org.mig.utils
 				
 				case CustomFieldTypes.COLOR:
 					child = new MiGColorPicker();
-					if(vo) {
+					if(vo && vo[customfield.name]) {
 						MiGColorPicker(child).selectedColor= Number(vo[customfield.name]);				
 						summary = Number(vo[customfield.name]).toString(16);
 					}
@@ -228,7 +228,7 @@ package org.mig.utils
 						dp.addItem(item);
 					}
 					
-					if(vo && vo[customfield.name].toString() != '') {
+					if(vo && vo[customfield.name] && vo[customfield.name].toString() != '') {
 						for each(item in dp)
 							item.vo = vo;
 						selected = vo[customfield.name].toString().split(',');
@@ -254,7 +254,8 @@ package org.mig.utils
 					List(child).addEventListener(FlexEvent.CREATION_COMPLETE,handleListCreationComplete);
 					//BindingUtils.bindProperty(List(child),"height",flowLayout,"runningHeight");
 					//BindingUtils.bindProperty(container,"height",flowLayout,"runningHeight");
-					dp.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleListChange);
+					if(vo)
+						dp.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleListChange);
 				break;
 				
 				case CustomFieldTypes.INTEGER:
@@ -262,7 +263,7 @@ package org.mig.utils
 					child.styleName = "inputFieldBlack";
 					TextInput(child).restrict="0-9\\-";
 					child.percentWidth = 100;
-					if(vo) {
+					if(vo && vo[customfield.name]) {
 						TextInput(child).text = vo[customfield.name];	
 						summary = vo[customfield.name].toString().slice(0,150)+'...';
 					}
@@ -270,7 +271,7 @@ package org.mig.utils
 				
 				case CustomFieldTypes.DATE:
 					child = new DateTimePicker();
-					if(vo && vo[customfield.name].toString() != '')
+					if(vo && vo[customfield.name] && vo[customfield.name].toString() != '')
 					{
 						var date:Date = new Date();
 						date.time = Number(vo[customfield.name].toString())*1000;
@@ -286,7 +287,7 @@ package org.mig.utils
 					child = new TextInput();
 					child.styleName = "inputFieldBlack";	
 					child.percentWidth = 100;
-					if(vo) {
+					if(vo && vo[customfield.name]) {
 						TextInput(child).text = vo[customfield.name];
 						summary = vo[customfield.name].toString().slice(0,150)+'...';
 					}
@@ -301,7 +302,7 @@ package org.mig.utils
 						item.customfield = customfield;
 						dp.addItem(item);
 					}	
-					if(vo && vo[customfield.name].toString() != '')
+					if(vo && vo[customfield.name] && vo[customfield.name].toString() != '')
 					{
 						for each(item in dp)
 							item.vo = vo;
@@ -326,12 +327,15 @@ package org.mig.utils
 					List(child).dropEnabled = true;
 					optionRenderer = new ClassFactory(CustomFieldListCheckBox);	
 					List(child).itemRenderer = optionRenderer;
-					dp.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleListChange);
+					if(vo)
+						dp.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleListChange);
 				break;							
 			}
 			if(child) {
 				container.addElement(child);
-				child.addEventListener(Event.CHANGE,dataChangeProxy);		
+				
+				if(vo)
+					child.addEventListener(Event.CHANGE,dataChangeProxy);		
 				if(customfield.typeid == CustomFieldTypes.FILE_LINK)
 					child.addEventListener(FlexEvent.CREATION_COMPLETE,handleCreationComplete);	
 				return [child,summary];
@@ -353,8 +357,8 @@ package org.mig.utils
 				child.parent.addChild(linkButton);
 		} 
 		private static function dataChangeProxy(event:Event):void {
-			if(UIComponent(event.target).parent is ICustomFieldView) {
-				var container:ICustomFieldView = UIComponent(event.target).parent as ICustomFieldView;
+			if(UIComponent(event.target).parentDocument is ICustomFieldView) {
+				var container:ICustomFieldView = UIComponent(event.target).parentDocument as ICustomFieldView;
 				var customfield:CustomField = container.customfield;
 				var vo:ValueObject = container.vo;
 				switch(customfield.typeid)

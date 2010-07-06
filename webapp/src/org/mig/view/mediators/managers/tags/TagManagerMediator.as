@@ -20,7 +20,6 @@ package org.mig.view.mediators.managers.tags
 		import org.mig.events.NotificationEvent;
 		import org.mig.model.ContentModel;
 		import org.mig.model.vo.UpdateData;
-		import org.mig.model.vo.app.ContentCustomField;
 		import org.mig.model.vo.app.CustomField;
 		import org.mig.model.vo.app.CustomFieldTypes;
 		import org.mig.model.vo.app.StatusResult;
@@ -66,7 +65,7 @@ package org.mig.view.mediators.managers.tags
 			view.name = contentModel.termsConfig.@name.toString();
 		}
 		private function handleTermsLoaded(event:StateEvent):void {
-			if(event.action == AppStartupStateConstants.LOAD_CATEGORIESCF_COMPLETE) {	
+			if(event.action == AppStartupStateConstants.LOAD_CATEGORIES_CFS_COMPLETE) {	
 				contentModel.tagTerms.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleChange);
 				contentModel.categoryTermsFlat.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleChange);
 			/*	var cols:Array = view.catGrid.columns;
@@ -106,8 +105,8 @@ package org.mig.view.mediators.managers.tags
 			cf.displayname = "Slug";
 			desc.addItem(cf);
 			
-			for each(var item:ContentCustomField in contentModel.categoriesCustomFields)
-				desc.addItem(item.customfield);
+			for each(var item:CustomField in contentModel.categoriesCustomFields)
+				desc.addItem(item);
 						
 			view.categoriesView.inspector.dataProvider = desc;
 		}

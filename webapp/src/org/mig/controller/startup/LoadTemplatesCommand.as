@@ -5,7 +5,6 @@ package org.mig.controller.startup
 	import org.mig.model.ContentModel;
 	import org.mig.model.vo.app.CustomField;
 	import org.mig.model.vo.content.Template;
-	import org.mig.model.vo.app.ContentCustomField;
 	import org.mig.services.interfaces.IAppService;
 	import org.mig.services.interfaces.IContentService;
 	import org.robotlegs.mvcs.Command;
@@ -26,42 +25,27 @@ package org.mig.controller.startup
 			service.loadTemplates();
 			service.addHandlers(handleTemplates);
 		}
+		private var templateId:int;
 		private function handleTemplates(data:Object):void {
 			var results:Array = data.result as Array;
-			for each(var item:Object in results) {
-				var template:Template = new Template();
-				template.name = item.name;
-				template.id = Number(item.id);
-				contentModel.templates.addItem(template);
-				if(item.rowids != '') {
-					var cfs1:Array = item.rowids.toString().split(',');
-					var cfs2:Array = item.customfieldids.toString().split(',');
-					var cfs3:Array = item.fieldids.toString().split(',');
-					var cfs4:Array = item.displayorders.toString().split(',');
-					var cfs5:Array = item.rowids.toString().split(',');
-					
-					for (var i:int=0;i<cfs1.length;i++) {
-						var templateCustomField:ContentCustomField = new ContentCustomField();
-						templateCustomField.id = cfs1[i];
-						templateCustomField.fieldid = cfs3[i];
-						templateCustomField.displayorder = cfs4[i];
-						//templateCustomField.visible = cfs5[i] == '1'?true:false;
-						
-						var cfid:int = cfs2[i];
-						for each(var field:CustomField in appModel.customfieldsFlat) {
-							if(field.id == cfid) {
-								templateCustomField.customfield = field;
-								break;
-							}
-						}
-						template.customfields.addItem(templateCustomField);
-					}
+			for each(var item:Template in results) {				
+				contentModel.templates.addItem(item);
+				templateId = item.id;
+				contentModel.templatesCustomFields.filterFunction = filterByTemplateId;
+				contentModel.templatesCustomFields.refresh();
+				for each(var cf:CustomField in contentModel.templatesCustomFields) {
+					item.customfields.addItem(cf);
 				}
 			}
+			contentModel.templatesCustomFields.filterFunction = null;
+			contentModel.templatesCustomFields.refresh();
 			trace("Startup: Templates Complete");
-			appModel.startupCount = 9;	
+			appModel.startupCount = 4;	
 			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP_PROGRESS,"Templates loaded"));
 			eventDispatcher.dispatchEvent(new StateEvent(StateEvent.ACTION, AppStartupStateConstants.LOAD_TEMPLATES_COMPLETE));	
+		}
+		private function filterByTemplateId(item:CustomField):Boolean {
+			return item.templateid == templateId ? true:false;
 		}
 	}
 }

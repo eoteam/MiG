@@ -25,7 +25,7 @@ package org.mig.controller.startup
 			eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.RETRIEVE_CHILDREN,contentModel.mediaModel));
 			
 			trace("Startup: Media Model Complete");
-			appModel.startupCount = 6;
+			appModel.startupCount = 5;
 			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP_PROGRESS,"Media Model initiated"));
 			eventDispatcher.dispatchEvent(new StateEvent(StateEvent.ACTION, AppStartupStateConstants.LOAD_MEDIA_COMPLETE));
 			

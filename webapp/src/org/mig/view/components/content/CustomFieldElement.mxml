@@ -14,26 +14,17 @@
 			import mx.core.UIComponent;
 			
 			import org.mig.model.vo.ValueObject;
-			import org.mig.model.vo.app.ContentCustomField;
 			import org.mig.model.vo.app.CustomField;
 			import org.mig.model.vo.content.ContainerData;
 			import org.mig.utils.GlobalUtils;
 			import org.mig.view.interfaces.ICustomFieldView;
 			
 				
-			private var _field:ContentCustomField;
 			private var _vo:ContainerData;
 			private var _customfield:CustomField;
 			[Bindable] public var headerLabel:String;
 			[Bindable] public var summaryText:String;
 				
-			public function set field(value:ContentCustomField):void {
-				_field = value;
-				customfield = value.customfield;
-			}
-			public function get field():ContentCustomField {
-				return _field
-			}
 			public function set vo(value:ValueObject):void {
 				_vo = value as ContainerData
 			}

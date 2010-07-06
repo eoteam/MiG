@@ -29,7 +29,6 @@ package org.mig.controller.startup
 			appService.addHandlers(handleTerms);
 		}
 		private function handleTerms(data:Object):void {
-			
 			var results:Array = data.result as Array;
 			var i:Term;
 			var flatCategoryTerms:Array = [];

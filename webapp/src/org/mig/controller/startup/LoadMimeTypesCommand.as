@@ -27,7 +27,7 @@ package org.mig.controller.startup
 		private function handleMimeTypes(data:Object):void {
 			contentModel.mimetypes = data.result as Array;	
 			trace("Startup: Mimetypes Complete");
-			appModel.startupCount = 7;
+			appModel.startupCount = 6;
 			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP_PROGRESS,"MimeTypes loaded")); 
 			eventDispatcher.dispatchEvent(new StateEvent(StateEvent.ACTION, AppStartupStateConstants.LOAD_MIMETYPES_COMPLETE));
 			

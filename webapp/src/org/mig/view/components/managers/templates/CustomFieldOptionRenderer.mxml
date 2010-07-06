@@ -7,19 +7,37 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import mx.collections.IList;
+			
+			import org.mig.model.vo.app.CustomField;
+			import org.mig.model.vo.app.CustomFieldOption;
+			
 			import spark.components.List;
-				[Bindable] private var enableAddButton:Boolean = false;
-				override public function set data(value:Object):void {
-					super.data = value;
-					if(data.index == List(owner).dataProvider.length)
-						enableAddButton = true;
-				}
+			
+			[Bindable] public var enableAddButton:Boolean = false;
+			[Bindable] public var enableRemoveButton:Boolean = true;
+			
+			override public function set data(value:Object):void {
+				super.data = value;
+				if(data && data.index == List(owner).dataProvider.length)
+					enableAddButton = true;
+				else
+					enableAddButton = false;
+			}
+
+			protected function button1_clickHandler(event:MouseEvent):void {
+				this.dispatchEvent(new Event("removeCustomField",true));
+			}
+			protected function addButton_clickHandler(event:MouseEvent):void {
+				this.dispatchEvent(new Event("addCustomField",true));
+			}
+
 		]]>
 	</fx:Script>
 	<s:layout>
 		<s:HorizontalLayout  gap="2" />
 	</s:layout>
 		<s:TextInput width="100%" styleName="inputFieldBlack" text="{data.value}"/>
-		<s:Button label="-" />
-		<s:Button id="addButton" label="+" visible="{enableAddButton}" includeInLayout="{enableAddButton}" />
+		<s:Button label="-" click="button1_clickHandler(event)"  visible="{enableRemoveButton}" includeInLayout="{enableRemoveButton}"/>
+		<s:Button id="addButton" label="+" visible="{enableAddButton}" includeInLayout="{enableAddButton}" click="addButton_clickHandler(event)" />
 </s:ItemRenderer>

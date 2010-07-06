@@ -14,24 +14,26 @@ package org.mig.controller.startup
 		
 		override public function execute():void {
 			
-			appModel.startupItems = 11;
+			appModel.startupItems = 10;
 			
 			var fsmInjector:FSMInjector = new FSMInjector( AppStartupStateConstants.FSM );
 			var stateMachine:StateMachine = new StateMachine(eventDispatcher);
 			
 			commandMap.mapEvent( AppStartupStateConstants.LOAD_CONFIG, 			LoadConfigCommand, 				StateEvent, true );
-			//commandMap.mapEvent( AppStartupStateConstants.LOAD_CFGROUPS,		LoadCustomFieldGroupsCommand,	StateEvent, true );
-			//commandMap.mapEvent( AppStartupStateConstants.LOAD_CFS, 			LoadCustomFieldsCommand,		StateEvent, true );
-			commandMap.mapEvent( AppStartupStateConstants.LOAD_CATEGORIESCF,	LoadCategoriesCustomFields,		StateEvent, true );
+
 			commandMap.mapEvent( AppStartupStateConstants.LOAD_CONTENT, 		LoadContentCommand,				StateEvent, true );		
+			commandMap.mapEvent( AppStartupStateConstants.LOAD_TEMPLATES_CFS,	LoadTemplatesCFSCommand,		StateEvent, true);
+			commandMap.mapEvent( AppStartupStateConstants.LOAD_TEMPLATES,		LoadTemplatesCommand,			StateEvent, true);
+			
 			commandMap.mapEvent( AppStartupStateConstants.LOAD_MEDIA,			LoadMediaCommand,				StateEvent, true );
 			commandMap.mapEvent( AppStartupStateConstants.LOAD_MIMETYPES,		LoadMimeTypesCommand,			StateEvent, true );
-			commandMap.mapEvent( AppStartupStateConstants.LOAD_TERMS,			LoadTermsCommand,				StateEvent, true );
-			commandMap.mapEvent( AppStartupStateConstants.LOAD_TEMPLATES,		LoadTemplatesCommand,			StateEvent, true);
-			commandMap.mapEvent( AppStartupStateConstants.LOAD_COLORS,			LoadColorsCommand,				StateEvent, true); 
-			commandMap.mapEvent( AppStartupStateConstants.STARTUP_COMPLETE,		StartupCompleteCommand,			StateEvent, true );
 			
+			commandMap.mapEvent( AppStartupStateConstants.LOAD_CATEGORIES_CFS,	LoadCategoriesCustomFields,		StateEvent, true );
+			commandMap.mapEvent( AppStartupStateConstants.LOAD_TERMS,			LoadTermsCommand,				StateEvent, true );
 
+			commandMap.mapEvent( AppStartupStateConstants.LOAD_COLORS,			LoadColorsCommand,				StateEvent, true); 
+			
+			commandMap.mapEvent( AppStartupStateConstants.STARTUP_COMPLETE,		StartupCompleteCommand,			StateEvent, true );
 			commandMap.mapEvent( AppStartupStateConstants.FAIL,StartupFailedCommand, StateEvent, true );
 
 			

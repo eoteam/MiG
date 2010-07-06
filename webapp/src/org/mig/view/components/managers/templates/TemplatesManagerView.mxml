@@ -18,6 +18,7 @@
 	<s:HGroup width="100%" id="header" verticalAlign="middle" gap="2" clipAndEnableScrolling="false">
 		<s:Label styleName="boldCopy"  width="100%" text="Templates Manager" />
 		<s:Rect width="100%"/>
+		<s:Button id="submitButton" styleName="defaultGrayButton" label="Save Changes" click="this.visible=false" enabled="false"/>
 		<s:Button id="closeButton" styleName="defaultGrayButton" label="Close" click="this.visible=false"/>
 	</s:HGroup>
 	<s:Rect height="4" />
@@ -58,10 +59,10 @@
 			<s:Label text="Default Value" width="100%" />
 		</s:HGroup>
 		<s:List width="100%" id="cfList" contentBackgroundAlpha="0"  requireSelection="false" allowMultipleSelection="true"  
-		dragMoveEnabled="true" useVirtualLayout="false" borderVisible="false">
+		dragMoveEnabled="true" borderVisible="false">
 			<s:itemRenderer>
 				<fx:Component>
-					<templates:CustomFieldView width="100%" field="{data}"  customFieldTypes="{outerDocument.customFieldTypes}"/>
+					<templates:CustomFieldView width="100%" vo="{data}"  customFieldTypes="{outerDocument.customFieldTypes}"/>
 				</fx:Component>
 			</s:itemRenderer>
 			<s:layout>

@@ -9,7 +9,7 @@ package org.mig.view.mediators.content
 	import org.mig.model.vo.ContentData;
 	import org.mig.model.vo.UpdateData;
 	import org.mig.model.vo.ValueObject;
-	import org.mig.model.vo.app.ContentCustomField;
+	import org.mig.model.vo.app.CustomField;
 	import org.mig.model.vo.content.ContainerData;
 	import org.mig.model.vo.content.Template;
 	import org.mig.view.components.content.ContentGeneralEditor;
@@ -38,10 +38,10 @@ package org.mig.view.mediators.content
 			sort.fields = [new SortField("displayorder",false,false,true)];
 			template.customfields.sort = sort;
 			template.customfields.refresh();
-			for each(var field:ContentCustomField in template.customfields)
+			for each(var field:CustomField in template.customfields)
 			{
 				var cfElement:CustomFieldElement = new CustomFieldElement();
-				cfElement.field = field;
+				cfElement.customfield = field;
 				cfElement.vo = view.content.data as ValueObject;
 				view.mainContainer.addElement(cfElement);
 				cfElements.push(cfElement);
@@ -60,7 +60,7 @@ package org.mig.view.mediators.content
 			update.id = view.content.data.id;
 			for each(var element:CustomFieldElement in cfElements) {
 				if(element.modified) {
-					update["customfield"+element.field.fieldid] = view.content.data[element.field.customfield.name];
+					update["customfield"+element.customfield.fieldid] = view.content.data[element.customfield.name];
 				}
 			}
 		}

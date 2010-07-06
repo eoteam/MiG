@@ -1,5 +1,6 @@
 package org.mig.view.mediators.managers.templates
 {
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	import mx.events.CollectionEvent;
@@ -9,7 +10,6 @@ package org.mig.view.mediators.managers.templates
 	import org.mig.events.AppEvent;
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
-	import org.mig.model.vo.app.ContentCustomField;
 	import org.mig.model.vo.app.CustomField;
 	import org.mig.model.vo.app.CustomFieldTypes;
 	import org.mig.model.vo.content.Template;
@@ -29,8 +29,8 @@ package org.mig.view.mediators.managers.templates
 		[Inject]
 		public var contentModel:ContentModel;
 
-		[Inject]
-		public var appModel:AppModel;
+			[Inject]
+			public var appModel:AppModel;
 		
 		override public function onRegister():void {
 			eventMap.mapListener(eventDispatcher,StateEvent.ACTION,handleTemplatesLoaded);
@@ -40,6 +40,7 @@ package org.mig.view.mediators.managers.templates
 			view.cfList.addEventListener(ContentViewEvent.CUSTOMFIELD_DRAG_START,handleDragStart);
 			view.cfList.addEventListener(DragEvent.DRAG_COMPLETE,handleListDragDrop);
 			view.addFieldButton.addEventListener(MouseEvent.CLICK,handleAddButton);
+			view.submitButton.addEventListener(MouseEvent.CLICK,handleSubmitButton);
 		}
 		private function handleConfigLoaded(event:AppEvent):void {
 			view.name = contentModel.templatesConfig.@name.toString();
@@ -68,13 +69,15 @@ package org.mig.view.mediators.managers.templates
 				cfView.percentWidth = 100;
 			}*/
 		}
-		private function handleChange(event:MouseEvent):void {
-			
+		private function handleChange(event:Event):void {
+			view.submitButton.enabled = true;
 		}
 		private function handleAddButton(event:MouseEvent):void {
-			var templateCF:ContentCustomField = new ContentCustomField();
-			templateCF.customfield = new CustomField();
+			var templateCF:CustomField = new CustomField();
 			view.cfList.dataProvider.addItem(templateCF);
+		}
+		private function handleSubmitButton(event:MouseEvent):void {
+			
 		}
 	}
 }

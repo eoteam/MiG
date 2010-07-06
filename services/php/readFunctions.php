@@ -936,6 +936,18 @@ function getTemplates($params) {
 	return $result;
 
 }
+function getRelatedCustomFields($params) {
+	$sql = "SELECT " . $params["tablename"] . ".*, customfields.typeid, customfields.name, customfields.displayname, customfields.options, customfields.defaultvalue";
+	$sql .= " ,customfields.options, customfields.description FROM " . $params["tablename"];
+	
+	$sql .= " LEFT JOIN customfields ON customfields.id = " . $params["tablename"] . ".id";
+	//echo $sql;
+	$result = queryDatabase($sql);
+
+	// return the results
+	return $result;
+}
+
 function getContentTree($params)
 {
 	/*
