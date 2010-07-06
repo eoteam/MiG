@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="false" focusEnabled="true"  width="100%"
+				contentBackgroundAlpha="1" contentBackgroundColor="0x00000">
+	
+	<fx:Script>
+		<![CDATA[
+			import spark.components.List;
+				[Bindable] private var enableAddButton:Boolean = false;
+				override public function set data(value:Object):void {
+					super.data = value;
+					if(data.index == List(owner).dataProvider.length)
+						enableAddButton = true;
+				}
+		]]>
+	</fx:Script>
+	<s:layout>
+		<s:HorizontalLayout  gap="2" />
+	</s:layout>
+		<s:TextInput width="100%" styleName="inputFieldBlack" text="{data.value}"/>
+		<s:Button label="-" />
+		<s:Button id="addButton" label="+" visible="{enableAddButton}" includeInLayout="{enableAddButton}" />
+</s:ItemRenderer>

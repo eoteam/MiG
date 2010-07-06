@@ -3,7 +3,8 @@
 		  xmlns:s="library://ns.adobe.com/flex/spark" 
 		  xmlns:mx="library://ns.adobe.com/flex/mx" 
 		  skinClass="org.mig.view.skins.buttons.LinkButtonSkin"
-		  toolTip = "Drag to a container to link" mouseDown="handleSocketClick(event)">
+		  toolTip = "Drag to a container to link" 
+		  mouseDown="handleSocketClick(event)">
 	<fx:Script>
 		<![CDATA[
 			import mx.core.UIComponent;
@@ -18,8 +19,7 @@
 			private var mouseXInit:Number;
 			private var mouseYInit:Number;
 			
-			private function handleSocketClick(event:MouseEvent):void	
-			{
+			private function handleSocketClick(event:MouseEvent):void {
 				mouseXInit = parentApplication.mouseX-this.mouseX+this.width/2-10;
 				mouseYInit = parentApplication.mouseY-this.mouseY+this.height/2;					
 				//Application.application.linkingMode = true;
@@ -27,8 +27,7 @@
 				parentApplication.stage.addEventListener(MouseEvent.MOUSE_MOVE,handleMouseMove);
 				parentApplication.stage.addEventListener(MouseEvent.MOUSE_UP,removeLine);
 			}
-			private function handleMouseMove(event:MouseEvent):void
-			{
+			private function handleMouseMove(event:MouseEvent):void {
 				//var drawingLayer:UIComponent = Application.application.drawingLayer;
 				drawingLayer.graphics.clear(); 
 				drawingLayer.graphics.lineStyle(3, 0xFCEE21, 1); 
@@ -36,8 +35,7 @@
 				drawingLayer.graphics.lineTo(drawingLayer.mouseX, drawingLayer.mouseY);
 				drawingLayer.graphics.endFill();  
 			}		
-			private function removeLine(event:Event):void
-			{
+			private function removeLine(event:Event):void {
 				var currPoint:Point = new Point(parentApplication.mouseX,parentApplication.mouseY);
 				//Application.application.linkingMode = false;
 /* 				
@@ -66,7 +64,6 @@
 				parentApplication.stage.removeEventListener(MouseEvent.MOUSE_MOVE,handleMouseMove);
 				parentApplication.stage.removeEventListener(MouseEvent.MOUSE_UP,removeLine);
 				//Application.application.hideDrawingLayer();
-
 			}
 			private var clearLineTimer:Timer;			
 		]]>

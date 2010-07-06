@@ -16,7 +16,7 @@
 	folderClosedIcon="{containerIcon}"
 	folderOpenIcon="{containerIcon}"
 	iconField="{ContentNode(data).config.@icon}"
-	itemRenderer="org.mig.view.renderers.ContentTreeRenderer"
+	itemRenderer="org.mig.view.components.main.ContentTreeRenderer"
 	dataDescriptor="{new ContentTreeDataDescriptor(this)}"
 	rendererIsEditor="true" variableRowHeight="true"
 	dragFormat="{DraggableViews.CONTENT_TREE_CONTAINERS}"

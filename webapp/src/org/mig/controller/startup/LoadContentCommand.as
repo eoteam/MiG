@@ -31,7 +31,7 @@ package org.mig.controller.startup
 			contentModel.contentModel = new ContainerNode (contentModel.contentConfig.@name, contentModel.contentConfig,result,null,appModel.user.privileges,true,true,false);
 			
 			trace("Startup: Content Model Complete");
-			appModel.startupCount = 2;
+			appModel.startupCount = 5;
 			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP_PROGRESS,"Content Model initiated"));
 			eventDispatcher.dispatchEvent(new StateEvent(StateEvent.ACTION, AppStartupStateConstants.LOAD_CONTENT_COMPLETE));
 		}

@@ -13,6 +13,8 @@ package org.mig.view.events
 		public static const MEDIA_RATING_SELECTED:String = "mediaRatingSelected";
 		public static const MEDIA_RATING_DESELECTED:String = "mediaRatingDeselected";
 		
+		public static const CUSTOMFIELD_DRAG_START:String = "customFieldDragStart";
+		
 		public var args:Array
 		public function ContentViewEvent(type:String,...args)
 		{

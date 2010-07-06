@@ -278,7 +278,7 @@
 			    dataProvider="{tileDP}">
 					<controls:itemRenderer>
 						<fx:Component>
-							<renderers:MediaTreeRenderer columns="{outerDocument.columns}" />
+							<media:MediaTreeRenderer columns="{outerDocument.columns}" />
 						</fx:Component>
 					</controls:itemRenderer>
 				</controls:MigTree>

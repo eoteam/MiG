@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx"
-		 implements="org.mig.view.interfaces.ICustomFieldView"
-		 xmlns:app="org.mig.model.vo.app.*" creationComplete="hgroup1_creationCompleteHandler(event)"
-		  >
+		 xmlns:mx="library://ns.adobe.com/flex/mx" contentBackgroundAlpha="1" contentBackgroundColor="0x00000"
+		 implements="org.mig.view.interfaces.ICustomFieldView" autoDrawBackground="true"  focusEnabled="true"
+		 xmlns:app="org.mig.model.vo.app.*" creationComplete="hgroup1_creationCompleteHandler(event)" 
+		 xmlns:templates="org.mig.view.components.managers.templates.*">
 	<fx:Script>
 		<![CDATA[
 			import mx.core.IVisualElement;
@@ -13,24 +13,26 @@
 			import org.mig.model.vo.ValueObject;
 			import org.mig.model.vo.app.ContentCustomField;
 			import org.mig.model.vo.app.CustomField;
+			import org.mig.model.vo.app.CustomFieldTypes;
 			import org.mig.utils.GlobalUtils;
+			import org.mig.view.events.ContentViewEvent;
+			
+			import spark.events.IndexChangeEvent;
 
 			protected function hgroup1_creationCompleteHandler(event:FlexEvent):void
 			{
-				var tmp:Array = GlobalUtils.createCustomField(this);
-				var element:IVisualElement = tmp[0] as IVisualElement;
-				holder.addElementAt(element,4);
-				element.percentWidth = 100;
+				generateCustomField();
 			}
 
 			[Bindable] private var _customfield:CustomField;
+			[Bindable] private var typeSelectedIndex:int = -1;
 			private var _field:ContentCustomField;
 			
 			public function set vo(value:ValueObject):void {
 				
 			}	
 			public function get vo():ValueObject {
-				return null
+				return null;
 			}
 			
 			public function set field(value:ContentCustomField):void {
@@ -39,54 +41,110 @@
 			}
 			public function set customfield(value:CustomField):void {
 				_customfield = value;
+				if(value) {
+					for each(var item:Object in customFieldTypes.source) {
+						if(item.typeid == value.typeid) {
+							typeSelectedIndex = customFieldTypes.getItemIndex(item);
+						}
+					}
+				}
+					
 			}
-			
 			public function get customfield():CustomField {
 				return _customfield;
 			}
-
+			private function comboBoxBlack_changeHandler(event:IndexChangeEvent):void {
+				_customfield.typeid = typesList.selectedItem.typeid;
+				cfHolder.removeAllElements();
+				generateCustomField();
+				
+			}
+			private function generateCustomField():void {
+				
+				var tmp:Array = GlobalUtils.createCustomField(this);
+				if(tmp[0] != null) {
+					var element:IVisualElement = tmp[0] as IVisualElement;
+					cfHolder.addElement(element);
+					switch(_customfield.typeid) {
+						case  CustomFieldTypes.SELECT:
+							//optionsHolder.enabled = true;
+							optionsList.dataProvider = new ArrayList(_customfield.optionsArray);
+							break;
+						case  CustomFieldTypes.MULTIPLE_SELECT:
+							//optionsHolder.enabled = true;
+							optionsList.dataProvider = new ArrayList(_customfield.optionsArray);
+							break;
+						case  CustomFieldTypes.MULTIPLE_SELECT_WITH_ORDER:
+							//optionsHolder.enabled = true;
+							optionsList.dataProvider = new ArrayList(_customfield.optionsArray);
+							break;
+					}
+				}
+			}
+			private function handleDragButton(event:MouseEvent):void {
+				owner.dispatchEvent(new ContentViewEvent(ContentViewEvent.CUSTOMFIELD_DRAG_START));
+				blinkEffect.play();
+			}
 		]]>
 	</fx:Script>
 	<fx:Declarations>
 		<s:ArrayList id="customFieldTypes" />
+		<s:Fade repeatCount="2" duration="150" id="blinkEffect" alphaFrom="0.5" alphaTo="1" target="{this}" />
 	</fx:Declarations>
 	<s:Rect width="100%" height="100%">
 		<s:fill>
 			<s:LinearGradient rotation="90">
-				<s:GradientEntry color="0x808080" />
-				<s:GradientEntry color="0x595959" />
+				<s:GradientEntry color="0x333333" />
+				<s:GradientEntry color="0x333333" />
 			</s:LinearGradient>
 		</s:fill>
 	</s:Rect>
+   
+	<s:HGroup gap="4" verticalAlign="top" id="holder" width="100%" paddingBottom="4" paddingTop="4" paddingLeft="4" paddingRight="4">
+		
+		<s:TextInput styleName="inputFieldBlack" id="nameInput"  text="{_customfield.name}" width="180" change="_customfield.name=nameInput.text" />
+		<s:Rect width="1" height="100%">
+			<s:fill>
+				<s:SolidColor color="0"/>
+			</s:fill>
+		</s:Rect>
+		
+		<s:DropDownList id="typesList" styleName="comboBoxBlack" labelField="label" width="180" 
+		dataProvider="{customFieldTypes}" prompt="Choose..." change="comboBoxBlack_changeHandler(event)" selectedIndex="{typeSelectedIndex}"  />
+		<s:Rect width="1" height="100%">
+			<s:fill>
+				<s:SolidColor color="0"/>
+			</s:fill>
+		</s:Rect>
 
-	<s:Rect width="100%" height="100%"> 
-		<s:fill>
-			<s:LinearGradient rotation="90">
-				<s:GradientEntry color="#FFFFFF" alpha="0.1" />
-				<s:GradientEntry color="#FFFFFF" alpha="0.02" />
-			</s:LinearGradient>
-		</s:fill>
-	</s:Rect>   
-	<s:HGroup gap="2" verticalAlign="top" id="holder" paddingBottom="4" paddingTop="4" paddingLeft="4" paddingRight="4" width="100%">
-		<s:TextInput styleName="inputFieldBlack"  text="{_customfield.name}" width="100%"/>
-		<s:Rect width="1" height="100%">
-			<s:fill>
-				<s:SolidColor color="0x333333"/>
-			</s:fill>
-		</s:Rect>
-		
-		<s:DropDownList id="comboBoxBlack" labelField="label" width="100%" styleName="migComboBox" dataProvider="{customFieldTypes}" />
-		<s:Rect width="1" height="100%">
-			<s:fill>
-				<s:SolidColor color="0x333333"/>
-			</s:fill>
-		</s:Rect>
+<!--		<s:SkinnableContainer contentBackgroundAlpha="0" backgroundColor="0x666666" width="100%" id="optionsHolder" height="{optionsList.height}"  enabled="false">-->
+			<s:List id="optionsList" useVirtualLayout="false" width="100%"  labelField="value" >
+				<s:itemRenderer>
+					<fx:Component>
+						<templates:CustomFieldOptionRenderer />
+					</fx:Component>
+				</s:itemRenderer>
+				<s:layout>
+					<s:VerticalLayout gap="2" />
+				</s:layout>
+			</s:List>
+<!--		</s:SkinnableContainer>-->
 		
 		<s:Rect width="1" height="100%">
 			<s:fill>
-				<s:SolidColor color="0x333333"/>
+				<s:SolidColor color="0"/>
 			</s:fill>
 		</s:Rect>
+		
+		<s:Group width="100%" id="cfHolder"  />
+		
+		<s:Rect width="1" height="100%">
+			<s:fill>
+				<s:SolidColor color="0"/>
+			</s:fill>
+		</s:Rect>
+		
+
 		
 <!--		<s:TextArea id="description" updateComplete="description.heightInLines=NaN"  text="{_customfield.description}"  width="100%"/>
 		<s:Rect width="1" height="100%">
@@ -95,12 +153,13 @@
 			</s:fill>
 		</s:Rect>
 		-->
-		<s:Button label="-"/>
+		<s:Button label="-" />
 		<s:Rect width="1" height="100%">
 			<s:fill>
-				<s:SolidColor color="0x333333"/>
+				<s:SolidColor color="0"/>
 			</s:fill>
 		</s:Rect>
-		<s:Button width="5" height="100%" label="..."/>
+		<s:Button width="10" height="100%" label="..." mouseDown="handleDragButton(event)"/>
 	</s:HGroup>
-</s:Group>
+
+</s:ItemRenderer>

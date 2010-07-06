@@ -15,6 +15,8 @@ package org.mig.utils
 	import mx.collections.ArrayList;
 	import mx.core.ClassFactory;
 	import mx.core.FlexGlobals;
+	import mx.core.IVisualElement;
+	import mx.core.IVisualElementContainer;
 	import mx.core.UIComponent;
 	import mx.events.CollectionEvent;
 	import mx.events.FlexEvent;
@@ -150,8 +152,7 @@ package org.mig.utils
 			var selected:Array;
 			var index:String;
 			dateFormatter.formatString = "MM/DD/YY";
-			switch(customfield.typeid)
-			{
+			switch(customfield.typeid) {
 				case CustomFieldTypes.BINARY:
 					child = new CheckBox();
 					if(vo) {
@@ -162,10 +163,10 @@ package org.mig.utils
 				
 				case CustomFieldTypes.SELECT:
 					child = new DropDownList();
-					child.width = 300;
 					DropDownList(child).labelField = "value";
 					DropDownList(child).styleName = "comboBoxBlack";
 					DropDownList(child).dataProvider = new ArrayList(customfield.optionsArray);
+					child.width = 180;
 					if(vo) {
 						for each(option in customfield.optionsArray) {
 						if(option.index.toString() == vo[customfield.name]) {
@@ -189,7 +190,6 @@ package org.mig.utils
 				
 				case CustomFieldTypes.HTML_TEXT:
 					child = new MiGTLFTextArea();
-					child.percentWidth =100;
 					if(vo) {
 						MiGTLFTextArea(child).htmlText = vo[customfield.name];
 						summary = vo[customfield.name].toString().slice(0,150)+'...';
@@ -201,9 +201,9 @@ package org.mig.utils
 					TextArea(child).heightInLines = NaN;
 					TextArea(child).addEventListener(FlexEvent.UPDATE_COMPLETE,handleTextAreaUpdate);
 					TextArea(child).maxHeight = 300;
-					child.percentWidth = 100;
 					child.styleName = "bodyCopy";
-					child.setStyle("backgroundColor",0);	
+					child.setStyle("backgroundColor",0);
+					child.percentWidth = 100;
 					if(vo) {
 						TextArea(child).text = vo[customfield.name];
 						summary = vo[customfield.name].toString().slice(0,150)+'...';
@@ -241,27 +241,27 @@ package org.mig.utils
 					}
 										
 					child = new List();
-					child.percentHeight = 100;
+					//child.percentHeight = 100;
 					child.percentWidth = 100;
 					List(child).styleName = 'customFieldsList';
 					List(child).dataProvider = dp;
 					List(child).labelField = "value";
-					var flowLayout:FlowLayout = new FlowLayout();
-					flowLayout.clipAndEnableScrolling = false;
-					List(child).layout = flowLayout;
+					//var flowLayout:FlowLayout = new FlowLayout();
+					//flowLayout.clipAndEnableScrolling = false;
+					//List(child).layout = flowLayout;
 					optionRenderer = new ClassFactory(CustomFieldListCheckBox);						
 					List(child).itemRenderer = optionRenderer;
 					List(child).addEventListener(FlexEvent.CREATION_COMPLETE,handleListCreationComplete);
-					BindingUtils.bindProperty(List(child),"height",flowLayout,"runningHeight");
-					BindingUtils.bindProperty(container,"height",flowLayout,"runningHeight");
+					//BindingUtils.bindProperty(List(child),"height",flowLayout,"runningHeight");
+					//BindingUtils.bindProperty(container,"height",flowLayout,"runningHeight");
 					dp.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleListChange);
 				break;
 				
 				case CustomFieldTypes.INTEGER:
 					child = new TextInput();
 					child.styleName = "inputFieldBlack";
-					child.percentWidth = 100;
 					TextInput(child).restrict="0-9\\-";
+					child.percentWidth = 100;
 					if(vo) {
 						TextInput(child).text = vo[customfield.name];	
 						summary = vo[customfield.name].toString().slice(0,150)+'...';
@@ -284,8 +284,8 @@ package org.mig.utils
 				
 				case CustomFieldTypes.FILE_LINK:
 					child = new TextInput();
-					child.styleName = "inputFieldBlack";
-					child.percentWidth = 100;			
+					child.styleName = "inputFieldBlack";	
+					child.percentWidth = 100;
 					if(vo) {
 						TextInput(child).text = vo[customfield.name];
 						summary = vo[customfield.name].toString().slice(0,150)+'...';
@@ -315,7 +315,7 @@ package org.mig.utils
 						summary = summary.substring(0,summary.length-2);
 					}	
 					child = new List();
-					child.percentHeight = 100;
+					//child.percentHeight = 100;
 					child.percentWidth = 100;
 					List(child).styleName = 'customFieldsList';
 					List(child).dataProvider = dp;
@@ -329,19 +329,29 @@ package org.mig.utils
 					dp.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleListChange);
 				break;							
 			}
-			container.addElement(child);
-			child.addEventListener(Event.CHANGE,dataChangeProxy);		
-			if(customfield.typeid == CustomFieldTypes.FILE_LINK)
-			{
-				var linkButton:LinkSocket = new LinkSocket();
-				linkButton.drawingLayer = FlexGlobals.topLevelApplication.mainView.drawingLayer;
-				linkButton.textInput = TextInput(child);
-				linkButton.setStyle("right",2);
-				linkButton.setStyle("top",0);
-				container.addElement(linkButton);		
-			}	
-			return [child,summary];
+			if(child) {
+				container.addElement(child);
+				child.addEventListener(Event.CHANGE,dataChangeProxy);		
+				if(customfield.typeid == CustomFieldTypes.FILE_LINK)
+					child.addEventListener(FlexEvent.CREATION_COMPLETE,handleCreationComplete);	
+				return [child,summary];
+			}
+			else {
+				return [null];
+			}
 		}
+		private static function handleCreationComplete(event:FlexEvent):void {
+			var child:TextInput = event.target as TextInput;
+			var linkButton:LinkSocket = new LinkSocket();
+			linkButton.drawingLayer = FlexGlobals.topLevelApplication.mainView.drawingLayer;
+			linkButton.textInput = TextInput(child);
+			linkButton.setStyle("right",2);
+			linkButton.setStyle("top",0);
+			if(child.parent is IVisualElementContainer)
+				IVisualElementContainer(child.parent).addElement(linkButton); 
+			else
+				child.parent.addChild(linkButton);
+		} 
 		private static function dataChangeProxy(event:Event):void {
 			if(UIComponent(event.target).parent is ICustomFieldView) {
 				var container:ICustomFieldView = UIComponent(event.target).parent as ICustomFieldView;

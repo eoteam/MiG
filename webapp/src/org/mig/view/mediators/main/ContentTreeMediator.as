@@ -27,7 +27,7 @@ package org.mig.view.mediators.main
 	import org.mig.view.components.main.ContentTree;
 	import org.mig.view.components.main.SystemPopup;
 	import org.mig.view.events.ContentViewEvent;
-	import org.mig.view.renderers.ContentTreeRenderer;
+	import org.mig.view.components.main.ContentTreeRenderer;
 	import org.robotlegs.mvcs.Mediator;
 	import org.robotlegs.utilities.statemachine.StateEvent;
 

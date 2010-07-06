@@ -9,6 +9,6 @@ package org.mig.model.vo.app
 		public var displayorder:Number;
 		public var fieldid:Number;
 		public var customfieldid:int;
-		
+		public var isNew:Boolean = true;
 	}
 }

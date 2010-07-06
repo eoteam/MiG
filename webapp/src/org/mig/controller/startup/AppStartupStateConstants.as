@@ -99,14 +99,37 @@ package org.mig.controller.startup
 				
 				<!-- DOING SOME WORK -->
 				<state name={LOADING_CONFIG} changed={LOAD_CONFIG}>
-				   <transition action={LOAD_CONFIG_COMPLETE} target={LOADING_CONTENT}/>			       
+				   <transition action={LOAD_CONFIG_COMPLETE} target={LOADING_CFGROUPS}/>			       
 				   <transition action={LOAD_CONFIG_FAILED} target={FAILING}/>
 				</state>
 		
+		
+				<state name={LOADING_CFGROUPS} changed={LOAD_CFGROUPS}>
+				   <transition action={LOAD_CFGROUPS_COMPLETE} target={LOADING_CFS}/>			       
+				   <transition action={LOAD_CFGROUPS_FAILED} target={FAILING}/>
+				</state>
+		
+				<state name={LOADING_CFS} changed={LOAD_CFS}>
+				   <transition action={LOAD_CFS_COMPLETE} target={LOADING_CATEGORIESCF}/>			       
+				   <transition action={LOAD_CFS_FAILED} target={FAILING}/>
+				</state>
+
+				<state name={LOADING_CATEGORIESCF} changed={LOAD_CATEGORIESCF}>
+				   <transition action={LOAD_CATEGORIESCF_COMPLETE} target={LOADING_CONTENT}/>			       
+				   <transition action={LOAD_CATEGORIESCF_FAILED} target={FAILING}/>
+				</state>
+		
+		
 				<state name={LOADING_CONTENT} changed={LOAD_CONTENT}>
-				   <transition action={LOAD_CONTENT_COMPLETE} target={LOADING_MEDIA}/>			       
+				   <transition action={LOAD_CONTENT_COMPLETE} target={LOADING_TEMPLATES}/>			       
 				   <transition action={LOAD_CONTENT_FAILED} target={FAILING}/>
 				</state>
+	
+				<state name={LOADING_TEMPLATES} changed={LOAD_TEMPLATES}>
+				   <transition action={LOAD_TEMPLATES_COMPLETE} target={LOADING_MEDIA}/>			       
+				   <transition action={LOAD_TEMPLATES_FAILED} target={FAILING}/>
+				</state>	
+		
 		
 				<state name={LOADING_MEDIA} changed={LOAD_MEDIA}>
 				   <transition action={LOAD_MEDIA_COMPLETE} target={LOADING_MIMETYPES}/>			       
@@ -118,31 +141,13 @@ package org.mig.controller.startup
 				   <transition action={LOAD_MIMETYPES_COMPLETE} target={LOADING_TERMS}/>			       
 				   <transition action={LOAD_MIMETYPES_FAILED} target={FAILING}/>
 				</state>
-		
+
+	
 				<state name={LOADING_TERMS} changed={LOAD_TERMS}>
-				   <transition action={LOAD_TERMS_COMPLETE} target={LOADING_CFGROUPS}/>			       
+				   <transition action={LOAD_TERMS_COMPLETE} target={LOADING_COLORS}/>			       
 				   <transition action={LOAD_TERMS_FAILED} target={FAILING}/>
 				</state>
-					
-				<state name={LOADING_CFGROUPS} changed={LOAD_CFGROUPS}>
-				   <transition action={LOAD_CFGROUPS_COMPLETE} target={LOADING_CFS}/>			       
-				   <transition action={LOAD_CFGROUPS_FAILED} target={FAILING}/>
-				</state>
 		
-				<state name={LOADING_CFS} changed={LOAD_CFS}>
-				   <transition action={LOAD_CFS_COMPLETE} target={LOADING_TEMPLATES}/>			       
-				   <transition action={LOAD_CFS_FAILED} target={FAILING}/>
-				</state>
-		
-				<state name={LOADING_TEMPLATES} changed={LOAD_TEMPLATES}>
-				   <transition action={LOAD_TEMPLATES_COMPLETE} target={LOADING_CATEGORIESCF}/>			       
-				   <transition action={LOAD_TEMPLATES_FAILED} target={FAILING}/>
-				</state>		
-		
-				<state name={LOADING_CATEGORIESCF} changed={LOAD_CATEGORIESCF}>
-				   <transition action={LOAD_CATEGORIESCF_COMPLETE} target={LOADING_COLORS}/>			       
-				   <transition action={LOAD_CATEGORIESCF_FAILED} target={FAILING}/>
-				</state>
 		
 				<state name={LOADING_COLORS} changed={LOAD_COLORS}>
 				   <transition action={LOAD_COLORS_COMPLETE} target={STARTINGUP_COMPLETE}/>			       

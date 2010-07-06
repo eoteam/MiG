@@ -66,7 +66,7 @@ package org.mig.services
 			/*var contentConfig:XML 	= appModel.config.controller[1]; //XML(config.controller.(@id == "contentController"));
 			var root:XML = XML(contentConfig.child[0].toString());
 			root.@retrieveContent = contentModel.defaultRetrieve;
-			params.action = root.@retrieveContent.toString();*/
+			params.action = root.@reieveContent.toString();*/
 			params.action = ValidFunctions.GET_ROOT;
 			this.createService(params,ResponseType.DATA,ContainerData);
 		}
