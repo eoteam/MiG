@@ -23,6 +23,9 @@
 					enableAddButton = true;
 				else
 					enableAddButton = false;
+				if(List(owner).dataProvider.length == 1) {
+					enableRemoveButton = false;
+				}
 			}
 
 			protected function button1_clickHandler(event:MouseEvent):void {

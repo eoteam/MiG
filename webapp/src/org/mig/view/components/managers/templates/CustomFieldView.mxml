@@ -93,22 +93,31 @@
 				if(tmp[0] != null) {
 					var element:IVisualElement = tmp[0] as IVisualElement;
 					cfHolder.addElement(element);
+					var listMode:Boolean = false;
 					switch(_customfield.typeid) {
 						case  CustomFieldTypes.SELECT:
-							//optionsHolder.enabled = true;
-							optionsList.dataProvider = new ArrayList(_customfield.optionsArray);
-							break;
+							listMode = true;
+						break;
 						case  CustomFieldTypes.MULTIPLE_SELECT:
-							//optionsHolder.enabled = true;
-							optionsList.dataProvider = new ArrayList(_customfield.optionsArray);
-							break;
+							listMode = true;
+						break;
 						case  CustomFieldTypes.MULTIPLE_SELECT_WITH_ORDER:
-							//optionsHolder.enabled = true;
-							optionsList.dataProvider = new ArrayList(_customfield.optionsArray);
-							break;
+							listMode = true;	
+						break;
 						default:
 							optionsList.dataProvider = null;
 						break;
+					}
+				}
+				if(listMode) {
+					optionsList.dataProvider = new ArrayList(_customfield.optionsArray);
+					if(optionsList.dataProvider.length == 0) {
+						var defaultOption:CustomFieldOption = new CustomFieldOption();
+						defaultOption.value = "default";
+						defaultOption.index = 1;
+						defaultOption.customfield = this._customfield;
+						optionsList.dataProvider.addItem(defaultOption);
+						List(element).dataProvider.addItem(defaultOption);
 					}
 				}
 			}
