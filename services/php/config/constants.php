@@ -44,7 +44,8 @@ $validWriteFunctions = array (
 "deleteRecords",
 "deleteContent",
 "deleteMediaByPath",
-"duplicateContent"
+"duplicateContent",
+"updateCustomField"
 );
 
 $validFileFunctions = array (

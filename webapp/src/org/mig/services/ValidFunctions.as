@@ -36,6 +36,8 @@ package org.mig.services
 		public static const DELETE_CONTENT:String 					= "deleteContent";
 		public static const DELETE_MEDIA_BY_PATH:String 			= "deleteMediaByPath";
 		public static const DUPLICATE_CONTENT:String 				= "duplicateContent";
+		public static const UPDATE_CUSTOMFIELD:String 				= "updateCustomField";
+		public static const DELETE_CUSTOMFIELD:String 				= "deleteCustomField";
 
 		
 		public static const READ_DIRECTORY:String					= "readDirectory";
@@ -51,7 +53,15 @@ package org.mig.services
 		public static const DOWNLOAD_ZIP:String 					= "downloadZip";
 		public static const DIRECTORY_SIZE:String 					= "getDirSize";
 		
-		public static const FUNCTIONS_WITH_TABLENAME:Array = [GET_DATA,UPDATE_RECORD,UPDATE_RECORDS,INSERT_RECORD,DELETE_RECORD,DELETE_RECORDS];
+		public static const FUNCTIONS_WITH_TABLENAME:Array = [
+			GET_DATA,
+			UPDATE_RECORD,
+			UPDATE_RECORDS,
+			INSERT_RECORD,
+			DELETE_RECORD,
+			DELETE_RECORDS,
+			UPDATE_CUSTOMFIELD,
+			DELETE_CUSTOMFIELD];
 
 	}
 }

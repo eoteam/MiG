@@ -145,9 +145,7 @@ package org.mig.utils
 			var option:Object;
 			var child:UIComponent;
 			var item:CustomFieldOption;
-			var opt:Object;
 			var optionRenderer:ClassFactory
-			var dp:ArrayCollection = new ArrayCollection();
 			var summary:String = '';
 			var selected:Array;
 			var index:String;
@@ -165,10 +163,10 @@ package org.mig.utils
 					child = new DropDownList();
 					DropDownList(child).labelField = "value";
 					DropDownList(child).styleName = "comboBoxBlack";
-					DropDownList(child).dataProvider = new ArrayList(customfield.optionsArray);
+					DropDownList(child).dataProvider = customfield.optionsArray;
 					child.width = 180;
 					if(vo && vo[customfield.name]) {
-						for each(option in customfield.optionsArray) {
+						for each(option in customfield.optionsArray.source) {
 						if(option.index.toString() == vo[customfield.name]) {
 							DropDownList(child).selectedItem = option;
 							summary = option.value;
@@ -219,21 +217,15 @@ package org.mig.utils
 				break;
 				
 				case CustomFieldTypes.MULTIPLE_SELECT:
-					for each(opt in customfield.optionsArray) {		
-						item = new CustomFieldOption();
-						item.value = opt.value;
-						item.index = Number(opt.index);
-						item.selected = false;
-						item.customfield = customfield;
-						dp.addItem(item);
-					}
-					
-					if(vo && vo[customfield.name] && vo[customfield.name].toString() != '') {
-						for each(item in dp)
+					if(vo) {
+						customfield.optionsArray.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleListChange);
+						for each(item in customfield.optionsArray.source)
 							item.vo = vo;
+					}					
+					if(vo && vo[customfield.name] && vo[customfield.name].toString() != '') {
 						selected = vo[customfield.name].toString().split(',');
 						for each(index in selected) {
-							item = dp.getItemAt(Number(index)-1) as CustomFieldOption;
+							item = customfield.optionsArray.getItemAt(Number(index)-1) as CustomFieldOption;
 							item.selected = true;
 							summary += item.value+', ';
 						}
@@ -244,7 +236,7 @@ package org.mig.utils
 					//child.percentHeight = 100;
 					child.percentWidth = 100;
 					List(child).styleName = 'customFieldsList';
-					List(child).dataProvider = dp;
+					List(child).dataProvider = customfield.optionsArray;
 					List(child).labelField = "value";
 					//var flowLayout:FlowLayout = new FlowLayout();
 					//flowLayout.clipAndEnableScrolling = false;
@@ -254,8 +246,6 @@ package org.mig.utils
 					List(child).addEventListener(FlexEvent.CREATION_COMPLETE,handleListCreationComplete);
 					//BindingUtils.bindProperty(List(child),"height",flowLayout,"runningHeight");
 					//BindingUtils.bindProperty(container,"height",flowLayout,"runningHeight");
-					if(vo)
-						dp.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleListChange);
 				break;
 				
 				case CustomFieldTypes.INTEGER:
@@ -294,22 +284,17 @@ package org.mig.utils
 				break;	
 				
 				case CustomFieldTypes.MULTIPLE_SELECT_WITH_ORDER:
-					for each(opt in customfield.optionsArray) {		
-						item = new CustomFieldOption();
-						item.value = opt.value;
-						item.index = Number(opt.index);
-						item.selected = false;
-						item.customfield = customfield;
-						dp.addItem(item);
+					if(vo) {
+						customfield.optionsArray.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleListChange);
+						for each(item in customfield.optionsArray.source) 		
+							item.vo = vo;						
 					}	
 					if(vo && vo[customfield.name] && vo[customfield.name].toString() != '')
 					{
-						for each(item in dp)
-							item.vo = vo;
 						selected = vo[customfield.name].toString().split(',');
 						for each(index in selected)
 						{
-							item = dp.getItemAt(Number(index)-1) as CustomFieldOption;
+							item = customfield.optionsArray.getItemAt(Number(index)-1) as CustomFieldOption;
 							item.selected = true;
 							summary += item.value+', ';
 						}
@@ -319,7 +304,7 @@ package org.mig.utils
 					//child.percentHeight = 100;
 					child.percentWidth = 100;
 					List(child).styleName = 'customFieldsList';
-					List(child).dataProvider = dp;
+					List(child).dataProvider = customfield.optionsArray;
 					List(child).labelField = "value";
 					List(child).allowMultipleSelection = true;
 					List(child).dragMoveEnabled = true;
@@ -327,8 +312,6 @@ package org.mig.utils
 					List(child).dropEnabled = true;
 					optionRenderer = new ClassFactory(CustomFieldListCheckBox);	
 					List(child).itemRenderer = optionRenderer;
-					if(vo)
-						dp.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleListChange);
 				break;							
 			}
 			if(child) {
@@ -397,7 +380,7 @@ package org.mig.utils
 			}
 		}	
 		private static function handleListChange(event:CollectionEvent):void {
-			var list:ArrayCollection = event.target as ArrayCollection;
+			var list:ArrayList = event.target as ArrayList;
 			var item:CustomFieldOption = list.getItemAt(0) as CustomFieldOption;
 			var customfield:CustomField = item.customfield;
 			var vo:ValueObject = item.vo;
@@ -444,7 +427,7 @@ package org.mig.utils
 				break; 
 				
 				case CustomFieldTypes.SELECT:
-					for each(option in customfield.optionsArray) {
+					for each(option in customfield.optionsArray.source) {
 						if(option.index.toString() == vo[customfield.name]) {
 							DropDownList(child).selectedItem = option;
 							break;

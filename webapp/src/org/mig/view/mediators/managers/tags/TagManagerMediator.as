@@ -279,8 +279,7 @@ package org.mig.view.mediators.managers.tags
 			term.parentid = currentTerm.id;
 			term.updateData.parentid = currentTerm.id;
 			view.categoriesView.categoryList.invalidateList();
-			view.categoriesView.categoryList.expandItem(currentTerm,true);
-			
+			view.categoriesView.categoryList.expandItem(currentTerm,true);			
 		}
 		private function checkCudCount():void {
 			cudCount++;

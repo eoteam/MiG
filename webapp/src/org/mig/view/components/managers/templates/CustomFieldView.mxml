@@ -11,6 +11,7 @@
 			import mx.core.IVisualElement;
 			import mx.events.FlexEvent;
 			
+			import org.mig.collections.DataCollection;
 			import org.mig.model.vo.ValueObject;
 			import org.mig.model.vo.app.CustomField;
 			import org.mig.model.vo.app.CustomFieldOption;
@@ -28,34 +29,46 @@
 				generateCustomField();
 				optionsList.addEventListener("addCustomField",handleAddCustomField);
 				optionsList.addEventListener("removeCustomField",handleRemoveCustomField);
-			}			
+				optionsList.addEventListener("changeCustomField",updateOptions);
+			}	
+			private function updateOptions(event:Event=null):void {
+				_customfield.updateData.options = _customfield.options;
+				var col:DataCollection = List(owner).dataProvider as DataCollection;
+				
+				if(col.modifiedItems.getItemIndex(_customfield) == -1 && col.deletedItems.getItemIndex(_customfield) == -1)
+					DataCollection(List(owner).dataProvider).modifiedItems.addItem(_customfield);
+			}
 			private function handleAddCustomField(event:Event):void {
 				event.target.enableAddButton=false;
-				var dp:IList = optionsList.dataProvider;
 				var item:CustomFieldOption = new CustomFieldOption();
-				dp.addItem(item);
-				item.index =  dp.length;
-				item.value = '';
-				item.customfield = this.data as CustomField;
+				_customfield.optionsArray.addItem(item);
+				_defaultValueField.optionsArray.addItem(item);
+				item.index =  _customfield.optionsArray.length;
+				item.value = 'new';
+				item.customfield = this.data as CustomField;	
 				
+				_customfield.updateData.options = _customfield.options;
 				var lastOption:CustomFieldOptionRenderer = optionsList.dataGroup.getElementAt(0) as CustomFieldOptionRenderer;
 				lastOption.enableRemoveButton = true;	
 				optionsList.invalidateDisplayList();
+				updateOptions();
 			}
 			private function handleRemoveCustomField(event:Event):void {
-				var dp:IList = optionsList.dataProvider;
-				dp.removeItemAt(dp.getItemIndex(event.target.data));
+				_defaultValueField.optionsArray.removeItemAt(_defaultValueField.optionsArray.getItemIndex(event.target.data));
+				_customfield.optionsArray.removeItemAt(_customfield.optionsArray.getItemIndex(event.target.data));
+				_customfield.updateData.options = _customfield.options;
 				optionsList.invalidateDisplayList();
 				var lastOption:CustomFieldOptionRenderer;
-				if(dp.length == 1) {
+				if(_customfield.optionsArray.length == 1) {
 					lastOption =  optionsList.dataGroup.getElementAt(0) as CustomFieldOptionRenderer;
 					lastOption.enableAddButton = true;
 					lastOption.enableRemoveButton = false;
 				}
 				else {
-					lastOption = optionsList.dataGroup.getElementAt(dp.length-1) as CustomFieldOptionRenderer;
+					lastOption = optionsList.dataGroup.getElementAt(_customfield.optionsArray.length-1) as CustomFieldOptionRenderer;
 					lastOption.enableAddButton = true;
 				}
+				updateOptions();
 			}
 			public function set vo(value:ValueObject):void {
 				_customfield = value as CustomField;
@@ -110,7 +123,7 @@
 					}
 				}
 				if(listMode) {
-					optionsList.dataProvider = new ArrayList(_customfield.optionsArray);
+					optionsList.dataProvider = _customfield.optionsArray;
 					if(optionsList.dataProvider.length == 0) {
 						var defaultOption:CustomFieldOption = new CustomFieldOption();
 						defaultOption.value = "default";
@@ -118,6 +131,7 @@
 						defaultOption.customfield = this._customfield;
 						optionsList.dataProvider.addItem(defaultOption);
 						List(element).dataProvider.addItem(defaultOption);
+						_customfield.options = _defaultValueField.options = "1=default";
 					}
 				}
 			}
@@ -125,11 +139,13 @@
 				owner.dispatchEvent(new ContentViewEvent(ContentViewEvent.CUSTOMFIELD_DRAG_START));
 				blinkEffect.play();
 			}
-
-			protected function button1_clickHandler(event:MouseEvent):void
-			{
+			private function button1_clickHandler(event:MouseEvent):void {
 				var dp:IList = List(this.owner).dataProvider;
 				dp.removeItemAt(dp.getItemIndex(this.data));
+			}
+			private function handleNameChange(event:Event):void {
+				_customfield.displayname = nameInput.text;
+				_customfield.name = GlobalUtils.sanitizeString(nameInput.text);	
 			}
 
 		]]>
@@ -149,7 +165,7 @@
    
 	<s:HGroup gap="4" verticalAlign="top" id="holder" width="100%" paddingBottom="4" paddingTop="4" paddingLeft="4" paddingRight="4">
 		
-		<s:TextInput styleName="inputFieldBlack" id="nameInput"  text="{_customfield.name}" width="180" change="_customfield.name=nameInput.text" />
+		<s:TextInput styleName="inputFieldBlack" id="nameInput"  text="{_customfield.displayname}" width="180" change="handleNameChange(event)" />
 		<s:Rect width="1" height="100%">
 			<s:fill>
 				<s:SolidColor color="0"/>

@@ -1,5 +1,7 @@
 package org.mig.model.vo.app
 {
+	import mx.collections.ArrayList;
+	
 	import org.mig.model.vo.ContentData;
 
 	[Bindable]
@@ -17,7 +19,7 @@ package org.mig.model.vo.app
 		public var typeid:int;
 		public var name:String;
 		public var displayname:String;
-		public var optionsArray:Array = [];
+		public var optionsArray:ArrayList = new ArrayList();
 		public var defaultvalue:String = "";
 		public var description:String = "";
 		
@@ -28,13 +30,17 @@ package org.mig.model.vo.app
 			var tmp:Array = ops.split(',');
 			for each(var op:String in tmp) {
 				var tokens:Array = op.split('=');
-				optionsArray.push({index:tokens[0],value:tokens[1]});
+				var option:CustomFieldOption = new CustomFieldOption();
+				option.customfield = this;
+				option.index = Number(tokens[0]);
+				option.value = tokens[1];
+				optionsArray.addItem(option);
 			}
 		}
 		public function get options():String {
 			var result:String = '';
-			for each(var item:Object in optionsArray) {
-				result += (optionsArray.indexOf(item)+1).toString()+'='+item.value + ',';
+			for each(var item:CustomFieldOption in optionsArray.source) {
+				result += (optionsArray.getItemIndex(item)+1).toString()+'='+item.value + ',';
 			}
 			result = result.substring(0,result.length-1);
 			return result;

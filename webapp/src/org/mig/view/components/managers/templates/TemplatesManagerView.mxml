@@ -18,7 +18,7 @@
 	<s:HGroup width="100%" id="header" verticalAlign="middle" gap="2" clipAndEnableScrolling="false">
 		<s:Label styleName="boldCopy"  width="100%" text="Templates Manager" />
 		<s:Rect width="100%"/>
-		<s:Button id="submitButton" styleName="defaultGrayButton" label="Save Changes" click="this.visible=false" enabled="false"/>
+		<s:Button id="submitButton" styleName="defaultGrayButton" label="Save Changes"  enabled="false"/>
 		<s:Button id="closeButton" styleName="defaultGrayButton" label="Close" click="this.visible=false"/>
 	</s:HGroup>
 	<s:Rect height="4" />

@@ -13,26 +13,31 @@
 			import org.mig.model.vo.app.CustomFieldOption;
 			
 			import spark.components.List;
+			import spark.events.TextOperationEvent;
 			
 			[Bindable] public var enableAddButton:Boolean = false;
 			[Bindable] public var enableRemoveButton:Boolean = true;
 			
 			override public function set data(value:Object):void {
 				super.data = value;
-				if(data && data.index == List(owner).dataProvider.length)
-					enableAddButton = true;
-				else
-					enableAddButton = false;
-				if(List(owner).dataProvider.length == 1) {
-					enableRemoveButton = false;
+				if(data) {
+					if(data.index == List(owner).dataProvider.length)
+						enableAddButton = true;
+					else
+						enableAddButton = false;
+					if(List(owner).dataProvider.length == 1)
+						enableRemoveButton = false;
 				}
 			}
-
-			protected function button1_clickHandler(event:MouseEvent):void {
+			private function button1_clickHandler(event:MouseEvent):void {
 				this.dispatchEvent(new Event("removeCustomField",true));
 			}
-			protected function addButton_clickHandler(event:MouseEvent):void {
+			private function addButton_clickHandler(event:MouseEvent):void {
 				this.dispatchEvent(new Event("addCustomField",true));
+			}
+			private function textinput1_changeHandler(event:TextOperationEvent):void {
+				data.value = input.text;
+				this.dispatchEvent(new Event("changeCustomField",true));
 			}
 
 		]]>
@@ -40,7 +45,7 @@
 	<s:layout>
 		<s:HorizontalLayout  gap="2" />
 	</s:layout>
-		<s:TextInput width="100%" styleName="inputFieldBlack" text="{data.value}"/>
+		<s:TextInput id="input" width="100%" styleName="inputFieldBlack" text="{data.value}" change="textinput1_changeHandler(event)"/>
 		<s:Button label="-" click="button1_clickHandler(event)"  visible="{enableRemoveButton}" includeInLayout="{enableRemoveButton}"/>
 		<s:Button id="addButton" label="+" visible="{enableAddButton}" includeInLayout="{enableAddButton}" click="addButton_clickHandler(event)" />
 </s:ItemRenderer>

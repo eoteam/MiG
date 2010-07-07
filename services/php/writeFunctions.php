@@ -1,6 +1,61 @@
 <?php
 require_once "readFunctions.php";
-
+function updateCustomField($params) {
+	if(isset($params['tablename'])) {
+		
+		if(isset($params['id']) && isset($params['customfieldid']))
+		{
+			$columnsTermTaxArray = getTableColumns($params['tablename']);
+			$sendParams = array();
+			$sql = "UPDATE `term_taxonomy` SET ";
+			foreach ($params as $key=>$value)
+			{
+				if ($key != 'action' && $key != 'id' && $key != 'name' && $key != 'displayname' && 
+					$key != 'options' && $key != 'typeid' && $key != 'description')
+				{
+					if (in_array($key, $columnsTermTaxArray)) // checks for misspelling of field name
+					{
+						$sql .= $key . " = :".$key.", ";
+						$sendParams[$key] = processText($value);
+					}
+					else die("Unknown field name '$key'.");
+				}
+			}
+			$sql = substr($sql,0,strlen($sql)-2);
+			$sql .= " WHERE id = :id";
+			$sendParams['id'] = $params['id'];
+			if($result = queryDatabase($sql, $sendParams))
+			{
+				$columnsTermTaxArray = getTableColumns('customfields');
+				$sql  = " UPDATE `customfields` SET ";
+				foreach ($params as $key=>$value)
+				{
+					if ($key != 'action' && $key != 'id' && $key != 'customfieldid' && $key != 'displayorder' && 
+						$key != 'fieldid' )
+					{
+						if (in_array($key, $columnsTermTaxArray)) // checks for misspelling of field name
+						{
+							$sql .= $key . " = :".$key.", ";
+							$sendParams[$key] = processText($value);
+						}
+						else die("Unknown field name '$key'.");
+					}
+				}				
+				$sql .= " WHERE id = :customfield";
+				if($result = queryDatabase($sql, $sendParams)) {
+					sendSuccess();
+				} 
+				else die("Query Failed: " . $result->errorInfo());
+			
+			}	 
+			else die("Query Failed: " . $result->errorInfo());			
+		}
+		else die("No id or customfieldid provided");
+	}
+	else {
+		die("No tablename provided");
+	}
+}
 function updateTag($params) //!?
 {
 	/*

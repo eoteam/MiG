@@ -228,12 +228,12 @@ package org.mig.services
 			service.token.content = vo;
 		}
 		public function deleteContent(vo:ContentData,config:XML):void {
-		
 			var params:Object = new Object();
 			params.action = config.@deleteContent.toString();
 			if(ValidFunctions.FUNCTIONS_WITH_TABLENAME.indexOf(params.action) != -1)
-				params.tablename = config.@tablename.toString();
+					params.tablename = config.@tablename.toString();	
 			params.id = vo.id;
+			
 			//var classToUse:String = flash.utils.getQualifiedClassName(vo);
 			//var classRef:Class = flash.utils.getDefinitionByName(classToUse) as Class; 
 			//var resultClass:ClassFactory = new ClassFactory(classRef);

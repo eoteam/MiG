@@ -67,6 +67,11 @@
 			retrieveContent="getTerms"
 			updateContent="updateTag"
 			deleteContent="deleteTag" />
+		<customfields tablename="termtaxonomy_customfields" 
+			createContent="insertRecord" 
+			retrieveContent="getData"
+			updateContent="updateRecord"
+			deleteContent="deleteRecord"  />	
 	</manager>
 <!--	<manager id="customfieldsManager" name="Custom Fields">-->
 <!--		<child labelfield="name"-->
@@ -82,13 +87,18 @@
 			updateContent="updateRecord"
 			deleteContent="deleteRecord" 
 			createVerbose="true" />
+		<customfields tablename="template_customfields" 
+			createContent="insertRecord" 
+			retrieveContent="getData"
+			updateContent="updateCustomField"
+			deleteContent="deleteCustomField"/>	
 	</manager>	
 		<manager id="userManager" name="User">
 		<child labelfield="name"
 			createContent="insertRecord" 
 			retrieveContent="getData"
 			updateContent="updateRecord"
-			deleteContent="deleteRecord" />
+			deleteContent="deleteCustomField" />
 	</manager>	
 	<elements>
 		<tray type="RelatedContent" contentView="com.mapx.view.content.trays.LinkingTray"
