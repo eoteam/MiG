@@ -19,10 +19,12 @@ package org.mig.utils
 	import mx.core.IVisualElementContainer;
 	import mx.core.UIComponent;
 	import mx.events.CollectionEvent;
+	import mx.events.DragEvent;
 	import mx.events.FlexEvent;
 	import mx.events.PropertyChangeEvent;
 	import mx.events.PropertyChangeEventKind;
 	import mx.formatters.DateFormatter;
+	import mx.managers.DragManager;
 	
 	import org.mig.model.AppModel;
 	import org.mig.model.UserModel;
@@ -80,10 +82,16 @@ package org.mig.utils
 			
 			var output:String = '';
 			if(input!= '')
-				output = input.replace(new RegExp("[^a-zA-Z 0-9]+", "g"), "").replace(new RegExp("\\s+","g"), "-").toLowerCase();
+				output = input.replace(new RegExp("[^a-zA-Z 0-9]+", "g"), "").replace(new RegExp("\\s+","g"), "_").toLowerCase();
 			return output;
 		}
-		
+		public static function createSlug(input:String):String {
+			
+			var output:String = '';
+			if(input!= '')
+				output = input.replace(new RegExp("[^a-zA-Z 0-9]+", "g"), "").replace(new RegExp("\\s+","g"), "-").toLowerCase();
+			return output;
+		}		
 		
 		public static function tranlateSize(size:Number):String {
 			var label:String = '';
@@ -310,6 +318,8 @@ package org.mig.utils
 					List(child).dragMoveEnabled = true;
 					List(child).dragEnabled = true;
 					List(child).dropEnabled = true;
+					List(child).addEventListener(DragEvent.DRAG_EXIT,checkDrag);
+					List(child).addEventListener(DragEvent.DRAG_ENTER,checkDrag);
 					optionRenderer = new ClassFactory(CustomFieldListCheckBox);	
 					List(child).itemRenderer = optionRenderer;
 				break;							
@@ -392,10 +402,10 @@ package org.mig.utils
 				if(prop.property != "vo") 
 					modified = true;
 			}
-			else if(event.kind == "remove" || event.kind == "move")
+			else if(event.kind == "add" || event.kind == "remove")
 				modified = true;
 			if(modified) {
-				for each(item in list) {
+				for each(item in list.source) {
 					if(item.selected) {	
 						ordereredItems += item.index + ',';
 						summary += item.value+', ';
@@ -412,6 +422,16 @@ package org.mig.utils
 		private static function handleListCreationComplete(event:FlexEvent):void {
 			List(event.target).dataGroup.clipAndEnableScrolling = false;
 		}
+		private static function checkDrag(event:DragEvent):void {
+			if(event.dragInitiator == event.target) {
+				DragManager.acceptDragDrop(event.target as List);
+			}
+			else {
+				event.preventDefault();
+				//event.target.hideDropFeedback(event);
+				DragManager.showFeedback(DragManager.NONE);
+			}
+		}
 		public static function populateCustomField(container:ICustomFieldView,child:UIComponent):void {
 			var option:Object;
 			var selected:Array;
@@ -420,6 +440,7 @@ package org.mig.utils
 			var index:String;
 			var customfield:CustomField = container.customfield;
 			var vo:ValueObject = container.vo;
+			var dp:ArrayList = customfield.optionsArray;
 			switch(customfield.typeid)
 			{
 				case CustomFieldTypes.BINARY:
@@ -452,21 +473,21 @@ package org.mig.utils
 				break;
 				
 				case CustomFieldTypes.MULTIPLE_SELECT:
-					for each(item in List(child).dataProvider)
+					for each(item in dp.source)
 						item.vo = vo;
 					if(vo[customfield.name].toString() != '')
 					{
 						selected = vo[customfield.name].toString().split(',');
 						for each(index in selected)
 						{
-							item = List(child).dataProvider.getItemAt(Number(index)-1) as CustomFieldOption;
+							item = dp.getItemAt(Number(index)-1) as CustomFieldOption;
 							item.selected = true;
 							summary += item.value+', ';
 						}
 						summary = summary.substring(0,summary.length-2);
 					}
 					else {
-						for each(item in List(child).dataProvider) 
+						for each(item in dp.source) 
 							item.selected = false;
 					}
 					break;
@@ -492,22 +513,22 @@ package org.mig.utils
 				break;	
 				
 				case CustomFieldTypes.MULTIPLE_SELECT_WITH_ORDER:
-					for each(item in List(child).dataProvider)
+					for each(item in dp.source)
 						item.vo = vo;
 					if(vo[customfield.name].toString() != '')
 					{
 						selected = vo[customfield.name].toString().split(',');
 						for each(index in selected)
 						{
-							item = List(child).dataProvider.getItemAt(Number(index)-1) as CustomFieldOption;
+							item = dp.getItemAt(Number(index)-1) as CustomFieldOption;
 							item.selected = true;
 							summary += item.value+', ';
 						}
 						summary = summary.substring(0,summary.length-2);
 					}	
 					else {
-						for each(item in List(child).dataProvider) 
-						item.selected = false;
+						for each(item in dp.source) 
+							item.selected = false;
 					}
 				break;	
 			}

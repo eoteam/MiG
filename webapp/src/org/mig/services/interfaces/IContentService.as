@@ -36,7 +36,7 @@ package org.mig.services.interfaces
 		
 		//refactor this later
 		function updateContent(vo:ContentData,config:XML,customfields:Array):void;
-		function createContent(vo:ContentData,config:XML,customfields:Array):void;
+		function createContent(vo:ContentData,config:XML,customfields:Array,status:Boolean=false):void;
 		function deleteContent(vo:ContentData,config:XML):void;
 	}
 }

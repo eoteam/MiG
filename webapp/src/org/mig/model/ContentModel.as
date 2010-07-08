@@ -22,7 +22,7 @@ package org.mig.model
 		public var currentContainer:ContainerNode;
 		public var templates:ArrayCollection;
 		public var templatesConfig:XML;
-		public var templatesCustomFields:ArrayCollection;
+		public var templatesCustomFields:DataCollection;
 		public var configEelements:XML;
 		public var defaultCreate:String;
 		public var defaultUpdate:String;
@@ -49,7 +49,7 @@ package org.mig.model
 			tagTerms = new DataCollection();
 			categoryTerms = []
 			categoryTermsFlat = new DataCollection();
-			templatesCustomFields = new ArrayCollection();
+			templatesCustomFields = new DataCollection();
 			tagTerms.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleTagTerms);
 			categoryTermsFlat.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleCategoryTerms);
 			categoriesCustomFields = [];
@@ -59,7 +59,7 @@ package org.mig.model
 				for each(var change:PropertyChangeEvent in event.items) {
 					var term:Term = change.source as Term;
 					if(change.property == "name")
-						term.slug = GlobalUtils.sanitizeString(term.name);
+						term.slug = GlobalUtils.createSlug(term.name);
 					if(!isNaN(term.termid))
 						term.updateData.termid = term.termid;
 				}
@@ -75,7 +75,7 @@ package org.mig.model
 				for each(var change:PropertyChangeEvent in event.items) {
 					var term:Term = change.source as Term;
 					if(change.property == "name")
-						term.slug = GlobalUtils.sanitizeString(term.name);
+						term.slug = GlobalUtils.createSlug(term.name);
 					if(!isNaN(term.termid))
 						term.updateData.termid = term.termid;
 				}
@@ -105,6 +105,10 @@ package org.mig.model
 				}
 			}
 			return MimeTypes.FILE;
+		}
+		
+		public function refreshTemplates():void {
+			
 		}
 	}
 }

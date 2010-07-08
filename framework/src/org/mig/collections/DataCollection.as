@@ -38,15 +38,22 @@ package org.mig.collections
 				var propChange:PropertyChangeEvent;
 				var item:ContentData; 
 				switch(CollectionEvent(event).kind) {
-					case "remove":
-						for each(item in items) 
+
+					case CollectionEventKind.REMOVE:
+						for each(item in items)  {
+						 	//add everything to deleted. wait for an add event to see if it was a move
 							deletedItems.addItem(item);
-						//this.dispatchEvent(new Event("stageChange",true));
+						}
+							//this.dispatchEvent(new Event("stageChange",true));
 					break;
 					case CollectionEventKind.ADD:
 						if(state > 0) {
-							for each(item in items) 
-							newItems.addItem(item);
+							for each(item in items)  {
+								if(deletedItems.getItemIndex(item) != -1) //just moved
+									deletedItems.removeItem(item);
+								else //otherwise its truly new item
+									newItems.addItem(item);
+							}
 							this.state = 1;
 							//this.dispatchEvent(new Event("stageChange",true));
 						}

@@ -30,14 +30,14 @@
 				}
 			}
 			private function button1_clickHandler(event:MouseEvent):void {
-				this.dispatchEvent(new Event("removeCustomField",true));
+				this.dispatchEvent(new Event("removeCustomFieldOpion",true));
 			}
 			private function addButton_clickHandler(event:MouseEvent):void {
-				this.dispatchEvent(new Event("addCustomField",true));
+				this.dispatchEvent(new Event("addCustomFieldOption",true));
 			}
 			private function textinput1_changeHandler(event:TextOperationEvent):void {
 				data.value = input.text;
-				this.dispatchEvent(new Event("changeCustomField",true));
+				this.dispatchEvent(new Event("changeCustomFieldOption",true));
 			}
 
 		]]>

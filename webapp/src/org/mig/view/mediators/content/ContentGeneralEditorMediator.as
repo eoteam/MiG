@@ -34,10 +34,10 @@ package org.mig.view.mediators.content
 			contentModel.templates.filterFunction = null;
 			contentModel.templates.refresh();
 			
-			var sort:Sort = new Sort();
-			sort.fields = [new SortField("displayorder",false,false,true)];
-			template.customfields.sort = sort;
-			template.customfields.refresh();
+			//var sort:Sort = new Sort();
+			//sort.fields = [new SortField("displayorder",false,false,true)];
+			//template.customfields.sort = sort;
+			//template.customfields.refresh();
 			for each(var field:CustomField in template.customfields)
 			{
 				var cfElement:CustomFieldElement = new CustomFieldElement();

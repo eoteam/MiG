@@ -1,8 +1,10 @@
 package org.mig.controller.startup
 {
+	import org.mig.collections.DataCollection;
 	import org.mig.events.AppEvent;
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
+	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.app.CustomField;
 	import org.mig.model.vo.content.Template;
 	import org.mig.services.interfaces.IAppService;
@@ -36,6 +38,7 @@ package org.mig.controller.startup
 				for each(var cf:CustomField in contentModel.templatesCustomFields) {
 					item.customfields.addItem(cf);
 				}
+				//item.customfields.state = DataCollection.COMMITED;
 			}
 			contentModel.templatesCustomFields.filterFunction = null;
 			contentModel.templatesCustomFields.refresh();

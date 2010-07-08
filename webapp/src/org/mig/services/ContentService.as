@@ -196,9 +196,10 @@ package org.mig.services
 			service.token.content = vo;
 			service.token.update = updateData;
 		}
-		public function createContent(vo:ContentData,config:XML,customfields:Array):void {
+		public function createContent(vo:ContentData,config:XML,customfields:Array,status:Boolean=false):void {
 			var updateData:UpdateData = vo.updateData;
 			var params:Object = new Object();
+			var service:XMLHTTPService
 			for (var prop:String in updateData) {
 				if(prop != "modified" && prop != "updateData" && prop != "mx_internal_uid")
 					params[prop] = updateData[prop];
@@ -220,10 +221,15 @@ package org.mig.services
 					}
 				}
 			}
-			var classToUse:String = flash.utils.getQualifiedClassName(vo);
-			var classRef:Class = flash.utils.getDefinitionByName(classToUse) as Class; 
-			//var resultClass:ClassFactory = new ClassFactory(classRef);
-			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,classRef,handleContentCreated);
+			if(!status) {
+				var classToUse:String = flash.utils.getQualifiedClassName(vo);
+				var classRef:Class = flash.utils.getDefinitionByName(classToUse) as Class; 
+				//var resultClass:ClassFactory = new ClassFactory(classRef);
+				service = this.createService(params,ResponseType.DATA,classRef,handleContentCreated);
+			}
+			else {
+				service = this.createService(params,ResponseType.STATUS,null,handleContentCreatedStatus);
+			}
 			service.service.showBusyCursor = true;
 			service.token.content = vo;
 		}
@@ -256,6 +262,13 @@ package org.mig.services
 				var result:ContentData = results[0] as ContentData;
 				var vo:ContentData = data.token.content as ContentData;
 				vo.id = results[0].id;
+				vo.updateData = new UpdateData();
+			}	
+		}
+		private function handleContentCreatedStatus(data:Object):void {
+			var result:StatusResult = data.result as StatusResult;
+			if(result.success) {
+				var vo:ContentData = data.token.content as ContentData;
 				vo.updateData = new UpdateData();
 			}	
 		}

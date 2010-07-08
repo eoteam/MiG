@@ -249,8 +249,8 @@ package org.mig.view.mediators.managers.tags
 			term.taxonomy = "category";
 			term.updateData.taxonomy = "category";
 			term.name = term.slug = 'new';
-			for each(var cf:Object in contentModel.categoriesCustomFields) {
-				term[cf.customfield.name] = '';
+			for each(var cf:CustomField in contentModel.categoriesCustomFields) {
+				term[cf.name] = '';
 			}
 			var currentTerm:Term = view.categoriesView.categoryList.selectedItem as Term;
 			if(currentTerm && currentTerm.parent) {
@@ -269,8 +269,8 @@ package org.mig.view.mediators.managers.tags
 			term.taxonomy = "category";
 			term.updateData.taxonomy = "category";
 			term.name = term.slug = 'new';
-			for each(var cf:Object in contentModel.categoriesCustomFields) {
-				term[cf.customfield.name] = '';
+			for each(var cf:CustomField in contentModel.categoriesCustomFields) {
+				term[cf.name] = '';
 			}
 			if(!currentTerm.children)
 				currentTerm.children = [];

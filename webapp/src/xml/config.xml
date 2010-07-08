@@ -88,7 +88,7 @@
 			deleteContent="deleteRecord" 
 			createVerbose="true" />
 		<customfields tablename="template_customfields" 
-			createContent="insertRecord" 
+			createContent="insertCustomField" 
 			retrieveContent="getData"
 			updateContent="updateCustomField"
 			deleteContent="deleteCustomField"/>	
