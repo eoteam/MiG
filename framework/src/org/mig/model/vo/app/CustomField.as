@@ -13,9 +13,6 @@ package org.mig.model.vo.app
 		public var fieldid:int;
 		public var displayorder:int;
 		
-		
-		public var isNew:Boolean = true;
-		
 		public var typeid:int;
 		public var name:String;
 		public var displayname:String;

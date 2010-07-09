@@ -8,7 +8,7 @@ package org.mig.events
 		public static const MANAGER_SELECTED:String = "managerSelected";
 		
 		public static const REFRESH_MEDIA:String = "refreshMedia";
-		//public static const REFRESH_CONTENT:String = "refreshContent";
+		public static const REFRESH_SELECTED_CONTENT:String = "refreshSelecedContent";
 		public static const VALIDATE_CONTENT:String = "validateContent";
 		
 		public static const FILE_DOWNLOAD_PROGRESS:String = "fileDownloadProgress";

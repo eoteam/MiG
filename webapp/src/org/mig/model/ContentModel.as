@@ -106,9 +106,5 @@ package org.mig.model
 			}
 			return MimeTypes.FILE;
 		}
-		
-		public function refreshTemplates():void {
-			
-		}
 	}
 }

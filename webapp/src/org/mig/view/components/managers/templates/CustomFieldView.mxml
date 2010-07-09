@@ -2,7 +2,7 @@
 <s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx" contentBackgroundAlpha="1" contentBackgroundColor="0x00000"
-		 implements="org.mig.view.interfaces.ICustomFieldView" autoDrawBackground="true"  focusEnabled="true"
+		 implements="org.mig.view.interfaces.ICustomFieldView" autoDrawBackground="false"  focusEnabled="true"
 		 xmlns:app="org.mig.model.vo.app.*" creationComplete="creationCompleteHandler(event)" 
 		 xmlns:templates="org.mig.view.components.managers.templates.*">
 	<fx:Script>
@@ -25,7 +25,7 @@
 			[Bindable] private var _customfield:CustomField;
 			[Bindable] private var _defaultValueField:CustomField;
 			[Bindable] private var typeSelectedIndex:int = -1;
-			private var element:UIComponent;
+			//private var element:UIComponent;
 			
 			private function creationCompleteHandler(event:FlexEvent):void {
 				generateCustomField();
@@ -35,13 +35,14 @@
 			}	
 			private function updateOptions(event:Event=null):void {
 				_customfield.updateData.options = _customfield.options;
-				var col:DataCollection = List(owner).dataProvider as DataCollection;
+				var col:IList = List(owner).dataProvider as ArrayList;
 				
-				if(col.modifiedItems.getItemIndex(_customfield) == -1 && col.deletedItems.getItemIndex(_customfield) == -1)
-					DataCollection(List(owner).dataProvider).modifiedItems.addItem(_customfield);
+				//if(col.modifiedItems.getItemIndex(_customfield) == -1 && col.deletedItems.getItemIndex(_customfield) == -1)
+				//	(List(owner).dataProvider).modifiedItems.addItem(_customfield);
 				
 				optionsList.invalidateDisplayList();
-				List(element).invalidateDisplayList();
+				
+				List(cfHolder.getElementAt(0)).invalidateDisplayList();
 			}
 			private function handleAddCustomField(event:Event):void {
 				event.target.enableAddButton=false;
@@ -50,17 +51,15 @@
 				_defaultValueField.optionsArray.addItem(item);
 				item.index =  _customfield.optionsArray.length;
 				item.value = 'new';
-				item.customfield = this.data as CustomField;	
-				
-				_customfield.updateData.options = _customfield.options;
+				item.customfield = _customfield;	
+				item.vo = _defaultValueField;
 				var lastOption:CustomFieldOptionRenderer = optionsList.dataGroup.getElementAt(0) as CustomFieldOptionRenderer;
 				lastOption.enableRemoveButton = true;	
 				updateOptions();
 			}
 			private function handleRemoveCustomField(event:Event):void {
-				_defaultValueField.optionsArray.removeItemAt(_defaultValueField.optionsArray.getItemIndex(event.target.data));
-				_customfield.optionsArray.removeItemAt(_customfield.optionsArray.getItemIndex(event.target.data));
-				_customfield.updateData.options = _customfield.options;
+				_customfield.optionsArray.removeItemAt(_defaultValueField.optionsArray.getItemIndex(event.target.data));
+				
 				var lastOption:CustomFieldOptionRenderer;
 				if(_customfield.optionsArray.length == 1) {
 					lastOption =  optionsList.dataGroup.getElementAt(0) as CustomFieldOptionRenderer;
@@ -85,7 +84,7 @@
 						var dv:CustomField = new CustomField();
 						dv.typeid = _customfield.typeid;
 						dv.name = "defaultvalue";
-						dv.options = _customfield.options;
+						dv.optionsArray = _customfield.optionsArray;
 						customfield = dv;
 					}
 				}
@@ -108,9 +107,10 @@
 			private function generateCustomField():void {
 				_defaultValueField.typeid = _customfield.typeid;
 				var tmp:Array = GlobalUtils.createCustomField(this);
+				var element:UIComponent;
 				if(tmp[0] != null) {
 					element = tmp[0] as UIComponent;
-					trace(_defaultValueField.typeid , _customfield.typeid, _customfield.displayname,element.className);
+					//trace(_defaultValueField.typeid , _customfield.typeid, _customfield.displayname,element.className);
 					cfHolder.addElement(element);
 					var listMode:Boolean = false;
 					switch(_customfield.typeid) {
@@ -134,13 +134,14 @@
 						var defaultOption:CustomFieldOption = new CustomFieldOption();
 						defaultOption.value = "default";
 						defaultOption.index = 1;
-						defaultOption.customfield = this._customfield;
+						defaultOption.customfield = _defaultValueField;
+						defaultOption.vo = _customfield;
 						optionsList.dataProvider.addItem(defaultOption);
 						List(element).dataProvider.addItem(defaultOption);
 						_customfield.options = _defaultValueField.options = "1=default";
 					}
 				}
-				this.invalidateDisplayList();
+				//this.invalidateDisplayList();
 			}
 			private function handleDragButton(event:MouseEvent):void {
 				owner.dispatchEvent(new ContentViewEvent(ContentViewEvent.CUSTOMFIELD_DRAG_START));

@@ -6,12 +6,14 @@ package org.mig.view.mediators.managers.templates
 	import mx.events.CollectionEvent;
 	import mx.events.CollectionEventKind;
 	import mx.events.DragEvent;
+	import mx.events.FlexEvent;
 	
 	import org.flexunit.internals.builders.NullBuilder;
 	import org.mig.collections.DataCollection;
 	import org.mig.controller.startup.AppStartupStateConstants;
 	import org.mig.events.AppEvent;
 	import org.mig.events.NotificationEvent;
+	import org.mig.events.ViewEvent;
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
 	import org.mig.model.vo.app.CustomField;
@@ -25,11 +27,12 @@ package org.mig.view.mediators.managers.templates
 	import org.robotlegs.mvcs.Mediator;
 	import org.robotlegs.utilities.statemachine.StateEvent;
 	
+	import spark.components.supportClasses.ItemRenderer;
 	import spark.events.IndexChangeEvent;
 	
 	public class TemplatesManagerMediator extends Mediator
 	{
-		[Inject]
+		[Inject]	
 		public var view:TemplatesManagerView;
 		
 		[Inject]
@@ -41,9 +44,12 @@ package org.mig.view.mediators.managers.templates
 		[Inject]
 		public var contentService:IContentService;
 		
+		private var previouslySelectedTemplate:Template;
+		
 		override public function onRegister():void {
 			eventMap.mapListener(eventDispatcher,StateEvent.ACTION,handleTemplatesLoaded);
 			eventMap.mapListener(eventDispatcher,AppEvent.CONFIG_FILE_LOADED,handleConfigLoaded,AppEvent);
+			
 			
 			view.customFieldTypes = CustomFieldTypes.TYPES;
 			view.templateList.addEventListener(IndexChangeEvent.CHANGE,handleTemplateList);
@@ -56,6 +62,14 @@ package org.mig.view.mediators.managers.templates
 			
 			view.cfList.addEventListener(ContentViewEvent.CUSTOMFIELD_DRAG_START,handleDragStart);
 			view.cfList.addEventListener(DragEvent.DRAG_COMPLETE,handleListDragDrop);			
+			view.addEventListener(FlexEvent.HIDE,handleHide);
+			view.addEventListener(FlexEvent.SHOW,handleShow);
+		}
+		private function handleHide(event:FlexEvent):void {
+			previouslySelectedTemplate = view.templateList.selectedItem as Template;
+		}
+		private function handleShow(event:FlexEvent):void {
+			view.templateList.selectedItem = previouslySelectedTemplate
 		}
 		private function handleConfigLoaded(event:AppEvent):void {
 			view.name = contentModel.templatesConfig.@name.toString();
@@ -104,12 +118,17 @@ package org.mig.view.mediators.managers.templates
 		}
 		private function enableSubmit(event:Event=null):void {
 			view.submitButton.enabled = true;
+			if(event && event.target is ItemRenderer) {
+				var field:CustomField = view.cfList.selectedItem as CustomField;
+				if(contentModel.templatesCustomFields.modifiedItems.getItemIndex(field) == -1 && 
+				   contentModel.templatesCustomFields.deletedItems.getItemIndex(field) == -1)
+						contentModel.templatesCustomFields.modifiedItems.addItem(field);
+			}
 		}
 		private function handleAddButton(event:MouseEvent):void {
 			var template:Template = view.templateList.selectedItem as Template;
 			var templateCF:CustomField = new CustomField();
 			view.cfList.dataProvider.addItem(templateCF);
-			contentModel.templatesCustomFields.addItem(templateCF);
 			templateCF.templateid = template.id;
 			templateCF.displayorder = view.cfList.dataProvider.getItemIndex(templateCF)+1;
 		}
@@ -118,7 +137,7 @@ package org.mig.view.mediators.managers.templates
 		private function handleSubmitButton(event:MouseEvent):void {
 			cudTotal = cudCount = 0;
 			var customfield:CustomField;
-			var selectedTemplate:Template = view.templateList.selectedItem as Template;
+			//var selectedTemplate:Template = view.templateList.selectedItem as Template;
 			var time:Number = Math.round((new Date().time/1000));
 			for each(customfield in  contentModel.templatesCustomFields.deletedItems.source) {
 				cudTotal++;
@@ -155,7 +174,7 @@ package org.mig.view.mediators.managers.templates
 				var selectedTemplate:Template = view.templateList.selectedItem as Template;
 				var ids:Array = status.message.split(',');
 				var field:CustomField = data.token.content as CustomField;
-				field.id = ids[0]; field.customfieldid = ids[1];
+				field.id = ids[0]; field.customfieldid = ids[1]; field.fieldid = ids[2];
 				contentModel.templatesCustomFields.setItemNotModified(data.token.content as CustomField);
 			}	
 		}			
@@ -164,10 +183,7 @@ package org.mig.view.mediators.managers.templates
 			if(cudCount == cudTotal) {
 				eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Custom Fields updated successfully"));
 				view.submitButton.enabled = false;	
-				contentModel.refreshTemplates();
-				//view.categoriesView.selectedCategoryLabel.text = view.categoriesView.categoryList.selectedItem.name;
-				//view.categoriesView.categoryList.invalidateList();
-				//view.categoriesView.refresh();
+				eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_SELECTED_CONTENT));
 			}
 		}		
 	}

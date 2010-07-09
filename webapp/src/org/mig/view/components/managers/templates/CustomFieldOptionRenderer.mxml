@@ -30,7 +30,7 @@
 				}
 			}
 			private function button1_clickHandler(event:MouseEvent):void {
-				this.dispatchEvent(new Event("removeCustomFieldOpion",true));
+				this.dispatchEvent(new Event("removeCustomFieldOption",true));
 			}
 			private function addButton_clickHandler(event:MouseEvent):void {
 				this.dispatchEvent(new Event("addCustomFieldOption",true));

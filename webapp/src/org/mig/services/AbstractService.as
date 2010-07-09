@@ -34,7 +34,6 @@
 		protected function result(event:ResultEvent):void {
 			if(event.token.resultCallBack) {
 				event.token.resultCallBack(event);
-				//
 			}
 			delete services[event.token.id];
 		}

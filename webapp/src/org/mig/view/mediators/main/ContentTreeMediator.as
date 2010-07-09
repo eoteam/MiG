@@ -18,16 +18,16 @@ package org.mig.view.mediators.main
 	import org.mig.model.ContentModel;
 	import org.mig.model.vo.ContentData;
 	import org.mig.model.vo.ContentNode;
-	import org.mig.model.vo.app.StatusResult;
 	import org.mig.model.vo.UpdateData;
-	import org.mig.model.vo.content.ContainerNode;
+	import org.mig.model.vo.app.StatusResult;
 	import org.mig.model.vo.content.ContainerData;
+	import org.mig.model.vo.content.ContainerNode;
 	import org.mig.services.interfaces.IContentService;
 	import org.mig.utils.GlobalUtils;
 	import org.mig.view.components.main.ContentTree;
+	import org.mig.view.components.main.ContentTreeRenderer;
 	import org.mig.view.components.main.SystemPopup;
 	import org.mig.view.events.ContentViewEvent;
-	import org.mig.view.components.main.ContentTreeRenderer;
 	import org.robotlegs.mvcs.Mediator;
 	import org.robotlegs.utilities.statemachine.StateEvent;
 
@@ -48,7 +48,8 @@ package org.mig.view.mediators.main
 			eventMap.mapListener(eventDispatcher,ViewEvent.DELETE_CONTAINERS,deleteItems);
 			eventMap.mapListener(eventDispatcher,ViewEvent.ENABLE_CONTENT_TREE,enableTree);
 			eventMap.mapListener(eventDispatcher,ViewEvent.VALIDATE_CONTENT,validateContent);
-		
+			eventMap.mapListener(eventDispatcher,ViewEvent.REFRESH_SELECTED_CONTENT,refreshSelectedContent);
+			
 			eventMap.mapListener(eventDispatcher,ContentEvent.SELECT,handleSelectedContent);
 			addListeners();
 			addContextMenu();
@@ -199,6 +200,11 @@ package org.mig.view.mediators.main
 		}
 		private function handleDeleteSelection(event:Event):void {
 			eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.DELETE,itemsToDelete));
+		}
+		private function refreshSelectedContent(event:ViewEvent):void {
+			var selectedNode:ContainerNode = view.selectedItem as ContainerNode
+			if(selectedNode)
+				eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.SELECT,selectedNode));
 		}
 		private function handleSelectedContent(event:ContentEvent):void {
 			var container:ContainerNode = event.args[0] as ContainerNode;

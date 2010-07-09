@@ -54,9 +54,6 @@
 			}
 		]]>
 	</fx:Script>
-	<fx:Declarations>
-		<mx:DateFormatter id="dateFormatter"  formatString="MM/DD/YY"/>	
-	</fx:Declarations>
 	<s:Label width="150" styleName="boldCopy" text="{headerLabel}" />
 </s:HGroup>
 <!-- 

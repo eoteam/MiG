@@ -1,12 +1,6 @@
 package org.mig.view.mediators.content
 {
-	import mx.collections.ArrayCollection;
-	import mx.collections.Sort;
-	import mx.collections.SortField;
-	
-	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
-	import org.mig.model.vo.ContentData;
 	import org.mig.model.vo.UpdateData;
 	import org.mig.model.vo.ValueObject;
 	import org.mig.model.vo.app.CustomField;
@@ -38,7 +32,7 @@ package org.mig.view.mediators.content
 			//sort.fields = [new SortField("displayorder",false,false,true)];
 			//template.customfields.sort = sort;
 			//template.customfields.refresh();
-			for each(var field:CustomField in template.customfields)
+			for each(var field:CustomField in template.customfields.source)
 			{
 				var cfElement:CustomFieldElement = new CustomFieldElement();
 				cfElement.customfield = field;
