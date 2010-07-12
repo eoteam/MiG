@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" 
+				autoDrawBackground="false" focusEnabled="true" height="28" creationComplete="itemrenderer1_creationCompleteHandler(event)">
+	
+	
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.DataGrid;
+			import mx.controls.dataGridClasses.DataGridListData;
+			import mx.controls.listClasses.BaseListData;
+			import mx.events.DataGridEvent;
+			import mx.events.FlexEvent;
+			
+			import org.mig.view.controls.MiGDataGrid;
+			
+			import spark.components.List;
+			
+			[Bindable] public var isPassword:Boolean = false;	         
+			[Bindable] public var textColor:Number = 0xffffff;
+			[Bindable] public var fieldStyleName:String = "inputFieldGray";
+			[Bindable] private var cellValue:String; 
+			[Bindable] public var enabledField:String;
+			
+			public var colorEnabled:Boolean = false;
+			private var doFocus:Boolean = true;
+			override public function set data(value:Object):void {  
+				super.data = value;
+				if(value != null) {
+					cellValue = value[List(owner).labelField];
+					if(colorEnabled && data.id == 0)
+						textColor = 0x666666;
+					else
+						textColor = 0xffffff;
+					if(input && doFocus) {
+						input.setFocus();
+						if(cellValue)
+							input.selectRange(cellValue.length,cellValue.length);
+					}
+				} 
+			}
+			private function handleValueChange():void {
+				data[List(owner).labelField] = input.text;
+			}
+/* 			override protected  function getCurrentRendererState():String {
+				if(data.editing == true) {
+					if(input) {
+						input.setFocus();
+					}
+					if (selected && hasState("selected"))
+						return "selectedAndEditing";
+					
+					if (hovered && hasState("hovered"))
+						return "hoveredAndEditing";
+					
+					if (hasState("normal"))    
+						return "normalAndEditing";
+					
+					// If none of the above states are defined in the item renderer,
+					// we return the empty string. This means the user-defined renderer
+					// will display but essentially be non-interactive visually. 
+					return null;
+				}
+				else 
+					return super.getCurrentRendererState();
+			} */
+			private function toggleEditing(event:KeyboardEvent):void {
+				if(event.keyCode == Keyboard.ENTER) {
+					input.editable = !input.editable;
+					input.setStyle("contentBackgroundAlpha",input.editable?1:0);
+				}
+			}
+			private function finishEdting(event:Event):void {
+				input.editable = false;
+				input.setStyle("contentBackgroundAlpha",0);
+			}
+
+
+			protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
+			{
+				addEventListener(KeyboardEvent.KEY_DOWN,toggleEditing);
+			}
+
+		]]>
+	</fx:Script>
+	<s:states>
+		<s:State name="normal" stateGroups="normalStates" />            
+		<s:State name="hovered" stateGroups="hoveredStates" />
+		<s:State name="selected" stateGroups="selectedStates" />	
+	</s:states>
+
+	<s:Rect top="0" bottom="0" left="0" right="0">
+		<s:fill>
+			<s:SolidColor color="0xED1C58" alpha.hoveredStates="0.5" alpha.selectedStates="0.5" alpha="0"/>
+		</s:fill>
+	</s:Rect>	
+	<s:TextInput id="input" top="0" left="0" right="0" bottom="0"  styleName="{fieldStyleName}"
+	change="handleValueChange()"   verticalCenter="0"
+	editable="false" 
+	contentBackgroundAlpha="0"  focusOut="finishEdting(event)"
+	displayAsPassword="{isPassword}"  text="{cellValue}" color="{textColor}"  
+	borderVisible="false" fontFamily="Transit-Bold" fontSize="16"/>
+
+	
+</s:ItemRenderer>
