@@ -44,7 +44,7 @@
 		protected function createService(params:Object,responseType:String,decodeClass:Class=null,
 										 resultFunction:Function=null,faultFunction:Function=null):XMLHTTPService {
 		
-			var id:String = GUID.create();
+			//var id:String = GUID.create();
 			var service:XMLHTTPService = new XMLHTTPService(url,params,responseType,decodeClass);
 			services.push(service);
 			service.execute();
@@ -60,6 +60,10 @@
 			var service:XMLHTTPService = services[services.length-1];
 			service.token.resultCallBack = resultHandler;
 			service.token.faultCallBack = faultHandler;
+		}
+		public function addProperties(prop:String,value:*):void {
+			var service:XMLHTTPService = services[services.length-1];
+			service.token[prop] = value;
 		}
 /*		protected function getService(id:String):XMLHTTPService {
 			return services[id] as XMLHTTPService;

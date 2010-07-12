@@ -23,6 +23,7 @@ package org.mig.view.mediators.managers.templates
 	import org.mig.model.vo.app.CustomFieldTypes;
 	import org.mig.model.vo.app.StatusResult;
 	import org.mig.model.vo.content.Template;
+	import org.mig.services.interfaces.IAppService;
 	import org.mig.services.interfaces.IContentService;
 	import org.mig.utils.GlobalUtils;
 	import org.mig.view.components.managers.templates.CustomFieldView;
@@ -47,6 +48,9 @@ package org.mig.view.mediators.managers.templates
 		
 		[Inject]
 		public var contentService:IContentService;
+		
+		[Inject]
+		public var appService:IAppService;
 		
 		private var previouslySelectedTemplate:Template;
 		
@@ -81,13 +85,11 @@ package org.mig.view.mediators.managers.templates
 						contentModel.templates.removeItemAt(contentModel.templates.getItemIndex(template));
 				}
 				break;
-				case "Rename":
-					if(view.templateList.selectedItem)
-						view.templateList.selectedItem.editing = true;
-				break;
 				case "Duplicate":
-					for each(template in view.templateList.selectedItems) 
-						contentModel.templates.removeItemAt(contentModel.templates.getItemIndex(template));
+					for each(template in view.templateList.selectedItems)  {
+						appService.duplicateObject(template,contentModel.templatesConfig.child[0],"templateid","template_customfields");
+						appService.addHandlers(handleDuplicated);
+					}
 				break;
 				case "Add":
 					template = new Template();
@@ -109,7 +111,7 @@ package org.mig.view.mediators.managers.templates
 			if(event.action == AppStartupStateConstants.LOAD_TEMPLATES_COMPLETE) {
 				view.templateList.dataProvider = contentModel.templates;
 				contentModel.templates.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleTemplatesChanged);
-				GlobalUtils.createContextMenu(["Add","Remove","Rename","Duplicate"],menuItemSelectHandler,null,[view.templateList]);		
+				GlobalUtils.createContextMenu(["Add","Remove","Duplicate"],menuItemSelectHandler,null,[view.templateList]);		
 			}
 		}
 		private function handleTemplatesChanged(event:CollectionEvent):void {
@@ -147,8 +149,11 @@ package org.mig.view.mediators.managers.templates
 					}
 				}
 			}
-			item = view.templateList.selectedItem as Template;
+			item = view.templateList.dataProvider.getItemAt(event.newIndex) as Template;
 			view.cfList.dataProvider = item.customfields;
+			
+			view.cfList.invalidateDisplayList();
+			view.cfList.invalidateProperties();
 			view.callLater(addChangeListener);
 		}
 		private function addChangeListener():void {
@@ -292,5 +297,38 @@ package org.mig.view.mediators.managers.templates
 				eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_SELECTED_CONTENT));
 			}
 		}		
+		private function handleDuplicated(data:Object):void {
+			var status:StatusResult = data.result as StatusResult;
+			var template:Template = data.token.vo as Template;
+			if(status.success) {
+				var id:int = Number(status.message);
+				var newTemplate:Template = new Template();
+				newTemplate.id = id;
+				newTemplate.name = template.name;
+				
+				contentService.loadRelatedCustomfields(contentModel.templatesConfig.customfields[0],{name:'templateid',value:id});
+				//contentService.retrieveContent(id,contentModel.templatesConfig.child[0],Template);
+				contentService.addHandlers(hanleDuplicatedRetrieve);
+				contentService.addProperties("template",newTemplate);
+			}
+		}
+		private function hanleDuplicatedRetrieve(data:Object):void {
+			var results:Array = data.result as Array;
+			var template:Template = data.token.template as Template;
+			if(results.length > 0) {
+				
+				for each(var result:CustomField in results) {
+					contentModel.templatesCustomFields.addItem(result);
+					contentModel.templatesCustomFields.setItemNotModified(result);
+					contentModel.templatesCustomFields.setItemNotNew(result);	
+					template.customfields.addItem(result);
+				}
+				contentModel.templates.addItem(template);
+				contentModel.templates.setItemNotNew(template);
+				contentModel.templates.setItemNotModified(template);
+				view.submitButton.enabled = false;
+				eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Template Manager updated successfully"));
+			}
+		}
 	}
 }

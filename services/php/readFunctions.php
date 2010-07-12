@@ -131,6 +131,7 @@ function getData ($params) {
 
 	if (isset($params['tablename'])) {
 
+			
 		$validParams = array("action","tablename","id","orderby","orderdirection");
 
 		$sql = "SELECT `".$params['tablename']."`.*";
@@ -385,7 +386,7 @@ function getContent($params)
 			$currentChildIDs = getChildren($id,$params['children_depth']);
 			$childids = array_merge($childids,$currentChildIDs);
 				
-			$sql2 = "SELECT COUNT(*) as count FROM `content` WHERE parentid = " .$id_new;
+			$sql2 = "SELECT COUNT(*) as count FROM `content` WHERE parentid = " .$id;
 			$result2 = queryDatabase($sql2);
 			$row2 = $result2->fetch(PDO::FETCH_ASSOC);
 			$childrencount[$id] = $row['count'];
@@ -441,9 +442,8 @@ function getContent($params)
 			  LEFT JOIN terms AS terms ON terms.id = term_taxonomy.termid
 			  LEFT JOIN templates ON templates.id = content.templateid ";		  
 
-
 	
-	$sql .= " LEFT JOIN ( SELECT parentid, COUNT(*) AS childrencount FROM `content` WHERE parentid IN (". $params['contentid'] .") AND `content`.`deleted` = '0' GROUP BY parentid
+		$sql .= " LEFT JOIN ( SELECT parentid, COUNT(*) AS childrencount FROM `content` WHERE parentid IN (". $params['contentid'] .") AND `content`.`deleted` = '0' GROUP BY parentid
 				  ) AS childrencount ON childrencount.parentid = content.id";
 
 	
@@ -937,17 +937,24 @@ function getTemplates($params) {
 
 }
 function getRelatedCustomFields($params) {
+	$validParams = array("action","tablename");
 	$sql = "SELECT " . $params["tablename"] . ".*, customfields.typeid, customfields.name, customfields.displayname, customfields.options, customfields.defaultvalue";
 	$sql .= " ,customfields.options, customfields.description FROM " . $params["tablename"];
 	
-	$sql .= " LEFT JOIN customfields ON customfields.id = " . $params["tablename"] . ".id";
-	//echo $sql;
+	$sql .= " LEFT JOIN customfields ON customfields.id = " . $params["tablename"] . ".customfieldid";
+	foreach ($params as $key=>$value) {
+		if (!in_array($key,$validParams)) {
+			$sql .= " AND " . $key . " = :".$key;
+			$sendParams[$key] = $value;
+		}
+	}
+		
+	$sql .= " ORDER BY displayorder";
 	$result = queryDatabase($sql);
 
 	// return the results
 	return $result;
 }
-
 function getContentTree($params)
 {
 	/*
@@ -1597,9 +1604,10 @@ function getTerms($params) {
 	$sendParams = array();
 	$validParams = array("action","tagid","contentid","include_unused");
 
+
 	$sql = "SELECT termtaxonomy_customfields.fieldid, customfields.name, customfields.displayname
 			FROM termtaxonomy_customfields 
- 			LEFT JOIN customfields ON customfields.id = termtaxonomy_customfields.customfieldid WHERE customfields.groupid = '2'";
+ 			LEFT JOIN customfields ON customfields.id = termtaxonomy_customfields.customfieldid	";
 
 	$result = queryDatabase($sql);
 	$customfields = array();
@@ -1623,10 +1631,11 @@ function getTerms($params) {
 	
 	// define the sql query
 
-	$sql = "SELECT"; 
+	$sql = "SELECT";	 
 	foreach ($customfields AS $key=>$value)
 		$sql .= " term_taxonomy.customfield".$key." AS ".$value.",";
-		
+
+	
 	$sql .= " terms.name,terms.slug,terms.name,terms.slug,term_taxonomy.id,term_taxonomy.parentid,term_taxonomy.termid,term_taxonomy.displayorder,term_taxonomy.taxonomy, 
 			GROUP_CONCAT(DISTINCT content_terms.contentid) AS contentids,
 			GROUP_CONCAT(DISTINCT content.migtitle) AS contenttitles,

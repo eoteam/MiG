@@ -17,6 +17,5 @@ package org.mig.model.vo
 		public var children:Array = [];
 		
 		public var modified:Boolean = false;
-		public var editing:Boolean = false;
 	}
 }

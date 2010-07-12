@@ -38,10 +38,13 @@ package org.mig.services
 		public function ContentService() {
 			
 		}
-		public function loadTemplatesCustomFields():void {
+		public function loadRelatedCustomfields(config:XML,...args):void {
 			var params:Object = new  Object();
 			params.action = ValidFunctions.GET_RELATED_CUSTOMFIELDS;
-			params.tablename = "template_customfields";
+			params.tablename = config.@tablename.toString();
+			for each(var prop:Object in args) {
+				params[prop.name] = prop.value;
+			}
 			this.createService(params,ResponseType.DATA,CustomField);				
 		}
 		public function loadTemplates():void {
@@ -61,12 +64,6 @@ package org.mig.services
 			params.action = contentModel.termsConfig.child[0].@retrieveContent.toString();
 			this.createService(params,ResponseType.DATA,Term)
 		}
-		public function loadCategoriesCustomFields():void {
-			var params:Object = new Object();
-			params.action = ValidFunctions.GET_RELATED_CUSTOMFIELDS;
-			params.tablename = "termtaxonomy_customfields";
-			this.createService(params,ResponseType.DATA,CustomField);
-		}
 		public function retrieveContentRoot():void {
 			var params:Object = new Object();
 			/*var contentConfig:XML 	= appModel.config.controller[1]; //XML(config.controller.(@id == "contentController"));
@@ -83,12 +80,15 @@ package org.mig.services
 			else if(content is SubContainerNode)
 				loadSubContainer(content);
 		}
-		public function retrieveVerbose(content:ContentNode):void {
+		public function retrieveContainer(content:ContentNode,verbose:Boolean=true):void {
 			if(content is ContainerNode) {
 				var params:Object = new Object();
 				params.action = ValidFunctions.GET_CONTENT;
 				params.contentid = content.data.id;
-				params.verbosity = 1;
+				if(verbose)
+					params.verbosity = 1;
+				else
+					params.verbosity = 0;
 				this.createService(params,ResponseType.DATA,ContainerData);
 			}
 		}
@@ -103,12 +103,12 @@ package org.mig.services
 			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
 			service.token.content = container;
 		}
-		public function duplicateContainer(container:ContainerNode):void {
+/*		public function duplicateContainer(container:ContainerNode):void {
 			var params:Object = new Object();
 			params.action = ValidFunctions.DUPLICATE_CONTENT;
 			params.id = container.data.id;
 			this.createService(params,ResponseType.DATA,ContainerData).token.content = container;
-		}
+		}*/
 		public function updateContainer(container:ContainerNode,update:UpdateData):void {
 			var params:Object = new Object();
 			for (var prop:String in update)
@@ -134,6 +134,13 @@ package org.mig.services
 			params.idfield = "id";
 			params.idvalues = ids;
 			this.createService(params,ResponseType.STATUS).token.containers = containers;
+		}
+		public function retrieveContent(id:int,config:XML,clazz:Class):void {
+			var params:Object = new Object();
+			params.action = config.@retriveContent.toString();
+			params.tablename = config.@tablename.toString();
+			params.id = id;
+			this.createService(params,ResponseType.DATA,clazz);
 		}
 		public function createContainer(title:String,config:XML):void {
 			var date:Date = new Date();
@@ -172,7 +179,7 @@ package org.mig.services
 			var updateData:UpdateData = vo.updateData;
 			var params:Object = new Object();
 			for (var prop:String in updateData) {
-				if(prop != "modified" && prop != "updateData" && prop != "editing")
+				if(prop != "modified" && prop != "updateData")
 					params[prop] = updateData[prop];
 			}
 			params.action = config.@updateContent.toString();
@@ -275,7 +282,7 @@ package org.mig.services
 		private function loadContainer(content:ContentNode):void {
 			var params:Object = new Object();
 			var execute:Boolean = false;			
-			if(ContainerNode(content).isRoot) { //Containers
+			if(ContainerNode(content).isRoot) { //Containers ?????
 				if(content.privileges ==  UserPrivileges.MiGAdmin)
 					params.parentid = "1,2";
 				else

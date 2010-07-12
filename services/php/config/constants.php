@@ -7,6 +7,7 @@
 
 require_once "filepath.php";
 
+$creationColumns = array('createdby','createdate','modifiedby','modifieddate');
 
 // VALID ACTION NAMES - FOR SECURITY!
 $validReadFunctions = array (
@@ -45,7 +46,10 @@ $validWriteFunctions = array (
 "deleteContent",
 "deleteMediaByPath",
 "duplicateContent",
-"updateCustomField"
+"updateCustomField",
+"deleteCustomField",
+"insertCustomField",
+"duplicateObject"
 );
 
 $validFileFunctions = array (

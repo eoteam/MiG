@@ -18,11 +18,15 @@ package org.mig.controller
 	import org.mig.model.vo.content.SubContainerNode;
 	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.services.ContentService;
+	import org.mig.services.interfaces.IAppService;
 	import org.mig.services.interfaces.IContentService;
 	import org.robotlegs.mvcs.Command;
 	
 	public class ContentCommand extends Command
 	{
+		[Inject]
+		public var appService:IAppService;		
+		
 		[Inject]
 		public var service:IContentService;
 		
@@ -44,7 +48,7 @@ package org.mig.controller
 				break;
 				
 				case ContentEvent.RETRIEVE_VERBOSE:
-					service.retrieveVerbose(event.args[0] as ContentNode);
+					service.retrieveContainer(event.args[0] as ContentNode);
 					service.addHandlers(handleLoadComplete);
 				break;
 				case ContentEvent.DELETE:
@@ -59,8 +63,9 @@ package org.mig.controller
 				case ContentEvent.DUPLICATE:
 					for each(var item:ContainerNode in event.args[0]) {
 					if(!item.isRoot && !item.isFixed) {
-						service.duplicateContainer(item);
-						service.addHandlers(handleDuplicate);
+						var tables:String = "content_media,content_content,content_users,content_terms,comments";
+						appService.duplicateObject(item.data,item.config,"contentid",tables);
+						appService.addHandlers(handleDuplicate);
 					}	
 				}
 				break;
@@ -93,12 +98,25 @@ package org.mig.controller
 			}
 		}
 		private function handleDuplicate(data:Object):void {
+			var status:StatusResult = data.result as StatusResult;
 			var node:ContainerNode = data.token.content as ContainerNode;
-			var contentData:ContainerData = data.result[0] as ContainerData;
-			
-			var newNode:ContainerNode = new ContainerNode(contentData.migtitle,node.config,contentData,node.parentNode,node.privileges,false,false,node.isNesting);
-			node.parentNode.children.addItemAt(newNode,0);
-			
+			if(status) {
+				var id:int = Number(status.message);
+				var contentData:ContainerData = new ContainerData();
+				contentData.id = id;	
+				var newNode:ContainerNode = new ContainerNode(node.baseLabel,node.config,contentData,node.parentNode,node.privileges,false,false,node.isNesting);
+				node.parentNode.children.addItemAt(newNode,0);
+				if(node.state == ContentNode.NOT_LOADED)
+					service.retrieveContainer(newNode,false);
+				else
+					service.retrieveContainer(newNode,true);
+				service.addHandlers(handleDuplicatedContentLoaded);
+			}
+		}
+		private function handleDuplicatedContentLoaded(data:Object):void {	
+			var node:ContainerNode = data.token.content as ContainerNode;
+			var contentData:ContainerData = data.result[0] as ContainerData;		
+			node.data = contentData;
 			eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Container duplicated successfully"));
 			//eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_CONTENT));
 			

@@ -58,7 +58,7 @@
 			<s:Label text="Default Value" width="100%" />
 		</s:HGroup>
 		<s:List width="100%" id="cfList" contentBackgroundAlpha="0"  requireSelection="false" allowMultipleSelection="true"  
-		dragMoveEnabled="true" borderVisible="false" useVirtualLayout="false">
+		dragMoveEnabled="true" borderVisible="false" useVirtualLayout="true">
 			<s:itemRenderer>
 				<fx:Component>
 					<templates:CustomFieldView width="100%" vo="{data}"  customFieldTypes="{outerDocument.customFieldTypes}"/>

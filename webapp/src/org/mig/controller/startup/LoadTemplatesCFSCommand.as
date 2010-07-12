@@ -22,7 +22,7 @@ package org.mig.controller.startup
 		public var contentModel:ContentModel;
 		
 		override public function execute():void {
-			service.loadTemplatesCustomFields();
+			service.loadRelatedCustomfields(contentModel.templatesConfig.customfields[0]);
 			service.addHandlers(handleTemplates);
 		}
 		private function handleTemplates(data:Object):void {

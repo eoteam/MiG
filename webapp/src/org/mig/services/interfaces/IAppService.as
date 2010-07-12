@@ -1,5 +1,7 @@
 package org.mig.services.interfaces
 {
+	import org.mig.model.vo.ValueObject;
+
 	public interface IAppService extends IService
 	{
 		function loadConfig():void;
@@ -11,5 +13,7 @@ package org.mig.services.interfaces
 		function loadCustomFieldGroups():void ;
 		
 		function loadColors():void;
+		
+		function duplicateObject(vo:ValueObject,config:XML,relatedField:String,relatedTables:String):void;
 	}
 }

@@ -1,21 +1,152 @@
 <?php
 require_once "readFunctions.php";
-function updateCustomField($params) {
+
+function insertCustomField($params) 
+{
+	global $creationColumns;
+	if (isset($params['tablename'])) {
+		
+		$columnsArray = getTableColumns($params['tablename']);
+		$cfColumnsArray = getTableColumns('customfields');	
+		$sendParams = array();
+		$sql = "INSERT INTO `customfields` ";
+		$sql .= "(";
+
+		foreach ($params as $key=>$value) {
+			if ($key != 'action' && $key != 'tablename' && in_array($key,$columnsArray) == false && in_array($key,$creationColumns) == false) {
+				if (in_array($key, $cfColumnsArray)) // checks for misspelling of field name
+					$sql .= $key . ",";
+				else die("Unknown field name '$key'.");
+			}
+		}
+
+		// remove last comma
+		$sql = substr($sql,0,strlen($sql)-1);
+		$sql .= ")";
+
+		// put values into SQL
+		$sql .= " VALUES (";
+
+		foreach ($params as $key=>$value) {
+			if ($key != 'action' && $key != 'tablename' && in_array($key,$columnsArray) == false ) {
+				$sql .= ":".$key.",";
+				$sendParams[$key] = processText($value);
+			}
+		}
+		// remove last comma
+		$sql = substr($sql,0,strlen($sql)-1);
+		$sql .=")";
+		
+		if ($result = queryDatabase($sql,$sendParams,$insertid)) {
+		
+			//find next fieldid
+			$sql = "SHOW COLUMNS FROM `content` where `Field` LIKE '%customfield%'";
+			$result = queryDatabase($sql);
+			$cfCount = $result->rowCount();
+			$cfIds = array();
+			$counter = 1;
+			while($counter <= $cfCount ) {
+				$cfIds[] = $counter;
+				$counter++;
+			}
+			$sql = "SELECT fieldid from `" . $params['tablename'] . "`";
+			$result = queryDatabase($sql);
+    		if ($result)
+    		{
+    			while ($row = $result->fetch(PDO::FETCH_OBJ))
+        		{
+        			if(in_array($row->fieldid,$cfIds)) {
+        				unset($cfIds[$row->fieldid-1]);
+        			}
+        		}
+    		}
+    		$fieldid = 	array_shift($cfIds);
+    			
+			$sendParams = array();
+			$sql = "INSERT INTO `".$params['tablename']."` ";
+			$sql .= "(";
+
+			foreach ($params as $key=>$value) {
+				if ($key != 'action' && $key != 'tablename' && in_array($key,$cfColumnsArray) == false ) {
+					if (in_array($key, $columnsArray)) // checks for misspelling of field name
+						$sql .= $key . ",";
+					else die("Unknown field name '$key'.");
+				}
+			}
+			$sql .= "customfieldid,fieldid";
+			$sql .= ")";
+
+			// put values into SQL
+			$sql .= " VALUES (";
+
+			foreach ($params as $key=>$value) {
+				if ($key != 'action' && $key != 'tablename' && in_array($key,$cfColumnsArray) == false ) {
+					$sql .= ":".$key.",";
+					$sendParams[$key] = processText($value);
+				}
+			}
+			$sql .= ":customfieldid, :fieldid)";
+			$sendParams['customfieldid'] = 	$insertid;
+			$sendParams['fieldid'] = $fieldid;
+			if ($result = queryDatabase($sql,$sendParams,$insertid2)) {
+				sendSuccess($insertid2.','.$insertid.','.$fieldid);
+			}
+			else die("Query Failed: " . $result->errorInfo());
+
+		}
+		else die("Query Failed: " . $result->errorInfo());
+	}
+	else 
+		die ("No id or tablename provided.");
+
+}
+function deleteCustomField($params) //+
+{
+	if(isset($params['id']) && isset($params['tablename']))
+	{
+		$sendParams = array();
+		$sql = "SELECT customfieldid FROM " . $params['tablename'] . "  WHERE id = :id";
+		$sendParams['id'] = $params['id'];
+		if($result = queryDatabase($sql, $sendParams)) {
+			
+			$row = $result->fetch(PDO::FETCH_OBJ);
+			$sql = "DELETE FROM customfields WHERE id = :id ";
+			$sendParams = array();
+			$sendParams['id'] = $row->customfieldid;
+			if($result = queryDatabase($sql,$sendParams))
+				sendSuccess();
+			else 
+				die("Query Failed: " . $result->errorInfo());
+		}
+		else 
+			die("Query Failed: " . $result->errorInfo());
+	} 
+	else 
+		die ("No id or tablename provided.");
+}
+
+function updateCustomField($params)
+{
+	global $creationColumns;
 	if(isset($params['tablename'])) {
 		
 		if(isset($params['id']) && isset($params['customfieldid']))
 		{
-			$columnsTermTaxArray = getTableColumns($params['tablename']);
+			$columnsArray = getTableColumns($params['tablename']);
+			$cfColumnsArray = getTableColumns('customfields');
+			//print_r($params) . "<br>";
+			//print_r($columnsArray) . "<br/>";
+			//print_r($cfColumnsArray) . "<br/>";
 			$sendParams = array();
-			$sql = "UPDATE `term_taxonomy` SET ";
+			$sql = "UPDATE ". $params['tablename']  ." SET ";
 			foreach ($params as $key=>$value)
 			{
-				if ($key != 'action' && $key != 'id' && $key != 'name' && $key != 'displayname' && 
-					$key != 'options' && $key != 'typeid' && $key != 'description')
+				if (!in_array($key,$cfColumnsArray) && $key != 'tablename' && $key != 'action' && $key != 'id')
 				{
-					if (in_array($key, $columnsTermTaxArray)) // checks for misspelling of field name
+					if (in_array($key, $columnsArray)) // checks for misspelling of field name
 					{
 						$sql .= $key . " = :".$key.", ";
+						
 						$sendParams[$key] = processText($value);
 					}
 					else die("Unknown field name '$key'.");
@@ -24,29 +155,35 @@ function updateCustomField($params) {
 			$sql = substr($sql,0,strlen($sql)-2);
 			$sql .= " WHERE id = :id";
 			$sendParams['id'] = $params['id'];
+			
 			if($result = queryDatabase($sql, $sendParams))
 			{
 				$columnsTermTaxArray = getTableColumns('customfields');
+				$sendParams = array();
 				$sql  = " UPDATE `customfields` SET ";
 				foreach ($params as $key=>$value)
 				{
-					if ($key != 'action' && $key != 'id' && $key != 'customfieldid' && $key != 'displayorder' && 
-						$key != 'fieldid' )
+					if ($key != 'tablename' && $key != 'action' && $key != 'id'  && !in_array($key,$creationColumns) && !in_array($key,$columnsArray) )
 					{
-						if (in_array($key, $columnsTermTaxArray)) // checks for misspelling of field name
+						if (in_array($key, $cfColumnsArray)) // checks for misspelling of field name
 						{
 							$sql .= $key . " = :".$key.", ";
 							$sendParams[$key] = processText($value);
 						}
-						else die("Unknown field name '$key'.");
+						else die("Unknown44 field name '$key'.");
 					}
-				}				
-				$sql .= " WHERE id = :customfield";
-				if($result = queryDatabase($sql, $sendParams)) {
-					sendSuccess();
-				} 
-				else die("Query Failed: " . $result->errorInfo());
-			
+				}
+				$sql = substr($sql,0,strlen($sql)-2);				
+				$sql .= " WHERE id = :id";
+				if(count($sendParams) > 0) {	
+					$sendParams['id'] = $params['customfieldid'];
+				
+					if($result = queryDatabase($sql, $sendParams)) {
+						sendSuccess();
+					} 
+					else die("Query Failed: " . $result->errorInfo());
+				}
+				else sendSuccess(); 
 			}	 
 			else die("Query Failed: " . $result->errorInfo());			
 		}
@@ -56,7 +193,7 @@ function updateCustomField($params) {
 		die("No tablename provided");
 	}
 }
-function updateTag($params) //!?
+function updateTag($params) 
 {
 	/*
 		* Script will attempt to update tag at table 'term_taxonomy' by id or at table 'terms' by termid
@@ -1035,7 +1172,71 @@ function processSlug($text)
 	}
 	return strtr(processText($text),$accents);
 }
+function duplicateObject($params)
+{
 
+	/*
+		* Script will attempt to duplicate a record (by content id) into table 'content'
+
+		** REQUIRED PARAMS
+		id - primary key of the record to duplicate
+		*/
+
+	// make sure we have a content id
+	if(isset($params['id']) && isset($params['tablename']))
+	{
+		$sendParams = array();
+		$sql = "SELECT ". $params["tablename"] .".* from `" . $params["tablename"] . "` WHERE id = :id";
+		$sendParams['id'] = $params['id'];
+		$result = queryDatabase($sql,$sendParams);
+		$row = $result->fetch(PDO::FETCH_ASSOC);
+
+		// valid  id
+		if ($row!=null) {
+
+			$sendParams = array();
+
+			$sql = "INSERT INTO `". $params["tablename"]."` ";
+
+			// put field names into SQL
+			$sql .= "(";
+
+			foreach ($row as $key=>$value)
+			{
+				if($key != 'id')
+				$sql .= $key . ",";
+			}
+			// remove last comma
+			$sql = substr($sql,0,strlen($sql)-1);
+			$sql .= ")";
+
+			// put values into SQL
+			$sql .= " VALUES (";
+
+			foreach ($row as $key=>$value)
+			{
+				if($key != 'id') {
+					$sql .= ":".$key.",";
+					$sendParams[$key] = $value;
+				}
+			}
+			$sql = substr($sql,0,strlen($sql)-1);
+			$sql .=")";
+			if ($result = queryDatabase($sql,$sendParams,$insertid)) {
+				if(isset($params["relatedTables"]) && isset($params["relatedField"]) ) {
+					$relatedTables = explode(",",$params["relatedTables"]);
+					foreach ($relatedTables as $key=>$value) 
+						duplicateRows($value,$params["relatedField"],$params['id'],$insertid);
+					sendSuccess($insertid);
+				}
+				else die("something is wrong");
+			}
+			else die("Query Failed: " . $result->errorInfo());
+		}
+		else die("Invalid id.");
+	}
+	else die("Content id is not provided.");
+}
 function duplicateContent($params)
 {
 	/*
@@ -1148,7 +1349,7 @@ function duplicateRows($tablename,$idField,$idValue,$insertId)
 		}
 		$sql = substr($sql,0,strlen($sql)-1);
 		$sql .=")";
-		queryDatabase($sql,$sendParams);
+		queryDatabase($sql,$sendParams,$insertid);
 	}
 }
 ?>

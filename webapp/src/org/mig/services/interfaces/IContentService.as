@@ -10,23 +10,21 @@ package org.mig.services.interfaces
 	{
 		function loadTemplates():void;
 		
-		function loadTemplatesCustomFields():void;
+		
 		
 		function loadMimeTypes():void;
 		
 		function loadTerms():void;
 
-		function loadCategoriesCustomFields():void;
+		function loadRelatedCustomfields(config:XML,...args):void;
 		
 		function retrieveContentRoot():void;
 		
 		function retrieveChildren(content:ContentNode):void;
 		
-		function retrieveVerbose(content:ContentNode):void;
+		function retrieveContainer(content:ContentNode,verbose:Boolean=true):void;
 		
 		function deleteContainer(content:ContainerNode):void;
-		
-		function duplicateContainer(content:ContainerNode):void;
 		
 		function createContainer(title:String,config:XML):void;
 		
@@ -35,6 +33,7 @@ package org.mig.services.interfaces
 		function updateContainersStatus(containers:Array,statusid:int):void;
 		
 		//refactor this later
+		function retrieveContent(id:int,config:XML,clazz:Class):void;
 		function updateContent(vo:ContentData,config:XML,customfields:Array):void;
 		function createContent(vo:ContentData,config:XML,customfields:Array,status:Boolean=false):void;
 		function deleteContent(vo:ContentData,config:XML):void;

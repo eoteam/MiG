@@ -42,6 +42,19 @@ package org.mig.model.vo.app
 			result = result.substring(0,result.length-1);
 			return result;
 		}
-
+		
+		/*public function clone():CustomField {
+			var field:CustomField = new CustomField();
+			field.customfieldid = customfieldid;
+			field.fieldid = fieldid;
+			field.typeid = typeid;
+			field.name = name;
+			field.displayname = displayname;
+			field.displayorder = displayorder;
+			field.defaultvalue = defaultvalue;
+			field.description = description;
+			field.options = options;
+			return field;
+		}*/
 	}
 }

@@ -44,28 +44,6 @@
 			private function handleValueChange():void {
 				data[List(owner).labelField] = input.text;
 			}
-/* 			override protected  function getCurrentRendererState():String {
-				if(data.editing == true) {
-					if(input) {
-						input.setFocus();
-					}
-					if (selected && hasState("selected"))
-						return "selectedAndEditing";
-					
-					if (hovered && hasState("hovered"))
-						return "hoveredAndEditing";
-					
-					if (hasState("normal"))    
-						return "normalAndEditing";
-					
-					// If none of the above states are defined in the item renderer,
-					// we return the empty string. This means the user-defined renderer
-					// will display but essentially be non-interactive visually. 
-					return null;
-				}
-				else 
-					return super.getCurrentRendererState();
-			} */
 			private function toggleEditing(event:KeyboardEvent):void {
 				if(event.keyCode == Keyboard.ENTER) {
 					input.editable = !input.editable;

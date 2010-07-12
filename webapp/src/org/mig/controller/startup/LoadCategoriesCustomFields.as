@@ -20,7 +20,7 @@ package org.mig.controller.startup
 		public var service:IContentService;
 		
 		override public function execute():void {
-			service.loadCategoriesCustomFields();
+			service.loadRelatedCustomfields(contentModel.termsConfig.customfields[0]);
 			service.addHandlers(handleCategoriesCustomFields);
 		}
 		private function handleCategoriesCustomFields(data:Object):void {

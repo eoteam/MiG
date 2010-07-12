@@ -63,8 +63,7 @@ package org.mig.collections
 						if(state > 0 ) {
 							for each(propChange in items) {
 								if(propChange.property != "modified" && propChange.property != "updateData" && 
-								   propChange.property != "children" && propChange.property != "parent" &&
-								   propChange.property != "editing") {
+								   propChange.property != "children" && propChange.property != "parent") {
 									if(modifiedItems.getItemIndex(propChange.source) == -1 && newItems.getItemIndex(propChange.source) == -1 ) {
 										modifiedItems.addItem(propChange.source)
 									}

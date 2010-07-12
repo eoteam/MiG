@@ -22,24 +22,32 @@ package org.mig.services
 		public static const GET_ROOT:String							= "getRoot";
 		public static const GET_RELATED_CUSTOMFIELDS:String			= "getRelatedCustomFields";
 		
-		public static const UPDATE_TAG:String 						= "updateTag";
+		
 		public static const UPDATE_RECORD:String 					= "updateRecord";
 		public static const UPDATE_RECORDS:String 					= "updateRecords";
-		public static const UPDATE_CONTAINER_PATHS:String 			= "updateContainerPaths";
-		public static const UPDATE_MEDIA_BY_PATH:String 			= "updateMediaByPath";
-		public static const INSET_TAG:String 						= "insertTag";
-		public static const INSERT_RECORD:String 					= "insertRecord";
-		public static const INSET_RECORD_WITH_RELATED_TAGS:String 	= "insertRecordWithRelatedTag";
-		public static const DELETE_TAG:String 						= "deleteTag";
 		public static const DELETE_RECORD:String 					= "deleteRecord";
 		public static const DELETE_RECORDS:String 					= "deleteRecords";
+		public static const INSERT_RECORD:String 					= "insertRecord";
+		public static const INSET_RECORD_WITH_RELATED_TAGS:String 	= "insertRecordWithRelatedTag";
+		
+		public static const UPDATE_TAG:String 						= "updateTag";
+		public static const INSET_TAG:String 						= "insertTag";
+		public static const DELETE_TAG:String 						= "deleteTag";
+		
+
+
+		public static const UPDATE_CONTAINER_PATHS:String 			= "updateContainerPaths";
+		public static const UPDATE_MEDIA_BY_PATH:String 			= "updateMediaByPath";
 		public static const DELETE_CONTENT:String 					= "deleteContent";
 		public static const DELETE_MEDIA_BY_PATH:String 			= "deleteMediaByPath";
-		public static const DUPLICATE_CONTENT:String 				= "duplicateContent";
+		
 		public static const UPDATE_CUSTOMFIELD:String 				= "updateCustomField";
 		public static const DELETE_CUSTOMFIELD:String 				= "deleteCustomField"
-		public static const CREATE_CUSTOMFIELD:String 				= "insertCustomField";
-
+		public static const CREATE_CUSTOMFIELD:String 				= "insertCustomField"
+	
+		public static const DUPLICATE_CONTENT:String 				= "duplicateContent";
+		public static const DUPLICATE_OBJECT:String 				= "duplicateObject";
+		
 		
 		public static const READ_DIRECTORY:String					= "readDirectory";
 		public static const CREATE_DIRECTORY:String					= "createDirectory";
