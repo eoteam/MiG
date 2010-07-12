@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:controls="com.mapx.view.controls.*"  mouseDown="mouseDownHandler(event)" 
-		 horizontalGap="0" creationComplete="creationCompleteHandler(event)" xmlns:textEditBar="textEditBar.*">
-	<mx:Script>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:textEditBar="textEditBar.*"
+		 mouseDown="mouseDownHandler(event)" 
+		 gap="0" creationComplete="creationCompleteHandler(event)" xmlns:controls="org.mig.view.controls.*">
+	
+	
+	<fx:Script>
 		<![CDATA[
 			import flash.geom.Point;
 			import flash.text.engine.FontLookup;
@@ -25,6 +31,8 @@
 			import mx.events.FlexEvent;
 			import mx.events.ItemClickEvent;
 			
+			import spark.events.IndexChangeEvent;
+			
 
 			private var _htmlText:String;
 			private var _xhtmlText:String;
@@ -35,8 +43,8 @@
 			private var wWatcher:ChangeWatcher, hWatcher:ChangeWatcher;
 
 			[Bindable] public var includeTools:Boolean = true;
-			[Bindable] public var holderColor:uint;
 			[Bindable] public var editable:Boolean = true;
+			[Bindable] public var holderColor:uint;
 			
 			public var firstTime:Boolean = true;
 			public var changed:Boolean = false;
@@ -54,14 +62,15 @@
 			private function importMarkup():void {
 			
 			}				
-			private function togglebuttonbar1_itemClickHandler(event:ItemClickEvent):void {
+			private function togglebuttonbar1_itemClickHandler(event:IndexChangeEvent):void {
 				commit();
-				if(ButtonBarButton(event.relatedObject).selected && event.index != prevIndex)
+				if(event.newIndex != prevIndex)
 				{
 					stack.selectedIndex=1;
-					prevIndex = event.index;
-					if(event.item.format != 'xhtml')
-						markupTextArea.text = TextConverter.export(activeFlow,event.item.format,ConversionType.STRING_TYPE).toString();					
+					prevIndex = event.newIndex;
+					var item:Object = markups.selectedItem;
+					if(item.format != 'xhtml')
+						markupTextArea.text = TextConverter.export(activeFlow,item.format,ConversionType.STRING_TYPE).toString();					
 					else
 						markupTextArea.text = this.richTextEditorToHtml(_htmlText);	
 				}
@@ -475,11 +484,39 @@
 			}
 
 		]]>
-	</mx:Script>
-	<mx:Metadata>
+	</fx:Script>
+	<fx:Metadata>
 		[Event(name="selectionChange", type="flash.events.Event")]
 		[Event(name="change", type="flash.events.Event")]
-	</mx:Metadata>
+	</fx:Metadata>
+	
+	<s:Group height="30" width="100%"><!-- includeInLayout="{includeTools}" visible="{includeTools}" -->
+		<s:HGroup width="100%" height="100%" paddingTop="5" paddingLeft="4" paddingRight="4">
+			<controls:IconToggleButton click="fullScreen_clickHandler()" styleName="grayIconToggleButton"   
+			icon1="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#fullScreen')"  width="30"  id="fsButton"/>
+			<s:ButtonBar  selectedIndex="-1" id="markups" change="togglebuttonbar1_itemClickHandler(event)">
+				<s:layout>
+					<s:HorizontalLayout gap="2" />
+				</s:layout>
+				<s:dataProvider>
+					<s:ArrayList>
+						<fx:Object label="HTML" format="{TextConverter.TEXT_FIELD_HTML_FORMAT}" />
+						<fx:Object label="TLF" format="{TextConverter.TEXT_LAYOUT_FORMAT}" />
+						<fx:Object label="XHTML" format="xhtml" />						
+					</s:ArrayList>
+				</s:dataProvider>
+				<s:itemRenderer>
+					<fx:Component>
+						<s:ItemRenderer>
+							<s:ToggleButton label="{data.label}" />	
+						</s:ItemRenderer>
+					</fx:Component>
+				</s:itemRenderer>
+			</s:ButtonBar>
+			<s:ToggleButton  id="importBtn" label="Import" clear="importMarkup()"/>
+		</s:HGroup>
+	</s:Group>
+	
 	<mx:ViewStack width="100%" height="100%" creationPolicy="all" id="stack">	
 		<mx:Canvas id="holder" width="100%" height="100%" backgroundColor="{holderColor}">
 			<mx:UIComponent id="spellDrawing" width="100%" height="100%"  />
@@ -488,29 +525,17 @@
 			<mx:UIComponent id="searchDrawing2" width="100%" height="100%" visible="false"  />
 			<textEditBar:SingleContainerView id="textPanel" left="5" bottom="5" right="5" top="5" width="100%" height="100%" focusIn="handleFocusIn(event)" backgroundAlpha="0" />
 		</mx:Canvas>	
-		
 		<mx:Canvas width="100%" height="100%" backgroundColor="0xCCCCCC"  >
 			<mx:TextArea contentBackgroundAlpha="0"  id="markupTextArea" fontSize="14"  fontFamily="Transit-Normal"  width="100%"  color="0" minHeight="{this.height}" />	
 		</mx:Canvas>	
 	</mx:ViewStack>
-	<mx:Canvas styleName="toolsContainer" height="{this.height}" includeInLayout="{includeTools}" visible="{includeTools}">
-		<mx:VBox width="100%" height="100%"  horizontalAlign="center" paddingTop="5" paddingLeft="4" paddingRight="4">
-			<mx:Button toggle="true" click="fullScreen_clickHandler()"  icon="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#fullScreen')"  width="30" paddingLeft="5" id="fsButton"/>
-			<mx:ToggleButtonBar verticalGap="2" selectedIndex="-1" id="markups" direction="vertical" itemClick="togglebuttonbar1_itemClickHandler(event)">
-				<mx:dataProvider>
-					<mx:ArrayCollection>
-						<mx:Object label="HTML" format="{TextConverter.TEXT_FIELD_HTML_FORMAT}" />
-						<mx:Object label="TLF" format="{TextConverter.TEXT_LAYOUT_FORMAT}" />
-						<mx:Object label="XHTML" format="xhtml" />
-					</mx:ArrayCollection>
-				</mx:dataProvider>
-			</mx:ToggleButtonBar>
-			<mx:Button toggle="true"  id="importBtn" label="Import" clear="importMarkup()"/>
-		</mx:VBox>	
-	</mx:Canvas> 
-	<mx:Parallel duration="300" target="{this}" id="eff">
-		<mx:Move xTo="0" yTo="0" id="moveEff" />
-		<mx:Resize id="resize"  />		
-	</mx:Parallel>
+	
+	<fx:Declarations>
+		<mx:Parallel duration="300" target="{this}" id="eff">
+			<mx:Move xTo="0" yTo="0" id="moveEff" />
+			<mx:Resize id="resize"  />		
+		</mx:Parallel>		
+	</fx:Declarations>
 
-</mx:HBox>
+
+</s:VGroup>

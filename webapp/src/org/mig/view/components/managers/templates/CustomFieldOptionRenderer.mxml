@@ -21,7 +21,8 @@
 			override public function set data(value:Object):void {
 				super.data = value;
 				if(data) {
-					if(data.index == List(owner).dataProvider.length)
+					var col:IList = List(owner).dataProvider;
+					if(col.getItemIndex(data) == col.length-1)
 						enableAddButton = true;
 					else
 						enableAddButton = false;

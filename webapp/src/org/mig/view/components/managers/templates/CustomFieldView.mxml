@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" contentBackgroundAlpha="1" contentBackgroundColor="0x00000"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 contentBackgroundAlpha="1" contentBackgroundColor="0x00000"
 		 implements="org.mig.view.interfaces.ICustomFieldView" autoDrawBackground="false"  focusEnabled="true"
 		 xmlns:app="org.mig.model.vo.app.*" creationComplete="creationCompleteHandler(event)" 
 		 xmlns:templates="org.mig.view.components.managers.templates.*">
@@ -34,25 +35,21 @@
 				optionsList.addEventListener("changeCustomFieldOption",updateOptions);
 			}	
 			private function updateOptions(event:Event=null):void {
-				_customfield.updateData.options = _customfield.options;
-				var col:IList = List(owner).dataProvider as ArrayList;
-				
-				//if(col.modifiedItems.getItemIndex(_customfield) == -1 && col.deletedItems.getItemIndex(_customfield) == -1)
-				//	(List(owner).dataProvider).modifiedItems.addItem(_customfield);
-				
+				for each(var option:CustomFieldOption in _customfield.optionsArray.source) {
+					option.index = _customfield.optionsArray.getItemIndex(option)+1;
+				}
+				_customfield.updateData.options = _customfield.options;				
 				optionsList.invalidateDisplayList();
-				
 				List(cfHolder.getElementAt(0)).invalidateDisplayList();
 			}
 			private function handleAddCustomField(event:Event):void {
 				event.target.enableAddButton=false;
 				var item:CustomFieldOption = new CustomFieldOption();
 				_customfield.optionsArray.addItem(item);
-				_defaultValueField.optionsArray.addItem(item);
 				item.index =  _customfield.optionsArray.length;
 				item.value = 'new';
-				item.customfield = _customfield;	
-				item.vo = _defaultValueField;
+				item.customfield = _defaultValueField;
+				item.vo = _customfield;
 				var lastOption:CustomFieldOptionRenderer = optionsList.dataGroup.getElementAt(0) as CustomFieldOptionRenderer;
 				lastOption.enableRemoveButton = true;	
 				updateOptions();
@@ -80,12 +77,17 @@
 							typeSelectedIndex = customFieldTypes.getItemIndex(item);
 						}
 					}
+					
 					if(!_defaultValueField) {
 						var dv:CustomField = new CustomField();
 						dv.typeid = _customfield.typeid;
 						dv.name = "defaultvalue";
 						dv.optionsArray = _customfield.optionsArray;
 						customfield = dv;
+						for each(var option:CustomFieldOption in _customfield.optionsArray.source) {
+							option.customfield = _defaultValueField;
+							option.vo = _customfield;
+						}
 					}
 				}
 			}	
@@ -136,9 +138,9 @@
 						defaultOption.index = 1;
 						defaultOption.customfield = _defaultValueField;
 						defaultOption.vo = _customfield;
-						optionsList.dataProvider.addItem(defaultOption);
-						List(element).dataProvider.addItem(defaultOption);
-						_customfield.options = _defaultValueField.options = "1=default";
+/* 						optionsList.dataProvider.addItem(defaultOption);
+						List(element).dataProvider.addItem(defaultOption); */
+						_customfield.optionsArray.addItem(defaultOption);
 					}
 				}
 				//this.invalidateDisplayList();

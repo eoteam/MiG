@@ -20,7 +20,7 @@ package org.mig.model
 		public var contentConfig:XML;
 		public var contentModel:ContainerNode;
 		public var currentContainer:ContainerNode;
-		public var templates:ArrayCollection;
+		public var templates:DataCollection;
 		public var templatesConfig:XML;
 		public var templatesCustomFields:DataCollection;
 		public var configEelements:XML;
@@ -45,7 +45,7 @@ package org.mig.model
 		public var termsConfig:XML;
 		
 		public function ContentModel() {
-			templates = new ArrayCollection();
+			templates = new DataCollection();
 			tagTerms = new DataCollection();
 			categoryTerms = []
 			categoryTermsFlat = new DataCollection();

@@ -21,6 +21,7 @@ package org.mig.collections
 		public var modifiedItems:ArrayList;
 		
 		public var state:int;
+		
 		public function DataCollection(source:Array=null)
 		{
 			super(source);
@@ -61,7 +62,9 @@ package org.mig.collections
 					case CollectionEventKind.UPDATE:
 						if(state > 0 ) {
 							for each(propChange in items) {
-								if(propChange.property != "modified" && propChange.property != "updateData" && propChange.property != "children" && propChange.property != "parent") {
+								if(propChange.property != "modified" && propChange.property != "updateData" && 
+								   propChange.property != "children" && propChange.property != "parent" &&
+								   propChange.property != "editing") {
 									if(modifiedItems.getItemIndex(propChange.source) == -1 && newItems.getItemIndex(propChange.source) == -1 ) {
 										modifiedItems.addItem(propChange.source)
 									}
@@ -77,10 +80,10 @@ package org.mig.collections
 			}
 			return super.dispatchEvent(event);
 		}	
-		public function commit():void {
-			state = 1;
+/*		public function commit():void {
+			//state = 1;
 			this.dispatchEvent(new Event("stageChange",true));
-		}
+		}*/
 		public function setItemNotModified(item:ContentData):void {
 			if(this.modifiedItems.getItemIndex(item) != -1) {
 				modifiedItems.removeItem(item);

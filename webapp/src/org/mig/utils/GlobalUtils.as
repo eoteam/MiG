@@ -196,6 +196,9 @@ package org.mig.utils
 				
 				case CustomFieldTypes.HTML_TEXT:
 					child = new MiGTLFTextArea();
+					child.percentWidth = 100;
+					child.minHeight = 300;
+					child.percentHeight = 100;
 					if(vo && vo[customfield.name]) {
 						MiGTLFTextArea(child).htmlText = vo[customfield.name];
 						summary = vo[customfield.name].toString().slice(0,150)+'...';
@@ -399,7 +402,7 @@ package org.mig.utils
 			var modified:Boolean = false;
 			if(event.kind == "update") {
 				var prop:PropertyChangeEvent = event.items[0];
-				if(prop.property != "vo") 
+				if(prop.property != "vo" && prop.property != "customfield") 
 					modified = true;
 			}
 			else if(event.kind == "add" || event.kind == "remove")

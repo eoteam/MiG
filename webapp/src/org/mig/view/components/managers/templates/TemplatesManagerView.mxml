@@ -6,7 +6,7 @@
 	xmlns:controls="org.mig.view.controls.*"
 	xmlns:fe="com.fxcomponents.controls.fe.*"
 	backgroundColor="0x121212"
-	width="100%" height="100%" xmlns:templates="org.mig.view.components.managers.templates.*">
+	width="100%" height="100%" xmlns:templates="org.mig.view.components.managers.templates.*" xmlns:renderers="org.mig.view.renderers.*">
 	
 	<fx:Declarations>
 		<s:ArrayList id="customFieldTypes" />
@@ -38,15 +38,14 @@
 			<controls:IconButton width="34" height="22" styleName="grayIconButton" 
 			icon="@Embed(source='/migAssets/library.swf#fileActions')"  id="actionButton" />
 		</s:HGroup>
-		<controls:MiGList width="100%" height="100%" id="templateList" headerText="Templates" labelField="name" sortField="name">
+		<controls:MiGList width="100%" height="100%" id="templateList" headerText="Templates" labelField="name" sortField="name"
+			 allowMultipleSelection="true">
 			<controls:layout>
 				<s:VerticalLayout gap="2" clipAndEnableScrolling="true"/>
 			</controls:layout>
 			<controls:itemRenderer>
 				<fx:Component>
-					<s:ItemRenderer width="100%" autoDrawBackground="true" focusEnabled="true" height="24">
-						<s:Label verticalCenter="0" text="{data.name}" styleName="boldCopy" width="100%" paddingLeft="4"/>
-					</s:ItemRenderer>
+					<renderers:ListCellEditor />
 				</fx:Component>
 			</controls:itemRenderer>
 		</controls:MiGList>		
@@ -59,7 +58,7 @@
 			<s:Label text="Default Value" width="100%" />
 		</s:HGroup>
 		<s:List width="100%" id="cfList" contentBackgroundAlpha="0"  requireSelection="false" allowMultipleSelection="true"  
-		dragMoveEnabled="true" borderVisible="false">
+		dragMoveEnabled="true" borderVisible="false" useVirtualLayout="false">
 			<s:itemRenderer>
 				<fx:Component>
 					<templates:CustomFieldView width="100%" vo="{data}"  customFieldTypes="{outerDocument.customFieldTypes}"/>

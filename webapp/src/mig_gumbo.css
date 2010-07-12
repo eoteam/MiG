@@ -79,6 +79,14 @@ s|Button {
 	renderingMode:		"cff";
 	skinClass: ClassReference("org.mig.view.skins.buttons.GrayButtonSkin");
 }
+s|ToggleButton {
+	color: #ffffff;
+	fontLookup: "embeddedCFF";
+	textRollOverColor: #FFFFFF;
+	textSelectedColor: #000000;
+	renderingMode:		"cff";
+	skinClass: ClassReference("org.mig.view.skins.buttons.GrayToggleButtonSkin");
+}
 .defaultBlackButton {
 	skinClass: ClassReference("org.mig.view.skins.buttons.BlackButtonSkin");
 }

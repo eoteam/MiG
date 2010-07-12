@@ -82,6 +82,7 @@
 <!--	</manager>-->
 	<manager id="templateManager" name="Templates">
 		<child labelfield="name"
+			tablename="templates"
 			createContent="insertRecord" 
 			retrieveContent="getData"
 			updateContent="updateRecord"

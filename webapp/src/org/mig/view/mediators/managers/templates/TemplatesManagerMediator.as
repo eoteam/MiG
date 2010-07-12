@@ -1,5 +1,6 @@
 package org.mig.view.mediators.managers.templates
 {
+	import flash.events.ContextMenuEvent;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
@@ -7,6 +8,7 @@ package org.mig.view.mediators.managers.templates
 	import mx.events.CollectionEventKind;
 	import mx.events.DragEvent;
 	import mx.events.FlexEvent;
+	import mx.events.PropertyChangeEvent;
 	
 	import org.flexunit.internals.builders.NullBuilder;
 	import org.mig.collections.DataCollection;
@@ -17,10 +19,12 @@ package org.mig.view.mediators.managers.templates
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
 	import org.mig.model.vo.app.CustomField;
+	import org.mig.model.vo.app.CustomFieldOption;
 	import org.mig.model.vo.app.CustomFieldTypes;
 	import org.mig.model.vo.app.StatusResult;
 	import org.mig.model.vo.content.Template;
 	import org.mig.services.interfaces.IContentService;
+	import org.mig.utils.GlobalUtils;
 	import org.mig.view.components.managers.templates.CustomFieldView;
 	import org.mig.view.components.managers.templates.TemplatesManagerView;
 	import org.mig.view.events.ContentViewEvent;
@@ -64,6 +68,33 @@ package org.mig.view.mediators.managers.templates
 			view.cfList.addEventListener(DragEvent.DRAG_COMPLETE,handleListDragDrop);			
 			view.addEventListener(FlexEvent.HIDE,handleHide);
 			view.addEventListener(FlexEvent.SHOW,handleShow);
+			
+
+		
+		}
+		private function menuItemSelectHandler(event:ContextMenuEvent):void{
+			contentModel.templates.state = DataCollection.MODIFIED;;
+			var template:Template
+			switch(event.target.caption) {
+				case "Remove":
+					for each(template in view.templateList.selectedItems) {
+						contentModel.templates.removeItemAt(contentModel.templates.getItemIndex(template));
+				}
+				break;
+				case "Rename":
+					if(view.templateList.selectedItem)
+						view.templateList.selectedItem.editing = true;
+				break;
+				case "Duplicate":
+					for each(template in view.templateList.selectedItems) 
+						contentModel.templates.removeItemAt(contentModel.templates.getItemIndex(template));
+				break;
+				case "Add":
+					template = new Template();
+					template.name = "new";
+					contentModel.templates.addItem(template);
+				break
+			}
 		}
 		private function handleHide(event:FlexEvent):void {
 			previouslySelectedTemplate = view.templateList.selectedItem as Template;
@@ -77,6 +108,18 @@ package org.mig.view.mediators.managers.templates
 		private function handleTemplatesLoaded(event:StateEvent):void {
 			if(event.action == AppStartupStateConstants.LOAD_TEMPLATES_COMPLETE) {
 				view.templateList.dataProvider = contentModel.templates;
+				contentModel.templates.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleTemplatesChanged);
+				GlobalUtils.createContextMenu(["Add","Remove","Rename","Duplicate"],menuItemSelectHandler,null,[view.templateList]);		
+			}
+		}
+		private function handleTemplatesChanged(event:CollectionEvent):void {
+			if(event.kind == CollectionEventKind.UPDATE) {
+				for each(var prop:PropertyChangeEvent in event.items) {
+					if(prop.property == "name")  {
+						view.submitButton.enabled = true;
+						contentModel.templates.state = DataCollection.MODIFIED
+					}	
+				}
 			}
 		}
 		private function handleDragStart(event:ContentViewEvent):void {
@@ -91,7 +134,20 @@ package org.mig.view.mediators.managers.templates
 			}
 		}
 		private function handleTemplateList(event:IndexChangeEvent):void {
-			var item:Template = view.templateList.selectedItem as Template;
+			var item:Template;
+			var option:CustomFieldOption;
+			var field:CustomField;
+			if(event.oldIndex != -1) {
+				item = view.templateList.dataProvider.getItemAt(event.oldIndex) as Template;
+				//restore the twistedness where CustomFieldOption have switched the vo to the CF and the CF to a defaultvalueCF
+				for each(field in item.customfields.source) {
+					for each(option in field.optionsArray.source) {
+						option.customfield = field;
+						option.vo = null;
+					}
+				}
+			}
+			item = view.templateList.selectedItem as Template;
 			view.cfList.dataProvider = item.customfields;
 			view.callLater(addChangeListener);
 		}
@@ -118,6 +174,7 @@ package org.mig.view.mediators.managers.templates
 		}
 		private function enableSubmit(event:Event=null):void {
 			view.submitButton.enabled = true;
+			contentModel.templatesCustomFields.state = DataCollection.MODIFIED;
 			if(event && event.target is ItemRenderer) {
 				var field:CustomField = view.cfList.selectedItem as CustomField;
 				if(contentModel.templatesCustomFields.modifiedItems.getItemIndex(field) == -1 && 
@@ -137,11 +194,13 @@ package org.mig.view.mediators.managers.templates
 		private function handleSubmitButton(event:MouseEvent):void {
 			cudTotal = cudCount = 0;
 			var customfield:CustomField;
+			var template:Template;
 			//var selectedTemplate:Template = view.templateList.selectedItem as Template;
 			var time:Number = Math.round((new Date().time/1000));
 			for each(customfield in  contentModel.templatesCustomFields.deletedItems.source) {
 				cudTotal++;
 				contentService.deleteContent(customfield,contentModel.templatesConfig.customfields[0]);
+				contentService.addHandlers(handleCustomFieldDeleted);
 			}
 			for each(customfield in  contentModel.templatesCustomFields.modifiedItems.source) {
 				cudTotal++;
@@ -159,29 +218,76 @@ package org.mig.view.mediators.managers.templates
 				contentService.createContent(customfield,contentModel.templatesConfig.customfields[0],[],true);
 				contentService.addHandlers(handleCustomfieldCreated);
 			}
+			for each(template in contentModel.templates.modifiedItems.source) {
+				cudTotal++;
+				template.modifiedby = appModel.user.id;
+				template.modifieddate = time;
+				contentService.updateContent(template,contentModel.templatesConfig.child[0],[]);
+				contentService.addHandlers(handleTemplateUpdated);
+			}
+			for each(template in contentModel.templates.newItems.source) {
+				cudTotal++;
+				template.createdby = template.modifiedby = appModel.user.id;
+				template.modifieddate = template.createdate= time;
+				contentService.createContent(template,contentModel.templatesConfig.child[0],[]);
+				contentService.addHandlers(handleTemplateCreated);
+			}
+			for each(template in  contentModel.templates.deletedItems.source) {
+				cudTotal++;
+				contentService.deleteContent(template,contentModel.templatesConfig.child[0]);
+				contentService.addHandlers(handleTemplateDeleted);
+			}			
 		}
 		private function handleCustomfieldUpdated(data:Object):void {
 			var status:StatusResult = data.result as StatusResult;
 			if(status.success) {
-				checkCudCount();
 				contentModel.templatesCustomFields.setItemNotModified(data.token.content as CustomField);
+				checkCudCount();
 			}	
 		}
 		private function handleCustomfieldCreated(data:Object):void {
 			var status:StatusResult = data.result as StatusResult;
 			if(status.success) {
-				checkCudCount();
 				var selectedTemplate:Template = view.templateList.selectedItem as Template;
 				var ids:Array = status.message.split(',');
 				var field:CustomField = data.token.content as CustomField;
 				field.id = ids[0]; field.customfieldid = ids[1]; field.fieldid = ids[2];
-				contentModel.templatesCustomFields.setItemNotModified(data.token.content as CustomField);
+				contentModel.templatesCustomFields.setItemNotNew(data.token.content as CustomField);
+				checkCudCount();
 			}	
-		}			
+		}	
+		private function handleCustomFieldDeleted(data:Object):void {
+			var status:StatusResult = data.result as StatusResult;
+			if(status.success) {
+				contentModel.templatesCustomFields.deletedItems.removeItem(data.token.content as CustomField);
+				checkCudCount();
+			}
+		}
+		private function handleTemplateDeleted(data:Object):void {
+			var status:StatusResult = data.result as StatusResult;
+			if(status.success) {
+				contentModel.templates.deletedItems.removeItem(data.token.content as Template);
+				checkCudCount();
+			}
+		}
+		private function handleTemplateUpdated(data:Object):void {
+			var status:StatusResult = data.result as StatusResult;
+			if(status.success) {
+				contentModel.templates.setItemNotModified(data.token.content as Template);
+				checkCudCount();
+			}	
+		}
+		private function handleTemplateCreated(data:Object):void {
+			var results:Array = data.result as Array;
+			if(results.length == 1) {
+				contentModel.templates.setItemNotNew(data.token.content as Template);
+				checkCudCount();
+			}	
+		}
 		private function checkCudCount():void {
 			cudCount++;
 			if(cudCount == cudTotal) {
-				eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Custom Fields updated successfully"));
+				eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Template Manager updated successfully"));
 				view.submitButton.enabled = false;	
 				eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_SELECTED_CONTENT));
 			}

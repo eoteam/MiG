@@ -22,7 +22,6 @@
     <classEntry path="org.mig.view.skins.buttons.IconToggleButtonSkin"/>
     <classEntry path="org.mig.view.controls.IconButton"/>
     <classEntry path="org.mig.view.skins.buttons.IconButtonSkin"/>
-    <classEntry path="org.mig.view.skins.buttons.DefaultGrayToggleButtonSkin"/>
     <classEntry path="org.mig.view.skins.controls.MiGListSkin"/>
     <classEntry path="org.mig.view.controls.LinkSocket"/>
     <classEntry path="org.mig.view.controls.Rating"/>

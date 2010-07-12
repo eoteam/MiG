@@ -172,7 +172,7 @@ package org.mig.services
 			var updateData:UpdateData = vo.updateData;
 			var params:Object = new Object();
 			for (var prop:String in updateData) {
-				if(prop != "modified" && prop != "updateData")
+				if(prop != "modified" && prop != "updateData" && prop != "editing")
 					params[prop] = updateData[prop];
 			}
 			params.action = config.@updateContent.toString();
