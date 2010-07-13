@@ -2,27 +2,33 @@ package org.mig.services
 {
 	public final class ValidFunctions
 	{
-
-		public static const VALIDATE_USER:String 					= "validateUser";
-		public static const GET_CUTOMFIELDS:String 					= "getCustomFields";
+		//read functions	
 		public static const GET_DATA:String 						= "getData";
-		public static const GET_CONTENT_TREE:String					= "getContentTree";
-		public static const GET_USERS:String 						= "getUsers";
+		public static const GET_RELATED_CUSTOMFIELDS:String			= "getRelatedCustomFields";
+		
+		public static const GET_ROOT:String							= "getRoot";
 		public static const GET_CONTENT:String 						= "getContent";
 		public static const GET_CONTENT_USERS:String				= "getContentUsers";
 		public static const GET_CONTENT_MEDIA:String 				= "getContentMedia";
 		public static const GET_CONTENT_TAGS:String 				= "getContentTags";
 		public static const GET_CONTENT_CONTENT:String 				= "getContentContent";
-		public static const GET_MEDIA:String 						= "getMedia";
-		public static const GET_TEMPLATES:String 					= "getTemplates";
 		public static const CONTENT_SEARCH:String 					= "contentSearch";
-		public static const SEND_USER_INFO:String 					= "sendUserInformation";
-		public static const MIG_SEARCH:String 						= "migSearch";
+		public static const GET_CONTENT_TREE:String					= "getContentTree";
+		public static const GET_TEMPLATE_CUSTOMFIELDS:String		= "getTemplateCustomFields";
+		
+		public static const GET_MEDIA:String 						= "getMedia";
+
 		public static const GET_TERMS:String 						= "getTerms";
-		public static const GET_ROOT:String							= "getRoot";
-		public static const GET_RELATED_CUSTOMFIELDS:String			= "getRelatedCustomFields";
+		
+		public static const VALIDATE_USER:String 					= "validateUser";
+		public static const SEND_USER_INFO:String 					= "sendUserInformation";
+		public static const GET_USERS:String 						= "getUsers";
+		
+		public static const MIG_SEARCH:String 						= "migSearch";
 		
 		
+		
+		//write functions
 		public static const UPDATE_RECORD:String 					= "updateRecord";
 		public static const UPDATE_RECORDS:String 					= "updateRecords";
 		public static const DELETE_RECORD:String 					= "deleteRecord";
@@ -34,8 +40,6 @@ package org.mig.services
 		public static const INSET_TAG:String 						= "insertTag";
 		public static const DELETE_TAG:String 						= "deleteTag";
 		
-
-
 		public static const UPDATE_CONTAINER_PATHS:String 			= "updateContainerPaths";
 		public static const UPDATE_MEDIA_BY_PATH:String 			= "updateMediaByPath";
 		public static const DELETE_CONTENT:String 					= "deleteContent";
@@ -49,6 +53,8 @@ package org.mig.services
 		public static const DUPLICATE_OBJECT:String 				= "duplicateObject";
 		
 		
+		
+		//file functions
 		public static const READ_DIRECTORY:String					= "readDirectory";
 		public static const CREATE_DIRECTORY:String					= "createDirectory";
 		public static const DELETE_DIRECTORY:String					= "removeDirectory";

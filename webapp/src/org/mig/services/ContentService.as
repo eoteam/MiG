@@ -38,6 +38,11 @@ package org.mig.services
 		public function ContentService() {
 			
 		}
+		public function loadTemplateCustomfields():void {
+			var params:Object = new  Object();
+			params.action = ValidFunctions.GET_TEMPLATE_CUSTOMFIELDS;
+			this.createService(params,ResponseType.DATA,CustomField);	
+		}
 		public function loadRelatedCustomfields(config:XML,...args):void {
 			var params:Object = new  Object();
 			params.action = ValidFunctions.GET_RELATED_CUSTOMFIELDS;
@@ -155,7 +160,7 @@ package org.mig.services
 					if(params.templateid == template.id) {
 						for each(var field:CustomField in template.customfields) {
 							if(field.defaultvalue != null) {
-								params["customfield"+field.fieldid] = field.defaultvalue;
+								//params["customfield"+field.fieldid] = field.defaultvalue;
 							}
 						}
 					}
@@ -188,7 +193,7 @@ package org.mig.services
 			params.id = vo.id;
 			
 			//reverse translate customfields
-			for (prop in params) {
+/*			for (prop in params) {
 				for each(var customfield:CustomField in customfields) {
 					if(prop == customfield.name)
 					var value:String = params[prop];
@@ -197,7 +202,7 @@ package org.mig.services
 						params["customfield"+customfield.fieldid] = value;
 					}
 				}
-			}
+			}*/
 			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS,null,handleContentUpdated);
 			service.service.showBusyCursor = true;
 			service.token.content = vo;
@@ -218,7 +223,7 @@ package org.mig.services
 				params.verbose = config.@createVerbose.toString() == "true" ? true:false;
 			}
 			//reverse translate customfields
-			for (prop in params) {
+/*			for (prop in params) {
 				for each(var customfield:CustomField in customfields) {
 					if(prop == customfield.name)
 						var value:String = params[prop];
@@ -227,7 +232,8 @@ package org.mig.services
 						params["customfield"+customfield.fieldid] = value;
 					}
 				}
-			}
+			}*/
+			
 			if(!status) {
 				var classToUse:String = flash.utils.getQualifiedClassName(vo);
 				var classRef:Class = flash.utils.getDefinitionByName(classToUse) as Class; 

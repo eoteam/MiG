@@ -7,10 +7,9 @@ package org.mig.model.vo.app
 	[Bindable]
 	public class CustomField extends ContentData
 	{	
-		
-		public var templateid:int;
+		public var templateids:String;
 		public var customfieldid:int;
-		public var fieldid:int;
+		public var groupid:int;
 		public var displayorder:int;
 		
 		public var typeid:int;
@@ -21,6 +20,7 @@ package org.mig.model.vo.app
 		public var description:String = "";
 		
 	
+		public var newTemplates:Array = [];
 		
 		public function set options(ops:String):void
 		{

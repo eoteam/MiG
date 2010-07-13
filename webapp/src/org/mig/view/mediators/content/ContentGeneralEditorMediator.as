@@ -54,7 +54,7 @@ package org.mig.view.mediators.content
 			update.id = view.content.data.id;
 			for each(var element:CustomFieldElement in cfElements) {
 				if(element.modified) {
-					update["customfield"+element.customfield.fieldid] = view.content.data[element.customfield.name];
+					//update["customfield"+element.customfield.fieldid] = view.content.data[element.customfield.name];
 				}
 			}
 		}
