@@ -4,6 +4,7 @@ package org.mig.view.mediators.managers.templates
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import mx.collections.ArrayList;
 	import mx.events.CollectionEvent;
 	import mx.events.CollectionEventKind;
 	import mx.events.DragEvent;
@@ -53,6 +54,8 @@ package org.mig.view.mediators.managers.templates
 		public var appService:IAppService;
 		
 		private var previouslySelectedTemplate:Template;
+		public var cudTotal:int;
+		public var cudCount:int;
 		
 		override public function onRegister():void {
 			eventMap.mapListener(eventDispatcher,StateEvent.ACTION,handleTemplatesLoaded);
@@ -72,9 +75,6 @@ package org.mig.view.mediators.managers.templates
 			view.cfList.addEventListener(DragEvent.DRAG_COMPLETE,handleListDragDrop);			
 			view.addEventListener(FlexEvent.HIDE,handleHide);
 			view.addEventListener(FlexEvent.SHOW,handleShow);
-			
-
-		
 		}
 		private function menuItemSelectHandler(event:ContextMenuEvent):void{
 			contentModel.templates.state = DataCollection.MODIFIED;;
@@ -150,15 +150,12 @@ package org.mig.view.mediators.managers.templates
 				}
 			}
 			item = view.templateList.dataProvider.getItemAt(event.newIndex) as Template;
-			view.cfList.dataProvider = item.customfields;
-			
-			view.cfList.invalidateDisplayList();
-			view.cfList.invalidateProperties();
-			view.callLater(addChangeListener);
+			view.cfList.dataProvider = null;
+			view.callLater(addChangeListener,[item]);
 		}
-		private function addChangeListener():void {
-			var item:Template = view.templateList.selectedItem as Template;
-			item.customfields.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleChange);
+		private function addChangeListener(template:Template):void {		
+			view.cfList.dataProvider = template.customfields;
+			template.customfields.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleChange);
 		}
 		private function handleChange(event:CollectionEvent):void {
 			var field:CustomField;
@@ -194,8 +191,6 @@ package org.mig.view.mediators.managers.templates
 			templateCF.templateid = template.id;
 			templateCF.displayorder = view.cfList.dataProvider.getItemIndex(templateCF)+1;
 		}
-		public var cudTotal:int;
-		public var cudCount:int;
 		private function handleSubmitButton(event:MouseEvent):void {
 			cudTotal = cudCount = 0;
 			var customfield:CustomField;
