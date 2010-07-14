@@ -2,10 +2,12 @@
 <s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx" 
-		 contentBackgroundAlpha="1" contentBackgroundColor="0x00000"
-		 implements="org.mig.view.interfaces.ICustomFieldView" autoDrawBackground="false"  focusEnabled="true"
-		 xmlns:app="org.mig.model.vo.app.*" creationComplete="creationCompleteHandler(event)" 
-		 xmlns:templates="org.mig.view.components.managers.templates.*">
+		 implements="org.mig.view.interfaces.ICustomFieldView"
+		 xmlns:app="org.mig.model.vo.app.*"
+		 xmlns:templates="org.mig.view.components.managers.templates.*" 
+		 xmlns:customfields="org.mig.view.components.managers.customfields.*"
+		 autoDrawBackground="false"  focusEnabled="true"
+		 contentBackgroundAlpha="1" contentBackgroundColor="0x00000" creationComplete="creationCompleteHandler(event)">
 	<fx:Script>
 		<![CDATA[
 			import mx.collections.IList;
@@ -33,9 +35,9 @@
 			
 			private function creationCompleteHandler(event:FlexEvent):void {
 				generateCustomField();
-				optionsList.addEventListener("addCustomFieldOption",handleAddCustomField);
-				optionsList.addEventListener("removeCustomFieldOption",handleRemoveCustomField);
-				optionsList.addEventListener("changeCustomFieldOption",updateOptions);
+				optionsList.addEventListener("addCustomFieldOption",handleAddCustomField,false,0,true);
+				optionsList.addEventListener("removeCustomFieldOption",handleRemoveCustomField,false,0,true);
+				optionsList.addEventListener("changeCustomFieldOption",updateOptions,false,0,true);
 			}	
 			private function updateOptions(event:Event=null):void {
 				for each(var option:CustomFieldOption in _customfield.optionsArray.source) {
@@ -73,6 +75,10 @@
 				updateOptions();
 			}
 			public function set vo(value:ValueObject):void {
+				var dirty:Boolean = false;
+				if(_customfield && value && _customfield.typeid != CustomField(value).typeid)
+					dirty = true;
+				
 				_customfield = value as CustomField;
 				if(_customfield) {
 					for each(var item:Object in customFieldTypes.source) {
@@ -85,12 +91,18 @@
 						var dv:CustomField = new CustomField();
 						dv.typeid = _customfield.typeid;
 						dv.name = "defaultvalue";
-						dv.optionsArray = _customfield.optionsArray;
 						customfield = dv;
-						for each(var option:CustomFieldOption in _customfield.optionsArray.source) {
-							option.customfield = _defaultValueField;
-							option.vo = _customfield;
-						}
+					}
+					_defaultValueField.optionsArray = _customfield.optionsArray;	
+					for each(var option:CustomFieldOption in _customfield.optionsArray.source) {
+						option.customfield = _defaultValueField;
+						option.vo = _customfield;
+					}
+					if(dirty) {	
+						if(_customfield.typeid != 0)
+							generateCustomField();
+						else						
+							cfHolder.removeAllElements();
 					}
 				}
 			}	
@@ -115,7 +127,6 @@
 				var element:UIComponent;
 				if(tmp[0] != null) {
 					element = tmp[0] as UIComponent;
-					//trace(_defaultValueField.typeid , _customfield.typeid, _customfield.displayname,element.className);
 					cfHolder.addElement(element);
 					var listMode:Boolean = false;
 					switch(_customfield.typeid) {
@@ -141,24 +152,26 @@
 						defaultOption.index = 1;
 						defaultOption.customfield = _defaultValueField;
 						defaultOption.vo = _customfield;
-/* 						optionsList.dataProvider.addItem(defaultOption);
-						List(element).dataProvider.addItem(defaultOption); */
 						_customfield.optionsArray.addItem(defaultOption);
 					}
 				}
-				//this.invalidateDisplayList();
 			}
 			private function handleDragButton(event:MouseEvent):void {
 				owner.dispatchEvent(new ContentViewEvent(ContentViewEvent.CUSTOMFIELD_DRAG_START));
 				blinkEffect.play();
 			}
 			private function button1_clickHandler(event:MouseEvent):void {
-				var warning:SystemPopup = new SystemPopup();
-				warning.message = "Do you want to make this change affect all other templates?";
-				PopUpManager.addPopUp(warning,this,true,PopUpManagerChildList.POPUP);
-				warning.addEventListener("yesSelected",handleDeleteSelection);
-				warning.addEventListener("noSelected",handleDeleteSelection);
-				
+				if(!this.data.isNew) {
+					var warning:SystemPopup = new SystemPopup();
+					warning.message = "Do you want to make this change affect all other templates?";
+					PopUpManager.addPopUp(warning,this,true,PopUpManagerChildList.POPUP);
+					warning.addEventListener("yesSelected",handleDeleteSelection,false,0,true);
+					warning.addEventListener("noSelected",handleDeleteSelection,false,0,true);
+				}
+				else {
+					var dp:IList = List(this.owner).dataProvider;
+					dp.removeItemAt(dp.getItemIndex(this.data));	
+				}
 			}
 			private function handleNameChange(event:Event):void {
 				_customfield.displayname = nameInput.text;
@@ -205,7 +218,7 @@
 			<s:List id="optionsList" useVirtualLayout="false" width="100%"  labelField="value" >
 				<s:itemRenderer>
 					<fx:Component>
-						<templates:CustomFieldOptionRenderer />
+						<customfields:CustomFieldOptionRenderer />
 					</fx:Component>
 				</s:itemRenderer>
 				<s:layout>

@@ -6,7 +6,7 @@
 	xmlns:controls="org.mig.view.controls.*"
 	xmlns:fe="com.fxcomponents.controls.fe.*"
 	backgroundColor="0x121212"
-	width="100%" height="100%" xmlns:templates="org.mig.view.components.managers.templates.*" xmlns:renderers="org.mig.view.renderers.*">
+	width="100%" height="100%" xmlns:templates="org.mig.view.components.managers.templates.*" xmlns:renderers="org.mig.view.renderers.*" xmlns:customfields="org.mig.view.components.managers.customfields.*">
 	
 	<fx:Declarations>
 		<s:ArrayList id="customFieldTypes" />
@@ -61,7 +61,7 @@
 		dragMoveEnabled="true" borderVisible="false" useVirtualLayout="true">
 			<s:itemRenderer>
 				<fx:Component>
-					<templates:CustomFieldView width="100%" vo="{data}"  customFieldTypes="{outerDocument.customFieldTypes}"/>
+					<customfields:CustomFieldView width="100%" vo="{data}"  customFieldTypes="{outerDocument.customFieldTypes}"/>
 				</fx:Component>
 			</s:itemRenderer>
 			<s:layout>

@@ -252,7 +252,9 @@ package org.mig.services
 			if(ValidFunctions.FUNCTIONS_WITH_TABLENAME.indexOf(params.action) != -1)
 					params.tablename = config.@tablename.toString();	
 			params.id = vo.id;
-			
+			for each(var arg:Object in args) {
+				params[arg.name] = arg.value;
+			}
 			//var classToUse:String = flash.utils.getQualifiedClassName(vo);
 			//var classRef:Class = flash.utils.getDefinitionByName(classToUse) as Class; 
 			//var resultClass:ClassFactory = new ClassFactory(classRef);

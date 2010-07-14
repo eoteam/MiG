@@ -16,6 +16,7 @@ package org.mig.model.vo
 		public var parent:ContentData;
 		public var children:Array = [];
 		
+		public var isNew:Boolean = true;
 		public var modified:Boolean = false;
 	}
 }

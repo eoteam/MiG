@@ -43,7 +43,10 @@ package org.mig.collections
 					case CollectionEventKind.REMOVE:
 						for each(item in items)  {
 						 	//add everything to deleted. wait for an add event to see if it was a move
-							deletedItems.addItem(item);
+							if(!item.isNew)
+								deletedItems.addItem(item);
+							else
+								newItems.removeItem(item);
 						}
 							//this.dispatchEvent(new Event("stageChange",true));
 					break;
@@ -52,11 +55,16 @@ package org.mig.collections
 							for each(item in items)  {
 								if(deletedItems.getItemIndex(item) != -1) //just moved
 									deletedItems.removeItem(item);
-								else //otherwise its truly new item
+								else if(item.isNew) { //otherwise its truly new item
 									newItems.addItem(item);
+								}
 							}
 							this.state = 1;
 							//this.dispatchEvent(new Event("stageChange",true));
+						}
+						else {
+							for each(item in items) 
+								item.isNew = false;
 						}
 					break;
 					case CollectionEventKind.UPDATE:
@@ -64,7 +72,7 @@ package org.mig.collections
 							for each(propChange in items) {
 								if(propChange.property != "modified" && propChange.property != "updateData" && 
 								   propChange.property != "children" && propChange.property != "parent") {
-									if(modifiedItems.getItemIndex(propChange.source) == -1 && newItems.getItemIndex(propChange.source) == -1 ) {
+									if(modifiedItems.getItemIndex(propChange.source) == -1 && newItems.getItemIndex(propChange.source) == -1) {
 										modifiedItems.addItem(propChange.source)
 									}
 									ContentData(propChange.source).modified = true;
@@ -91,6 +99,7 @@ package org.mig.collections
 		public function setItemNotNew(item:ContentData):void {
 			if(this.newItems.getItemIndex(item) != -1) {
 				newItems.removeItem(item);
+				item.isNew = false;
 			}				
 		}
 		public function isItemNew(item:ContentData):Boolean {

@@ -208,7 +208,7 @@ package org.mig.utils
 				case CustomFieldTypes.TEXT:
 					child = new TextArea();
 					TextArea(child).heightInLines = NaN;
-					TextArea(child).addEventListener(FlexEvent.UPDATE_COMPLETE,handleTextAreaUpdate);
+					TextArea(child).addEventListener(FlexEvent.UPDATE_COMPLETE,handleTextAreaUpdate,false,0,true);
 					TextArea(child).maxHeight = 300;
 					child.styleName = "bodyCopy";
 					child.setStyle("backgroundColor",0);
@@ -222,14 +222,14 @@ package org.mig.utils
 				case CustomFieldTypes.COLOR:
 					child = new MiGColorPicker();
 					if(vo && vo[customfield.name]) {
-						MiGColorPicker(child).selectedColor= Number(vo[customfield.name]);				
-						summary = Number(vo[customfield.name]).toString(16);
+						MiGColorPicker(child).selectedColor =  Number('0x'+vo[customfield.name].substr(1,vo[customfield.name].length));	
+						summary = vo[customfield.name];
 					}
 				break;
 				
 				case CustomFieldTypes.MULTIPLE_SELECT:
 					if(vo) {
-						customfield.optionsArray.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleListChange);
+						customfield.optionsArray.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleListChange,false,0,true);
 						for each(item in customfield.optionsArray.source)
 							item.vo = vo;
 					}					
@@ -254,7 +254,7 @@ package org.mig.utils
 					//List(child).layout = flowLayout;
 					optionRenderer = new ClassFactory(CustomFieldListCheckBox);						
 					List(child).itemRenderer = optionRenderer;
-					List(child).addEventListener(FlexEvent.CREATION_COMPLETE,handleListCreationComplete);
+					List(child).addEventListener(FlexEvent.CREATION_COMPLETE,handleListCreationComplete,false,0,true);
 					//BindingUtils.bindProperty(List(child),"height",flowLayout,"runningHeight");
 					//BindingUtils.bindProperty(container,"height",flowLayout,"runningHeight");
 				break;
@@ -296,7 +296,7 @@ package org.mig.utils
 				
 				case CustomFieldTypes.MULTIPLE_SELECT_WITH_ORDER:
 					if(vo) {
-						customfield.optionsArray.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleListChange);
+						customfield.optionsArray.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleListChange,false,0,true);
 						for each(item in customfield.optionsArray.source) 		
 							item.vo = vo;						
 					}	
@@ -321,8 +321,8 @@ package org.mig.utils
 					List(child).dragMoveEnabled = true;
 					List(child).dragEnabled = true;
 					List(child).dropEnabled = true;
-					List(child).addEventListener(DragEvent.DRAG_EXIT,checkDrag);
-					List(child).addEventListener(DragEvent.DRAG_ENTER,checkDrag);
+					List(child).addEventListener(DragEvent.DRAG_EXIT,checkDrag,false,0,true);
+					List(child).addEventListener(DragEvent.DRAG_ENTER,checkDrag,false,0,true);
 					optionRenderer = new ClassFactory(CustomFieldListCheckBox);	
 					List(child).itemRenderer = optionRenderer;
 				break;							
@@ -331,9 +331,9 @@ package org.mig.utils
 				container.addElement(child);
 				
 				if(vo)
-					child.addEventListener(Event.CHANGE,dataChangeProxy);		
+					child.addEventListener(Event.CHANGE,dataChangeProxy,false,0,true);		
 				if(customfield.typeid == CustomFieldTypes.FILE_LINK)
-					child.addEventListener(FlexEvent.CREATION_COMPLETE,handleCreationComplete);	
+					child.addEventListener(FlexEvent.CREATION_COMPLETE,handleCreationComplete,false,0,true);	
 				return [child,summary];
 			}
 			else {
@@ -375,7 +375,7 @@ package org.mig.utils
 						vo[customfield.name] = TextArea(event.target).text;
 						break;					
 					case CustomFieldTypes.COLOR:
-						vo[customfield.name] =  MiGColorPicker(event.target).selectedColor.toString(16);
+						vo[customfield.name] =  '#'+MiGColorPicker(event.target).selectedColor.toString(16);
 						break;
 					case CustomFieldTypes.INTEGER:
 						vo[customfield.name] = TextInput(event.target).text;

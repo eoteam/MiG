@@ -36,6 +36,6 @@ package org.mig.services.interfaces
 		function retrieveContent(id:int,config:XML,clazz:Class):void;
 		function updateContent(vo:ContentData,config:XML,customfields:Array):void;
 		function createContent(vo:ContentData,config:XML,customfields:Array,status:Boolean=false):void;
-		function deleteContent(vo:ContentData,config:XML):void;
+		function deleteContent(vo:ContentData,config:XML,...args):void;
 	}
 }
