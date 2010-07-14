@@ -27,12 +27,13 @@ package org.mig.controller.startup
 			service.loadTemplates();
 			service.addHandlers(handleTemplates);
 		}
-		private var templateId:RegExp;
+		private var templateId:int;
 		private function handleTemplates(data:Object):void {
 			var results:Array = data.result as Array;
 			for each(var item:Template in results) {				
 				contentModel.templates.addItem(item);
-				templateId = new RegExp(item.id.toString() , "gi");
+				templateId = item.id;
+				//templateId = new RegExp(item.id.toString() , "gi");
 				contentModel.templatesCustomFields.filterFunction = filterByTemplateId;
 				contentModel.templatesCustomFields.refresh();
 				for each(var cf:CustomField in contentModel.templatesCustomFields) {
@@ -48,7 +49,7 @@ package org.mig.controller.startup
 			eventDispatcher.dispatchEvent(new StateEvent(StateEvent.ACTION, AppStartupStateConstants.LOAD_TEMPLATES_COMPLETE));	
 		}
 		private function filterByTemplateId(item:CustomField):Boolean {
-			return item.templateids.search(templateId) == -1 ? false:true;
+			return item.templateid == templateId ? true:false;
 		}
 	}
 }

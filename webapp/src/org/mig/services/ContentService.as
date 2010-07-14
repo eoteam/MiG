@@ -38,11 +38,11 @@ package org.mig.services
 		public function ContentService() {
 			
 		}
-		public function loadTemplateCustomfields():void {
+/*		public function loadTemplateCustomfields():void {
 			var params:Object = new  Object();
 			params.action = ValidFunctions.GET_TEMPLATE_CUSTOMFIELDS;
 			this.createService(params,ResponseType.DATA,CustomField);	
-		}
+		}*/
 		public function loadRelatedCustomfields(config:XML,...args):void {
 			var params:Object = new  Object();
 			params.action = ValidFunctions.GET_RELATED_CUSTOMFIELDS;
@@ -246,7 +246,7 @@ package org.mig.services
 			service.service.showBusyCursor = true;
 			service.token.content = vo;
 		}
-		public function deleteContent(vo:ContentData,config:XML):void {
+		public function deleteContent(vo:ContentData,config:XML,...args):void {
 			var params:Object = new Object();
 			params.action = config.@deleteContent.toString();
 			if(ValidFunctions.FUNCTIONS_WITH_TABLENAME.indexOf(params.action) != -1)

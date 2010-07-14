@@ -22,13 +22,17 @@ package org.mig.controller.startup
 		public var contentModel:ContentModel;
 		
 		override public function execute():void {
-			service.loadTemplateCustomfields();
+			service.loadRelatedCustomfields(contentModel.templatesConfig.customfields[0]);
 			service.addHandlers(handleTemplates);
 		}
 		private function handleTemplates(data:Object):void {
 			var results:Array = data.result as Array;
 			for each(var result:CustomField in results) {
 				contentModel.templatesCustomFields.addItem(result);
+				if(result.defaultvalue == null)
+					result.defaultvalue = '';
+				if(result.description == null)
+					result.description = '';
 			}
 			trace("Startup: Templates CustomFields Complete");
 			appModel.startupCount = 3;	

@@ -7,20 +7,19 @@ package org.mig.model.vo.app
 	[Bindable]
 	public class CustomField extends ContentData
 	{	
-		public var templateids:String;
+		public var templateid:int;
 		public var customfieldid:int;
-		public var groupid:int;
 		public var displayorder:int;
 		
 		public var typeid:int;
+		public var groupid:int;
 		public var name:String;
 		public var displayname:String;
 		public var optionsArray:ArrayList = new ArrayList();
 		public var defaultvalue:String = "";
 		public var description:String = "";
 		
-	
-		public var newTemplates:Array = [];
+		public var hardDelete:Boolean = false;
 		
 		public function set options(ops:String):void
 		{

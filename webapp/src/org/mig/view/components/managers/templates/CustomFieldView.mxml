@@ -12,6 +12,8 @@
 			import mx.core.IVisualElement;
 			import mx.core.UIComponent;
 			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
+			import mx.managers.PopUpManagerChildList;
 			
 			import org.mig.collections.DataCollection;
 			import org.mig.model.vo.ValueObject;
@@ -19,6 +21,7 @@
 			import org.mig.model.vo.app.CustomFieldOption;
 			import org.mig.model.vo.app.CustomFieldTypes;
 			import org.mig.utils.GlobalUtils;
+			import org.mig.view.components.main.SystemPopup;
 			import org.mig.view.events.ContentViewEvent;
 			
 			import spark.events.IndexChangeEvent;
@@ -150,14 +153,22 @@
 				blinkEffect.play();
 			}
 			private function button1_clickHandler(event:MouseEvent):void {
-				var dp:IList = List(this.owner).dataProvider;
-				dp.removeItemAt(dp.getItemIndex(this.data));
+				var warning:SystemPopup = new SystemPopup();
+				warning.message = "Do you want to make this change affect all other templates?";
+				PopUpManager.addPopUp(warning,this,true,PopUpManagerChildList.POPUP);
+				warning.addEventListener("yesSelected",handleDeleteSelection);
+				warning.addEventListener("noSelected",handleDeleteSelection);
+				
 			}
 			private function handleNameChange(event:Event):void {
 				_customfield.displayname = nameInput.text;
 				_customfield.name = GlobalUtils.sanitizeString(nameInput.text);	
 			}
-
+			private function handleDeleteSelection(event:Event):void {
+				this.data.hardDelete = event.type == "yesSelected"?true:false;
+				var dp:IList = List(this.owner).dataProvider;
+				dp.removeItemAt(dp.getItemIndex(this.data));				
+			}
 		]]>
 	</fx:Script>
 	<fx:Declarations>

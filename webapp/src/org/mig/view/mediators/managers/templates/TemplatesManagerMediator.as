@@ -71,7 +71,7 @@ package org.mig.view.mediators.managers.templates
 			view.templateList.addEventListener(DragEvent.DRAG_ENTER,handleTemplateListDragEnter);
 			view.templateList.addEventListener(DragEvent.DRAG_DROP,handleTemplateListDragDrop);
 			
-			view.addFieldButton.addEventListener(MouseEvent.CLICK,handleAddButton);
+			view.addFieldButton.addEventListener(MouseEvent.CLICK,handleAddFieldButton);
 			view.submitButton.addEventListener(MouseEvent.CLICK,handleSubmitButton);
 			
 			view.cfList.addEventListener("addCustomFieldOption",enableSubmit);
@@ -191,10 +191,10 @@ package org.mig.view.mediators.managers.templates
 			for each(var field:CustomField in view.cfList.selectedItems) {
 				if(template.customfields.getItemIndex(field) == -1) {
 					contentModel.templatesCustomFields.state = DataCollection.MODIFIED;
+					view.submitButton.enabled = true;
+					var newField:CustomField = duplicateField(template,field);
 					template.customfields.addItem(field);
-					field.templateids += ","+template.id.toString();
-					field.newTemplates.push(template.id.toString());
-					field.displayorder = template.customfields.length+1;
+					contentModel.templatesCustomFields.addItem(newField);
 				}
 			}
 		}
@@ -229,12 +229,11 @@ package org.mig.view.mediators.managers.templates
 						contentModel.templatesCustomFields.modifiedItems.addItem(field);
 			}
 		}
-		private function handleAddButton(event:MouseEvent):void {
-			//view.fieldsList.visible = true;
+		private function handleAddFieldButton(event:MouseEvent):void {
 			var template:Template = view.templateList.selectedItem as Template;
 			var templateCF:CustomField = new CustomField();
 			view.cfList.dataProvider.addItem(templateCF);
-			templateCF.templateids = template.id.toString();
+			templateCF.templateid = template.id;
 			templateCF.groupid = 1;
 			templateCF.displayorder = view.cfList.dataProvider.getItemIndex(templateCF)+1;
 		}
@@ -243,54 +242,41 @@ package org.mig.view.mediators.managers.templates
 			var customfield:CustomField;
 			var template:Template;
 			var t:String;
-			//var selectedTemplate:Template = view.templateList.selectedItem as Template;
 			var time:Number = Math.round((new Date().time/1000));
 			for each(customfield in  contentModel.templatesCustomFields.deletedItems.source) {
 				cudTotal++;
-				contentService.deleteContent(customfield,contentModel.templatesConfig.customfields[0]);
-				contentService.addHandlers(handleCustomFieldDeleted);
+				if(customfield.hardDelete) {
+					
+				}
+				else {
+					contentService.deleteContent(customfield,contentModel.templatesConfig.customfields[0]);
+					contentService.addHandlers(handleCustomFieldDeleted);
+				}
 			}
-			for each(customfield in  contentModel.templatesCustomFields.modifiedItems.source) {
-							
+			for each(customfield in  contentModel.templatesCustomFields.modifiedItems.source) {				
 				delete customfield.updateData.optionsArray;
-				delete customfield.updateData.templateids;
-				delete customfield.updateData.newTemplates;
-				var i:int;
-				for (var p:String in customfield.updateData) {
-					i++;
-				}
-				if(i > 0 ) { //properties are changed
-					cudTotal++;	
-					customfield.updateData.customfieldid = customfield.id;
-					customfield.modifiedby = appModel.user.id;
-					customfield.modifieddate = time;
-					contentService.updateContent(customfield,contentModel.templatesConfig.customfields[0],[]);
-					contentService.addHandlers(handleCustomfieldUpdated);
-				}
-				for each(t in customfield.newTemplates) {
-					//only adding relational row
-					cudTotal++;
-					customfield.updateData.templateid = t;
-					customfield.updateData.customfieldid = customfield.id;
-					customfield.modifiedby = appModel.user.id;
-					customfield.modifieddate = time;
-					contentService.createContent(customfield,contentModel.templatesConfig.customfields[0],[],true);
-					contentService.addHandlers(handleCustomfieldCreated);
-				}
+				cudTotal++;	
+				customfield.updateData.customfieldid = customfield.customfieldid;
+				customfield.updateData.tablename2 = "content";
+				
+				customfield.modifiedby = appModel.user.id;
+				customfield.modifieddate = time;
+				contentService.updateContent(customfield,contentModel.templatesConfig.customfields[0],[]);
+				contentService.addHandlers(handleCustomfieldUpdated);
+
 			}
 			for each(customfield in contentModel.templatesCustomFields.newItems.source) {
-				var templateids:Array = customfield.templateids.split(',');
-				for each(t in templateids) {
-					cudTotal++;
-					delete customfield.updateData.templateids;
-					delete customfield.updateData.optionsArray;
-					customfield.updateData.templateid = t; //sneaky
-					customfield.updateData.tablename2 = "content";
-					customfield.createdby = customfield.modifiedby = appModel.user.id;
-					customfield.modifieddate = customfield.createdate= time;
-					contentService.createContent(customfield,contentModel.templatesConfig.customfields[0],[],true);
-					contentService.addHandlers(handleCustomfieldCreated);
-				}
+				cudTotal++;
+				delete customfield.updateData.optionsArray;
+				if(customfield.customfieldid != 0)
+					customfield.updateData.customfieldid = customfield.customfieldid;
+				customfield.updateData.tablename2 = "content";
+				customfield.updateData.templateid = customfield.templateid;
+				
+				customfield.createdby = customfield.modifiedby = appModel.user.id;
+				customfield.modifieddate = customfield.createdate= time;
+				contentService.createContent(customfield,contentModel.templatesConfig.customfields[0],[],true);
+				contentService.addHandlers(handleCustomfieldCreated);
 			}
 			for each(template in contentModel.templates.modifiedItems.source) {
 				cudTotal++;
@@ -377,8 +363,11 @@ package org.mig.view.mediators.managers.templates
 				newTemplate.id = id;
 				newTemplate.name = template.name;
 				for each(var field:CustomField in template.customfields.source) {
-					newTemplate.customfields.addItem(field);
-					field.templateids += ","+id;
+					var newField:CustomField = duplicateField(newTemplate,field);
+					newTemplate.customfields.addItem(newField);
+					contentModel.templatesCustomFields.addItem(newField);
+					contentModel.templatesCustomFields.setItemNotNew(newField);
+					contentModel.templatesCustomFields.setItemNotModified(newField);					
 				}
 				contentModel.templates.addItem(newTemplate);
 				contentModel.templates.setItemNotNew(newTemplate);
@@ -389,6 +378,22 @@ package org.mig.view.mediators.managers.templates
 				contentService.addHandlers(hanleDuplicatedRetrieve);
 				contentService.addProperties("template",newTemplate);*/
 			}
+		}
+		private function duplicateField(template:Template,field:CustomField):CustomField {
+			var newField:CustomField = new CustomField();
+			
+			newField.templateid = template.id;
+			newField.customfieldid = field.customfieldid;
+			newField.displayorder = template.customfields.length+1;
+			
+			newField.typeid = field.typeid;
+			newField.groupid = field.groupid;
+			newField.optionsArray = field.optionsArray;
+			newField.displayname = field.displayname
+			newField.name = field.name;
+			newField.defaultvalue = field.defaultvalue;
+			newField.description = field.description;
+			return newField;
 		}
 		/*private function hanleDuplicatedRetrieve(data:Object):void {
 			var results:Array = data.result as Array;
