@@ -38,7 +38,6 @@
 			}
 			private function textinput1_changeHandler(event:TextOperationEvent):void {
 				data.value = input.text;
-				this.dispatchEvent(new Event("changeCustomFieldOption",true));
 			}
 
 		]]>

@@ -1,0 +1,13 @@
+Some helper classes for building modular apps with RobotLegs.
+
+h1. Usage
+
+Modules should implement IModule which provides a setter for an IInjector as well as a dispose method for cleanup.
+
+Each module requires a context, which should extend ModuleContext. This context should be instantiated when the module is provided with an injector. The ModuleContext uses the injector to provide the module with a child injector that maintains the mappings of the provided injector.
+
+The IModuleCommandMap and IModuleEventDispatcher work together to provide the modules with a shared event/command bus for inter-module events to take place. Each module has an individual ModuleCommandMap, but unlike the normal CommandMap this triggers module level commands in response to mapped events that occur over the shared IModuleEventDispatcher.
+
+Please see the "RobotLegs framework":http://www.robotlegs.org for more info.
+
+These classes were compiled to work with RobotLegs v1.1.0.

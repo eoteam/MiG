@@ -18,5 +18,10 @@ package org.mig.model.vo
 		
 		public var isNew:Boolean = true;
 		public var modified:Boolean = false;
+		public var stateProps:Array;
+		
+		public function ContentData() {
+			stateProps = ["stateProps","isNew","modified","updateData","children","parent"];
+		}
 	}
 }

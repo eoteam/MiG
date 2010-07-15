@@ -1,5 +1,7 @@
 package org.mig.controller.configuration
 {
+	import mx.core.FlexGlobals;
+	
 	import org.mig.events.AppEvent;
 	import org.mig.model.AppModel;
 	import org.mig.services.interfaces.IAppService;
@@ -16,23 +18,26 @@ package org.mig.controller.configuration
 		override public function execute():void
 		{
 			trace("Application Started");
-			service.loadConfig();
-			service.addHandlers(configHandler);
-			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP));
+			//service.loadConfig();
+			//service.addHandlers(configHandler);
+			//eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP));
+			appModel.prompt = FlexGlobals.topLevelApplication.parameters.prompt;
+			appModel.configfile = FlexGlobals.topLevelApplication.parameters.configfile;	
+			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.CONFIG_LOADED));	
 		}
-		private function configHandler(data:Object):void {
+/*		private function configHandler(data:Object):void {
 			var results:Array = data.result as Array;
 			for each(var item:Object in results) {
 				switch(item.name) {
 					case "prompt":
-						appModel.prompt = item.value;
+					
 						break;
 					case "configfile":
 						appModel.configfile = item.value;
 						break;
 				}
 			}
-			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.CONFIG_LOADED));
-		}
+			
+		}*/
 	}
 }

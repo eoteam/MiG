@@ -44,7 +44,7 @@
 	</controller>
 	<manager id="mediaManager" name="Media"
 		mediaURL="http://migdev.mig.pentagram.com/files"
-		thumbURL="http://migdev.mig.pentagram.com/files/migThumbs" 
+		thumbURL="http://migdev.mig.pentagram.com/files/migThumbs" 	
 		fileDir="files"
 		thumbDir="files/migThumbs">
 		<child labelField="name" 

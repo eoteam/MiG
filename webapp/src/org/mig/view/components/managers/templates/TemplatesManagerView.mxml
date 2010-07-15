@@ -61,7 +61,7 @@
 		dragMoveEnabled="true" borderVisible="false" useVirtualLayout="true">
 			<s:itemRenderer>
 				<fx:Component>
-					<customfields:CustomFieldView width="100%" vo="{data}"  customFieldTypes="{outerDocument.customFieldTypes}"/>
+					<customfields:CustomFieldView width="100%"  customFieldTypes="{outerDocument.customFieldTypes}"/>
 				</fx:Component>
 			</s:itemRenderer>
 			<s:layout>

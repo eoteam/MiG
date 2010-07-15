@@ -4,95 +4,107 @@ require_once "readFunctions.php";
 function insertCustomField($params) 
 {
 	global $creationColumns;
-	if (isset($params['tablename'])) {
+	if (isset($params['tablename']) && isset($params["tablename2"])) {
 		
 		$columnsArray = getTableColumns($params['tablename']);
 		$cfColumnsArray = getTableColumns('customfields');	
+		$commandFields = array("action","tablename","tablename2");
+		
 		$sendParams = array();
-		$sql = "INSERT INTO `customfields` ";
-		$sql .= "(";
-
-		foreach ($params as $key=>$value) {
-			if ($key != 'action' && $key != 'tablename' && in_array($key,$columnsArray) == false && in_array($key,$creationColumns) == false) {
-				if (in_array($key, $cfColumnsArray)) // checks for misspelling of field name
-					$sql .= $key . ",";
-				else die("Unknown field name '$key'.");
-			}
-		}
-
-		// remove last comma
-		$sql = substr($sql,0,strlen($sql)-1);
-		$sql .= ")";
-
-		// put values into SQL
-		$sql .= " VALUES (";
-
-		foreach ($params as $key=>$value) {
-			if ($key != 'action' && $key != 'tablename' && in_array($key,$columnsArray) == false ) {
-				$sql .= ":".$key.",";
-				$sendParams[$key] = processText($value);
-			}
-		}
-		// remove last comma
-		$sql = substr($sql,0,strlen($sql)-1);
-		$sql .=")";
 		
-		if ($result = queryDatabase($sql,$sendParams,$insertid)) {
-		
-			//find next fieldid
-			$sql = "SHOW COLUMNS FROM `content` where `Field` LIKE '%customfield%'";
-			$result = queryDatabase($sql);
-			$cfCount = $result->rowCount();
-			$cfIds = array();
-			$counter = 1;
-			while($counter <= $cfCount ) {
-				$cfIds[] = $counter;
-				$counter++;
-			}
-			$sql = "SELECT fieldid from `" . $params['tablename'] . "`";
-			$result = queryDatabase($sql);
-    		if ($result)
-    		{
-    			while ($row = $result->fetch(PDO::FETCH_OBJ))
-        		{
-        			if(in_array($row->fieldid,$cfIds)) {
-        				unset($cfIds[$row->fieldid-1]);
-        			}
-        		}
-    		}
-    		$fieldid = 	array_shift($cfIds);
-    			
-			$sendParams = array();
-			$sql = "INSERT INTO `".$params['tablename']."` ";
+		if(!isset($params["customfieldid"])) {
+						
+			$sql = "INSERT INTO `customfields` ";
 			$sql .= "(";
 
 			foreach ($params as $key=>$value) {
-				if ($key != 'action' && $key != 'tablename' && in_array($key,$cfColumnsArray) == false ) {
-					if (in_array($key, $columnsArray)) // checks for misspelling of field name
+				if (!in_array($key,$commandFields) && !in_array($key,$columnsArray) && !in_array($key,$creationColumns)) {
+					if (in_array($key, $cfColumnsArray)) // checks for misspelling of field name
 						$sql .= $key . ",";
 					else die("Unknown field name '$key'.");
 				}
 			}
-			$sql .= "customfieldid,fieldid";
+			// remove last comma
+			$sql = substr($sql,0,strlen($sql)-1);
 			$sql .= ")";
-
+	
 			// put values into SQL
 			$sql .= " VALUES (";
 
 			foreach ($params as $key=>$value) {
-				if ($key != 'action' && $key != 'tablename' && in_array($key,$cfColumnsArray) == false ) {
+				if (!in_array($key,$commandFields) && !in_array($key,$columnsArray)) {
 					$sql .= ":".$key.",";
 					$sendParams[$key] = processText($value);
 				}
 			}
-			$sql .= ":customfieldid, :fieldid)";
-			$sendParams['customfieldid'] = 	$insertid;
-			$sendParams['fieldid'] = $fieldid;
-			if ($result = queryDatabase($sql,$sendParams,$insertid2)) {
-				sendSuccess($insertid2.','.$insertid.','.$fieldid);
+			// remove last comma
+			$sql = substr($sql,0,strlen($sql)-1);
+			$sql .=")";
+		
+			if ($result = queryDatabase($sql,$sendParams,$customfieldid)) {
+				
+				$sql = "SELECT sqltype FROM customfieldtypes WHERE id = " . $params["typeid"];
+				if($result = queryDatabase($sql)) {
+					$row = $result->fetch(PDO::FETCH_OBJ);
+					$sqltype = $row->sqltype;
+				}
+				else die("Query Failed: " . $result->errorInfo());
+				
+				if(isset($params["tablename2"]))
+					$tablename = $params["tablename2"];
+				else
+					$tablename = $params["tablename"];
+				$sql = "ALTER TABLE `". $tablename . "` ADD `". $params["name"] ."` ". $sqltype ." NOT NULL";
+				if ($result = queryDatabase($sql))
+					$ok = true;	
+				else die("Query Failed: " . $result->errorInfo());	
 			}
 			else die("Query Failed: " . $result->errorInfo());
+		}
+		else 
+			$customfieldid = $params["customfieldid"];
+			
+		$sendParams = array();
+		$sql = "INSERT INTO `".$params['tablename']."` ";
+		$sql .= "(";
 
+		foreach ($params as $key=>$value) {
+			if (!in_array($key,$commandFields) && !in_array($key,$cfColumnsArray)) {
+				if (in_array($key, $columnsArray)) // checks for misspelling of field name
+					$sql .= $key . ",";
+				else die("Unknown field name '$key'.");
+			}
+		}
+		if(isset($params['customfieldid'])) {
+			// remove last comma
+			$sql = substr($sql,0,strlen($sql)-1);
+			$sql .=")";
+		}
+		else {
+			$sql .= "customfieldid)";
+		}
+
+		// put values into SQL
+		$sql .= " VALUES (";
+		foreach ($params as $key=>$value) {
+			if (!in_array($key,$commandFields) && !in_array($key,$cfColumnsArray) && in_array($key,$columnsArray)) {
+				$sql .= ":".$key.",";
+				$sendParams[$key] = processText($value);
+			}
+		}
+		if(isset($params['customfieldid'])) {
+			// remove last comma
+			$sql = substr($sql,0,strlen($sql)-1);
+			$sql .=")";	
+		}
+		else {
+			$sql .= ":customfieldid)";
+		}
+		$sendParams['customfieldid'] = 	$customfieldid;
+		//print_r($sendParams). "<br><br>";
+		//echo $sql;
+		if ($result = queryDatabase($sql,$sendParams,$insertid)) {
+			sendSuccess($insertid.','.$customfieldid);
 		}
 		else die("Query Failed: " . $result->errorInfo());
 	}
@@ -100,48 +112,37 @@ function insertCustomField($params)
 		die ("No id or tablename provided.");
 
 }
-function deleteCustomField($params) //+
-{
-	if(isset($params['id']) && isset($params['tablename']))
-	{
-		$sendParams = array();
-		$sql = "SELECT customfieldid FROM " . $params['tablename'] . "  WHERE id = :id";
-		$sendParams['id'] = $params['id'];
-		if($result = queryDatabase($sql, $sendParams)) {
-			
-			$row = $result->fetch(PDO::FETCH_OBJ);
-			$sql = "DELETE FROM customfields WHERE id = :id ";
-			$sendParams = array();
-			$sendParams['id'] = $row->customfieldid;
-			if($result = queryDatabase($sql,$sendParams))
-				sendSuccess();
-			else 
-				die("Query Failed: " . $result->errorInfo());
-		}
-		else 
-			die("Query Failed: " . $result->errorInfo());
-	} 
-	else 
-		die ("No id or tablename provided.");
-}
-
 function updateCustomField($params)
 {
 	global $creationColumns;
 	if(isset($params['tablename'])) {
-		
+		$commandFields = array("action","tablename","tablename2","id");
 		if(isset($params['id']) && isset($params['customfieldid']))
 		{
+			if(isset($params['name'])) {
+				$sql = "SELECT name FROM customfields WHERE id = :id ";
+				$sendParams['id'] = $params['customfieldid'];
+				$result = queryDatabase($sql,$sendParams);
+				$row = $result->fetch(PDO::FETCH_OBJ);
+				$oldname = $row->name;
+				
+				$sql = "SHOW COLUMNS FROM ". $params['tablename2'] ." where Field = '" . $oldname."'";
+				$result = queryDatabase($sql);
+				$row = $result->fetch(PDO::FETCH_OBJ);
+				$type = $row->Type;
+								
+				$sql = "ALTER TABLE ". $params['tablename2'] . " CHANGE `".$oldname."` `".$params['name']."` ". $type ." NOT NULL";
+				$result = queryDatabase($sql);
+			}
+			
 			$columnsArray = getTableColumns($params['tablename']);
 			$cfColumnsArray = getTableColumns('customfields');
-			//print_r($params) . "<br>";
-			//print_r($columnsArray) . "<br/>";
-			//print_r($cfColumnsArray) . "<br/>";
+
 			$sendParams = array();
 			$sql = "UPDATE ". $params['tablename']  ." SET ";
 			foreach ($params as $key=>$value)
 			{
-				if (!in_array($key,$cfColumnsArray) && $key != 'tablename' && $key != 'action' && $key != 'id')
+				if (!in_array($key,$cfColumnsArray) && !in_array($key,$commandFields))
 				{
 					if (in_array($key, $columnsArray)) // checks for misspelling of field name
 					{
@@ -163,14 +164,14 @@ function updateCustomField($params)
 				$sql  = " UPDATE `customfields` SET ";
 				foreach ($params as $key=>$value)
 				{
-					if ($key != 'tablename' && $key != 'action' && $key != 'id'  && !in_array($key,$creationColumns) && !in_array($key,$columnsArray) )
+					if (!in_array($key,$commandFields)  && !in_array($key,$creationColumns) && !in_array($key,$columnsArray) )
 					{
 						if (in_array($key, $cfColumnsArray)) // checks for misspelling of field name
 						{
 							$sql .= $key . " = :".$key.", ";
 							$sendParams[$key] = processText($value);
 						}
-						else die("Unknown44 field name '$key'.");
+						else die("Unknown field name '$key'.");
 					}
 				}
 				$sql = substr($sql,0,strlen($sql)-2);				
@@ -193,6 +194,52 @@ function updateCustomField($params)
 		die("No tablename provided");
 	}
 }
+function deleteCustomField($params) //+
+{
+	$sendParams = array();
+	if(isset($params["customfieldid"]) && isset($params["tablename2"]))
+	{
+		//remove the column from table2
+		$sql = "SELECT name FROM customfields WHERE id = :id ";
+		$sendParams['id'] = $params["customfieldid"];
+		if($result = queryDatabase($sql, $sendParams));
+		else die("Query Failed: " . $result->errorInfo()); 
+		
+		if($result->rowCount() > 0 ) {
+			$row = $result->fetch(PDO::FETCH_OBJ);
+			$column = $row->name;
+		
+		
+			$sql = "ALTER TABLE " . $params['tablename2'] . " DROP " . $column;		
+			if($result = queryDatabase($sql));
+			else die("Query Failed: " . $result->errorInfo()); 
+		
+			$sql = "DELETE FROM customfields WHERE id = :id ";
+			$sendParams['id'] = $params['customfieldid'];
+			if($result = queryDatabase($sql, $sendParams))
+				sendSuccess();		 
+			else die("Query Failed: " . $result->errorInfo()); 		
+		}
+		else sendSuccess();
+	}
+	
+	else if(isset($params['id']) && isset($params['tablename']))
+	{
+		
+		$sql = "DELETE FROM " . $params["tablename"] . " WHERE id = :id ";
+		$sendParams['id'] = $params['id'];
+		if($result = queryDatabase($sql, $sendParams))
+			sendSuccess();		 
+		else die("Query Failed: " . $result->errorInfo()); 	
+	}
+	 
+	else 
+		die ("No id or tablename provided.");
+}
+
+
+
+
 function updateTag($params) 
 {
 	/*

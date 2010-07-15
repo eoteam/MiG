@@ -20,12 +20,6 @@ package org.mig.services
 		public function AppService() {
 			super();
 		}
-		public function loadConfig():void {
-			var params:Object = new Object();
-			params.action = "getData";
-			params.tablename = "config";
-			this.createService(params,ResponseType.DATA,Object);
-		}
 		public function loadConfigFile(url:String):void {
 			var suffix:String = (new Date()).getTime().toString();
 

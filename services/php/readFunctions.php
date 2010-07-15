@@ -25,91 +25,6 @@ function validateUser($params)
 		} else die("User not found.");
 	} else die ("Username and Password are both required!");
 }
-
-function getCustomFields($params) {
-	/*
-		-- REQUIRED --
-
-		contentid (int) - what contentid are we getting fields for? - CANNOT BE COMMA-DELIMITED!
-
-		-- OPTIONAL --
-
-		include_all
-
-		*/
-
-	if (isset($params['contentid'])) {
-
-		$sendParams = array();
-
-		$arrCF = array();
-
-		$sql = "SELECT template_customfields.customfieldid, 'template' as cftype,customfields.name,
-					'' as data, customfieldtypes.type, template_customfields.displayorder
-				FROM content 
-				LEFT JOIN template_customfields ON template_customfields.templateid = content.templateid
-				LEFT JOIN customfields ON customfields.id = template_customfields.customfieldid
-				LEFT JOIN customfieldtypes ON customfieldtypes.id = customfields.typeid
-				WHERE content.id = :contentid AND template_customfields.customfieldid IS NOT NULL";
-
-		$sendParams['contentid'] = $params['contentid'];
-
-		if(!isset($params['include_all']))
-		$sql .= " AND customfieldtypes.type != 'special' ";
-
-		$sql .= " UNION ALL
-				SELECT content_customfields.id AS customfieldid, 
-						'content' as cftype,
-						content_customfields.name, 
-						content_customfields.value,
-						customfieldtypes.type,
-						content_customfields.displayorder
-				FROM content_customfields
-				LEFT JOIN customfieldtypes ON customfieldtypes.id = content_customfields.typeid
-				WHERE content_customfields.contentid = :contentid";
-
-		$result = queryDatabase($sql,$sendParams);
-
-		// put the results into an array
-
-		while ($row = $result->fetch(PDO::FETCH_ASSOC))
-		$arrCF[] = $row;
-			
-		// now we need to get field data for template-based custom fields. this info is stored in the content table (customfield1,2,3,etc...)
-
-		$sendParams = array(); //params to replace placeholders at queryDatabase()
-			
-		$sql = "SELECT customfield1,customfield2,customfield3,customfield4,customfield5,customfield6,customfield7,customfield8 FROM content WHERE id = :contentid";
-		$sendParams['contentid'] = $params['contentid'];
-		$result = queryDatabase($sql,$sendParams);
-
-		if ($result->rowCount() > 0) {
-
-			$row = $result->fetch(PDO::FETCH_ASSOC);
-
-			foreach ($arrCF as $key => $CF) {
-				if ($CF['cftype'] == 'template')
-				$arrCF[$key]['data'] = $row['customfield'.$CF['customfieldid']];
-			}
-		}
-	} else {
-		die("Contentid is required.");
-	}
-
-	// put the array into xml
-
-	$xml = "<customfields>";
-
-	foreach ($arrCF as $CF) {
-		$xml .= "<customfield id=\"".$CF['customfieldid']."\" cftype=\"".$CF['cftype']."\" name=\"".$CF['name']."\" type=\"".$CF['type']."\" displayorder=\"".$CF['displayorder']."\">".stripslashes($CF['data'])."</customfield>";
-	}
-
-	$xml .= "</customfields>";
-
-	serializeArray($xml);
-	die();
-}
-
 function getData ($params) {
 	/*
 
@@ -300,33 +215,27 @@ function getContent($params)
 	"search_description","search_title","search_customfields","verbosity","parentid","orderby","orderdirection","children_depth");
 
 
-	// first let's grab customfield names, so we can translate!!
+	// SELECT fields according to verbosity
 
-	// first get all custom fields!
-	//$sql = "SELECT * FROM customfields";
-	$sql = "SELECT template_customfields.fieldid, customfields.name, customfields.displayname
+	if (!isset($params['verbosity'])) // set default verbosity
+	$params['verbosity'] = 0;
+	
+	if (isset($arrCFFlag[$params['verbosity']])) {
+	
+		$sql = "SELECT customfields.name, customfields.displayname
 				FROM template_customfields " .
 	 			"LEFT JOIN customfields ON customfields.id = template_customfields.customfieldid";
 
-	$result = queryDatabase($sql);
-	$customfields = array();
+		$result = queryDatabase($sql);
+		$customfields = array();
 
-	if ($result->rowCount() > 0) { // make sure some custom fields exist!
+		if ($result->rowCount() > 0) { // make sure some custom fields exist!
 
-		while ($row = $result->fetch(PDO::FETCH_ASSOC))
-		$customfields[$row['fieldid']] = $row['name'];
-
-		// now cycle through all params, and translate to custom field number if we have one
-		foreach ($params as $key=>$value) {
-
-			if ($cfKey = array_search($key, $customfields)) {
-
-				$params['customfield'.$cfKey] = $params[$key];
-				unset($params[$key]);
-					
-			}
+			while ($row = $result->fetch(PDO::FETCH_ASSOC))
+				$customfields[] = $row['name'];
 		}
 	}
+	
 	if (isset($params['parentid'])) {
 
 		// for this we need to get all contentids which have a particular parentid, and then get all their children!
@@ -397,11 +306,6 @@ function getContent($params)
 	}
 
 
-	// SELECT fields according to verbosity
-
-	if (!isset($params['verbosity'])) // set default verbosity
-	$params['verbosity'] = 0;
-
 	// BUILD SELECT STATEMENT FROM INFO IN VERBOSITY ARRAY!
 
 	$sql = "SELECT ";
@@ -415,7 +319,7 @@ function getContent($params)
 	if (isset($arrCFFlag[$params['verbosity']])) {
 
 		foreach ($customfields AS $key=>$value)
-		$sql .= " content.customfield".$key." AS ".$value.",";
+		$sql .= " content.".$value.",";
 	}
 
 	// remove last comma!
@@ -680,9 +584,6 @@ function getContent($params)
 	else
 	$sql .= " ORDER BY content.id ASC";
 
-	//print_r($sendParams);
-	//echo $sql;
-	// get the results
 	$result = queryDatabase($sql, $sendParams);
 
 	// return the results
@@ -919,41 +820,44 @@ function getContentContent($params)
 	// return the results
 	return $result;
 }
-
-function getTemplates($params) {
-
-	$sql = "SELECT templates.*,
-			GROUP_CONCAT(template_customfields.id ORDER BY template_customfields.id ASC) as rowids ,
- 			GROUP_CONCAT(template_customfields.customfieldid ORDER BY template_customfields.customfieldid ASC) as customfieldids , 
- 			GROUP_CONCAT(template_customfields.fieldid  ORDER BY template_customfields.fieldid ASC) as fieldids, 
- 			GROUP_CONCAT(template_customfields.displayorder  ORDER BY template_customfields.displayorder ASC) as displayorders 
- 			FROM templates LEFT JOIN template_customfields ON template_customfields.templateid = templates.id 
- 			GROUP BY templates.id ORDER BY templates.id";
-
-	$result = queryDatabase($sql);
-
-	// return the results
-	return $result;
+//for content
+function getTemplateCustomFields($params) {
+	$sql = "SELECT customfields.*, templatecfs.templateids, templatecfs.ids FROM customfields 
+			
+			LEFT JOIN (
+				SELECT template_customfields.customfieldid,
+				GROUP_CONCAT(template_customfields.templateid ORDER BY template_customfields.templateid) AS templateids,
+				GROUP_CONCAT(template_customfields.id ORDER BY template_customfields.templateid) AS ids
+				FROM template_customfields
+				GROUP BY template_customfields.customfieldid
+			
+ 			 ) AS templatecfs ON templatecfs.customfieldid = customfields.id WHERE customfields.groupid='1'";
+ 	if($result = queryDatabase($sql)) {
+ 		return $result;
+ 	}
+	else die("Query Failed: " . $result->errorInfo());
 
 }
+//for managers
 function getRelatedCustomFields($params) {
 	$validParams = array("action","tablename");
-	$sql = "SELECT " . $params["tablename"] . ".*, customfields.typeid, customfields.name, customfields.displayname, customfields.options, customfields.defaultvalue";
-	$sql .= " ,customfields.options, customfields.description FROM " . $params["tablename"];
-	
-	$sql .= " LEFT JOIN customfields ON customfields.id = " . $params["tablename"] . ".customfieldid";
+	$sendParams = array();
+	$sql  = "SELECT customfields.typeid, customfields.groupid,customfields.name, customfields.displayname, customfields.options, customfields.defaultvalue, customfields.description, ";
+	$sql .= $params["tablename"] . ".* ";
+	$sql .= " FROM " . $params["tablename"];
+	$sql .= " LEFT JOIN customfields ON customfields.id = " . $params["tablename"] . ".customfieldid WHERE " .  $params["tablename"]. ".id <> 0 ";
+
 	foreach ($params as $key=>$value) {
 		if (!in_array($key,$validParams)) {
 			$sql .= " AND " . $key . " = :".$key;
 			$sendParams[$key] = $value;
 		}
 	}
-		
 	$sql .= " ORDER BY displayorder";
-	$result = queryDatabase($sql);
-
-	// return the results
-	return $result;
+ 	if($result = queryDatabase($sql,$sendParams)) {
+ 		return $result;
+ 	}
+	else die("Query Failed: " . $result->errorInfo());
 }
 function getContentTree($params)
 {

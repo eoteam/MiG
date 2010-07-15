@@ -6,7 +6,7 @@
 		 xmlns:app="org.mig.model.vo.app.*"
 		 xmlns:templates="org.mig.view.components.managers.templates.*" 
 		 xmlns:customfields="org.mig.view.components.managers.customfields.*"
-		 autoDrawBackground="false"  focusEnabled="true"
+		 autoDrawBackground="false"  focusEnabled="true" 
 		 contentBackgroundAlpha="1" contentBackgroundColor="0x00000" creationComplete="creationCompleteHandler(event)">
 	<fx:Script>
 		<![CDATA[
@@ -14,8 +14,10 @@
 			import mx.core.IVisualElement;
 			import mx.core.UIComponent;
 			import mx.events.FlexEvent;
+			import mx.events.PropertyChangeEvent;
 			import mx.managers.PopUpManager;
 			import mx.managers.PopUpManagerChildList;
+			import mx.utils.StringUtil;
 			
 			import org.mig.collections.DataCollection;
 			import org.mig.model.vo.ValueObject;
@@ -31,21 +33,23 @@
 			[Bindable] private var _customfield:CustomField;
 			[Bindable] private var _defaultValueField:CustomField;
 			[Bindable] private var typeSelectedIndex:int = -1;
-			//private var element:UIComponent;
 			
+			override public function set data(value:Object):void {
+				super.data = value;
+				if(value) {
+					vo = value as ValueObject;
+				}
+			}
 			private function creationCompleteHandler(event:FlexEvent):void {
 				generateCustomField();
 				optionsList.addEventListener("addCustomFieldOption",handleAddCustomField,false,0,true);
 				optionsList.addEventListener("removeCustomFieldOption",handleRemoveCustomField,false,0,true);
-				optionsList.addEventListener("changeCustomFieldOption",updateOptions,false,0,true);
 			}	
 			private function updateOptions(event:Event=null):void {
-				for each(var option:CustomFieldOption in _customfield.optionsArray.source) {
-					option.index = _customfield.optionsArray.getItemIndex(option)+1;
-				}
-				_customfield.updateData.options = _customfield.options;				
+				//_customfield.updateData.options = _customfield.options;				
 				optionsList.invalidateDisplayList();
-				List(cfHolder.getElementAt(0)).invalidateDisplayList();
+				if(cfHolder.numElements > 0 ) 
+					List(cfHolder.getElementAt(0)).invalidateDisplayList();
 			}
 			private function handleAddCustomField(event:Event):void {
 				event.target.enableAddButton=false;
@@ -57,7 +61,6 @@
 				item.vo = _customfield;
 				var lastOption:CustomFieldOptionRenderer = optionsList.dataGroup.getElementAt(0) as CustomFieldOptionRenderer;
 				lastOption.enableRemoveButton = true;	
-				updateOptions();
 			}
 			private function handleRemoveCustomField(event:Event):void {
 				_customfield.optionsArray.removeItemAt(_defaultValueField.optionsArray.getItemIndex(event.target.data));
@@ -72,39 +75,42 @@
 					lastOption = optionsList.dataGroup.getElementAt(_customfield.optionsArray.length-1) as CustomFieldOptionRenderer;
 					lastOption.enableAddButton = true;
 				}
-				updateOptions();
 			}
 			public function set vo(value:ValueObject):void {
 				var dirty:Boolean = false;
-				if(_customfield && value && _customfield.typeid != CustomField(value).typeid)
-					dirty = true;
 				
-				_customfield = value as CustomField;
 				if(_customfield) {
-					for each(var item:Object in customFieldTypes.source) {
-						if(item.typeid == _customfield.typeid) {
-							typeSelectedIndex = customFieldTypes.getItemIndex(item);
-						}
-					}
-					
-					if(!_defaultValueField) {
-						var dv:CustomField = new CustomField();
-						dv.typeid = _customfield.typeid;
-						dv.name = "defaultvalue";
-						customfield = dv;
-					}
-					_defaultValueField.optionsArray = _customfield.optionsArray;	
-					for each(var option:CustomFieldOption in _customfield.optionsArray.source) {
-						option.customfield = _defaultValueField;
-						option.vo = _customfield;
-					}
-					if(dirty) {	
-						if(_customfield.typeid != 0)
-							generateCustomField();
-						else						
-							cfHolder.removeAllElements();
+					_customfield.removeEventListener(PropertyChangeEvent.PROPERTY_CHANGE, updateHandler);
+				 if(_customfield.typeid != CustomField(value).typeid)
+					dirty = true;
+				}
+				_customfield = value as CustomField;
+				_customfield.ready = false;
+				_customfield.addEventListener(PropertyChangeEvent.PROPERTY_CHANGE, updateHandler);
+				for each(var item:Object in customFieldTypes.source) {
+					if(item.typeid == _customfield.typeid) {
+						typeSelectedIndex = customFieldTypes.getItemIndex(item);
 					}
 				}
+				
+				if(!_defaultValueField) {
+					var dv:CustomField = new CustomField();
+					dv.typeid = _customfield.typeid;
+					dv.name = "defaultvalue";
+					customfield = dv;
+				}
+				_defaultValueField.optionsArray = _customfield.optionsArray;	
+				for each(var option:CustomFieldOption in _customfield.optionsArray.source) {
+					option.customfield = _defaultValueField;
+					option.vo = _customfield;
+				}
+				if(dirty) {	
+					if(_customfield.typeid != 0)
+						generateCustomField();
+					else						
+						cfHolder.removeAllElements();
+				}
+				_customfield.ready = true;					
 			}	
 			public function get vo():ValueObject {
 				return _customfield;
@@ -118,7 +124,6 @@
 			private function comboBoxBlack_changeHandler(event:IndexChangeEvent):void {
 				_customfield.typeid = _defaultValueField.typeid = typesList.selectedItem.typeid;
 				_customfield.defaultvalue = null;
-				cfHolder.removeAllElements();
 				generateCustomField();			
 			}
 			private function generateCustomField():void {
@@ -126,6 +131,7 @@
 				var tmp:Array = GlobalUtils.createCustomField(this);
 				var element:UIComponent;
 				if(tmp[0] != null) {
+					cfHolder.removeAllElements();
 					element = tmp[0] as UIComponent;
 					cfHolder.addElement(element);
 					var listMode:Boolean = false;
@@ -178,9 +184,38 @@
 				_customfield.name = GlobalUtils.sanitizeString(nameInput.text);	
 			}
 			private function handleDeleteSelection(event:Event):void {
-				this.data.hardDelete = event.type == "yesSelected"?true:false;
+				this.data.globalDelete = event.type == "yesSelected"?true:false;
 				var dp:IList = List(this.owner).dataProvider;
 				dp.removeItemAt(dp.getItemIndex(this.data));				
+			}
+			private var currentChangeEvent:PropertyChangeEvent;
+			private function updateHandler(event:PropertyChangeEvent):void {
+/* 			if(CustomField(event.source).stateProps.indexOf(event.property) == -1) {
+					if(currentChangeEvent && currentChangeEvent.property == event.property && 
+					   currentChangeEvent.oldValue == event.newValue && currentChangeEvent.newValue == event.oldValue) {
+						currentChangeEvent = event;
+					}
+					else {
+						currentChangeEvent = event;
+						var warning:SystemPopup = new SystemPopup();
+						warning.includeNo = false;
+						warning.message = "Do you want to make this change affect all other templates?";
+						PopUpManager.addPopUp(warning,this,true,PopUpManagerChildList.POPUP);
+						warning.addEventListener("yesSelected",handleUpdateSelection,false,0,true);
+						warning.addEventListener("cancelSelected",handleUpdateSelection,false,0,true);		
+					}
+				} */
+			}
+			private function handleUpdateSelection(event:Event):void {
+				if(event.type == "yesSelected") {
+					CustomField(data).globalChange = true;
+					if(currentChangeEvent.property == "options") 
+						updateOptions();
+				}
+				else {
+					if(currentChangeEvent.property != "options") 
+						data[currentChangeEvent.property] = currentChangeEvent.oldValue;
+				}
 			}
 		]]>
 	</fx:Script>

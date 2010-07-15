@@ -69,18 +69,21 @@ package org.mig.collections
 					break;
 					case CollectionEventKind.UPDATE:
 						if(state > 0 ) {
+							var noChange:Boolean = true;
 							for each(propChange in items) {
-								if(propChange.property != "modified" && propChange.property != "updateData" && 
-								   propChange.property != "children" && propChange.property != "parent") {
+								if(ContentData(propChange.source).stateProps.indexOf(propChange.property) == -1) {
 									if(modifiedItems.getItemIndex(propChange.source) == -1 && newItems.getItemIndex(propChange.source) == -1) {
 										modifiedItems.addItem(propChange.source)
 									}
 									ContentData(propChange.source).modified = true;
 									ContentData(propChange.source).updateData[propChange.property] = propChange.newValue;
+									noChange = false;
 								}
+								
 							}
 							this.state = 1;
-							//this.dispatchEvent(new Event("stageChange",true));
+							if(noChange)
+								return false;
 						}
 					break;
 				}

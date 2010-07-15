@@ -70,9 +70,10 @@ package org.mig.view.mediators.managers.templates
 			view.addFieldButton.addEventListener(MouseEvent.CLICK,handleAddFieldButton,false,0,true);
 			view.submitButton.addEventListener(MouseEvent.CLICK,handleSubmitButton,false,0,true);
 			
-			view.cfList.addEventListener("addCustomFieldOption",enableSubmit,false,0,true);
-			view.cfList.addEventListener("removeCustomFieldOption",enableSubmit,false,0,true);
-			view.cfList.addEventListener("changeCustomFieldOption",enableSubmit,false,0,true);		
+			//view.cfList.addEventListener("addCustomFieldOption",enableSubmit,false,0,true);
+			//view.cfList.addEventListener("removeCustomFieldOption",enableSubmit,false,0,true);
+			//view.cfList.addEventListener("changeCustomFieldOption",enableSubmit,false,0,true);		
+			
 			view.cfList.addEventListener(ContentViewEvent.CUSTOMFIELD_DRAG_START,handleDragStart,false,0,true);
 			view.cfList.addEventListener(DragEvent.DRAG_COMPLETE,handleListDragDrop,false,0,true);			
 			
@@ -80,7 +81,6 @@ package org.mig.view.mediators.managers.templates
 			view.addEventListener(FlexEvent.SHOW,handleShow,false,0,true);
 		}
 		private function menuItemSelectHandler(event:ContextMenuEvent):void{
-			contentModel.templates.state = DataCollection.MODIFIED;
 			var template:Template
 			switch(event.target.caption) {
 				case "Remove":
@@ -105,7 +105,9 @@ package org.mig.view.mediators.managers.templates
 			previouslySelectedTemplate = view.templateList.selectedItem as Template;
 		}
 		private function handleShow(event:FlexEvent):void {
-			view.templateList.selectedItem = previouslySelectedTemplate
+			view.templateList.selectedItem = previouslySelectedTemplate;
+			contentModel.templatesCustomFields.state = DataCollection.MODIFIED;
+			contentModel.templates.state = DataCollection.MODIFIED;
 		}
 		private function handleConfigLoaded(event:AppEvent):void {
 			view.name = contentModel.templatesConfig.@name.toString();
@@ -114,9 +116,8 @@ package org.mig.view.mediators.managers.templates
 			if(event.action == AppStartupStateConstants.LOAD_TEMPLATES_COMPLETE) {
 				view.templateList.dataProvider = contentModel.templates;
 				contentModel.templates.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleTemplatesChanged,false,0,true);
+				contentModel.templatesCustomFields.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleChange,false,0,true);
 				GlobalUtils.createContextMenu(["Add","Remove","Duplicate"],menuItemSelectHandler,null,[view.templateList]);	
-				for each(var template:Template in contentModel.templates) 
-					template.customfields.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleChange,false,0,true);
 			}
 /*			if(event.action == AppStartupStateConstants.LOAD_TEMPLATES_CFS_COMPLETE) {
 				view.fieldsList.dataProvider = contentModel.templatesCustomFields;
@@ -127,7 +128,6 @@ package org.mig.view.mediators.managers.templates
 				for each(var prop:PropertyChangeEvent in event.items) {
 					if(prop.property == "name")  {
 						view.submitButton.enabled = true;
-						contentModel.templates.state = DataCollection.MODIFIED;
 					}	
 				}
 			}
@@ -153,6 +153,7 @@ package org.mig.view.mediators.managers.templates
 				item = view.templateList.dataProvider.getItemAt(event.oldIndex) as Template;
 				//restore the twistedness where CustomFieldOption have switched the vo to the CF and the CF to a defaultvalueCF
 				for each(field in item.customfields.source) {
+					field.ready = false;
 					for each(option in field.optionsArray.source) {
 						option.customfield = field;
 						option.vo = null;
@@ -187,7 +188,6 @@ package org.mig.view.mediators.managers.templates
 			var template:Template = view.templateList.dataProvider.getItemAt(location.dropIndex) as Template;
 			for each(var field:CustomField in view.cfList.selectedItems) {
 				if(template.customfields.getItemIndex(field) == -1) {
-					contentModel.templatesCustomFields.state = DataCollection.MODIFIED;
 					view.submitButton.enabled = true;
 					var newField:CustomField = duplicateField(template,field);
 				}
@@ -198,15 +198,12 @@ package org.mig.view.mediators.managers.templates
 		}
 		private function handleChange(event:CollectionEvent):void {
 			var field:CustomField;
-			switch (event.kind) {
-				
+			switch (event.kind) {			
 				case "add":
-					contentModel.templatesCustomFields.state = DataCollection.MODIFIED;
 					for each(field in event.items) 
 						contentModel.templatesCustomFields.addItem(field);
 				break;
 				case "remove":
-					contentModel.templatesCustomFields.state = DataCollection.MODIFIED;
 					for each(field in event.items) 
 						contentModel.templatesCustomFields.removeItemAt(contentModel.templatesCustomFields.getItemIndex(field));
 				break;
@@ -215,7 +212,6 @@ package org.mig.view.mediators.managers.templates
 		}
 		private function enableSubmit(event:Event=null):void {
 			view.submitButton.enabled = true;
-			contentModel.templatesCustomFields.state = DataCollection.MODIFIED;
 			if(event && event.target is ItemRenderer) {
 				var field:CustomField = view.cfList.selectedItem as CustomField;
 				if(contentModel.templatesCustomFields.modifiedItems.getItemIndex(field) == -1 && 
@@ -239,7 +235,7 @@ package org.mig.view.mediators.managers.templates
 			var time:Number = Math.round((new Date().time/1000));
 			for each(customfield in  contentModel.templatesCustomFields.deletedItems.source) {
 				cudTotal++;
-				if(customfield.hardDelete) {
+				if(customfield.globalDelete) {
 					var arg1:Object = {name:'customfieldid',value:customfield.customfieldid};
 					var arg2:Object = {name:'tablename2',value:'content'};
 					contentService.deleteContent(customfield,contentModel.templatesConfig.customfields[0],arg1,arg2);					
@@ -250,8 +246,6 @@ package org.mig.view.mediators.managers.templates
 				contentService.addHandlers(handleCustomFieldDeleted);	
 			}
 			for each(customfield in  contentModel.templatesCustomFields.modifiedItems.source) {				
-				delete customfield.updateData.optionsArray;
-				delete customfield.updateData.hardDelete;
 				var c:int;
 				for(t in customfield.updateData)
 					c++;
@@ -271,8 +265,6 @@ package org.mig.view.mediators.managers.templates
 			}
 			for each(customfield in contentModel.templatesCustomFields.newItems.source) {
 				cudTotal++;
-				delete customfield.updateData.optionsArray;
-				delete customfield.updateData.hardDelete;
 				if(customfield.customfieldid != 0)
 					customfield.updateData.customfieldid = customfield.customfieldid;
 				customfield.updateData.tablename2 = "content";
@@ -329,7 +321,7 @@ package org.mig.view.mediators.managers.templates
 			var status:StatusResult = data.result as StatusResult;
 			if(status.success) {
 				var field:CustomField = data.token.content as CustomField;
-				if(!field.hardDelete)
+				if(!field.globalDelete)
 					contentModel.templatesCustomFields.deletedItems.removeItem(field);
 				else {
 					for each(var template:Template in contentModel.templates) {

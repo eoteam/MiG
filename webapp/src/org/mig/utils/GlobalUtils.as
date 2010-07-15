@@ -407,7 +407,7 @@ package org.mig.utils
 			}
 			else if(event.kind == "add" || event.kind == "remove")
 				modified = true;
-			if(modified) {
+			if(modified && customfield.ready) {
 				for each(item in list.source) {
 					if(item.selected) {	
 						ordereredItems += item.index + ',';

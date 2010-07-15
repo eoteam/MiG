@@ -13,7 +13,6 @@ $creationColumns = array('createdby','createdate','modifiedby','modifieddate');
 $validReadFunctions = array (
 "getRoot",
 "validateUser",
-"getCustomFields",
 "getData",
 "getContentTree",
 "getUsers",
@@ -22,13 +21,13 @@ $validReadFunctions = array (
 "getContentMedia",
 "getContentTags",
 "getContentContent",
-"getTemplates",
 "getMedia",
 "contentSearch",
 "migSearch",
 "getTerms",
 "sendUserInformation",
-"getRelatedCustomFields"
+"getRelatedCustomFields",
+"getTemplateCustomFields"
 );
 
 $validWriteFunctions = array (
@@ -68,26 +67,16 @@ $validFileFunctions = array (
 );
 
 
-
 // VERBOSITY LEVELS FOR getContent() FUNCTION...
 //search result
 $arrVerbosity[0] = array("content.id","content.parentid","content.migtitle","content.statusid","content.is_fixed","content.templateid","childrencount.childrencount");
 
+$arrCFFlag[1] = true;
 $arrVerbosity[1] = array("content.id","content.parentid","content.templateid","content.migtitle","content.statusid","content.containerpath",
-"content.createdby","content.createdate","content.modifiedby","childrencount.childrencount",
-"content.modifieddate","content.deleted","content.is_fixed","content.can_have_children","content.displayorder");
-
-$arrVerbosity[2] = array("content.id","content.color","content.parentid","content.templateid","content.url","content.title",
-"content.url","content.description2 as description","content.shortdescription","content.date","content.displayorder",
-"content_mediaids.mediaids");
+"content.createdby","content.createdate","content.modifiedby","content.modifieddate","content.deleted",
+"content.is_fixed","content.can_have_children","content.displayorder","childrencount.childrencount");
 
 // add verbosity levels for specific front end
-
-/*
-$fileDir = "../files/";
-$thumbDir = "../files/migThumbs/";
-$tempDir = "../temporary/";
-*/
 
 $mediaVerbosity[0] = array("media.*", "mimetypes.name as mimetype","content_media.displayorder","content_media.caption","content_media.credits", 
 			"GROUP_CONCAT(DISTINCT terms.id) AS tagids", "GROUP_CONCAT(DISTINCT terms.name) AS tags",
@@ -111,8 +100,6 @@ $mediaVerbosity[2] = array("media.id","media.name","media.path","media.playtime"
 $CRYPT_SALT = 85; # any number ranging 1-255
 $START_CHAR_CODE = 100; # 'd' letter
 
-$arrCFFlag[1] = true;
-$arrCFFlag[2] = true;
 
 
 $htmlSymbols = array(
