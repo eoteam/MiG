@@ -17,6 +17,8 @@
 				event.preventDefault(); 
 			}
 
+
+
 		]]>
 	</fx:Script>
 	
@@ -29,8 +31,9 @@
 			<s:BitmapImage source="@Embed(source='/migAssets/library.swf#tagIcon')" />
 			<s:Label styleName="boldCopy" left="-3" bottom="-5" width="100%" text="Tag Manager"/>
 			<s:Rect width="100%"/>
-			<s:Button styleName="defaultGrayButton" label="Close" click="this.visible=false"/>
+			<s:ToggleButton id="cfEditButton"  label="Edit" />
 			<s:Button styleName="defaultGrayButton" label="Save Changes" enabled="false" id="submitButton"/>
+			<s:Button styleName="defaultGrayButton" label="Close" click="this.visible=false"/>
 		</s:HGroup>
 		<s:Rect height="10" />
 		<s:Rect id="rule1" width="100%" height="1">

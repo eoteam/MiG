@@ -1,5 +1,6 @@
 package org.mig.controller.startup
 {
+	import org.mig.collections.DataCollection;
 	import org.mig.events.AppEvent;
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
@@ -25,16 +26,10 @@ package org.mig.controller.startup
 		}
 		private function handleCategoriesCustomFields(data:Object):void {
 			var results:Array = data.result as Array;
-			contentModel.categoriesCustomFields = results;
-		/*	for each(var result:ContentCustomField in results) {
-				for each(var cf:CustomField in appModel.customfieldsFlat) {
-					if(result.customfieldid == cf.id) {
-						result.customfield = cf;
-						contentModel.categoriesCustomFields.push(result);
-						break;
-					}
-				}
-			}*/
+			for each(var result:CustomField in results) {
+				contentModel.categoriesCustomFields.addItem(result);	
+			}		
+			contentModel.categoriesCustomFields.state = DataCollection.COMMITED;
 			trace("Startup: Categories CustomFields Complete");
 			appModel.startupCount = 7;
 			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP_PROGRESS,"Categories CustomFields loaded"));

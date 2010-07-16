@@ -90,7 +90,7 @@ package org.mig.view.mediators.managers.templates
 				break;
 				case "Duplicate":
 					for each(template in view.templateList.selectedItems)  {
-						appService.duplicateObject(template,contentModel.templatesConfig.child[0],"templateid","template_customfields");
+						appService.duplicateObject(template,contentModel.templatesConfig.child[0],"templateid","templates_customfields");
 						appService.addHandlers(handleDuplicated);
 					}
 				break;

@@ -3,7 +3,9 @@
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 xmlns:controls="org.mig.view.controls.*" 
-		 xmlns:fe="com.fxcomponents.controls.fe.*" xmlns:managers="org.mig.view.components.managers.*"> 
+		 xmlns:fe="com.fxcomponents.controls.fe.*" 
+		 xmlns:managers="org.mig.view.components.managers.*" 
+		 xmlns:customfields="org.mig.view.components.managers.customfields.*"> 
 
 	<fx:Script>
 		<![CDATA[
@@ -25,7 +27,10 @@
 
 		]]>
 	</fx:Script>
-	
+	<fx:Declarations>
+		<s:ArrayList id="customFieldTypes" />
+		
+ 	</fx:Declarations>	
 	<s:Rect height="1" width="100%">
 		<s:fill>
 			<s:SolidColor color="0xffffff" />
@@ -42,21 +47,51 @@
 		allowMultipleSelection="true" styleName="categoryTree"
 		dropEnabled="true" dragMoveEnabled="true" dragEnabled="true" />
 		
-		<s:VGroup width="50%"  height="100%">
-			<s:HGroup verticalAlign="middle">
-				<s:BitmapImage source="@Embed(source='/migAssets/library.swf#tagIcon')" />
-				<s:Label styleName="bodyCopy" fontSize="20" id="selectedCategoryLabel"/>
-			</s:HGroup>
+		<mx:ViewStack width="100%" height="100%" id="cfStack">
+			<s:NavigatorContent width="100%" height="100%">
+				<s:layout>
+					<s:VerticalLayout gap="4" paddingRight="4" />
+				</s:layout>
+				<s:HGroup verticalAlign="middle">
+					<s:BitmapImage source="@Embed(source='/migAssets/library.swf#tagIcon')" />
+					<s:Label styleName="bodyCopy" fontSize="20" id="selectedCategoryLabel"/>
+				</s:HGroup>			
+				<s:Rect width="100%" height="1">
+					<s:fill>
+						<s:SolidColor color="0xffffff" />
+					</s:fill>
+				</s:Rect>
+				<s:HGroup paddingLeft="2" width="100%">
+					<s:Label width="100" styleName="boldCopy" text="Name"/>
+					<s:TextInput styleName="inputFieldBlack" width="100%" contentBackgroundAlpha="1" />
+				</s:HGroup>
+				<s:Rect height="4"/>
+				<s:HGroup paddingLeft="2" width="100%">
+					<s:Label width="100" styleName="boldCopy" text="Slug"/>
+					<s:TextInput styleName="inputFieldBlack" width="100%" contentBackgroundAlpha="1" />
+				</s:HGroup>				
+				
+				<managers:ContentDataInspector width="100%"  height="100%" id="inspector" />				
+				
+			</s:NavigatorContent>
 			
-			<s:Rect width="100%" height="1">
-				<s:fill>
-					<s:SolidColor color="0xffffff" />
-				</s:fill>
-			</s:Rect>
-			<managers:ContentDataInspector width="100%"  height="100%" id="inspector" />
-			
-		</s:VGroup>
-		
-	</fe:ExtendedDividedBox>
-	
+			<s:NavigatorContent width="100%" height="100%" id="cfEditorContainer">
+				<s:layout>
+					<s:VerticalLayout gap="4" />
+				</s:layout>
+				<s:List width="100%" id="cfList" contentBackgroundAlpha="0"  requireSelection="false" allowMultipleSelection="true"  
+						dragMoveEnabled="true" borderVisible="false" useVirtualLayout="true">
+					<s:itemRenderer>
+						<fx:Component>
+							<customfields:CustomFieldView width="100%"  customFieldTypes="{outerDocument.customFieldTypes}"/>
+						</fx:Component>
+					</s:itemRenderer>
+					<s:layout>
+						<s:VerticalLayout gap="4" variableRowHeight="true"/>
+					</s:layout>
+				</s:List>
+				<s:Button label="New Field +" id="addFieldButton"/>
+			</s:NavigatorContent>
+		</mx:ViewStack>	
+	</fe:ExtendedDividedBox>	
 </s:VGroup>

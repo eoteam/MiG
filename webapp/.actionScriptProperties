@@ -33,6 +33,7 @@
   </compiler>
   <applications>
     <application path="migApp.mxml"/>
+    <application path="MaskingTest.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

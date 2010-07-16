@@ -4,7 +4,7 @@
 				xmlns:mx="library://ns.adobe.com/flex/mx" 
 				contentBackgroundAlpha="1"  width="100%" 
 				implements="org.mig.view.interfaces.ICustomFieldView"
-				creationComplete="itemrenderer1_creationCompleteHandler(event)" 
+				creationComplete="createCustomField(event)" 
 				autoDrawBackground="false">
 	
 		<s:layout>
@@ -24,13 +24,15 @@
 				public var element:UIComponent;
 				private var _vo:ContentData;
 				private var _customfield:CustomField;
+				private var created:Boolean = false;
+				
 				override public function set data(value:Object):void {
 					super.data = value;
 					customfield = value as CustomField;
 				}
 				
 				public function set vo(value:ValueObject):void {
-					_vo = value as ContentData;
+						_vo = value as ContentData;
 				}
 				
 				public function get vo():ValueObject {
@@ -39,16 +41,26 @@
 				
 				public function set customfield(value:CustomField):void {
 					_customfield = value;
+					if(_customfield && created) {
+						this.removeElementAt(1);
+						createCustomField();
+					}
 				}
 				
 				public function get customfield():CustomField {
 					return _customfield;
 				}						
-				protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
+				private function createCustomField(event:FlexEvent=null):void
 				{
+					created = true;
 					var tmp:Array = GlobalUtils.createCustomField(this);
-					element = tmp[0] as UIComponent;
-					element.enabled = false;	
+					if(tmp[0]) {
+						element = tmp[0] as UIComponent;
+						if(!vo)
+							element.enabled = false;	
+						else
+							GlobalUtils.populateCustomField(this,element);
+					}
 				}
 			]]>
 		</fx:Script>

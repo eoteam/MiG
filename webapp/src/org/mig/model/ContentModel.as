@@ -41,7 +41,7 @@ package org.mig.model
 		public var tagTerms:DataCollection;
 		public var categoryTerms:Array;
 		public var categoryTermsFlat:DataCollection;
-		public var categoriesCustomFields:Array;	
+		public var categoriesCustomFields:DataCollection;	
 		public var termsConfig:XML;
 		
 		public function ContentModel() {
@@ -52,7 +52,7 @@ package org.mig.model
 			templatesCustomFields = new DataCollection();
 			tagTerms.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleTagTerms);
 			categoryTermsFlat.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleCategoryTerms);
-			categoriesCustomFields = [];
+			categoriesCustomFields = new DataCollection();
 		}
 		private function handleTagTerms(event:CollectionEvent):void {
 			if(event.kind == CollectionEventKind.UPDATE) {

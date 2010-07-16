@@ -3,23 +3,15 @@ package org.mig.view.mediators.managers.tags
 		import flash.events.Event;
 		import flash.events.MouseEvent;
 		
-		import mx.collections.ArrayCollection;
 		import mx.collections.ArrayList;
-		import mx.collections.HierarchicalData;
-		import mx.controls.advancedDataGridClasses.AdvancedDataGridColumn;
-		import mx.controls.dataGridClasses.DataGridColumn;
-		import mx.core.ClassFactory;
 		import mx.events.CollectionEvent;
-		import mx.events.DataGridEvent;
 		import mx.events.FlexEvent;
 		import mx.events.ListEvent;
 		
-		import org.mig.collections.DataCollection;
 		import org.mig.controller.startup.AppStartupStateConstants;
 		import org.mig.events.AppEvent;
 		import org.mig.events.NotificationEvent;
 		import org.mig.model.ContentModel;
-		import org.mig.model.vo.UpdateData;
 		import org.mig.model.vo.app.CustomField;
 		import org.mig.model.vo.app.CustomFieldTypes;
 		import org.mig.model.vo.app.StatusResult;
@@ -27,7 +19,6 @@ package org.mig.view.mediators.managers.tags
 		import org.mig.services.interfaces.IContentService;
 		import org.mig.utils.GlobalUtils;
 		import org.mig.view.components.managers.tags.TagManagerView;
-		import org.mig.view.renderers.ADGCustomField;
 		import org.robotlegs.mvcs.Mediator;
 		import org.robotlegs.utilities.statemachine.StateEvent;
 	
@@ -46,6 +37,7 @@ package org.mig.view.mediators.managers.tags
 			eventMap.mapListener(eventDispatcher,StateEvent.ACTION,handleTermsLoaded);
 			eventMap.mapListener(eventDispatcher,AppEvent.CONFIG_FILE_LOADED,handleConfigLoaded,AppEvent);
 			
+			view.categoriesView.customFieldTypes = CustomFieldTypes.TYPES;
 			addListeners();
 		}
 		private function addListeners():void {
@@ -54,12 +46,20 @@ package org.mig.view.mediators.managers.tags
 			view.trashButton1.addEventListener(MouseEvent.CLICK,handleTagDeleteButton);
 			view.trashButton2.addEventListener(MouseEvent.CLICK,handleCategoryDeleteButton);
 			view.submitButton.addEventListener(MouseEvent.CLICK,handleSubmitButton);
+			view.cfEditButton.addEventListener(MouseEvent.CLICK,handleCFEdit);			
+			
 			//view.termsGrid.addEventListener(DataGridEvent.ITEM_EDIT_END,handleTagEditEnd);
 			
 			view.categoriesView.categoryList.addEventListener(ListEvent.ITEM_CLICK,handleCategoryListClick);
+			view.categoriesView.addFieldButton.addEventListener(MouseEvent.CLICK,handleAddFieldButton);
+			
 			view.insertParentButton.addEventListener(MouseEvent.CLICK,handleInsertParentCategory);
 			view.insertChildButton.addEventListener(MouseEvent.CLICK,handleInsertChildCategory);
-			
+
+		}
+		private function handleAddFieldButton(event:MouseEvent):void {
+			var newField:CustomField = new CustomField();
+			contentModel.categoriesCustomFields.addItem(newField);
 		}
 		private function handleConfigLoaded(event:AppEvent):void {
 			view.name = contentModel.termsConfig.@name.toString();
@@ -91,24 +91,9 @@ package org.mig.view.mediators.managers.tags
 			view.categoriesView.parentList.sortField = "name";
 			view.categoriesView.childrenList.sortField = "name";
 			view.categoriesView.childrenList.headerText = "Category";*/
-			var desc:ArrayList = new ArrayList();
-			var cf:CustomField;
-			cf = new CustomField();
-			cf.typeid = CustomFieldTypes.STRING;
-			cf.name = "name";
-			cf.displayname = "Name";
-			desc.addItem(cf);
-			
-			cf = new CustomField();
-			cf.typeid = CustomFieldTypes.STRING;
-			cf.name = "slug";
-			cf.displayname = "Slug";
-			desc.addItem(cf);
-			
-			for each(var item:CustomField in contentModel.categoriesCustomFields)
-				desc.addItem(item);
-						
-			view.categoriesView.inspector.dataProvider = desc;
+									
+			view.categoriesView.inspector.dataProvider = new ArrayList(contentModel.categoriesCustomFields.source);
+			view.categoriesView.cfList.dataProvider = contentModel.categoriesCustomFields;
 		}
 		private function handleInsertButton	(event:MouseEvent):void {
 			var term:Term = new Term();
@@ -133,27 +118,30 @@ package org.mig.view.mediators.managers.tags
 		private function handleChange(event:Event):void {
 			view.submitButton.enabled = true;
 		}
+		private function handleCFEdit(event:MouseEvent):void {
+			view.categoriesView.cfStack.selectedIndex = view.cfEditButton.selected?1:0;
+		}
 		private function handleSubmitButton(event:Event):void {
 			cudCount = cudTotal = 0;
 			var term:Term;
 			for each(term in contentModel.tagTerms.modifiedItems.source) {
-				contentService.updateContent(term,contentModel.termsConfig.child[0],contentModel.categoriesCustomFields);
+				contentService.updateContent(term,contentModel.termsConfig.child[0],contentModel.categoriesCustomFields.source);
 				contentService.addHandlers(handleTagTermUpdated);
 				cudTotal++;
 			}
 			for each(term in contentModel.tagTerms.newItems.source) {
-				contentService.createContent(term,contentModel.termsConfig.child[0],contentModel.categoriesCustomFields);
+				contentService.createContent(term,contentModel.termsConfig.child[0],contentModel.categoriesCustomFields.source);
 				contentService.addHandlers(handleTagTermCreated);
 				cudTotal++;
 			}
 			for each(term in contentModel.categoryTermsFlat.modifiedItems.source) {
-				contentService.updateContent(term,contentModel.termsConfig.child[0],contentModel.categoriesCustomFields);
+				contentService.updateContent(term,contentModel.termsConfig.child[0],contentModel.categoriesCustomFields.source);
 				contentService.addHandlers(handleCategoryTermUpdated);
 				cudTotal++;	
 			}
 			for each(term in contentModel.categoryTermsFlat.newItems.source) {
 				if(term.name != "new") {
-					contentService.createContent(term,contentModel.termsConfig.child[0],contentModel.categoriesCustomFields);
+					contentService.createContent(term,contentModel.termsConfig.child[0],contentModel.categoriesCustomFields.source);
 					contentService.addHandlers(handleCategoryTermCreated);
 					cudTotal++;
 				}
