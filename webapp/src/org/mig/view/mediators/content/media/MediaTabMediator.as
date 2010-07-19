@@ -2,6 +2,7 @@ package org.mig.view.mediators.content.media
 {
 	import flash.events.DataEvent;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.utils.getDefinitionByName;
 	
 	import mx.collections.ArrayCollection;
@@ -17,8 +18,8 @@ package org.mig.view.mediators.content.media
 	import org.mig.events.ViewEvent;
 	import org.mig.model.AppModel;
 	import org.mig.model.vo.ContentNode;
-	import org.mig.model.vo.content.ContainerNode;
 	import org.mig.model.vo.content.ContainerData;
+	import org.mig.model.vo.content.ContainerNode;
 	import org.mig.model.vo.content.SubContainerNode;
 	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.model.vo.media.FileNode;
@@ -92,13 +93,27 @@ package org.mig.view.mediators.content.media
 			view.usageList.addEventListener(ListItemEvent.ITEM_DOUBLE_CLICK,handleUsageSelection);
 			view.usageList.addEventListener(DragEvent.DRAG_ENTER,handleUsageListDragEnter);
 			
+			view.detailView.cancelButton.addEventListener(MouseEvent.CLICK,handleDetailViewCancel);
 		}
 		private function handleViewButtons(event:DataEvent):void {
 			var index:int = Number(event.data);
 			handleView(index);
 		}
+		private function handleDetailViewCancel(event:MouseEvent):void {
+			//view.stack.mask = null;
+			view.stack.filters = [];
+			view.maskingContainer.visible = false;
+			view.moveEff.yTo = -550;
+			view.moveEff.play();
+		}
+
 		private function handleDetailView(event:ViewEvent):void {
-			view.detailView.visible = true;
+			//view.stack.mask = view.maskingContainer;
+			view.stack.filters = [view.blurFiter];
+			view.maskingContainer.visible = true;
+			view.moveEff.yTo = 0;
+			view.moveEff.play();
+			//view.detailView.visible = true;
 			
 		}
 		private function filterByUsage(item:ContentMedia):Boolean

@@ -10,7 +10,7 @@ package org.mig.model.vo
 	
 	//stateless
 	
-	public class ValueObject extends ObjectProxy implements IValueObject
+	internal class ValueObject extends ObjectProxy implements IValueObject
 	{
 		public var id:Number;
 		public function ValueObject() {

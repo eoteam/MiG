@@ -37,7 +37,6 @@ package org.mig.view.mediators.managers.tags
 			eventMap.mapListener(eventDispatcher,StateEvent.ACTION,handleTermsLoaded);
 			eventMap.mapListener(eventDispatcher,AppEvent.CONFIG_FILE_LOADED,handleConfigLoaded,AppEvent);
 			
-			view.categoriesView.customFieldTypes = CustomFieldTypes.TYPES;
 			addListeners();
 		}
 		private function addListeners():void {
@@ -51,7 +50,7 @@ package org.mig.view.mediators.managers.tags
 			//view.termsGrid.addEventListener(DataGridEvent.ITEM_EDIT_END,handleTagEditEnd);
 			
 			view.categoriesView.categoryList.addEventListener(ListEvent.ITEM_CLICK,handleCategoryListClick);
-			view.categoriesView.addFieldButton.addEventListener(MouseEvent.CLICK,handleAddFieldButton);
+			view.customfieldsEditor.addFieldButton.addEventListener(MouseEvent.CLICK,handleAddFieldButton);
 			
 			view.insertParentButton.addEventListener(MouseEvent.CLICK,handleInsertParentCategory);
 			view.insertChildButton.addEventListener(MouseEvent.CLICK,handleInsertChildCategory);
@@ -60,6 +59,7 @@ package org.mig.view.mediators.managers.tags
 		private function handleAddFieldButton(event:MouseEvent):void {
 			var newField:CustomField = new CustomField();
 			contentModel.categoriesCustomFields.addItem(newField);
+			
 		}
 		private function handleConfigLoaded(event:AppEvent):void {
 			view.name = contentModel.termsConfig.@name.toString();
@@ -93,7 +93,8 @@ package org.mig.view.mediators.managers.tags
 			view.categoriesView.childrenList.headerText = "Category";*/
 									
 			view.categoriesView.inspector.dataProvider = new ArrayList(contentModel.categoriesCustomFields.source);
-			view.categoriesView.cfList.dataProvider = contentModel.categoriesCustomFields;
+			view.customfieldsEditor.list.dataProvider = contentModel.categoriesCustomFields;
+			view.customfieldsEditor.siblingContainer = view.categoriesContainer;
 		}
 		private function handleInsertButton	(event:MouseEvent):void {
 			var term:Term = new Term();
@@ -119,7 +120,12 @@ package org.mig.view.mediators.managers.tags
 			view.submitButton.enabled = true;
 		}
 		private function handleCFEdit(event:MouseEvent):void {
-			view.categoriesView.cfStack.selectedIndex = view.cfEditButton.selected?1:0;
+			if(!view.cfEditButton.selected) {
+				view.customfieldsEditor.show();
+			}
+			else {
+				view.customfieldsEditor.hide();
+			}
 		}
 		private function handleSubmitButton(event:Event):void {
 			cudCount = cudTotal = 0;

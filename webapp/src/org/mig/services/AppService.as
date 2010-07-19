@@ -6,6 +6,7 @@ package org.mig.services
 	import mx.rpc.http.HTTPService;
 	
 	import org.mig.model.ContentModel;
+	import org.mig.model.vo.ContentData;
 	import org.mig.model.vo.ValueObject;
 	import org.mig.model.vo.app.CustomField;
 	import org.mig.model.vo.manager.Term;
@@ -50,7 +51,7 @@ package org.mig.services
 			params.tablename = "colors";
 			this.createService(params,ResponseType.DATA,Object);			
 		}
-		public function duplicateObject(vo:ValueObject,config:XML,relatedField:String,relatedTables:String):void {
+		public function duplicateObject(vo:ContentData,config:XML,relatedField:String,relatedTables:String):void {
 			var params:Object = new  Object();
 			params.action = ValidFunctions.DUPLICATE_OBJECT;
 			params.id = vo.id;

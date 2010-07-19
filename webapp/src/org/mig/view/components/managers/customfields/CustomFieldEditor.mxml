@@ -20,6 +20,7 @@
 			import mx.utils.StringUtil;
 			
 			import org.mig.collections.DataCollection;
+			import org.mig.model.vo.ContentData;
 			import org.mig.model.vo.ValueObject;
 			import org.mig.model.vo.app.CustomField;
 			import org.mig.model.vo.app.CustomFieldOption;
@@ -37,7 +38,7 @@
 			override public function set data(value:Object):void {
 				super.data = value;
 				if(value) {
-					vo = value as ValueObject;
+					vo = value as ContentData;
 				}
 			}
 			private function creationCompleteHandler(event:FlexEvent):void {
@@ -76,7 +77,7 @@
 					lastOption.enableAddButton = true;
 				}
 			}
-			public function set vo(value:ValueObject):void {
+			public function set vo(value:ContentData):void {
 				var dirty:Boolean = false;
 				
 				if(_customfield) {
@@ -112,7 +113,7 @@
 				}
 				_customfield.ready = true;					
 			}	
-			public function get vo():ValueObject {
+			public function get vo():ContentData {
 				return _customfield;
 			}
 			public function set customfield(value:CustomField):void {

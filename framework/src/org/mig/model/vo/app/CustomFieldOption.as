@@ -1,6 +1,6 @@
 package org.mig.model.vo.app
 {
-	import org.mig.model.vo.ValueObject;
+	import org.mig.model.vo.ContentData;
 
 	[Bindable]
 	public class CustomFieldOption
@@ -9,7 +9,7 @@ package org.mig.model.vo.app
 		public var value:String = '';
 		public var selected:Boolean = false;
 		
-		public var vo:ValueObject;
+		public var vo:ContentData;
 		public var customfield:CustomField;
 	}
 }

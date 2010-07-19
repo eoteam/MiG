@@ -12,147 +12,10 @@
 	creationComplete="handleCreationComplete()"
 	resize="handleResize()" xmlns:easing="com.greensock.easing.*" xmlns:controls="org.mig.view.controls.*">
 	
-	<fx:Script>
-		<![CDATA[ 
-			import mx.effects.easing.Exponential;
-			
-			import org.mig.view.skins.buttons.AddContainerButtonSkin;
-			import org.mig.view.skins.buttons.SearchButtonSkin;
-			import org.mig.view.skins.dropdowns.ComboBoxHeaderButtonSkin;
-			import org.mig.view.skins.dropdowns.DefaultComboBoxSkin;
-			[Embed(source='/migAssets/library.swf#Tree_folderClosedIcon')]
-			[Bindable] private var closeIcon:Class;
-			
-			[Embed(source='/migAssets/library.swf#Tree_folderOpenIcon')]
-			[Bindable] private var openIcon:Class;
-			
-			[Embed(source='/migAssets/library.swf#draftIconWhiteUp')]
-			[Bindable] public var draftIconWhite:Class;
-			
-			[Embed(source='/migAssets/library.swf#mainBGLogo')]
-			[Bindable] public var bgLogo:Class;
-			private const SIDEBAR_CLOSED_WIDTH:Number = 18;
-			private const LEFT_SIDEBAR_OPEN_WIDTH:Number = 200;
-			private const RIGHT_SIDEBAR_OPEN_WIDTH:Number = 350;
-			private var _containerPanelVisible:Boolean = true;
-			private var _toolsPanelVisible:Boolean = true;
-			private var introLogo:MovieClip;
-			
-			public var optionsComboPrompt:String;
-			public var helpComboPrompt:String = "Help"; 
-			
-			private function handleCreationComplete():void {
-				var c:Number = preloaderHolder.width > preloaderHolder.height ? preloaderHolder.height : preloaderHolder.height;
-				var a:Number = Math.sqrt(c*c/2);
-				preloaderHolder.x = (this.width +a)/2;
-				preloaderHolder.y = (this.height+a)/2;
-				pendingTree.visible = false;
-			}
-			public function set containerPanelVisible(newVal:Boolean):void {
-				_containerPanelVisible = newVal;
-				toggleContainerPanelVisible();
-			}
-			public function get containerPanelVisible():Boolean {
-				return _containerPanelVisible;
-			}
-			private function toggleContainerPanelVisible():void {
-				if(_containerPanelVisible == true) {
-					containerPanelCollapseButton.selected = false;
-					//hide/show tray content
-					containerTray.visible = true;
-					controlBox.visible = true;
-				}
-				else {
-					containerPanelCollapseButton.selected = true;
-					containerTray.visible = false;
-					controlBox.visible = false;
-				}
-			}
-			public function set toolsPanelVisible(newVal:Boolean):void {
-				_toolsPanelVisible = newVal;
-				toggleToolsPanelVisible();
-			}
-			public function get toolsPanelVisible():Boolean {
-				return _toolsPanelVisible;
-			}
-			private function toggleToolsPanelVisible():void {
-				if(_toolsPanelVisible == true) {
-					toolsPanelCollapseButton.selected = false;
-					//hide/show tray content
-					//editorsView.visible = true;
-				}
-				else {
-					toolsPanelCollapseButton.selected = true;
-					//editorsView.visible = false;	
-				}
-			}
-			private function logoCompleteHandler(event:Event):void {
-				introLogo = MovieClip(mainLogo.content);		
-				introLogo.play();
-			}
-			private function handleResize():void {
-				if(preloaderHolder) {
-					var c:Number = preloaderHolder.width > preloaderHolder.height ? preloaderHolder.height : preloaderHolder.height;
-					var a:Number = Math.sqrt(c*c/2);
-					preloaderHolder.x = (this.width +a)/2;
-					preloaderHolder.y = (this.height+a)/2;
-				}
-			}
-			private function handleSliderParentReSize(event:Event):void{
-				//handle reaction to dragging from a closed state or 
-				//to a closed state so that the arrow reflects this
-				//for both sliders
-				if(event.currentTarget.name=="pendingTray"){
-					if (event.currentTarget.height > pendingTrayTitleHolder.height && pendingTree.visible == false){
-						pendingTree.visible = true;
-						pendingStateIcon.icon = openIcon;
-						pendingStateIcon.invalidateSkinState();
-					}
-					else{
-						if (event.currentTarget.height < pendingTrayTitleHolder.height){
-							pendingTree.visible = false;
-							event.currentTarget.height = pendingTrayTitleHolder.height;
-							pendingStateIcon.icon = closeIcon;
-							pendingStateIcon.invalidateSkinState();
-						}
-					}
-				}
-				else{
-					if (event.currentTarget.width > SIDEBAR_CLOSED_WIDTH){
-						event.currentTarget.visible = true;
-						if(event.currentTarget.name=="leftMain"){containerPanelVisible = true;}
-						else if(event.currentTarget.name=="rightMain"){toolsPanelVisible = true;}
-						
-					}
-					else{
-						if (event.currentTarget.width <= SIDEBAR_CLOSED_WIDTH){
-							
-							if(event.currentTarget.name=="leftMain"){containerPanelVisible = false;}
-							else if(event.currentTarget.name=="rightMain"){toolsPanelVisible = false;}
-							event.currentTarget.width = SIDEBAR_CLOSED_WIDTH;
-						}
-					} 
-				}
-			}	
-			private function pendingTrayToggle(event:MouseEvent):void {
-				if(pendingTree.visible == true) {
-					closePendingTray.play();
-					pendingTree.visible = false;
-					pendingStateIcon.icon = closeIcon;
-					pendingStateIcon.invalidateSkinState();
-				}
-				else {
-					openPendingTray.play();
-					pendingTree.visible = true;
-					pendingStateIcon.icon = openIcon;
-					pendingStateIcon.invalidateSkinState();
-				}
-			}
-		]]>
-	</fx:Script>
+	<fx:Script source="MainViewScript.as" />
 	<mx:SWFLoader id="bgLogoHolder" source="{bgLogo}" visible="false" horizontalCenter="0" top="200" width="211" height="290" showEffect="fadeIn" />
 	
-	<s:VGroup id="bodyContainer"  top="85" width="100%" height="100%" visible="false" showEffect="fadeIn" gap="0" >
+	<s:VGroup id="bodyContainer"  top="85" width="100%" height="100%" visible="false" showEffect="fadeIn" gap="0" clipAndEnableScrolling="true">
 		
 		<s:Rect width="100%" height="1">
 			<s:fill>
@@ -255,10 +118,10 @@
 	</s:SkinnableContainer>
 	
 	
-	<mx:SWFLoader id="mainLogo" source="migAssets/introLogoAnimation.swf" width="560" height="560" top="2" right="0" autoLoad="true"
-				  complete="logoCompleteHandler(event)" />
+	<mx:SWFLoader id="mainLogo" source="migAssets/introLogoAnimation.swf" width="560" height="560" top="2" right="0" autoLoad="true" complete="logoCompleteHandler(event)" />
 	
-	<!--	<mx:Text styleName="bodyCopy" id="timestamp" fontSize="10" text="04/29/09" y="70" right="5" visible="false" />	--> 
+	<mx:UIComponent id="drawingLayer" width="100%" height="100%" />
+	
 	
 	<fx:Declarations>
 		<s:Resize id="wipeDown" duration="500" easer="{easeOut}" heightTo="320" disableLayout="true" />
@@ -270,20 +133,19 @@
 		<s:Fade alphaFrom="0" alphaTo="1" duration="400" id="fadeIn"  easer="{easeOut}" />	
 		<s:Fade alphaFrom="1" alphaTo="0" duration="400" id="fadeOut"  easer="{easeIn}" />
 		
-		<mx:Fade alphaFrom="0" alphaTo="1" duration="800" id="logoFadeIn"  target="{mainLogo}" />	
-		<mx:Fade alphaFrom="1" alphaTo="0" duration="800" startDelay="600" id="logoFadeOut"  target="{mainLogo}" />
+		<s:Resize id="closeContainerTray" targets="{[leftMain]}" duration="0" widthTo="{SIDEBAR_CLOSED_WIDTH}" />
+		<s:Resize id="openContainerTray" targets="{[leftMain]}" duration="0" widthTo="300"/>
+		<s:Resize id="closePendingTray" targets="{[pendingTray]}" duration="400" heightTo="10" />
+		<s:Resize id="openPendingTray" targets="{[pendingTray]}" duration="400" heightTo="250"/>	
 		
-		<mx:Resize id="closePendingTray" targets="{[pendingTray]}" duration="400" heightTo="10" />
-		<mx:Resize id="openPendingTray" targets="{[pendingTray]}" duration="400" heightTo="250"/>
+		<s:Fade alphaFrom="0" alphaTo="1" duration="800" id="logoFadeIn"  target="{mainLogo}" />	
+		<s:Fade alphaFrom="1" alphaTo="0" duration="800" startDelay="600" id="logoFadeOut"  target="{mainLogo}" />
 		
-		<mx:Resize id="closeContainerTray" targets="{[leftMain]}" duration="0" widthTo="{SIDEBAR_CLOSED_WIDTH}" />
-		<mx:Resize id="openContainerTray" targets="{[leftMain]}" duration="0" widthTo="300"/>
+		<s:Resize id="closeToolsTray" targets="{[rightMain]}" duration="0" widthTo="{SIDEBAR_CLOSED_WIDTH}" />
+		<s:Resize id="openToolsTray" targets="{[rightMain]}" duration="0" widthTo="300"/>
 		
-		<mx:Resize id="closeToolsTray" targets="{[rightMain]}" duration="0" widthTo="{SIDEBAR_CLOSED_WIDTH}" />
-		<mx:Resize id="openToolsTray" targets="{[rightMain]}" duration="0" widthTo="300"/>
-		
-		<mx:Resize id="openManagers" target="{managersTree}" duration="200" />
+		<s:Resize id="openManagers" target="{managersTree}" duration="200" />
 	</fx:Declarations>
 	
-	<mx:UIComponent id="drawingLayer" width="100%" height="100%" />
+	
 </s:Group>

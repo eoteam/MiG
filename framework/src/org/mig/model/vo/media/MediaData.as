@@ -1,12 +1,10 @@
 package org.mig.model.vo.media
 {
-
-	import org.mig.model.vo.ConfigurableContentData;
 	import org.mig.model.vo.ContentData;
 
 	//this VO will not be dynamic. It will mirror the media table and its current feature set UNLESS custom fields are introduced.	
 	[Bindable]
-	public class MediaData extends ConfigurableContentData
+	public dynamic class MediaData extends ContentData
 	{
 		public var id3:XML;
 		public var title:String;

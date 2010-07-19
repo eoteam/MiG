@@ -1,11 +1,10 @@
 package org.mig.model.vo.content
 {
-	import org.mig.model.vo.ConfigurableContentData;
 	import org.mig.model.vo.ContentData;
 	import org.mig.model.vo.ValueObject;
 
 	[Bindable] 
-	public dynamic class ContainerData extends ConfigurableContentData
+	public dynamic class ContainerData extends ContentData
 	{
 		public var parentid:int;		
 		public var statusid:int;

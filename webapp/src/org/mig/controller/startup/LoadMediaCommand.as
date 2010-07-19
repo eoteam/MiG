@@ -20,8 +20,9 @@ package org.mig.controller.startup
 		override public function execute():void {
 			var data:MediaData = new MediaData();
 			data.id = 0;
-			data.childrencount = 1000;
-			contentModel.currentDirectory = contentModel.mediaModel = new DirectoryNode("files", contentModel.mediaConfig.child[0], data, null,'/',appModel.user.privileges);
+			var rootDir:DirectoryNode = new DirectoryNode("files", contentModel.mediaConfig.child[0], data, null,'/',appModel.user.privileges);
+			rootDir.childrencount = 1;
+			contentModel.currentDirectory = contentModel.mediaModel = rootDir;
 			eventDispatcher.dispatchEvent(new MediaEvent(MediaEvent.RETRIEVE_CHILDREN,contentModel.mediaModel));
 			
 			trace("Startup: Media Model Complete");

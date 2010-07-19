@@ -9,7 +9,7 @@ package org.mig.controller
 	import org.mig.events.NotificationEvent;
 	import org.mig.events.ViewEvent;
 	import org.mig.model.ContentModel;
-	import org.mig.model.vo.ConfigurableContentData;
+	
 	import org.mig.model.vo.ContentData;
 	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.app.StatusResult;

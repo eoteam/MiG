@@ -5,7 +5,7 @@
 	xmlns:mx="library://ns.adobe.com/flex/mx"
  	useVirtualLayout="false" borderVisible="false"
 	width="100%" height="100%"
-	xmlns:managers="org.mig.view.components.managers.*">
+	xmlns:managers="org.mig.view.components.managers.*" xmlns:customfields="org.mig.view.components.managers.customfields.*">
 	<fx:Script>
 		<![CDATA[
 			import mx.core.IVisualElement;
@@ -14,7 +14,7 @@
 			import org.mig.utils.GlobalUtils;
 			public function set content(value:ContentData):void {
 				for (var i:int; i<dataGroup.numElements;i++) { 
-					var renderer:CustomFieldItemRenderer = this.dataGroup.getElementAt(i) as CustomFieldItemRenderer;
+					var renderer:DataCustomFieldRenderer = this.dataGroup.getElementAt(i) as DataCustomFieldRenderer;
 					renderer.element.enabled = true;
 					renderer.vo = value;
 					GlobalUtils.populateCustomField(renderer,renderer.element);
@@ -27,7 +27,7 @@
 	</s:layout>
 	<s:itemRenderer>
 		<fx:Component>
-			<managers:CustomFieldItemRenderer />
+			<customfields:DataCustomFieldRenderer />
 		</fx:Component>
 	</s:itemRenderer>
 </s:List>

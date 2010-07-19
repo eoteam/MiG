@@ -17,6 +17,8 @@ package org.mig.model.vo
 	import mx.events.CollectionEvent;
 	import mx.events.CollectionEventKind;
 	
+	import org.mig.collections.DataCollection;
+	
 	[Bindable]
 	public class ContentNode
 	{
@@ -28,16 +30,17 @@ package org.mig.model.vo
 		public var children:ArrayCollection;
 		public var parentNode:ContentNode;
 		public var subContainers:Dictionary;
-		public var data:ConfigurableContentData;
+		public var data:ContentData;
 		public var privileges:int;		
 		
 		public var state:int;
 		public var hasChildren:Boolean = false;
+		public var childrencount:int;
 		
 		protected var _config:XML;
 		protected var _baseLabel:String;
 		
-		public function ContentNode(baseLabel:String, config:XML, data:ConfigurableContentData, parentNode:ContentNode,privileges:int) {
+		public function ContentNode(baseLabel:String, config:XML, data:ContentData, parentNode:ContentNode,privileges:int) {
 			this.parentNode = parentNode;	
 			this.baseLabel = baseLabel.replace(/<.*?>/g, "");
 			this.baseLabel = baseLabel.replace(/]]>/g, "");
@@ -45,7 +48,8 @@ package org.mig.model.vo
 			this.privileges = privileges;
 			this._config = config;
 			this.state = 0;
-			this.hasChildren =  data.childrencount > 0 ? true :  false;
+			this.childrencount = data.childrencount;
+			this.hasChildren =  childrencount > 0 ? true :  false;
 			children = new ArrayCollection();
 			subContainers = new Dictionary();
 			children.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleCollection);								

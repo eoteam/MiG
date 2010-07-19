@@ -31,11 +31,11 @@
 					customfield = value as CustomField;
 				}
 				
-				public function set vo(value:ValueObject):void {
+				public function set vo(value:ContentData):void {
 						_vo = value as ContentData;
 				}
 				
-				public function get vo():ValueObject {
+				public function get vo():ContentData {
 					return _vo
 				}
 				

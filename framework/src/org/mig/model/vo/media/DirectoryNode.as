@@ -35,7 +35,7 @@ package  org.mig.model.vo.media
 			
 			diskFiles = []; diskFolders = [];
 			newFiles = []; newFolders = [];
-			if(data.childrencount > 0 ) {
+			if(childrencount > 0 ) {
 				//children.addItem({label: 'loading ...', data:null});
 				isBranch = true;
 			}

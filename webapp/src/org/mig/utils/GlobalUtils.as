@@ -50,6 +50,7 @@ package org.mig.utils
 	import spark.components.List;
 	import spark.components.TextArea;
 	import spark.components.TextInput;
+	import spark.layouts.VerticalLayout;
 	
 	
 	public class GlobalUtils //implements IGlobalUtils
@@ -149,7 +150,7 @@ package org.mig.utils
 		private static var dateFormatter:DateFormatter = new DateFormatter();
 		public static function createCustomField(container:ICustomFieldView):Array {		
 			var customfield:CustomField = container.customfield;
-			var vo:ValueObject = container.vo; 
+			var vo:ContentData = container.vo; 
 			var option:Object;
 			var child:UIComponent;
 			var item:CustomFieldOption;
@@ -158,6 +159,8 @@ package org.mig.utils
 			var selected:Array;
 			var index:String;
 			dateFormatter.formatString = "MM/DD/YY";
+			var layout:VerticalLayout = new VerticalLayout;
+			layout.gap = 2;
 			switch(customfield.typeid) {
 				case CustomFieldTypes.BINARY:
 					child = new CheckBox();
@@ -251,7 +254,7 @@ package org.mig.utils
 					List(child).labelField = "value";
 					//var flowLayout:FlowLayout = new FlowLayout();
 					//flowLayout.clipAndEnableScrolling = false;
-					//List(child).layout = flowLayout;
+					List(child).layout = layout;
 					optionRenderer = new ClassFactory(CustomFieldListCheckBox);						
 					List(child).itemRenderer = optionRenderer;
 					List(child).addEventListener(FlexEvent.CREATION_COMPLETE,handleListCreationComplete,false,0,true);
@@ -313,6 +316,7 @@ package org.mig.utils
 					}	
 					child = new List();
 					//child.percentHeight = 100;
+
 					child.percentWidth = 100;
 					List(child).styleName = 'customFieldsList';
 					List(child).dataProvider = customfield.optionsArray;
@@ -321,6 +325,7 @@ package org.mig.utils
 					List(child).dragMoveEnabled = true;
 					List(child).dragEnabled = true;
 					List(child).dropEnabled = true;
+					List(child).layout = layout;
 					List(child).addEventListener(DragEvent.DRAG_EXIT,checkDrag,false,0,true);
 					List(child).addEventListener(DragEvent.DRAG_ENTER,checkDrag,false,0,true);
 					optionRenderer = new ClassFactory(CustomFieldListCheckBox);	
@@ -356,7 +361,7 @@ package org.mig.utils
 			if(UIComponent(event.target).parentDocument is ICustomFieldView) {
 				var container:ICustomFieldView = UIComponent(event.target).parentDocument as ICustomFieldView;
 				var customfield:CustomField = container.customfield;
-				var vo:ValueObject = container.vo;
+				var vo:ContentData = container.vo;
 				switch(customfield.typeid)
 				{
 					case CustomFieldTypes.BINARY:
@@ -396,7 +401,7 @@ package org.mig.utils
 			var list:ArrayList = event.target as ArrayList;
 			var item:CustomFieldOption = list.getItemAt(0) as CustomFieldOption;
 			var customfield:CustomField = item.customfield;
-			var vo:ValueObject = item.vo;
+			var vo:ContentData = item.vo;
 			var summary:String = '';
 			var ordereredItems:String = '';
 			var modified:Boolean = false;
@@ -442,7 +447,7 @@ package org.mig.utils
 			var summary:String = '';
 			var index:String;
 			var customfield:CustomField = container.customfield;
-			var vo:ValueObject = container.vo;
+			var vo:ContentData = container.vo;
 			var dp:ArrayList = customfield.optionsArray;
 			switch(customfield.typeid)
 			{

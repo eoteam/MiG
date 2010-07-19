@@ -13,6 +13,7 @@
 		<![CDATA[
 			import mx.core.UIComponent;
 			
+			import org.mig.model.vo.ContentData;
 			import org.mig.model.vo.ValueObject;
 			import org.mig.model.vo.app.CustomField;
 			import org.mig.model.vo.content.ContainerData;
@@ -25,11 +26,11 @@
 			[Bindable] public var headerLabel:String;
 			[Bindable] public var summaryText:String;
 				
-			public function set vo(value:ValueObject):void {
+			public function set vo(value:ContentData):void {
 				_vo = value as ContainerData
 			}
 			
-			public function get vo():ValueObject {
+			public function get vo():ContentData {
 				return _vo;
 			}
 			

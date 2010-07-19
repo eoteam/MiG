@@ -1,6 +1,7 @@
 package org.mig.view.mediators.content
 {
 	import org.mig.model.ContentModel;
+	import org.mig.model.vo.ContentData;
 	import org.mig.model.vo.UpdateData;
 	import org.mig.model.vo.ValueObject;
 	import org.mig.model.vo.app.CustomField;
@@ -36,7 +37,7 @@ package org.mig.view.mediators.content
 			{
 				var cfElement:CustomFieldElement = new CustomFieldElement();
 				cfElement.customfield = field;
-				cfElement.vo = view.content.data as ValueObject;
+				cfElement.vo = view.content.data as ContentData;
 				view.mainContainer.addElement(cfElement);
 				cfElements.push(cfElement);
 			}

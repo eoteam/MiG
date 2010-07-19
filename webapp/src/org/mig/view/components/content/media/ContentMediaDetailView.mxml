@@ -30,7 +30,7 @@
 
 	<s:HGroup width="100%">
 		<s:Label width="97" text="Rating" />
-		<controls:RatingComponent  rating="0" />
+		<controls:Rating editable="true" id="ratingComponent" />
 	</s:HGroup>
 	
 	<s:HGroup width="100%">
@@ -76,7 +76,7 @@
 	<s:Rect height="20" />
 	<s:HGroup width="100%">
 		<s:Button label="Save Changes" />
-		<s:Button label="Cancel" click="this.visible=false" />
+		<s:Button label="Cancel"  id="cancelButton"/>
 	</s:HGroup>	
 		
 	</s:SkinnableContainer>
