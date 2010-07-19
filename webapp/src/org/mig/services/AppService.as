@@ -61,5 +61,11 @@ package org.mig.services
 			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
 			service.token.vo = vo;
 		}
+		public function loadSettings():void {
+			var params:Object = new Object();
+			params.action = ValidFunctions.GET_DATA;
+			params.tablename = "settings";
+			this.createService(params,ResponseType.DATA);
+		}
 	}
 }

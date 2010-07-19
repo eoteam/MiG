@@ -71,7 +71,7 @@ package org.mig.model.vo
 		}	
 		public function get config():XML {
 			return _config;
-		}		
+		}
 		public function get label():String {
 			if(data.childrencount > 0)
 				return _baseLabel + " (" + data.childrencount + ")";

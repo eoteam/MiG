@@ -223,8 +223,8 @@ function getContent($params)
 	if (isset($arrCFFlag[$params['verbosity']])) {
 	
 		$sql = "SELECT customfields.name, customfields.displayname
-				FROM template_customfields " .
-	 			"LEFT JOIN customfields ON customfields.id = template_customfields.customfieldid";
+				FROM templates_customfields " .
+	 			"LEFT JOIN customfields ON customfields.id = templates_customfields.customfieldid";
 
 		$result = queryDatabase($sql);
 		$customfields = array();
@@ -825,11 +825,11 @@ function getTemplateCustomFields($params) {
 	$sql = "SELECT customfields.*, templatecfs.templateids, templatecfs.ids FROM customfields 
 			
 			LEFT JOIN (
-				SELECT template_customfields.customfieldid,
-				GROUP_CONCAT(template_customfields.templateid ORDER BY template_customfields.templateid) AS templateids,
-				GROUP_CONCAT(template_customfields.id ORDER BY template_customfields.templateid) AS ids
-				FROM template_customfields
-				GROUP BY template_customfields.customfieldid
+				SELECT templates_customfields.customfieldid,
+				GROUP_CONCAT(templates_customfields.templateid ORDER BY templates_customfields.templateid) AS templateids,
+				GROUP_CONCAT(templates_customfields.id ORDER BY templates_customfields.templateid) AS ids
+				FROM templates_customfields
+				GROUP BY templates_customfields.customfieldid
 			
  			 ) AS templatecfs ON templatecfs.customfieldid = customfields.id WHERE customfields.groupid='1'";
  	if($result = queryDatabase($sql)) {
