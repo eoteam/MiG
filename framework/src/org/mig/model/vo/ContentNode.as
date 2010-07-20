@@ -32,21 +32,19 @@ package org.mig.model.vo
 		public var subContainers:Dictionary;
 		public var data:ContentData;
 		public var privileges:int;		
-		
+		public var labelField:String = "name";
 		public var state:int;
 		public var hasChildren:Boolean = false;
 		public var childrencount:int;
 		
-		protected var _config:XML;
 		protected var _baseLabel:String;
 		
-		public function ContentNode(baseLabel:String, config:XML, data:ContentData, parentNode:ContentNode,privileges:int) {
+		public function ContentNode(baseLabel:String, data:ContentData, parentNode:ContentNode,privileges:int) {
 			this.parentNode = parentNode;	
 			this.baseLabel = baseLabel.replace(/<.*?>/g, "");
 			this.baseLabel = baseLabel.replace(/]]>/g, "");
 			this.data = data;
 			this.privileges = privileges;
-			this._config = config;
 			this.state = 0;
 			this.childrencount = data.childrencount;
 			this.hasChildren =  childrencount > 0 ? true :  false;
@@ -69,9 +67,6 @@ package org.mig.model.vo
 				data.childrencount = children.length;
 			}
 		}	
-		public function get config():XML {
-			return _config;
-		}
 		public function get label():String {
 			if(data.childrencount > 0)
 				return _baseLabel + " (" + data.childrencount + ")";
@@ -96,7 +91,7 @@ package org.mig.model.vo
 		public function set baseLabel(value:String):void {
 			_baseLabel = value;
 			if(data)
-				data[_config.@labelField] = value;
+				data[labelField] = value;
 		}	
 		//removes a child node from the children list
 		/*		public function removeNode(node:ContentNode):void {

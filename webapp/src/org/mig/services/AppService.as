@@ -21,17 +21,11 @@ package org.mig.services
 		public function AppService() {
 			super();
 		}
-		public function loadConfigFile(url:String):void {
-			var suffix:String = (new Date()).getTime().toString();
-
-			var service:XMLHTTPService = new XMLHTTPService(url + "?" + suffix,null,null,null);
-			services.push(service);
-			service.service.resultFormat = HTTPService.RESULT_FORMAT_E4X;
-			service.service.method = URLRequestMethod.GET;
-			service.execute();
-			service.token.id = services.indexOf(service);
-			//service.token.addResponder(new Responder(configfileHandler,fault));
-			service.token.addResponder(new Responder(result,fault));
+		public function loadSettings():void {
+			var params:Object = new  Object();
+			params.action = ValidFunctions.GET_DATA;
+			params.tablename = "settings"; 
+			this.createService(params,ResponseType.DATA);
 		}
 		public function loadCustomFieldGroups():void {
 			var params:Object = new  Object();
@@ -60,12 +54,6 @@ package org.mig.services
 			params.relatedTables = relatedTables;
 			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
 			service.token.vo = vo;
-		}
-		public function loadSettings():void {
-			var params:Object = new Object();
-			params.action = ValidFunctions.GET_DATA;
-			params.tablename = "settings";
-			this.createService(params,ResponseType.DATA);
 		}
 	}
 }

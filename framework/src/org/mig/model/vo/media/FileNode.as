@@ -17,8 +17,8 @@ package org.mig.model.vo.media
 	public class FileNode extends ContentNode
 	{
 		public var isBranch:Boolean = false;
-		public function FileNode(baseLabel:String, config:XML, data:MediaData, parentContent:ContentNode,privileges:int) {
-			super(baseLabel, config, data, parentContent,privileges);	
+		public function FileNode(baseLabel:String, data:MediaData, parentContent:ContentNode,privileges:int) {
+			super(baseLabel, data, parentContent,privileges);	
 			children = null;
 		}
 /*		

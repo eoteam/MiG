@@ -19,11 +19,13 @@ package org.mig.controller.startup
 			var fsmInjector:FSMInjector = new FSMInjector( AppStartupStateConstants.FSM );
 			var stateMachine:StateMachine = new StateMachine(eventDispatcher);
 			
-			commandMap.mapEvent( AppStartupStateConstants.LOAD_CONFIG, 			LoadConfigCommand, 				StateEvent, true );
+			commandMap.mapEvent( AppStartupStateConstants., 			LoadConfigCommand, 				StateEvent, true );
 
-			commandMap.mapEvent( AppStartupStateConstants.LOAD_CONTENT, 		LoadContentCommand,				StateEvent, true );		
+				
 			commandMap.mapEvent( AppStartupStateConstants.LOAD_TEMPLATES_CFS,	LoadTemplatesCFSCommand,		StateEvent, true);
 			commandMap.mapEvent( AppStartupStateConstants.LOAD_TEMPLATES,		LoadTemplatesCommand,			StateEvent, true);
+			
+			commandMap.mapEvent( AppStartupStateConstants.LOAD_CONTENT, 		LoadContentCommand,				StateEvent, true );	
 			
 			commandMap.mapEvent( AppStartupStateConstants.LOAD_MEDIA,			LoadMediaCommand,				StateEvent, true );
 			commandMap.mapEvent( AppStartupStateConstants.LOAD_MIMETYPES,		LoadMimeTypesCommand,			StateEvent, true );

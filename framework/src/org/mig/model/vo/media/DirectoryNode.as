@@ -27,8 +27,8 @@ package  org.mig.model.vo.media
 		public var newFolders:Array;
 		
 		public var isBranch:Boolean = false;
-		public function DirectoryNode(baseLabel:String, config:XML, data:MediaData, parentContent:ContentNode, directory:String,privileges:int) {
-			super(baseLabel, config, data, parentContent,privileges);	
+		public function DirectoryNode(baseLabel:String, data:MediaData, parentContent:ContentNode, directory:String,privileges:int) {
+			super(baseLabel, data, parentContent,privileges);	
 			this.directory = directory;
 			numFolders = 0;
 			numFiles = 0;

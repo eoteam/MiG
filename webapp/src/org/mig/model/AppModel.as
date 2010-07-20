@@ -6,9 +6,9 @@ package org.mig.model
 	public class AppModel extends Actor
 	{	
 		//constants
-		public var config:XML;
+		//public var config:XML;
 		public var prompt:String;
-		public var configfile:String;
+		
 		
 		//session
 		public var user:User; //currently logged in user

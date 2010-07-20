@@ -13,7 +13,7 @@ package org.mig.events
 		public static const LOGIN_ERROR:String = "loginError";
 		
 		public static const TIMED_OUT:String = "timedout";
-		public static const CONFIG_LOADED:String = "configLoaded";
+		public static const BOOTSTRAP_COMPLETE:String = "bootStrapComplete";
 		public static const CONFIG_FILE_LOADED:String = "configFileLoaded";
 		public static const INIT:String = "init";	
 		

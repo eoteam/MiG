@@ -38,21 +38,20 @@ package org.mig.controller.startup
 		
 		
 		
-		/***********************************************CONFIG*************************************************/
-		public static const LOADING_CONFIG:String          			= "state/starting/config";
-		public static const LOAD_CONFIG:String             			= "event/start/config";
-		public static const LOAD_CONFIG_COMPLETE:String				= "action/start/config/complete";
-		public static const LOAD_CONFIG_FAILED:String   			= "action/start/config/failed";
+		/***********************************************SETTINGS*************************************************/
+		public static const SETTINGS:String          					= "state/starting/settings";
+		public static const SETTINGS_LOAD:String             			= "event/start/settings";
+		public static const SETTINGS_LOAD_COMPLETE:String				= "action/start/settings/complete";
+		public static const SETTINGS_LOAD_FAILED:String   				= "action/start/settings/failed";
 		/*******************************************************************************************************/
 		
 		
-		
-		/***********************************************CONTENT*************************************************/
-		public static const LOADING_CONTENT:String					= "state/starting/content";
-		public static const LOAD_CONTENT:String						= "event/start/content";
-		public static const LOAD_CONTENT_COMPLETE:String 			= "action/start/content/complete";
-		public static const LOAD_CONTENT_FAILED:String    			= "action/start/content/failed";
-	
+		/***********************************************TEMPLATES*************************************************/	
+		public static const LOADING_TEMPLATES_CFS:String			= "state/starting/templatescfs";
+		public static const LOAD_TEMPLATES_CFS:String				= "event/start/templatescfs";
+		public static const LOAD_TEMPLATES_CFS_COMPLETE:String  	= "action/start/templatescfs/complete";
+		public static const LOAD_TEMPLATES_CFS_FAILED:String    	= "action/start/templatescfs/failed";	
+
 		public static const LOADING_TEMPLATES_CFS:String			= "state/starting/templatescfs";
 		public static const LOAD_TEMPLATES_CFS:String				= "event/start/templatescfs";
 		public static const LOAD_TEMPLATES_CFS_COMPLETE:String  	= "action/start/templatescfs/complete";
@@ -61,7 +60,13 @@ package org.mig.controller.startup
 		public static const LOADING_TEMPLATES:String				= "state/starting/templates";
 		public static const LOAD_TEMPLATES:String					= "event/start/templates";
 		public static const LOAD_TEMPLATES_COMPLETE:String  		= "action/start/templates/complete";
-		public static const LOAD_TEMPLATES_FAILED:String    		= "action/start/templates/failed";		
+		public static const LOAD_TEMPLATES_FAILED:String    		= "action/start/templates/failed";	
+		
+		
+		public static const LOADING_CONTENT:String					= "state/starting/content";
+		public static const LOAD_CONTENT:String						= "event/start/content";
+		public static const LOAD_CONTENT_COMPLETE:String 			= "action/start/content/complete";
+		public static const LOAD_CONTENT_FAILED:String    			= "action/start/content/failed";
 		/*******************************************************************************************************/
 			
 		

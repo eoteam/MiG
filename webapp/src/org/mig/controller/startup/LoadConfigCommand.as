@@ -20,12 +20,12 @@ package org.mig.controller.startup
 		public var contentModel:ContentModel;
 		
 		override public function execute():void {
-			service.loadConfigFile(appModel.configfile);
+			service.loadSettings();
 			service.addHandlers(handleConfigLoaded);
 		}
 		private function handleConfigLoaded(data:Object): void {
-			var config:XML = data.result as XML;
-			appModel.config = config;	
+			var results:Array = data.result as Array;
+			/*appModel.config = config;	
 			
 			var mediaConfig:XML 			= config.manager[0]; //XML(config.controller.(@id == "mediaController"));
 			contentModel.mediaConfig		= mediaConfig;
@@ -60,7 +60,7 @@ package org.mig.controller.startup
 			for each(var node:XML in containers) {
 				processNode(node);
 			}
-			trace("Startup: Config File Loaded");
+*/			trace("Startup: Config File Loaded");
 			appModel.startupCount = 1;
 			
 			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP_PROGRESS,"Configuration loaded ..."));

@@ -22,8 +22,7 @@ package org.mig.controller.configuration
 			//service.addHandlers(configHandler);
 			//eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP));
 			appModel.prompt = FlexGlobals.topLevelApplication.parameters.prompt;
-			appModel.configfile = FlexGlobals.topLevelApplication.parameters.configfile;	
-			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.CONFIG_LOADED));	
+			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.BOOTSTRAP_COMPLETE));	
 		}
 /*		private function configHandler(data:Object):void {
 			var results:Array = data.result as Array;

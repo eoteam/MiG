@@ -1,9 +1,6 @@
 package org.mig.model.vo.content
 {
 
-	import org.mig.model.vo.content.ContainerData;
-	import org.mig.model.vo.ContentNode;
-
 	import flash.errors.IllegalOperationError;
 	import flash.events.Event;
 	
@@ -11,13 +8,19 @@ package org.mig.model.vo.content
 	import mx.controls.Alert;
 	import mx.events.CollectionEvent;
 	
+	import org.mig.model.vo.ContentNode;
+	import org.mig.model.vo.content.ContainerData;
+	
 	[Bindable]
 	public class SubContainerNode extends ContentNode
 	{
 		public var queryVars:Object;
-		public function SubContainerNode(baseLabel:String, config:XML, data:ContainerData, parentContent:ContentNode,privileges:int,queryVars:Object) {
-			super(baseLabel, config, data, parentContent,privileges);
+		public var tab:ContentTab;
+		
+		public function SubContainerNode(baseLabel:String, tab:ContentTab, data:ContainerData, parentContent:ContentNode,privileges:int,queryVars:Object) {
+			super(baseLabel, data, parentContent,privileges);
 			this.queryVars = queryVars;
+			this.tab = tab;
 		}
 		override public function get label():String {
 			if(children != null && children.length > 0)

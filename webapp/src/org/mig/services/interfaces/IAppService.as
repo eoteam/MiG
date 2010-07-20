@@ -5,7 +5,7 @@ package org.mig.services.interfaces
 
 	public interface IAppService extends IService
 	{
-		function loadConfigFile(url:String):void;
+		function loadSettings():void;
 		
 		function loadCustomFields():void;
 		

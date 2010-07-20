@@ -14,12 +14,15 @@ package org.mig.model.vo.content
 		public var isNesting:Boolean = false; //if turned on, this node and its children share the same template
 		public var isBranch:Boolean = false; //used for the spring loaded mechanism
 		
-		public function ContainerNode(baseLabel:String, config:XML, data:ContainerData, parentContent:ContentNode,
+		public var template:Template;
+		
+		public function ContainerNode(baseLabel:String, template:Template, data:ContainerData, parentContent:ContentNode,
 		priveleges:int,root:Boolean=true,fixed:Boolean=false,nesting:Boolean=false) {
-			super(baseLabel, config, data, parentContent,priveleges);
+			super(baseLabel, data, parentContent,priveleges);
 			isRoot = root;
 			isFixed = fixed;
 			isNesting = nesting;
+			this.template = template;
 			if(isFixed || isRoot || isNesting)
 				isBranch = true;	
 		}
