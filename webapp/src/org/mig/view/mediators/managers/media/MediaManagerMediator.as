@@ -73,7 +73,7 @@ package org.mig.view.mediators.managers.media
 		
 		override public function onRegister():void {
 			//eventMap.mapListener(eventDispatcher,MediaEvent.RETRIEVE_CHILDREN,handleContent,MediaEvent); 
-			eventMap.mapListener(eventDispatcher,AppEvent.CONFIG_FILE_LOADED,handleConfigLoaded,AppEvent);
+			eventMap.mapListener(eventDispatcher,AppEvent.STARTUP_COMPLETE,handleConfigLoaded,AppEvent);
 			eventMap.mapListener(eventDispatcher,ViewEvent.REFRESH_MEDIA,handleRefresh,ViewEvent);
 			addListeners();
 			addContextMenu();
@@ -81,7 +81,7 @@ package org.mig.view.mediators.managers.media
 		}
 		private function handleConfigLoaded(event:AppEvent):void {
 			view.thumbURL = appModel.thumbURL;
-			view.name = view.parentDocument.name = contentModel.mediaConfig.@name.toString();
+			view.name = view.parentDocument.name = contentModel.mediaConfig.name;
 		}
 		private function handleRefresh(event:ViewEvent):void {
 			if(view.stack.selectedIndex == 0) {

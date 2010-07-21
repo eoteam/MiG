@@ -1,5 +1,6 @@
 package org.mig.services.interfaces
 {
+	import org.mig.model.vo.ConfigurationObject;
 	import org.mig.model.vo.ContentData;
 	import org.mig.model.vo.ValueObject;
 
@@ -7,12 +8,14 @@ package org.mig.services.interfaces
 	{
 		function loadSettings():void;
 		
-		function loadCustomFields():void;
+		function loadManagers():void;
 		
-		function loadCustomFieldGroups():void ;
+/*		function loadCustomFields():void;
+		
+		function loadCustomFieldGroups():void ;*/
 		
 		function loadColors():void;
 		
-		function duplicateObject(vo:ContentData,config:XML,relatedField:String,relatedTables:String):void;
+		function duplicateObject(vo:ContentData,config:ConfigurationObject,relatedField:String,relatedTables:String):void;
 	}
 }

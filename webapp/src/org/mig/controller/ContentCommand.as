@@ -9,13 +9,13 @@ package org.mig.controller
 	import org.mig.events.NotificationEvent;
 	import org.mig.events.ViewEvent;
 	import org.mig.model.ContentModel;
-	
 	import org.mig.model.vo.ContentData;
 	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.app.StatusResult;
 	import org.mig.model.vo.content.ContainerData;
 	import org.mig.model.vo.content.ContainerNode;
 	import org.mig.model.vo.content.SubContainerNode;
+	import org.mig.model.vo.content.Template;
 	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.services.ContentService;
 	import org.mig.services.interfaces.IAppService;
@@ -38,6 +38,7 @@ package org.mig.controller
 		
 		private var deleteCount:int;
 		private var deleteTracker:int;
+		private var templateId:int;
 		
 		override public function execute():void {
 			switch(event.type) {
@@ -64,13 +65,13 @@ package org.mig.controller
 					for each(var item:ContainerNode in event.args[0]) {
 					if(!item.isRoot && !item.isFixed) {
 						var tables:String = "content_media,content_content,content_users,content_terms,comments";
-						appService.duplicateObject(item.data,item.config,"contentid",tables);
+						appService.duplicateObject(item.data,item.template,"contentid",tables);
 						appService.addHandlers(handleDuplicate);
 					}	
 				}
 				break;
 				case ContentEvent.CREATE:
-					service.createContainer(event.args[0] as String, event.args[1] as XML);
+					service.createContainer(event.args[0] as String, event.args[1] as Template);
 					service.addHandlers(handleNewContainer);
 				break;
 				case ContentEvent.SELECT:
@@ -104,7 +105,7 @@ package org.mig.controller
 				var id:int = Number(status.message);
 				var contentData:ContainerData = new ContainerData();
 				contentData.id = id;	
-				var newNode:ContainerNode = new ContainerNode(node.baseLabel,node.config,contentData,node.parentNode,node.privileges,false,false,node.isNesting);
+				var newNode:ContainerNode = new ContainerNode(node.baseLabel,node.template,contentData,node.parentNode,node.privileges,false,false);
 				node.parentNode.children.addItemAt(newNode,0);
 				if(node.state == ContentNode.NOT_LOADED)
 					service.retrieveContainer(newNode,false);
@@ -160,12 +161,12 @@ package org.mig.controller
 				if(results.length > 0) {
 					ContainerNode(content).isBranch = true;
 					for each (item in results) {
-						resultLabel = item[content.config.@labelField];
-						var containerConfig:XML; 			
+						resultLabel = item[ContainerNode(content).template.labelfield];
+/*						var containerTemplate:Template; 			
 						fixed = item.is_fixed.toString() == "1" ? true:false;
 						nesting = false;
 						if(ContainerNode(content).isNesting) {
-							containerConfig = ObjectUtil.copy(content.config) as XML; //replicate the same config 
+							//containerConfig = ObjectUtil.copy(content.config) as XML; //replicate the same config 
 							nesting = true;
 						}
 						else {
@@ -190,12 +191,17 @@ package org.mig.controller
 								containerConfig = ObjectUtil.copy(containerConfig) as XML; //replicate the same config
 								nesting = true;
 							}
-						}
-						node = new ContainerNode(resultLabel, containerConfig, item,content,content.privileges,false,fixed,nesting);
+						}*/
+						templateId= item.templateid;
+						contentModel.templates.filterFunction = filterByTemplateId;
+						contentModel.templates.refresh();
+						node = new ContainerNode(resultLabel, contentModel.templates.getItemAt(0) as Template, item,content,content.privileges,false,fixed);
 						content.children.addItem(node);
 						content.state = ContentNode.LOADED;
 						eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.VALIDATE_CONTENT));
 					}
+					contentModel.templates.filterFunction = null;
+					contentModel.templates.refresh();
 				}
 			}
 			else if(content is SubContainerNode) {
@@ -207,17 +213,16 @@ package org.mig.controller
 				}
 			}	
 		}
+		private function filterByTemplateId(item:Template):Boolean {
+			return item.id == templateId ? true:false;
+		}
 		private function handleNewContainer(data:Object):void {
 			if(contentModel.currentContainer.state == ContentNode.LOADED) {
-			var config:XML = data.token.config as XML;
 			var contentData:ContainerData = data.result[0] as ContainerData;
+			var template:Template = data.token.template as Template;
 			var is_fixed:Boolean = contentData.is_fixed == 0 ?false:true;
-			var nesting:Boolean = false;
-			if(config.attribute("nesting").length() > 0) {
-				nesting = config.@nesting.toString() == "0" ? false : true;
-			}
-			var node:ContainerNode = new ContainerNode(contentData.migtitle,config,contentData,contentModel.currentContainer,
-													   contentModel.currentContainer.privileges,false,is_fixed,nesting);
+			var node:ContainerNode = new ContainerNode(contentData.migtitle,template,contentData,contentModel.currentContainer,
+													   contentModel.currentContainer.privileges,false,is_fixed);
 			contentModel.currentContainer.children.addItemAt(node,0);
 			}
 			contentModel.currentContainer.data.childrencount += 1;

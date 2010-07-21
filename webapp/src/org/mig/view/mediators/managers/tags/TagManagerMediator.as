@@ -35,7 +35,7 @@ package org.mig.view.mediators.managers.tags
 		
 		override public function onRegister():void {
 			eventMap.mapListener(eventDispatcher,StateEvent.ACTION,handleTermsLoaded);
-			eventMap.mapListener(eventDispatcher,AppEvent.CONFIG_FILE_LOADED,handleConfigLoaded,AppEvent);
+			eventMap.mapListener(eventDispatcher,AppEvent.STARTUP_COMPLETE,handleConfigLoaded,AppEvent);
 			
 			addListeners();
 		}
@@ -62,7 +62,7 @@ package org.mig.view.mediators.managers.tags
 			
 		}
 		private function handleConfigLoaded(event:AppEvent):void {
-			view.name = contentModel.termsConfig.@name.toString();
+			view.name = contentModel.termsConfig.name;
 		}
 		private function handleTermsLoaded(event:StateEvent):void {
 			if(event.action == AppStartupStateConstants.LOAD_CATEGORIES_CFS_COMPLETE) {	
@@ -131,23 +131,23 @@ package org.mig.view.mediators.managers.tags
 			cudCount = cudTotal = 0;
 			var term:Term;
 			for each(term in contentModel.tagTerms.modifiedItems.source) {
-				contentService.updateContent(term,contentModel.termsConfig.child[0],contentModel.categoriesCustomFields.source);
+				contentService.updateContent(term,contentModel.termsConfig,contentModel.categoriesCustomFields.source);
 				contentService.addHandlers(handleTagTermUpdated);
 				cudTotal++;
 			}
 			for each(term in contentModel.tagTerms.newItems.source) {
-				contentService.createContent(term,contentModel.termsConfig.child[0],contentModel.categoriesCustomFields.source);
+				contentService.createContent(term,contentModel.termsConfig,contentModel.categoriesCustomFields.source);
 				contentService.addHandlers(handleTagTermCreated);
 				cudTotal++;
 			}
 			for each(term in contentModel.categoryTermsFlat.modifiedItems.source) {
-				contentService.updateContent(term,contentModel.termsConfig.child[0],contentModel.categoriesCustomFields.source);
+				contentService.updateContent(term,contentModel.termsConfig,contentModel.categoriesCustomFields.source);
 				contentService.addHandlers(handleCategoryTermUpdated);
 				cudTotal++;	
 			}
 			for each(term in contentModel.categoryTermsFlat.newItems.source) {
 				if(term.name != "new") {
-					contentService.createContent(term,contentModel.termsConfig.child[0],contentModel.categoriesCustomFields.source);
+					contentService.createContent(term,contentModel.termsConfig,contentModel.categoriesCustomFields.source);
 					contentService.addHandlers(handleCategoryTermCreated);
 					cudTotal++;
 				}
@@ -159,7 +159,7 @@ package org.mig.view.mediators.managers.tags
 				if(contentModel.tagTerms.isItemNew(item)) 
 					contentModel.tagTerms.removeItemAt(contentModel.tagTerms.getItemIndex(item));
 				else {
-					contentService.deleteContent(item,contentModel.termsConfig.child[0]);
+					contentService.deleteContent(item,contentModel.termsConfig);
 					contentService.addHandlers(handleTagTermDeleted);
 					cudTotal++;
 				}
@@ -181,7 +181,7 @@ package org.mig.view.mediators.managers.tags
 				if(contentModel.categoryTermsFlat.isItemNew(item)) 
 					contentModel.categoryTermsFlat.removeItemAt(contentModel.categoryTermsFlat.getItemIndex(item));
 				else {
-					contentService.deleteContent(item,contentModel.termsConfig.child[0]);
+					contentService.deleteContent(item,contentModel.termsConfig);
 					contentService.addHandlers(handleCategoryTermDeleted);
 					cudTotal++;
 				}

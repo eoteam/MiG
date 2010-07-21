@@ -9,7 +9,9 @@ package org.mig.view.mediators.content
 	
 	import org.mig.events.ContentEvent;
 	import org.mig.model.vo.content.ContainerData;
+	import org.mig.model.vo.content.ContainerNode;
 	import org.mig.model.vo.content.ContentStatus;
+	import org.mig.model.vo.content.ContentTab;
 	import org.mig.model.vo.content.SubContainerNode;
 	import org.mig.utils.ClassUtils;
 	import org.mig.view.components.content.ContentTabItem;
@@ -28,18 +30,16 @@ package org.mig.view.mediators.content
 		//this will store a list of views that implement IEditable and this mediator will call the submit function on each view, which will 
 		//trigger the corresponding  behavior in each view's mediator
 		override public function onRegister():void {
-			
+
 			editableViewsList = [];
-			
-			var containers:XMLList = view.content.config.tab;
-			generalEditor = IEditableContentView(ClassUtils.instantiateClass(view.content.config.@generalEditorView));
+			generalEditor = IEditableContentView(ClassUtils.instantiateClass(ContainerNode(view.content).template.generalView));
 			generalEditor.content = view.content;
 			view.contentTabs.addChildAt(generalEditor as UIComponent,0);
 			editableViewsList.push(generalEditor);
-			for each (var container:XML in containers) {
+			for each (var container:ContentTab in ContainerNode(view.content).template.contentTabs) {
 
 				var queryVars:Object = new Object();
-				var vars:Array = String(container.@vars).split(",");
+				var vars:Array = container.vars.split(",");
 				
 				for each(var queryVar:String in vars)
 				{
@@ -52,13 +52,13 @@ package org.mig.view.mediators.content
 				data.id = view.content.data.id;
 				
 				var subNode:SubContainerNode;
-				if(!view.content.subContainers[container.@name.toString()]) {
-					subNode = new SubContainerNode(container.@name, container, data, view.content,view.content.privileges,queryVars);
-					view.content.subContainers[container.@name.toString()] = subNode;
+				if(!view.content.subContainers[container.name]) {
+					subNode = new SubContainerNode(container.name, container, data, view.content,view.content.privileges,queryVars);
+					view.content.subContainers[container.name] = subNode;
 					eventDispatcher.dispatchEvent(new ContentEvent(ContentEvent.RETRIEVE_CHILDREN,subNode));
 				}
 				else
-					subNode = view.content.subContainers[container.@name.toString()];
+					subNode = view.content.subContainers[container.name];
 				var tabItem:ContentTabItem = new ContentTabItem();
 				view.contentTabs.addChild(tabItem);
 				tabItem.content = subNode;

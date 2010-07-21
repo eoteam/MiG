@@ -15,7 +15,6 @@
 	labelField="debugLabel" openDuration="250"
 	folderClosedIcon="{containerIcon}"
 	folderOpenIcon="{containerIcon}"
-	iconField="{ContentNode(data).config.@icon}"
 	itemRenderer="org.mig.view.components.main.ContentTreeRenderer"
 	dataDescriptor="{new ContentTreeDataDescriptor(this)}"
 	rendererIsEditor="true" variableRowHeight="true"

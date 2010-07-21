@@ -69,7 +69,7 @@ package org.mig.controller
 					var name:String = event.args[1];
 					var dirData:MediaData = event.args[2];
 					var newDirectory:String = node.directory + name + '/';
-					directory = new DirectoryNode(name,node.config, dirData, node, newDirectory, node.privileges);
+					directory = new DirectoryNode(name, dirData, node, newDirectory, node.privileges);
 					var index:int = 0;
 					for each(item in node.children) {
 						index++;
@@ -85,7 +85,7 @@ package org.mig.controller
 				case MediaEvent.ADD_FILE:
 					node = event.args[0] as DirectoryNode;
 					var fileData:MediaData = event.args[1];
-					file = new FileNode(fileData.name,node.config,fileData,node,node.privileges);
+					file = new FileNode(fileData.name,fileData,node,node.privileges);
 					node.children.addItem(file);
 					eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.REFRESH_MEDIA));
 				break;
@@ -175,7 +175,7 @@ package org.mig.controller
 						for each(item in content.diskFiles) {		
 							if(item.name == result.name) {
 								found = true;
-								var node:FileNode = new FileNode(result.name, content.config, result, content,content.privileges);
+								var node:FileNode = new FileNode(result.name, result, content,content.privileges);
 								content.children.addItem(node);
 								content.numFiles += 1;	
 								break;
@@ -208,7 +208,7 @@ package org.mig.controller
 								result.childrencount = item.childrencount;
 								result.size = item.size;
 								var newdirectory:String = content.directory + item.name.toString() + '/';
-								var categoryNode:DirectoryNode = new DirectoryNode(result.name, content.config, result,content, newdirectory,content.privileges);
+								var categoryNode:DirectoryNode = new DirectoryNode(result.name, result,content, newdirectory,content.privileges);
 								content.children.addItem(categoryNode);
 								content.numFolders += 1;
 								break;

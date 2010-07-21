@@ -6,6 +6,7 @@ package org.mig.controller.startup
 	import org.mig.model.ContentModel;
 	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.app.CustomField;
+	import org.mig.model.vo.content.ContentTab;
 	import org.mig.model.vo.content.Template;
 	import org.mig.services.interfaces.IAppService;
 	import org.mig.services.interfaces.IContentService;
@@ -28,16 +29,24 @@ package org.mig.controller.startup
 			service.addHandlers(handleTemplates);
 		}
 		private var templateId:int;
+
+		
 		private function handleTemplates(data:Object):void {
 			var results:Array = data.result as Array;
 			for each(var item:Template in results) {				
 				contentModel.templates.addItem(item);
 				templateId = item.id;
-				//templateId = new RegExp(item.id.toString() , "gi");
+				//templateIds = new RegExp(item.id.toString() , "gi");
+				
 				contentModel.templatesCustomFields.filterFunction = filterByTemplateId;
 				contentModel.templatesCustomFields.refresh();
 				for each(var cf:CustomField in contentModel.templatesCustomFields) {
 					item.customfields.addItem(cf);
+				}
+				for each (var tab:ContentTab in contentModel.contentTabs) {
+					var ids:Array = tab.templateids.split(',');
+					if(ids.indexOf(item.id) != -1)
+						item.contentTabs.addItem(tab);
 				}
 				//item.customfields.state = DataCollection.COMMITED;
 			}

@@ -4,7 +4,8 @@
 	<controller id="contentController" rootURL="http://migdev.mig.pentagram.com/"
 		pendingURL="http://migdev.mig.pentagram.com/" publishedURL="http://migdev.mig.pentagram.com/"
 		textEditorColor="0xCCCCCC" renderer="flash" textFormat="textFieldHTMLFormat"
-		timeout="100" tablename="content" createContent="insertRecord"
+		timeout="100" tablename="content" 
+		createContent="insertRecord"
 		retrieveContent="getContent" updateContent="updateRecord"
 		deleteContent="deleteContent"><!--  soft delete is global -->
 

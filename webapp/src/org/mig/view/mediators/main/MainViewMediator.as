@@ -42,8 +42,8 @@ package org.mig.view.mediators.main
 		private var pendingContainersDropped:Boolean = false;
 		
 		public override function onRegister():void {
-			eventMap.mapListener( eventDispatcher, AppEvent.CONFIG_LOADED,		handleConfig,			AppEvent);
-			eventMap.mapListener( eventDispatcher, AppEvent.CONFIG_FILE_LOADED,	handleConfigFile,		AppEvent);
+			eventMap.mapListener( eventDispatcher, AppEvent.BOOTSTRAP_COMPLETE,	handleConfig,			AppEvent);
+			eventMap.mapListener( eventDispatcher, AppEvent.STARTUP_COMPLETE,	handleConfigFile,		AppEvent);
 			eventMap.mapListener( eventDispatcher, AppEvent.STARTUP,			handleStartupProgress,	AppEvent); 
 			eventMap.mapListener( eventDispatcher, AppEvent.STARTUP_PROGRESS,	handleStartupProgress,	AppEvent); 
 			eventMap.mapListener( eventDispatcher, AppEvent.STARTUP_COMPLETE,	handleStartupProgress,	AppEvent);

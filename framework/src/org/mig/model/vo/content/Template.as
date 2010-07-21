@@ -18,13 +18,13 @@ package org.mig.model.vo.content
 			customfields = new ArrayList();
 			contentTabs = new ArrayList();
 		}
-		public var name:String;
+
 		public var is_fixed:int;
 		public var is_nesting:int;
 		public var orderby:String = "id";
 		public var orderdirection:String = "ASC";
-		public var generalview:String;
-		
+		public var generalView:String;
+		public var verbosity:int;
 		public var customfields:ArrayList;
 		public var contentTabs:ArrayList;
 		

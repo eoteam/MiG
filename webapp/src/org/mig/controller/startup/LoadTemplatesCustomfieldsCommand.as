@@ -10,7 +10,7 @@ package org.mig.controller.startup
 	import org.robotlegs.mvcs.Command;
 	import org.robotlegs.utilities.statemachine.StateEvent;
 	
-	public class LoadTemplatesCFSCommand extends Command
+	public class LoadTemplatesCustomfieldsCommand extends Command
 	{
 		[Inject]
 		public var service:IContentService;
@@ -22,7 +22,7 @@ package org.mig.controller.startup
 		public var contentModel:ContentModel;
 		
 		override public function execute():void {
-			service.loadRelatedCustomfields(contentModel.templatesConfig.customfields[0]);
+			service.loadRelatedCustomfields(contentModel.templatesConfig);
 			service.addHandlers(handleTemplates);
 		}
 		private function handleTemplates(data:Object):void {

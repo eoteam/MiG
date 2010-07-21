@@ -28,7 +28,7 @@ package org.mig.controller.startup
 		}
 		private function handleContentLoaded(data:Object):void {
 			var result:ContainerData 	= data.result[0] as ContainerData;
-			contentModel.contentModel = new ContainerNode (contentModel.contentConfig.@name, contentModel.contentConfig,result,null,appModel.user.privileges,true,true,false);
+			contentModel.contentModel = new ContainerNode (result.migtitle,contentModel.templates[0],result,null,appModel.user.privileges,true,true);
 			
 			trace("Startup: Content Model Complete");
 			appModel.startupCount = 2;

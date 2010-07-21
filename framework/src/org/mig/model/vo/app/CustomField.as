@@ -50,7 +50,6 @@ package org.mig.model.vo.app
 				if(PropertyChangeEvent(event.items[0]).property == "selected" || PropertyChangeEvent(event.items[0]).property == "index")
 					changed = false;
 			}	
-			trace(_options,result);
 			if(ready && changed) 
 				this.dispatchEvent(new PropertyChangeEvent(PropertyChangeEvent.PROPERTY_CHANGE,false,false,PropertyChangeEventKind.UPDATE,"options",_options,result,this));
 			_options = result;

@@ -24,20 +24,14 @@ package org.mig.view.mediators.main
 
 		override public function onRegister():void {
 			
-			eventMap.mapListener(eventDispatcher,AppEvent.CONFIG_FILE_LOADED,handleConfig,AppEvent);
+			eventMap.mapListener(eventDispatcher,AppEvent.STARTUP_COMPLETE,handleConfig,AppEvent);
 			view.addEventListener(ListEvent.ITEM_CLICK,handleTreeChange);
 		}
 		
 		private function handleConfig(event:AppEvent):void {
 			var root:Object = new Object();
 			root.name = "Managers";
-			root.children = [];
-			var managers:XMLList = appModel.config.manager;
-			for each(var item:XML in managers) {
-				var manager:Object = new Object();
-				manager.name = item.@name.toString();
-				root.children.push(manager);
-			}
+			root.children = appModel.managers;
 			view.dataProvider = root;	
 			view.addEventListener(TreeEvent.ITEM_OPEN,handleResize);
 			view.addEventListener(TreeEvent.ITEM_CLOSE,handleResize);

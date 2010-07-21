@@ -11,19 +11,17 @@ package org.mig.model.vo.content
 		
 		public var isRoot:Boolean = false;
 		public var isFixed:Boolean = false; //fixed items in DB and config
-		public var isNesting:Boolean = false; //if turned on, this node and its children share the same template
 		public var isBranch:Boolean = false; //used for the spring loaded mechanism
 		
 		public var template:Template;
 		
 		public function ContainerNode(baseLabel:String, template:Template, data:ContainerData, parentContent:ContentNode,
-		priveleges:int,root:Boolean=true,fixed:Boolean=false,nesting:Boolean=false) {
+		priveleges:int,root:Boolean=true,fixed:Boolean=false) {
 			super(baseLabel, data, parentContent,priveleges);
 			isRoot = root;
 			isFixed = fixed;
-			isNesting = nesting;
 			this.template = template;
-			if(isFixed || isRoot || isNesting)
+			if(isFixed || isRoot || template.is_nesting)
 				isBranch = true;	
 		}
 		/*public function updateChildrenOrder(userId:int = -1):void {

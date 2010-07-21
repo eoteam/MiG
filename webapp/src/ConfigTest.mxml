@@ -39,4 +39,6 @@
 			</s:LinearGradient>
 		</s:fill>
 	</s:Rect>
+	<s:Button label="Restart" id="restart" />
+	<s:TextArea width="100%" height="100%" top="30" id="log" text="" contentBackgroundAlpha="0" color="0xffffff"/>
 </s:Application>

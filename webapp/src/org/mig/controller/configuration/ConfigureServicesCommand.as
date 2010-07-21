@@ -22,9 +22,10 @@ package org.mig.controller.configuration
 		{
 			
 			//services
-			injector.mapSingletonOf(IUserService,UserService); 
+			
 			injector.mapSingletonOf(IAppService, AppService);
 			injector.mapSingletonOf(IContentService,ContentService);
+			injector.mapSingletonOf(IUserService,UserService); 			
 			injector.mapSingletonOf(IMediaService,MediaService);
 			injector.mapSingletonOf(IFileService,FileService);
 			

@@ -6,6 +6,7 @@ package org.mig.services
 		public static const GET_DATA:String 						= "getData";
 		public static const GET_RELATED_CUSTOMFIELDS:String			= "getRelatedCustomFields";
 		
+		
 		public static const GET_ROOT:String							= "getRoot";
 		public static const GET_CONTENT:String 						= "getContent";
 		public static const GET_CONTENT_USERS:String				= "getContentUsers";
@@ -14,6 +15,7 @@ package org.mig.services
 		public static const GET_CONTENT_CONTENT:String 				= "getContentContent";
 		public static const CONTENT_SEARCH:String 					= "contentSearch";
 		public static const GET_CONTENT_TREE:String					= "getContentTree";
+		public static const GET_CONTENTTABS:String					= "getContentTabs";
 		
 		public static const GET_MEDIA:String 						= "getMedia";
 

@@ -59,7 +59,7 @@ package org.mig.view.mediators.managers.templates
 		
 		override public function onRegister():void {
 			eventMap.mapListener(eventDispatcher,StateEvent.ACTION,handleTemplatesLoaded);
-			eventMap.mapListener(eventDispatcher,AppEvent.CONFIG_FILE_LOADED,handleConfigLoaded,AppEvent);
+			eventMap.mapListener(eventDispatcher,AppEvent.STARTUP_COMPLETE,handleConfigLoaded,AppEvent);
 			
 			view.customFieldTypes = CustomFieldTypes.TYPES;
 			
@@ -90,7 +90,7 @@ package org.mig.view.mediators.managers.templates
 				break;
 				case "Duplicate":
 					for each(template in view.templateList.selectedItems)  {
-						appService.duplicateObject(template,contentModel.templatesConfig.child[0],"templateid","templates_customfields");
+						appService.duplicateObject(template,contentModel.templatesConfig,"templateid","templates_customfields");
 						appService.addHandlers(handleDuplicated);
 					}
 				break;
@@ -110,7 +110,7 @@ package org.mig.view.mediators.managers.templates
 			contentModel.templates.state = DataCollection.MODIFIED;
 		}
 		private function handleConfigLoaded(event:AppEvent):void {
-			view.name = contentModel.templatesConfig.@name.toString();
+			view.name = contentModel.templatesConfig.name;
 		} 
 		private function handleTemplatesLoaded(event:StateEvent):void {
 			if(event.action == AppStartupStateConstants.LOAD_TEMPLATES_COMPLETE) {
@@ -272,26 +272,26 @@ package org.mig.view.mediators.managers.templates
 				
 				customfield.createdby = customfield.modifiedby = appModel.user.id;
 				customfield.modifieddate = customfield.createdate= time;
-				contentService.createContent(customfield,contentModel.templatesConfig.customfields[0],[],true);
+				contentService.createContent(customfield,contentModel.templatesConfig,[],true);
 				contentService.addHandlers(handleCustomfieldCreated);
 			}
 			for each(template in contentModel.templates.modifiedItems.source) {
 				cudTotal++;
 				template.modifiedby = appModel.user.id;
 				template.modifieddate = time;
-				contentService.updateContent(template,contentModel.templatesConfig.child[0],[]);
+				contentService.updateContent(template,contentModel.templatesConfig,[]);
 				contentService.addHandlers(handleTemplateUpdated);	
 			}
 			for each(template in contentModel.templates.newItems.source) {
 				cudTotal++;
 				template.createdby = template.modifiedby = appModel.user.id;
 				template.modifieddate = template.createdate= time;
-				contentService.createContent(template,contentModel.templatesConfig.child[0],[]);
+				contentService.createContent(template,contentModel.templatesConfig,[]);
 				contentService.addHandlers(handleTemplateCreated);
 			}
 			for each(template in  contentModel.templates.deletedItems.source) {
 				cudTotal++;
-				contentService.deleteContent(template,contentModel.templatesConfig.child[0]);
+				contentService.deleteContent(template,contentModel.templatesConfig);
 				contentService.addHandlers(handleTemplateDeleted);
 			}	
 			if(cudTotal == 0)

@@ -13,10 +13,11 @@
 		<![CDATA[
 			import mx.collections.ArrayCollection;
 			import mx.collections.ArrayList;
+			import mx.collections.IList;
 			import mx.controls.RadioButton;
 			import mx.events.FlexEvent;
 		
-			[Bindable] public var dataProvider:ArrayList;		
+			[Bindable] public var dataProvider:IList;		
 			public var valid:Boolean;
 		]]>
 	</fx:Script>

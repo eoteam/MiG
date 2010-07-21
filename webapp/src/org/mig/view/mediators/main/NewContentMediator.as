@@ -9,6 +9,7 @@ package org.mig.view.mediators.main
 	import org.mig.events.ContentEvent;
 	import org.mig.events.ViewEvent;
 	import org.mig.model.AppModel;
+	import org.mig.model.ContentModel;
 	import org.mig.model.vo.content.ContainerNode;
 	import org.mig.view.components.main.NewContentView;
 	import org.robotlegs.mvcs.Mediator;
@@ -21,6 +22,9 @@ package org.mig.view.mediators.main
 		[Inject]
 		public var appModel:AppModel;
 		
+		[Inject]
+		public var contentModel:ContentModel;
+		
 		override public function onRegister():void {
 			eventMap.mapListener(eventDispatcher, ContentEvent.SELECT,handleContentSelected,ContentEvent);
 			view.cancelBtn.addEventListener(MouseEvent.CLICK,handleCancel);
@@ -28,7 +32,7 @@ package org.mig.view.mediators.main
 		}
 		
 		private function handleContentSelected(event:ContentEvent):void {
-			var contentNode:ContainerNode = event.args[0] as ContainerNode;
+		/*	var contentNode:ContainerNode = event.args[0] as ContainerNode;
 			var dataProvider:ArrayList = new ArrayList();
 			if(contentNode.config.attribute("createContent").length() > 0)
 			{
@@ -49,8 +53,8 @@ package org.mig.view.mediators.main
 				//selectedNode = col.getItemAt(0) as ContentNode;
 			}
 			else
-				eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.ENABLE_NEW_CONTENT,false,false));
-			view.dataProvider = dataProvider;
+				eventDispatcher.dispatchEvent(new ViewEvent(ViewEvent.ENABLE_NEW_CONTENT,false,false));*/
+			view.dataProvider = contentModel.templates;
 		}
 		private function handleCancel(event:MouseEvent):void {
 			view.visible = false;

@@ -1,6 +1,7 @@
 package org.mig.view.interfaces
 {
 	import org.mig.model.vo.ContentNode;
+	import org.mig.model.vo.content.ContainerNode;
 	
 	
 	/**

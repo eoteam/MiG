@@ -12,6 +12,7 @@ package org.mig.services
 	import org.mig.controller.Constants;
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
+	import org.mig.model.vo.ConfigurationObject;
 	import org.mig.model.vo.ContentData;
 	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.UpdateData;
@@ -20,8 +21,10 @@ package org.mig.services
 	import org.mig.model.vo.content.ContainerData;
 	import org.mig.model.vo.content.ContainerNode;
 	import org.mig.model.vo.content.ContentStatus;
+	import org.mig.model.vo.content.ContentTab;
 	import org.mig.model.vo.content.SubContainerNode;
 	import org.mig.model.vo.content.Template;
+	import org.mig.model.vo.manager.ManagerConfig;
 	import org.mig.model.vo.manager.Term;
 	import org.mig.model.vo.media.MimeType;
 	import org.mig.model.vo.user.UserPrivileges;
@@ -43,10 +46,10 @@ package org.mig.services
 			params.action = ValidFunctions.GET_TEMPLATE_CUSTOMFIELDS;
 			this.createService(params,ResponseType.DATA,CustomField);	
 		}*/
-		public function loadRelatedCustomfields(config:XML,...args):void {
+		public function loadRelatedCustomfields(config:ManagerConfig,...args):void {
 			var params:Object = new  Object();
 			params.action = ValidFunctions.GET_RELATED_CUSTOMFIELDS;
-			params.tablename = config.@tablename.toString();
+			params.tablename = config.cfTablename;
 			for each(var prop:Object in args) {
 				params[prop.name] = prop.value;
 			}
@@ -56,8 +59,16 @@ package org.mig.services
 			var params:Object = new  Object();
 			params.action = ValidFunctions.GET_DATA;
 			params.tablename = "templates";
+			params.orderby= "id";
 			this.createService(params,ResponseType.DATA,Template);		
 		}
+		public function loadContentTabs():void {
+			var params:Object = new  Object();
+			params.action = ValidFunctions.GET_CONTENTTABS;
+			//params.tablename = "contenttabs";
+			this.createService(params,ResponseType.DATA,ContentTab);				
+		}
+		
 		public function loadMimeTypes():void {
 			var params:Object = new Object();
 			params.action = ValidFunctions.GET_DATA;
@@ -66,7 +77,7 @@ package org.mig.services
 		}
 		public function loadTerms():void {
 			var params:Object = new Object();
-			params.action = contentModel.termsConfig.child[0].@retrieveContent.toString();
+			params.action = contentModel.termsConfig.retrieveContent;
 			this.createService(params,ResponseType.DATA,Term)
 		}
 		public function retrieveContentRoot():void {
@@ -81,9 +92,9 @@ package org.mig.services
 		public function retrieveChildren(content:ContentNode):void {
 			//this is fine here, params are a map object. Im guessing REST will form a URL, but awareness of these vars is tricky
 			if(content is ContainerNode)
-				loadContainer(content);
+				loadContainer(content as ContainerNode);
 			else if(content is SubContainerNode)
-				loadSubContainer(content);
+				loadSubContainer(content as SubContainerNode);
 		}
 		public function retrieveContainer(content:ContentNode,verbose:Boolean=true):void {
 			if(content is ContainerNode) {
@@ -99,7 +110,7 @@ package org.mig.services
 		}
 		public function deleteContainer(container:ContainerNode):void {
 			var params:Object = new Object();
-			params.action = container.config.@deleteContent.toString();
+			params.action = container.template.deleteContent;
 			params.tablename = "content";
 			params.id = container.data.id;
 			if(params.action == ValidFunctions.UPDATE_RECORD) {
@@ -119,7 +130,7 @@ package org.mig.services
 			for (var prop:String in update)
 				params[prop] = update[prop];
 			params.action = ValidFunctions.UPDATE_RECORD;
-			params.tablename = container.config.@tablename.toString();
+			params.tablename = container.template.tablename;
 			params.id = update.id;
 			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
 			service.token.content = container;
@@ -140,56 +151,55 @@ package org.mig.services
 			params.idvalues = ids;
 			this.createService(params,ResponseType.STATUS).token.containers = containers;
 		}
-		public function retrieveContent(id:int,config:XML,clazz:Class):void {
+		public function retrieveContent(id:int,config:ConfigurationObject,clazz:Class):void {
 			var params:Object = new Object();
-			params.action = config.@retriveContent.toString();
-			params.tablename = config.@tablename.toString();
+			params.action = config.retrieveContent;
+			params.tablename = config.tablename;
 			params.id = id;
 			this.createService(params,ResponseType.DATA,clazz);
 		}
-		public function createContainer(title:String,config:XML):void {
+		public function createContainer(title:String,template:Template):void {
 			var date:Date = new Date();
 			var time:Number = Math.round(date.time / 1000);
 			var params:Object = new Object();
-			params.action = ValidFunctions.INSERT_RECORD;
-			params.tablename = config.@tablename.toString();
-			if(contentModel.currentContainer.config.attribute("templateid").length() > 0)
-			{
-				params.templateid = contentModel.currentContainer.config.@templateid.toString();
-				for each(var template:Template in contentModel.templates) {
-					if(params.templateid == template.id) {
-						for each(var field:CustomField in template.customfields) {
-							if(field.defaultvalue != null) {
-								//params["customfield"+field.fieldid] = field.defaultvalue;
-							}
-						}
+			params.action = template.createContent;
+			params.tablename = template.tablename;
+			//if(contentModel.currentContainer.config.attribute("templateid").length() > 0)
+			//{
+				params.templateid = template.id;
+
+				for each(var field:CustomField in template.customfields) {
+					if(field.defaultvalue != null) {
+						params[field.name] = field.defaultvalue;
 					}
 				}
-			}
+					
+				
+			//}
 			if(contentModel.currentContainer.isRoot)
 				params.parentid = 0;
 			else
 				params.parentid = contentModel.currentContainer.data.id;
 			params.migtitle = title;
-			params.is_fixed = config.@is_fixed.toString();
+			params.is_fixed = template.is_fixed;
 			params.createdby = appModel.user.id;
 			params.modifiedby = appModel.user.id;
 			params.createdate = time;
 			params.modifieddate = time;
 			params.statusid = ContentStatus.DRAFT;
 			params.verbose = true;
-			this.createService(params,ResponseType.DATA,ContainerData).token.config = config;	
+			this.createService(params,ResponseType.DATA,ContainerData).token.template = template;	
 		}
-		public function updateContent(vo:ContentData,config:XML,customfields:Array):void {
+		public function updateContent(vo:ContentData,config:ConfigurationObject,customfields:Array):void {
 			var updateData:UpdateData = vo.updateData;
 			var params:Object = new Object();
 			for (var prop:String in updateData) {
 				if(prop != "modified" && prop != "updateData")
 					params[prop] = updateData[prop];
 			}
-			params.action = config.@updateContent.toString();
+			params.action = config.updateContent;
 			if(ValidFunctions.FUNCTIONS_WITH_TABLENAME.indexOf(params.action) != -1)
-				params.tablename = config.@tablename.toString();
+				params.tablename = config.tablename;
 			params.id = vo.id;
 			
 			//reverse translate customfields
@@ -208,7 +218,7 @@ package org.mig.services
 			service.token.content = vo;
 			service.token.update = updateData;
 		}
-		public function createContent(vo:ContentData,config:XML,customfields:Array,status:Boolean=false):void {
+		public function createContent(vo:ContentData,config:ConfigurationObject,customfields:Array,status:Boolean=false):void {
 			var updateData:UpdateData = vo.updateData;
 			var params:Object = new Object();
 			var service:XMLHTTPService
@@ -216,12 +226,12 @@ package org.mig.services
 				if(prop != "modified" && prop != "updateData" && prop != "mx_internal_uid")
 					params[prop] = updateData[prop];
 			}
-			params.action = config.@createContent.toString();
+			params.action = config.createContent;
 			if(ValidFunctions.FUNCTIONS_WITH_TABLENAME.indexOf(params.action) != -1)
-				params.tablename = config.@tablename.toString();
-			if(config.attribute("createVerbose").length() > 0) {
-				params.verbose = config.@createVerbose.toString() == "true" ? true:false;
-			}
+				params.tablename = config.tablename
+			//if(config.attribute("createVerbose").length() > 0) {
+			//	params.verbose = config.@createVerbose.toString() == "true" ? true:false;
+			//}
 			//reverse translate customfields
 /*			for (prop in params) {
 				for each(var customfield:CustomField in customfields) {
@@ -246,11 +256,11 @@ package org.mig.services
 			service.service.showBusyCursor = true;
 			service.token.content = vo;
 		}
-		public function deleteContent(vo:ContentData,config:XML,...args):void {
+		public function deleteContent(vo:ContentData,config:ConfigurationObject,...args):void {
 			var params:Object = new Object();
-			params.action = config.@deleteContent.toString();
+			params.action = config.deleteContent;
 			if(ValidFunctions.FUNCTIONS_WITH_TABLENAME.indexOf(params.action) != -1)
-					params.tablename = config.@tablename.toString();	
+					params.tablename = config.tablename;	
 			params.id = vo.id;
 			for each(var arg:Object in args) {
 				params[arg.name] = arg.value;
@@ -287,64 +297,53 @@ package org.mig.services
 				vo.updateData = new UpdateData();
 			}	
 		}
-		private function loadContainer(content:ContentNode):void {
+		private function loadContainer(container:ContainerNode):void {
 			var params:Object = new Object();
 			var execute:Boolean = false;			
-			if(ContainerNode(content).isRoot) { //Containers ?????
-				if(content.privileges ==  UserPrivileges.MiGAdmin)
+			if(container.isRoot) { //Containers ?????
+				if(container.privileges ==  UserPrivileges.MiGAdmin)
 					params.parentid = "1,2";
 				else
 					params.parentid = 1;
 			}
 			else {//Anything else, even fixed ones, will onyl get their children
-				params.parentid = ContainerData(content.data).id.toString();
-				if(ContainerNode(content).isNesting || content.config.children().length() > 0)
-					execute = true; //good for content leaves AND relational nodes in tabs and trays
-				else {
-					//this.dispatchEvent(new ContentNodeEvent(ContentNodeEvent.READY,this,true));
-					return;
-				}
+				params.parentid = ContainerData(container.data).id.toString();
+//				if(container.isNesting)
+//					execute = true; //good for content leaves AND relational nodes in tabs and trays
+//				else {
+//					//this.dispatchEvent(new ContentNodeEvent(ContentNodeEvent.READY,this,true));
+//					return;
+//				}
 			}		
-			params.action = content.config.@retrieveContent.toString();			
+			params.action = container.template.retrieveContent;
 			params.deleted = 0;
-			if(content.config.attribute("orderby").length() > 0) 
-				params.orderby = content.config.@orderby.toString();
-			if(content.config.attribute("orderdirection").length() > 0) 
-				params.orderdirection = content.config.@orderdirection.toString();
-			if(content.config.attribute("verbosity").length() > 0)
-				params.verbosity = content.config.@verbosity.toString();
-			else
-				params.verbosity = 0;
+			params.orderby = container.template.orderby;
+			params.orderdirection = container.template.orderdirection
+			params.verbosity = container.template.verbosity;
 			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,ContainerData);
-			service.token.content = content;
+			service.token.container = container;
 		}
-		private function loadSubContainer(content:ContentNode):void {
-			if(SubContainerNode(content).queryVars != null) {
+		private function loadSubContainer(content:SubContainerNode):void {
+			if(content.queryVars != null) {
 				var params:Object = new Object();
-				params.action = content.config.@retrieveContent.toString();
+				params.action = content.tab.retrieveContent;
 				if(params.action == "getData") {
-					if(content.config.attribute("tablename").length() > 0) 
-						params.tablename = content.config.@tablename.toString();
+					params.tablename = content.tab.tablename;
 				}
-				if(content.config.attribute("verbosity").length() > 0) 	
-					params.verbosity = content.config.@verbosity.toString();
-				if(content.config.attribute("orderby").length() > 0) 
-					params.orderby = content.config.@orderby.toString();
-				if(content.config.attribute("orderdirection").length() > 0)
-					params.orderdirection = content.config.@orderdirection.toString();					
-				if(content.config.attribute("include_children").length() > 0)
-					params.include_children = 1;
-				if(content.config.attribute("children_depth").length() > 0)
-					params.children_depth = content.config.@children_depth.toString();	
-				if(content.config.attribute("deleted").length() > 0)
-					params.deleted = content.config.@deleted.toString();							
+				params.orderby = content.tab.orderby;
+				params.orderdirection = content.tab.orderdirection;
+				
+/*				params.include_children = 1;
+				params.children_depth = content.config.@children_depth.toString();	
+				params.deleted = content.config.@deleted.toString();*/
+				
 				for (var item:String in SubContainerNode(content).queryVars) {
 					if(SubContainerNode(content).queryVars[item] == "")
 						params[item] = 0;
 					else
 						params[item] = SubContainerNode(content).queryVars[item];
 				}
-				var classToUse:String = content.config.@dto;
+				var classToUse:String = content.tab.dto;
 				var classRef:Class = getDefinitionByName(classToUse) as Class;
 				var service:XMLHTTPService = this.createService(params,ResponseType.DATA,classRef);
 				service.token.content = content;				

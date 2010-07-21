@@ -7,6 +7,7 @@ package org.mig.model
 	
 	import org.mig.collections.DataCollection;
 	import org.mig.model.vo.content.ContainerNode;
+	import org.mig.model.vo.manager.ManagerConfig;
 	import org.mig.model.vo.manager.Term;
 	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.model.vo.media.MimeType;
@@ -21,13 +22,15 @@ package org.mig.model
 		public var contentModel:ContainerNode;
 		public var currentContainer:ContainerNode;
 		public var templates:DataCollection;
-		public var templatesConfig:XML;
+		public var templatesConfig:ManagerConfig;
 		public var templatesCustomFields:DataCollection;
-		public var configEelements:XML;
-		public var defaultCreate:String;
-		public var defaultUpdate:String;
-		public var defaultRetrieve:String;
-		public var defaultDelete:String;
+		
+		public var contentTabs:Array;
+		
+		public var defaultCreateContent:String;
+		public var defaultUpdateContent:String;
+		public var defaultRetrieveContent:String;
+		public var defaultDeleteContent:String;
 		public var defaultTable:String;
 		
 		//media - model media after Terms. Flat VO, single config, single config
@@ -35,14 +38,14 @@ package org.mig.model
 		public var mediaModel:DirectoryNode;
 		public var currentDirectory:DirectoryNode;
 		public var mimetypes:Array;
-		public var mediaConfig:XML;
+		public var mediaConfig:ManagerConfig;
 		
 		//tags
 		public var tagTerms:DataCollection;
 		public var categoryTerms:Array;
 		public var categoryTermsFlat:DataCollection;
 		public var categoriesCustomFields:DataCollection;	
-		public var termsConfig:XML;
+		public var termsConfig:ManagerConfig;
 		
 		public function ContentModel() {
 			templates = new DataCollection();
