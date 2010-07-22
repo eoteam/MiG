@@ -41,15 +41,10 @@ package org.mig.services
 		public function ContentService() {
 			
 		}
-/*		public function loadTemplateCustomfields():void {
-			var params:Object = new  Object();
-			params.action = ValidFunctions.GET_TEMPLATE_CUSTOMFIELDS;
-			this.createService(params,ResponseType.DATA,CustomField);	
-		}*/
 		public function loadRelatedCustomfields(config:ManagerConfig,...args):void {
 			var params:Object = new  Object();
 			params.action = ValidFunctions.GET_RELATED_CUSTOMFIELDS;
-			params.tablename = config.cfTablename;
+			params.tablename = config.customfieldsConfig.tablename;
 			for each(var prop:Object in args) {
 				params[prop.name] = prop.value;
 			}
@@ -68,7 +63,19 @@ package org.mig.services
 			//params.tablename = "contenttabs";
 			this.createService(params,ResponseType.DATA,ContentTab);				
 		}
-		
+		public function loadContentTabParameters(tab:ContentTab):void {
+			var params:Object = new  Object();
+			params.action = ValidFunctions.GET_DATA;
+			params.tablename = "tabsparameters";
+			params.id = tab.parameterids;
+			this.createService(params,ResponseType.DATA).token.tab = tab;
+		}
+		public function loadTemplateContentTabParameters(template:Template):void {
+			var params:Object = new  Object();
+			params.action = ValidFunctions.GET_TEMPLATE_CONTENTTABS_PARAMS;
+			params.templateid = template.id;
+			this.createService(params,ResponseType.DATA).token.template = template;
+		}
 		public function loadMimeTypes():void {
 			var params:Object = new Object();
 			params.action = ValidFunctions.GET_DATA;
@@ -96,6 +103,38 @@ package org.mig.services
 			else if(content is SubContainerNode)
 				loadSubContainer(content as SubContainerNode);
 		}
+		public function createContainer(title:String,template:Template):void {
+			var date:Date = new Date();
+			var time:Number = Math.round(date.time / 1000);
+			var params:Object = new Object();
+			params.action = template.createContent;
+			params.tablename = template.tablename;
+			//if(contentModel.currentContainer.config.attribute("templateid").length() > 0)
+			//{
+			params.templateid = template.id;
+			
+			for each(var field:CustomField in template.customfields) {
+				if(field.defaultvalue != null) {
+					params[field.name] = field.defaultvalue;
+				}
+			}
+			
+			
+			//}
+			if(contentModel.currentContainer.isRoot)
+				params.parentid = 0;
+			else
+				params.parentid = contentModel.currentContainer.data.id;
+			params.migtitle = title;
+			params.is_fixed = template.is_fixed;
+			params.createdby = appModel.user.id;
+			params.modifiedby = appModel.user.id;
+			params.createdate = time;
+			params.modifieddate = time;
+			params.statusid = ContentStatus.DRAFT;
+			params.verbose = true;
+			this.createService(params,ResponseType.DATA,ContainerData).token.template = template;	
+		}		
 		public function retrieveContainer(content:ContentNode,verbose:Boolean=true):void {
 			if(content is ContainerNode) {
 				var params:Object = new Object();
@@ -108,6 +147,17 @@ package org.mig.services
 				this.createService(params,ResponseType.DATA,ContainerData);
 			}
 		}
+		public function updateContainer(container:ContainerNode,update:UpdateData):void {
+			var params:Object = new Object();
+			for (var prop:String in update)
+				params[prop] = update[prop];
+			params.action = ValidFunctions.UPDATE_RECORD;
+			params.tablename = container.template.tablename;
+			params.id = update.id;
+			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
+			service.token.content = container;
+			service.token.update = update;
+		}		
 		public function deleteContainer(container:ContainerNode):void {
 			var params:Object = new Object();
 			params.action = container.template.deleteContent;
@@ -125,17 +175,7 @@ package org.mig.services
 			params.id = container.data.id;
 			this.createService(params,ResponseType.DATA,ContainerData).token.content = container;
 		}*/
-		public function updateContainer(container:ContainerNode,update:UpdateData):void {
-			var params:Object = new Object();
-			for (var prop:String in update)
-				params[prop] = update[prop];
-			params.action = ValidFunctions.UPDATE_RECORD;
-			params.tablename = container.template.tablename;
-			params.id = update.id;
-			var service:XMLHTTPService = this.createService(params,ResponseType.STATUS);
-			service.token.content = container;
-			service.token.update = update;
-		}
+
 		public function updateContainersStatus(containers:Array,statusid:int):void {
 			var params:Object = new Object();
 			params.action = ValidFunctions.UPDATE_RECORDS;
@@ -151,44 +191,50 @@ package org.mig.services
 			params.idvalues = ids;
 			this.createService(params,ResponseType.STATUS).token.containers = containers;
 		}
+		public function createContent(vo:ContentData,config:ConfigurationObject,customfields:Array,status:Boolean=false):void {
+			var updateData:UpdateData = vo.updateData;
+			var params:Object = new Object();
+			var service:XMLHTTPService
+			for (var prop:String in updateData) {
+				if(prop != "modified" && prop != "updateData" && prop != "mx_internal_uid")
+					params[prop] = updateData[prop];
+			}
+			params.action = config.createContent;
+			if(ValidFunctions.FUNCTIONS_WITH_TABLENAME.indexOf(params.action) != -1)
+				params.tablename = config.tablename
+			//if(config.attribute("createVerbose").length() > 0) {
+			//	params.verbose = config.@createVerbose.toString() == "true" ? true:false;
+			//}
+			//reverse translate customfields
+			/*			for (prop in params) {
+			for each(var customfield:CustomField in customfields) {
+			if(prop == customfield.name)
+			var value:String = params[prop];
+			if(value != null) {
+			delete params[prop];
+			params["customfield"+customfield.fieldid] = value;
+			}
+			}
+			}*/
+			
+			if(!status) {
+				var classToUse:String = flash.utils.getQualifiedClassName(vo);
+				var classRef:Class = flash.utils.getDefinitionByName(classToUse) as Class; 
+				//var resultClass:ClassFactory = new ClassFactory(classRef);
+				service = this.createService(params,ResponseType.DATA,classRef,handleContentCreated);
+			}
+			else {
+				service = this.createService(params,ResponseType.STATUS,null,handleContentCreatedStatus);
+			}
+			service.service.showBusyCursor = true;
+			service.token.content = vo;
+		}
 		public function retrieveContent(id:int,config:ConfigurationObject,clazz:Class):void {
 			var params:Object = new Object();
 			params.action = config.retrieveContent;
 			params.tablename = config.tablename;
 			params.id = id;
 			this.createService(params,ResponseType.DATA,clazz);
-		}
-		public function createContainer(title:String,template:Template):void {
-			var date:Date = new Date();
-			var time:Number = Math.round(date.time / 1000);
-			var params:Object = new Object();
-			params.action = template.createContent;
-			params.tablename = template.tablename;
-			//if(contentModel.currentContainer.config.attribute("templateid").length() > 0)
-			//{
-				params.templateid = template.id;
-
-				for each(var field:CustomField in template.customfields) {
-					if(field.defaultvalue != null) {
-						params[field.name] = field.defaultvalue;
-					}
-				}
-					
-				
-			//}
-			if(contentModel.currentContainer.isRoot)
-				params.parentid = 0;
-			else
-				params.parentid = contentModel.currentContainer.data.id;
-			params.migtitle = title;
-			params.is_fixed = template.is_fixed;
-			params.createdby = appModel.user.id;
-			params.modifiedby = appModel.user.id;
-			params.createdate = time;
-			params.modifieddate = time;
-			params.statusid = ContentStatus.DRAFT;
-			params.verbose = true;
-			this.createService(params,ResponseType.DATA,ContainerData).token.template = template;	
 		}
 		public function updateContent(vo:ContentData,config:ConfigurationObject,customfields:Array):void {
 			var updateData:UpdateData = vo.updateData;
@@ -217,44 +263,6 @@ package org.mig.services
 			service.service.showBusyCursor = true;
 			service.token.content = vo;
 			service.token.update = updateData;
-		}
-		public function createContent(vo:ContentData,config:ConfigurationObject,customfields:Array,status:Boolean=false):void {
-			var updateData:UpdateData = vo.updateData;
-			var params:Object = new Object();
-			var service:XMLHTTPService
-			for (var prop:String in updateData) {
-				if(prop != "modified" && prop != "updateData" && prop != "mx_internal_uid")
-					params[prop] = updateData[prop];
-			}
-			params.action = config.createContent;
-			if(ValidFunctions.FUNCTIONS_WITH_TABLENAME.indexOf(params.action) != -1)
-				params.tablename = config.tablename
-			//if(config.attribute("createVerbose").length() > 0) {
-			//	params.verbose = config.@createVerbose.toString() == "true" ? true:false;
-			//}
-			//reverse translate customfields
-/*			for (prop in params) {
-				for each(var customfield:CustomField in customfields) {
-					if(prop == customfield.name)
-						var value:String = params[prop];
-					if(value != null) {
-						delete params[prop];
-						params["customfield"+customfield.fieldid] = value;
-					}
-				}
-			}*/
-			
-			if(!status) {
-				var classToUse:String = flash.utils.getQualifiedClassName(vo);
-				var classRef:Class = flash.utils.getDefinitionByName(classToUse) as Class; 
-				//var resultClass:ClassFactory = new ClassFactory(classRef);
-				service = this.createService(params,ResponseType.DATA,classRef,handleContentCreated);
-			}
-			else {
-				service = this.createService(params,ResponseType.STATUS,null,handleContentCreatedStatus);
-			}
-			service.service.showBusyCursor = true;
-			service.token.content = vo;
 		}
 		public function deleteContent(vo:ContentData,config:ConfigurationObject,...args):void {
 			var params:Object = new Object();
@@ -321,7 +329,7 @@ package org.mig.services
 			params.orderdirection = container.template.orderdirection
 			params.verbosity = container.template.verbosity;
 			var service:XMLHTTPService = this.createService(params,ResponseType.DATA,ContainerData);
-			service.token.container = container;
+			service.token.content = container;
 		}
 		private function loadSubContainer(content:SubContainerNode):void {
 			if(content.queryVars != null) {

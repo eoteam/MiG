@@ -34,7 +34,7 @@ package org.mig.controller.startup
 			}
 			
 			trace("Startup: Global Colors Complete");
-			appModel.startupCount = 9;
+			appModel.startupCount = 11;
 			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP_PROGRESS,"Global Colors loaded"));
 			eventDispatcher.dispatchEvent(new StateEvent(StateEvent.ACTION, AppStartupStateConstants.LOAD_COLORS_COMPLETE));
 		}

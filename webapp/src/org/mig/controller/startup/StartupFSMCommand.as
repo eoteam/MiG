@@ -14,7 +14,7 @@ package org.mig.controller.startup
 		
 		override public function execute():void {
 			
-			appModel.startupItems = 10;
+			appModel.startupItems = 12;
 			
 			var fsmInjector:FSMInjector = new FSMInjector( AppStartupStateConstants.FSM );
 			var stateMachine:StateMachine = new StateMachine(eventDispatcher);

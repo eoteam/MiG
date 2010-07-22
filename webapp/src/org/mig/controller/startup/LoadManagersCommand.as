@@ -3,6 +3,7 @@ package org.mig.controller.startup
 	import org.mig.events.AppEvent;
 	import org.mig.model.AppModel;
 	import org.mig.model.ContentModel;
+	import org.mig.model.vo.ConfigurationObject;
 	import org.mig.model.vo.manager.ManagerConfig;
 	import org.mig.services.interfaces.IAppService;
 	import org.robotlegs.mvcs.Command;
@@ -25,9 +26,16 @@ package org.mig.controller.startup
 		}
 		private function handleManagers(data:Object):void {
 			var results:Array = data.result as Array;
-			appModel.managers = results;
 			
+			appModel.managers = results;
 			for each(var item:ManagerConfig in results) {
+				item.customfieldsConfig = new ConfigurationObject();
+				item.customfieldsConfig.tablename = item['cfTablename'];
+				item.customfieldsConfig.createContent = item['cfCreateContent'];
+				item.customfieldsConfig.retrieveContent = item['cfRetrieveContent'];
+				item.customfieldsConfig.updateContent = item['cfUpdateContent'];
+				item.customfieldsConfig.deleteContent = item['cfDeleteContent'];
+				
 				if(contentModel.hasOwnProperty(item.type))
 					contentModel[item.type] = item;
 			}

@@ -1,5 +1,10 @@
 package org.mig.controller.startup
 {
+	import flash.net.registerClassAlias;
+	import flash.utils.ByteArray;
+	
+	import mx.utils.ObjectUtil;
+	
 	import org.mig.collections.DataCollection;
 	import org.mig.events.AppEvent;
 	import org.mig.model.AppModel;
@@ -12,7 +17,7 @@ package org.mig.controller.startup
 	import org.mig.services.interfaces.IContentService;
 	import org.robotlegs.mvcs.Command;
 	import org.robotlegs.utilities.statemachine.StateEvent;
-	
+		
 	public class LoadTemplatesCommand extends Command
 	{
 		[Inject]
@@ -29,7 +34,7 @@ package org.mig.controller.startup
 			service.addHandlers(handleTemplates);
 		}
 		private var templateId:int;
-
+		private var counter:int;
 		
 		private function handleTemplates(data:Object):void {
 			var results:Array = data.result as Array;
@@ -43,20 +48,58 @@ package org.mig.controller.startup
 				for each(var cf:CustomField in contentModel.templatesCustomFields) {
 					item.customfields.addItem(cf);
 				}
-				for each (var tab:ContentTab in contentModel.contentTabs) {
-					var ids:Array = tab.templateids.split(',');
-					if(ids.indexOf(item.id) != -1)
-						item.contentTabs.addItem(tab);
-				}
-				//item.customfields.state = DataCollection.COMMITED;
+				service.loadTemplateContentTabParameters(item);
+				service.addHandlers(handleTemplateContentTabParams);
 			}
 			contentModel.templatesCustomFields.filterFunction = null;
 			contentModel.templatesCustomFields.refresh();
-			trace("Startup: Templates Complete");
-			appModel.startupCount = 4;	
-			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP_PROGRESS,"Templates loaded"));
-			eventDispatcher.dispatchEvent(new StateEvent(StateEvent.ACTION, AppStartupStateConstants.LOAD_TEMPLATES_COMPLETE));	
+
 		}
+		
+		private function handleTemplateContentTabParams(data:Object):void {
+			
+			var template:Template = data.token.template as Template;
+			var results:Array = data.result as Array;
+			for each (var tab:ContentTab in contentModel.contentTabs) {
+				var ids:Array = tab.templateids.split(',');
+				if(ids.indexOf(template.id.toString()) != -1) {
+					var newTab:ContentTab = new ContentTab();
+					newTab.id = tab.id;
+					newTab.contentview = tab.contentview;
+					newTab.itemview = tab.itemview;
+					newTab.createContent = tab.createContent;
+					newTab.retrieveContent = tab.retrieveContent;
+					newTab.updateContent = tab.updateContent;
+					newTab.deleteContent = tab.deleteContent;
+					newTab.dto = tab.dto;
+					newTab.labelfield = tab.labelfield;
+					newTab.orderby = tab.orderby;
+					newTab.orderdirection = tab.orderdirection;
+					newTab.tablename = tab.tablename;
+					newTab.vars = tab.vars;
+					if(results.length) {
+						for each(var param:Object in tab.parameters) {
+							for each(var result:Object in results) {
+								if(param.id == result.parameterid) {
+									for (var prop:String in param)
+										result[prop] = param[prop];
+									newTab.parameters.push(result);
+								}
+							}
+						}
+						template.contentTabs.addItem(newTab);
+					}
+				}
+			}		
+			counter++;
+			if(counter == contentModel.templates.length) {
+				trace("Startup: Templates Complete");
+				appModel.startupCount = 5;	
+				eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP_PROGRESS,"Templates loaded"));
+				eventDispatcher.dispatchEvent(new StateEvent(StateEvent.ACTION, AppStartupStateConstants.LOAD_TEMPLATES_COMPLETE));	
+			}
+		}
+		
 		private function filterByTemplateId(item:CustomField):Boolean {
 			return item.templateid == templateId ? true:false;
 		}

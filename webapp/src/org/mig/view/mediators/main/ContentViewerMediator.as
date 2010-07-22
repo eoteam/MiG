@@ -39,9 +39,9 @@ package org.mig.view.mediators.main
 			if(node != content && node != null)
 			{
 				content = node;
-				if (content != null && content.template.contentView.length > 0)
+				if (content != null && content.template.contentview.length > 0)
 				{
-					var contentView:IContentView = IContentView(ClassUtils.instantiateClass(content.template.contentView));
+					var contentView:IContentView = IContentView(ClassUtils.instantiateClass(content.template.contentview));
 					contentView.content = content;
 					UIComponent(contentView).percentHeight = 100; 
 					//BindingUtils.bindProperty(contentView, "height", contentViewContainer, "height")

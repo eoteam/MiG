@@ -47,7 +47,9 @@ package org.mig.model.vo.app
 			result = result.substring(0,result.length-1);
 			var changed:Boolean = true;
 			if(event.kind == CollectionEventKind.UPDATE) {
-				if(PropertyChangeEvent(event.items[0]).property == "selected" || PropertyChangeEvent(event.items[0]).property == "index")
+				if(PropertyChangeEvent(event.items[0]).property == "selected" || 
+				   PropertyChangeEvent(event.items[0]).property == "index" ||
+				   PropertyChangeEvent(event.items[0]).property == "vo")
 					changed = false;
 			}	
 			if(ready && changed) 

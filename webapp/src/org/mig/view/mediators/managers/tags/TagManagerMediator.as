@@ -120,7 +120,7 @@ package org.mig.view.mediators.managers.tags
 			view.submitButton.enabled = true;
 		}
 		private function handleCFEdit(event:MouseEvent):void {
-			if(!view.cfEditButton.selected) {
+			if(view.cfEditButton.selected) {
 				view.customfieldsEditor.show();
 			}
 			else {
@@ -280,7 +280,8 @@ package org.mig.view.mediators.managers.tags
 			if(cudCount == cudTotal) {
 				eventDispatcher.dispatchEvent(new NotificationEvent(NotificationEvent.NOTIFY,"Terms & Catergories updated successfully"));
 				view.submitButton.enabled = false;
-				view.categoriesView.selectedCategoryLabel.text = view.categoriesView.categoryList.selectedItem.name;
+				if( view.categoriesView.categoryList.selectedItem)
+					view.categoriesView.selectedCategoryLabel.text = view.categoriesView.categoryList.selectedItem.name;
 				view.categoriesView.categoryList.invalidateList();
 				view.categoriesView.refresh();
 			}

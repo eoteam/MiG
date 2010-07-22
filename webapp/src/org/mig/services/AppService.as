@@ -23,6 +23,7 @@ package org.mig.services
 		public function AppService() {
 			super();
 		}
+
 		public function loadSettings():void {
 			var params:Object = new  Object();
 			params.action = ValidFunctions.GET_DATA;
@@ -35,24 +36,13 @@ package org.mig.services
 			params.tablename = "managers"; 
 			this.createService(params,ResponseType.DATA,ManagerConfig);
 		}
-		public function loadCustomFieldGroups():void {
-			var params:Object = new  Object();
-			params.action = ValidFunctions.GET_DATA;
-			params.tablename = "customfieldgroups"; 
-			this.createService(params,ResponseType.DATA,Object);
-		}		
-		public function loadCustomFields():void {
-			var params:Object = new  Object();
-			params.action = ValidFunctions.GET_DATA;
-			params.tablename = "customfields";
-			this.createService(params,ResponseType.DATA,CustomField);
-		}
 		public function loadColors():void {
 			var params:Object = new  Object();
 			params.action = ValidFunctions.GET_DATA;
 			params.tablename = "colors";
 			this.createService(params,ResponseType.DATA,Object);			
 		}
+		
 		public function duplicateObject(vo:ContentData,config:ConfigurationObject,relatedField:String,relatedTables:String):void {
 			var params:Object = new  Object();
 			params.action = ValidFunctions.DUPLICATE_OBJECT;

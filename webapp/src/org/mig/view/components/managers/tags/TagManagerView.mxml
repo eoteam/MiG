@@ -3,10 +3,12 @@
 		xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		xmlns:s="library://ns.adobe.com/flex/spark" 
 		xmlns:mx="library://ns.adobe.com/flex/mx"
-		backgroundColor="0x121212"
-		width="100%" height="100%" 
 		xmlns:controls="org.mig.view.controls.*" 
-		xmlns:renderers="org.mig.view.renderers.*" xmlns:managers="org.mig.view.components.managers.*" xmlns:customfields="org.mig.view.components.managers.customfields.*">
+		xmlns:renderers="org.mig.view.renderers.*" 
+		xmlns:managers="org.mig.view.components.managers.*" 
+		xmlns:customfields="org.mig.view.components.managers.customfields.*"		
+		backgroundColor="0x121212"
+		width="100%" height="100%" >
 	<fx:Script>
 		<![CDATA[
 			import mx.events.DataGridEvent;
@@ -16,9 +18,6 @@
 				termsGrid.destroyItemEditor();
 				event.preventDefault(); 
 			}
-
-
-
 		]]>
 	</fx:Script>
 	
@@ -31,7 +30,7 @@
 			<s:BitmapImage source="@Embed(source='/migAssets/library.swf#tagIcon')" />
 			<s:Label styleName="boldCopy" left="-3" bottom="-5" width="100%" text="Tag Manager"/>
 			<s:Rect width="100%"/>
-			<s:ToggleButton id="cfEditButton"  label="Edit" />
+			<s:ToggleButton id="cfEditButton"  label="Edit" visible="{tabNavigator.selectedIndex==0?false:true}" />
 			<s:Button styleName="defaultGrayButton" label="Save Changes" enabled="false" id="submitButton"/>
 			<s:Button styleName="defaultGrayButton" label="Close" click="this.visible=false"/>
 		</s:HGroup>

@@ -55,7 +55,7 @@ package org.mig.view.mediators.content.media
 			types = new ArrayList();
 			
 			var imageRenderer:ClassFactory;
-			var tmp:Array = content.tab.usage.toString().split(",");
+			var tmp:Array;// = content.tab.usage.toString().split(",");
 			for each(var item:String in tmp)
 			{
 				type = item.split(' ').join('_').toLowerCase();
@@ -69,13 +69,11 @@ package org.mig.view.mediators.content.media
 			content.children.filterFunction = null;
 			content.children.refresh();
 			
-			var classToUse:String = content.tab.itemView;
+			var classToUse:String = content.tab.itemview;
 			var classRef:Class = getDefinitionByName(classToUse) as Class; 
 			imageRenderer = new ClassFactory(classRef);
-			dragFormats = String(content.tab.formats.toString()).split(",");			
-			
-			
-						
+			//dragFormats = String(content.tab.formats.toString()).split(",");			
+					
 			view.animatedList.addEventListener("orderChange",handleAnimatedListOrderChange);
 			view.animatedList.itemRenderer = imageRenderer;
 			

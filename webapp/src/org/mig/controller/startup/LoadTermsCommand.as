@@ -58,7 +58,7 @@ package org.mig.controller.startup
 			}
 			contentModel.tagTerms.state = contentModel.categoryTermsFlat.state = DataCollection.COMMITED;	
 			trace("Startup: Terms Complete");
-			appModel.startupCount = 8;
+			appModel.startupCount = 10;
 			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP_PROGRESS,"Terms loaded"));
 			eventDispatcher.dispatchEvent(new StateEvent(StateEvent.ACTION, AppStartupStateConstants.LOAD_TERMS_COMPLETE));
 		}

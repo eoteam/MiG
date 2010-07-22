@@ -50,7 +50,7 @@
 		<s:itemRenderer>
 			<fx:Component>
 				<s:ItemRenderer>
-					<s:RadioButton chromeColor="0" label="{data.@name.toString()}" group="{outerDocument.radioGroup}" symbolColor="0xFFFFFF"/>
+					<s:RadioButton chromeColor="0" label="{data.name}" group="{outerDocument.radioGroup}" symbolColor="0xFFFFFF"/>
 				</s:ItemRenderer>
 			</fx:Component>
 		</s:itemRenderer>

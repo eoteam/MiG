@@ -8,6 +8,7 @@ package org.mig.view.mediators.main
 	import org.mig.events.AppEvent;
 	import org.mig.events.ViewEvent;
 	import org.mig.model.AppModel;
+	import org.mig.model.vo.manager.ManagerConfig;
 	import org.mig.view.components.main.MainView;
 	import org.mig.view.components.main.ManagersTree;
 	import org.mig.view.renderers.ManagerTreeRenderer;

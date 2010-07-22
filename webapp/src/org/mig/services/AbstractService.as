@@ -30,7 +30,17 @@
 		public function AbstractService() {
 			super();
 		}
-
+		
+/*		public function loadData(tablename:String,clazz:Class=null,...args):void {
+			var params:Object = new  Object();
+			params.action = ValidFunctions.GET_DATA;
+			params.tablename = tablename;
+			for each (var prop:Object in args) {
+				params[prop.key] = prop.value;
+			}
+			this.createService(params,ResponseType.DATA,clazz?clazz:Object);	
+		}	*/	
+		
 		protected function result(event:ResultEvent):void {
 			if(event.token.resultCallBack) {
 				event.token.resultCallBack(event);

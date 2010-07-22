@@ -32,11 +32,11 @@ package org.mig.view.mediators.content
 		override public function onRegister():void {
 
 			editableViewsList = [];
-			generalEditor = IEditableContentView(ClassUtils.instantiateClass(ContainerNode(view.content).template.generalView));
+			generalEditor = IEditableContentView(ClassUtils.instantiateClass(ContainerNode(view.content).template.generalview));
 			generalEditor.content = view.content;
 			view.contentTabs.addChildAt(generalEditor as UIComponent,0);
 			editableViewsList.push(generalEditor);
-			for each (var container:ContentTab in ContainerNode(view.content).template.contentTabs) {
+			for each (var container:ContentTab in ContainerNode(view.content).template.contentTabs.source) {
 
 				var queryVars:Object = new Object();
 				var vars:Array = container.vars.split(",");

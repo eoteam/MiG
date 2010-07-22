@@ -9,13 +9,11 @@ package org.mig.services.interfaces
 		function loadSettings():void;
 		
 		function loadManagers():void;
-		
-/*		function loadCustomFields():void;
-		
-		function loadCustomFieldGroups():void ;*/
-		
+				
 		function loadColors():void;
 		
 		function duplicateObject(vo:ContentData,config:ConfigurationObject,relatedField:String,relatedTables:String):void;
+		
+		
 	}
 }

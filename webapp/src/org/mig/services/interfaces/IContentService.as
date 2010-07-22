@@ -5,6 +5,7 @@ package org.mig.services.interfaces
 	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.UpdateData;
 	import org.mig.model.vo.content.ContainerNode;
+	import org.mig.model.vo.content.ContentTab;
 	import org.mig.model.vo.content.Template;
 	import org.mig.model.vo.manager.ManagerConfig;
 	import org.mig.model.vo.manager.Term;
@@ -17,7 +18,9 @@ package org.mig.services.interfaces
 		
 		function loadContentTabs():void;
 		
-		//function loadTemplateCustomfields():void;
+		function loadContentTabParameters(tab:ContentTab):void;
+		
+		function loadTemplateContentTabParameters(template:Template):void;
 		
 		function loadMimeTypes():void;
 		
@@ -39,8 +42,11 @@ package org.mig.services.interfaces
 		
 		//refactor this later
 		function retrieveContent(id:int,config:ConfigurationObject,clazz:Class):void;
+		
 		function updateContent(vo:ContentData,config:ConfigurationObject,customfields:Array):void;
+		
 		function createContent(vo:ContentData,config:ConfigurationObject,customfields:Array,status:Boolean=false):void;
+		
 		function deleteContent(vo:ContentData,config:ConfigurationObject,...args):void;
 	}
 }

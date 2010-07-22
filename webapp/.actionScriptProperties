@@ -32,7 +32,6 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="ConfigTest.mxml"/>
     <application path="migApp.mxml"/>
   </applications>
   <modules/>

@@ -4,18 +4,16 @@ package org.mig.model.vo.manager
 	
 	[Bindable]
 	public class ManagerConfig extends ConfigurationObject
-	{
-		public var cfCreateContent:String;
-		public var cfRetrieveContent:String;
-		public var cfUpdateContent:String;
-		public var cfDeleteContent:String;
-		public var cfTablename:String;
+	{		
+		public var customfieldsConfig:ConfigurationObject;
+		
 		public var customfields:Boolean;
 		public var type:String;
 		
 		public function ManagerConfig()
 		{
 			super();
+			children = null;
 		}
 	}
 }

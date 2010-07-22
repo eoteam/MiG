@@ -18,6 +18,8 @@
 			protected function parentList_itemClickHandler(event:ListEvent):void
 			{
 				inspector.content = event.itemRenderer.data as ContentData;
+				nameInput.text = event.itemRenderer.data.name;
+				slugInput.text = event.itemRenderer.data.slug;
 				selectedCategoryLabel.text = event.itemRenderer.data.name;
 			}
 			public function refresh():void {
@@ -61,12 +63,12 @@
 				</s:Rect>
 				<s:HGroup paddingLeft="2" width="100%">
 					<s:Label width="100" styleName="boldCopy" text="Name"/>
-					<s:TextInput styleName="inputFieldBlack" width="100%" contentBackgroundAlpha="1" />
+					<s:TextInput styleName="inputFieldBlack" width="100%" contentBackgroundAlpha="1" id="nameInput"/>
 				</s:HGroup>
 				<s:Rect height="4"/>
 				<s:HGroup paddingLeft="2" width="100%">
 					<s:Label width="100" styleName="boldCopy" text="Slug"/>
-					<s:TextInput styleName="inputFieldBlack" width="100%" contentBackgroundAlpha="1" />
+					<s:TextInput styleName="inputFieldBlack" width="100%" contentBackgroundAlpha="1" id="slugInput" />
 				</s:HGroup>				
 				
 				<customfields:DataCustomFieldList width="100%"  height="100%" id="inspector" />				

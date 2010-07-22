@@ -31,7 +31,7 @@
 			//this accomodates lazy instantiation of the actual view
 			public function configure():void {
 				if(!configured) {
-					view = IEditableContentView(ClassUtils.instantiateClass(_content.tab.contentView));
+					view = IEditableContentView(ClassUtils.instantiateClass(_content.tab.contentview));
 					view.content = _content;
 					UIComponent(view).percentHeight = 100;
 					UIComponent(view).percentWidth = 100;

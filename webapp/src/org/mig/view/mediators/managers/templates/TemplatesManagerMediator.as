@@ -238,10 +238,10 @@ package org.mig.view.mediators.managers.templates
 				if(customfield.globalDelete) {
 					var arg1:Object = {name:'customfieldid',value:customfield.customfieldid};
 					var arg2:Object = {name:'tablename2',value:'content'};
-					contentService.deleteContent(customfield,contentModel.templatesConfig.customfields[0],arg1,arg2);					
+					contentService.deleteContent(customfield,contentModel.templatesConfig.customfieldsConfig,arg1,arg2);					
 				}
 				else {
-					contentService.deleteContent(customfield,contentModel.templatesConfig.customfields[0]);
+					contentService.deleteContent(customfield,contentModel.templatesConfig.customfieldsConfig);
 				}
 				contentService.addHandlers(handleCustomFieldDeleted);	
 			}
@@ -256,7 +256,7 @@ package org.mig.view.mediators.managers.templates
 					
 					customfield.modifiedby = appModel.user.id;
 					customfield.modifieddate = time;
-					contentService.updateContent(customfield,contentModel.templatesConfig.customfields[0],[]);
+					contentService.updateContent(customfield,contentModel.templatesConfig.customfieldsConfig,[]);
 					contentService.addHandlers(handleCustomfieldUpdated);
 				}
 				else {
@@ -272,7 +272,7 @@ package org.mig.view.mediators.managers.templates
 				
 				customfield.createdby = customfield.modifiedby = appModel.user.id;
 				customfield.modifieddate = customfield.createdate= time;
-				contentService.createContent(customfield,contentModel.templatesConfig,[],true);
+				contentService.createContent(customfield,contentModel.templatesConfig.customfieldsConfig,[],true);
 				contentService.addHandlers(handleCustomfieldCreated);
 			}
 			for each(template in contentModel.templates.modifiedItems.source) {

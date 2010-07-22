@@ -31,7 +31,7 @@ package org.mig.controller.startup
 			}		
 			contentModel.categoriesCustomFields.state = DataCollection.COMMITED;
 			trace("Startup: Categories CustomFields Complete");
-			appModel.startupCount = 7;
+			appModel.startupCount = 9;
 			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP_PROGRESS,"Categories CustomFields loaded"));
 			eventDispatcher.dispatchEvent(new StateEvent(StateEvent.ACTION, AppStartupStateConstants.LOAD_CATEGORIES_CFS_COMPLETE));
 		}
