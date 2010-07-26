@@ -23,7 +23,6 @@ package org.mig.model.vo.content
 		public var is_nesting:int;
 		public var orderby:String = "id";
 		public var orderdirection:String = "ASC";
-		public var generalview:String;
 		public var verbosity:int;
 		public var customfields:ArrayList;
 		public var contentTabs:ArrayList;
