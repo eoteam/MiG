@@ -56,8 +56,7 @@ package org.mig.controller.startup
 
 		}
 		
-		private function handleTemplateContentTabParams(data:Object):void {
-			
+		private function handleTemplateContentTabParams(data:Object):void {		
 			var template:Template = data.token.template as Template;
 			var results:Array = data.result as Array;
 			for each (var tab:ContentTab in contentModel.contentTabs) {
@@ -65,6 +64,7 @@ package org.mig.controller.startup
 				if(ids.indexOf(template.id.toString()) != -1) {
 					var newTab:ContentTab = new ContentTab();
 					newTab.id = tab.id;
+					newTab.name = tab.name;
 					newTab.contentview = tab.contentview;
 					newTab.itemview = tab.itemview;
 					newTab.createContent = tab.createContent;

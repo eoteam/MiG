@@ -119,6 +119,10 @@ s|ToggleButton {
 	skinClass: ClassReference("org.mig.view.skins.controls.ToolTabBarSkin");
 	cornerRadius: 0;
 }
+.editabletoolTabBar {
+	skinClass: ClassReference("org.mig.view.skins.controls.EditableTabBarSkin");
+	cornerRadius: 0;
+}
 /******************************/
 /************ Text ************/
 /******************************/

@@ -4,7 +4,7 @@
 		xmlns:fx="http://ns.adobe.com/mxml/2009"
 		xmlns:s="library://ns.adobe.com/flex/spark"
 		xmlns:fb="http://ns.adobe.com/flashbuilder/2009"
-		alpha.disabled="0.5">
+		alpha.disabled="0.5" xmlns:controls="org.mig.view.controls.*">
 	<s:states>
 		<s:State name="normal" />
 		<s:State name="disabled" />
@@ -38,7 +38,7 @@
 		</s:layout>
 		<s:itemRenderer>
 			<fx:Component>
-				<s:ButtonBarButton skinClass="org.mig.view.skins.controls.TabBarButtonSkin" />
+				<controls:EditableButtonBar skinClass="org.mig.view.skins.controls.TabBarEditableButtonSkin" />
 			</fx:Component>
 		</s:itemRenderer>
 	</s:DataGroup>

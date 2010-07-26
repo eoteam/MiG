@@ -24,10 +24,7 @@
           <crossDomainRslEntry autoExtract="true" policyFileUrl="" rslUrl="textLayout_ui.swf"/>
         </crossDomainRsls>
       </libraryPathEntry>
-      <libraryPathEntry kind="3" linkType="1" path="/Robotlegs/bin/Robotlegs.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="/Robotlegs-StateMachine/bin/Robotlegs-StateMachine.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/components_framework/bin/components_framework.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="/SwiftSuspenders/bin/SwiftSuspenders.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>

@@ -1,9 +1,11 @@
 package org.mig.view.mediators.managers.templates
 {
+	import flash.display.DisplayObject;
 	import flash.events.ContextMenuEvent;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import mx.collections.ArrayList;
 	import mx.events.CollectionEvent;
 	import mx.events.CollectionEventKind;
 	import mx.events.DragEvent;
@@ -23,10 +25,12 @@ package org.mig.view.mediators.managers.templates
 	import org.mig.model.vo.app.CustomFieldOption;
 	import org.mig.model.vo.app.CustomFieldTypes;
 	import org.mig.model.vo.app.StatusResult;
+	import org.mig.model.vo.content.ContentTab;
 	import org.mig.model.vo.content.Template;
 	import org.mig.services.interfaces.IAppService;
 	import org.mig.services.interfaces.IContentService;
 	import org.mig.utils.GlobalUtils;
+	import org.mig.view.components.managers.templates.TemplateContentTabBaseView;
 	import org.mig.view.components.managers.templates.TemplatesManagerView;
 	import org.mig.view.events.ContentViewEvent;
 	import org.robotlegs.mvcs.Mediator;
@@ -195,6 +199,18 @@ package org.mig.view.mediators.managers.templates
 		}
 		private function addChangeListener(template:Template):void {		
 			view.cfList.dataProvider = template.customfields;
+			var len:int = view.tabStack.getChildren().length;
+			for each(var c:DisplayObject in view.tabStack.getChildren()) {
+				if(c != view.templateDetailView)
+					view.tabStack.removeChild(c);
+			}
+			for each(var tab:ContentTab in template.contentTabs.source) {
+				var tabContainer:TemplateContentTabBaseView = new TemplateContentTabBaseView();
+				tabContainer.percentHeight = tabContainer.percentWidth = 100;
+				tabContainer.dataProvider = new ArrayList(tab.parameters);
+				view.tabStack.addChild(tabContainer);
+				tabContainer.label = tab.name;
+			}
 		}
 		private function handleChange(event:CollectionEvent):void {
 			var field:CustomField;

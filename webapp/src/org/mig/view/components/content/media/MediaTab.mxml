@@ -152,7 +152,8 @@
 					allowMultipleSelection="true"
 					dropEnabled="true" dragMoveEnabled="true" dragEnabled="true"><!-- newSelectionColor="0xF491A9" -->
 					<controls:layout>
-						<s:TileLayout  rowHeight="240" columnWidth="200"   verticalGap="4" horizontalGap="4" clipAndEnableScrolling="true" useVirtualLayout="true" orientation="rows"  />
+						<s:TileLayout  rowHeight="240" columnWidth="200"   verticalGap="4" horizontalGap="4" 
+						clipAndEnableScrolling="true" useVirtualLayout="true" orientation="rows"  />
 					</controls:layout>
 					<controls:itemRenderer>
 						<fx:Component>

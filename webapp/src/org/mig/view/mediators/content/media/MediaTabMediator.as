@@ -50,48 +50,59 @@ package org.mig.view.mediators.content.media
 		private var dragFormats:Array;
 		private var types:ArrayList;
 		override public function onRegister():void {
-			
-			var content:SubContainerNode = view.content as SubContainerNode;
+					
 			types = new ArrayList();
-			
+	
+			initView();
+			addListeners();
+		}
+		private function initView():void {
+			var content:SubContainerNode = view.content as SubContainerNode;
 			var imageRenderer:ClassFactory;
-			var tmp:Array;// = content.tab.usage.toString().split(",");
-			for each(var item:String in tmp)
-			{
+			var tmp:Array;
+			for each(var parameter:Object in content.tab.parameters) {
+				if(parameter.name == "usage")	{
+					tmp = parameter.value.split(",");
+				}
+			}
+			for each(var item:String in tmp) {
 				type = item.split(' ').join('_').toLowerCase();
 				content.children.filterFunction = filterByUsage;
 				content.children.refresh();		
 				var dp:ArrayList = new ArrayList();
 				for each(var item2:ContentMedia in content.children)
-					dp.addItem(item2);
+				dp.addItem(item2);
 				types.addItem({type:item,baseLabel:item,label:item + ' ('+content.children.length+')',dataProvider:dp});
 			}
 			content.children.filterFunction = null;
 			content.children.refresh();
-			
 			var classToUse:String = content.tab.itemview;
 			var classRef:Class = getDefinitionByName(classToUse) as Class; 
 			imageRenderer = new ClassFactory(classRef);
 			//dragFormats = String(content.tab.formats.toString()).split(",");			
-					
-			view.animatedList.addEventListener("orderChange",handleAnimatedListOrderChange);
-			view.animatedList.itemRenderer = imageRenderer;
-			
+			view.animatedList.itemRenderer = imageRenderer;		
 			view.thumbURL = appModel.thumbURL;
 			view.scaleSlider.value = view.scalePercent = 1;
-			
+			view.currentState = "usage";
+		}
+		private function addListeners():void {
+			view.animatedList.addEventListener("orderChange",handleAnimatedListOrderChange);
+		
 			view.stack.addEventListener(Event.CHANGE, handleStackChange);
 			
 			view.addEventListener(ViewEvent.SHOW_CONTENT_MEDIA_DETAIL,handleDetailView);
-			view.currentState = "usage";
+		
 			view.addEventListener("viewBtn",handleViewButtons);
-				
+			
 			view.usageList.dataProvider = types;
 			view.usageList.invalidateDisplayList();
 			view.usageList.addEventListener(ListItemEvent.ITEM_DOUBLE_CLICK,handleUsageSelection);
 			view.usageList.addEventListener(DragEvent.DRAG_ENTER,handleUsageListDragEnter);
 			
 			view.detailView.cancelButton.addEventListener(MouseEvent.CLICK,handleDetailViewCancel);
+			
+			view.tileHolder.addEventListener(DragEvent.DRAG_ENTER,handleFixedListDragEnter);
+			view.tileHolder.addEventListener(DragEvent.DRAG_DROP,handleFixedListDragDrop);
 		}
 		private function handleViewButtons(event:DataEvent):void {
 			var index:int = Number(event.data);
@@ -202,11 +213,31 @@ package org.mig.view.mediators.content.media
 				}
 			}
 		}
+		private function handleFixedListDragEnter(event:DragEvent):void {
+			if(!event.dragSource.hasFormat(DraggableViews.MEDIA_ITEMS)) {
+				event.preventDefault();
+				event.target.hideDropFeedback(event);
+				DragManager.showFeedback(DragManager.NONE);
+			}
+			else {
+				DragManager.showFeedback(DragManager.COPY);
+				DragManager.acceptDragDrop(view.tileHolder);
+				view.tileHolder.mouseChildren = false;
+			}
+		}
+		private function handleFixedListDragDrop(event:DragEvent):void {
+			view.tileHolder.mouseChildren = true;
+			addDraggedItems(event.dragSource.dataForFormat(DraggableViews.MEDIA_ITEMS) as Array);		
+		}
 		private function handleUsageListDragDrop(event:DragEvent):void {
+			
+			addDraggedItems(event.dragSource.dataForFormat(DraggableViews.MEDIA_ITEMS) as Array);			
+			view.usageList.invalidateProperties();
+		}
+		private function addDraggedItems(items:Array):void {
 			var type:Object = view.usageList.selectedItem;
 			var dp:ArrayList = type.dataProvider;
 			var usage_type:String = type.type;
-			var items:Array = event.dragSource.dataForFormat(DraggableViews.MEDIA_ITEMS) as Array;
 			var files:Array = [];
 			for each(var item:ContentNode in items) {
 				if(item is FileNode)
@@ -217,7 +248,7 @@ package org.mig.view.mediators.content.media
 			for each(var file:FileNode in files) {	
 				var newItem:ContentMedia = new ContentMedia;
 				var fileData:MediaData = file.data as MediaData;
-
+				
 				newItem.contentid = view.content.data.id;
 				
 				newItem.mediaid		= fileData.id;
@@ -241,8 +272,7 @@ package org.mig.view.mediators.content.media
 				dp.addItem(newItem);
 				
 			}
-			type.label =  type.baseLabel + ' ('+dp.length+')';		
-			view.usageList.invalidateProperties();
+			type.label =  type.baseLabel + ' ('+dp.length+')';
 		}
 	}
 }
