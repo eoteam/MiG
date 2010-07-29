@@ -101,7 +101,8 @@ package org.mig.controller.startup
 						}
 					}
 				}
-			}		
+			}	
+			template.contentTabs.state = DataCollection.COMMITED;
 			counter++;
 			if(counter == contentModel.templates.length) {
 				trace("Startup: Templates Complete");

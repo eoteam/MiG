@@ -821,23 +821,48 @@ function getContentContent($params)
 	return $result;
 }
 //for content
-function getTemplateCustomFields($params) {
-	$sql = "SELECT customfields.*, templatecfs.templateids, templatecfs.ids FROM customfields 
+function getContentTabs($params) {
+	$sql = "SELECT contenttabs.*, templates.templateids,parameters.parameterids FROM contenttabs	
 			
 			LEFT JOIN (
-				SELECT templates_customfields.customfieldid,
-				GROUP_CONCAT(templates_customfields.templateid ORDER BY templates_customfields.templateid) AS templateids,
-				GROUP_CONCAT(templates_customfields.id ORDER BY templates_customfields.templateid) AS ids
-				FROM templates_customfields
-				GROUP BY templates_customfields.customfieldid
+				SELECT templates_contenttabs.tabid,
+				GROUP_CONCAT(templates_contenttabs.templateid ORDER BY templates_contenttabs.templateid) AS templateids
+				FROM templates_contenttabs
+				GROUP BY templates_contenttabs.tabid
 			
- 			 ) AS templatecfs ON templatecfs.customfieldid = customfields.id WHERE customfields.groupid='1'";
+ 			 ) AS templates ON templates.tabid = contenttabs.id
+ 			 
+ 			 LEFT JOIN (
+					SELECT contenttabs.id tabid, 
+						GROUP_CONCAT( tabsparameters.id ORDER BY tabsparameters.id ASC) AS parameterids
+					FROM contenttabs, tabsparameters
+					WHERE contenttabs.id = tabsparameters.tabid
+					GROUP BY tabsparameters.tabid
+				
+				) AS parameters ON parameters.tabid = contenttabs.id";
  	if($result = queryDatabase($sql)) {
- 		return $result;
+ 		return $result;	
  	}
 	else die("Query Failed: " . $result->errorInfo());
-
 }
+//template id + tamplatetab id + tamplatetab parameter ids as comma-delimited list
+function getTemplateContenttabsParams($params) {
+	if(isset($params['templateid'])) {
+		$sql = "SELECT templates_contenttabs_parameters.id,templates_contenttabs_parameters.value,templates_contenttabs_parameters.parameterid
+				FROM templates_contenttabs_parameters
+				LEFT JOIN templates_contenttabs ON templates_contenttabs.id = templates_contenttabs_parameters.templatetabid
+				LEFT JOIN tabsparameters ON tabsparameters.id = templates_contenttabs_parameters.parameterid
+				WHERE templates_contenttabs.templateid = '" . $params['templateid'] . "'";
+ 	
+ 		if($result = queryDatabase($sql)) {
+ 			return $result;
+ 		}
+		else die("Query Failed: " . $result->errorInfo());
+	}
+	else die("Template id not provided");
+}
+
+
 //for managers
 function getRelatedCustomFields($params) {
 	$validParams = array("action","tablename");

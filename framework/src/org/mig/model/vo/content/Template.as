@@ -16,16 +16,16 @@ package org.mig.model.vo.content
 			super();
 			//stateProps = stateProps.concat(
 			customfields = new ArrayList();
-			contentTabs = new ArrayList();
+			contentTabs = new DataCollection();
 		}
-
+		public var generalview:String;
 		public var is_fixed:int;
 		public var is_nesting:int;
 		public var orderby:String = "id";
 		public var orderdirection:String = "ASC";
 		public var verbosity:int;
 		public var customfields:ArrayList;
-		public var contentTabs:ArrayList;
+		public var contentTabs:DataCollection;
 		
 	/*	public function clone(id:int):Template {
 			var template:Template = new Template();

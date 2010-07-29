@@ -59,7 +59,6 @@ package org.mig.view.mediators.main
 		private function handleManager(event:ViewEvent):void {
 			var item:Object = event.args[0];
 			for(var i:int = 0;i<view.managerContainer.numChildren;i++) {
-				trace(view.managerContainer.getChildAt(i).name);
 				if(view.managerContainer.getChildAt(i).name != item.name)
 					view.managerContainer.getChildAt(i).visible = false;
 				else {

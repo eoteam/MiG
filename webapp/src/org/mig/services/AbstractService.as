@@ -75,6 +75,9 @@
 			var service:XMLHTTPService = services[services.length-1];
 			service.token[prop] = value;
 		}
+		public function get currentToken():AsyncToken {
+			return XMLHTTPService(services[services.length-1]).token ;
+		}
 /*		protected function getService(id:String):XMLHTTPService {
 			return services[id] as XMLHTTPService;
 		}*/

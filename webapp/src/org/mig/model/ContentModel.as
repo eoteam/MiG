@@ -6,12 +6,14 @@ package org.mig.model
 	import mx.events.PropertyChangeEvent;
 	
 	import org.mig.collections.DataCollection;
+	import org.mig.model.vo.ConfigurationObject;
 	import org.mig.model.vo.content.ContainerNode;
 	import org.mig.model.vo.manager.ManagerConfig;
 	import org.mig.model.vo.manager.Term;
 	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.model.vo.media.MimeType;
 	import org.mig.model.vo.media.MimeTypes;
+	import org.mig.services.ValidFunctions;
 	import org.mig.utils.GlobalUtils;
 	import org.robotlegs.mvcs.Actor;
 
@@ -26,6 +28,7 @@ package org.mig.model
 		public var templatesCustomFields:DataCollection;
 		
 		public var contentTabs:Array;
+		public var contentTabsParametersConfig:ConfigurationObject;
 		
 		public var defaultCreateContent:String;
 		public var defaultUpdateContent:String;
@@ -49,13 +52,24 @@ package org.mig.model
 		
 		public function ContentModel() {
 			templates = new DataCollection();
+			
+			templatesCustomFields = new DataCollection();
+			
 			tagTerms = new DataCollection();
+			tagTerms.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleTagTerms);
+			
 			categoryTerms = []
 			categoryTermsFlat = new DataCollection();
-			templatesCustomFields = new DataCollection();
-			tagTerms.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleTagTerms);
 			categoryTermsFlat.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleCategoryTerms);
 			categoriesCustomFields = new DataCollection();
+			
+			contentTabsParametersConfig  = new ConfigurationObject();
+			contentTabsParametersConfig.createContent = ValidFunctions.INSERT_RECORD;
+			contentTabsParametersConfig.updateContent = ValidFunctions.UPDATE_RECORD;
+			contentTabsParametersConfig.deleteContent = ValidFunctions.DELETE_RECORD;
+			contentTabsParametersConfig.retrieveContent = ValidFunctions.GET_DATA;
+			contentTabsParametersConfig.tablename = "templates_contenttabs_parameters";
+			
 		}
 		private function handleTagTerms(event:CollectionEvent):void {
 			if(event.kind == CollectionEventKind.UPDATE) {

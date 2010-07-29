@@ -20,6 +20,7 @@ package org.mig.view.mediators.content.media
 	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.content.ContainerData;
 	import org.mig.model.vo.content.ContainerNode;
+	import org.mig.model.vo.content.ContentTabParameter;
 	import org.mig.model.vo.content.SubContainerNode;
 	import org.mig.model.vo.media.DirectoryNode;
 	import org.mig.model.vo.media.FileNode;
@@ -59,20 +60,21 @@ package org.mig.view.mediators.content.media
 		private function initView():void {
 			var content:SubContainerNode = view.content as SubContainerNode;
 			var imageRenderer:ClassFactory;
-			var tmp:Array;
-			for each(var parameter:Object in content.tab.parameters) {
+			var parameter:ContentTabParameter;
+			var tmp:Array = [];
+			for each(parameter in content.tab.parameters) {
 				if(parameter.name == "usage")	{
-					tmp = parameter.value.split(",");
+					tmp.push(parameter);
 				}
 			}
-			for each(var item:String in tmp) {
-				type = item.split(' ').join('_').toLowerCase();
+			for each(parameter in tmp) {
+				type = parameter.name.split(' ').join('_').toLowerCase();
 				content.children.filterFunction = filterByUsage;
 				content.children.refresh();		
 				var dp:ArrayList = new ArrayList();
 				for each(var item2:ContentMedia in content.children)
 				dp.addItem(item2);
-				types.addItem({type:item,baseLabel:item,label:item + ' ('+content.children.length+')',dataProvider:dp});
+				types.addItem({type:parameter,baseLabel:parameter.name,label:parameter.name + ' ('+content.children.length+')',dataProvider:dp});
 			}
 			content.children.filterFunction = null;
 			content.children.refresh();

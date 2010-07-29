@@ -27,7 +27,8 @@ $validReadFunctions = array (
 "getTerms",
 "sendUserInformation",
 "getRelatedCustomFields",
-"getTemplateCustomFields"
+"getContentTabs",
+"getTemplateContenttabsParams"
 );
 
 $validWriteFunctions = array (
@@ -74,7 +75,7 @@ $arrVerbosity[0] = array("content.id","content.parentid","content.migtitle","con
 $arrCFFlag[1] = true;
 $arrVerbosity[1] = array("content.id","content.parentid","content.templateid","content.migtitle","content.statusid","content.containerpath",
 "content.createdby","content.createdate","content.modifiedby","content.modifieddate","content.deleted",
-"content.is_fixed","content.can_have_children","content.displayorder","childrencount.childrencount");
+"content.is_fixed","content.displayorder","childrencount.childrencount");
 
 // add verbosity levels for specific front end
 

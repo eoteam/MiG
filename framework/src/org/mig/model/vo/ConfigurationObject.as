@@ -6,6 +6,7 @@ package org.mig.model.vo
 		public var name:String;
 		public var labelfield:String;
 		public var contentview:String;
+		
 		public var createContent:String;
 		public var retrieveContent:String;
 		public var updateContent:String;

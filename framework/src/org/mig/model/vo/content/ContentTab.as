@@ -24,11 +24,9 @@ package org.mig.model.vo.content
 		public var parameterids:String;
 		
 		public var parameters:DataCollection;
-		public var parametersChanged:Boolean = false;
 		public function ContentTab()
 		{
 			super();
-			this.stateProps = stateProps.concat(["parametersChanged"]);
 			parameters = new DataCollection();
 			//parameters.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleParametersChange);
 		}

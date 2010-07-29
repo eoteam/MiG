@@ -230,6 +230,7 @@ package org.mig.view.mediators.managers.templates
 			templateCF.displayorder = view.cfList.dataProvider.getItemIndex(templateCF)+1;
 		}
 		private function handleSubmitButton(event:MouseEvent):void {
+			eventDispatcher.dispatchEvent(new ContentViewEvent(ContentViewEvent.COMMIT_TEMPLATES));
 			cudTotal = cudCount = 0;
 			var customfield:CustomField;
 			var template:Template;

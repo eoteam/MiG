@@ -17,6 +17,7 @@ package org.mig.view.events
 		
 		
 		public static const TEMPLATE_MODIFIED:String = "templateModified";
+		public static const COMMIT_TEMPLATES:String = "commitTemplates";
 		
 		public var args:Array
 		public function ContentViewEvent(type:String,...args)
