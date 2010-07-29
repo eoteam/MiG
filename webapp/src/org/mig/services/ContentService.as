@@ -22,6 +22,7 @@ package org.mig.services
 	import org.mig.model.vo.content.ContainerNode;
 	import org.mig.model.vo.content.ContentStatus;
 	import org.mig.model.vo.content.ContentTab;
+	import org.mig.model.vo.content.ContentTabParameter;
 	import org.mig.model.vo.content.SubContainerNode;
 	import org.mig.model.vo.content.Template;
 	import org.mig.model.vo.manager.ManagerConfig;
@@ -63,18 +64,18 @@ package org.mig.services
 			//params.tablename = "contenttabs";
 			this.createService(params,ResponseType.DATA,ContentTab);				
 		}
-		public function loadContentTabParameters(tab:ContentTab):void {
+/*		public function loadContentTabParameters(tab:ContentTab):void {
 			var params:Object = new  Object();
 			params.action = ValidFunctions.GET_DATA;
 			params.tablename = "tabsparameters";
 			params.id = tab.parameterids;
 			this.createService(params,ResponseType.DATA).token.tab = tab;
-		}
+		}*/
 		public function loadTemplateContentTabParameters(template:Template):void {
 			var params:Object = new  Object();
 			params.action = ValidFunctions.GET_TEMPLATE_CONTENTTABS_PARAMS;
 			params.templateid = template.id;
-			this.createService(params,ResponseType.DATA).token.template = template;
+			this.createService(params,ResponseType.DATA,ContentTabParameter).token.template = template;
 		}
 		public function loadMimeTypes():void {
 			var params:Object = new Object();

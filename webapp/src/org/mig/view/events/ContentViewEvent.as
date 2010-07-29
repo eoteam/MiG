@@ -7,13 +7,16 @@ package org.mig.view.events
 		public static const PUBLISH:String = "submit";
 		public static const DRAFT:String = "draft";
 		public static const CANCEL:String = "cancel";
-		public static const LOAD_CHILDREN:String = "loadChildren";
+		
+		public static const LOAD_CHILDREN:String = "loadChildren";		
 		public static const TITLE_CHANGED:String = "titleChanged";
 		public static const CONTAINER_SELECTED:String = "containerSelected";
+		
 		public static const MEDIA_RATING_SELECTED:String = "mediaRatingSelected";
 		public static const MEDIA_RATING_DESELECTED:String = "mediaRatingDeselected";
 		
-		public static const CUSTOMFIELD_DRAG_START:String = "customFieldDragStart";
+		
+		public static const TEMPLATE_MODIFIED:String = "templateModified";
 		
 		public var args:Array
 		public function ContentViewEvent(type:String,...args)

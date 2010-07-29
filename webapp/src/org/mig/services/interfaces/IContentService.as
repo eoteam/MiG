@@ -18,7 +18,7 @@ package org.mig.services.interfaces
 		
 		function loadContentTabs():void;
 		
-		function loadContentTabParameters(tab:ContentTab):void;
+		//function loadContentTabParameters(tab:ContentTab):void;
 		
 		function loadTemplateContentTabParameters(template:Template):void;
 		

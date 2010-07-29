@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates:TabBaseView
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx" 
+	xmlns:templates="org.mig.view.components.managers.templates.*" xmlns:tabs="org.mig.view.components.managers.templates.tabs.*">
+
+	<fx:Script>
+		<![CDATA[
+			import mx.events.DragEvent;	
+			import org.mig.model.vo.content.ContentTabParameter;
+			
+			private function handleDragComplete(event:DragEvent):void {
+				usageList.dragEnabled=usageList.dropEnabled=false;
+				if(event.target == event.relatedObject) {
+					//change the displayorder	
+					for each(var parameter:ContentTabParameter in usageList.dataProvider) {
+						parameter.param3 = (usageList.dataProvider.getItemIndex(parameter)+1).toString(); 
+					}
+				}	
+			}
+		]]>
+	</fx:Script>
+	<templates:layout>
+		<s:VerticalLayout clipAndEnableScrolling="false" paddingTop="8" paddingLeft="4" paddingRight="4" paddingBottom="8" />
+	</templates:layout>
+	
+	<s:HGroup width="100%">
+		<s:Label text="Usage" width="190" />
+		<s:Label text="Format" width="190"/>
+		<s:Label text="Maximum Count" width="190" />
+	</s:HGroup>
+	
+	<s:List id="usageList" width="100%"  dragMoveEnabled="true" 
+	allowMultipleSelection="true" dataProvider="{tab.parameters}" dragComplete="handleDragComplete(event)">
+		<s:layout>
+			<s:VerticalLayout clipAndEnableScrolling="true" />
+		</s:layout>
+		<s:itemRenderer>
+			<fx:Component>
+				<tabs:TemplateMediaTabRenderer />
+			</fx:Component>
+		</s:itemRenderer>
+	</s:List>
+	
+	<s:Button label="Add Folder +" id="addButton"/>
+</templates:TabBaseView>

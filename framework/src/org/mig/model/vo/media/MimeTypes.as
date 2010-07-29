@@ -1,5 +1,7 @@
 package org.mig.model.vo.media
 {
+	import mx.collections.ArrayList;
+
 	public final class MimeTypes
 	{
 		public static const IMAGE:int = 1;
@@ -15,5 +17,11 @@ package org.mig.model.vo.media
 		public var audioExtensions:Array=[".mp3"];
 		public var fontExtensions:Array= [".ttf", ".otf"];  */
 		
+		public static const TYPES:ArrayList  = new ArrayList([
+			{typeid:IMAGE,label:"images"},				
+			{typeid:VIDEO,label:"videos"},					
+			{typeid:AUDIO,label:"audio"},					
+			{typeid:FILE,label:"other"}
+		]); 
 	}
 }

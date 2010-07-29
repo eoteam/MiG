@@ -29,8 +29,9 @@ package org.mig.view.mediators.managers.templates
 	import org.mig.model.vo.content.Template;
 	import org.mig.services.interfaces.IAppService;
 	import org.mig.services.interfaces.IContentService;
+	import org.mig.utils.ClassUtils;
 	import org.mig.utils.GlobalUtils;
-	import org.mig.view.components.managers.templates.TemplateContentTabBaseView;
+	import org.mig.view.components.managers.templates.TabBaseView;
 	import org.mig.view.components.managers.templates.TemplatesManagerView;
 	import org.mig.view.events.ContentViewEvent;
 	import org.robotlegs.mvcs.Mediator;
@@ -64,8 +65,7 @@ package org.mig.view.mediators.managers.templates
 		override public function onRegister():void {
 			eventMap.mapListener(eventDispatcher,StateEvent.ACTION,handleTemplatesLoaded);
 			eventMap.mapListener(eventDispatcher,AppEvent.STARTUP_COMPLETE,handleConfigLoaded,AppEvent);
-			
-			view.customFieldTypes = CustomFieldTypes.TYPES;
+			eventMap.mapListener(eventDispatcher,ContentViewEvent.TEMPLATE_MODIFIED,enableSubmit);
 			
 			view.templateList.addEventListener(IndexChangeEvent.CHANGE,handleTemplateList,false,0,true);
 			view.templateList.addEventListener(DragEvent.DRAG_ENTER,handleTemplateListDragEnter,false,0,true);
@@ -77,10 +77,7 @@ package org.mig.view.mediators.managers.templates
 			//view.cfList.addEventListener("addCustomFieldOption",enableSubmit,false,0,true);
 			//view.cfList.addEventListener("removeCustomFieldOption",enableSubmit,false,0,true);
 			//view.cfList.addEventListener("changeCustomFieldOption",enableSubmit,false,0,true);		
-			
-			view.cfList.addEventListener(ContentViewEvent.CUSTOMFIELD_DRAG_START,handleDragStart,false,0,true);
-			view.cfList.addEventListener(DragEvent.DRAG_COMPLETE,handleListDragDrop,false,0,true);			
-			
+						
 			view.addEventListener(FlexEvent.HIDE,handleHide,false,0,true);
 			view.addEventListener(FlexEvent.SHOW,handleShow,false,0,true);
 		}
@@ -133,19 +130,6 @@ package org.mig.view.mediators.managers.templates
 					if(prop.property == "name")  {
 						view.submitButton.enabled = true;
 					}	
-				}
-			}
-		}
-		private function handleDragStart(event:ContentViewEvent):void {
-			view.cfList.dragEnabled = view.cfList.dropEnabled = true;
-		}
-		private function handleListDragDrop(event:DragEvent):void {
-			view.cfList.dragEnabled = view.cfList.dropEnabled = false;
-			if(event.target == event.relatedObject) {
-				var template:Template = view.templateList.selectedItem as Template;
-				//change the displayorder	
-				for each(var customfield:CustomField in template.customfields.source) {
-					customfield.displayorder = template.customfields.getItemIndex(customfield)+1;
 				}
 			}
 		}
@@ -205,9 +189,11 @@ package org.mig.view.mediators.managers.templates
 					view.tabStack.removeChild(c);
 			}
 			for each(var tab:ContentTab in template.contentTabs.source) {
-				var tabContainer:TemplateContentTabBaseView = new TemplateContentTabBaseView();
+				var tabContainer:TabBaseView = ClassUtils.instantiateClass(tab.editview) as TabBaseView;
 				tabContainer.percentHeight = tabContainer.percentWidth = 100;
-				tabContainer.dataProvider = new ArrayList(tab.parameters);
+				tabContainer.tab = tab;
+				tabContainer.template = template;
+				//tabContainer.dataProvider = new ArrayList(tab.parameters);
 				view.tabStack.addChild(tabContainer);
 				tabContainer.label = tab.name;
 			}

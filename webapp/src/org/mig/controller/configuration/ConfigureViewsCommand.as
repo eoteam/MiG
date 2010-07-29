@@ -23,6 +23,8 @@ package org.mig.controller.configuration
 	import org.mig.view.components.managers.media.RenameView;
 	import org.mig.view.components.managers.tags.TagManagerView;
 	import org.mig.view.components.managers.templates.TemplatesManagerView;
+	import org.mig.view.components.managers.templates.tabs.TemplateMediaTab;
+	import org.mig.view.components.managers.templates.tabs.TemplateTermsTab;
 	import org.mig.view.controls.MiGColorPicker;
 	import org.mig.view.mediators.content.ContentGeneralEditorMediator;
 	import org.mig.view.mediators.content.ContentViewMediator;
@@ -44,6 +46,7 @@ package org.mig.controller.configuration
 	import org.mig.view.mediators.managers.media.RenameMediator;
 	import org.mig.view.mediators.managers.tags.TagManagerMediator;
 	import org.mig.view.mediators.managers.templates.TemplatesManagerMediator;
+	import org.mig.view.mediators.managers.templates.tabs.TemplateMediaTabMediator;
 	import org.robotlegs.mvcs.Command;
 	import org.robotlegs.utilities.statemachine.StateEvent;
 	
@@ -81,7 +84,7 @@ package org.mig.controller.configuration
 			
 			//templates manager
 			mediatorMap.mapView(TemplatesManagerView,TemplatesManagerMediator);
-			
+			mediatorMap.mapView(TemplateMediaTab, TemplateMediaTabMediator);
 			
 			//components
 			mediatorMap.mapView(MiGColorPicker ,MiGColorPickerMediator); 
@@ -95,6 +98,9 @@ package org.mig.controller.configuration
 			injector.mapClass(MainMiddleView,MainMiddleView);
 			injector.mapClass(TagsCategoriesTab,TagsCategoriesTab);
 			injector.mapClass(MediaTabAnimatedListRenderer, MediaTabAnimatedListRenderer);
+			
+			injector.mapClass(TemplateTermsTab,TemplateTermsTab);
+			
 			trace("Configure: Views Complete");
 			//notifiy the state machine that we are done with this step
 			eventDispatcher.dispatchEvent( new StateEvent(StateEvent.ACTION, AppConfigStateConstants.CONFIGURE_VIEWS_COMPLETE));

@@ -164,7 +164,7 @@
 				}
 			}
 			private function handleDragButton(event:MouseEvent):void {
-				owner.dispatchEvent(new ContentViewEvent(ContentViewEvent.CUSTOMFIELD_DRAG_START));
+				List(owner).dragEnabled = List(owner).dropEnabled = true;
 				blinkEffect.play();
 			}
 			private function button1_clickHandler(event:MouseEvent):void {
@@ -176,7 +176,7 @@
 					warning.addEventListener("noSelected",handleDeleteSelection,false,0,true);
 				}
 				else {
-					var dp:IList = List(this.owner).dataProvider;
+					var dp:IList = List(this.owner).dataProvider; 
 					dp.removeItemAt(dp.getItemIndex(this.data));	
 				}
 			}

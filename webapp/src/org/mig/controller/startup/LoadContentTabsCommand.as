@@ -29,12 +29,16 @@ package org.mig.controller.startup
 		private function handleContentTabs(data:Object):void {
 			contentModel.contentTabs = data.result as Array;
 			
-			for each(var tab:ContentTab in contentModel.contentTabs) {
+			/*for each(var tab:ContentTab in contentModel.contentTabs) {
 				service.loadContentTabParameters(tab);
 				service.addHandlers(handleTabParameters);
-			}
+			}*/
+			trace("Startup: Content Tabs Complete");
+			appModel.startupCount = 4;	
+			eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP_PROGRESS,"Content Tabs loaded"));
+			eventDispatcher.dispatchEvent(new StateEvent(StateEvent.ACTION, AppStartupStateConstants.LOAD_CONTENTTABS_COMPLETE)); 	
 		}
-		private var counter:int;
+		/*private var counter:int;
 		private function handleTabParameters(data:Object):void {
 			var tab:ContentTab = data.token.tab as ContentTab;
 			tab.parameters = data.result as Array;
@@ -46,6 +50,6 @@ package org.mig.controller.startup
 				eventDispatcher.dispatchEvent(new AppEvent(AppEvent.STARTUP_PROGRESS,"Content Tabs loaded"));
 				eventDispatcher.dispatchEvent(new StateEvent(StateEvent.ACTION, AppStartupStateConstants.LOAD_CONTENTTABS_COMPLETE)); 	
  			}
-		}
+		}*/
 	}
 }

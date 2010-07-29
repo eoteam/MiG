@@ -60,34 +60,45 @@ package org.mig.controller.startup
 			var template:Template = data.token.template as Template;
 			var results:Array = data.result as Array;
 			for each (var tab:ContentTab in contentModel.contentTabs) {
-				var ids:Array = tab.templateids.split(',');
-				if(ids.indexOf(template.id.toString()) != -1) {
-					var newTab:ContentTab = new ContentTab();
-					newTab.id = tab.id;
-					newTab.name = tab.name;
-					newTab.contentview = tab.contentview;
-					newTab.itemview = tab.itemview;
-					newTab.createContent = tab.createContent;
-					newTab.retrieveContent = tab.retrieveContent;
-					newTab.updateContent = tab.updateContent;
-					newTab.deleteContent = tab.deleteContent;
-					newTab.dto = tab.dto;
-					newTab.labelfield = tab.labelfield;
-					newTab.orderby = tab.orderby;
-					newTab.orderdirection = tab.orderdirection;
-					newTab.tablename = tab.tablename;
-					newTab.vars = tab.vars;
-					if(results.length) {
-						for each(var param:Object in tab.parameters) {
-							for each(var result:Object in results) {
-								if(param.id == result.parameterid) {
-									for (var prop:String in param)
-										result[prop] = param[prop];
-									newTab.parameters.push(result);
-								}
-							}
-						}
+				if(tab.templateids) {
+					var ids:Array = tab.templateids.split(',');
+					if(ids.indexOf(template.id.toString()) != -1) {
+	
+						var newTab:ContentTab = new ContentTab();
+						newTab.id = tab.id;
+						newTab.name = tab.name;
+						newTab.contentview = tab.contentview;
+						newTab.editview = tab.editview;
+						newTab.itemview = tab.itemview;
+						newTab.createContent = tab.createContent;
+						newTab.retrieveContent = tab.retrieveContent;
+						newTab.updateContent = tab.updateContent;
+						newTab.deleteContent = tab.deleteContent;
+						newTab.dto = tab.dto;
+						newTab.labelfield = tab.labelfield;
+						newTab.orderby = tab.orderby;
+						newTab.orderdirection = tab.orderdirection;
+						newTab.tablename = tab.tablename;
+						newTab.vars = tab.vars;
 						template.contentTabs.addItem(newTab);
+						
+						if(results.length > 0) {
+/*							for each(var param:Object in tab.parameters) {
+								for each(var result:Object in results) {
+									if(param.id == result.parameterid) {
+										for (var prop:String in param)
+											result[prop] = param[prop];
+										newTab.parameters.push(result);
+									}
+								}
+							}	*/
+
+							for each(var result:Object in results) {
+								if(result.tabid == newTab.id) 
+									newTab.parameters.addItem(result);
+							}
+							newTab.parameters.state = DataCollection.COMMITED;
+						}
 					}
 				}
 			}		

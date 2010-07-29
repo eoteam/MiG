@@ -11,7 +11,6 @@ package org.mig.model.vo
 		public var modifiedby:int;
 		public var modifieddate:Number;		
 		
-
 		public var updateData:UpdateData = new UpdateData();
 		
 		public var parent:ContentData;

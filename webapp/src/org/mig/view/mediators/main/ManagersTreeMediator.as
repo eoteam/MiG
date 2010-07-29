@@ -4,6 +4,7 @@ package org.mig.view.mediators.main
 	
 	import mx.events.ListEvent;
 	import mx.events.TreeEvent;
+	import mx.utils.ObjectProxy;
 	
 	import org.mig.events.AppEvent;
 	import org.mig.events.ViewEvent;
@@ -30,7 +31,7 @@ package org.mig.view.mediators.main
 		}
 		
 		private function handleConfig(event:AppEvent):void {
-			var root:Object = new Object();
+			var root:ObjectProxy = new ObjectProxy();
 			root.name = "Managers";
 			root.children = appModel.managers;
 			view.dataProvider = root;	

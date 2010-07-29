@@ -14,10 +14,10 @@ package org.mig.view.controls
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
-	import mx.controls.TextInput;
 	import mx.core.mx_internal;
 	
 	import spark.components.IItemRenderer;
+	import spark.components.TextInput;
 	import spark.components.ToggleButton;
 	import spark.components.supportClasses.ItemRenderer;
 	

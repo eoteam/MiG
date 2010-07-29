@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:NavigatorContent xmlns:fx="http://ns.adobe.com/mxml/2009" 
-					xmlns:s="library://ns.adobe.com/flex/spark" 
-					xmlns:mx="library://ns.adobe.com/flex/mx" 
-					backgroundAlpha="1" backgroundColor="0x3F3F3F"
-					width="100%" height="100%">
-	
+<templates:TabBaseView xmlns:fx="http://ns.adobe.com/mxml/2009" 
+									  xmlns:s="library://ns.adobe.com/flex/spark" 
+									  xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:templates="org.mig.view.components.managers.templates.*" width="400" height="300">
 	<fx:Declarations>
-		<s:ArrayList id="dataProvider" />
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:List width="100%" height="100%" allowMultipleSelection="true" dataProvider="{dataProvider}">
+
+	
+	<s:List width="100%" height="100%" allowMultipleSelection="true" dataProvider="{tab.parameters}">
 		<s:layout>
 			<s:VerticalLayout clipAndEnableScrolling="true" paddingTop="8" paddingLeft="4" paddingRight="4"/>
 		</s:layout>
@@ -16,6 +15,7 @@
 			<fx:Component>
 				<s:ItemRenderer contentBackgroundAlpha="1" contentBackgroundColor="0x00000"
 				autoDrawBackground="false"  focusEnabled="true" width="100%">
+
 					<s:Rect width="100%" height="100%">
 						<s:fill>
 							<s:LinearGradient rotation="90">
@@ -32,4 +32,4 @@
 			</fx:Component>
 		</s:itemRenderer>
 	</s:List>
-</s:NavigatorContent>
+</templates:TabBaseView>

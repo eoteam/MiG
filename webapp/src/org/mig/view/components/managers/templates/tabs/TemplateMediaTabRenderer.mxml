@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				creationComplete="creationCompleteHandler(event)"
+				contentBackgroundAlpha="1" contentBackgroundColor="0x00000" 
+				autoDrawBackground="false"  focusEnabled="true" width="100%">
+	<fx:Declarations>
+		<s:Fade repeatCount="2" duration="150" id="blinkEffect" alphaFrom="0.5" alphaTo="1" target="{this}" />
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayList;
+			import mx.collections.IList;
+			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
+			import mx.managers.PopUpManagerChildList;
+			import mx.utils.ObjectProxy;
+			
+			import org.mig.model.vo.media.MimeTypes;
+			import org.mig.view.components.main.SystemPopup;
+			[Bindable] private var mimetypes:ArrayList;
+			override public function set data(value:Object):void {
+				super.data = value;
+				if(value) {
+					mimetypes = new ArrayList();
+					for each(var item:Object in MimeTypes.TYPES.source) {
+						var option:ObjectProxy = new ObjectProxy({label:item.label,selected:false,typeid:item.typeid});
+						mimetypes.addItem(option);
+					}
+					mimetypes.addItem(new ObjectProxy({selected:false,label:'all',typeid:'*'}));
+					if(data.param1) {
+						if(data.param1 == '*') {
+							for each (option in mimetypes.source) {
+								option.selected = true;
+							}
+						}
+						var mt:Array = data.param1.split(',');
+						for each (option in mimetypes.source) {
+							if(mt.indexOf(option.typeid.toString()) != -1)
+								option.selected = true;
+						}
+					}
+				}
+			}
+			private function creationCompleteHandler(event:FlexEvent):void {
+				formatsList.addEventListener('changed',handleFormatsChange);
+			}
+			private function handleFormatsChange(event:Event):void {
+				var value:String = '';
+				var option:Object;
+				for each(option in mimetypes.source) {
+					
+					if(option.selected) {
+						if(option.typeid == '*') {
+							value = '*'; 
+							break;
+						}
+						else
+							value += option.typeid.toString() + ',';
+					}
+				}
+				if(value == '*') {
+					for each(option in mimetypes.source) 
+					option.selected = true;
+					formatsList.invalidateDisplayList();
+				}
+				else if(value.length > 1)
+					value = value.substr(0,value.length-1);
+				data.param1 = value;
+				trace(value);
+			}
+			private function button2_clickHandler(event:MouseEvent):void {
+				if(!this.data.isNew) {
+					var warning:SystemPopup = new SystemPopup();
+					warning.message = "Do you want to delete this folder You will loose all images in that folder. yadi doo da";
+					PopUpManager.addPopUp(warning,this,true,PopUpManagerChildList.POPUP);
+					warning.addEventListener("yesSelected",handleDeleteSelection,false,0,true);
+					warning.addEventListener("noSelected",handleDeleteSelection,false,0,true);
+				}
+				else {
+					var dp:IList = List(this.owner).dataProvider;
+					dp.removeItemAt(dp.getItemIndex(this.data));	
+				}
+			}
+			private function handleDeleteSelection(event:Event):void {
+				var dp:IList = List(this.owner).dataProvider;
+				dp.removeItemAt(dp.getItemIndex(this.data));				
+			}
+			private function handleDragButton(event:MouseEvent):void {
+				List(owner).dragEnabled = List(owner).dropEnabled = true;
+				blinkEffect.play();
+			}
+		]]>
+	</fx:Script>
+	<s:Rect width="100%" height="100%">
+		<s:fill>
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry color="0x333333" />
+				<s:GradientEntry color="0x333333" />
+			</s:LinearGradient>
+		</s:fill>
+	</s:Rect>
+	<s:HGroup gap="4" verticalAlign="top" id="holder" width="100%" paddingBottom="4" paddingTop="4" paddingLeft="4" paddingRight="4">
+		<s:TextInput id="usageInput" width="180" text="{data.value}" styleName="inputFieldBlack" change="data.value=usageInput.text" />
+		<s:Rect width="1" height="100%">
+			<s:fill>
+				<s:SolidColor color="0"/>
+			</s:fill>
+		</s:Rect>
+		
+		<s:List id="formatsList" dataProvider="{mimetypes}" width="180">
+			<s:itemRenderer>
+				<fx:Component>
+					<s:ItemRenderer autoDrawBackground="true" focusEnabled="true" height="22" width="100%">											
+						
+						<fx:Script>
+							<![CDATA[
+								private function check_changeHandler(event:Event):void {
+									data.selected=check.selected;
+									owner.dispatchEvent(new Event('changed'));
+								}
+							]]>
+						</fx:Script>
+						
+						<s:CheckBox  id="check" label="{data.label}" selected="{data.selected}" left="5" right="5"  change="check_changeHandler(event)" />										
+					</s:ItemRenderer>
+				</fx:Component>
+			</s:itemRenderer>
+		</s:List>
+		<s:Rect width="1" height="100%">
+			<s:fill>
+				<s:SolidColor color="0"/>
+			</s:fill>
+		</s:Rect>
+		<s:NumericStepper id="countInput" value="{data.param2}" change="data.param2=countInput.value" />
+		<s:Rect  width="100%" />
+		<s:Rect width="1" height="100%">
+			<s:fill>
+				<s:SolidColor color="0"/>
+			</s:fill>
+		</s:Rect>
+		<s:Button label="-" click="button2_clickHandler(event)" />
+		<s:Rect width="1" height="100%">
+			<s:fill>
+				<s:SolidColor color="0"/>
+			</s:fill>
+		</s:Rect>
+		<s:Button width="10" height="100%" label="..." mouseDown="handleDragButton(event)" />
+	</s:HGroup>
+	
+</s:ItemRenderer>
