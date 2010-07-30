@@ -21,13 +21,14 @@ package org.mig.model.vo.content
 		public var orderdirection:String = "ASC";
 		public var templateids:String; 
 
-		public var parameterids:String;
-		
+		public var type:String;
+		public var labelParameter:ContentTabParameter;	
 		public var parameters:DataCollection;
 		public function ContentTab()
 		{
 			super();
 			parameters = new DataCollection();
+			stateProps = stateProps.concat(["labelParameter"]);
 			//parameters.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleParametersChange);
 		}
 		/*private function handleParametersChange(event:CollectionEvent):void {

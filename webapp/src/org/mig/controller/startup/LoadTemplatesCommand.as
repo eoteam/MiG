@@ -12,6 +12,7 @@ package org.mig.controller.startup
 	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.app.CustomField;
 	import org.mig.model.vo.content.ContentTab;
+	import org.mig.model.vo.content.ContentTabParameter;
 	import org.mig.model.vo.content.Template;
 	import org.mig.services.interfaces.IAppService;
 	import org.mig.services.interfaces.IContentService;
@@ -66,7 +67,7 @@ package org.mig.controller.startup
 	
 						var newTab:ContentTab = new ContentTab();
 						newTab.id = tab.id;
-						newTab.name = tab.name;
+						newTab.type = tab.name;
 						newTab.contentview = tab.contentview;
 						newTab.editview = tab.editview;
 						newTab.itemview = tab.itemview;
@@ -93,9 +94,15 @@ package org.mig.controller.startup
 								}
 							}	*/
 
-							for each(var result:Object in results) {
-								if(result.tabid == newTab.id) 
-									newTab.parameters.addItem(result);
+							for each(var result:ContentTabParameter in results) {
+								if(result.tabid == newTab.id) {
+									if(result.is_label == 1) {
+										newTab.name = result.value;
+										newTab.labelParameter = result;
+									}
+									else
+										newTab.parameters.addItem(result);
+								}
 							}
 							newTab.parameters.state = DataCollection.COMMITED;
 						}

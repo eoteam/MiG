@@ -264,7 +264,10 @@ s|List {
 }
 .dropDownList {
 	contentBackgroundColor: #333333;
-	contentBackgroundAlpha: 0.9;
+	contentBackgroundAlpha: 1;
+	fontFamily: Transit-Normal;
+	fontSize: 14pt;
+	fontLookup: "embeddedCFF";
 }
 /*****************************************/
 /************ Halo Components ************/

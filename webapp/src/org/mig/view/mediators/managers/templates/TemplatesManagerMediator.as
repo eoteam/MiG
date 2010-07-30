@@ -222,7 +222,7 @@ package org.mig.view.mediators.managers.templates
 				tabContainer.template = template;
 				//tabContainer.dataProvider = new ArrayList(tab.parameters);
 				view.tabStack.addChild(tabContainer);
-				tabContainer.label = tab.name;
+				tabContainer.label = tab.type;
 			}
 		}
 		private function handleChange(event:CollectionEvent):void {

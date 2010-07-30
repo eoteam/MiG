@@ -133,7 +133,12 @@
 				<s:SolidColor color="0"/>
 			</s:fill>
 		</s:Rect>
-		<s:NumericStepper minimum="1" maximum="{Number.MAX_VALUE}" id="countInput" value="{data.param2}" change="data.param2=countInput.value" />
+		<s:NumericStepper width="180" minimum="1" maximum="{Number.MAX_VALUE}" id="countInput" value="{data.param2}" change="data.param2=countInput.value" />
+		<s:Rect width="1" height="100%">
+			<s:fill>
+				<s:SolidColor color="0"/>
+			</s:fill>
+		</s:Rect>
 		<s:Rect  width="100%" />
 		<s:Rect width="1" height="100%">
 			<s:fill>

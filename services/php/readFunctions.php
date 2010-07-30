@@ -822,7 +822,7 @@ function getContentContent($params)
 }
 //for content
 function getContentTabs($params) {
-	$sql = "SELECT contenttabs.*, templates.templateids,parameters.parameterids FROM contenttabs	
+	$sql = "SELECT contenttabs.*, templates.templateids FROM contenttabs	
 			
 			LEFT JOIN (
 				SELECT templates_contenttabs.tabid,
@@ -830,16 +830,7 @@ function getContentTabs($params) {
 				FROM templates_contenttabs
 				GROUP BY templates_contenttabs.tabid
 			
- 			 ) AS templates ON templates.tabid = contenttabs.id
- 			 
- 			 LEFT JOIN (
-					SELECT contenttabs.id tabid, 
-						GROUP_CONCAT( tabsparameters.id ORDER BY tabsparameters.id ASC) AS parameterids
-					FROM contenttabs, tabsparameters
-					WHERE contenttabs.id = tabsparameters.tabid
-					GROUP BY tabsparameters.tabid
-				
-				) AS parameters ON parameters.tabid = contenttabs.id";
+ 			 ) AS templates ON templates.tabid = contenttabs.id";
  	if($result = queryDatabase($sql)) {
  		return $result;	
  	}
@@ -848,11 +839,8 @@ function getContentTabs($params) {
 //template id + tamplatetab id + tamplatetab parameter ids as comma-delimited list
 function getTemplateContenttabsParams($params) {
 	if(isset($params['templateid'])) {
-		$sql = "SELECT templates_contenttabs_parameters.id,templates_contenttabs_parameters.value,templates_contenttabs_parameters.parameterid
-				FROM templates_contenttabs_parameters
-				LEFT JOIN templates_contenttabs ON templates_contenttabs.id = templates_contenttabs_parameters.templatetabid
-				LEFT JOIN tabsparameters ON tabsparameters.id = templates_contenttabs_parameters.parameterid
-				WHERE templates_contenttabs.templateid = '" . $params['templateid'] . "'";
+		$sql = "SELECT templates_contenttabs_parameters.*	FROM templates_contenttabs_parameters
+				WHERE templates_contenttabs_parameters.templateid = '" . $params['templateid'] . "'";
  	
  		if($result = queryDatabase($sql)) {
  			return $result;

@@ -6,10 +6,34 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 
+	<templates:layout>
+		<s:VerticalLayout clipAndEnableScrolling="false" paddingTop="8" paddingLeft="4" paddingRight="4" paddingBottom="8" />
+	</templates:layout>
 	
+	<s:Group width="100%" contentBackgroundAlpha="1">
+		<s:Rect width="100%" height="100%">
+			<s:fill>
+				<s:LinearGradient rotation="90">
+					<s:GradientEntry color="0x333333" />
+					<s:GradientEntry color="0x333333" />
+				</s:LinearGradient>
+			</s:fill>
+		</s:Rect>
+		<s:HGroup gap="4" verticalAlign="middle"  width="100%" paddingBottom="4" paddingTop="4" paddingLeft="4" paddingRight="4">
+			<s:Label width="120" text="Label" />
+			<s:TextInput width="100%" text="{tab.name}"  styleName="inputFieldBlack" id="nameInput"	 />
+		</s:HGroup>
+	</s:Group>
+	
+	<s:HGroup width="100%">
+		<s:Label text="Types" width="180" />
+		<s:Label text="Name" width="180"/>
+		<s:Label text="Enabled" width="180" />
+	</s:HGroup>
+		
 	<s:List width="100%" height="100%" allowMultipleSelection="true" dataProvider="{tab.parameters}">
 		<s:layout>
-			<s:VerticalLayout clipAndEnableScrolling="true" paddingTop="8" paddingLeft="4" paddingRight="4"/>
+			<s:VerticalLayout clipAndEnableScrolling="true"/>
 		</s:layout>
 		<s:itemRenderer>
 			<fx:Component>
@@ -25,8 +49,31 @@
 						</s:fill>
 					</s:Rect>
 					<s:HGroup gap="4" verticalAlign="middle" id="holder" width="100%" paddingBottom="4" paddingTop="4" paddingLeft="4" paddingRight="4">
-						<s:Label width="120" text="{data.name}" />
-						<s:TextInput width="100%" text="{data.value}" styleName="inputFieldBlack" />
+						<s:Label width="180" text="{data.name}" />
+						<s:Rect width="1" height="100%">
+							<s:fill>
+								<s:SolidColor color="0"/>
+							</s:fill>
+						</s:Rect>
+						<s:TextInput id="nameInput" width="180" text="{data.value}" styleName="inputFieldBlack" change="data.value=nameInput.text" />
+						<s:Rect width="1" height="100%">
+							<s:fill>
+								<s:SolidColor color="0"/>
+							</s:fill>
+						</s:Rect>
+						<s:CheckBox id="enabledInput" selected="{data.param1=='true'?true:false}" change="data.param1=enabledInput.selected?'true':'false'" />
+						<s:Rect width="1" height="100%">
+							<s:fill>
+								<s:SolidColor color="0"/>
+							</s:fill>
+						</s:Rect>
+						<s:Rect  width="100%" />
+						<s:Rect width="1" height="100%">
+							<s:fill>
+								<s:SolidColor color="0"/>
+							</s:fill>
+						</s:Rect>
+						<s:Button width="10" height="100%" label="..."  />
 					</s:HGroup>
 				</s:ItemRenderer>	
 			</fx:Component>
