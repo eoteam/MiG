@@ -46,7 +46,7 @@ function getData ($params) {
 
 	if (isset($params['tablename'])) {
 
-			
+
 		$validParams = array("action","tablename","id","orderby","orderdirection");
 
 		$sql = "SELECT `".$params['tablename']."`.*";
@@ -180,7 +180,7 @@ function getUsers($params) {
 	return $result;
 }
 function getRoot($params) {
-	
+
 	$sql = " SELECT `content`.*, childrencount.childrencount FROM `content` 
 			  LEFT JOIN ( SELECT parentid, COUNT(*) AS childrencount FROM `content` WHERE `content`.`parentid` ='1' GROUP BY parentid) 
 			  AS childrencount ON childrencount.parentid = content.id WHERE `content`.`id` = '1' ";
@@ -219,9 +219,9 @@ function getContent($params)
 
 	if (!isset($params['verbosity'])) // set default verbosity
 	$params['verbosity'] = 0;
-	
+
 	if (isset($arrCFFlag[$params['verbosity']])) {
-	
+
 		$sql = "SELECT customfields.name, customfields.displayname
 				FROM templates_customfields " .
 	 			"LEFT JOIN customfields ON customfields.id = templates_customfields.customfieldid";
@@ -235,7 +235,7 @@ function getContent($params)
 				$customfields[] = $row['name'];
 		}
 	}
-	
+
 	if (isset($params['parentid'])) {
 
 		// for this we need to get all contentids which have a particular parentid, and then get all their children!
@@ -294,7 +294,7 @@ function getContent($params)
 		{
 			$currentChildIDs = getChildren($id,$params['children_depth']);
 			$childids = array_merge($childids,$currentChildIDs);
-				
+
 			$sql2 = "SELECT COUNT(*) as count FROM `content` WHERE parentid = " .$id;
 			$result2 = queryDatabase($sql2);
 			$row2 = $result2->fetch(PDO::FETCH_ASSOC);
@@ -346,12 +346,12 @@ function getContent($params)
 			  LEFT JOIN terms AS terms ON terms.id = term_taxonomy.termid
 			  LEFT JOIN templates ON templates.id = content.templateid ";		  
 
-	
+
 		$sql .= " LEFT JOIN ( SELECT parentid, COUNT(*) AS childrencount FROM `content` WHERE parentid IN (". $params['contentid'] .") AND `content`.`deleted` = '0' GROUP BY parentid
 				  ) AS childrencount ON childrencount.parentid = content.id";
 
-	
-	
+
+
 	$sql .= "
 			  LEFT JOIN (
 	
@@ -394,7 +394,7 @@ function getContent($params)
 
 	// WHERE CLAUSE INFO
 
-	$sql .= " WHERE content.id <> 1 AND content.is_revision = 0";
+	$sql .= " WHERE content.id <> 1 AND is_revision <> 1";
 
 	if (isset($params['contentid'])) { // return a specific content id, or a list thereof
 		if (isset($strChildIDs)) {
@@ -444,7 +444,7 @@ function getContent($params)
 
 			$sql .= " AND tags.tag IN (".$strTags.") ";
 		}
-			
+
 	}
 
 	if (isset($params['search_terms'])) { // general search
@@ -480,7 +480,7 @@ function getContent($params)
 			$sql .= " ) ";
 
 		}
-			
+
 	}
 
 	if (isset($params['search_customfields'])) { // search customfields
@@ -492,13 +492,13 @@ function getContent($params)
 			$sql .= " AND ( ";
 
 			foreach ($arrSearchTerms as $term) {
-					
+
 				foreach ($customfields as $key=>$field) {
 
 					$sql .= " content.customfield".$key." LIKE '%".$term."%' OR";
 
 				}
-					
+
 			}
 			// remove last "OR"
 			$sql = substr($sql,0,strlen($sql)-2);
@@ -551,7 +551,7 @@ function getContent($params)
 			$sql .= " ) ";
 
 		}
-			
+
 	}
 	// GET ANY EXTRA PARAMS AND APPLY THOSE TO THE WHERE CLAUSE!
 
@@ -925,7 +925,7 @@ function getContentTree($params)
 	//$arrContainers = array();
 
 	while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-			
+
 		$xml.= "<container ".returnTagAttributes($row).">";
 
 		if ($x = returnChildren($row['id']))
@@ -1208,7 +1208,7 @@ function contentSearch($params)
 				// remove last "OR"
 
 				$sql = substr($sql,0,strlen($sql)-2);
-					
+
 				$sql .= " ) ";
 
 				foreach ($params as $key=>$value)
@@ -1331,7 +1331,7 @@ function migSearch($params)
 				// remove last "OR"
 
 				$sql = substr($sql,0,strlen($sql)-2);
-					
+
 				$sql .= " ) ";
 			}
 		}
@@ -1517,7 +1517,7 @@ function getTerms($params) {
 		//contentids (int) - specifies a specific content id to return media results for (can be comma-delimited)
 		//include_unused (1,0) - include media that is not tied to content - defaults to 0 (NO).
 		*/
-		
+
 	$sendParams = array();
 	$validParams = array("action","tagid","contentid","include_unused");
 
@@ -1541,24 +1541,24 @@ function getTerms($params) {
 
 				$params['customfield'.$cfKey] = $params[$key];
 				unset($params[$key]);
-					
+
 			}
 		}
 	}	
-	
+
 	// define the sql query
 
 	$sql = "SELECT";	 
 	foreach ($customfields AS $key=>$value)
 		$sql .= " term_taxonomy.customfield".$key." AS ".$value.",";
 
-	
+
 	$sql .= " terms.name,terms.slug,terms.name,terms.slug,term_taxonomy.id,term_taxonomy.parentid,term_taxonomy.termid,term_taxonomy.displayorder,term_taxonomy.taxonomy, 
 			GROUP_CONCAT(DISTINCT content_terms.contentid) AS contentids,
 			GROUP_CONCAT(DISTINCT content.migtitle) AS contenttitles,
 		    GROUP_CONCAT(DISTINCT media.path,media.name) AS mediatitles,
 		    GROUP_CONCAT(DISTINCT media.id) AS mediaids";
-	
+
 
 	$sql .= " FROM term_taxonomy
 			  LEFT JOIN terms ON terms.id = term_taxonomy.termid
