@@ -381,7 +381,7 @@ function updateRecord($params) //+
 		// output the serialized xml
 		return $result;
 	}
-	else sendSuccess();
+//	else sendSuccess();
 }
 
 function updateRecords($params) //+
@@ -549,6 +549,127 @@ function updateContainerPaths($params, $insertid) //+
 		}
 	}
 	return $strPath;
+}
+function updateContentAndRevision($params) 
+{
+		/*
+
+		* Script will attempt to update multiple fields (name/value pairs) 
+		* of the record in the table `content` by provided id
+		* and make the revision of it 
+		* only if provided modifying fields are customfields
+		* otherwise the updateRecord() function will be called with provided parameters
+
+		** REQUIRED PARAMS
+		id - primary key of the record to make a revision of 
+
+		** OTHER PARAMS
+		name/value pairs to update
+
+		*/
+	
+	$customfieldsArray = array(); // array of rows of 'name' fields from 'customfields' table 
+
+	// make sure we have a content id
+	if (isset($params['id'])) {
+		$sql = "SELECT name FROM customfields WHERE groupid='1'";
+		$result = queryDatabase($sql);
+		if($result->rowCount() > 0 ) {
+			while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+				$customfieldsArray[] = $row['name'];
+			}
+		} else die("No customfields.");
+		
+		$countModifFields = 0;
+		// checks if at least one modified field is a field at 'customfields' table
+		foreach ($params as $key=>$value) {
+			if (in_array($key, $customfieldsArray)) {
+				$countModifFields++; 
+			}
+		}
+		
+		$params['tablename'] = "content";
+		
+		if ($countModifFields == 0) { // no fields from 'customfields' table 
+			updateRecord($params); // so no need to make revision -> call updateRecord function
+		} 
+		else { // at least one field to mogify from 'customfields' table -> make revision 
+			
+			// 1. duplicate the modifying row
+			$autoIncrementContent = getAutoIncrement('content'); // get auto-increment for the new record
+			duplicateRows('content','id',$params['id'],$autoIncrementContent);
+						
+			// 2. update old row (always not a revision) :
+			// 	a. change modifieddate using time()
+			// 	b. plus the rest of $params (modifying fields) 
+			$params['modifieddate'] = time();
+			updateRecord($params);
+			
+			// 3. update new duplicated row (which is new revision) : 
+			// 	a. change is_revision to '1' (true)
+			// 	b. set $params['id'] to $autoIncrementContent
+			$paramsUpd = array();
+			$paramsUpd['tablename'] = $params['tablename'];
+			$paramsUpd['id'] = $autoIncrementContent;
+			$paramsUpd['is_revision'] = "1";
+			updateRecord($paramsUpd);
+
+			sendSuccess();
+		}
+	} else die("No id provided.");
+}
+function revertRevision($params)
+{
+		/*
+
+		* Script will attempt to revert to the content record by revertid
+
+		** REQUIRED PARAMS
+		id - primary key of non-revision record 
+		revertid - primary key of the record to be reverted back instead of non-revision record
+		
+		*/
+	
+	// make sure we have a content id of the non-revision   
+	if (isset($params['id']) && isset($params['revertid'])) {
+		
+		// 1. duplicate the record by provided id and set the id of the new record to $autoIncrementContent
+		$autoIncrementContent = getAutoIncrement('content'); // get auto-increment for the new record
+		duplicateRows('content','id',$params['id'],$autoIncrementContent);
+		
+		// 2. make the revision of the duplicated record :
+		//	a. change is_revision to '1' 
+		$paramsUpd = array();
+		$paramsUpd['tablename'] = "content";
+		$paramsUpd['id'] = $autoIncrementContent;
+		$paramsUpd['is_revision'] = '1';
+		updateRecord($paramsUpd);
+
+		// 3. copy all the fields of revertid record to id record
+		// and change is_revision to '0'
+		$sql = "SELECT content.* from `content` WHERE id = " . $params['revertid'];
+		$result = queryDatabase($sql);
+		$rows = $result->fetch(PDO::FETCH_ASSOC);
+		
+		foreach ($rows as $key=>$value) {
+			if (($key != 'id') && ($key != 'is_revision')) {
+				$rowsUpd[$key] = $value;
+			}
+		}
+		$rowsUpd['tablename'] = "content";
+		$rowsUpd['id'] = $params['id'];
+		$rowsUpd['is_revision'] = '0';
+		$rowsUpd['modifieddate'] = time();
+		updateRecord($rowsUpd);
+		
+		// 4. delete the record by provided revertid
+		$sql = "DELETE FROM `content` WHERE id = " .$params['revertid'];
+		if (!$result2 = queryDatabase($sql))
+		die("Query Failed: " . $result2->errorInfo());		
+		
+		sendSuccess();
+		
+	} else die("No id provided.");
 }
 
 function insertTag($params) //+

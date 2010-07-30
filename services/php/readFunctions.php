@@ -394,7 +394,7 @@ function getContent($params)
 
 	// WHERE CLAUSE INFO
 
-	$sql .= " WHERE content.id <> 1 ";
+	$sql .= " WHERE content.id <> 1 AND content.is_revision = 0";
 
 	if (isset($params['contentid'])) { // return a specific content id, or a list thereof
 		if (isset($strChildIDs)) {

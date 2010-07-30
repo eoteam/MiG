@@ -49,7 +49,9 @@ $validWriteFunctions = array (
 "updateCustomField",
 "deleteCustomField",
 "insertCustomField",
-"duplicateObject"
+"duplicateObject",
+"updateContentAndRevision",
+"revertRevision"
 );
 
 $validFileFunctions = array (
