@@ -33,6 +33,8 @@
     <classEntry path="org.mig.utils.LSOHandler"/>
     <classEntry path="org.mig.utils.GUID"/>
     <classEntry path="org.mig.view.controls.EditableButtonBar"/>
+    <classEntry path="org.mig.view.controls.ActionButton"/>
+    <classEntry path="org.mig.view.events.UIEvent"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

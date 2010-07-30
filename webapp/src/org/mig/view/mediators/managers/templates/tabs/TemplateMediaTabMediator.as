@@ -97,8 +97,8 @@ package org.mig.view.mediators.managers.templates.tabs
 			}	
 		}
 		private function handleParamCreated(data:Object):void {
-			var results:Array = data.result as Array;
-			if(results.length == 1) {
+			var result:StatusResult = data.result as StatusResult;
+			if(result.success) {
 				var tab:ContentTab = data.token.tab as ContentTab;
 				tab.parameters.setItemNotNew(data.token.content as ContentTabParameter);
 				checkCudCount();

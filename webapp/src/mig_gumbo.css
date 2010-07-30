@@ -87,6 +87,12 @@ s|ToggleButton {
 	renderingMode:		"cff";
 	skinClass: ClassReference("org.mig.view.skins.buttons.GrayToggleButtonSkin");
 }
+controls|ActionButton {
+	skinClass: ClassReference("org.mig.view.skins.buttons.ActionButtonSkin");	
+}
+.labelActionButton {
+	skinClass: ClassReference("org.mig.view.skins.buttons.LabelActionButtonSkin");	
+}	
 .defaultBlackButton {
 	skinClass: ClassReference("org.mig.view.skins.buttons.BlackButtonSkin");
 }

@@ -2,10 +2,9 @@
 <s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
 				xmlns:s="library://ns.adobe.com/flex/spark" 
 				xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" 
-				autoDrawBackground="false" focusEnabled="true" height="28" creationComplete="itemrenderer1_creationCompleteHandler(event)">
-	
-	
-	
+				autoDrawBackground="false" focusEnabled="true" height="28" 
+				creationComplete="itemrenderer1_creationCompleteHandler(event)">
+
 	<fx:Script>
 		<![CDATA[
 			import mx.controls.DataGrid;
@@ -46,8 +45,7 @@
 			}
 			private function toggleEditing(event:KeyboardEvent):void {
 				if(event.keyCode == Keyboard.ENTER) {
-					input.editable = !input.editable;
-					input.setStyle("contentBackgroundAlpha",input.editable?1:0);
+					startEditing();
 				}
 			}
 			private function finishEdting(event:Event):void {
@@ -55,7 +53,10 @@
 				input.setStyle("contentBackgroundAlpha",0);
 			}
 
-
+			public function startEditing():void {
+				input.editable = !input.editable;
+				input.setStyle("contentBackgroundAlpha",input.editable?1:0);
+			}
 			protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
 			{
 				addEventListener(KeyboardEvent.KEY_DOWN,toggleEditing);

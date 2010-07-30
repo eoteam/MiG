@@ -74,7 +74,7 @@ package org.mig.view.mediators.content.media
 				var dp:ArrayList = new ArrayList();
 				for each(var item2:ContentMedia in content.children)
 				dp.addItem(item2);
-				types.addItem({type:parameter,baseLabel:parameter.name,label:parameter.name + ' ('+content.children.length+')',dataProvider:dp});
+				types.addItem({type:parameter,baseLabel:parameter.value,label:parameter.value + ' ('+content.children.length+')',dataProvider:dp});
 			}
 			content.children.filterFunction = null;
 			content.children.refresh();

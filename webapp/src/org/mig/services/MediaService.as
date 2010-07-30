@@ -90,7 +90,7 @@ package org.mig.services
 		}
 		public function updateContent(content:ContentNode,update:UpdateData):void {
 			var params:Object = new Object();
-			params.action = contentModel.mediaConfig.createContent;
+			params.action = contentModel.mediaConfig.updateContent.toString().split(',')[0];
 			params.tablename = contentModel.mediaConfig.tablename;
 			for (var prop:String in update) {
 				params[prop] = update[prop];

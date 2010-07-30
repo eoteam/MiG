@@ -52,8 +52,7 @@
 	
 	<s:VGroup width="200" height="100%">
 		<s:HGroup id="toolBar">
-			<controls:IconButton width="34" height="22" styleName="grayIconButton" 
-			icon="@Embed(source='/migAssets/library.swf#fileActions')"  id="actionButton" />
+				<controls:ActionButton  id="actionButton" />
 		</s:HGroup>
 		<controls:MiGList width="100%" height="100%" id="templateList" headerText="Templates" labelField="name" sortField="name"
 			 allowMultipleSelection="true">
@@ -69,7 +68,7 @@
 	</s:VGroup>
 	<s:Group width="75%" height="100%">	
 		<s:TabBar  dataProvider="{tabStack}" id="tabBar"  height="23"  cornerRadius="0" styleName="toolTabBar"  />	
-		<s:Button label="New Tab +" id="addTabButton" left="{tabBar.width+10}" />
+		<controls:ActionButton label="New Tab +" id="addTabButton" left="{tabBar.width+10}" styleName="labelActionButton" />
 		<mx:ViewStack borderVisible="false" contentBackgroundAlpha="0"
 		width="100%" verticalGap="0" height="100%"
 		historyManagementEnabled="false" top="23"

@@ -194,9 +194,8 @@
 		icon="@Embed(source='/migAssets/library.swf#addFolderIcon')" buttonMode="true" useHandCursor="true" styleName="grayIconButton"/>
 		
 		<!-- Actions -->
-		<!--<controls:IconButton height="22" width="28" icon="@Embed(source='/migAssets/library.swf#trashUp')"  toolTip="Delete"  styleName="grayIconButton" id="trashButton" mouseChildren="false"  buttonMode="true" />			-->
-		<controls:IconButton width="34" height="22" styleName="grayIconButton" 
-		icon="@Embed(source='/migAssets/library.swf#fileActions')"  id="actionButton" />	
+		<!--<controls:IconButton height="22" width="28" icon="@Embed(source='/migAssets/library.swf#trashUp')"  toolTip="Delete"  styleName="grayIconButton" id="trashButton" mouseChildren="false"  buttonMode="true" />			-->		
+		<controls:ActionButton id="actionButton" />
 		<controls:MiGColorPicker id="colorPicker" enabled="false"  />
 	</container:FlowContainer>
 	<!--</s:Group>-->

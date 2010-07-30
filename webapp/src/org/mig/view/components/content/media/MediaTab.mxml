@@ -177,9 +177,7 @@
 		
 		<media:ContentMediaDetailView  id="detailView" y="-550" horizontalCenter="0"/>	
 		</s:SkinnableContainer>	
-	
 
-	
 	<s:HGroup width="100%">
 		<s:Rect width="100%" />
 		<controls:MiGHSlider id="scaleSlider" value="0.1"  minimum="0.25" maximum="2" change="scalePercent=scaleSlider.value"   

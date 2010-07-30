@@ -48,6 +48,7 @@ package org.mig.view.mediators.managers.media
 	import org.mig.view.controls.DataButton;
 	import org.mig.view.events.ContentViewEvent;
 	import org.mig.view.events.ListItemEvent;
+	import org.mig.view.events.UIEvent;
 	import org.robotlegs.mvcs.Mediator;
 	import org.robotlegs.utilities.statemachine.StateEvent;
 	
@@ -97,8 +98,9 @@ package org.mig.view.mediators.managers.media
 			view.listButton.addEventListener(MouseEvent.CLICK,handleListButton);
 			view.searchInput.addEventListener(FlexEvent.ENTER,handleSearchInput);
 			view.clearSearch.addEventListener(MouseEvent.CLICK,handleClearSearch);
+			view.actionButton.addEventListener(UIEvent.SELECT,handleActionSelection);
 			//view.trashButton.addEventListener(MouseEvent.CLICK,deleteItems);
-			view.actionButton.addEventListener(MouseEvent.CLICK,handleActionButton);
+			
 			//view.parentdirButton.addEventListener(MouseEvent.CLICK,handleParentdirButton);
 			view.addEventListener(FlexEvent.SHOW,handleContent);
 			
@@ -134,6 +136,8 @@ package org.mig.view.mediators.managers.media
 			//view.parentdirButton.alpha = 0.5;
 			view.currentState = "loading";
 			view.listView.dragFormat  = DraggableViews.MEDIA_ITEMS;
+			view.actionButton.dataProvider = ["Download","Delete","New Folder","Rename","Remove Color"];
+			
 		}
 		private function handleContent(event:FlexEvent):void {
 			this.selectedContent = contentModel.currentDirectory as DirectoryNode;
@@ -427,25 +431,9 @@ package org.mig.view.mediators.managers.media
 				}
 			}
 		}
-		private function handleActionButton(event:MouseEvent):void
-		{
-			var list:List = new List();
-			list.width = 120;
-			list.styleName = "dropDownList";
 
-			
-			list.addEventListener(FlexMouseEvent.MOUSE_DOWN_OUTSIDE,closeList); 
-			list.addEventListener(IndexChangeEvent.CHANGE,handleItemClick);
-			list.dataProvider = new ArrayList(["Download","Delete","New Folder","Rename","Remove Color"]);
-			var pt:Point = view.toolBar.localToGlobal(new Point(view.actionButton.x,view.actionButton.y));
-			list.x = pt.x; list.y = pt.y+view.actionButton.height;	
-			PopUpManager.addPopUp(list,view,false,PopUpManagerChildList.POPUP);
-		}	
-		private function closeList(event:Event):void {
-			PopUpManager.removePopUp(event.target as List);
-		}
-		private function handleItemClick(event:Event):void {
-			var action:String = List(event.target).selectedItem;
+		private function handleActionSelection(event:UIEvent):void {
+			var action:String = event.data as String;
 			switch(action) {
 				case "Rename":	
 					renameItem();
@@ -458,15 +446,13 @@ package org.mig.view.mediators.managers.media
 					break;
 				case "New Folder":
 					addFolder();
-				break;
+					break;
 				case "Remove Color":
 					removeColor();
-				break;
+					break;
 				
 			}
-			PopUpManager.removePopUp(event.target as List);
 		}
-
 		private var cudTotal:int=0;
 		private function handleColorPicker(event:Event):void {
 			if(view.listView.selectedItems.length > 0) {

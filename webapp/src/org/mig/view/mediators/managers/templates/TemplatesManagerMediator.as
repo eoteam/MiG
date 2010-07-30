@@ -34,6 +34,8 @@ package org.mig.view.mediators.managers.templates
 	import org.mig.view.components.managers.templates.TabBaseView;
 	import org.mig.view.components.managers.templates.TemplatesManagerView;
 	import org.mig.view.events.ContentViewEvent;
+	import org.mig.view.events.UIEvent;
+	import org.mig.view.renderers.ListCellEditor;
 	import org.robotlegs.mvcs.Mediator;
 	import org.robotlegs.utilities.statemachine.StateEvent;
 	
@@ -73,6 +75,9 @@ package org.mig.view.mediators.managers.templates
 			
 			view.addFieldButton.addEventListener(MouseEvent.CLICK,handleAddFieldButton,false,0,true);
 			view.submitButton.addEventListener(MouseEvent.CLICK,handleSubmitButton,false,0,true);
+			view.actionButton.dataProvider = ["Add","Remove","Duplicate","Rename"];
+			view.actionButton.addEventListener(UIEvent.SELECT,handleActionSelection);
+			
 			
 			//view.cfList.addEventListener("addCustomFieldOption",enableSubmit,false,0,true);
 			//view.cfList.addEventListener("removeCustomFieldOption",enableSubmit,false,0,true);
@@ -80,28 +85,48 @@ package org.mig.view.mediators.managers.templates
 						
 			view.addEventListener(FlexEvent.HIDE,handleHide,false,0,true);
 			view.addEventListener(FlexEvent.SHOW,handleShow,false,0,true);
+			
+			
 		}
 		private function menuItemSelectHandler(event:ContextMenuEvent):void{
-			var template:Template
-			switch(event.target.caption) {
+			processSelection(event.target.caption);
+		}
+		private function handleActionSelection(event:UIEvent):void {
+			processSelection(event.data.toString());
+		}
+		private function processSelection(action:String):void {
+			var template:Template;
+			switch(action) {
 				case "Remove":
 					for each(template in view.templateList.selectedItems) {
 						contentModel.templates.removeItemAt(contentModel.templates.getItemIndex(template));
-				}
+					}
 				break;
+				
 				case "Duplicate":
 					for each(template in view.templateList.selectedItems)  {
 						appService.duplicateObject(template,contentModel.templatesConfig,"templateid","templates_customfields");
 						appService.addHandlers(handleDuplicated);
 					}
 				break;
+				
 				case "Add":
 					template = new Template();
 					template.name = "new";
 					contentModel.templates.addItem(template);
-				break
+				break;
+				
+				case "Rename":
+					if(view.templateList.selectedItem) {
+						var editor:ListCellEditor = ListCellEditor(view.templateList.dataGroup.getChildAt(view.templateList.selectedIndex));
+						editor.startEditing();
+						editor.input.setFocus();
+						editor.input.selectRange(editor.input.text.length,editor.input.text.length);
+					}
+				break;
 			}
 		}
+		
 		private function handleHide(event:FlexEvent):void {
 			previouslySelectedTemplate = view.templateList.selectedItem as Template;
 		}
@@ -119,6 +144,8 @@ package org.mig.view.mediators.managers.templates
 				contentModel.templates.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleTemplatesChanged,false,0,true);
 				contentModel.templatesCustomFields.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleChange,false,0,true);
 				GlobalUtils.createContextMenu(["Add","Remove","Duplicate"],menuItemSelectHandler,null,[view.templateList]);	
+				view.addTabButton.dataProvider = contentModel.contentTabs;
+				view.addTabButton.labelField = "name";
 			}
 /*			if(event.action == AppStartupStateConstants.LOAD_TEMPLATES_CFS_COMPLETE) {
 				view.fieldsList.dataProvider = contentModel.templatesCustomFields;
