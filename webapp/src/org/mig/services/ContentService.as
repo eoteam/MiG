@@ -64,13 +64,6 @@ package org.mig.services
 			//params.tablename = "contenttabs";
 			this.createService(params,ResponseType.DATA,ContentTab);				
 		}
-/*		public function loadContentTabParameters(tab:ContentTab):void {
-			var params:Object = new  Object();
-			params.action = ValidFunctions.GET_DATA;
-			params.tablename = "tabsparameters";
-			params.id = tab.parameterids;
-			this.createService(params,ResponseType.DATA).token.tab = tab;
-		}*/
 		public function loadTemplateContentTabParameters(template:Template):void {
 			var params:Object = new  Object();
 			params.action = ValidFunctions.GET_TEMPLATE_CONTENTTABS_PARAMS;

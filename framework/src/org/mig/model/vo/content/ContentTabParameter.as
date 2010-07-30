@@ -13,7 +13,7 @@ package org.mig.model.vo.content
 		public var param1:String;
 		public var param2:String;
 		public var param3:String;
-
+		public var is_label:int;
 		
 		public function ContentTabParameter() {
 			super();

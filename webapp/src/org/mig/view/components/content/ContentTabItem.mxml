@@ -20,7 +20,7 @@
 			public var configured:Boolean = false;
 			public function set content(value:ContentNode):void {
 				_content = value as SubContainerNode;
-				this.label = _content.label;
+				this.label = _content.tab.name;
 			}
 			public function get content():ContentNode {
 				return _content;

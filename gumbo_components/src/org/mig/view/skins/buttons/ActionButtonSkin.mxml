@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+ADOBE SYSTEMS INCORPORATED
+Copyright 2008 Adobe Systems Incorporated
+All Rights Reserved.
+
+NOTICE: Adobe permits you to use, modify, and distribute this file
+in accordance with the terms of the license agreement accompanying it.
+
+-->
+
+<!--- The default skin class for the Spark Button component.  
+
+@see spark.components.Button
+
+@langversion 3.0
+@playerversion Flash 10
+@playerversion AIR 1.5
+@productversion Flex 4
+-->
+<s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" 
+			 xmlns:fb="http://ns.adobe.com/flashbuilder/2009" minWidth="21" minHeight="21" width="34" height="22" alpha.disabled="0.5" xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:components="org.flashcommander.components.*">
+	
+	<!-- host component -->
+	<fx:Metadata>
+		<![CDATA[ 
+		/** 
+		* @copy spark.skins.spark.ApplicationSkin#hostComponent
+		*/
+		[HostComponent("org.mig.view.controls.ActionButton")]
+		]]>
+	</fx:Metadata>
+	
+	<fx:Script fb:purpose="styling">
+		<![CDATA[         
+			/* Define the skin elements that should not be colorized. 
+			For button, the graphics are colorized but the label is not. */
+			static private const exclusions:Array = ["graphic"];
+			
+			/** 
+			 * @private
+			 */     
+			override public function get colorizeExclusions():Array {return exclusions;}
+			
+			/**
+			 * @private
+			 */
+			override protected function initializationComplete():void
+			{
+				useChromeColor = true;
+				super.initializationComplete();
+			}  
+			
+		]]>        
+	</fx:Script>
+	
+	<!-- states -->
+	<s:states>
+		<s:State name="up" />
+		<s:State name="over" />
+		<s:State name="down" />
+		<s:State name="disabled" />
+	</s:states>
+	<s:transitions>
+		<s:Transition  fromState="*" toState="over">
+			<s:Fade target="{bgOver}"  alphaTo="1" duration="500" />
+		</s:Transition>
+		
+		<s:Transition fromState="*" toState="up">
+			<s:Fade target="{bgOver}"  alphaTo="0" duration="500" />
+		</s:Transition>
+		
+		<s:Transition  fromState="*" toState="down">
+			<s:Fade target="{bgOver}"  alphaTo="0" duration="500" />
+		</s:Transition>
+	</s:transitions>
+	
+	<s:Rect width="100%" height="100%">
+		<s:fill>
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry color="0x808080" />
+				<s:GradientEntry color="0x595959" />
+			</s:LinearGradient>
+		</s:fill>
+	</s:Rect>
+	<s:Rect id="bgOver" width="100%" height="100%" alpha="0" alpha.over="1" alpha.down="0" alpha.up="0" alpha.disabled="0"> 
+		<s:fill>
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry color="#ED1C58" />
+				<s:GradientEntry color="#BD1E53" />
+			</s:LinearGradient>
+		</s:fill>
+	</s:Rect>
+	
+	<s:Rect width="100%" height="100%"> 
+		<s:fill>
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry color="#FFFFFF" alpha="0.1" />
+				<s:GradientEntry color="#FFFFFF" alpha="0.02" />
+			</s:LinearGradient>
+		</s:fill>
+	</s:Rect>    
+		
+	<s:BitmapImage verticalCenter="0" horizontalCenter="0"
+	source="@Embed(source='../../../../../../webapp/src/migAssets/library.swf#fileActions')" id="graphic"   />
+	
+	<s:PopUpAnchor id="popUp"  displayPopUp="false"
+				   top="0" bottom="0" left="0" minWidth="120"
+				   popUpWidthMatchesAnchorWidth="true"
+				   popUpPosition="below" >
+		
+		<s:Group id="dropDown" minHeight="22" width="100%">
+			
+			<components:ListAutoComplete  id="list" width="100%" minWidth="22" styleName="dropDownList" />
+			
+		</s:Group>
+		
+	</s:PopUpAnchor>
+</s:SparkSkin>
