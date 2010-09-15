@@ -252,6 +252,7 @@ package org.mig.view.mediators.managers.templates
 			var template:Template = view.templateList.selectedItem as Template;
 			var templateCF:CustomField = new CustomField();
 			view.cfList.dataProvider.addItem(templateCF);
+			contentModel.templatesCustomFields.addItem(templateCF);
 			templateCF.templateid = template.id;
 			templateCF.groupid = 1;
 			templateCF.displayorder = view.cfList.dataProvider.getItemIndex(templateCF)+1;

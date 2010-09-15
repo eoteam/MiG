@@ -25,7 +25,7 @@ package org.mig.model.vo.content
 		public var orderdirection:String = "ASC";
 		public var verbosity:int;
 		public var customfields:ArrayList;
-		public var contentTabs:DataCollection;
+		public var contentTabs:DataCollection;//Vector.<ContentTab>;
 		
 	/*	public function clone(id:int):Template {
 			var template:Template = new Template();

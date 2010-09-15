@@ -72,28 +72,30 @@
 		<s:State name="hoveredAndLoading"  stateGroups="hoveredStates,loadingStates"/>
 		<s:State name="selectedAndLoading"  stateGroups="selectedStates,loadingStates"/>
 	</s:states>
-	<s:transitions>
+<!--	<s:transitions>
 		<s:Transition toState="hovered">
 			<s:Fade target="{overFill}"  duration="300" />
 		</s:Transition>
-	</s:transitions>
+	</s:transitions>-->
 	
 	<s:Rect  left="0" right="0" top="0" bottom="0" id="bgFill">
 		<s:fill>
 			<s:LinearGradient rotation="90">
-				<s:GradientEntry color="0xFFFFFF" alpha="{data.data.statusid == ContentStatus.PUBLISHED ? 1:0.5}"/>
-				<s:GradientEntry color="0xD9D9D9" alpha="{data.data.statusid == ContentStatus.PUBLISHED ? 1:0.5}"/>
+				<s:GradientEntry color="0xFFFFFF" color.selectedStates="0xED1C58" color.hoveredStates="0xED1C58" 
+				alpha="{data.data.statusid == ContentStatus.PUBLISHED ? 1:0.5}"/>
+				<s:GradientEntry color="0xD9D9D9" color.selectedStates="0xBD1E53" color.hoveredStates="0xBD1E53"
+				alpha="{data.data.statusid == ContentStatus.PUBLISHED ? 1:0.5}"/>
 			</s:LinearGradient>
 		</s:fill>
 	</s:Rect>
-	<s:Rect  left="0" right="0" top="0" bottom="0" alpha="0" alpha.selectedStates="1" alpha.hoveredStates="0.5" id="overFill">
+<!--	<s:Rect  left="0" right="0" top="0" bottom="0" alpha="0" alpha.selectedStates="1" alpha.hoveredStates="0.5" id="overFill">
 		<s:fill>
 			<s:LinearGradient rotation="90">
 				<s:GradientEntry color="0xED1C58" alpha="{data.data.statusid == ContentStatus.PUBLISHED ? 1:0.5}"  />		
 				<s:GradientEntry color="0xBD1E53" alpha="{data.data.statusid == ContentStatus.PUBLISHED ? 1:0.5}"/>
 			</s:LinearGradient>
 		</s:fill>
-	</s:Rect>
+	</s:Rect>-->
 	
 	<s:HGroup left="0" right="0" top="0" bottom="0" verticalAlign="middle" gap="3">	
 		<s:Rect id="indentationSpacer" width="{treeListData.indent}" percentHeight="100" alpha="0">

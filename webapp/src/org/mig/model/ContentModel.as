@@ -52,7 +52,6 @@ package org.mig.model
 		
 		public function ContentModel() {
 			templates = new DataCollection();
-			
 			templatesCustomFields = new DataCollection();
 			
 			tagTerms = new DataCollection();

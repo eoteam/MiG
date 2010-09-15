@@ -49,6 +49,7 @@ package org.mig.model.vo.app
 			if(event.kind == CollectionEventKind.UPDATE) {
 				if(PropertyChangeEvent(event.items[0]).property == "selected" || 
 				   PropertyChangeEvent(event.items[0]).property == "index" ||
+				   PropertyChangeEvent(event.items[0]).property == "customfield" ||
 				   PropertyChangeEvent(event.items[0]).property == "vo")
 					changed = false;
 			}	
