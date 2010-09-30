@@ -6,10 +6,11 @@ package org.mig.model.vo.app
 	import mx.events.PropertyChangeEvent;
 	import mx.events.PropertyChangeEventKind;
 	
+	import org.mig.model.vo.BaseVO;
 	import org.mig.model.vo.ContentData;
 
 	[Bindable]
-	public class CustomField extends ContentData
+	public class CustomField extends BaseVO
 	{	
 		public var templateid:int;
 		public var customfieldid:int;

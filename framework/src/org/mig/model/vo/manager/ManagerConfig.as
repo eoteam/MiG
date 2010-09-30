@@ -13,7 +13,6 @@ package org.mig.model.vo.manager
 		public function ManagerConfig()
 		{
 			super();
-			children = null;
 		}
 	}
 }

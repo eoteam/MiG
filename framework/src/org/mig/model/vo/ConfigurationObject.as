@@ -1,7 +1,7 @@
 package org.mig.model.vo
 {
 	[Bindable]
-	public class ConfigurationObject extends ContentData
+	public class ConfigurationObject extends BaseVO
 	{
 		public var name:String;
 		public var labelfield:String;
@@ -18,4 +18,4 @@ package org.mig.model.vo
 			super();
 		}
 	}
-}
+}	

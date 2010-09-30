@@ -13,6 +13,6 @@ package org.mig.model.vo.content
 		public var templateid:int;
 		public var deleted:int;
 		
-		// this used when a content is partially loaded, content table, maybe media when not all the file info is needed --xmp and id3
+
 	}
 }

@@ -1,9 +1,9 @@
 package org.mig.model.vo.content
 {
-	import org.mig.model.vo.ContentData;
+	import org.mig.model.vo.BaseVO;
 	
 	[Bindable]
-	public class ContentTabParameter extends ContentData
+	public class ContentTabParameter extends BaseVO
 	{
 
 		public var templateid:int;
