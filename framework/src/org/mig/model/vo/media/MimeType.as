@@ -5,14 +5,14 @@ package org.mig.model.vo.media
 	 */
 	public class MimeType
 	{
-		public static var IMAGE:MimeType = new MimeType(1,;
-		public static const VIDEO:int = MimeType;
-		public static const AUDIO:int = MimeType; 
-		public static const SWF:int = MimeType;
-		public static const FILE:int = MimeType;
-		public static const YOUTUBE:int = MimeType;	
-		public static const FONT:int = MimeType;
-		public static const DIRECTORY:int = MimeType;
+		public static const IMAGE:MimeType = new MimeType(1,"images");
+		public static const VIDEO:MimeType = new MimeType(2,"video");
+		public static const AUDIO:MimeType = new MimeType(3,"audio"); 
+		public static const SWF:MimeType = new MimeType(4,"swf");
+		public static const FILE:MimeType = new MimeType(5,"file");
+		public static const YOUTUBE:MimeType = new MimeType(6,"youtube");	
+		public static const FONT:MimeType = new MimeType(7,"font");
+		public static const DIRECTORY:MimeType = new MimeType(8,"directory");
 		
 		
 		public function MimeType(id:int,name:String)
@@ -20,25 +20,13 @@ package org.mig.model.vo.media
 			this.id = id;
 			this.name = name;
 		}
-		/*		public var imageExtensions:Array= [".jpg", ".jpeg", ".gif", ".png"];
-		public var videoExtensions:Array= [".flv", ".mov", ".mp4", ".m4v", ".f4v"];
-		public var audioExtensions:Array=[".mp3"];
-		public var fontExtensions:Array= [".ttf", ".otf"];  */
-		
+
+		public static function get list( ):Array
+		{
+			return [IMAGE,VIDEO,AUDIO,SWF,FILE,YOUTUBE,FONT,DIRECTORY];
+		}
 		public var id:int;
 		public var name:String;
-		public var _extensions:String;
 		
-		
-		
-		public function set extensions(value:String):void {
-			_extensions = value;
-			extensionsArray = value.split(',');
-		}
-		public function get extensions():String {
-			return _extensions;
-		}
-		
-		public var extensionsArray:Array;
 	}
 }

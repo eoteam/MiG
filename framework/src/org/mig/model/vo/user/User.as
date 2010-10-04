@@ -8,6 +8,10 @@ package org.mig.model.vo.user
 	[Bindable]
 	public class User extends ContentData
 	{
+		
+		public static const MiG:int = 1;
+		public static const FronEnd:int = 2;
+		
 		public var email:String;
 		public var active:int;
 		public var username:String;
@@ -16,7 +20,7 @@ package org.mig.model.vo.user
 		public var password:String;
 		public var dateofbirth:Number;
 		
-		public var group:int;
+		public var miggroup:int;
 		
 		public var address:String;
 		public var address2:String;
@@ -29,9 +33,7 @@ package org.mig.model.vo.user
 		public var mobile:String;
 		public var fax:String;
 	
-		private var _privileges:int;
-		private var _privilegesString:String;
-		
+		public var privilege:UserPrivilege;
 				
 		public var lastlogin:Number;
 
@@ -40,20 +42,11 @@ package org.mig.model.vo.user
 		public var newCategories:Array;
 		public var delCategories:Array;
 			
-		public function get privileges():int {
-			return _privileges;
-		}
-		public function set privileges(value:int):void {
-			_privileges = value;
-			_privilegesString = UserPrivilege.translateIntToString(value);
+
+		public function set privilegeid(value:int):void {
+			privilege = UserPrivilege.list[value];
 		}		
-		public function get privilegesString():String {
-			return _privilegesString;
-		}
-		public function set privilegesString(value:String):void {
-			_privilegesString = value;
-			_privileges = UserPrivilege.translateStringToInt(value);
-		}
+		
 		public function User() {
 			email="";
 			firstname="";

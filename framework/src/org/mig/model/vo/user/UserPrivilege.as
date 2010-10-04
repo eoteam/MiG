@@ -23,7 +23,7 @@ package org.mig.model.vo.user
 		}
 		public static function get list( ):Array
 		{
-			return [ MiGAdmin,Admin,Writer1,Writer2,Reader];
+			return [NONE,MiGAdmin,Admin,Writer1,Writer2,Reader];
 		}
 		
 		public static function translateIntToString(input:int):String
