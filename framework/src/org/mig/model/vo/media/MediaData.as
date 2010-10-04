@@ -3,6 +3,9 @@ package org.mig.model.vo.media
 	import org.mig.model.vo.ContentData;
 
 	//this VO will not be dynamic. It will mirror the media table and its current feature set UNLESS custom fields are introduced.	
+	/**
+	 * @flowerModelElementId _edhhIM2REd--irTzzklAjg
+	 */
 	[Bindable]
 	public dynamic class MediaData extends ContentData
 	{

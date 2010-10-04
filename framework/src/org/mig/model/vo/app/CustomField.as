@@ -9,6 +9,9 @@ package org.mig.model.vo.app
 	import org.mig.model.vo.BaseVO;
 	import org.mig.model.vo.ContentData;
 
+	/**
+	 * @flowerModelElementId _ecpXYM2REd--irTzzklAjg
+	 */
 	[Bindable]
 	public class CustomField extends BaseVO
 	{	

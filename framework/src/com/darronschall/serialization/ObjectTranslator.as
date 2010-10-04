@@ -33,6 +33,7 @@ import flash.utils.getDefinitionByName;
 import flash.utils.getQualifiedClassName;
 /**
  * Utility class to convert vanilla objects to class instances.
+ * @flowerModelElementId _ecDhgM2REd--irTzzklAjg
  */
 public final class ObjectTranslator
 {

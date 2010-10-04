@@ -19,6 +19,9 @@ package org.mig.model.vo
 	
 	import org.mig.collections.DataCollection;
 	
+	/**
+	 * @flowerModelElementId _ec_Voc2REd--irTzzklAjg
+	 */
 	[Bindable]
 	public class ContentNode
 	{

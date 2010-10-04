@@ -2,6 +2,9 @@ package org.mig.model.vo.content
 {
 	import org.mig.model.vo.BaseVO;
 	
+	/**
+	 * @flowerModelElementId _edKUwM2REd--irTzzklAjg
+	 */
 	[Bindable]
 	public class ContentTabParameter extends BaseVO
 	{

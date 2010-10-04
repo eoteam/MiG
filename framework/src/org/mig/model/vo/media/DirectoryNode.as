@@ -12,6 +12,9 @@ package  org.mig.model.vo.media
 	
 	import org.mig.model.vo.ContentNode;
 	
+	/**
+	 * @flowerModelElementId _edbagM2REd--irTzzklAjg
+	 */
 	[Bindable]
 	public class DirectoryNode extends ContentNode {
 		

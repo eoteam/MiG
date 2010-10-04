@@ -1,5 +1,8 @@
 package org.mig.model.vo
 {
+	/**
+	 * @flowerModelElementId _edGDUM2REd--irTzzklAjg
+	 */
 	[Bindable]
 	public class ConfigurationObject extends BaseVO
 	{

@@ -20,3 +20,4 @@ services/files/
 .svn
 webapp/release/
 webapp/.DS_Store
+testing/ModelTesting/bin-debug

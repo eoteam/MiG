@@ -9,6 +9,9 @@ package org.mig.model.vo.content
 	import org.mig.collections.DataCollection;
 	import org.mig.model.vo.ConfigurationObject;
 	
+	/**
+	 * @flowerModelElementId _edFcQM2REd--irTzzklAjg
+	 */
 	[Bindable]
 	public class ContentTab extends ConfigurationObject
 	{

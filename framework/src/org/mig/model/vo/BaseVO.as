@@ -1,5 +1,9 @@
 package org.mig.model.vo
 {
+
+	/**
+	 * @flowerModelElementId _ecp-cM2REd--irTzzklAjg
+	 */
 	public class BaseVO extends ValueObject
 	{
 		public var updateData:UpdateData = new UpdateData();

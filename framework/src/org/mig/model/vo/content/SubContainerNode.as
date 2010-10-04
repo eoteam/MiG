@@ -11,6 +11,9 @@ package org.mig.model.vo.content
 	import org.mig.model.vo.ContentNode;
 	import org.mig.model.vo.content.ContainerData;
 	
+	/**
+	 * @flowerModelElementId _edOmMM2REd--irTzzklAjg
+	 */
 	[Bindable]
 	public class SubContainerNode extends ContentNode
 	{

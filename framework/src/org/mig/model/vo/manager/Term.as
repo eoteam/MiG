@@ -7,6 +7,9 @@ package org.mig.model.vo.manager
 	import org.mig.model.vo.ContentData;
 	import org.mig.model.vo.ValueObject;
 	
+	/**
+	 * @flowerModelElementId _edXwIM2REd--irTzzklAjg
+	 */
 	[Bindable]
 	public dynamic class Term extends ContentData
 	{

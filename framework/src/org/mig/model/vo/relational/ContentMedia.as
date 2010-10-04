@@ -3,6 +3,9 @@ package org.mig.model.vo.relational
 	import org.mig.model.vo.ContentData;
 	import org.mig.model.vo.content.ContentStatus;
 
+	/**
+	 * @flowerModelElementId _edtHUM2REd--irTzzklAjg
+	 */
 	[Bindable]	
 	public class ContentMedia extends ContentData
 	{

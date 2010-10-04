@@ -1,5 +1,8 @@
 package org.mig.model.vo.user
 {
+	/**
+	 * @flowerModelElementId _ed9mAM2REd--irTzzklAjg
+	 */
 	[Bindable]
 	public class UserGroup
 	{

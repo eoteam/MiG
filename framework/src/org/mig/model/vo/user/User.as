@@ -2,6 +2,9 @@ package org.mig.model.vo.user
 {
 	import org.mig.model.vo.ContentData;
 
+	/**
+	 * @flowerModelElementId _ed1qMM2REd--irTzzklAjg
+	 */
 	[Bindable]
 	public class User extends ContentData
 	{
@@ -31,8 +34,7 @@ package org.mig.model.vo.user
 		
 				
 		public var lastlogin:Number;
-		public var createdBy:int;
-		public var createdDate:Number;
+
 		
 		public var categories:Array;
 		public var newCategories:Array;
@@ -43,14 +45,14 @@ package org.mig.model.vo.user
 		}
 		public function set privileges(value:int):void {
 			_privileges = value;
-			_privilegesString = UserPrivileges.translateIntToString(value);
+			_privilegesString = UserPrivilege.translateIntToString(value);
 		}		
 		public function get privilegesString():String {
 			return _privilegesString;
 		}
 		public function set privilegesString(value:String):void {
 			_privilegesString = value;
-			_privileges = UserPrivileges.translateStringToInt(value);
+			_privileges = UserPrivilege.translateStringToInt(value);
 		}
 		public function User() {
 			email="";

@@ -3,6 +3,9 @@ package org.mig.model.vo
 	import mx.collections.ArrayCollection;
 
 	//User ContainerData MediaData
+	/**
+	 * @flowerModelElementId _ec7rQc2REd--irTzzklAjg
+	 */
 	[Bindable]
 	public dynamic class ContentData extends BaseVO
 	{		

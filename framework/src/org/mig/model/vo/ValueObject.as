@@ -10,6 +10,9 @@ package org.mig.model.vo
 	
 	//stateless
 	
+	/**
+	 * @flowerModelElementId _eeETsM2REd--irTzzklAjg
+	 */
 	internal class ValueObject extends ObjectProxy implements IValueObject
 	{
 		public var id:Number;

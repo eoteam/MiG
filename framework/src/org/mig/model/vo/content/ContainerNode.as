@@ -5,6 +5,9 @@ package org.mig.model.vo.content
 	import org.mig.model.vo.UpdateData;
 	import org.mig.model.vo.content.ContainerData;
 	
+	/**
+	 * @flowerModelElementId _ec_VoM2REd--irTzzklAjg
+	 */
 	[Bindable] 
 	public class ContainerNode extends ContentNode
 	{		

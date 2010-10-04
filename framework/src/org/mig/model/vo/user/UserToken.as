@@ -1,5 +1,8 @@
 package org.mig.model.vo.user
 {
+	/**
+	 * @flowerModelElementId _eeCegM2REd--irTzzklAjg
+	 */
 	public class UserToken
 	{
 		public var username:String;

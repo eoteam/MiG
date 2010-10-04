@@ -10,6 +10,9 @@ package org.mig.collections
 	
 	import org.mig.model.vo.ContentData;
 	
+	/**
+	 * @flowerModelElementId _ecXDgM2REd--irTzzklAjg
+	 */
 	public class DataCollection extends ArrayCollection
 	{
 		public static const NEW_COLLECTION:int = 0;

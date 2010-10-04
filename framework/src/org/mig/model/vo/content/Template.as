@@ -9,6 +9,9 @@ package org.mig.model.vo.content
 	import org.mig.model.vo.ValueObject;
 	import org.mig.model.vo.app.CustomField;
 	
+	/**
+	 * @flowerModelElementId _edSQkM2REd--irTzzklAjg
+	 */
 	[Bindable]
 	public class Template extends ConfigurationObject
 	{
