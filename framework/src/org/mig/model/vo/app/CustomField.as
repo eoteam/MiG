@@ -19,7 +19,6 @@ package org.mig.model.vo.app
 		public var customfieldid:int;
 		public var displayorder:int;
 		
-		public var typeid:int;
 		public var groupid:int;
 		public var name:String;
 		public var displayname:String;
@@ -27,30 +26,43 @@ package org.mig.model.vo.app
 		public var defaultvalue:String;
 		public var description:String;
 		
+		///?????
 		public var globalDelete:Boolean = false;
 		public var ready:Boolean = false;
 		public var globalChange:Boolean = false;
+		//////
 		
 		private var _options:String;
+		public var type:CustomFieldType;
 		
-		public function CustomField() {
+		
+		public function CustomField()
+		{
 			super();
 			stateProps = stateProps.concat(["optionsArray","globalChange","ready","globalDelete"]);
 			defaultvalue = description = '';
 			optionsArray = new ArrayList();
 			optionsArray.addEventListener(CollectionEvent.COLLECTION_CHANGE,handleChange);
 		}
-		private function handleChange(event:CollectionEvent):void {
-			for each(var option:CustomFieldOption in optionsArray.source) {
+		private function set typeid(value:int):void
+		{
+			type = CustomFieldType.list[value];
+		}
+		private function handleChange(event:CollectionEvent):void
+		{
+			for each(var option:CustomFieldOption in optionsArray.source)
+			{
 				option.index = optionsArray.getItemIndex(option)+1;
 			}
 			var result:String = '';
-			for each(var item:CustomFieldOption in optionsArray.source) {
+			for each(var item:CustomFieldOption in optionsArray.source)
+			{
 				result += (optionsArray.getItemIndex(item)+1).toString()+'='+item.value + ',';
 			}
 			result = result.substring(0,result.length-1);
 			var changed:Boolean = true;
-			if(event.kind == CollectionEventKind.UPDATE) {
+			if(event.kind == CollectionEventKind.UPDATE)
+			{
 				if(PropertyChangeEvent(event.items[0]).property == "selected" || 
 				   PropertyChangeEvent(event.items[0]).property == "index" ||
 				   PropertyChangeEvent(event.items[0]).property == "customfield" ||
@@ -75,22 +87,9 @@ package org.mig.model.vo.app
 				optionsArray.addItem(option);
 			}
 		}
-		public function get options():String {
+		public function get options():String
+		{
 			return _options;
 		}
-		
-		/*public function clone():CustomField {
-			var field:CustomField = new CustomField();
-			field.customfieldid = customfieldid;
-			field.fieldid = fieldid;
-			field.typeid = typeid;
-			field.name = name;
-			field.displayname = displayname;
-			field.displayorder = displayorder;
-			field.defaultvalue = defaultvalue;
-			field.description = description;
-			field.options = options;
-			return field;
-		}*/
 	}
 }

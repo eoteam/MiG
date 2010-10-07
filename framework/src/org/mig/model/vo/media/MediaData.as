@@ -7,13 +7,12 @@ package org.mig.model.vo.media
 	 * @flowerModelElementId _edhhIM2REd--irTzzklAjg
 	 */
 	[Bindable]
-	public dynamic class MediaData extends ContentData
+	public class MediaData extends ContentData
 	{
 		public var id3:XML;
 		public var title:String;
 		public var name:String;
 		public var path:String;
-		public var mimetypeid:int;
 		public var thumb:String;
 		public var video_proxy:String;
 		public var size:Number;
@@ -26,5 +25,12 @@ package org.mig.model.vo.media
 		public var height:int;
 		public var rating:int;
 		public var color:String;
+		
+		public var mimetype:MimeType = MimeType.NONE;
+		
+		public function set mimetypeid(value:int):void
+		{
+			this.mimetype = MimeType.list[value];
+		}
 	}
 }

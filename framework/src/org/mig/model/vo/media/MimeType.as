@@ -5,6 +5,7 @@ package org.mig.model.vo.media
 	 */
 	public class MimeType
 	{
+		public static const NONE:MimeType = new MimeType(0,"NONE");
 		public static const IMAGE:MimeType = new MimeType(1,"images");
 		public static const VIDEO:MimeType = new MimeType(2,"video");
 		public static const AUDIO:MimeType = new MimeType(3,"audio"); 
@@ -23,7 +24,7 @@ package org.mig.model.vo.media
 
 		public static function get list( ):Array
 		{
-			return [IMAGE,VIDEO,AUDIO,SWF,FILE,YOUTUBE,FONT,DIRECTORY];
+			return [NONE,IMAGE,VIDEO,AUDIO,SWF,FILE,YOUTUBE,FONT,DIRECTORY];
 		}
 		public var id:int;
 		public var name:String;

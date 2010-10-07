@@ -61,7 +61,7 @@ package org.mig.model.vo.user
 			phone = '';
 			mobile = '';
 			fax = '';
-			privileges = 4; //always reader
+			privilege = UserPrivilege.NONE; //always reader
 			categories = [];
 			newCategories = [];
 			delCategories = [];

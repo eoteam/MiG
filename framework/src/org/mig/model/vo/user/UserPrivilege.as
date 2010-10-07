@@ -13,12 +13,12 @@ package org.mig.model.vo.user
 		public static const Reader:UserPrivilege = new UserPrivilege(5,"Reader");
 		
 		
-		public var value:int;
+		public var id:int;
 		public var name:String;
 		
-		public function UserPrivilege(value:int,name:String)
+		public function UserPrivilege(id:int,name:String)
 		{
-			this.value = value;
+			this.id = id;
 			this.name = name;
 		}
 		public static function get list( ):Array
@@ -30,7 +30,7 @@ package org.mig.model.vo.user
 		{
 			for each ( var userPrivilege:UserPrivilege in UserPrivilege.list )
 			{
-				if ( input == userPrivilege.value )
+				if ( input == userPrivilege.id )
 					return userPrivilege.name;
 			}
 			return NONE.name;
@@ -40,9 +40,9 @@ package org.mig.model.vo.user
 			for each ( var userPrivilege:UserPrivilege in UserPrivilege.list )
 			{
 				if ( input == userPrivilege.name )
-					return userPrivilege.value;
+					return userPrivilege.id;
 			}
-			return NONE.value;
+			return NONE.id;
 		}		
 	}
 }
